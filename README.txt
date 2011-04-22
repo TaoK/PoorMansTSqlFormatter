@@ -1,0 +1,25 @@
+Poor Man's T-SQL Formatter
+--------------------------
+
+This is a small free .Net 2.0 library (with demo program) for reformatting T-SQL code.
+
+Features:
+ - Simple Xml-based parse tree
+ - Extensible, with possibility of supporting other SQL dialects (but none implemented)
+ - Configurable according to SQL formatting preferences
+
+Limitations:
+ - This is NOT a full SQL-parsing solution: only "coarse" parsing is performed, the 
+    minimum necessary for re-formatting.
+ - The parsing implementation is not very efficient - no effort has been made to 
+    optimize it.
+ - The code is very "procedural" - no effort has been made to organize the code 
+    according to object-oriented design principles.
+   
+This application is released under GPLv3: http://www.gnu.org/licenses/gpl.html
+
+Please contact me with any questions, concerns, or issues: my email address starts
+with tao, and is hosted at klerks dot biz.
+
+Tao Klerks
+

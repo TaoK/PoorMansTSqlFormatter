@@ -1,0 +1,2 @@
+﻿THIS TEST FILE IS NOT VALID SQL
+Test Me Test Me Do!
