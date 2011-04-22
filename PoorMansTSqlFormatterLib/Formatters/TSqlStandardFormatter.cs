@@ -75,6 +75,12 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     breakExpected = true;
                     break;
 
+                case Interfaces.Constants.ENAME_SQL_CLAUSE:
+                    WhiteSpace_SeparateClauses(contentElement, outString, indentLevel, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
+                    breakExpected = true;
+                    break;
+
                 case Interfaces.Constants.ENAME_BATCH_SEPARATOR:
                     //newline regardless of whether previous element recommended a break or not.
                     outString.Append(Environment.NewLine);
@@ -138,7 +144,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     outString.Append(" ");
                     ProcessSqlNodeList(outString, contentElement.SelectNodes(Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION), indentLevel + 1, ref breakExpected);
                     //test for begin end block:
-                    XmlNode beginBlock = contentElement.SelectSingleNode(string.Format("{0}/*[local-name() = '{1}' or local-name() = '{2}']", Interfaces.Constants.ENAME_SQL_STATEMENT, Interfaces.Constants.ENAME_BEGIN_END_BLOCK, Interfaces.Constants.ENAME_TRY_BLOCK));
+                    XmlNode beginBlock = contentElement.SelectSingleNode(string.Format("{0}/{1}/*[local-name() = '{2}' or local-name() = '{3}']", Interfaces.Constants.ENAME_SQL_STATEMENT, Interfaces.Constants.ENAME_SQL_CLAUSE, Interfaces.Constants.ENAME_BEGIN_END_BLOCK, Interfaces.Constants.ENAME_TRY_BLOCK));
                     if (beginBlock != null)
                     {
                         WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel, ref breakExpected);
@@ -158,7 +164,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     outString.Append("ELSE");
 
                     //test for begin end block:
-                    XmlNode beginBlock2 = contentElement.SelectSingleNode(string.Format("{0}/*[local-name() = '{1}' or local-name() = '{2}']", Interfaces.Constants.ENAME_SQL_STATEMENT, Interfaces.Constants.ENAME_BEGIN_END_BLOCK, Interfaces.Constants.ENAME_TRY_BLOCK));
+                    XmlNode beginBlock2 = contentElement.SelectSingleNode(string.Format("{0}/{1}/*[local-name() = '{2}' or local-name() = '{3}']", Interfaces.Constants.ENAME_SQL_STATEMENT, Interfaces.Constants.ENAME_SQL_CLAUSE, Interfaces.Constants.ENAME_BEGIN_END_BLOCK, Interfaces.Constants.ENAME_TRY_BLOCK));
                     if (beginBlock2 != null)
                     {
                         WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel, ref breakExpected);
@@ -254,6 +260,16 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (breakExpected)
             {
                 outString.Append(Environment.NewLine);
+                outString.Append(Environment.NewLine);
+                outString.Append(Indent(indentLevel));
+                breakExpected = false;
+            }
+        }
+
+        private void WhiteSpace_SeparateClauses(XmlElement contentElement, StringBuilder outString, int indentLevel, ref bool breakExpected)
+        {
+            if (breakExpected)
+            {
                 outString.Append(Environment.NewLine);
                 outString.Append(Indent(indentLevel));
                 breakExpected = false;

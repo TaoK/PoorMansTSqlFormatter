@@ -46,6 +46,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         //tree structure element names
         public const string ENAME_SQL_ROOT = "SqlRoot";
         public const string ENAME_SQL_STATEMENT = "SqlStatement";
+        public const string ENAME_SQL_CLAUSE = "Clause";
         public const string ENAME_PARENS = "Parens";
         public const string ENAME_BEGIN_END_BLOCK = "BeginEndBlock";
         public const string ENAME_TRY_BLOCK = "TryBlock";

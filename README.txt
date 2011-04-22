@@ -15,6 +15,16 @@ Limitations:
     optimize it.
  - The code is very "procedural" - no effort has been made to organize the code 
     according to object-oriented design principles.
+
+Known Issues / Todo:
+ - Finalize compound-term clause handling, such as "INNER JOIN"
+ - Lots of refactoring required
+ - CASE statement structure handling (for breaking/indenting)
+ - Comma-delimited list handling (for breaking/indenting)
+ - Logical Operator handling (for breaking/indenting)
+ - Keyword Capitalization
+ - HTML output (color highlighting)
+
    
 This application is released under GPLv3: http://www.gnu.org/licenses/gpl.html
 

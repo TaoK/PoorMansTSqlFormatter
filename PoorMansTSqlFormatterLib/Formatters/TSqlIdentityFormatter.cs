@@ -61,6 +61,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             switch (contentElement.Name)
             {
                 case Interfaces.Constants.ENAME_SQL_STATEMENT:
+                case Interfaces.Constants.ENAME_SQL_CLAUSE:
                 case Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION:
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"));
                     break;
