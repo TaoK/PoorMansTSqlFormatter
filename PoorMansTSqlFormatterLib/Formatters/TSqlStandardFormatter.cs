@@ -48,6 +48,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
             StringBuilder outString = new StringBuilder();
             if (sqlTokenOrTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", Interfaces.Constants.ENAME_SQL_ROOT, Interfaces.Constants.ANAME_ERRORFOUND)) != null)
                 outString.AppendLine("--WARNING! ERRORS ENCOUNTERED DURING PARSING!");
+            if (sqlTokenOrTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", Interfaces.Constants.ENAME_SQL_ROOT, Interfaces.Constants.ANAME_DATALOSS)) != null)
+                outString.AppendLine("--WARNING! SOME STRUCTURE COULD NOT BE PRESERVED! (formatted SQL will still be logically equivalent) ");
 
             XmlNodeList rootList = sqlTokenOrTreeDoc.SelectNodes(string.Format("/{0}/*", rootElement));
             bool breakExpected = false;

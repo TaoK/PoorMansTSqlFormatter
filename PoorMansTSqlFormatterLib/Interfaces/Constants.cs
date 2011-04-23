@@ -65,5 +65,6 @@ namespace PoorMansTSqlFormatterLib.Interfaces
 
         //attribute names
         public const string ANAME_ERRORFOUND = "errorFound";
+        public const string ANAME_DATALOSS = "dataLossLimitation";
     }
 }

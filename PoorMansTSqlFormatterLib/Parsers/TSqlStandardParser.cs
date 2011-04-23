@@ -22,6 +22,7 @@ using System;
 using System.Xml;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace PoorMansTSqlFormatterLib.Parsers
 {
@@ -29,9 +30,6 @@ namespace PoorMansTSqlFormatterLib.Parsers
     {
         /*
          * TODO:
-         *  - Implement Clauses within statements
-         *    - Handle compound terms better (BEGIN TRY, LEFT JOIN, etc)
-         *  - Handle SELECT as non-starter (inside INSERT section) 
          *  - support clauses in parens? (for derived tables)
          *    - UNION clauses get special formatting?
          *  
@@ -47,9 +45,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
             XmlDocument sqlTree = new XmlDocument();
             XmlElement firstStatement;
             XmlElement currentContainerNode;
-            SqlParsingState currentState;
-            StringBuilder inProgressTextValue = new StringBuilder();
             bool errorFound = false;
+            bool dataShufflingForced = false;
 
             if (tokenListDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", Interfaces.Constants.ENAME_SQLTOKENS_ROOT, Interfaces.Constants.ANAME_ERRORFOUND)) != null)
                 errorFound = true;
@@ -59,8 +56,6 @@ namespace PoorMansTSqlFormatterLib.Parsers
             currentContainerNode = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_CLAUSE);
             firstStatement.AppendChild(currentContainerNode);
             sqlTree.DocumentElement.AppendChild(firstStatement);
-            currentState = SqlParsingState.Default;
-            inProgressTextValue.Length = 0;
 
             XmlNodeList tokenList = tokenListDoc.SelectNodes(string.Format("/{0}/*", Interfaces.Constants.ENAME_SQLTOKENS_ROOT));
             int tokenCount = tokenList.Count;
@@ -69,129 +64,328 @@ namespace PoorMansTSqlFormatterLib.Parsers
             {
                 XmlElement token = (XmlElement)tokenList[tokenID];
 
-                XmlElement newElement = null;
-                XmlElement newElement2 = null;
-                XmlElement newElement3 = null;
-                XmlElement newElement4 = null;
-                string uppercaseContent = token.InnerText.ToUpper();
-                switch (currentState)
+                switch (token.Name)
                 {
-                    case SqlParsingState.Default:
-                        ProcessThisTokenNormally(sqlTree, ref currentContainerNode, ref currentState, inProgressTextValue, token, ref errorFound);
+                    case Interfaces.Constants.ENAME_PARENS_OPEN:
+                        currentContainerNode = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_PARENS, "", currentContainerNode);
                         break;
 
-                    case SqlParsingState.FoundBegin:
-                        if (token.Name.Equals(Interfaces.Constants.ENAME_WHITESPACE))
+                    case Interfaces.Constants.ENAME_PARENS_CLOSE:
+                        //check whether we expected to end the parens...
+                        if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_PARENS))
                         {
-                            inProgressTextValue.Append(token.InnerText);
-                        }
-                        else if (token.Name.Equals(Interfaces.Constants.ENAME_OTHERNODE) && uppercaseContent.Equals("TRY"))
-                        {
-                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
-                            inProgressTextValue.Append(token.InnerText);
-                            newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_TRY_BLOCK);
-                            newElement.AppendChild(sqlTree.CreateTextNode(inProgressTextValue.ToString()));
-                            currentContainerNode.AppendChild(newElement);
-                            newElement2 = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_STATEMENT);
-                            newElement.AppendChild(newElement2);
-                            newElement3 = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_CLAUSE);
-                            newElement2.AppendChild(newElement3);
-                            currentContainerNode = newElement3;
-                            currentState = SqlParsingState.Default;
-                        }
-                        else if (token.Name.Equals(Interfaces.Constants.ENAME_OTHERNODE) && uppercaseContent.Equals("TRANSACTION"))
-                        {
-                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
-                            inProgressTextValue.Append(token.InnerText);
-                            newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_BEGIN_TRANSACTION);
-                            newElement.AppendChild(sqlTree.CreateTextNode(inProgressTextValue.ToString()));
-                            currentContainerNode.AppendChild(newElement);
-                            currentState = SqlParsingState.Default;
+                            currentContainerNode = (XmlElement)currentContainerNode.ParentNode;
                         }
                         else
                         {
-                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
-                            newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_BEGIN_END_BLOCK);
-                            string beginAndWhiteSpace = inProgressTextValue.ToString();
-                            newElement.AppendChild(sqlTree.CreateTextNode(beginAndWhiteSpace.Substring(0, 5)));
-                            currentContainerNode.AppendChild(newElement);
-                            newElement2 = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_STATEMENT);
-                            newElement.AppendChild(newElement2);
-                            newElement3 = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_CLAUSE);
-                            newElement2.AppendChild(newElement3);
-                            currentContainerNode = newElement3;
-                            newElement4 = sqlTree.CreateElement(Interfaces.Constants.ENAME_WHITESPACE);
-                            newElement4.InnerText = beginAndWhiteSpace.Substring(5);
-                            currentContainerNode.AppendChild(newElement4);
-                            currentState = SqlParsingState.Default;
-                            ProcessThisTokenNormally(sqlTree, ref currentContainerNode, ref currentState, inProgressTextValue, token, ref errorFound);
+                            BackupTokenHandlingWithError(sqlTree, Interfaces.Constants.ENAME_OTHERNODE, ")", currentContainerNode, ref errorFound);
                         }
                         break;
 
-                    case SqlParsingState.FoundEnd:
-                        if (token.Name.Equals(Interfaces.Constants.ENAME_WHITESPACE))
+                    case Interfaces.Constants.ENAME_OTHERNODE:
+
+                        //prepare multi-keyword detection by "peeking" up to 4 keywords ahead
+                        List<List<XmlElement>> compoundKeywordOverflowNodes = null;
+                        List<int> compoundKeywordTokenCounts = null;
+                        List<string> compoundKeywordRawStrings = null;
+                        string keywordMatchPhrase = GetKeywordMatchPhrase(tokenList, tokenID, ref compoundKeywordRawStrings, ref compoundKeywordTokenCounts, ref compoundKeywordOverflowNodes);
+                        int keywordMatchStringsUsed = 0;
+
+                        if (keywordMatchPhrase.StartsWith("BEGIN TRANSACTION "))
                         {
-                            inProgressTextValue.Append(token.InnerText);
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            keywordMatchStringsUsed = 2;
+                            ProcessCompoundKeyword(sqlTree, Interfaces.Constants.ENAME_BEGIN_TRANSACTION, ref tokenID, currentContainerNode, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
                         }
-                        else if (token.Name.Equals(Interfaces.Constants.ENAME_OTHERNODE) && uppercaseContent.Equals("TRY"))
+                        else if (keywordMatchPhrase.StartsWith("BEGIN TRY "))
+                        {
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            keywordMatchStringsUsed = 2;
+                            XmlElement newTryBlock = ProcessCompoundKeyword(sqlTree, Interfaces.Constants.ENAME_TRY_BLOCK, ref tokenID, currentContainerNode, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
+                            currentContainerNode = StartNewStatement(sqlTree, newTryBlock);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("BEGIN CATCH "))
+                        {
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            keywordMatchStringsUsed = 2;
+                            XmlElement newCatchBlock = ProcessCompoundKeyword(sqlTree, Interfaces.Constants.ENAME_CATCH_BLOCK, ref tokenID, currentContainerNode, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
+                            currentContainerNode = StartNewStatement(sqlTree, newCatchBlock);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("BEGIN "))
+                        {
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            XmlElement newBeginBlock = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_BEGIN_END_BLOCK, token.InnerText, currentContainerNode);
+                            currentContainerNode = StartNewStatement(sqlTree, newBeginBlock);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("CASE "))
+                        {
+                            currentContainerNode = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_CASE_STATEMENT, token.InnerText, currentContainerNode);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("END TRY "))
                         {
                             EscapeAnySingleStatementContainers(ref currentContainerNode);
 
-                            //check whether we expected to end the block...
-                            inProgressTextValue.Append(token.InnerText);
+                            keywordMatchStringsUsed = 2;
+                            string keywordString = GetCompoundKeyword(ref tokenID, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
+
                             if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
                                 && currentContainerNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
                                 && currentContainerNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_TRY_BLOCK))
                             {
-                                currentContainerNode.ParentNode.ParentNode.AppendChild(sqlTree.CreateTextNode(inProgressTextValue.ToString()));
+                                currentContainerNode.ParentNode.ParentNode.AppendChild(sqlTree.CreateTextNode(keywordString));
                                 currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode;
                             }
                             else
                             {
-                                newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_OTHERNODE);
-                                newElement.InnerText = inProgressTextValue.ToString();
-                                currentContainerNode.AppendChild(newElement);
-#if DEBUG
-                                System.Diagnostics.Debugger.Break();
-#endif
-                                errorFound = true;
+                                BackupTokenHandlingWithError(sqlTree, Interfaces.Constants.ENAME_OTHERNODE, keywordString, currentContainerNode, ref errorFound);
                             }
-                            currentState = SqlParsingState.Default;
                         }
-                        else
+                        else if (keywordMatchPhrase.StartsWith("END CATCH "))
                         {
                             EscapeAnySingleStatementContainers(ref currentContainerNode);
 
-                            //check whether we expected to end the block...
+                            keywordMatchStringsUsed = 2;
+                            string keywordString = GetCompoundKeyword(ref tokenID, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
+
                             if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
                                 && currentContainerNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
-                                && currentContainerNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_BEGIN_END_BLOCK))
+                                && currentContainerNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_CATCH_BLOCK))
                             {
-                                string beginAndWhiteSpace = inProgressTextValue.ToString();
-                                currentContainerNode.ParentNode.ParentNode.AppendChild(sqlTree.CreateTextNode(beginAndWhiteSpace.Substring(0, 3)));
+                                currentContainerNode.ParentNode.ParentNode.AppendChild(sqlTree.CreateTextNode(keywordString));
                                 currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode;
-                                newElement3 = sqlTree.CreateElement(Interfaces.Constants.ENAME_WHITESPACE);
-                                newElement3.InnerText = beginAndWhiteSpace.Substring(3);
-                                currentContainerNode.AppendChild(newElement3);
                             }
                             else
                             {
-                                newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_OTHERNODE);
-                                newElement.InnerText = inProgressTextValue.ToString();
-                                currentContainerNode.AppendChild(newElement);
-#if DEBUG
-                                System.Diagnostics.Debugger.Break();
-#endif
-                                errorFound = true;
+                                BackupTokenHandlingWithError(sqlTree, Interfaces.Constants.ENAME_OTHERNODE, keywordString, currentContainerNode, ref errorFound);
                             }
-                            currentState = SqlParsingState.Default;
-                            ProcessThisTokenNormally(sqlTree, ref currentContainerNode, ref currentState, inProgressTextValue, token, ref errorFound);
                         }
+                        else if (keywordMatchPhrase.StartsWith("END "))
+                        {
+                            if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_CASE_STATEMENT))
+                            {
+                                currentContainerNode.AppendChild(sqlTree.CreateTextNode(token.InnerText));
+                                currentContainerNode = (XmlElement)currentContainerNode.ParentNode;
+                            }
+                            else
+                            {
+                                //Begin/End block handling
+                                EscapeAnySingleStatementContainers(ref currentContainerNode);
+
+                                if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
+                                    && currentContainerNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
+                                    && currentContainerNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_BEGIN_END_BLOCK))
+                                {
+                                    currentContainerNode.ParentNode.ParentNode.AppendChild(sqlTree.CreateTextNode(token.InnerText));
+                                    currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode;
+                                }
+                                else
+                                {
+                                    BackupTokenHandlingWithError(sqlTree, Interfaces.Constants.ENAME_OTHERNODE, token.InnerText, currentContainerNode, ref errorFound);
+                                }
+                            }
+                        }
+                        else if (keywordMatchPhrase.StartsWith("GO "))
+                        {
+                            EscapeAnySingleStatementContainers(ref currentContainerNode);
+
+                            //this looks a little simplistic... might need to review.
+                            if ((token.PreviousSibling == null || IsLineBreakingWhiteSpace((XmlElement)token.PreviousSibling))
+                                && (token.NextSibling == null || IsLineBreakingWhiteSpace((XmlElement)token.NextSibling))
+                                )
+                            {
+                                // we found a batch separator - were we supposed to?
+                                if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
+                                    && currentContainerNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
+                                    && currentContainerNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_ROOT)
+                                    )
+                                {
+                                    XmlElement sqlRoot = (XmlElement)currentContainerNode.ParentNode.ParentNode;
+                                    StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_BATCH_SEPARATOR, token.InnerText, sqlRoot);
+                                    currentContainerNode = StartNewStatement(sqlTree, sqlRoot);
+                                }
+                                else
+                                {
+                                    BackupTokenHandlingWithError(sqlTree, token.Name, token.InnerText, currentContainerNode, ref errorFound);
+                                }
+                            }
+                            else
+                            {
+                                StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                            }
+                        }
+                        else if (keywordMatchPhrase.StartsWith("JOIN "))
+                        {
+                            ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
+                            StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("LEFT JOIN ")
+                            || keywordMatchPhrase.StartsWith("RIGHT JOIN ")
+                            || keywordMatchPhrase.StartsWith("INNER JOIN ")
+                            || keywordMatchPhrase.StartsWith("CROSS JOIN ")
+                            )
+                        {
+                            ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
+                            keywordMatchStringsUsed = 2;
+                            string keywordString = GetCompoundKeyword(ref tokenID, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
+                            StandardTokenHandling(sqlTree, token.Name, keywordString, currentContainerNode);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("FULL OUTER JOIN ")
+                            || keywordMatchPhrase.StartsWith("LEFT OUTER JOIN ")
+                            || keywordMatchPhrase.StartsWith("RIGHT OUTER JOIN ")
+                            )
+                        {
+                            ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
+                            keywordMatchStringsUsed = 3;
+                            string keywordString = GetCompoundKeyword(ref tokenID, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
+                            StandardTokenHandling(sqlTree, token.Name, keywordString, currentContainerNode);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("WHILE "))
+                        {
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            XmlElement newWhileLoop = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_WHILE_LOOP, token.InnerText, currentContainerNode);
+                            currentContainerNode = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION, "", newWhileLoop);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("IF "))
+                        {
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            XmlElement newIfStatement = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_IF_STATEMENT, token.InnerText, currentContainerNode);
+                            currentContainerNode = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION, "", newIfStatement);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("ELSE "))
+                        {
+                            if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_CASE_STATEMENT))
+                            {
+                                //we don't really do anything with case statement structure yet
+                                StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                            }
+                            else if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
+                                    && currentContainerNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
+                                    && currentContainerNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_IF_STATEMENT))
+                            {
+                                //topmost if - just pop back one.
+                                XmlElement containerIf = (XmlElement)currentContainerNode.ParentNode.ParentNode;
+                                XmlElement newElseClause = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_ELSE_CLAUSE, token.InnerText, containerIf);
+                                currentContainerNode = StartNewStatement(sqlTree, newElseClause);
+                            }
+                            else if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
+                                    && currentContainerNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
+                                    && currentContainerNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_ELSE_CLAUSE)
+                                    && currentContainerNode.ParentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_IF_STATEMENT)
+                                )
+                            {
+                                //not topmost if; we need to pop up the single-statement containers stack to the next "if" that doesn't have an "else".
+                                XmlElement currentNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode;
+                                while (currentNode != null
+                                    && (currentNode.Name.Equals(Interfaces.Constants.ENAME_WHILE_LOOP)
+                                        || currentNode.SelectSingleNode(Interfaces.Constants.ENAME_ELSE_CLAUSE) != null
+                                        )
+                                    )
+                                {
+                                    if (currentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
+                                        && currentNode.ParentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_IF_STATEMENT)
+                                        )
+                                        currentNode = (XmlElement)currentNode.ParentNode.ParentNode.ParentNode;
+                                    else if (currentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
+                                        && currentNode.ParentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_WHILE_LOOP)
+                                        )
+                                        currentNode = (XmlElement)currentNode.ParentNode.ParentNode.ParentNode;
+                                    else if (currentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
+                                        && currentNode.ParentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_ELSE_CLAUSE)
+                                        && currentNode.ParentNode.ParentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_IF_STATEMENT)
+                                        )
+                                        currentNode = (XmlElement)currentNode.ParentNode.ParentNode.ParentNode.ParentNode;
+                                    else
+                                        currentNode = null;
+                                }
+
+                                if (currentNode != null)
+                                {
+                                    XmlElement newElseClause2 = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_ELSE_CLAUSE, token.InnerText, currentNode);
+                                    currentContainerNode = StartNewStatement(sqlTree, newElseClause2);
+                                }
+                                else
+                                {
+                                    BackupTokenHandlingWithError(sqlTree, token.Name, token.InnerText, currentContainerNode, ref errorFound);
+                                }
+                            }
+                            else
+                            {
+                                BackupTokenHandlingWithError(sqlTree, token.Name, token.InnerText, currentContainerNode, ref errorFound);
+                            }
+                        }
+                        else if (keywordMatchPhrase.StartsWith("INSERT INTO "))
+                        {
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
+                            keywordMatchStringsUsed = 2;
+                            string keywordString = GetCompoundKeyword(ref tokenID, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
+                            StandardTokenHandling(sqlTree, token.Name, keywordString, currentContainerNode);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("INSERT "))
+                        {
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
+                            StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("SELECT "))
+                        {
+                            if (!(
+                                    currentContainerNode.FirstChild.Name.Equals(Interfaces.Constants.ENAME_OTHERNODE)
+                                    && currentContainerNode.FirstChild.InnerText.ToUpper().StartsWith("INSERT")
+                                    )
+                                )
+                                ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+
+                            ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
+                            StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                        }
+                        else
+                        {
+                            //miscellaneous single-word tokens, which may or may not be statement starters and/or clause starters
+
+                            //check for statements starting...
+                            if (IsStatementStarter(token))
+                            {
+                                ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            }
+
+                            //check for statements starting...
+                            if (IsClauseStarter(token))
+                            {
+                                ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
+                            }
+
+                            StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                        }
+
+                        //handle any Overflow Nodes
+                        if (keywordMatchStringsUsed > 1)
+                        {
+                            for (int i = 0; i < keywordMatchStringsUsed - 1; i++)
+                            {
+                                foreach (XmlElement overflowEntry in compoundKeywordOverflowNodes[i])
+                                {
+                                    currentContainerNode.AppendChild(overflowEntry);
+                                    dataShufflingForced = true;
+                                }
+                            }
+                        }
+
                         break;
 
+                    case Interfaces.Constants.ENAME_ASTERISK:
+                    case Interfaces.Constants.ENAME_COMMA:
+                    case Interfaces.Constants.ENAME_COMMENT_MULTILINE:
+                    case Interfaces.Constants.ENAME_COMMENT_SINGLELINE:
+                    case Interfaces.Constants.ENAME_NSTRING:
+                    case Interfaces.Constants.ENAME_OTHEROPERATOR:
+                    case Interfaces.Constants.ENAME_QUOTED_IDENTIFIER:
+                    case Interfaces.Constants.ENAME_STRING:
+                    case Interfaces.Constants.ENAME_WHITESPACE:
+                        StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                        break;
                     default:
-                        throw new Exception("Invalid Parsing State encountered!");
-
+                        throw new Exception("Unrecognized element encountered!");
                 }
 
                 tokenID++;
@@ -209,272 +403,98 @@ namespace PoorMansTSqlFormatterLib.Parsers
                 sqlTree.DocumentElement.SetAttribute(Interfaces.Constants.ANAME_ERRORFOUND, "1");
             }
 
+            if (dataShufflingForced)
+            {
+                sqlTree.DocumentElement.SetAttribute(Interfaces.Constants.ANAME_DATALOSS, "1");
+            }
+
             return sqlTree;
         }
 
-        private static void ProcessThisTokenNormally(XmlDocument sqlTree, ref XmlElement currentContainerNode, ref SqlParsingState currentState, StringBuilder currentValue, XmlElement token, ref bool errorFound)
+        private string GetKeywordMatchPhrase(XmlNodeList tokenList, int tokenID, ref List<string> rawKeywordParts, ref List<int> tokenCounts, ref List<List<XmlElement>> overflowNodes)
         {
-            XmlElement newElement = null;
-            XmlElement newElement2 = null;
-            XmlElement newElement3 = null;
-            switch (token.Name)
+            string phrase = "";
+            int phraseComponentsFound = 0;
+            rawKeywordParts = new List<string>();
+            overflowNodes = new List<List<XmlElement>>();
+            tokenCounts = new List<int>();
+            string precedingWhitespace = "";
+            int originalTokenID = tokenID;
+
+            while (tokenID < tokenList.Count && phraseComponentsFound < 3)
             {
-                case Interfaces.Constants.ENAME_PARENS_OPEN:
-                    newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_PARENS);
-                    currentContainerNode.AppendChild(newElement);
-                    currentContainerNode = newElement;
-                    break;
+                if (tokenList[tokenID].Name.Equals(Interfaces.Constants.ENAME_OTHERNODE))
+                {
+                    phrase += tokenList[tokenID].InnerText.ToUpper() + " ";
+                    phraseComponentsFound++;
+                    rawKeywordParts.Add(precedingWhitespace + tokenList[tokenID].InnerText);
 
-                case Interfaces.Constants.ENAME_PARENS_CLOSE:
-                    //check whether we expected to end the parens...
-                    if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_PARENS))
-                    {
-                        currentContainerNode = (XmlElement)currentContainerNode.ParentNode;
-                    }
-                    else
-                    {
-                        newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_OTHERNODE);
-                        newElement.InnerText = ")";
-                        currentContainerNode.AppendChild(newElement);
-#if DEBUG
-                        System.Diagnostics.Debugger.Break();
-#endif
-                        errorFound = true;
-                    }
-                    break;
+                    tokenID++;
+                    tokenCounts.Add(tokenID - originalTokenID);
 
-                case Interfaces.Constants.ENAME_OTHERNODE:
-                    if (token.InnerText.ToUpper().Equals("BEGIN"))
-                    {
-                        currentState = SqlParsingState.FoundBegin;
-                        currentValue.Length = 0;
-                        currentValue.Append(token.InnerText);
-                    }
-                    else if (token.InnerText.ToUpper().Equals("CASE"))
-                    {
-                        newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_CASE_STATEMENT);
-                        newElement.InnerText = token.InnerText;
-                        currentContainerNode.AppendChild(newElement);
-                        currentContainerNode = newElement;
-                    }
-                    else if (token.InnerText.ToUpper().Equals("END"))
-                    {
-                        if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_CASE_STATEMENT))
-                        {
-                            currentContainerNode.AppendChild(sqlTree.CreateTextNode(token.InnerText));
-                            currentContainerNode = (XmlElement)currentContainerNode.ParentNode;
-                        }
-                        else
-                        {
-                            currentState = SqlParsingState.FoundEnd;
-                            currentValue.Length = 0;
-                            currentValue.Append(token.InnerText);
-                        }
-                    }
-                    else if (token.InnerText.ToUpper().Equals("GO"))
-                    {
-                        EscapeAnySingleStatementContainers(ref currentContainerNode);
-
-                        //this looks a little simplistic... might need to review.
-                        if ((token.PreviousSibling == null || IsLineBreakingWhiteSpace((XmlElement)token.PreviousSibling))
-                            && (token.NextSibling == null || IsLineBreakingWhiteSpace((XmlElement)token.NextSibling))
+                    //found a possible phrase component - skip past any upcoming whitespace or comments, keeping track.
+                    overflowNodes.Add(new List<XmlElement>());
+                    precedingWhitespace = "";
+                    while (tokenID < tokenList.Count
+                        && (tokenList[tokenID].Name.Equals(Interfaces.Constants.ENAME_WHITESPACE)
+                            || tokenList[tokenID].Name.Equals(Interfaces.Constants.ENAME_COMMENT_SINGLELINE)
+                            || tokenList[tokenID].Name.Equals(Interfaces.Constants.ENAME_COMMENT_MULTILINE)
                             )
-                        {
-                            // we found a batch separator - were we supposed to?
-                            if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
-                                && currentContainerNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
-                                && currentContainerNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_ROOT)
-                                )
-                            {
-                                newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_BATCH_SEPARATOR);
-                                newElement.InnerText = token.InnerText;
-                                currentContainerNode.ParentNode.ParentNode.AppendChild(newElement);
-
-                                newElement2 = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_STATEMENT);
-                                currentContainerNode.ParentNode.ParentNode.AppendChild(newElement2);
-
-                                newElement3 = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_CLAUSE);
-                                newElement2.AppendChild(newElement3);
-
-                                currentContainerNode = newElement3;
-                            }
-                            else
-                            {
-                                newElement = (XmlElement)sqlTree.ImportNode(token, true);
-                                currentContainerNode.AppendChild(newElement);
-#if DEBUG
-                                System.Diagnostics.Debugger.Break();
-#endif
-                                errorFound = true;
-                            }
-                        }
-                        else
-                        {
-                            newElement = (XmlElement)sqlTree.ImportNode(token, true);
-                            currentContainerNode.AppendChild(newElement);
-                        }
-                    }
-                    else if (token.InnerText.ToUpper().Equals("WHILE"))
-                    {
-                        ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
-                        newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_WHILE_LOOP);
-                        newElement.InnerText = token.InnerText;
-                        currentContainerNode.AppendChild(newElement);
-                        newElement2 = sqlTree.CreateElement(Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION);
-                        newElement.AppendChild(newElement2);
-                        currentContainerNode = newElement2;
-                    }
-                    /*
-                    else if (token.InnerText.ToUpper().Equals("JOIN")
-                        || token.InnerText.ToUpper().Equals("FULL")
-                        || token.InnerText.ToUpper().Equals("LEFT")
-                        || token.InnerText.ToUpper().Equals("RIGHT")
-                        || token.InnerText.ToUpper().Equals("INNER")
-                        || token.InnerText.ToUpper().Equals("CROSS")
                         )
                     {
-                        ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
-                        newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_WHILE_LOOP);
-                        newElement.InnerText = token.InnerText;
-                        currentContainerNode.AppendChild(newElement);
-                        newElement2 = sqlTree.CreateElement(Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION);
-                        newElement.AppendChild(newElement2);
-                        currentContainerNode = newElement2;
-                    }
-                    */
-                    else if (token.InnerText.ToUpper().Equals("IF"))
-                    {
-                        ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
-                        newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_IF_STATEMENT);
-                        newElement.InnerText = token.InnerText;
-                        currentContainerNode.AppendChild(newElement);
-                        newElement2 = sqlTree.CreateElement(Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION);
-                        newElement.AppendChild(newElement2);
-                        currentContainerNode = newElement2;
-                    }
-                    else if (token.InnerText.ToUpper().Equals("ELSE"))
-                    {
-                        if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_CASE_STATEMENT))
+                        if (tokenList[tokenID].Name.Equals(Interfaces.Constants.ENAME_WHITESPACE))
                         {
-                            //we don't really do anything with case statement structure yet
-                            newElement = (XmlElement)sqlTree.ImportNode(token, true);
-                            currentContainerNode.AppendChild(newElement);
-                        }
-                        else if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
-                                && currentContainerNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
-                                && currentContainerNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_IF_STATEMENT))
-                        {
-                            //topmost if - just pop back one.
-                            newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_ELSE_CLAUSE);
-                            newElement.InnerText = token.InnerText;
-                            currentContainerNode.ParentNode.ParentNode.AppendChild(newElement);
-
-                            newElement2 = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_STATEMENT);
-                            newElement.AppendChild(newElement2);
-
-                            newElement3 = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_CLAUSE);
-                            newElement2.AppendChild(newElement3);
-
-                            currentContainerNode = newElement3;
-                        }
-                        else if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
-                                && currentContainerNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
-                                && currentContainerNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_ELSE_CLAUSE)
-                                && currentContainerNode.ParentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_IF_STATEMENT)
-                            )
-                        {
-                            //not topmost if; we need to pop up the single-statement containers stack to the next "if" that doesn't have an "else".
-                            XmlElement currentNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode;
-                            while (currentNode != null 
-                                && (currentNode.Name.Equals(Interfaces.Constants.ENAME_WHILE_LOOP)
-                                    || currentNode.SelectSingleNode(Interfaces.Constants.ENAME_ELSE_CLAUSE) != null
-                                    )
-                                )
-                            {
-                                if (currentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
-                                    && currentNode.ParentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_IF_STATEMENT)
-                                    )
-                                    currentNode = (XmlElement)currentNode.ParentNode.ParentNode.ParentNode;
-                                else if (currentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
-                                    && currentNode.ParentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_WHILE_LOOP)
-                                    )
-                                    currentNode = (XmlElement)currentNode.ParentNode.ParentNode.ParentNode;
-                                else if (currentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
-                                    && currentNode.ParentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_ELSE_CLAUSE)
-                                    && currentNode.ParentNode.ParentNode.ParentNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_IF_STATEMENT)
-                                    )
-                                    currentNode = (XmlElement)currentNode.ParentNode.ParentNode.ParentNode.ParentNode;
-                                else
-                                    currentNode = null;
-                            }
-
-                            if (currentNode != null)
-                            {
-                                //found the next available if!
-                                newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_ELSE_CLAUSE);
-                                newElement.InnerText = token.InnerText;
-                                currentNode.AppendChild(newElement);
-
-                                newElement2 = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_STATEMENT);
-                                newElement.AppendChild(newElement2);
-
-                                newElement3 = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_CLAUSE);
-                                newElement2.AppendChild(newElement3);
-
-                                currentContainerNode = newElement3;
-                            }
-                            else
-                            {
-                                newElement = (XmlElement)sqlTree.ImportNode(token, true);
-                                currentContainerNode.AppendChild(newElement);
-#if DEBUG
-                                System.Diagnostics.Debugger.Break();
-#endif
-                                errorFound = true;
-                            }
+                            precedingWhitespace += tokenList[tokenID].InnerText;
                         }
                         else
                         {
-                            newElement = (XmlElement)sqlTree.ImportNode(token, true);
-                            currentContainerNode.AppendChild(newElement);
-#if DEBUG
-                            System.Diagnostics.Debugger.Break();
-#endif
-                            errorFound = true;
+                            overflowNodes[phraseComponentsFound-1].Add((XmlElement)tokenList[tokenID]);
                         }
+                        tokenID++;
                     }
-                    else
-                    {
-                        //check for statements starting...
-                        if (IsStatementStarter(token))
-                        {
-                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
-                        }
-                        //check for statements starting...
-                        if (IsClauseStarter(token))
-                        {
-                            ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
-                        }
-                        newElement = (XmlElement)sqlTree.ImportNode(token, true);
-                        currentContainerNode.AppendChild(newElement);
-                    }
+                }
+                else
+                    //we're not interested in any other node types
                     break;
-
-                case Interfaces.Constants.ENAME_ASTERISK:
-                case Interfaces.Constants.ENAME_COMMA:
-                case Interfaces.Constants.ENAME_COMMENT_MULTILINE:
-                case Interfaces.Constants.ENAME_COMMENT_SINGLELINE:
-                case Interfaces.Constants.ENAME_NSTRING:
-                case Interfaces.Constants.ENAME_OTHEROPERATOR:
-                case Interfaces.Constants.ENAME_QUOTED_IDENTIFIER:
-                case Interfaces.Constants.ENAME_STRING:
-                case Interfaces.Constants.ENAME_WHITESPACE:
-                    newElement = (XmlElement)sqlTree.ImportNode(token, true);
-                    currentContainerNode.AppendChild(newElement);
-                    break;
-                default:
-                    throw new Exception("Unrecognized element encountered!");
             }
+
+            return phrase;
+        }
+
+        private XmlElement StandardTokenHandling(XmlDocument sqlTree, string newElementName, string newElementValue, XmlElement currentContainerNode)
+        {
+            XmlElement newElement = sqlTree.CreateElement(newElementName);
+            newElement.InnerText = newElementValue;
+            currentContainerNode.AppendChild(newElement);
+            return newElement;
+        }
+
+        private void BackupTokenHandlingWithError(XmlDocument sqlTree, string newElementName, string newElementValue, XmlElement currentContainerNode, ref bool errorFound)
+        {
+            XmlElement newElement = sqlTree.CreateElement(newElementName);
+            newElement.InnerText = newElementValue;
+            currentContainerNode.AppendChild(newElement);
+#if DEBUG
+            System.Diagnostics.Debugger.Break();
+#endif
+            errorFound = true;
+        }
+
+        private XmlElement ProcessCompoundKeyword(XmlDocument sqlTree, string newElementName, ref int tokenID, XmlElement currentContainerNode, int compoundKeywordCount, List<int> compoundKeywordTokenCounts, List<string> compoundKeywordRawStrings)
+        {
+            tokenID += compoundKeywordTokenCounts[compoundKeywordCount-1] - 1;
+            XmlElement newElement = sqlTree.CreateElement(newElementName);
+            currentContainerNode.AppendChild(newElement);
+            return newElement;
+        }
+
+        private string GetCompoundKeyword(ref int tokenID, int compoundKeywordCount, List<int> compoundKeywordTokenCounts, List<string> compoundKeywordRawStrings)
+        {
+            tokenID += compoundKeywordTokenCounts[compoundKeywordCount - 1] - 1;
+            string outString = "";
+            for (int i = 0; i < compoundKeywordCount; i++)
+                outString += compoundKeywordRawStrings[i];
+            return outString;
         }
 
         private static void ConsiderStartingNewStatement(XmlDocument sqlTree, ref XmlElement currentContainerNode)
@@ -515,6 +535,15 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     MigrateApplicableComments(inBetweenContainerElement, currentContainerNode);
                 MigrateApplicableComments(previousContainerElement, currentContainerNode);
             }
+        }
+
+        private XmlElement StartNewStatement(XmlDocument sqlTree, XmlElement containerElement)
+        {
+            XmlElement newStatement = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_STATEMENT);
+            containerElement.AppendChild(newStatement);
+            XmlElement newClause = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_CLAUSE);
+            newStatement.AppendChild(newClause);
+            return newClause;
         }
 
         private static void ConsiderStartingNewClause(XmlDocument sqlTree, ref XmlElement currentContainerNode)
@@ -660,6 +689,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     || uppercaseValue.Equals("INTO")
                     || uppercaseValue.Equals("SELECT")
                     || uppercaseValue.Equals("UNION")
+                    || uppercaseValue.Equals("VALUES")
                     )
                 );
         }
@@ -682,16 +712,6 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     return true;
 
             return false;
-        }
-
-        public enum SqlParsingState
-        {
-            Default,
-            FoundBegin,
-            FoundEnd,
-            FoundLeft,
-            FoundRight,
-            FoundInner,
         }
     }
 }
