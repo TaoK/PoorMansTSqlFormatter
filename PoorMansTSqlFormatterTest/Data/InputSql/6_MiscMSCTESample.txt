@@ -1,0 +1,23 @@
+﻿--random sample from msdn library: http://msdn.microsoft.com/en-us/library/bb630263.aspx
+WITH paths(path, EmployeeID) 
+AS (
+-- This section provides the value for the root of the hierarchy
+SELECT hierarchyid::GetRoot() AS OrgNode, EmployeeID 
+FROM #Children AS C 
+WHERE ManagerID IS NULL 
+
+UNION ALL 
+-- This section provides values for all nodes except the root
+SELECT 
+CAST(p.path.ToString() + CAST(C.Num AS varchar(30)) + '/' AS hierarchyid), 
+C.EmployeeID
+FROM #Children AS C 
+JOIN paths AS p 
+   ON C.ManagerID = P.EmployeeID 
+)
+INSERT NewOrg (OrgNode, O.EmployeeID, O.LoginID, O.ManagerID)
+SELECT P.path, O.EmployeeID, O.LoginID, O.ManagerID
+FROM EmployeeDemo AS O 
+JOIN Paths AS P 
+   ON O.EmployeeID = P.EmployeeID
+GO

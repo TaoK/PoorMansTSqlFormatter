@@ -5,8 +5,14 @@ This is a small free .Net 2.0 library (with demo program) for reformatting T-SQL
 
 Features:
  - Simple Xml-based parse tree
+ 
  - Extensible, with possibility of supporting other SQL dialects (but none implemented)
+ 
  - Configurable according to SQL formatting preferences
+ 
+ - Handles "procedural" T-SQL; this is not just a SQL statement formatter, but it also 
+    formats entire batches, and multi-batch scripts.
+
 
 Limitations:
  - This is NOT a full SQL-parsing solution: only "coarse" parsing is performed, the 
@@ -25,6 +31,8 @@ Limitations:
     comment in this case will be moved to after the compound keyword. (such issues
 	are flagged in the formatted SQL)
 
+ - DDL parsing and formatting is VERY coarse, the bare minimum to display ordered
+    table column and procedure parameter declarations.
 	
 Known Issues / Todo:
  - Handle indented selects
@@ -33,6 +41,7 @@ Known Issues / Todo:
  - CASE statement structure handling (for breaking/indenting)
  - Comma-delimited list handling (for breaking/indenting)
  - Logical Operator handling (for breaking/indenting)
+ - Handle "exotic" keywords from SQL 2005 on (common table expressions, etc)
  - Keyword Capitalization
  - Options in standard formatter and demo
  - HTML output (color highlighting)

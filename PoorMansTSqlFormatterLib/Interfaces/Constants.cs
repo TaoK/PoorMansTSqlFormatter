@@ -47,7 +47,6 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_SQL_ROOT = "SqlRoot";
         public const string ENAME_SQL_STATEMENT = "SqlStatement";
         public const string ENAME_SQL_CLAUSE = "Clause";
-        public const string ENAME_PARENS = "Parens";
         public const string ENAME_BEGIN_END_BLOCK = "BeginEndBlock";
         public const string ENAME_TRY_BLOCK = "TryBlock";
         public const string ENAME_BEGIN_TRANSACTION = "BeginTransaction";
@@ -57,11 +56,15 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_ELSE_CLAUSE = "ElseClause";
         public const string ENAME_BOOLEAN_EXPRESSION = "BooleanExpression";
         public const string ENAME_WHILE_LOOP = "WhileLoop";
-
-        //not yet implemented:
         public const string ENAME_CATCH_BLOCK = "CatchBlock";
         public const string ENAME_COMMIT_TRANSACTION = "CommitTransaction";
         public const string ENAME_ROLLBACK_TRANSACTION = "RollbackTransaction";
+        public const string ENAME_DDL_BLOCK = "DDLBlock";
+        public const string ENAME_DDL_AS_BLOCK = "DDLAsBlock";
+        public const string ENAME_DDL_PARENS = "DDLParens";
+        public const string ENAME_DDLDETAIL_PARENS = "DDLDetailParens";
+        public const string ENAME_EXPRESSION_PARENS = "ExpressionParens";
+        public const string ENAME_FUNCTION_PARENS = "FunctionParens";
 
         //attribute names
         public const string ANAME_ERRORFOUND = "errorFound";

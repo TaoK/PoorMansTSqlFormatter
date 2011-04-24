@@ -57,10 +57,24 @@ namespace PoorMansTSqlFormatterDemo
             DoFormatting();
         }
 
+        private void chk_ExpandParens_CheckedChanged(object sender, EventArgs e)
+        {
+            SetFormatter();
+            DoFormatting();
+        }
+
+        private void chk_TrailingCommas_CheckedChanged(object sender, EventArgs e)
+        {
+            SetFormatter();
+            DoFormatting();
+        }
+
         private void SetFormatter()
         {
             if (radio_Formatting_Standard.Checked)
-                _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter();
+            {
+                _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", chk_ExpandCommaLists.Checked, chk_TrailingCommas.Checked);
+            }
             else
                 _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter();
         }

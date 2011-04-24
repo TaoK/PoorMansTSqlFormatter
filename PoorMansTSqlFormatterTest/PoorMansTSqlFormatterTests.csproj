@@ -48,6 +48,7 @@
     <Content Include="Data\InputSql\3_MSSample.txt" />
     <Content Include="Data\InputSql\4_MiscProceduralSample.txt" />
     <Content Include="Data\InputSql\5_ComplexDDL.txt" />
+    <Content Include="Data\InputSql\6_MiscMSCTESample.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">

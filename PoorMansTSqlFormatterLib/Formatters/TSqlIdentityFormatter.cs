@@ -63,10 +63,14 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.Constants.ENAME_SQL_STATEMENT:
                 case Interfaces.Constants.ENAME_SQL_CLAUSE:
                 case Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION:
+                case Interfaces.Constants.ENAME_DDL_BLOCK:
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"));
                     break;
 
-                case Interfaces.Constants.ENAME_PARENS:
+                case Interfaces.Constants.ENAME_DDLDETAIL_PARENS:
+                case Interfaces.Constants.ENAME_DDL_PARENS:
+                case Interfaces.Constants.ENAME_FUNCTION_PARENS:
+                case Interfaces.Constants.ENAME_EXPRESSION_PARENS:
                     outString.Append("(");
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"));
                     outString.Append(")");
@@ -78,6 +82,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.Constants.ENAME_IF_STATEMENT:
                 case Interfaces.Constants.ENAME_ELSE_CLAUSE:
                 case Interfaces.Constants.ENAME_WHILE_LOOP:
+                case Interfaces.Constants.ENAME_DDL_AS_BLOCK:
                     foreach (XmlNode childNode in contentElement.ChildNodes)
                     {
                         switch (childNode.NodeType)
@@ -89,7 +94,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                                 ProcessSqlNode(outString, (XmlElement)childNode);
                                 break;
                             case XmlNodeType.Comment:
-                                //ignore
+                                //ignore; actual displayable T-SQL comments are elements.
                                 break;
                             default:
                                 throw new Exception("Unexpected xml node type encountered!");

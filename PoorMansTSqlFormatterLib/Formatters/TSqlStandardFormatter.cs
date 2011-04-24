@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace PoorMansTSqlFormatterLib.Formatters
@@ -28,7 +29,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
     {
         /*
          * TODO:
-         *  - Handle clauses (when implemented)
+         *  - UNION clauses get special formatting?
          *  - Handle line breaking and indenting on complex logical expressions (AND/OR)
          *  - Handle line breaking and indenting on comma-lists (params, select clauses etc)
          *  - Implement keyword casing
@@ -37,6 +38,19 @@ namespace PoorMansTSqlFormatterLib.Formatters
          *  - Provide preference option for keyword casing (uppercase/lowercase/titlecase)?
          *  - Handle preferred max width, option and implementation
          */
+
+        public TSqlStandardFormatter() : this("\t", false, false) {}
+
+        public TSqlStandardFormatter(string indentString, bool expandCommaLists, bool trailingCommas)
+        {
+            IndentString = indentString;
+            ExpandCommaLists = expandCommaLists;
+            TrailingCommas = trailingCommas;
+        }
+
+        public string IndentString { get; set; }
+        public bool ExpandCommaLists { get; set; }
+        public bool TrailingCommas { get; set; }
 
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
@@ -90,17 +104,47 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     breakExpected = true;
                     break;
 
+                case Interfaces.Constants.ENAME_DDL_BLOCK:
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
+                    break;
+
+                case Interfaces.Constants.ENAME_DDL_AS_BLOCK:
+                    //newline regardless of whether previous element recommended a break or not.
+                    outString.Append(Environment.NewLine);
+                    outString.Append("AS");
+                    outString.Append(Environment.NewLine);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
+                    break;
+
                 case Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
                     breakExpected = true;
                     break;
 
-                case Interfaces.Constants.ENAME_PARENS:
-                    WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
+                case Interfaces.Constants.ENAME_DDLDETAIL_PARENS:
+                case Interfaces.Constants.ENAME_FUNCTION_PARENS:
+                    //simply process sub-nodes - don't expect any linebreaks
                     outString.Append("(");
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected);
-                    WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel, ref breakExpected);
+                    outString.Append(")");
+                    break;
+
+                case Interfaces.Constants.ENAME_DDL_PARENS:
+                case Interfaces.Constants.ENAME_EXPRESSION_PARENS:
+                    WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
+                    outString.Append("(");
+                    StringBuilder innerStringBuilder = new StringBuilder();
+                    ProcessSqlNodeList(innerStringBuilder, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected);
+                    string innerString = innerStringBuilder.ToString();
+                    outString.Append(innerString);
+
+                    //if there was a linebreak in the parens content, then force the closing paren onto a new line. Otherwise, follow standard
+                    if (Regex.IsMatch(innerString, @"(\r|\n)+"))
+                        WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel + 1, ref breakExpected);
+                    else
+                        WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel + 1, ref breakExpected);
+
                     outString.Append(")");
                     break;
 
@@ -236,9 +280,33 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case Interfaces.Constants.ENAME_COMMA:
-                    WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel, ref breakExpected);
-                    outString.Append(",");
+
+                    if (TrailingCommas)
+                    {
+                        outString.Append(",");
+
+                        if (ExpandCommaLists
+                            && !(contentElement.ParentNode.Name.Equals(Interfaces.Constants.ENAME_DDLDETAIL_PARENS)
+                                || contentElement.ParentNode.Name.Equals(Interfaces.Constants.ENAME_FUNCTION_PARENS)
+                                )
+                            )
+                            breakExpected = true;
+                    }
+                    else
+                    {
+                        if (ExpandCommaLists
+                            && !(contentElement.ParentNode.Name.Equals(Interfaces.Constants.ENAME_DDLDETAIL_PARENS)
+                                || contentElement.ParentNode.Name.Equals(Interfaces.Constants.ENAME_FUNCTION_PARENS)
+                                )
+                            )
+                            WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel, ref breakExpected);
+                        else
+                            WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel, ref breakExpected);
+
+                        outString.Append(",");
+                    }
                     break;
+
                 case Interfaces.Constants.ENAME_ASTERISK:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append("*");
@@ -263,7 +331,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             {
                 outString.Append(Environment.NewLine);
                 outString.Append(Environment.NewLine);
-                outString.Append(Indent(indentLevel));
+                Indent(outString, indentLevel);
                 breakExpected = false;
             }
         }
@@ -273,7 +341,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (breakExpected)
             {
                 outString.Append(Environment.NewLine);
-                outString.Append(Indent(indentLevel));
+                Indent(outString, indentLevel);
                 breakExpected = false;
             }
         }
@@ -295,18 +363,16 @@ namespace PoorMansTSqlFormatterLib.Formatters
         private void WhiteSpace_BreakToNextLine(XmlElement contentElement, StringBuilder outString, int indentLevel, ref bool breakExpected)
         {
             outString.Append(Environment.NewLine);
-            outString.Append(Indent(indentLevel));
+            Indent(outString, indentLevel);
             breakExpected = false;
         }
 
-        private string Indent(int indentLevel)
+        private void Indent(StringBuilder outString, int indentLevel)
         {
-            char[] indentedArray = new char[indentLevel];
             for (int i = 0; i < indentLevel; i++)
             {
-                indentedArray[i] = '\t';
+                outString.Append(IndentString);
             }
-            return new string(indentedArray);
         }
 
         private static bool HasNonTextNonWhitespacePriorSibling(XmlNode contentNode)
