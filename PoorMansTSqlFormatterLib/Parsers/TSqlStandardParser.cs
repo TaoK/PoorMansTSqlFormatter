@@ -79,15 +79,15 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             );
 
                         if (IsLatestTokenADDLDetailValue(currentContainerNode))
-                            currentContainerNode = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_DDLDETAIL_PARENS, "", currentContainerNode);
+                            currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_DDLDETAIL_PARENS, "", currentContainerNode);
                         else if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_DDL_BLOCK)
                             || isInsertClause
                             )
-                            currentContainerNode = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_DDL_PARENS, "", currentContainerNode);
+                            currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_DDL_PARENS, "", currentContainerNode);
                         else if (IsLatestTokenAMiscName(currentContainerNode))
-                            currentContainerNode = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_FUNCTION_PARENS, "", currentContainerNode);
+                            currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_FUNCTION_PARENS, "", currentContainerNode);
                         else
-                            currentContainerNode = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_EXPRESSION_PARENS, "", currentContainerNode);
+                            currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_EXPRESSION_PARENS, "", currentContainerNode);
                         break;
 
                     case Interfaces.Constants.ENAME_PARENS_CLOSE:
@@ -102,7 +102,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else
                         {
-                            BackupTokenHandlingWithError(sqlTree, Interfaces.Constants.ENAME_OTHERNODE, ")", currentContainerNode, ref errorFound);
+                            SaveNewElementWithError(sqlTree, Interfaces.Constants.ENAME_OTHERNODE, ")", currentContainerNode, ref errorFound);
                         }
                         break;
 
@@ -121,14 +121,14 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             )
                         {
                             ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
-                            currentContainerNode = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_DDL_BLOCK, "", currentContainerNode);
-                            StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                            currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_DDL_BLOCK, "", currentContainerNode);
+                            SaveNewElement(sqlTree, token.Name, token.InnerText, currentContainerNode);
                         }
                         else if (keywordMatchPhrase.StartsWith("AS ") 
                             && currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_DDL_BLOCK)
                             )
                         {
-                            XmlElement newASBlock = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_DDL_AS_BLOCK, token.InnerText, currentContainerNode);
+                            XmlElement newASBlock = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_DDL_AS_BLOCK, token.InnerText, currentContainerNode);
                             currentContainerNode = StartNewStatement(sqlTree, newASBlock);
                         }
                         else if (keywordMatchPhrase.StartsWith("BEGIN TRANSACTION "))
@@ -166,12 +166,12 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         else if (keywordMatchPhrase.StartsWith("BEGIN "))
                         {
                             ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
-                            XmlElement newBeginBlock = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_BEGIN_END_BLOCK, token.InnerText, currentContainerNode);
+                            XmlElement newBeginBlock = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_BEGIN_END_BLOCK, token.InnerText, currentContainerNode);
                             currentContainerNode = StartNewStatement(sqlTree, newBeginBlock);
                         }
                         else if (keywordMatchPhrase.StartsWith("CASE "))
                         {
-                            currentContainerNode = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_CASE_STATEMENT, token.InnerText, currentContainerNode);
+                            currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_CASE_STATEMENT, token.InnerText, currentContainerNode);
                         }
                         else if (keywordMatchPhrase.StartsWith("END TRY "))
                         {
@@ -189,7 +189,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             }
                             else
                             {
-                                BackupTokenHandlingWithError(sqlTree, Interfaces.Constants.ENAME_OTHERNODE, keywordString, currentContainerNode, ref errorFound);
+                                SaveNewElementWithError(sqlTree, Interfaces.Constants.ENAME_OTHERNODE, keywordString, currentContainerNode, ref errorFound);
                             }
                         }
                         else if (keywordMatchPhrase.StartsWith("END CATCH "))
@@ -208,7 +208,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             }
                             else
                             {
-                                BackupTokenHandlingWithError(sqlTree, Interfaces.Constants.ENAME_OTHERNODE, keywordString, currentContainerNode, ref errorFound);
+                                SaveNewElementWithError(sqlTree, Interfaces.Constants.ENAME_OTHERNODE, keywordString, currentContainerNode, ref errorFound);
                             }
                         }
                         else if (keywordMatchPhrase.StartsWith("END "))
@@ -232,7 +232,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 }
                                 else
                                 {
-                                    BackupTokenHandlingWithError(sqlTree, Interfaces.Constants.ENAME_OTHERNODE, token.InnerText, currentContainerNode, ref errorFound);
+                                    SaveNewElementWithError(sqlTree, Interfaces.Constants.ENAME_OTHERNODE, token.InnerText, currentContainerNode, ref errorFound);
                                 }
                             }
                         }
@@ -255,23 +255,23 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                     )
                                 {
                                     XmlElement sqlRoot = sqlTree.DocumentElement;
-                                    StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_BATCH_SEPARATOR, token.InnerText, sqlRoot);
+                                    SaveNewElement(sqlTree, Interfaces.Constants.ENAME_BATCH_SEPARATOR, token.InnerText, sqlRoot);
                                     currentContainerNode = StartNewStatement(sqlTree, sqlRoot);
                                 }
                                 else
                                 {
-                                    BackupTokenHandlingWithError(sqlTree, token.Name, token.InnerText, currentContainerNode, ref errorFound);
+                                    SaveNewElementWithError(sqlTree, token.Name, token.InnerText, currentContainerNode, ref errorFound);
                                 }
                             }
                             else
                             {
-                                StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                                SaveNewElement(sqlTree, token.Name, token.InnerText, currentContainerNode);
                             }
                         }
                         else if (keywordMatchPhrase.StartsWith("JOIN "))
                         {
                             ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
-                            StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                            SaveNewElement(sqlTree, token.Name, token.InnerText, currentContainerNode);
                         }
                         else if (keywordMatchPhrase.StartsWith("LEFT JOIN ")
                             || keywordMatchPhrase.StartsWith("RIGHT JOIN ")
@@ -282,7 +282,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
                             keywordMatchStringsUsed = 2;
                             string keywordString = GetCompoundKeyword(ref tokenID, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
-                            StandardTokenHandling(sqlTree, token.Name, keywordString, currentContainerNode);
+                            SaveNewElement(sqlTree, token.Name, keywordString, currentContainerNode);
                         }
                         else if (keywordMatchPhrase.StartsWith("FULL OUTER JOIN ")
                             || keywordMatchPhrase.StartsWith("LEFT OUTER JOIN ")
@@ -292,26 +292,26 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
                             keywordMatchStringsUsed = 3;
                             string keywordString = GetCompoundKeyword(ref tokenID, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
-                            StandardTokenHandling(sqlTree, token.Name, keywordString, currentContainerNode);
+                            SaveNewElement(sqlTree, token.Name, keywordString, currentContainerNode);
                         }
                         else if (keywordMatchPhrase.StartsWith("WHILE "))
                         {
                             ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
-                            XmlElement newWhileLoop = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_WHILE_LOOP, token.InnerText, currentContainerNode);
-                            currentContainerNode = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION, "", newWhileLoop);
+                            XmlElement newWhileLoop = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_WHILE_LOOP, token.InnerText, currentContainerNode);
+                            currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION, "", newWhileLoop);
                         }
                         else if (keywordMatchPhrase.StartsWith("IF "))
                         {
                             ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
-                            XmlElement newIfStatement = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_IF_STATEMENT, token.InnerText, currentContainerNode);
-                            currentContainerNode = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION, "", newIfStatement);
+                            XmlElement newIfStatement = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_IF_STATEMENT, token.InnerText, currentContainerNode);
+                            currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION, "", newIfStatement);
                         }
                         else if (keywordMatchPhrase.StartsWith("ELSE "))
                         {
                             if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_CASE_STATEMENT))
                             {
                                 //we don't really do anything with case statement structure yet
-                                StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                                SaveNewElement(sqlTree, token.Name, token.InnerText, currentContainerNode);
                             }
                             else if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
                                     && currentContainerNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
@@ -319,7 +319,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             {
                                 //topmost if - just pop back one.
                                 XmlElement containerIf = (XmlElement)currentContainerNode.ParentNode.ParentNode;
-                                XmlElement newElseClause = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_ELSE_CLAUSE, token.InnerText, containerIf);
+                                XmlElement newElseClause = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_ELSE_CLAUSE, token.InnerText, containerIf);
                                 currentContainerNode = StartNewStatement(sqlTree, newElseClause);
                             }
                             else if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
@@ -355,17 +355,17 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
                                 if (currentNode != null)
                                 {
-                                    XmlElement newElseClause2 = StandardTokenHandling(sqlTree, Interfaces.Constants.ENAME_ELSE_CLAUSE, token.InnerText, currentNode);
+                                    XmlElement newElseClause2 = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_ELSE_CLAUSE, token.InnerText, currentNode);
                                     currentContainerNode = StartNewStatement(sqlTree, newElseClause2);
                                 }
                                 else
                                 {
-                                    BackupTokenHandlingWithError(sqlTree, token.Name, token.InnerText, currentContainerNode, ref errorFound);
+                                    SaveNewElementWithError(sqlTree, token.Name, token.InnerText, currentContainerNode, ref errorFound);
                                 }
                             }
                             else
                             {
-                                BackupTokenHandlingWithError(sqlTree, token.Name, token.InnerText, currentContainerNode, ref errorFound);
+                                SaveNewElementWithError(sqlTree, token.Name, token.InnerText, currentContainerNode, ref errorFound);
                             }
                         }
                         else if (keywordMatchPhrase.StartsWith("INSERT INTO "))
@@ -374,13 +374,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
                             keywordMatchStringsUsed = 2;
                             string keywordString = GetCompoundKeyword(ref tokenID, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
-                            StandardTokenHandling(sqlTree, token.Name, keywordString, currentContainerNode);
+                            SaveNewElement(sqlTree, token.Name, keywordString, currentContainerNode);
                         }
                         else if (keywordMatchPhrase.StartsWith("INSERT "))
                         {
                             ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
                             ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
-                            StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                            SaveNewElement(sqlTree, token.Name, token.InnerText, currentContainerNode);
                         }
                         else if (keywordMatchPhrase.StartsWith("SELECT "))
                         {
@@ -394,7 +394,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
 
                             ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
-                            StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                            SaveNewElement(sqlTree, token.Name, token.InnerText, currentContainerNode);
                         }
                         else
                         {
@@ -412,7 +412,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
                             }
 
-                            StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                            SaveNewElement(sqlTree, token.Name, token.InnerText, currentContainerNode);
                         }
 
                         //handle any Overflow Nodes
@@ -430,16 +430,26 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
                         break;
 
+                    case Interfaces.Constants.ENAME_COMMENT_MULTILINE:
+                    case Interfaces.Constants.ENAME_COMMENT_SINGLELINE:
+                    case Interfaces.Constants.ENAME_WHITESPACE:
+                        //create in statement rather than clause if there are no siblings yet
+                        if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
+                            && currentContainerNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)
+                            && currentContainerNode.SelectSingleNode("*") == null
+                            )
+                            SaveNewElementAsPriorSibling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                        else
+                            SaveNewElement(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                        break;
+
                     case Interfaces.Constants.ENAME_QUOTED_IDENTIFIER:
                     case Interfaces.Constants.ENAME_ASTERISK:
                     case Interfaces.Constants.ENAME_COMMA:
-                    case Interfaces.Constants.ENAME_COMMENT_MULTILINE:
-                    case Interfaces.Constants.ENAME_COMMENT_SINGLELINE:
                     case Interfaces.Constants.ENAME_NSTRING:
                     case Interfaces.Constants.ENAME_OTHEROPERATOR:
                     case Interfaces.Constants.ENAME_STRING:
-                    case Interfaces.Constants.ENAME_WHITESPACE:
-                        StandardTokenHandling(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                        SaveNewElement(sqlTree, token.Name, token.InnerText, currentContainerNode);
                         break;
                     default:
                         throw new Exception("Unrecognized element encountered!");
@@ -528,7 +538,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             return phrase;
         }
 
-        private XmlElement StandardTokenHandling(XmlDocument sqlTree, string newElementName, string newElementValue, XmlElement currentContainerNode)
+        private XmlElement SaveNewElement(XmlDocument sqlTree, string newElementName, string newElementValue, XmlElement currentContainerNode)
         {
             XmlElement newElement = sqlTree.CreateElement(newElementName);
             newElement.InnerText = newElementValue;
@@ -536,7 +546,15 @@ namespace PoorMansTSqlFormatterLib.Parsers
             return newElement;
         }
 
-        private void BackupTokenHandlingWithError(XmlDocument sqlTree, string newElementName, string newElementValue, XmlElement currentContainerNode, ref bool errorFound)
+        private XmlElement SaveNewElementAsPriorSibling(XmlDocument sqlTree, string newElementName, string newElementValue, XmlElement nodeToSaveBefore)
+        {
+            XmlElement newElement = sqlTree.CreateElement(newElementName);
+            newElement.InnerText = newElementValue;
+            nodeToSaveBefore.ParentNode.InsertBefore(newElement, nodeToSaveBefore);
+            return newElement;
+        }
+
+        private void SaveNewElementWithError(XmlDocument sqlTree, string newElementName, string newElementValue, XmlElement currentContainerNode, ref bool errorFound)
         {
             XmlElement newElement = sqlTree.CreateElement(newElementName);
             newElement.InnerText = newElementValue;
@@ -658,9 +676,9 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     {
                         while (!previousContainerElement.LastChild.Equals(migrationCandidate))
                         {
-                            currentContainerNode.PrependChild(previousContainerElement.LastChild);
+                            currentContainerNode.ParentNode.PrependChild(previousContainerElement.LastChild);
                         }
-                        currentContainerNode.PrependChild(migrationCandidate);
+                        currentContainerNode.ParentNode.PrependChild(migrationCandidate);
                         migrationCandidate = previousContainerElement.LastChild;
                     }
                     else
