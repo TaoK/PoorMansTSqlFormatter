@@ -30,27 +30,26 @@ namespace PoorMansTSqlFormatterLib.Formatters
         /*
          * TODO:
          *  - UNION clauses get special formatting?
-         *  - Handle line breaking and indenting on complex logical expressions (AND/OR)
-         *  - Handle line breaking and indenting on comma-lists (params, select clauses etc)
+         *  - Implement text width-based line breaking
+         *    - Provide preference option for width and tab spaces?
          *  - Implement keyword casing
-         *  - Provide params for indenting character/sequence
-         *  - Provide params for comma-list-preference
-         *  - Provide preference option for keyword casing (uppercase/lowercase/titlecase)?
-         *  - Handle preferred max width, option and implementation
+         *    - Provide preference option for keyword casing (uppercase/lowercase/titlecase)?
          */
 
-        public TSqlStandardFormatter() : this("\t", false, false) {}
+        public TSqlStandardFormatter() : this("\t", false, false, false) {}
 
-        public TSqlStandardFormatter(string indentString, bool expandCommaLists, bool trailingCommas)
+        public TSqlStandardFormatter(string indentString, bool expandCommaLists, bool trailingCommas, bool expandBooleanExpressions)
         {
             IndentString = indentString;
             ExpandCommaLists = expandCommaLists;
             TrailingCommas = trailingCommas;
+            ExpandBooleanExpressions = expandBooleanExpressions;
         }
 
         public string IndentString { get; set; }
         public bool ExpandCommaLists { get; set; }
         public bool TrailingCommas { get; set; }
+        public bool ExpandBooleanExpressions { get; set; }
 
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
@@ -241,7 +240,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         }
                     }
 
-                    WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
+                    WhiteSpace_SeparateWords(null, outString, indentLevel, ref breakExpected);
                     outString.Append("END");
                     break;
 
@@ -310,7 +309,23 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append("*");
                     break;
+
+                case Interfaces.Constants.ENAME_AND_OPERATOR:
+                case Interfaces.Constants.ENAME_OR_OPERATOR:
+                    if (ExpandBooleanExpressions)
+                        WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel, ref breakExpected);
+                    else
+                        WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
+
+                    if (contentElement.Name.Equals(Interfaces.Constants.ENAME_AND_OPERATOR))
+                        outString.Append("AND");
+                    else
+                        outString.Append("OR");
+                    break;
+
                 case Interfaces.Constants.ENAME_BEGIN_TRANSACTION:
+                case Interfaces.Constants.ENAME_COMMIT_TRANSACTION:
+                case Interfaces.Constants.ENAME_ROLLBACK_TRANSACTION:
                 case Interfaces.Constants.ENAME_OTHERNODE:
                 case Interfaces.Constants.ENAME_OTHEROPERATOR:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
@@ -349,7 +364,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
         {
             if (breakExpected)
                 WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel, ref breakExpected);
-            else if (HasNonTextNonWhitespacePriorSibling(contentElement))
+            else if (contentElement == null 
+                || HasNonTextNonWhitespacePriorSibling(contentElement)
+                )
                 outString.Append(" ");
         }
 

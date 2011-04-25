@@ -65,6 +65,8 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_DDLDETAIL_PARENS = "DDLDetailParens";
         public const string ENAME_EXPRESSION_PARENS = "ExpressionParens";
         public const string ENAME_FUNCTION_PARENS = "FunctionParens";
+        public const string ENAME_AND_OPERATOR = "And";
+        public const string ENAME_OR_OPERATOR = "Or";
 
         //attribute names
         public const string ANAME_ERRORFOUND = "errorFound";

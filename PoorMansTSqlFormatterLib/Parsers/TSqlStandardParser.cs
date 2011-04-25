@@ -30,11 +30,12 @@ namespace PoorMansTSqlFormatterLib.Parsers
     {
         /*
          * TODO:
-         *  - support declared tables as DDL blocks
          *  - support derived table parens type (if different from expression...?)
          *  - support clauses in parens? (for derived tables)
          *  - handle semicolon statement terminator
          *  - handle CTEs
+         *  - parse CASE statements for structured display
+         *  - parse ON sections, for those who prefer to start ON on the next line and indent from there
          *  
          *  - Tests
          *    - Samples illustrating all the tokens and container combinations implemented
@@ -395,6 +396,14 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
                             ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
                             SaveNewElement(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("AND "))
+                        {
+                            SaveNewElement(sqlTree, Interfaces.Constants.ENAME_AND_OPERATOR, token.InnerText, currentContainerNode);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("OR "))
+                        {
+                            SaveNewElement(sqlTree, Interfaces.Constants.ENAME_OR_OPERATOR, token.InnerText, currentContainerNode);
                         }
                         else
                         {

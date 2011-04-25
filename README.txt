@@ -39,8 +39,6 @@ Known Issues / Todo:
    - Derived tables
    - subqueries / correlated subqueries
  - CASE statement structure handling (for breaking/indenting)
- - Comma-delimited list handling (for breaking/indenting)
- - Logical Operator handling (for breaking/indenting)
  - Handle "exotic" keywords from SQL 2005 on (common table expressions, etc)
  - Keyword Capitalization
  - Options in standard formatter and demo

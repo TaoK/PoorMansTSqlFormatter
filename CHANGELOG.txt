@@ -1,0 +1,1 @@
+Poor Man's T-SQL Formatter change logVersion 0.9.0:--------------Initial release, see README.txt for known issues and plans.
