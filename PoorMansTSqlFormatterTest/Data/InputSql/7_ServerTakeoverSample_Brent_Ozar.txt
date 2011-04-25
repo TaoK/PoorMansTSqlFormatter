@@ -1,12 +1,10 @@
-﻿-- Sample script Retrieved from SQLServerPedia:
---  http://sqlserverpedia.com/wiki/Audit_a_SQL_Server_Configuration
--- (copy permission pending - license below claims creative commons, but does not 
---  specify exactly which creative commons license, and the link destination does 
---  not mention creative commons at all)
+﻿-- Sample script from Brent Ozar:
+--  http://www.brentozar.com/sql/blitz-minute-sql-server-takeovers/
+
 /*
 Script:       BLITZ! 60 Minute Server Takeovers by Brent Ozar
 Version:      1.1 - May 18, 2010
-Source:       http://www.BrentOzar.com/go/blitz
+Source:       http://www.brentozar.com/sql/blitz-minute-sql-server-takeovers/
 License:      Creative Commons.  For more information, see
               http://www.brentozar.com/what-i-do/using-material-from-my-blog/
 Description:  Shows what I look for when I take over existing servers.
