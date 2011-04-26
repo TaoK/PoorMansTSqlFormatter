@@ -18,7 +18,8 @@ namespace PoorMansTSqlFormatterWebDemo
         {
             //free use is all very nice, but I REALLY don't want anyone linking to this web service from some 
             // other site or app: they should just download the library and incorporate or host it directly.
-            // 
+            // (assuming the project is GPL-compatible)
+            //
             string allowedHost = System.Configuration.ConfigurationSettings.AppSettings["ReferrerHostValidation"];
             //no error handling, just do the bare (safe) minimum.
             if (string.IsNullOrEmpty(allowedHost)
