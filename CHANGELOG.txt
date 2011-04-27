@@ -1,1 +1,17 @@
-Poor Man's T-SQL Formatter change logVersion 0.9.0:--------------Initial release, see README.txt for known issues and plans.
+Poor Man's T-SQL Formatter change log
+
+Version 0.9.1:
+--------------
+
+ - Added web service demo project
+ - Added more handled keywords
+ - Corrected Period handling
+ - Added Semicolon (statement separator) handling
+
+
+Version 0.9.0:
+--------------
+
+Initial release, see README.txt for known issues and plans.
+
+

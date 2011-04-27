@@ -111,7 +111,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     //newline regardless of whether previous element recommended a break or not.
                     outString.Append(Environment.NewLine);
                     outString.Append("AS");
-                    outString.Append(Environment.NewLine);
+                    breakExpected = true;
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel-1, ref breakExpected);
                     break;
 
@@ -123,7 +123,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case Interfaces.Constants.ENAME_DDLDETAIL_PARENS:
                 case Interfaces.Constants.ENAME_FUNCTION_PARENS:
-                    //simply process sub-nodes - don't expect any linebreaks
+                    //simply process sub-nodes - don't add space or expect any linebreaks (but respect them if necessary)
+                    WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append("(");
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected);
                     outString.Append(")");
@@ -310,6 +311,16 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     outString.Append("*");
                     break;
 
+                case Interfaces.Constants.ENAME_PERIOD:
+                    WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel, ref breakExpected);
+                    outString.Append(".");
+                    break;
+
+                case Interfaces.Constants.ENAME_SEMICOLON:
+                    WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel, ref breakExpected);
+                    outString.Append(";");
+                    break;
+
                 case Interfaces.Constants.ENAME_AND_OPERATOR:
                 case Interfaces.Constants.ENAME_OR_OPERATOR:
                     if (ExpandBooleanExpressions)
@@ -365,7 +376,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (breakExpected)
                 WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel, ref breakExpected);
             else if (contentElement == null 
-                || HasNonTextNonWhitespacePriorSibling(contentElement)
+                || HasNonTextNonWhitespacePriorSiblingThatIsNotAPeriod(contentElement)
                 )
                 outString.Append(" ");
         }
@@ -391,7 +402,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             }
         }
 
-        private static bool HasNonTextNonWhitespacePriorSibling(XmlNode contentNode)
+        private static bool HasNonTextNonWhitespacePriorSiblingThatIsNotAPeriod(XmlNode contentNode)
         {
             XmlNode currentNode = contentNode;
 
@@ -400,9 +411,16 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 if (currentNode.PreviousSibling.NodeType == XmlNodeType.Element
                     && !currentNode.PreviousSibling.Name.Equals(Interfaces.Constants.ENAME_WHITESPACE)
                     )
-                    return true;
+                {
+                    if (currentNode.PreviousSibling.Name.Equals(Interfaces.Constants.ENAME_PERIOD))
+                        return false;
+                    else
+                        return true;
+                }
                 else
+                {
                     currentNode = currentNode.PreviousSibling;
+                }
             }
 
             return false;

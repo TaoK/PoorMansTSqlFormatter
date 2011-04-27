@@ -32,10 +32,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
          * TODO:
          *  - support derived table parens type (if different from expression...?)
          *  - support clauses in parens? (for derived tables)
-         *  - handle semicolon statement terminator
          *  - handle CTEs
          *  - parse CASE statements for structured display
          *  - parse ON sections, for those who prefer to start ON on the next line and indent from there
+         *  - enhance DDL context to also have clauses (with a backtrack in the standard formatter), for RETURNS...? Or just detect it in formatting?
+         *  - update the demo UI to reference GPL, and publish the program
+         *  - Add support for join hints, such as "LOOP"
+         *  - Manually review the output from all test cases for "strange" effects
          *  
          *  - Tests
          *    - Samples illustrating all the tokens and container combinations implemented
@@ -278,6 +281,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             || keywordMatchPhrase.StartsWith("RIGHT JOIN ")
                             || keywordMatchPhrase.StartsWith("INNER JOIN ")
                             || keywordMatchPhrase.StartsWith("CROSS JOIN ")
+                            || keywordMatchPhrase.StartsWith("CROSS APPLY ")
+                            || keywordMatchPhrase.StartsWith("OUTER APPLY ")
                             )
                         {
                             ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
@@ -439,6 +444,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
                         break;
 
+                    case Interfaces.Constants.ENAME_SEMICOLON:
+                        SaveNewElement(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                        ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                        break;
+
                     case Interfaces.Constants.ENAME_COMMENT_MULTILINE:
                     case Interfaces.Constants.ENAME_COMMENT_SINGLELINE:
                     case Interfaces.Constants.ENAME_WHITESPACE:
@@ -455,6 +465,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     case Interfaces.Constants.ENAME_QUOTED_IDENTIFIER:
                     case Interfaces.Constants.ENAME_ASTERISK:
                     case Interfaces.Constants.ENAME_COMMA:
+                    case Interfaces.Constants.ENAME_PERIOD:
                     case Interfaces.Constants.ENAME_NSTRING:
                     case Interfaces.Constants.ENAME_OTHEROPERATOR:
                     case Interfaces.Constants.ENAME_STRING:
@@ -791,10 +802,14 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     || uppercaseValue.Equals("FROM")
                     || uppercaseValue.Equals("ORDER")
                     || uppercaseValue.Equals("GROUP")
+                    || uppercaseValue.Equals("HAVING")
                     || uppercaseValue.Equals("INTO")
                     || uppercaseValue.Equals("SELECT")
                     || uppercaseValue.Equals("UNION")
                     || uppercaseValue.Equals("VALUES")
+                    || uppercaseValue.Equals("RETURNS")
+                    || uppercaseValue.Equals("PIVOT")
+                    || uppercaseValue.Equals("UNPIVOT")
                     )
                 );
         }

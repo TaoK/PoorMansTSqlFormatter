@@ -1,7 +1,8 @@
 Poor Man's T-SQL Formatter
 --------------------------
 
-This is a small free .Net 2.0 library (with demo program) for reformatting T-SQL code.
+This is a small free .Net 2.0 library (with demo program and web service) for 
+reformatting T-SQL code.
 
 Features:
  - Simple Xml-based parse tree

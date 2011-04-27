@@ -40,6 +40,8 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_NSTRING = "NationalString";
         public const string ENAME_QUOTED_IDENTIFIER = "QuotedIdentifier";
         public const string ENAME_COMMA = "Comma";
+        public const string ENAME_PERIOD = "Period";
+        public const string ENAME_SEMICOLON = "Semicolon";
         public const string ENAME_ASTERISK = "Asterisk";
         public const string ENAME_OTHEROPERATOR = "OtherOperator";
 

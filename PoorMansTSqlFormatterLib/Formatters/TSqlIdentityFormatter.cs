@@ -136,9 +136,19 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.Constants.ENAME_COMMA:
                     outString.Append(",");
                     break;
+
+                case Interfaces.Constants.ENAME_PERIOD:
+                    outString.Append(".");
+                    break;
+
+                case Interfaces.Constants.ENAME_SEMICOLON:
+                    outString.Append(";");
+                    break;
+
                 case Interfaces.Constants.ENAME_ASTERISK:
                     outString.Append("*");
                     break;
+
                 case Interfaces.Constants.ENAME_BEGIN_TRANSACTION:
                 case Interfaces.Constants.ENAME_OTHERNODE:
                 case Interfaces.Constants.ENAME_WHITESPACE:

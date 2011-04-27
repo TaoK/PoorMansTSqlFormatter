@@ -49,13 +49,13 @@ namespace PoorMansTSqlFormatterDemo
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.txt_Input = new System.Windows.Forms.TextBox();
+            this.txt_Input = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.txt_TokenizedXml = new System.Windows.Forms.TextBox();
-            this.txt_ParsedXml = new System.Windows.Forms.TextBox();
+            this.txt_TokenizedXml = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
+            this.txt_ParsedXml = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.txt_OutputSql = new System.Windows.Forms.TextBox();
+            this.txt_OutputSql = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
             this.radio_Formatting_Standard = new System.Windows.Forms.RadioButton();
             this.radio_Formatting_Identity = new System.Windows.Forms.RadioButton();
             this.grp_Options = new System.Windows.Forms.GroupBox();
@@ -305,12 +305,12 @@ namespace PoorMansTSqlFormatterDemo
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TextBox txt_Input;
-        private System.Windows.Forms.TextBox txt_TokenizedXml;
+        private PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox txt_Input;
+        private PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox txt_TokenizedXml;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.TextBox txt_OutputSql;
+        private PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox txt_OutputSql;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        private System.Windows.Forms.TextBox txt_ParsedXml;
+        private PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox txt_ParsedXml;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.RadioButton radio_Formatting_Standard;
         private System.Windows.Forms.RadioButton radio_Formatting_Identity;

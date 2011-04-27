@@ -262,6 +262,8 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                         case SqlTokenType.OpenParens:
                         case SqlTokenType.CloseParens:
                         case SqlTokenType.Comma:
+                        case SqlTokenType.Period:
+                        case SqlTokenType.SemiColon:
                         case SqlTokenType.Asterisk:
                         case SqlTokenType.OtherOperator:
                             currentTokenType = CompleteToken(currentTokenType.Value, tokenContainer, currentTokenValue);
@@ -310,24 +312,32 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
         {
             //characters that pop you out of a regular "word" context (maybe into a new word)
             return (IsWhitespace(currentCharacter)
-                || currentCharacter == '/'
-                || currentCharacter == '-'
-                || currentCharacter == '+'
+                || IsOperatorCharacter(currentCharacter)
                 || currentCharacter == '\''
                 || currentCharacter == ','
+                || currentCharacter == '.'
                 || currentCharacter == '['
-                || currentCharacter == '*'
                 || currentCharacter == '('
                 || currentCharacter == ')'
-                || currentCharacter == '<'
-                || currentCharacter == '>'
-                || currentCharacter == '='
-                || currentCharacter == '*'
+                || currentCharacter == '!'
+                || currentCharacter == ';'
+                );
+        }
+
+        private static bool IsOperatorCharacter(char currentCharacter)
+        {
+            //characters that pop you out of a regular "word" context (maybe into a new word)
+            return (currentCharacter == '/'
+                || currentCharacter == '-'
+                || currentCharacter == '+'
                 || currentCharacter == '%'
+                || currentCharacter == '*'
                 || currentCharacter == '&'
                 || currentCharacter == '|'
                 || currentCharacter == '^'
-                || currentCharacter == '!'
+                || currentCharacter == '='
+                || currentCharacter == '<'
+                || currentCharacter == '>'
                 || currentCharacter == '~'
                 );
         }
@@ -373,6 +383,14 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             {
                 currentNodeType = SqlTokenType.Comma;
             }
+            else if (currentCharacter == '.')
+            {
+                currentNodeType = SqlTokenType.Period;
+            }
+            else if (currentCharacter == ';')
+            {
+                currentNodeType = SqlTokenType.SemiColon;
+            }
             else if (currentCharacter == '*')
             {
                 currentNodeType = SqlTokenType.Asterisk;
@@ -389,14 +407,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             {
                 currentNodeType = SqlTokenType.SingleExclamation;
             }
-            else if (currentCharacter == '+'
-                || currentCharacter == '='
-                || currentCharacter == '%'
-                || currentCharacter == '&'
-                || currentCharacter == '|'
-                || currentCharacter == '^'
-                || currentCharacter == '~'
-                )
+            else if (IsOperatorCharacter(currentCharacter))
             {
                 currentNodeType = SqlTokenType.OtherOperator;
                 currentNodeValue.Append(currentCharacter);
@@ -482,6 +493,16 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                     elementValue = "";
                     break;
 
+                case SqlTokenType.Period:
+                    elementName = Interfaces.Constants.ENAME_PERIOD;
+                    elementValue = "";
+                    break;
+
+                case SqlTokenType.SemiColon:
+                    elementName = Interfaces.Constants.ENAME_SEMICOLON;
+                    elementValue = "";
+                    break;
+
                 case SqlTokenType.Asterisk:
                     elementName = Interfaces.Constants.ENAME_ASTERISK;
                     elementValue = "";
@@ -517,6 +538,8 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             OpenParens,
             CloseParens,
             Comma,
+            Period,
+            SemiColon,
             Asterisk,
             OtherOperator,
 

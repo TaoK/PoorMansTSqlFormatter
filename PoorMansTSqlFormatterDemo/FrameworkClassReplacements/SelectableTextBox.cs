@@ -18,17 +18,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+using System;
+using System.Windows.Forms;
 
-[assembly: AssemblyTitle("PoorMansTSqlFormatterLib")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PoorMansTSqlFormatterLib")]
-[assembly: AssemblyCopyright("Copyright ©  2011 Tao Klerks")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-[assembly: ComVisible(false)]
-[assembly: AssemblyVersion("0.9.1.*")]
+namespace PoorMansTSqlFormatterDemo.FrameworkClassReplacements
+{
+    public class SelectableTextBox : TextBox
+    {
+        //Ctrl-A support in .Net multiline textboxes.
+        // adapted from stackoverflow: 
+        // http://stackoverflow.com/questions/225711/stop-the-bell-on-ctrl-a-winforms/230417#230417
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.A | Keys.Control))
+            {
+                this.SelectionStart = 0;
+                this.SelectionLength = this.Text.Length;
+                this.Focus();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+    }
+}
