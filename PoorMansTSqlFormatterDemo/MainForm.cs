@@ -75,11 +75,18 @@ namespace PoorMansTSqlFormatterDemo
             DoFormatting();
         }
 
+
+        private void chk_ExpandCaseStatements_CheckedChanged(object sender, EventArgs e)
+        {
+            SetFormatter();
+            DoFormatting();
+        }
+
         private void SetFormatter()
         {
             if (radio_Formatting_Standard.Checked)
             {
-                _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", chk_ExpandCommaLists.Checked, chk_TrailingCommas.Checked, chk_ExpandBooleanExpressions.Checked);
+                _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", chk_ExpandCommaLists.Checked, chk_TrailingCommas.Checked, chk_ExpandBooleanExpressions.Checked, chk_ExpandCaseStatements.Checked);
             }
             else
                 _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter();

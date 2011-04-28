@@ -36,20 +36,22 @@ namespace PoorMansTSqlFormatterLib.Formatters
          *    - Provide preference option for keyword casing (uppercase/lowercase/titlecase)?
          */
 
-        public TSqlStandardFormatter() : this("\t", false, false, false) {}
+        public TSqlStandardFormatter() : this("\t", true, false, true, true) {}
 
-        public TSqlStandardFormatter(string indentString, bool expandCommaLists, bool trailingCommas, bool expandBooleanExpressions)
+        public TSqlStandardFormatter(string indentString, bool expandCommaLists, bool trailingCommas, bool expandBooleanExpressions, bool expandCaseStatements)
         {
             IndentString = indentString;
             ExpandCommaLists = expandCommaLists;
             TrailingCommas = trailingCommas;
             ExpandBooleanExpressions = expandBooleanExpressions;
+            ExpandCaseStatements = expandCaseStatements;
         }
 
         public string IndentString { get; set; }
         public bool ExpandCommaLists { get; set; }
         public bool TrailingCommas { get; set; }
         public bool ExpandBooleanExpressions { get; set; }
+        public bool ExpandCaseStatements { get; set; }
 
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
@@ -117,6 +119,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel-1, ref breakExpected);
                     break;
 
+                case Interfaces.Constants.ENAME_CASE_INPUT:
                 case Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
@@ -155,23 +158,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     if (contentElement.Name.Equals(Interfaces.Constants.ENAME_TRY_BLOCK))
                         outString.Append(" TRY");
                     WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel, ref breakExpected);
-
-                    foreach (XmlNode childNode in contentElement.ChildNodes)
-                    {
-                        switch (childNode.NodeType)
-                        {
-                            case XmlNodeType.Element:
-                                ProcessSqlNode(outString, (XmlElement)childNode, indentLevel, ref breakExpected);
-                                break;
-                            case XmlNodeType.Text:
-                            case XmlNodeType.Comment:
-                                //ignore
-                                break;
-                            default:
-                                throw new Exception("Unexpected xml node type encountered!");
-                        }
-                    }
-
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
                     WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel - 1, ref breakExpected);
                     outString.Append("END");
                     if (contentElement.Name.Equals(Interfaces.Constants.ENAME_TRY_BLOCK))
@@ -224,25 +211,27 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append("CASE");
                     outString.Append(" ");
-
-                    foreach (XmlNode childNode in contentElement.ChildNodes)
-                    {
-                        switch (childNode.NodeType)
-                        {
-                            case XmlNodeType.Element:
-                                ProcessSqlNode(outString, (XmlElement)childNode, indentLevel + 1, ref breakExpected);
-                                break;
-                            case XmlNodeType.Text:
-                            case XmlNodeType.Comment:
-                                //ignore
-                                break;
-                            default:
-                                throw new Exception("Unexpected xml node type encountered!");
-                        }
-                    }
-
-                    WhiteSpace_SeparateWords(null, outString, indentLevel, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected);
+                    if (ExpandCaseStatements)
+                        breakExpected = true;
+                    WhiteSpace_SeparateWords(null, outString, indentLevel + 1, ref breakExpected);
                     outString.Append("END");
+                    break;
+
+                case Interfaces.Constants.ENAME_CASE_WHEN:
+                case Interfaces.Constants.ENAME_CASE_THEN:
+                case Interfaces.Constants.ENAME_CASE_ELSE:
+                    if (ExpandCaseStatements)
+                        breakExpected = true;
+                    WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
+                    if (contentElement.Name.Equals(Interfaces.Constants.ENAME_CASE_WHEN))
+                        outString.Append("WHEN");
+                    else if (contentElement.Name.Equals(Interfaces.Constants.ENAME_CASE_THEN))
+                        outString.Append("THEN");
+                    else
+                        outString.Append("ELSE");
+                    outString.Append(" ");
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected);
                     break;
 
                 case Interfaces.Constants.ENAME_COMMENT_MULTILINE:
@@ -253,24 +242,28 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     if (contentElement.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT))
                         breakExpected = true;
                     break;
+
                 case Interfaces.Constants.ENAME_COMMENT_SINGLELINE:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append("--");
                     outString.Append(contentElement.InnerText.Replace("\r", "").Replace("\n", ""));
                     breakExpected = true;
                     break;
+
                 case Interfaces.Constants.ENAME_STRING:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append("'");
                     outString.Append(contentElement.InnerText.Replace("'", "''"));
                     outString.Append("'");
                     break;
+
                 case Interfaces.Constants.ENAME_NSTRING:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append("N'");
                     outString.Append(contentElement.InnerText.Replace("'", "''"));
                     outString.Append("'");
                     break;
+
                 case Interfaces.Constants.ENAME_QUOTED_IDENTIFIER:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append("[");

@@ -30,7 +30,6 @@ namespace PoorMansTSqlFormatterLib.Parsers
     {
         /*
          * TODO:
-         *  - parse CASE statements for structured display
          *  - handle CTEs
          *  - enhance DDL context to also have clauses (with a backtrack in the standard formatter), for RETURNS...? Or just detect it in formatting?
          *  - update the demo UI to reference GPL, and publish the program
@@ -179,7 +178,24 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (keywordMatchPhrase.StartsWith("CASE "))
                         {
-                            currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_CASE_STATEMENT, token.InnerText, currentContainerNode);
+                            XmlElement newCaseStatement = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_CASE_STATEMENT, token.InnerText, currentContainerNode);
+                            currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_CASE_INPUT, "", newCaseStatement);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("WHEN "))
+                        {
+                            if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_CASE_INPUT))
+                                currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_CASE_WHEN, token.InnerText, (XmlElement)currentContainerNode.ParentNode);
+                            else if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_CASE_THEN))
+                                currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_CASE_WHEN, token.InnerText, (XmlElement)currentContainerNode.ParentNode.ParentNode);
+                            else
+                                SaveNewElementWithError(sqlTree, Interfaces.Constants.ENAME_OTHERNODE, token.InnerText, currentContainerNode, ref errorFound);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("THEN "))
+                        {
+                            if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_CASE_WHEN))
+                                currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_CASE_THEN, token.InnerText, currentContainerNode);
+                            else
+                                SaveNewElementWithError(sqlTree, Interfaces.Constants.ENAME_OTHERNODE, token.InnerText, currentContainerNode, ref errorFound);
                         }
                         else if (keywordMatchPhrase.StartsWith("END TRY "))
                         {
@@ -221,10 +237,15 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (keywordMatchPhrase.StartsWith("END "))
                         {
-                            if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_CASE_STATEMENT))
+                            if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_CASE_THEN))
                             {
-                                currentContainerNode.AppendChild(sqlTree.CreateTextNode(token.InnerText));
-                                currentContainerNode = (XmlElement)currentContainerNode.ParentNode;
+                                currentContainerNode.ParentNode.ParentNode.AppendChild(sqlTree.CreateTextNode(token.InnerText));
+                                currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode;
+                            }
+                            else if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_CASE_ELSE))
+                            {
+                                currentContainerNode.ParentNode.AppendChild(sqlTree.CreateTextNode(token.InnerText));
+                                currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode;
                             }
                             else
                             {
@@ -318,10 +339,9 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (keywordMatchPhrase.StartsWith("ELSE "))
                         {
-                            if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_CASE_STATEMENT))
+                            if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_CASE_THEN))
                             {
-                                //we don't really do anything with case statement structure yet
-                                SaveNewElement(sqlTree, token.Name, token.InnerText, currentContainerNode);
+                                currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_CASE_ELSE, token.InnerText, (XmlElement)currentContainerNode.ParentNode.ParentNode);
                             }
                             else if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
                                     && currentContainerNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT)

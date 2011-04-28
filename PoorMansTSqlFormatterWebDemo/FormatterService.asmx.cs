@@ -34,7 +34,7 @@ namespace PoorMansTSqlFormatterWebDemo
     public class FormatterService : System.Web.Services.WebService
     {
         [WebMethod]
-        public string FormatTSql(string inputString, string indentString, bool expandCommaLists, bool trailingCommas, bool expandBooleanExpressions)
+        public string FormatTSql(string inputString)
         {
             //free use is all very nice, but I REALLY don't want anyone linking to this web service from some 
             // other site or app: they should just download the library and incorporate or host it directly.
@@ -49,12 +49,7 @@ namespace PoorMansTSqlFormatterWebDemo
                     )
                 )
             {
-                PoorMansTSqlFormatterLib.SqlParseManager manager = new PoorMansTSqlFormatterLib.SqlParseManager(
-                    new PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer(),
-                    new PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser(),
-                    new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(indentString, expandCommaLists, trailingCommas, expandBooleanExpressions)
-                    );
-                return manager.Format(inputString);
+                return PoorMansTSqlFormatterLib.SqlParseManager.DefaultFormat(inputString);
             }
             else
             {

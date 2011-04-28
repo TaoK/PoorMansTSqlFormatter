@@ -79,6 +79,10 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.Constants.ENAME_BEGIN_END_BLOCK:
                 case Interfaces.Constants.ENAME_TRY_BLOCK:
                 case Interfaces.Constants.ENAME_CASE_STATEMENT:
+                case Interfaces.Constants.ENAME_CASE_INPUT:
+                case Interfaces.Constants.ENAME_CASE_WHEN:
+                case Interfaces.Constants.ENAME_CASE_THEN:
+                case Interfaces.Constants.ENAME_CASE_ELSE:
                 case Interfaces.Constants.ENAME_IF_STATEMENT:
                 case Interfaces.Constants.ENAME_ELSE_CLAUSE:
                 case Interfaces.Constants.ENAME_WHILE_LOOP:

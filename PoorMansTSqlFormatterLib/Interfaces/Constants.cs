@@ -54,6 +54,10 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_BEGIN_TRANSACTION = "BeginTransaction";
         public const string ENAME_BATCH_SEPARATOR = "BatchSeparator";
         public const string ENAME_CASE_STATEMENT = "CaseStatement";
+        public const string ENAME_CASE_INPUT = "Input";
+        public const string ENAME_CASE_WHEN = "When";
+        public const string ENAME_CASE_THEN = "Then";
+        public const string ENAME_CASE_ELSE = "CaseElse";
         public const string ENAME_IF_STATEMENT = "IfStatement";
         public const string ENAME_ELSE_CLAUSE = "ElseClause";
         public const string ENAME_BOOLEAN_EXPRESSION = "BooleanExpression";

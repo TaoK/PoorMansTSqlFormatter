@@ -59,9 +59,10 @@ namespace PoorMansTSqlFormatterDemo
             this.radio_Formatting_Standard = new System.Windows.Forms.RadioButton();
             this.radio_Formatting_Identity = new System.Windows.Forms.RadioButton();
             this.grp_Options = new System.Windows.Forms.GroupBox();
+            this.chk_ExpandBooleanExpressions = new System.Windows.Forms.CheckBox();
             this.chk_TrailingCommas = new System.Windows.Forms.CheckBox();
             this.chk_ExpandCommaLists = new System.Windows.Forms.CheckBox();
-            this.chk_ExpandBooleanExpressions = new System.Windows.Forms.CheckBox();
+            this.chk_ExpandCaseStatements = new System.Windows.Forms.CheckBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -184,7 +185,7 @@ namespace PoorMansTSqlFormatterDemo
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 66F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 86F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(982, 290);
             this.tableLayoutPanel1.TabIndex = 1;
@@ -195,12 +196,12 @@ namespace PoorMansTSqlFormatterDemo
             this.txt_OutputSql.AcceptsTab = true;
             this.tableLayoutPanel1.SetColumnSpan(this.txt_OutputSql, 2);
             this.txt_OutputSql.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_OutputSql.Location = new System.Drawing.Point(3, 93);
+            this.txt_OutputSql.Location = new System.Drawing.Point(3, 113);
             this.txt_OutputSql.Multiline = true;
             this.txt_OutputSql.Name = "txt_OutputSql";
             this.txt_OutputSql.ReadOnly = true;
             this.txt_OutputSql.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txt_OutputSql.Size = new System.Drawing.Size(976, 194);
+            this.txt_OutputSql.Size = new System.Drawing.Size(976, 174);
             this.txt_OutputSql.TabIndex = 0;
             this.txt_OutputSql.WordWrap = false;
             // 
@@ -230,16 +231,30 @@ namespace PoorMansTSqlFormatterDemo
             // 
             // grp_Options
             // 
+            this.grp_Options.Controls.Add(this.chk_ExpandCaseStatements);
             this.grp_Options.Controls.Add(this.chk_ExpandBooleanExpressions);
             this.grp_Options.Controls.Add(this.chk_TrailingCommas);
             this.grp_Options.Controls.Add(this.chk_ExpandCommaLists);
             this.grp_Options.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grp_Options.Location = new System.Drawing.Point(3, 27);
             this.grp_Options.Name = "grp_Options";
-            this.grp_Options.Size = new System.Drawing.Size(485, 60);
+            this.grp_Options.Size = new System.Drawing.Size(485, 80);
             this.grp_Options.TabIndex = 4;
             this.grp_Options.TabStop = false;
             this.grp_Options.Text = "Options";
+            // 
+            // chk_ExpandBooleanExpressions
+            // 
+            this.chk_ExpandBooleanExpressions.AutoSize = true;
+            this.chk_ExpandBooleanExpressions.Checked = true;
+            this.chk_ExpandBooleanExpressions.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chk_ExpandBooleanExpressions.Location = new System.Drawing.Point(7, 37);
+            this.chk_ExpandBooleanExpressions.Name = "chk_ExpandBooleanExpressions";
+            this.chk_ExpandBooleanExpressions.Size = new System.Drawing.Size(163, 17);
+            this.chk_ExpandBooleanExpressions.TabIndex = 5;
+            this.chk_ExpandBooleanExpressions.Text = "Expand Boolean Expressions";
+            this.chk_ExpandBooleanExpressions.UseVisualStyleBackColor = true;
+            this.chk_ExpandBooleanExpressions.CheckedChanged += new System.EventHandler(this.chk_ExpandBooleanExpressions_CheckedChanged);
             // 
             // chk_TrailingCommas
             // 
@@ -255,6 +270,8 @@ namespace PoorMansTSqlFormatterDemo
             // chk_ExpandCommaLists
             // 
             this.chk_ExpandCommaLists.AutoSize = true;
+            this.chk_ExpandCommaLists.Checked = true;
+            this.chk_ExpandCommaLists.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chk_ExpandCommaLists.Location = new System.Drawing.Point(7, 17);
             this.chk_ExpandCommaLists.Name = "chk_ExpandCommaLists";
             this.chk_ExpandCommaLists.Size = new System.Drawing.Size(124, 17);
@@ -263,16 +280,18 @@ namespace PoorMansTSqlFormatterDemo
             this.chk_ExpandCommaLists.UseVisualStyleBackColor = true;
             this.chk_ExpandCommaLists.CheckedChanged += new System.EventHandler(this.chk_ExpandParens_CheckedChanged);
             // 
-            // chk_ExpandBooleanExpressions
+            // chk_ExpandCaseStatements
             // 
-            this.chk_ExpandBooleanExpressions.AutoSize = true;
-            this.chk_ExpandBooleanExpressions.Location = new System.Drawing.Point(7, 37);
-            this.chk_ExpandBooleanExpressions.Name = "chk_ExpandBooleanExpressions";
-            this.chk_ExpandBooleanExpressions.Size = new System.Drawing.Size(163, 17);
-            this.chk_ExpandBooleanExpressions.TabIndex = 5;
-            this.chk_ExpandBooleanExpressions.Text = "Expand Boolean Expressions";
-            this.chk_ExpandBooleanExpressions.UseVisualStyleBackColor = true;
-            this.chk_ExpandBooleanExpressions.CheckedChanged += new System.EventHandler(this.chk_ExpandBooleanExpressions_CheckedChanged);
+            this.chk_ExpandCaseStatements.AutoSize = true;
+            this.chk_ExpandCaseStatements.Checked = true;
+            this.chk_ExpandCaseStatements.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chk_ExpandCaseStatements.Location = new System.Drawing.Point(7, 57);
+            this.chk_ExpandCaseStatements.Name = "chk_ExpandCaseStatements";
+            this.chk_ExpandCaseStatements.Size = new System.Drawing.Size(149, 17);
+            this.chk_ExpandCaseStatements.TabIndex = 6;
+            this.chk_ExpandCaseStatements.Text = "Expand CASE Statements";
+            this.chk_ExpandCaseStatements.UseVisualStyleBackColor = true;
+            this.chk_ExpandCaseStatements.CheckedChanged += new System.EventHandler(this.chk_ExpandCaseStatements_CheckedChanged);
             // 
             // MainForm
             // 
@@ -318,6 +337,7 @@ namespace PoorMansTSqlFormatterDemo
         private System.Windows.Forms.GroupBox grp_Options;
         private System.Windows.Forms.CheckBox chk_TrailingCommas;
         private System.Windows.Forms.CheckBox chk_ExpandBooleanExpressions;
+        private System.Windows.Forms.CheckBox chk_ExpandCaseStatements;
     }
 }
 
