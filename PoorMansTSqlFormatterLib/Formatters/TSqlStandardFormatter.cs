@@ -91,8 +91,10 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case Interfaces.Constants.ENAME_SQL_CLAUSE:
-                    WhiteSpace_SeparateClauses(contentElement, outString, indentLevel, ref breakExpected);
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel+1, ref breakExpected);
+                    if (contentElement.ParentNode.Name.Equals(Interfaces.Constants.ENAME_EXPRESSION_PARENS))
+                        breakExpected = true;
+                    WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected);
                     breakExpected = true;
                     break;
 
@@ -127,6 +129,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append("(");
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected);
+                    WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append(")");
                     break;
 
@@ -135,16 +138,13 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append("(");
                     StringBuilder innerStringBuilder = new StringBuilder();
-                    ProcessSqlNodeList(innerStringBuilder, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected);
+                    ProcessSqlNodeList(innerStringBuilder, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
                     string innerString = innerStringBuilder.ToString();
                     outString.Append(innerString);
-
-                    //if there was a linebreak in the parens content, then force the closing paren onto a new line. Otherwise, follow standard
+                    //if there was a linebreak in the parens content, then force the closing paren onto a new line.
                     if (Regex.IsMatch(innerString, @"(\r|\n)+"))
-                        WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel + 1, ref breakExpected);
-                    else
-                        WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel + 1, ref breakExpected);
-
+                        breakExpected = true;
+                    WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append(")");
                     break;
 
@@ -355,16 +355,6 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (breakExpected)
             {
                 outString.Append(Environment.NewLine);
-                outString.Append(Environment.NewLine);
-                Indent(outString, indentLevel);
-                breakExpected = false;
-            }
-        }
-
-        private void WhiteSpace_SeparateClauses(XmlElement contentElement, StringBuilder outString, int indentLevel, ref bool breakExpected)
-        {
-            if (breakExpected)
-            {
                 outString.Append(Environment.NewLine);
                 Indent(outString, indentLevel);
                 breakExpected = false;

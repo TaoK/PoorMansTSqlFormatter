@@ -30,15 +30,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
     {
         /*
          * TODO:
-         *  - support derived table parens type (if different from expression...?)
-         *  - support clauses in parens? (for derived tables)
-         *  - handle CTEs
          *  - parse CASE statements for structured display
-         *  - parse ON sections, for those who prefer to start ON on the next line and indent from there
+         *  - handle CTEs
          *  - enhance DDL context to also have clauses (with a backtrack in the standard formatter), for RETURNS...? Or just detect it in formatting?
          *  - update the demo UI to reference GPL, and publish the program
          *  - Add support for join hints, such as "LOOP"
          *  - Manually review the output from all test cases for "strange" effects
+         *  - parse ON sections, for those who prefer to start ON on the next line and indent from there
          *  
          *  - Tests
          *    - Samples illustrating all the tokens and container combinations implemented
@@ -103,6 +101,12 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             )
                         {
                             currentContainerNode = (XmlElement)currentContainerNode.ParentNode;
+                        }
+                        else if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
+                                && currentContainerNode.ParentNode.Name.Equals(Interfaces.Constants.ENAME_EXPRESSION_PARENS)
+                                )
+                        {
+                            currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode;
                         }
                         else
                         {
@@ -576,9 +580,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
         private void SaveNewElementWithError(XmlDocument sqlTree, string newElementName, string newElementValue, XmlElement currentContainerNode, ref bool errorFound)
         {
-            XmlElement newElement = sqlTree.CreateElement(newElementName);
-            newElement.InnerText = newElementValue;
-            currentContainerNode.AppendChild(newElement);
+            SaveNewElement(sqlTree, newElementName, newElementValue, currentContainerNode);
 #if DEBUG
             System.Diagnostics.Debugger.Break();
 #endif
@@ -641,25 +643,25 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
         private XmlElement StartNewStatement(XmlDocument sqlTree, XmlElement containerElement)
         {
-            XmlElement newStatement = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_STATEMENT);
-            containerElement.AppendChild(newStatement);
-            XmlElement newClause = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_CLAUSE);
-            newClause.InnerText = "";
-            newStatement.AppendChild(newClause);
-            return newClause;
+            XmlElement newStatement = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_SQL_STATEMENT, "", containerElement);
+            return SaveNewElement(sqlTree, Interfaces.Constants.ENAME_SQL_CLAUSE, "", newStatement);
         }
 
-        private static void ConsiderStartingNewClause(XmlDocument sqlTree, ref XmlElement currentContainerNode)
+        private void ConsiderStartingNewClause(XmlDocument sqlTree, ref XmlElement currentContainerNode)
         {
             if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_CLAUSE)
                 && HasNonWhiteSpaceNonSingleCommentContent(currentContainerNode)
                 )
             {
+                //complete current clause, start a new one in the same container
                 XmlElement previousContainerElement = currentContainerNode;
-                XmlElement newElement = sqlTree.CreateElement(Interfaces.Constants.ENAME_SQL_CLAUSE);
-                currentContainerNode.ParentNode.AppendChild(newElement);
-                currentContainerNode = newElement;
+                currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_SQL_CLAUSE, "", (XmlElement)currentContainerNode.ParentNode);
                 MigrateApplicableComments(previousContainerElement, currentContainerNode);
+            }
+            else if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_EXPRESSION_PARENS))
+            {
+                //create new clause and set context to it.
+                currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_SQL_CLAUSE, "", currentContainerNode);
             }
         }
 
@@ -808,6 +810,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     || uppercaseValue.Equals("UNION")
                     || uppercaseValue.Equals("VALUES")
                     || uppercaseValue.Equals("RETURNS")
+                    || uppercaseValue.Equals("FOR")
                     || uppercaseValue.Equals("PIVOT")
                     || uppercaseValue.Equals("UNPIVOT")
                     )
@@ -863,6 +866,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             || testValue.Equals("ALL")
                             || testValue.Equals("SOME")
                             || testValue.Equals("ANY")
+                            || testValue.Equals("FROM")
+                            || testValue.Equals("JOIN")
                             )
                         )
                     )
