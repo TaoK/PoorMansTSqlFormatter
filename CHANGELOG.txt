@@ -1,5 +1,13 @@
 Poor Man's T-SQL Formatter change log
 
+Version 0.9.2:
+--------------
+
+ - Added structured output of Derived Tables (and subqueries)
+ - Added structured output of Case Statements
+ - Added more handled keywords
+ 
+
 Version 0.9.1:
 --------------
 
