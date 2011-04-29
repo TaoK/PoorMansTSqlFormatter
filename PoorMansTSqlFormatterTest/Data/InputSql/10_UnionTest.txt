@@ -1,0 +1,4 @@
+﻿SELECT *
+FROM (((SELECT A AS TheOnlyColumn FROM (Select 'Test' as a UNION SELECT 'Test2') AS something))
+UNION
+((SELECT 'More'))) AS TestDerivedTable

@@ -30,7 +30,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
     {
         /*
          * TODO:
-         *  - handle CTEs
+         *  - handle BETWEEN as a container, to easily avoid "AND" being treated as a boolean operator
+         *  - handle CTEs such that AS clause is on its own line
          *  - enhance DDL context to also have clauses (with a backtrack in the standard formatter), for RETURNS...? Or just detect it in formatting?
          *  - update the demo UI to reference GPL, and publish the program
          *  - Add support for join hints, such as "LOOP"
@@ -324,6 +325,20 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             keywordMatchStringsUsed = 3;
                             string keywordString = GetCompoundKeyword(ref tokenID, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
                             SaveNewElement(sqlTree, token.Name, keywordString, currentContainerNode);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("UNION ALL "))
+                        {
+                            ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
+                            keywordMatchStringsUsed = 2;
+                            string keywordString = GetCompoundKeyword(ref tokenID, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
+                            SaveNewElement(sqlTree, Interfaces.Constants.ENAME_UNION_CLAUSE, keywordString, currentContainerNode);
+                            currentContainerNode = (XmlElement)currentContainerNode.ParentNode;
+                        }
+                        else if (keywordMatchPhrase.StartsWith("UNION "))
+                        {
+                            ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
+                            SaveNewElement(sqlTree, Interfaces.Constants.ENAME_UNION_CLAUSE, token.InnerText, currentContainerNode);
+                            currentContainerNode = (XmlElement)currentContainerNode.ParentNode;
                         }
                         else if (keywordMatchPhrase.StartsWith("WHILE "))
                         {
@@ -678,7 +693,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                 currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_SQL_CLAUSE, "", (XmlElement)currentContainerNode.ParentNode);
                 MigrateApplicableComments(previousContainerElement, currentContainerNode);
             }
-            else if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_EXPRESSION_PARENS))
+            else if (currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_EXPRESSION_PARENS)
+                || currentContainerNode.Name.Equals(Interfaces.Constants.ENAME_SQL_STATEMENT))
             {
                 //create new clause and set context to it.
                 currentContainerNode = SaveNewElement(sqlTree, Interfaces.Constants.ENAME_SQL_CLAUSE, "", currentContainerNode);
@@ -699,9 +715,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                 }
                 else if (migrationCandidate.PreviousSibling != null
                     && (migrationCandidate.Name.Equals(Interfaces.Constants.ENAME_COMMENT_SINGLELINE)
-                        || (migrationCandidate.Name.Equals(Interfaces.Constants.ENAME_COMMENT_MULTILINE)
-                            && !Regex.IsMatch(migrationCandidate.InnerText, @"(\r|\n)+")
-                            )
+                        || migrationCandidate.Name.Equals(Interfaces.Constants.ENAME_COMMENT_MULTILINE)
                         )
                     && (migrationCandidate.PreviousSibling.NodeType == XmlNodeType.Whitespace
                         || migrationCandidate.PreviousSibling.Name.Equals(Interfaces.Constants.ENAME_WHITESPACE)
@@ -716,6 +730,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         && Regex.IsMatch(migrationCandidate.PreviousSibling.InnerText, @"(\r|\n)+")
                         )
                     {
+                        //migrate everything considered so far, and move on to the next one for consideration.
                         while (!previousContainerElement.LastChild.Equals(migrationCandidate))
                         {
                             currentContainerNode.ParentNode.PrependChild(previousContainerElement.LastChild);
@@ -725,11 +740,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     }
                     else
                     {
+                        //this one wasn't properly separated from the previous node/entry, keep going in case there's a linebreak further up.
                         migrationCandidate = migrationCandidate.PreviousSibling;
                     }
                 }
                 else
                 {
+                    //we found a non-whitespace non-comment node. Stop trying to migrate comments.
                     migrationCandidate = null;
                 }
             }
@@ -888,6 +905,9 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             || testValue.Equals("ANY")
                             || testValue.Equals("FROM")
                             || testValue.Equals("JOIN")
+                            || testValue.Equals("UNION")
+                            || testValue.Equals("AS")
+                            || testValue.Equals("APPLY")
                             )
                         )
                     )

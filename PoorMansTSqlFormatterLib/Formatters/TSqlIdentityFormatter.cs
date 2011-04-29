@@ -160,6 +160,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.Constants.ENAME_BATCH_SEPARATOR:
                 case Interfaces.Constants.ENAME_AND_OPERATOR:
                 case Interfaces.Constants.ENAME_OR_OPERATOR:
+                case Interfaces.Constants.ENAME_UNION_CLAUSE:
                     outString.Append(contentElement.InnerText);
                     break;
                 default:

@@ -29,7 +29,12 @@ namespace PoorMansTSqlFormatterLib.Formatters
     {
         /*
          * TODO:
-         *  - UNION clauses get special formatting?
+         *  - Find a way to stack same-indent closing parens (parens buffer??)
+         *  - (optionally?) perorm some syntantical consistency fixes:
+         *    - eliminate redundant "Outer" keyword from "left", "right" and "full" join clauses
+         *    - change plain "join" to "inner join"
+         *    - make this work despite any join hints (loop, hash, merge, remote)
+         *    
          *  - Implement text width-based line breaking
          *    - Provide preference option for width and tab spaces?
          *  - Implement keyword casing
@@ -97,6 +102,13 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         breakExpected = true;
                     WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel, ref breakExpected);
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected);
+                    breakExpected = true;
+                    break;
+
+                case Interfaces.Constants.ENAME_UNION_CLAUSE:
+                    WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel - 1, ref breakExpected);
+                    outString.Append(contentElement.InnerText);
+                    WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel - 1, ref breakExpected);
                     breakExpected = true;
                     break;
 
