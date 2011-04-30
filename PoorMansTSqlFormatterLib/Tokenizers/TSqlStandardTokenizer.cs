@@ -22,44 +22,41 @@ using System;
 using System.Text;
 using System.Xml;
 using System.IO;
+using PoorMansTSqlFormatterLib.Interfaces;
 
 namespace PoorMansTSqlFormatterLib.Tokenizers
 {
-    public class TSqlStandardTokenizer : Interfaces.ISqlTokenizer
+    public class TSqlStandardTokenizer : ISqlTokenizer
     {
         /*
          * TODO:
          *  - WILL NEED TO RESEARCH QUOTED_IDENTIFIER
          *  - Future Extensions
          *    - Scope Resolution Operator (and/or colons in general?)
-         *    - Compound operators (SQL 2008)
+         *    - Compound operators (SQL 2008), those that end in equals.
          */
 
-        public XmlDocument TokenizeSQL(string inputSQL)
+        public Interfaces.ITokenList TokenizeSQL(string inputSQL)
         {
-            XmlDocument tokenContainerDoc = new XmlDocument();
-            XmlElement tokenContainer;
+            TokenList tokenContainer = new TokenList();
             StringReader inputReader = new StringReader(inputSQL);
-            SqlTokenizationType? currentTokenType;
+            SqlTokenizationType? currentTokenizationType;
             StringBuilder currentTokenValue = new StringBuilder();
-            bool errorFound = false;
 
-            tokenContainerDoc.AppendChild(tokenContainerDoc.CreateElement(Interfaces.XmlConstants.ENAME_SQLTOKENS_ROOT));
-            tokenContainer = tokenContainerDoc.DocumentElement;
-            currentTokenType = null;
+            currentTokenizationType = null;
             currentTokenValue.Length = 0;
 
             int currentCharInt = inputReader.Read();
             while (currentCharInt >= 0)
             {
                 char currentCharacter = (char)currentCharInt;
-                if (currentTokenType == null)
+                if (currentTokenizationType == null)
                 {
-                    currentTokenType = StartToken(currentTokenValue, currentCharacter);
+                    ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
                 }
                 else
                 {
-                    switch (currentTokenType.Value)
+                    switch (currentTokenizationType.Value)
                     {
                         case SqlTokenizationType.WhiteSpace:
                             if (IsWhitespace(currentCharacter))
@@ -68,48 +65,50 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                             }
                             else
                             {
-                                currentTokenType = CompleteToken(currentTokenType.Value, tokenContainer, currentTokenValue);
-                                currentTokenType = StartToken(currentTokenValue, currentCharacter);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
                             }
                             break;
 
                         case SqlTokenizationType.SingleHyphen:
                             if (currentCharacter == '-')
                             {
-                                currentTokenType = SqlTokenizationType.SingleLineComment;
+                                currentTokenizationType = SqlTokenizationType.SingleLineComment;
                             }
                             else if (currentCharacter == '=')
                             {
-                                currentTokenType = SqlTokenizationType.OtherOperator;
+                                currentTokenizationType = SqlTokenizationType.OtherOperator;
                                 currentTokenValue.Append('-');
                                 currentTokenValue.Append(currentCharacter);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
                             }
                             else
                             {
-                                currentTokenType = SqlTokenizationType.OtherOperator;
+                                currentTokenizationType = SqlTokenizationType.OtherOperator;
                                 currentTokenValue.Append('-');
-                                currentTokenType = CompleteToken(currentTokenType.Value, tokenContainer, currentTokenValue);
-                                currentTokenType = StartToken(currentTokenValue, currentCharacter);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
                             }
                             break;
 
                         case SqlTokenizationType.SingleSlash:
                             if (currentCharacter == '*')
                             {
-                                currentTokenType = SqlTokenizationType.BlockComment;
+                                currentTokenizationType = SqlTokenizationType.BlockComment;
                             }
                             else if (currentCharacter == '=')
                             {
-                                currentTokenType = SqlTokenizationType.OtherOperator;
-                                currentTokenValue.Append('-');
+                                currentTokenizationType = SqlTokenizationType.OtherOperator;
+                                currentTokenValue.Append('/');
                                 currentTokenValue.Append(currentCharacter);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
                             }
                             else
                             {
-                                currentTokenType = SqlTokenizationType.OtherOperator;
+                                currentTokenizationType = SqlTokenizationType.OtherOperator;
                                 currentTokenValue.Append('/');
-                                currentTokenType = CompleteToken(currentTokenType.Value, tokenContainer, currentTokenValue);
-                                currentTokenType = StartToken(currentTokenValue, currentCharacter);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
                             }
                             break;
 
@@ -122,7 +121,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                                 if (currentCharacter == (char)13 && nextCharInt == 10)
                                     currentTokenValue.Append((char)inputReader.Read());
 
-                                currentTokenType = CompleteToken(currentTokenType.Value, tokenContainer, currentTokenValue);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
                             }
                             else
                             {
@@ -137,7 +136,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                                 if (nextCharInt == (int)'/')
                                 {
                                     inputReader.Read();
-                                    currentTokenType = CompleteToken(currentTokenType.Value, tokenContainer, currentTokenValue);
+                                    CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
                                 }
                                 else
                                 {
@@ -153,8 +152,8 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                         case SqlTokenizationType.OtherNode:
                             if (IsNonWordCharacter(currentCharacter))
                             {
-                                currentTokenType = CompleteToken(currentTokenType.Value, tokenContainer, currentTokenValue);
-                                currentTokenType = StartToken(currentTokenValue, currentCharacter);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
                             }
                             else
                             {
@@ -165,11 +164,11 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                         case SqlTokenizationType.SingleN:
                             if (currentCharacter == '\'')
                             {
-                                currentTokenType = SqlTokenizationType.NString;
+                                currentTokenizationType = SqlTokenizationType.NString;
                             }
                             else
                             {
-                                currentTokenType = SqlTokenizationType.OtherNode;
+                                currentTokenizationType = SqlTokenizationType.OtherNode;
                                 currentTokenValue.Append('N');
                                 currentTokenValue.Append(currentCharacter);
                             }
@@ -187,7 +186,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                                 }
                                 else
                                 {
-                                    currentTokenType = CompleteToken(currentTokenType.Value, tokenContainer, currentTokenValue);
+                                    CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
                                 }
                             }
                             else
@@ -207,7 +206,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                                 }
                                 else
                                 {
-                                    currentTokenType = CompleteToken(currentTokenType.Value, tokenContainer, currentTokenValue);
+                                    CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
                                 }
                             }
                             else
@@ -218,29 +217,31 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
 
                         case SqlTokenizationType.SingleLT:
                             currentTokenValue.Append('<');
-                            currentTokenType = SqlTokenizationType.OtherOperator;
+                            currentTokenizationType = SqlTokenizationType.OtherOperator;
                             if (currentCharacter == '=' || currentCharacter == '>')
                             {
                                 currentTokenValue.Append(currentCharacter);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
                             }
                             else
                             {
-                                currentTokenType = CompleteToken(currentTokenType.Value, tokenContainer, currentTokenValue);
-                                currentTokenType = StartToken(currentTokenValue, currentCharacter);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
                             }
                             break;
 
                         case SqlTokenizationType.SingleGT:
                             currentTokenValue.Append('>');
-                            currentTokenType = SqlTokenizationType.OtherOperator;
+                            currentTokenizationType = SqlTokenizationType.OtherOperator;
                             if (currentCharacter == '=')
                             {
                                 currentTokenValue.Append(currentCharacter);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
                             }
                             else
                             {
-                                currentTokenType = CompleteToken(currentTokenType.Value, tokenContainer, currentTokenValue);
-                                currentTokenType = StartToken(currentTokenValue, currentCharacter);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
                             }
                             break;
 
@@ -248,26 +249,16 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                             currentTokenValue.Append('!');
                             if (currentCharacter == '=' || currentCharacter == '<' || currentCharacter == '>')
                             {
-                                currentTokenType = SqlTokenizationType.OtherOperator;
+                                currentTokenizationType = SqlTokenizationType.OtherOperator;
                                 currentTokenValue.Append(currentCharacter);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
                             }
                             else
                             {
-                                currentTokenType = SqlTokenizationType.OtherNode;
-                                currentTokenType = CompleteToken(currentTokenType.Value, tokenContainer, currentTokenValue);
-                                currentTokenType = StartToken(currentTokenValue, currentCharacter);
+                                currentTokenizationType = SqlTokenizationType.OtherNode;
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
                             }
-                            break;
-
-                        case SqlTokenizationType.OpenParens:
-                        case SqlTokenizationType.CloseParens:
-                        case SqlTokenizationType.Comma:
-                        case SqlTokenizationType.Period:
-                        case SqlTokenizationType.SemiColon:
-                        case SqlTokenizationType.Asterisk:
-                        case SqlTokenizationType.OtherOperator:
-                            currentTokenType = CompleteToken(currentTokenType.Value, tokenContainer, currentTokenValue);
-                            currentTokenType = StartToken(currentTokenValue, currentCharacter);
                             break;
 
                         default:
@@ -279,24 +270,19 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             }
 
 
-            if (currentTokenType != null)
+            if (currentTokenizationType != null)
             {
-                if (currentTokenType.Value == SqlTokenizationType.BlockComment
-                    || currentTokenType.Value == SqlTokenizationType.String
-                    || currentTokenType.Value == SqlTokenizationType.NString
-                    || currentTokenType.Value == SqlTokenizationType.QuotedIdentifier
+                if (currentTokenizationType.Value == SqlTokenizationType.BlockComment
+                    || currentTokenizationType.Value == SqlTokenizationType.String
+                    || currentTokenizationType.Value == SqlTokenizationType.NString
+                    || currentTokenizationType.Value == SqlTokenizationType.QuotedIdentifier
                     )
-                    errorFound = true;
+                    tokenContainer.HasErrors = true;
 
-                CompleteToken(currentTokenType.Value, tokenContainer, currentTokenValue);
+                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
             }
 
-            if (errorFound)
-            {
-                tokenContainerDoc.DocumentElement.SetAttribute(Interfaces.XmlConstants.ANAME_ERRORFOUND, "1");
-            }
-
-            return tokenContainerDoc;
+            return tokenContainer;
         }
 
         private static bool IsWhitespace(char targetCharacter)
@@ -342,192 +328,152 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                 );
         }
 
-        private static SqlTokenizationType? StartToken(StringBuilder currentNodeValue, char currentCharacter)
+        private static void ProcessOrOpenToken(ref SqlTokenizationType? currentTokenizationType, StringBuilder currentNodeValue, char currentCharacter, ITokenList tokenContainer)
         {
-            SqlTokenizationType? currentNodeType;
+
+            if (currentTokenizationType != null)
+                throw new Exception("Cannot start a new Token: existing Tokenization Type is not null");
+
+            //start a new value.
+            currentNodeValue.Length = 0;
 
             if (IsWhitespace(currentCharacter))
             {
-                currentNodeType = SqlTokenizationType.WhiteSpace;
+                currentTokenizationType = SqlTokenizationType.WhiteSpace;
                 currentNodeValue.Append(currentCharacter);
             }
             else if (currentCharacter == '-')
             {
-                currentNodeType = SqlTokenizationType.SingleHyphen;
+                currentTokenizationType = SqlTokenizationType.SingleHyphen;
             }
             else if (currentCharacter == '/')
             {
-                currentNodeType = SqlTokenizationType.SingleSlash;
+                currentTokenizationType = SqlTokenizationType.SingleSlash;
             }
             else if (currentCharacter == 'N')
             {
-                currentNodeType = SqlTokenizationType.SingleN;
+                currentTokenizationType = SqlTokenizationType.SingleN;
             }
             else if (currentCharacter == '\'')
             {
-                currentNodeType = SqlTokenizationType.String;
+                currentTokenizationType = SqlTokenizationType.String;
             }
             else if (currentCharacter == '[')
             {
-                currentNodeType = SqlTokenizationType.QuotedIdentifier;
+                currentTokenizationType = SqlTokenizationType.QuotedIdentifier;
             }
             else if (currentCharacter == '(')
             {
-                currentNodeType = SqlTokenizationType.OpenParens;
+                tokenContainer.Add(new Token(SqlTokenType.OpenParens, ""));
             }
             else if (currentCharacter == ')')
             {
-                currentNodeType = SqlTokenizationType.CloseParens;
+                tokenContainer.Add(new Token(SqlTokenType.CloseParens, ""));
             }
             else if (currentCharacter == ',')
             {
-                currentNodeType = SqlTokenizationType.Comma;
+                tokenContainer.Add(new Token(SqlTokenType.Comma, ""));
             }
             else if (currentCharacter == '.')
             {
-                currentNodeType = SqlTokenizationType.Period;
+                tokenContainer.Add(new Token(SqlTokenType.Period, ""));
             }
             else if (currentCharacter == ';')
             {
-                currentNodeType = SqlTokenizationType.SemiColon;
+                tokenContainer.Add(new Token(SqlTokenType.Semicolon, ""));
             }
             else if (currentCharacter == '*')
             {
-                currentNodeType = SqlTokenizationType.Asterisk;
+                tokenContainer.Add(new Token(SqlTokenType.Asterisk, ""));
             }
             else if (currentCharacter == '>')
             {
-                currentNodeType = SqlTokenizationType.SingleGT;
+                currentTokenizationType = SqlTokenizationType.SingleGT;
             }
             else if (currentCharacter == '<')
             {
-                currentNodeType = SqlTokenizationType.SingleLT;
+                currentTokenizationType = SqlTokenizationType.SingleLT;
             }
             else if (currentCharacter == '!')
             {
-                currentNodeType = SqlTokenizationType.SingleExclamation;
+                currentTokenizationType = SqlTokenizationType.SingleExclamation;
             }
             else if (IsOperatorCharacter(currentCharacter))
             {
-                currentNodeType = SqlTokenizationType.OtherOperator;
-                currentNodeValue.Append(currentCharacter);
+                tokenContainer.Add(new Token(SqlTokenType.OtherOperator, currentCharacter.ToString()));
             }
             else
             {
-                currentNodeType = SqlTokenizationType.OtherNode;
+                currentTokenizationType = SqlTokenizationType.OtherNode;
                 currentNodeValue.Append(currentCharacter);
             }
-            return currentNodeType;
         }
 
-        private static SqlTokenizationType? CompleteToken(SqlTokenizationType thisType, XmlElement tokenContainer, StringBuilder currentValue)
+        private static void CompleteToken(ref SqlTokenizationType? currentTokenizationType, ITokenList tokenContainer, StringBuilder currentValue)
         {
-            string elementName = "";
-            string elementValue = "";
+            if (currentTokenizationType == null)
+                throw new Exception("Cannot complete Token, as there is no current Tokenization Type");
 
-            switch (thisType)
+            switch (currentTokenizationType)
             {
                 case SqlTokenizationType.BlockComment:
-                    elementName = Interfaces.XmlConstants.ENAME_COMMENT_MULTILINE;
-                    elementValue = currentValue.ToString();
+                    tokenContainer.Add(new Token(SqlTokenType.MultiLineComment, currentValue.ToString()));
                     break;
 
                 case SqlTokenizationType.OtherNode:
-                    elementName = Interfaces.XmlConstants.ENAME_OTHERNODE;
-                    elementValue = currentValue.ToString();
+                    tokenContainer.Add(new Token(SqlTokenType.OtherNode, currentValue.ToString()));
                     break;
 
                 case SqlTokenizationType.SingleLineComment:
-                    elementName = Interfaces.XmlConstants.ENAME_COMMENT_SINGLELINE;
-                    elementValue = currentValue.ToString();
+                    tokenContainer.Add(new Token(SqlTokenType.SingleLineComment, currentValue.ToString()));
                     break;
 
                 case SqlTokenizationType.SingleHyphen:
+                    tokenContainer.Add(new Token(SqlTokenType.OtherOperator, "-"));
+                    break;
+
                 case SqlTokenizationType.SingleSlash:
-                    elementName = Interfaces.XmlConstants.ENAME_OTHEROPERATOR;
-                    elementValue = "/";
+                    tokenContainer.Add(new Token(SqlTokenType.OtherOperator, "/"));
                     break;
 
                 case SqlTokenizationType.WhiteSpace:
-                    elementName = Interfaces.XmlConstants.ENAME_WHITESPACE;
-                    elementValue = currentValue.ToString();
+                    tokenContainer.Add(new Token(SqlTokenType.WhiteSpace, currentValue.ToString()));
                     break;
 
                 case SqlTokenizationType.SingleN:
-                    elementName = Interfaces.XmlConstants.ENAME_OTHERNODE;
-                    elementValue = "N";
+                    tokenContainer.Add(new Token(SqlTokenType.OtherNode, "N"));
                     break;
 
                 case SqlTokenizationType.SingleExclamation:
-                    elementName = Interfaces.XmlConstants.ENAME_OTHERNODE;
-                    elementValue = "!";
+                    tokenContainer.Add(new Token(SqlTokenType.OtherNode, "!"));
                     break;
 
                 case SqlTokenizationType.NString:
-                    elementName = Interfaces.XmlConstants.ENAME_NSTRING;
-                    elementValue = currentValue.ToString();
+                    tokenContainer.Add(new Token(SqlTokenType.NationalString, currentValue.ToString()));
                     break;
 
                 case SqlTokenizationType.String:
-                    elementName = Interfaces.XmlConstants.ENAME_STRING;
-                    elementValue = currentValue.ToString();
+                    tokenContainer.Add(new Token(SqlTokenType.String, currentValue.ToString()));
                     break;
 
                 case SqlTokenizationType.QuotedIdentifier:
-                    elementName = Interfaces.XmlConstants.ENAME_QUOTED_IDENTIFIER;
-                    elementValue = currentValue.ToString();
-                    break;
-
-                case SqlTokenizationType.OpenParens:
-                    elementName = Interfaces.XmlConstants.ENAME_PARENS_OPEN;
-                    elementValue = "";
-                    break;
-
-                case SqlTokenizationType.CloseParens:
-                    elementName = Interfaces.XmlConstants.ENAME_PARENS_CLOSE;
-                    elementValue = "";
-                    break;
-
-                case SqlTokenizationType.Comma:
-                    elementName = Interfaces.XmlConstants.ENAME_COMMA;
-                    elementValue = "";
-                    break;
-
-                case SqlTokenizationType.Period:
-                    elementName = Interfaces.XmlConstants.ENAME_PERIOD;
-                    elementValue = "";
-                    break;
-
-                case SqlTokenizationType.SemiColon:
-                    elementName = Interfaces.XmlConstants.ENAME_SEMICOLON;
-                    elementValue = "";
-                    break;
-
-                case SqlTokenizationType.Asterisk:
-                    elementName = Interfaces.XmlConstants.ENAME_ASTERISK;
-                    elementValue = "";
+                    tokenContainer.Add(new Token(SqlTokenType.QuotedIdentifier, currentValue.ToString()));
                     break;
 
                 case SqlTokenizationType.OtherOperator:
-                    elementName = Interfaces.XmlConstants.ENAME_OTHEROPERATOR;
-                    elementValue = currentValue.ToString();
+                    tokenContainer.Add(new Token(SqlTokenType.OtherOperator, currentValue.ToString()));
                     break;
 
                 default:
                     throw new Exception("Unrecognized SQL Node Type");
             }
 
-            XmlElement newNode = tokenContainer.OwnerDocument.CreateElement(elementName);
-            newNode.InnerText = elementValue;
-            tokenContainer.AppendChild(newNode);
-
-            currentValue.Length = 0;
-            return null;
+            currentTokenizationType = null;
         }
 
         public enum SqlTokenizationType
         {
-            //actual tokens:
+            //variable-length types
             WhiteSpace,
             OtherNode,
             SingleLineComment,
@@ -535,15 +481,9 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             String,
             NString,
             QuotedIdentifier,
-            OpenParens,
-            CloseParens,
-            Comma,
-            Period,
-            SemiColon,
-            Asterisk,
             OtherOperator,
 
-            //temp types:
+            //temporary types
             SingleHyphen,
             SingleSlash,
             SingleN,

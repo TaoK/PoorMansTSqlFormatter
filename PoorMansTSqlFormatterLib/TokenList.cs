@@ -25,15 +25,21 @@ using PoorMansTSqlFormatterLib.Interfaces;
 
 namespace PoorMansTSqlFormatterLib
 {
-    public class Token : Interfaces.IToken
+    public class TokenList : List<IToken>, ITokenList
     {
-        public Token(SqlTokenType type, string value)
+        public bool HasErrors { get; set; }
+        
+        public string PrettyPrint()
         {
-            Type = type;
-            Value = value;
+            StringBuilder outString = new StringBuilder();
+            foreach(IToken contentToken in this)
+            {
+                string tokenType = contentToken.Type.ToString();
+                outString.Append(tokenType.PadRight(20));
+                outString.Append(": ");
+                outString.AppendLine(contentToken.Value);
+            }
+            return outString.ToString();
         }
-
-        public SqlTokenType Type { get; set; }
-        public string Value { get; set; }
     }
 }

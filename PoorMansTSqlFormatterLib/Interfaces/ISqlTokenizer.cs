@@ -25,6 +25,6 @@ namespace PoorMansTSqlFormatterLib.Interfaces
 {
     public interface ISqlTokenizer
     {
-        XmlDocument TokenizeSQL(string inputSQL);
+        ITokenList TokenizeSQL(string inputSQL);
     }
 }

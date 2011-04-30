@@ -55,7 +55,7 @@ namespace PoorMansTSqlFormatterTests
         {
             foreach (string inputSQL in Utils.FolderTextFileIterator(TestDataFolder))
             {
-                XmlDocument tokenized = _tokenizer.TokenizeSQL(inputSQL);
+                ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
                 string outputSQL = _tokenFormatter.FormatSQLTokens(tokenized);
                 if (!inputSQL.Contains("THIS TEST FILE IS NOT VALID SQL"))
                     Assert.AreEqual<string>(outputSQL, inputSQL, "input and output should be the same, as this is a valid SQL file");
@@ -67,7 +67,7 @@ namespace PoorMansTSqlFormatterTests
         {
             foreach (string inputSQL in Utils.FolderTextFileIterator(TestDataFolder))
             {
-                XmlDocument tokenized = _tokenizer.TokenizeSQL(inputSQL);
+                ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
                 XmlDocument parsed = _parser.ParseSQL(tokenized);
                 string outputSQL = _treeFormatter.FormatSQLTree(parsed);
                 if (!inputSQL.Contains("THIS TEST FILE IS NOT VALID SQL"))

@@ -53,10 +53,10 @@ namespace PoorMansTSqlFormatterTests
         {
             foreach (string inputSQL in Utils.FolderTextFileIterator(TestDataFolder))
             {
-                XmlDocument tokenized = _tokenizer.TokenizeSQL(inputSQL);
+                ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
                 XmlDocument parsed = _parser.ParseSQL(tokenized);
                 string outputSQL = _treeFormatter.FormatSQLTree(parsed);
-                XmlDocument tokenizedAgain = _tokenizer.TokenizeSQL(outputSQL);
+                ITokenList tokenizedAgain = _tokenizer.TokenizeSQL(outputSQL);
                 XmlDocument parsedAgain = _parser.ParseSQL(tokenizedAgain);
                 Utils.StripWhiteSpaceFromSqlTree(parsed);
                 Utils.StripWhiteSpaceFromSqlTree(parsedAgain);

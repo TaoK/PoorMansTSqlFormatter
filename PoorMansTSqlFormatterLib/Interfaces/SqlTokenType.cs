@@ -19,21 +19,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using PoorMansTSqlFormatterLib.Interfaces;
 
-namespace PoorMansTSqlFormatterLib
+namespace PoorMansTSqlFormatterLib.Interfaces
 {
-    public class Token : Interfaces.IToken
+    public enum SqlTokenType
     {
-        public Token(SqlTokenType type, string value)
-        {
-            Type = type;
-            Value = value;
-        }
-
-        public SqlTokenType Type { get; set; }
-        public string Value { get; set; }
+        OpenParens,
+        CloseParens,
+        WhiteSpace,
+        OtherNode,
+        SingleLineComment,
+        MultiLineComment,
+        String,
+        NationalString,
+        QuotedIdentifier,
+        Comma,
+        Period,
+        Semicolon,
+        Asterisk,
+        OtherOperator
     }
 }

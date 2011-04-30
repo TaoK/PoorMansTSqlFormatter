@@ -25,6 +25,6 @@ namespace PoorMansTSqlFormatterLib.Interfaces
 {
     public interface ISqlTokenFormatter
     {
-        string FormatSQLTokens(XmlDocument sqlTree);
+        string FormatSQLTokens(ITokenList sqlTokenList);
     }
 }

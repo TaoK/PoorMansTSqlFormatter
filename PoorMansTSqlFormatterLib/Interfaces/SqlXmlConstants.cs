@@ -24,14 +24,8 @@ using System.Text;
 
 namespace PoorMansTSqlFormatterLib.Interfaces
 {
-    public static class XmlConstants
+    public static class SqlXmlConstants
     {
-        //token element names
-        public const string ENAME_SQLTOKENS_ROOT = "SqlTokensRoot";
-        public const string ENAME_PARENS_OPEN = "OpenParens";
-        public const string ENAME_PARENS_CLOSE = "CloseParens";
-
-        //shared token-and-tree element names
         public const string ENAME_WHITESPACE = "WhiteSpace";
         public const string ENAME_OTHERNODE = "Other";
         public const string ENAME_COMMENT_SINGLELINE = "SingleLineComment";
@@ -44,8 +38,6 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_SEMICOLON = "Semicolon";
         public const string ENAME_ASTERISK = "Asterisk";
         public const string ENAME_OTHEROPERATOR = "OtherOperator";
-
-        //tree structure element names
         public const string ENAME_SQL_ROOT = "SqlRoot";
         public const string ENAME_SQL_STATEMENT = "SqlStatement";
         public const string ENAME_SQL_CLAUSE = "Clause";

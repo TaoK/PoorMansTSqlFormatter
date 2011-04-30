@@ -95,7 +95,7 @@ namespace PoorMansTSqlFormatterDemo
         private void DoFormatting()
         {
             var tokenizedSql = _tokenizer.TokenizeSQL(txt_Input.Text);
-            txt_TokenizedXml.Text = tokenizedSql.OuterXml;
+            txt_TokenizedXml.Text = tokenizedSql.PrettyPrint();
             var parsedSql = _parser.ParseSQL(tokenizedSql);
             txt_ParsedXml.Text = parsedSql.OuterXml;
             txt_OutputSql.Text = _formatter.FormatSQLTree(parsedSql);

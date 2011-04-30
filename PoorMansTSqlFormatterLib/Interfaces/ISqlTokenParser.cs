@@ -25,6 +25,6 @@ namespace PoorMansTSqlFormatterLib.Interfaces
 {
     public interface ISqlTokenParser
     {
-        XmlDocument ParseSQL(XmlDocument tokenList);
+        XmlDocument ParseSQL(ITokenList tokenList);
     }
 }
