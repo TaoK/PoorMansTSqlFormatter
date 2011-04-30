@@ -43,9 +43,13 @@
     <Compile Include="Interfaces\ISqlTokenizer.cs" />
     <Compile Include="Interfaces\ISqlTokenParser.cs" />
     <Compile Include="Interfaces\ISqlTreeFormatter.cs" />
+    <Compile Include="Interfaces\IToken.cs" />
+    <Compile Include="Interfaces\ITokenList.cs" />
+    <Compile Include="Interfaces\TokenType.cs" />
     <Compile Include="Parsers\TSqlStandardParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlParseManager.cs" />
+    <Compile Include="Token.cs" />
     <Compile Include="Tokenizers\TSqlStandardTokenizer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -24,7 +24,7 @@ using System.Text;
 
 namespace PoorMansTSqlFormatterLib.Interfaces
 {
-    public static class Constants
+    public static class XmlConstants
     {
         //token element names
         public const string ENAME_SQLTOKENS_ROOT = "SqlTokensRoot";
@@ -74,6 +74,9 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_FUNCTION_PARENS = "FunctionParens";
         public const string ENAME_AND_OPERATOR = "And";
         public const string ENAME_OR_OPERATOR = "Or";
+        public const string ENAME_BETWEEN_CONDITION = "Between";
+        public const string ENAME_BETWEEN_LOWERBOUND = "LowerBound";
+        public const string ENAME_BETWEEN_UPPERBOUND = "UpperBound";
 
         //attribute names
         public const string ANAME_ERRORFOUND = "errorFound";

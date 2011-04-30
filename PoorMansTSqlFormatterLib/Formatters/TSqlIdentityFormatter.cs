@@ -28,18 +28,18 @@ namespace PoorMansTSqlFormatterLib.Formatters
     {
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
-            return FormatSQLDoc(sqlTreeDoc, Interfaces.Constants.ENAME_SQL_ROOT);
+            return FormatSQLDoc(sqlTreeDoc, Interfaces.XmlConstants.ENAME_SQL_ROOT);
         }
 
         public string FormatSQLTokens(XmlDocument sqlTokenDoc)
         {
-            return FormatSQLDoc(sqlTokenDoc, Interfaces.Constants.ENAME_SQLTOKENS_ROOT);
+            return FormatSQLDoc(sqlTokenDoc, Interfaces.XmlConstants.ENAME_SQLTOKENS_ROOT);
         }
 
         private string FormatSQLDoc(XmlDocument sqlTokenOrTreeDoc, string rootElement)
         {
             StringBuilder outString = new StringBuilder();
-            if (sqlTokenOrTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", rootElement, Interfaces.Constants.ANAME_ERRORFOUND)) != null)
+            if (sqlTokenOrTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", rootElement, Interfaces.XmlConstants.ANAME_ERRORFOUND)) != null)
                 outString.AppendLine("--WARNING! ERRORS ENCOUNTERED DURING PARSING!");
 
             XmlNodeList rootList = sqlTokenOrTreeDoc.SelectNodes(string.Format("/{0}/*", rootElement));
@@ -60,33 +60,36 @@ namespace PoorMansTSqlFormatterLib.Formatters
         {
             switch (contentElement.Name)
             {
-                case Interfaces.Constants.ENAME_SQL_STATEMENT:
-                case Interfaces.Constants.ENAME_SQL_CLAUSE:
-                case Interfaces.Constants.ENAME_BOOLEAN_EXPRESSION:
-                case Interfaces.Constants.ENAME_DDL_BLOCK:
+                case Interfaces.XmlConstants.ENAME_SQL_STATEMENT:
+                case Interfaces.XmlConstants.ENAME_SQL_CLAUSE:
+                case Interfaces.XmlConstants.ENAME_BOOLEAN_EXPRESSION:
+                case Interfaces.XmlConstants.ENAME_DDL_BLOCK:
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"));
                     break;
 
-                case Interfaces.Constants.ENAME_DDLDETAIL_PARENS:
-                case Interfaces.Constants.ENAME_DDL_PARENS:
-                case Interfaces.Constants.ENAME_FUNCTION_PARENS:
-                case Interfaces.Constants.ENAME_EXPRESSION_PARENS:
+                case Interfaces.XmlConstants.ENAME_DDLDETAIL_PARENS:
+                case Interfaces.XmlConstants.ENAME_DDL_PARENS:
+                case Interfaces.XmlConstants.ENAME_FUNCTION_PARENS:
+                case Interfaces.XmlConstants.ENAME_EXPRESSION_PARENS:
                     outString.Append("(");
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"));
                     outString.Append(")");
                     break;
 
-                case Interfaces.Constants.ENAME_BEGIN_END_BLOCK:
-                case Interfaces.Constants.ENAME_TRY_BLOCK:
-                case Interfaces.Constants.ENAME_CASE_STATEMENT:
-                case Interfaces.Constants.ENAME_CASE_INPUT:
-                case Interfaces.Constants.ENAME_CASE_WHEN:
-                case Interfaces.Constants.ENAME_CASE_THEN:
-                case Interfaces.Constants.ENAME_CASE_ELSE:
-                case Interfaces.Constants.ENAME_IF_STATEMENT:
-                case Interfaces.Constants.ENAME_ELSE_CLAUSE:
-                case Interfaces.Constants.ENAME_WHILE_LOOP:
-                case Interfaces.Constants.ENAME_DDL_AS_BLOCK:
+                case Interfaces.XmlConstants.ENAME_BEGIN_END_BLOCK:
+                case Interfaces.XmlConstants.ENAME_TRY_BLOCK:
+                case Interfaces.XmlConstants.ENAME_CASE_STATEMENT:
+                case Interfaces.XmlConstants.ENAME_CASE_INPUT:
+                case Interfaces.XmlConstants.ENAME_CASE_WHEN:
+                case Interfaces.XmlConstants.ENAME_CASE_THEN:
+                case Interfaces.XmlConstants.ENAME_CASE_ELSE:
+                case Interfaces.XmlConstants.ENAME_IF_STATEMENT:
+                case Interfaces.XmlConstants.ENAME_ELSE_CLAUSE:
+                case Interfaces.XmlConstants.ENAME_WHILE_LOOP:
+                case Interfaces.XmlConstants.ENAME_DDL_AS_BLOCK:
+                case Interfaces.XmlConstants.ENAME_BETWEEN_CONDITION:
+                case Interfaces.XmlConstants.ENAME_BETWEEN_LOWERBOUND:
+                case Interfaces.XmlConstants.ENAME_BETWEEN_UPPERBOUND:
                     foreach (XmlNode childNode in contentElement.ChildNodes)
                     {
                         switch (childNode.NodeType)
@@ -106,61 +109,61 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     }
                     break;
 
-                case Interfaces.Constants.ENAME_COMMENT_MULTILINE:
+                case Interfaces.XmlConstants.ENAME_COMMENT_MULTILINE:
                     outString.Append("/*");
                     outString.Append(contentElement.InnerText);
                     outString.Append("*/");
                     break;
-                case Interfaces.Constants.ENAME_COMMENT_SINGLELINE:
+                case Interfaces.XmlConstants.ENAME_COMMENT_SINGLELINE:
                     outString.Append("--");
                     outString.Append(contentElement.InnerText);
                     break;
-                case Interfaces.Constants.ENAME_STRING:
+                case Interfaces.XmlConstants.ENAME_STRING:
                     outString.Append("'");
                     outString.Append(contentElement.InnerText.Replace("'", "''"));
                     outString.Append("'");
                     break;
-                case Interfaces.Constants.ENAME_NSTRING:
+                case Interfaces.XmlConstants.ENAME_NSTRING:
                     outString.Append("N'");
                     outString.Append(contentElement.InnerText.Replace("'", "''"));
                     outString.Append("'");
                     break;
-                case Interfaces.Constants.ENAME_QUOTED_IDENTIFIER:
+                case Interfaces.XmlConstants.ENAME_QUOTED_IDENTIFIER:
                     outString.Append("[");
                     outString.Append(contentElement.InnerText.Replace("]", "]]"));
                     outString.Append("]");
                     break;
-                case Interfaces.Constants.ENAME_PARENS_OPEN:
+                case Interfaces.XmlConstants.ENAME_PARENS_OPEN:
                     outString.Append("(");
                     break;
-                case Interfaces.Constants.ENAME_PARENS_CLOSE:
+                case Interfaces.XmlConstants.ENAME_PARENS_CLOSE:
                     outString.Append(")");
                     break;
 
-                case Interfaces.Constants.ENAME_COMMA:
+                case Interfaces.XmlConstants.ENAME_COMMA:
                     outString.Append(",");
                     break;
 
-                case Interfaces.Constants.ENAME_PERIOD:
+                case Interfaces.XmlConstants.ENAME_PERIOD:
                     outString.Append(".");
                     break;
 
-                case Interfaces.Constants.ENAME_SEMICOLON:
+                case Interfaces.XmlConstants.ENAME_SEMICOLON:
                     outString.Append(";");
                     break;
 
-                case Interfaces.Constants.ENAME_ASTERISK:
+                case Interfaces.XmlConstants.ENAME_ASTERISK:
                     outString.Append("*");
                     break;
 
-                case Interfaces.Constants.ENAME_BEGIN_TRANSACTION:
-                case Interfaces.Constants.ENAME_OTHERNODE:
-                case Interfaces.Constants.ENAME_WHITESPACE:
-                case Interfaces.Constants.ENAME_OTHEROPERATOR:
-                case Interfaces.Constants.ENAME_BATCH_SEPARATOR:
-                case Interfaces.Constants.ENAME_AND_OPERATOR:
-                case Interfaces.Constants.ENAME_OR_OPERATOR:
-                case Interfaces.Constants.ENAME_UNION_CLAUSE:
+                case Interfaces.XmlConstants.ENAME_BEGIN_TRANSACTION:
+                case Interfaces.XmlConstants.ENAME_OTHERNODE:
+                case Interfaces.XmlConstants.ENAME_WHITESPACE:
+                case Interfaces.XmlConstants.ENAME_OTHEROPERATOR:
+                case Interfaces.XmlConstants.ENAME_BATCH_SEPARATOR:
+                case Interfaces.XmlConstants.ENAME_AND_OPERATOR:
+                case Interfaces.XmlConstants.ENAME_OR_OPERATOR:
+                case Interfaces.XmlConstants.ENAME_UNION_CLAUSE:
                     outString.Append(contentElement.InnerText);
                     break;
                 default:

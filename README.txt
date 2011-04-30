@@ -13,7 +13,7 @@ Features:
  
  - Handles "procedural" T-SQL; this is not just a SQL statement formatter, but it also 
     formats entire batches, and multi-batch scripts.
-
+ 
 
 Limitations:
  - This is NOT a full SQL-parsing solution: only "coarse" parsing is performed, the 
@@ -36,10 +36,18 @@ Limitations:
     table column and procedure parameter declarations.
 	
 Known Issues / Todo:
- - Handle "exotic" keywords from SQL 2005 on (common table expressions, etc)
  - Keyword Capitalization
+ - Handle more "exotic" keywords (or just things I've missed so far)
  - Options in standard formatter and demo
  - HTML output (color highlighting)
+
+Longer-term enhancements / additions:
+ - Demo App download, with proper license notices, better layout, etc
+ - Compiled library download
+ - Supporting Mono (the library code undoubtedly already does, but I'd like to make it easy to build)
+   - Compiled mono library download
+ - Command-line program/download for ripping through a folder hierarchy of sql scripts
+ - SSMS plugin(?)
 
    
 This application is released under the GNU Affero GPL v3: 

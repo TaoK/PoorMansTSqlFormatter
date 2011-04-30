@@ -1,5 +1,12 @@
 Poor Man's T-SQL Formatter change log
 
+Version 0.9.3:
+--------------
+
+ - Added formatting of union clauses
+ - Misc minor formatting enhancements (comments, cross apply, etc)
+
+
 Version 0.9.2:
 --------------
 

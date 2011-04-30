@@ -45,7 +45,7 @@ namespace PoorMansTSqlFormatterTests
 
         public static void StripWhiteSpaceFromSqlTree(XmlDocument sqlTree)
         {
-            XmlNodeList deletionCandidates = sqlTree.SelectNodes(string.Format("//*[local-name() = '{0}']", PoorMansTSqlFormatterLib.Interfaces.Constants.ENAME_WHITESPACE));
+            XmlNodeList deletionCandidates = sqlTree.SelectNodes(string.Format("//*[local-name() = '{0}']", PoorMansTSqlFormatterLib.Interfaces.XmlConstants.ENAME_WHITESPACE));
             foreach (XmlElement deletionCandidate in deletionCandidates)
                 deletionCandidate.ParentNode.RemoveChild(deletionCandidate);
         }
