@@ -36,12 +36,12 @@ Limitations:
     table column and procedure parameter declarations.
 	
 Known Issues / Todo:
- - Keyword Capitalization
- - Handle more "exotic" keywords (or just things I've missed so far)
- - Options in standard formatter and demo
+ - Indenting issues on DDL statements and CTEs
+ - "Max Line Width" wrapping feature
  - HTML output (color highlighting)
 
 Longer-term enhancements / additions:
+ - Keyword consistency correction feature (eg LEFT OUTER JOIN -> LEFT JOIN)
  - Demo App download, with proper license notices, better layout, etc
  - Compiled library download
  - Supporting Mono (the library code undoubtedly already does, but I'd like to make it easy to build)
