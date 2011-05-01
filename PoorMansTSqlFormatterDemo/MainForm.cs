@@ -32,6 +32,9 @@ namespace PoorMansTSqlFormatterDemo
         PoorMansTSqlFormatterLib.Interfaces.ISqlTokenParser _parser;
         PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter _formatter;
 
+        bool _queuedRefresh = false;
+        object _refreshLock = new object();
+
         public MainForm()
         {
             InitializeComponent();
@@ -40,59 +43,17 @@ namespace PoorMansTSqlFormatterDemo
             SetFormatter();
         }
 
-        private void txt_Input_Leave(object sender, EventArgs e)
-        {
-            DoFormatting();
-        }
-
-        private void radio_Formatting_Standard_CheckedChanged(object sender, EventArgs e)
+        private void SettingsControlChanged(object sender, EventArgs e)
         {
             SetFormatter();
-            DoFormatting();
-        }
-
-        private void radio_Formatting_Identity_CheckedChanged(object sender, EventArgs e)
-        {
-            SetFormatter();
-            DoFormatting();
-        }
-
-        private void chk_ExpandParens_CheckedChanged(object sender, EventArgs e)
-        {
-            SetFormatter();
-            DoFormatting();
-        }
-
-        private void chk_TrailingCommas_CheckedChanged(object sender, EventArgs e)
-        {
-            SetFormatter();
-            DoFormatting();
-        }
-
-        private void chk_ExpandBooleanExpressions_CheckedChanged(object sender, EventArgs e)
-        {
-            SetFormatter();
-            DoFormatting();
-        }
-
-
-        private void chk_ExpandCaseStatements_CheckedChanged(object sender, EventArgs e)
-        {
-            SetFormatter();
-            DoFormatting();
-        }
-
-        private void chk_UppercaseKeywords_CheckedChanged(object sender, EventArgs e)
-        {
-            SetFormatter();
-            DoFormatting();
+            TryToDoFormatting();
         }
 
         private void SetFormatter()
         {
             if (radio_Formatting_Standard.Checked)
             {
-                _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", chk_ExpandCommaLists.Checked, chk_TrailingCommas.Checked, chk_ExpandBooleanExpressions.Checked, chk_ExpandCaseStatements.Checked, chk_UppercaseKeywords.Checked);
+                _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", chk_ExpandCommaLists.Checked, chk_TrailingCommas.Checked, chk_ExpandBooleanExpressions.Checked, chk_ExpandCaseStatements.Checked, chk_UppercaseKeywords.Checked, chk_Coloring.Checked);
             }
             else
                 _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter();
@@ -104,7 +65,79 @@ namespace PoorMansTSqlFormatterDemo
             txt_TokenizedXml.Text = tokenizedSql.PrettyPrint();
             var parsedSql = _parser.ParseSQL(tokenizedSql);
             txt_ParsedXml.Text = parsedSql.OuterXml;
-            txt_OutputSql.Text = _formatter.FormatSQLTree(parsedSql);
+            string formattedSql = _formatter.FormatSQLTree(parsedSql);
+            if (!chk_Coloring.Checked)
+                formattedSql = System.Web.HttpUtility.HtmlEncode(formattedSql);
+
+            string displayHtmlPage = @"
+<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd""><html>
+<head>
+<style type=""text/css"">
+.SQLCode {{
+	font-size: 13px;
+	font-weight: bold;
+	font-family: Consolas,'Lucida Console','DejaVu Sans Mono',monospace;;
+	white-space: pre;
+}}
+.SQLComment {{
+	color: #00AA00;
+}}
+.SQLString {{
+	color: #AA0000;
+}}
+.SQLFunction {{
+	color: #AA00AA;
+}}
+.SQLKeyword {{
+	color: #0000AA;
+}}
+.SQLOperator {{
+	color: #AAAAAA;
+}}
+
+
+</style>
+</head>
+<body>
+<div class=""SQLCode"">{0}</div>
+</body>
+</html>
+";
+            webBrowser_OutputSql.SetHTML(string.Format(displayHtmlPage, formattedSql));
+        }
+
+        private void TryToDoFormatting()
+        {
+            lock (_refreshLock)
+            {
+                if (timer_TextChangeDelay.Enabled)
+                    _queuedRefresh = true;
+                else
+                {
+                    DoFormatting();
+                    timer_TextChangeDelay.Start();
+                }
+            }
+        }
+
+        private void txt_Input_TextChanged(object sender, EventArgs e)
+        {
+            TryToDoFormatting();
+        }
+
+        private void timer_TextChangeDelay_Tick(object sender, EventArgs e)
+        {
+            timer_TextChangeDelay.Enabled = false;
+            lock (_refreshLock)
+            {
+                if (_queuedRefresh)
+                {
+                    DoFormatting();
+                    timer_TextChangeDelay.Start();
+                    _queuedRefresh = false;
+                }
+            }
+
         }
 
     }

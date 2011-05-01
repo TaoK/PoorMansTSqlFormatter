@@ -13,6 +13,8 @@ Features:
  
  - Handles "procedural" T-SQL; this is not just a SQL statement formatter, but it also 
     formats entire batches, and multi-batch scripts.
+
+ - Optional colorized HTML output
  
 
 Limitations:
@@ -32,13 +34,12 @@ Limitations:
     comment in this case will be moved to after the compound keyword. (such issues
 	are flagged in the formatted SQL)
 
- - DDL parsing and formatting is VERY coarse, the bare minimum to display ordered
-    table column and procedure parameter declarations.
+ - DDL parsing is VERY coarse, the bare minimum to display ordered table column 
+    and procedure parameter declarations.
 	
 Known Issues / Todo:
  - Indenting issues on DDL statements and CTEs
  - "Max Line Width" wrapping feature
- - HTML output (color highlighting)
 
 Longer-term enhancements / additions:
  - Keyword consistency correction feature (eg LEFT OUTER JOIN -> LEFT JOIN)
@@ -47,10 +48,11 @@ Longer-term enhancements / additions:
  - Supporting Mono (the library code undoubtedly already does, but I'd like to make it easy to build)
    - Compiled mono library download
  - Command-line program/download for ripping through a folder hierarchy of sql scripts
+   - also for commit hook in SVN?
  - SSMS plugin(?)
 
    
-This application is released under the GNU Affero GPL v3: 
+This application and library is released under the GNU Affero GPL v3: 
 http://www.gnu.org/licenses/agpl.txt
 
 Please contact me with any questions, concerns, or issues: my email address starts

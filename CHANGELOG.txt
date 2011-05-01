@@ -1,5 +1,11 @@
 Poor Man's T-SQL Formatter change log
 
+Version 0.9.4:
+--------------
+
+ - Added HTML syntax colorizing (exposed in demo app and web service)
+ 
+
 Version 0.9.3:
 --------------
 

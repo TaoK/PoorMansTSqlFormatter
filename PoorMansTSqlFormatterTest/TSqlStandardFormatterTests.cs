@@ -43,7 +43,7 @@ namespace PoorMansTSqlFormatterTests
         {
             _tokenizer = new TSqlStandardTokenizer();
             _parser = new TSqlStandardParser();
-            _treeFormatter = new TSqlStandardFormatter();
+            _treeFormatter = new TSqlStandardFormatter("\t", true, false, true, true, true, false);
         }
 
         string TestDataFolder { get { return Utils.GetTestContentFolder("InputSql"); } }
