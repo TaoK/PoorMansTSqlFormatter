@@ -26,18 +26,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
 {
     public static class SqlXmlConstants
     {
-        public const string ENAME_WHITESPACE = "WhiteSpace";
-        public const string ENAME_OTHERNODE = "Other";
-        public const string ENAME_COMMENT_SINGLELINE = "SingleLineComment";
-        public const string ENAME_COMMENT_MULTILINE = "MultiLineComment";
-        public const string ENAME_STRING = "String";
-        public const string ENAME_NSTRING = "NationalString";
-        public const string ENAME_QUOTED_IDENTIFIER = "QuotedIdentifier";
-        public const string ENAME_COMMA = "Comma";
-        public const string ENAME_PERIOD = "Period";
-        public const string ENAME_SEMICOLON = "Semicolon";
-        public const string ENAME_ASTERISK = "Asterisk";
-        public const string ENAME_OTHEROPERATOR = "OtherOperator";
+
         public const string ENAME_SQL_ROOT = "SqlRoot";
         public const string ENAME_SQL_STATEMENT = "SqlStatement";
         public const string ENAME_SQL_CLAUSE = "Clause";
@@ -64,6 +53,23 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_DDLDETAIL_PARENS = "DDLDetailParens";
         public const string ENAME_EXPRESSION_PARENS = "ExpressionParens";
         public const string ENAME_FUNCTION_PARENS = "FunctionParens";
+        public const string ENAME_FUNCTION_KEYWORD = "FunctionKeyword";
+        public const string ENAME_DATATYPE_KEYWORD = "DataTypeKeyword";
+        public const string ENAME_OTHERKEYWORD = "OtherKeyword";
+
+        public const string ENAME_WHITESPACE = "WhiteSpace";
+        public const string ENAME_OTHERNODE = "Other";
+        public const string ENAME_COMMENT_SINGLELINE = "SingleLineComment";
+        public const string ENAME_COMMENT_MULTILINE = "MultiLineComment";
+        public const string ENAME_STRING = "String";
+        public const string ENAME_NSTRING = "NationalString";
+        public const string ENAME_QUOTED_IDENTIFIER = "QuotedIdentifier";
+        public const string ENAME_COMMA = "Comma";
+        public const string ENAME_PERIOD = "Period";
+        public const string ENAME_SEMICOLON = "Semicolon";
+        public const string ENAME_ASTERISK = "Asterisk";
+        public const string ENAME_OTHEROPERATOR = "OtherOperator";
+
         public const string ENAME_AND_OPERATOR = "And";
         public const string ENAME_OR_OPERATOR = "Or";
         public const string ENAME_BETWEEN_CONDITION = "Between";

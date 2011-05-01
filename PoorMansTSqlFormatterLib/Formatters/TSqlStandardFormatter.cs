@@ -34,16 +34,16 @@ namespace PoorMansTSqlFormatterLib.Formatters
          *    - eliminate redundant "Outer" keyword from "left", "right" and "full" join clauses
          *    - change plain "join" to "inner join"
          *    - make this work despite any join hints (loop, hash, merge, remote)
+         *    - Insert -> Insert Into
+         *    - TRAN -> TRANSACTION
          *    
          *  - Implement text width-based line breaking
          *    - Provide preference option for width and tab spaces?
-         *  - Implement keyword casing
-         *    - Provide preference option for keyword casing (uppercase/lowercase/titlecase)?
          */
 
-        public TSqlStandardFormatter() : this("\t", true, false, true, true) {}
+        public TSqlStandardFormatter() : this("\t", true, false, true, true, true) {}
 
-        public TSqlStandardFormatter(string indentString, bool expandCommaLists, bool trailingCommas, bool expandBooleanExpressions, bool expandCaseStatements)
+        public TSqlStandardFormatter(string indentString, bool expandCommaLists, bool trailingCommas, bool expandBooleanExpressions, bool expandCaseStatements, bool uppercaseKeywords)
         {
             IndentString = indentString;
             ExpandCommaLists = expandCommaLists;
@@ -51,6 +51,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             ExpandBooleanExpressions = expandBooleanExpressions;
             ExpandBetweenConditions = ExpandBooleanExpressions;
             ExpandCaseStatements = expandCaseStatements;
+            UppercaseKeywords = uppercaseKeywords;
         }
 
         public string IndentString { get; set; }
@@ -59,6 +60,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
         public bool ExpandBooleanExpressions { get; set; }
         public bool ExpandCaseStatements { get; set; }
         public bool ExpandBetweenConditions { get; set; }
+        public bool UppercaseKeywords { get; set; }
 
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
@@ -117,7 +119,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.SqlXmlConstants.ENAME_BATCH_SEPARATOR:
                     //newline regardless of whether previous element recommended a break or not.
                     outString.Append(Environment.NewLine);
-                    outString.Append("GO");
+                    outString.Append(UpperCaseOrLowerCase("GO"));
                     breakExpected = true;
                     break;
 
@@ -128,21 +130,21 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.SqlXmlConstants.ENAME_DDL_AS_BLOCK:
                     //newline regardless of whether previous element recommended a break or not.
                     outString.Append(Environment.NewLine);
-                    outString.Append("AS");
+                    outString.Append(UpperCaseOrLowerCase("AS"));
                     breakExpected = true;
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel-1, ref breakExpected);
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_BETWEEN_CONDITION:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
-                    outString.Append("BETWEEN");
+                    outString.Append(UpperCaseOrLowerCase("BETWEEN"));
                     outString.Append(" ");
                     ProcessSqlNodeList(outString, contentElement.SelectNodes(Interfaces.SqlXmlConstants.ENAME_BETWEEN_LOWERBOUND), indentLevel + 2, ref breakExpected);
                     if (ExpandBetweenConditions)
                         WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel + 1, ref breakExpected);
                     else
                         WhiteSpace_SeparateWords(contentElement, outString, indentLevel + 1, ref breakExpected);
-                    outString.Append("AND");
+                    outString.Append(UpperCaseOrLowerCase("AND"));
                     ProcessSqlNodeList(outString, contentElement.SelectNodes(Interfaces.SqlXmlConstants.ENAME_BETWEEN_UPPERBOUND), indentLevel + 2, ref breakExpected);
                     break;
 
@@ -183,15 +185,15 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.SqlXmlConstants.ENAME_BEGIN_END_BLOCK:
                 case Interfaces.SqlXmlConstants.ENAME_TRY_BLOCK:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
-                    outString.Append("BEGIN");
+                    outString.Append(UpperCaseOrLowerCase("BEGIN"));
                     if (contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_TRY_BLOCK))
-                        outString.Append(" TRY");
+                        outString.Append(UpperCaseOrLowerCase(" TRY"));
                     WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel, ref breakExpected);
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
                     WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel - 1, ref breakExpected);
-                    outString.Append("END");
+                    outString.Append(UpperCaseOrLowerCase("END"));
                     if (contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_TRY_BLOCK))
-                        outString.Append(" TRY");
+                        outString.Append(UpperCaseOrLowerCase(" TRY"));
                     breakExpected = true;
                     break;
 
@@ -201,7 +203,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     if (contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_WHILE_LOOP))
                         outString.Append("WHILE");
                     else
-                        outString.Append("IF");
+                        outString.Append(UpperCaseOrLowerCase("IF"));
                     outString.Append(" ");
                     ProcessSqlNodeList(outString, contentElement.SelectNodes(Interfaces.SqlXmlConstants.ENAME_BOOLEAN_EXPRESSION), indentLevel, ref breakExpected);
                     //test for begin end block:
@@ -221,7 +223,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case Interfaces.SqlXmlConstants.ENAME_ELSE_CLAUSE:
                     WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel, ref breakExpected);
-                    outString.Append("ELSE");
+                    outString.Append(UpperCaseOrLowerCase("ELSE"));
                     //test for begin end block:
                     XmlNode beginBlock2 = contentElement.SelectSingleNode(string.Format("{0}/{1}/*[local-name() = '{2}' or local-name() = '{3}']", Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT, Interfaces.SqlXmlConstants.ENAME_SQL_CLAUSE, Interfaces.SqlXmlConstants.ENAME_BEGIN_END_BLOCK, Interfaces.SqlXmlConstants.ENAME_TRY_BLOCK));
                     if (beginBlock2 != null)
@@ -254,11 +256,11 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         breakExpected = true;
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     if (contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_CASE_WHEN))
-                        outString.Append("WHEN");
+                        outString.Append(UpperCaseOrLowerCase("WHEN"));
                     else if (contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_CASE_THEN))
-                        outString.Append("THEN");
+                        outString.Append(UpperCaseOrLowerCase("THEN"));
                     else
-                        outString.Append("ELSE");
+                        outString.Append(UpperCaseOrLowerCase("ELSE"));
                     outString.Append(" ");
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected);
                     break;
@@ -351,16 +353,23 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
 
                     if (contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_AND_OPERATOR))
-                        outString.Append("AND");
+                        outString.Append(UpperCaseOrLowerCase("AND"));
                     else
-                        outString.Append("OR");
+                        outString.Append(UpperCaseOrLowerCase("OR"));
+                    break;
+
+                case Interfaces.SqlXmlConstants.ENAME_OTHEROPERATOR:
+                case Interfaces.SqlXmlConstants.ENAME_OTHERKEYWORD:
+                case Interfaces.SqlXmlConstants.ENAME_DATATYPE_KEYWORD:
+                    WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
+                    outString.Append(UpperCaseOrLowerCase(contentElement.InnerText));
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_BEGIN_TRANSACTION:
                 case Interfaces.SqlXmlConstants.ENAME_COMMIT_TRANSACTION:
                 case Interfaces.SqlXmlConstants.ENAME_ROLLBACK_TRANSACTION:
+                case Interfaces.SqlXmlConstants.ENAME_FUNCTION_KEYWORD:
                 case Interfaces.SqlXmlConstants.ENAME_OTHERNODE:
-                case Interfaces.SqlXmlConstants.ENAME_OTHEROPERATOR:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append(contentElement.InnerText);
                     break;
@@ -370,6 +379,14 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 default:
                     throw new Exception("Unrecognized element in SQL Xml!");
             }
+        }
+
+        private string UpperCaseOrLowerCase(string keyword)
+        {
+            if (UppercaseKeywords)
+                return keyword.ToUpper();
+            else
+                return keyword.ToLower();
         }
 
         private void WhiteSpace_SeparateStatements(XmlElement contentElement, StringBuilder outString, int indentLevel, ref bool breakExpected)

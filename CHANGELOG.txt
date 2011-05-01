@@ -7,8 +7,7 @@ Version 0.9.3:
  - Misc minor formatting enhancements (comments, cross apply, etc)
  - Added formatting of BETWEEN conditions
  - Refactored Tokenizer output to be a more-efficient List instead of an Xml Document
-
- - [IN PROGRESS] Introduced notion of Keywords, added Keyword Uppercasing (incl Operators)
+ - Introduced notion of Keywords, added Keyword Uppercasing (incl Operators)
 
 
 Version 0.9.2:

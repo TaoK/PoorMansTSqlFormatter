@@ -82,11 +82,17 @@ namespace PoorMansTSqlFormatterDemo
             DoFormatting();
         }
 
+        private void chk_UppercaseKeywords_CheckedChanged(object sender, EventArgs e)
+        {
+            SetFormatter();
+            DoFormatting();
+        }
+
         private void SetFormatter()
         {
             if (radio_Formatting_Standard.Checked)
             {
-                _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", chk_ExpandCommaLists.Checked, chk_TrailingCommas.Checked, chk_ExpandBooleanExpressions.Checked, chk_ExpandCaseStatements.Checked);
+                _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", chk_ExpandCommaLists.Checked, chk_TrailingCommas.Checked, chk_ExpandBooleanExpressions.Checked, chk_ExpandCaseStatements.Checked, chk_UppercaseKeywords.Checked);
             }
             else
                 _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter();
