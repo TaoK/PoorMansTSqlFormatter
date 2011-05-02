@@ -29,6 +29,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
     {
         /*
          * TODO:
+         *  - Move HTML page wrapper into another class or something...
          *  - Find a way to stack same-indent closing parens (parens buffer??)
          *  - Grouping of neighboring SET and DECLARE statements
          *  - (optionally?) perorm some syntantical consistency fixes:
@@ -42,9 +43,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
          *    - Provide preference option for width and tab spaces?
          */
 
-        public TSqlStandardFormatter() : this("\t", true, false, true, true, true, true) {}
+        public TSqlStandardFormatter() : this("\t", true, false, true, true, true, true, true) {}
 
-        public TSqlStandardFormatter(string indentString, bool expandCommaLists, bool trailingCommas, bool expandBooleanExpressions, bool expandCaseStatements, bool uppercaseKeywords, bool htmlColoring)
+        public TSqlStandardFormatter(string indentString, bool expandCommaLists, bool trailingCommas, bool expandBooleanExpressions, bool expandCaseStatements, bool uppercaseKeywords, bool htmlColoring, bool htmlFullPageDefinition)
         {
             IndentString = indentString;
             ExpandCommaLists = expandCommaLists;
@@ -54,6 +55,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             ExpandCaseStatements = expandCaseStatements;
             UppercaseKeywords = uppercaseKeywords;
             HTMLColoring = htmlColoring;
+            HTMLFullPageDefinition = htmlFullPageDefinition;
         }
 
         public string IndentString { get; set; }
@@ -64,25 +66,65 @@ namespace PoorMansTSqlFormatterLib.Formatters
         public bool ExpandBetweenConditions { get; set; }
         public bool UppercaseKeywords { get; set; }
         public bool HTMLColoring { get; set; }
+        public bool HTMLFullPageDefinition { get; set; }
 
+        private const string HTML_OUTER_PAGE = @"
+<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd""><html>
+<head>
+<style type=""text/css"">
+.SQLCode {{
+	font-size: 13px;
+	font-weight: bold;
+	font-family: Consolas,'Lucida Console','DejaVu Sans Mono',monospace;;
+	white-space: pre;
+}}
+.SQLComment {{
+	color: #00AA00;
+}}
+.SQLString {{
+	color: #AA0000;
+}}
+.SQLFunction {{
+	color: #AA00AA;
+}}
+.SQLKeyword {{
+	color: #0000AA;
+}}
+.SQLOperator {{
+	color: #AAAAAA;
+}}
+
+
+</style>
+</head>
+<body>
+<div class=""SQLCode"">{0}</div>
+</body>
+</html>
+";
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
-            return FormatSQLDoc(sqlTreeDoc, Interfaces.SqlXmlConstants.ENAME_SQL_ROOT);
-        }
-
-        private string FormatSQLDoc(XmlDocument sqlTokenOrTreeDoc, string rootElement)
-        {
             StringBuilder outString = new StringBuilder();
-            if (sqlTokenOrTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", Interfaces.SqlXmlConstants.ENAME_SQL_ROOT, Interfaces.SqlXmlConstants.ANAME_ERRORFOUND)) != null)
+            if (sqlTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", Interfaces.SqlXmlConstants.ENAME_SQL_ROOT, Interfaces.SqlXmlConstants.ANAME_ERRORFOUND)) != null)
                 outString.AppendLine("--WARNING! ERRORS ENCOUNTERED DURING PARSING! (formatted SQL could be incorrect / logically different) ");
-            if (sqlTokenOrTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", Interfaces.SqlXmlConstants.ENAME_SQL_ROOT, Interfaces.SqlXmlConstants.ANAME_DATALOSS)) != null)
+            if (sqlTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", Interfaces.SqlXmlConstants.ENAME_SQL_ROOT, Interfaces.SqlXmlConstants.ANAME_DATALOSS)) != null)
                 outString.AppendLine("--WARNING! SOME STRUCTURE COULD NOT BE PRESERVED! (formatted SQL will still be logically equivalent) ");
 
-            XmlNodeList rootList = sqlTokenOrTreeDoc.SelectNodes(string.Format("/{0}/*", rootElement));
+            XmlNodeList rootList = sqlTreeDoc.SelectNodes(string.Format("/{0}/*", Interfaces.SqlXmlConstants.ENAME_SQL_ROOT));
             bool breakExpected = false;
             ProcessSqlNodeList(outString, rootList, 0, ref breakExpected);
 
-            return outString.ToString();
+            if (HTMLFullPageDefinition)
+            {
+                if (HTMLColoring)
+                    return string.Format(HTML_OUTER_PAGE, outString.ToString());
+                else
+                    return string.Format(HTML_OUTER_PAGE, System.Web.HttpUtility.HtmlEncode(outString.ToString()));
+            }
+            else
+            {
+                return outString.ToString();
+            }
         }
 
         private void ProcessSqlNodeList(StringBuilder outString, XmlNodeList rootList, int indentLevel, ref bool breakExpected)

@@ -53,7 +53,7 @@ namespace PoorMansTSqlFormatterDemo
         {
             if (radio_Formatting_Standard.Checked)
             {
-                _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", chk_ExpandCommaLists.Checked, chk_TrailingCommas.Checked, chk_ExpandBooleanExpressions.Checked, chk_ExpandCaseStatements.Checked, chk_UppercaseKeywords.Checked, chk_Coloring.Checked);
+                _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", chk_ExpandCommaLists.Checked, chk_TrailingCommas.Checked, chk_ExpandBooleanExpressions.Checked, chk_ExpandCaseStatements.Checked, chk_UppercaseKeywords.Checked, chk_Coloring.Checked, true);
             }
             else
                 _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter();
@@ -65,45 +65,7 @@ namespace PoorMansTSqlFormatterDemo
             txt_TokenizedXml.Text = tokenizedSql.PrettyPrint();
             var parsedSql = _parser.ParseSQL(tokenizedSql);
             txt_ParsedXml.Text = parsedSql.OuterXml;
-            string formattedSql = _formatter.FormatSQLTree(parsedSql);
-            if (!chk_Coloring.Checked)
-                formattedSql = System.Web.HttpUtility.HtmlEncode(formattedSql);
-
-            string displayHtmlPage = @"
-<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd""><html>
-<head>
-<style type=""text/css"">
-.SQLCode {{
-	font-size: 13px;
-	font-weight: bold;
-	font-family: Consolas,'Lucida Console','DejaVu Sans Mono',monospace;;
-	white-space: pre;
-}}
-.SQLComment {{
-	color: #00AA00;
-}}
-.SQLString {{
-	color: #AA0000;
-}}
-.SQLFunction {{
-	color: #AA00AA;
-}}
-.SQLKeyword {{
-	color: #0000AA;
-}}
-.SQLOperator {{
-	color: #AAAAAA;
-}}
-
-
-</style>
-</head>
-<body>
-<div class=""SQLCode"">{0}</div>
-</body>
-</html>
-";
-            webBrowser_OutputSql.SetHTML(string.Format(displayHtmlPage, formattedSql));
+            webBrowser_OutputSql.SetHTML(_formatter.FormatSQLTree(parsedSql));
         }
 
         private void TryToDoFormatting()

@@ -16,6 +16,11 @@ Features:
 
  - Optional colorized HTML output
  
+ - Fault-tolerant parsing and formatting - if some unknown SQL construct is encountered
+    or a keyword is misinterpreted, parsing does not fail (but will simply not colorize
+    or indent correctly). If the parsing fails more catastrophically, a "best effort" 
+    will be made and warning displayed.
+ 
 
 Limitations:
  - This is NOT a full SQL-parsing solution: only "coarse" parsing is performed, the 
@@ -40,6 +45,7 @@ Limitations:
 Known Issues / Todo:
  - Indenting issues on DDL statements and CTEs
  - "Max Line Width" wrapping feature
+ - Grouping of "SET" and "DECLARE" statements
 
 Longer-term enhancements / additions:
  - Keyword consistency correction feature (eg LEFT OUTER JOIN -> LEFT JOIN)
