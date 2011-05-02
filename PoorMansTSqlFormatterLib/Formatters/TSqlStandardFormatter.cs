@@ -181,6 +181,22 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel-1, ref breakExpected);
                     break;
 
+                case Interfaces.SqlXmlConstants.ENAME_CTE_WITH_CLAUSE:
+                    WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
+                    outString.Append(FormatKeyword("WITH"));
+                    outString.Append(" ");
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
+                    break;
+
+                case Interfaces.SqlXmlConstants.ENAME_CTE_AS_BLOCK:
+                    //newline regardless of whether previous element recommended a break or not.
+                    outString.Append(Environment.NewLine);
+                    outString.Append(FormatKeyword("AS"));
+                    outString.Append(" ");
+                    breakExpected = false;
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
+                    break;
+
                 case Interfaces.SqlXmlConstants.ENAME_BETWEEN_CONDITION:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append(FormatOperator("BETWEEN"));

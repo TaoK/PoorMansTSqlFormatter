@@ -83,6 +83,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_BETWEEN_CONDITION:
                 case SqlXmlConstants.ENAME_BETWEEN_LOWERBOUND:
                 case SqlXmlConstants.ENAME_BETWEEN_UPPERBOUND:
+                case SqlXmlConstants.ENAME_CTE_WITH_CLAUSE:
+                case SqlXmlConstants.ENAME_CTE_AS_BLOCK:
                     foreach (XmlNode childNode in contentElement.ChildNodes)
                     {
                         switch (childNode.NodeType)
