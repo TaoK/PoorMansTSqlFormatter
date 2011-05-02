@@ -1,5 +1,11 @@
 Poor Man's T-SQL Formatter change log
 
+Version 0.9.5:
+--------------
+
+ - Added CTE parsing
+ 
+
 Version 0.9.4:
 --------------
 

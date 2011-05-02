@@ -43,9 +43,10 @@ Limitations:
     and procedure parameter declarations.
 	
 Known Issues / Todo:
- - Indenting issues on DDL statements and CTEs
  - "Max Line Width" wrapping feature
  - Grouping of "SET" and "DECLARE" statements
+ - Formatting/indenting of ranking functions and RETURNS clauses
+ - Parsing of Join Hints
 
 Longer-term enhancements / additions:
  - Keyword consistency correction feature (eg LEFT OUTER JOIN -> LEFT JOIN)
