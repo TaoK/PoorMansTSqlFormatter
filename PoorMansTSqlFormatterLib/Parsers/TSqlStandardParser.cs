@@ -31,7 +31,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
     {
         /*
          * TODO:
-         *  - handle CTEs such that AS clause is on its own line
+         *  - handle Ranking Functions with multiple partition or order by columns/clauses
          *  - enhance DDL context to also have clauses (with a backtrack in the standard formatter), for RETURNS...? Or just detect it in formatting?
          *  - update the demo UI to reference GPL, and publish the program
          *  - Add support for join hints, such as "LOOP"
@@ -104,19 +104,20 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     case SqlTokenType.CloseParens:
                         EscapeAnyBetweenConditions(ref currentContainerNode);
                         //check whether we expected to end the parens...
-                        if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS)
-                                && currentContainerNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CTE_AS_BLOCK)
-                                )
-                        {
-                            currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode;
-                        }
-                        else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDLDETAIL_PARENS)
+                        if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDLDETAIL_PARENS)
                             || currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_PARENS)
                             || currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_FUNCTION_PARENS)
                             || currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS)
                             )
                         {
                             currentContainerNode = (XmlElement)currentContainerNode.ParentNode;
+                        }
+                        else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
+                                && currentContainerNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS)
+                                && currentContainerNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CTE_AS_BLOCK)
+                                )
+                        {
+                            currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode.ParentNode;
                         }
                         else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
                                 && currentContainerNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS)
@@ -1423,6 +1424,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("PARAMETERIZATION", KeywordType.OtherKeyword);
             KeywordList.Add("PARSENAME", KeywordType.FunctionKeyword);
             KeywordList.Add("PARSEONLY", KeywordType.OtherKeyword);
+            KeywordList.Add("PARTITION", KeywordType.OtherKeyword);
             KeywordList.Add("PATINDEX", KeywordType.FunctionKeyword);
             KeywordList.Add("PERCENT", KeywordType.OtherKeyword);
             KeywordList.Add("PERM", KeywordType.OtherKeyword);
