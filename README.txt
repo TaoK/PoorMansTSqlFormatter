@@ -18,8 +18,8 @@ Features:
  
  - Fault-tolerant parsing and formatting - if some unknown SQL construct is encountered
     or a keyword is misinterpreted, parsing does not fail (but will simply not colorize
-    or indent correctly). If the parsing fails more catastrophically, a "best effort" 
-    will be made and warning displayed.
+    or indent that portion correctly). If the parsing fails more catastrophically, a 
+    "best effort" will be made and warning displayed.
  
 
 Limitations:
@@ -56,6 +56,10 @@ Longer-term enhancements / additions:
  - Command-line program/download for ripping through a folder hierarchy of sql scripts
    - also for commit hook in SVN?
  - SSMS plugin(?)
+ - Documentation of Xml structure and class usage
+ - Pakaging, NuGet and/or OpenWrap
+   - Keeping track of versiuoning and documentation more carefully: http://semver.org/
+ 
 
    
 This application and library is released under the GNU Affero GPL v3: 

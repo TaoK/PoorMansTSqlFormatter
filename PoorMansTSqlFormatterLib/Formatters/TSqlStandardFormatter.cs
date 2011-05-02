@@ -169,6 +169,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_DDL_BLOCK:
+                case Interfaces.SqlXmlConstants.ENAME_CTE_WITH_CLAUSE:
+                case Interfaces.SqlXmlConstants.ENAME_CTE_AS_BLOCK:
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
                     break;
 

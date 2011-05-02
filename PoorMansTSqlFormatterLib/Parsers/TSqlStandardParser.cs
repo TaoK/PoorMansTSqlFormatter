@@ -85,7 +85,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             && firstNonCommentParensSibling.InnerText.ToUpper().StartsWith("INSERT")
                             );
 
-                        if (IsLatestTokenADDLDetailValue(currentContainerNode))
+                        if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_CTE_WITH_CLAUSE))
+                            currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_DDL_PARENS, "", currentContainerNode);
+                        else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_CTE_AS_BLOCK))
+                            currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_EXPRESSION_PARENS, "", currentContainerNode);
+                        else if (IsLatestTokenADDLDetailValue(currentContainerNode))
                             currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_DDLDETAIL_PARENS, "", currentContainerNode);
                         else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_BLOCK)
                             || isInsertClause
@@ -100,7 +104,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     case SqlTokenType.CloseParens:
                         EscapeAnyBetweenConditions(ref currentContainerNode);
                         //check whether we expected to end the parens...
-                        if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDLDETAIL_PARENS)
+                        if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS)
+                                && currentContainerNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CTE_AS_BLOCK)
+                                )
+                        {
+                            currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode;
+                        }
+                        else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDLDETAIL_PARENS)
                             || currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_PARENS)
                             || currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_FUNCTION_PARENS)
                             || currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS)
@@ -138,12 +148,21 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_DDL_BLOCK, "", currentContainerNode);
                             SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode);
                         }
-                        else if (keywordMatchPhrase.StartsWith("AS ") 
-                            && currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_BLOCK)
-                            )
+                        else if (keywordMatchPhrase.StartsWith("AS "))
                         {
-                            XmlElement newASBlock = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_DDL_AS_BLOCK, token.Value, currentContainerNode);
-                            currentContainerNode = StartNewStatement(sqlTree, newASBlock);
+                            if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_BLOCK))
+                            {
+                                XmlElement newASBlock = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_DDL_AS_BLOCK, token.Value, currentContainerNode);
+                                currentContainerNode = StartNewStatement(sqlTree, newASBlock);
+                            }
+                            else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_CTE_WITH_CLAUSE))
+                            {
+                                currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_CTE_AS_BLOCK, token.Value, currentContainerNode);
+                            }
+                            else
+                            {
+                                SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode);
+                            }
                         }
                         else if (keywordMatchPhrase.StartsWith("BEGIN TRANSACTION ")
                             || keywordMatchPhrase.StartsWith("BEGIN TRAN ")
@@ -475,6 +494,20 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         {
                             EscapeAnyBetweenConditions(ref currentContainerNode);
                             SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OR_OPERATOR, token.Value, currentContainerNode);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("WITH "))
+                        {
+                            if (currentContainerNode.Name.Equals(Interfaces.SqlXmlConstants.ENAME_SQL_CLAUSE)
+                                && currentContainerNode.ParentNode.Name.Equals(Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT)
+                                && !HasNonWhiteSpaceNonCommentContent(currentContainerNode)
+                                )
+                            {
+                                currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_CTE_WITH_CLAUSE, token.Value, currentContainerNode);
+                            }
+                            else
+                            {
+                                SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode);
+                            }
                         }
                         else
                         {
@@ -1051,6 +1084,18 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     && (!testElement.Name.Equals(SqlXmlConstants.ENAME_COMMENT_MULTILINE)
                         || Regex.IsMatch(testElement.InnerText, @"(\r|\n)+")
                         )
+                    )
+                    return true;
+
+            return false;
+        }
+
+        private static bool HasNonWhiteSpaceNonCommentContent(XmlElement containerNode)
+        {
+            foreach (XmlElement testElement in containerNode.SelectNodes("*"))
+                if (!testElement.Name.Equals(SqlXmlConstants.ENAME_WHITESPACE)
+                    && !testElement.Name.Equals(SqlXmlConstants.ENAME_COMMENT_SINGLELINE)
+                    && !testElement.Name.Equals(SqlXmlConstants.ENAME_COMMENT_MULTILINE)
                     )
                     return true;
 

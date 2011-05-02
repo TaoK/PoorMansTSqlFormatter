@@ -33,6 +33,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_UNION_CLAUSE = "UnionClause";
         public const string ENAME_BEGIN_END_BLOCK = "BeginEndBlock";
         public const string ENAME_TRY_BLOCK = "TryBlock";
+        public const string ENAME_CATCH_BLOCK = "CatchBlock";
         public const string ENAME_BEGIN_TRANSACTION = "BeginTransaction";
         public const string ENAME_BATCH_SEPARATOR = "BatchSeparator";
         public const string ENAME_CASE_STATEMENT = "CaseStatement";
@@ -44,7 +45,8 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_ELSE_CLAUSE = "ElseClause";
         public const string ENAME_BOOLEAN_EXPRESSION = "BooleanExpression";
         public const string ENAME_WHILE_LOOP = "WhileLoop";
-        public const string ENAME_CATCH_BLOCK = "CatchBlock";
+        public const string ENAME_CTE_WITH_CLAUSE = "CTEWithClause";
+        public const string ENAME_CTE_AS_BLOCK = "CTEAsBlock";
         public const string ENAME_COMMIT_TRANSACTION = "CommitTransaction";
         public const string ENAME_ROLLBACK_TRANSACTION = "RollbackTransaction";
         public const string ENAME_DDL_BLOCK = "DDLBlock";
