@@ -37,6 +37,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formatters\HtmlPageWrapper.cs" />
     <Compile Include="Formatters\TSqlIdentityFormatter.cs" />
     <Compile Include="Formatters\TSqlStandardFormatter.cs" />
     <Compile Include="Interfaces\SqlXmlConstants.cs" />
@@ -49,7 +50,7 @@
     <Compile Include="Interfaces\SqlTokenType.cs" />
     <Compile Include="Parsers\TSqlStandardParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlParseManager.cs" />
+    <Compile Include="SqlFormattingManager.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="Tokenizers\TSqlStandardTokenizer.cs" />
     <Compile Include="TokenList.cs" />

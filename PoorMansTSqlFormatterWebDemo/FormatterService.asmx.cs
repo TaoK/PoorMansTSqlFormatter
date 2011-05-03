@@ -49,7 +49,11 @@ namespace PoorMansTSqlFormatterWebDemo
                     )
                 )
             {
-                return PoorMansTSqlFormatterLib.SqlParseManager.DefaultFormat(inputString);
+                PoorMansTSqlFormatterLib.SqlFormattingManager fullFormatter = new PoorMansTSqlFormatterLib.SqlFormattingManager();
+                PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", true, false, true, true, true, true);
+                PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper wrapper = new PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper(formatter);
+                fullFormatter.Formatter = wrapper;
+                return fullFormatter.Format(inputString);
             }
             else
             {

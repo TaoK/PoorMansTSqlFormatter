@@ -31,11 +31,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
     {
         /*
          * TODO:
-         *  - handle Ranking Functions with multiple partition or order by columns/clauses
+         *  - Add support for join hints, such as "LOOP"
          *  - enhance DDL context to also have clauses (with a backtrack in the standard formatter), for RETURNS...? Or just detect it in formatting?
          *  - update the demo UI to reference GPL, and publish the program
-         *  - Add support for join hints, such as "LOOP"
          *  - Manually review the output from all test cases for "strange" effects
+         *  - handle Ranking Functions with multiple partition or order by columns/clauses
          *  - parse ON sections, for those who prefer to start ON on the next line and indent from there
          *  
          *  - Tests

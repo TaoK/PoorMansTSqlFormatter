@@ -28,6 +28,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
     public class TSqlIdentityFormatter : Interfaces.ISqlTokenFormatter, Interfaces.ISqlTreeFormatter
     {
 
+        public bool HTMLFormatted { get { return false; } }
+
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
             string rootElement = SqlXmlConstants.ENAME_SQL_ROOT;
@@ -71,6 +73,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case SqlXmlConstants.ENAME_BEGIN_END_BLOCK:
                 case SqlXmlConstants.ENAME_TRY_BLOCK:
+                case SqlXmlConstants.ENAME_CATCH_BLOCK:
                 case SqlXmlConstants.ENAME_CASE_STATEMENT:
                 case SqlXmlConstants.ENAME_CASE_INPUT:
                 case SqlXmlConstants.ENAME_CASE_WHEN:

@@ -51,12 +51,15 @@ namespace PoorMansTSqlFormatterDemo
 
         private void SetFormatter()
         {
+            PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter innerFormatter;
             if (radio_Formatting_Standard.Checked)
             {
-                _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", chk_ExpandCommaLists.Checked, chk_TrailingCommas.Checked, chk_ExpandBooleanExpressions.Checked, chk_ExpandCaseStatements.Checked, chk_UppercaseKeywords.Checked, chk_Coloring.Checked, true);
+                innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", chk_ExpandCommaLists.Checked, chk_TrailingCommas.Checked, chk_ExpandBooleanExpressions.Checked, chk_ExpandCaseStatements.Checked, chk_UppercaseKeywords.Checked, chk_Coloring.Checked);
             }
             else
-                _formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter();
+                innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter();
+
+            _formatter = new PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper(innerFormatter);
         }
 
         private void DoFormatting()

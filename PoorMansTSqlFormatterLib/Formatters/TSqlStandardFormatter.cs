@@ -29,9 +29,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
     {
         /*
          * TODO:
-         *  - Move HTML page wrapper into another class or something...
          *  - Find a way to stack same-indent closing parens (parens buffer??)
-         *  - Grouping of neighboring SET and DECLARE statements
          *  - (optionally?) perorm some syntantical consistency fixes:
          *    - eliminate redundant "Outer" keyword from "left", "right" and "full" join clauses
          *    - change plain "join" to "inner join"
@@ -41,11 +39,15 @@ namespace PoorMansTSqlFormatterLib.Formatters
          *    
          *  - Implement text width-based line breaking
          *    - Provide preference option for width and tab spaces?
+         *  
+         *  - Establish a cleaner way to group neighboring SET and DECLARE statements together
+         *     (current combination of clause-starter-tracking and upcoming-keyword-peeking is 
+         *       expensive and ugly)
          */
 
-        public TSqlStandardFormatter() : this("\t", true, false, true, true, true, true, true) {}
+        public TSqlStandardFormatter() : this("\t", true, false, true, true, true, false) {}
 
-        public TSqlStandardFormatter(string indentString, bool expandCommaLists, bool trailingCommas, bool expandBooleanExpressions, bool expandCaseStatements, bool uppercaseKeywords, bool htmlColoring, bool htmlFullPageDefinition)
+        public TSqlStandardFormatter(string indentString, bool expandCommaLists, bool trailingCommas, bool expandBooleanExpressions, bool expandCaseStatements, bool uppercaseKeywords, bool htmlColoring)
         {
             IndentString = indentString;
             ExpandCommaLists = expandCommaLists;
@@ -55,7 +57,6 @@ namespace PoorMansTSqlFormatterLib.Formatters
             ExpandCaseStatements = expandCaseStatements;
             UppercaseKeywords = uppercaseKeywords;
             HTMLColoring = htmlColoring;
-            HTMLFullPageDefinition = htmlFullPageDefinition;
         }
 
         public string IndentString { get; set; }
@@ -66,43 +67,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
         public bool ExpandBetweenConditions { get; set; }
         public bool UppercaseKeywords { get; set; }
         public bool HTMLColoring { get; set; }
-        public bool HTMLFullPageDefinition { get; set; }
+        public bool HTMLFormatted { get { return HTMLColoring; } }
 
-        private const string HTML_OUTER_PAGE = @"
-<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
-<html>
-<head>
-<style type=""text/css"">
-.SQLCode {{
-	font-size: 13px;
-	font-weight: bold;
-	font-family: Consolas,'Lucida Console','DejaVu Sans Mono',monospace;;
-	white-space: pre;
-}}
-.SQLComment {{
-	color: #00AA00;
-}}
-.SQLString {{
-	color: #AA0000;
-}}
-.SQLFunction {{
-	color: #AA00AA;
-}}
-.SQLKeyword {{
-	color: #0000AA;
-}}
-.SQLOperator {{
-	color: #AAAAAA;
-}}
-
-
-</style>
-</head>
-<body>
-<div class=""SQLCode"">{0}</div>
-</body>
-</html>
-";
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
             StringBuilder outString = new StringBuilder();
@@ -113,37 +79,40 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
             XmlNodeList rootList = sqlTreeDoc.SelectNodes(string.Format("/{0}/*", Interfaces.SqlXmlConstants.ENAME_SQL_ROOT));
             bool breakExpected = false;
-            ProcessSqlNodeList(outString, rootList, 0, ref breakExpected);
+            XmlElement lastClauseStarter = null;
+            ProcessSqlNodeList(outString, rootList, 0, ref breakExpected, ref lastClauseStarter);
 
-            if (HTMLFullPageDefinition)
-            {
-                if (HTMLColoring)
-                    return string.Format(HTML_OUTER_PAGE, outString.ToString());
-                else
-                    return string.Format(HTML_OUTER_PAGE, System.Web.HttpUtility.HtmlEncode(outString.ToString()));
-            }
-            else
-            {
-                return outString.ToString();
-            }
+            return outString.ToString();
         }
 
-        private void ProcessSqlNodeList(StringBuilder outString, XmlNodeList rootList, int indentLevel, ref bool breakExpected)
+        private void ProcessSqlNodeList(StringBuilder outString, XmlNodeList rootList, int indentLevel, ref bool breakExpected, ref XmlElement firstSemanticElement)
         {
             foreach (XmlElement contentElement in rootList)
             {
-                ProcessSqlNode(outString, contentElement, indentLevel, ref breakExpected);
+                ProcessSqlNode(outString, contentElement, indentLevel, ref breakExpected, ref firstSemanticElement);
             }
         }
 
-        private void ProcessSqlNode(StringBuilder outString, XmlElement contentElement, int indentLevel, ref bool breakExpected)
+        private void ProcessSqlNode(StringBuilder outString, XmlElement contentElement, int indentLevel, ref bool breakExpected, ref XmlElement firstSemanticElement)
         {
+            XmlElement firstSemanticElementDeadEnd = null;
+
+            if (firstSemanticElement == null
+                && !contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_COMMENT_SINGLELINE)
+                && !contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_COMMENT_MULTILINE)
+                && !contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_WHITESPACE)
+                && !contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_SQL_CLAUSE)
+                && !contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT)
+                && !contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_DDL_BLOCK)
+                )
+                firstSemanticElement = contentElement;
 
             switch (contentElement.Name)
             {
                 case Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT:
-                    WhiteSpace_SeparateStatements(contentElement, outString, indentLevel, ref breakExpected);
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
+                    WhiteSpace_SeparateStatements(contentElement, outString, indentLevel, ref breakExpected, ref firstSemanticElement);
+                    firstSemanticElement = null;
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected, ref firstSemanticElement);
                     breakExpected = true;
                     break;
 
@@ -151,7 +120,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     if (contentElement.ParentNode.Name.Equals(Interfaces.SqlXmlConstants.ENAME_EXPRESSION_PARENS))
                         breakExpected = true;
                     WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel, ref breakExpected);
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected, ref firstSemanticElement);
                     breakExpected = true;
                     break;
 
@@ -170,7 +139,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_DDL_BLOCK:
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected, ref firstSemanticElement);
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_DDL_AS_BLOCK:
@@ -178,14 +147,14 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     outString.Append(Environment.NewLine);
                     outString.Append(FormatKeyword("AS"));
                     breakExpected = true;
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel-1, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel - 1, ref breakExpected, ref firstSemanticElementDeadEnd);
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_CTE_WITH_CLAUSE:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append(FormatKeyword("WITH"));
                     outString.Append(" ");
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected, ref firstSemanticElementDeadEnd);
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_CTE_AS_BLOCK:
@@ -194,20 +163,20 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     outString.Append(FormatKeyword("AS"));
                     outString.Append(" ");
                     breakExpected = false;
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected, ref firstSemanticElementDeadEnd);
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_BETWEEN_CONDITION:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append(FormatOperator("BETWEEN"));
                     outString.Append(" ");
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes(Interfaces.SqlXmlConstants.ENAME_BETWEEN_LOWERBOUND), indentLevel + 2, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes(Interfaces.SqlXmlConstants.ENAME_BETWEEN_LOWERBOUND), indentLevel + 2, ref breakExpected, ref firstSemanticElementDeadEnd);
                     if (ExpandBetweenConditions)
                         WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel + 1, ref breakExpected);
                     else
                         WhiteSpace_SeparateWords(contentElement, outString, indentLevel + 1, ref breakExpected);
                     outString.Append(FormatOperator("AND"));
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes(Interfaces.SqlXmlConstants.ENAME_BETWEEN_UPPERBOUND), indentLevel + 2, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes(Interfaces.SqlXmlConstants.ENAME_BETWEEN_UPPERBOUND), indentLevel + 2, ref breakExpected, ref firstSemanticElementDeadEnd);
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_CASE_INPUT:
@@ -215,7 +184,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.SqlXmlConstants.ENAME_BETWEEN_LOWERBOUND:
                 case Interfaces.SqlXmlConstants.ENAME_BETWEEN_UPPERBOUND:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected, ref firstSemanticElementDeadEnd);
                     breakExpected = true;
                     break;
 
@@ -224,7 +193,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     //simply process sub-nodes - don't add space or expect any linebreaks (but respect them if necessary)
                     WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append(FormatOperator("("));
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected, ref firstSemanticElementDeadEnd);
                     WhiteSpace_BreakIfExpected(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append(FormatOperator(")"));
                     break;
@@ -234,7 +203,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append(FormatOperator("("));
                     StringBuilder innerStringBuilder = new StringBuilder();
-                    ProcessSqlNodeList(innerStringBuilder, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
+                    ProcessSqlNodeList(innerStringBuilder, contentElement.SelectNodes("*"), indentLevel, ref breakExpected, ref firstSemanticElementDeadEnd);
                     string innerString = innerStringBuilder.ToString();
                     outString.Append(innerString);
                     //if there was a linebreak in the parens content, then force the closing paren onto a new line.
@@ -246,16 +215,21 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case Interfaces.SqlXmlConstants.ENAME_BEGIN_END_BLOCK:
                 case Interfaces.SqlXmlConstants.ENAME_TRY_BLOCK:
+                case Interfaces.SqlXmlConstants.ENAME_CATCH_BLOCK:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append(FormatKeyword("BEGIN"));
                     if (contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_TRY_BLOCK))
                         outString.Append(FormatKeyword(" TRY"));
+                    else if (contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_CATCH_BLOCK))
+                        outString.Append(FormatKeyword(" CATCH"));
                     WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel, ref breakExpected);
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected, ref firstSemanticElementDeadEnd);
                     WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel - 1, ref breakExpected);
                     outString.Append(FormatKeyword("END"));
                     if (contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_TRY_BLOCK))
                         outString.Append(FormatKeyword(" TRY"));
+                    else if (contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_CATCH_BLOCK))
+                        outString.Append(FormatKeyword(" CATCH"));
                     breakExpected = true;
                     break;
 
@@ -267,20 +241,20 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     else
                         outString.Append(FormatKeyword("IF"));
                     outString.Append(" ");
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes(Interfaces.SqlXmlConstants.ENAME_BOOLEAN_EXPRESSION), indentLevel, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes(Interfaces.SqlXmlConstants.ENAME_BOOLEAN_EXPRESSION), indentLevel, ref breakExpected, ref firstSemanticElementDeadEnd);
                     //test for begin end block:
                     XmlNode beginBlock = contentElement.SelectSingleNode(string.Format("{0}/{1}/*[local-name() = '{2}' or local-name() = '{3}']", Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT, Interfaces.SqlXmlConstants.ENAME_SQL_CLAUSE, Interfaces.SqlXmlConstants.ENAME_BEGIN_END_BLOCK, Interfaces.SqlXmlConstants.ENAME_TRY_BLOCK));
                     if (beginBlock != null)
                     {
                         WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel - 1, ref breakExpected);
-                        ProcessSqlNodeList(outString, contentElement.SelectNodes(string.Format("{0}", Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT)), indentLevel - 1, ref breakExpected);
+                        ProcessSqlNodeList(outString, contentElement.SelectNodes(string.Format("{0}", Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT)), indentLevel - 1, ref breakExpected, ref firstSemanticElementDeadEnd);
                     }
                     else
                     {
                         WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel, ref breakExpected);
-                        ProcessSqlNodeList(outString, contentElement.SelectNodes(string.Format("{0}", Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT)), indentLevel, ref breakExpected);
+                        ProcessSqlNodeList(outString, contentElement.SelectNodes(string.Format("{0}", Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT)), indentLevel, ref breakExpected, ref firstSemanticElementDeadEnd);
                     }
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes(Interfaces.SqlXmlConstants.ENAME_ELSE_CLAUSE), indentLevel - 1, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes(Interfaces.SqlXmlConstants.ENAME_ELSE_CLAUSE), indentLevel - 1, ref breakExpected, ref firstSemanticElementDeadEnd);
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_ELSE_CLAUSE:
@@ -291,24 +265,24 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     if (beginBlock2 != null)
                     {
                         WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel, ref breakExpected);
-                        ProcessSqlNodeList(outString, contentElement.SelectNodes(string.Format("{0}", Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT)), indentLevel, ref breakExpected);
+                        ProcessSqlNodeList(outString, contentElement.SelectNodes(string.Format("{0}", Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT)), indentLevel, ref breakExpected, ref firstSemanticElementDeadEnd);
                     }
                     else
                     {
                         WhiteSpace_BreakToNextLine(contentElement, outString, indentLevel + 1, ref breakExpected);
-                        ProcessSqlNodeList(outString, contentElement.SelectNodes(string.Format("{0}", Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT)), indentLevel + 1, ref breakExpected);
+                        ProcessSqlNodeList(outString, contentElement.SelectNodes(string.Format("{0}", Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT)), indentLevel + 1, ref breakExpected, ref firstSemanticElementDeadEnd);
                     }
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_CASE_STATEMENT:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
-                    outString.Append("CASE");
+                    outString.Append(FormatKeyword("CASE"));
                     outString.Append(" ");
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected, ref firstSemanticElementDeadEnd);
                     if (ExpandCaseStatements)
                         breakExpected = true;
                     WhiteSpace_SeparateWords(null, outString, indentLevel + 1, ref breakExpected);
-                    outString.Append("END");
+                    outString.Append(FormatKeyword("END"));
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_CASE_WHEN:
@@ -324,7 +298,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     else
                         outString.Append(FormatKeyword("ELSE"));
                     outString.Append(" ");
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel + 1, ref breakExpected, ref firstSemanticElementDeadEnd);
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_COMMENT_MULTILINE:
@@ -517,15 +491,52 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 return operatorOut;
         }
 
-        private void WhiteSpace_SeparateStatements(XmlElement contentElement, StringBuilder outString, int indentLevel, ref bool breakExpected)
+        private void WhiteSpace_SeparateStatements(XmlElement contentElement, StringBuilder outString, int indentLevel, ref bool breakExpected, ref XmlElement previousClauseStarter)
         {
             if (breakExpected)
             {
-                outString.Append(Environment.NewLine);
+                //check whether this is a DECLARE/SET clause with similar precedent, and therefore exempt from double-linebreak.
+                XmlElement thisClauseStarter = FirstSemanticElementChild(contentElement);
+                if (!(thisClauseStarter != null
+                    && previousClauseStarter != null
+                    && thisClauseStarter.Name.Equals(Interfaces.SqlXmlConstants.ENAME_OTHERKEYWORD)
+                    && previousClauseStarter.Name.Equals(Interfaces.SqlXmlConstants.ENAME_OTHERKEYWORD)
+                    && (thisClauseStarter.InnerXml.ToUpper().Equals("SET")
+                        || thisClauseStarter.InnerXml.ToUpper().Equals("DECLARE")
+                        )
+                    && (previousClauseStarter.InnerXml.ToUpper().Equals("SET")
+                        || previousClauseStarter.InnerXml.ToUpper().Equals("DECLARE")
+                        )
+                    ))
+                    outString.Append(Environment.NewLine);
+
                 outString.Append(Environment.NewLine);
                 Indent(outString, indentLevel);
                 breakExpected = false;
             }
+        }
+
+        private XmlElement FirstSemanticElementChild(XmlElement contentElement)
+        {
+            XmlElement target = null;
+            while (contentElement != null)
+            {
+                target = (XmlElement)contentElement.SelectSingleNode(string.Format("*[local-name() != '{0}' and local-name() != '{1}' and local-name() != '{2}']",
+                    Interfaces.SqlXmlConstants.ENAME_WHITESPACE,
+                    Interfaces.SqlXmlConstants.ENAME_COMMENT_MULTILINE,
+                    Interfaces.SqlXmlConstants.ENAME_COMMENT_SINGLELINE));
+
+                if (target != null 
+                    && (target.Name.Equals(Interfaces.SqlXmlConstants.ENAME_SQL_CLAUSE)
+                        || target.Name.Equals(Interfaces.SqlXmlConstants.ENAME_DDL_BLOCK)
+                        )
+                    )
+                    contentElement = target;
+                else
+                    contentElement = null;
+            }
+
+            return target;
         }
 
         private void WhiteSpace_SeparateWords(XmlElement contentElement, StringBuilder outString, int indentLevel, ref bool breakExpected)

@@ -44,7 +44,6 @@ Limitations:
 	
 Known Issues / Todo:
  - "Max Line Width" wrapping feature
- - Grouping of "SET" and "DECLARE" statements
  - Formatting/indenting of ranking functions and RETURNS clauses
  - Parsing of Join Hints
 

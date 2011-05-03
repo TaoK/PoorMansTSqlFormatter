@@ -25,29 +25,30 @@ using System.IO;
 
 namespace PoorMansTSqlFormatterLib
 {
-    public class SqlParseManager
+    public class SqlFormattingManager
     {
-        private Interfaces.ISqlTokenizer _tokenizer;
-        private Interfaces.ISqlTokenParser _parser;
-        private Interfaces.ISqlTreeFormatter _formatter;
-
         //default to built-in
-        public SqlParseManager() : this(new Tokenizers.TSqlStandardTokenizer(), new Parsers.TSqlStandardParser(), new Formatters.TSqlStandardFormatter()) { }
-        public SqlParseManager(Interfaces.ISqlTokenizer tokenizer, Interfaces.ISqlTokenParser parser, Interfaces.ISqlTreeFormatter formatter)
+        public SqlFormattingManager() : this(new Tokenizers.TSqlStandardTokenizer(), new Parsers.TSqlStandardParser(), new Formatters.TSqlStandardFormatter()) { }
+
+        public SqlFormattingManager(Interfaces.ISqlTokenizer tokenizer, Interfaces.ISqlTokenParser parser, Interfaces.ISqlTreeFormatter formatter)
         {
-            _tokenizer = tokenizer;
-            _parser = parser;
-            _formatter = formatter;
+            Tokenizer = tokenizer;
+            Parser = parser;
+            Formatter = formatter;
         }
+
+        public Interfaces.ISqlTokenizer Tokenizer { get; set; }
+        public Interfaces.ISqlTokenParser Parser { get; set; }
+        public Interfaces.ISqlTreeFormatter Formatter { get; set; }
 
         public string Format(string inputSQL)
         {
-            return _formatter.FormatSQLTree(_parser.ParseSQL(_tokenizer.TokenizeSQL(inputSQL)));
+            return Formatter.FormatSQLTree(Parser.ParseSQL(Tokenizer.TokenizeSQL(inputSQL)));
         }
 
         public static string DefaultFormat(string inputSQL)
         {
-            return new SqlParseManager().Format(inputSQL);
+            return new SqlFormattingManager().Format(inputSQL);
         }
     }
 }

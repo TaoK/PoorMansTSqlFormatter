@@ -4,6 +4,8 @@ Version 0.9.5:
 --------------
 
  - Added CTE parsing
+ - Cleaned up delivery mechanism for full HTML pages
+ - Added grouping of DECLARE and SET statements
  
 
 Version 0.9.4:
