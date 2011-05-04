@@ -45,7 +45,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 .SQLCode {{
 	font-size: 13px;
 	font-weight: bold;
-	font-family: Consolas,'Lucida Console','DejaVu Sans Mono',monospace;;
+	font-family: monospace;;
 	white-space: pre;
 }}
 .SQLComment {{
