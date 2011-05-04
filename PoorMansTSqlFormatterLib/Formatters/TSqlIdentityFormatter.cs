@@ -158,6 +158,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_UNION_CLAUSE:
                 case SqlXmlConstants.ENAME_FUNCTION_KEYWORD:
                 case SqlXmlConstants.ENAME_DATATYPE_KEYWORD:
+                case SqlXmlConstants.ENAME_DDL_RETURNS:
                 case SqlXmlConstants.ENAME_OTHERKEYWORD:
                     outString.Append(contentElement.InnerText);
                     break;

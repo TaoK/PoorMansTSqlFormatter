@@ -146,8 +146,15 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     //newline regardless of whether previous element recommended a break or not.
                     outString.Append(Environment.NewLine);
                     outString.Append(FormatKeyword("AS"));
-                    breakExpected = true;
+                    outString.Append(Environment.NewLine);
+                    breakExpected = false; //we force a single break instead of asking the nested statement for the standard inter-statement double-break.
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel - 1, ref breakExpected, ref firstSemanticElementDeadEnd);
+                    break;
+
+                case Interfaces.SqlXmlConstants.ENAME_DDL_RETURNS:
+                    outString.Append(Environment.NewLine);
+                    outString.Append(FormatKeyword("RETURNS"));
+                    breakExpected = false;
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_CTE_WITH_CLAUSE:
