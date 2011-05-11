@@ -31,7 +31,6 @@ namespace PoorMansTSqlFormatterLib.Parsers
     {
         /*
          * TODO:
-         *  - enhance DDL context to also have clauses (with a backtrack in the standard formatter), for RETURNS...? Or just detect it in formatting?
          *  - update the demo UI to reference GPL, and publish the program
          *  - Manually review the output from all test cases for "strange" effects
          *  - handle Ranking Functions with multiple partition or order by columns/clauses

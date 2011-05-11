@@ -15,10 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterTests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterWebDemo", "PoorMansTSqlFormatterWebDemo\PoorMansTSqlFormatterWebDemo.csproj", "{13C7C347-4081-41DB-8857-DCD191B37539}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterSSMSAddIn", "PoorMansTSqlFormatterSSMSAddIn\PoorMansTSqlFormatterSSMSAddIn.csproj", "{BBE30E5A-E867-47BA-92E7-E718AB78CAE1}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PoorMansTSqlFormatterSSMSAddIn.Setup", "PoorMansTSqlFormatterSSMSAddIn.Setup\PoorMansTSqlFormatterSSMSAddIn.Setup.vdproj", "{5A4006AF-D565-4BB9-9CA4-C246862F51DE}"
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = PoorMansTSqlFormatter.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -40,6 +41,12 @@ Global
 		{13C7C347-4081-41DB-8857-DCD191B37539}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13C7C347-4081-41DB-8857-DCD191B37539}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13C7C347-4081-41DB-8857-DCD191B37539}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBE30E5A-E867-47BA-92E7-E718AB78CAE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBE30E5A-E867-47BA-92E7-E718AB78CAE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBE30E5A-E867-47BA-92E7-E718AB78CAE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBE30E5A-E867-47BA-92E7-E718AB78CAE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A4006AF-D565-4BB9-9CA4-C246862F51DE}.Debug|Any CPU.ActiveCfg = Debug
+		{5A4006AF-D565-4BB9-9CA4-C246862F51DE}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
