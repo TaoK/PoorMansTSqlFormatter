@@ -1,5 +1,15 @@
 Poor Man's T-SQL Formatter change log
 
+Version 0.9.6:
+--------------
+
+ - Added SSMS Add-in
+   - Handles Visual Studio standard Ctrl-K, Ctrl-F hotkey combination
+   - Adds menu item to "Tools" menu
+   - Formats selected text if there is any, or entire document otherwise
+   - Warns about parse failures with option to abort
+   - Supports SSMS and Express 2005 and 2008
+
 Version 0.9.5:
 --------------
 
