@@ -1,8 +1,8 @@
 Poor Man's T-SQL Formatter
 --------------------------
 
-This is a small free .Net 2.0 library (with demo program and web service) for 
-reformatting T-SQL code.
+This is a small free .Net 2.0 library (with demo program, web service and SSMS Addin) 
+for reformatting T-SQL code.
 
 Features:
  - Simple Xml-based parse tree
@@ -19,7 +19,8 @@ Features:
  - Fault-tolerant parsing and formatting - if some unknown SQL construct is encountered
     or a keyword is misinterpreted, parsing does not fail (but will simply not colorize
     or indent that portion correctly). If the parsing fails more catastrophically, a 
-    "best effort" will be made and warning displayed.
+    "best effort" will be made and warning displayed (or in the case of interactive 
+    use, eg in SSMS, the operation can be aborted).
  
 
 Limitations:
@@ -36,8 +37,9 @@ Limitations:
     aspects of the original T-SQL code structure: for example, it cannot represent
     a comment inside an "INNER JOIN" compound keyword, like "inner/*test*/join".
     such specific situations will result in information loss during parsing: the 
-    comment in this case will be moved to after the compound keyword. (such issues
-	are flagged in the formatted SQL)
+    comment in this case will be moved to after the compound keyword, so the original 
+    ordinal position of the comment is lost. (and such issues are flagged in the 
+    formatted SQL)
 
  - DDL parsing is VERY coarse, the bare minimum to display ordered table column 
     and procedure parameter declarations.
@@ -55,16 +57,16 @@ Longer-term enhancements / additions:
    - Compiled mono library download
  - Command-line program/download for ripping through a folder hierarchy of sql scripts
    - also for commit hook in SVN?
- - SSMS plugin(?)
  - Documentation of Xml structure and class usage
  - Pakaging, NuGet and/or OpenWrap
-   - Keeping track of versiuoning and documentation more carefully: http://semver.org/
- 
+   - Keeping track of versioning and documentation more carefully: http://semver.org/
 
-   
 This application and library is released under the GNU Affero GPL v3: 
 http://www.gnu.org/licenses/agpl.txt
 
+The homepage for this project is currently: 
+http://www.architectshack.com/PoorMansTSqlFormatter.ashx
+   
 Please contact me with any questions, concerns, or issues: my email address starts
 with tao, and is hosted at klerks dot biz.
 
