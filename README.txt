@@ -1,8 +1,8 @@
 Poor Man's T-SQL Formatter
 --------------------------
 
-This is a small free .Net 2.0 library (with demo program, web service and SSMS Addin) 
-for reformatting T-SQL code.
+This is a small free .Net 2.0 library (with demo winforms program, web service, SSMS 
+Addin, and Command-line utility) for reformatting T-SQL code.
 
 Features:
  - Simple Xml-based parse tree
@@ -55,8 +55,6 @@ Longer-term enhancements / additions:
  - Compiled library download
  - Supporting Mono (the library code undoubtedly already does, but I'd like to make it easy to build)
    - Compiled mono library download
- - Command-line program/download for ripping through a folder hierarchy of sql scripts
-   - also for commit hook in SVN?
  - Documentation of Xml structure and class usage
  - Pakaging, NuGet and/or OpenWrap
    - Keeping track of versioning and documentation more carefully: http://semver.org/
@@ -66,7 +64,11 @@ http://www.gnu.org/licenses/agpl.txt
 
 The homepage for this project is currently: 
 http://www.architectshack.com/PoorMansTSqlFormatter.ashx
-   
+
+This project currently uses one external library, NDesk.Options, for command-line parsing.
+The NDesk.Options library is licensed under the MIT/X11 license, and its homepage is here:
+http://www.ndesk.org/Options
+
 Please contact me with any questions, concerns, or issues: my email address starts
 with tao, and is hosted at klerks dot biz.
 

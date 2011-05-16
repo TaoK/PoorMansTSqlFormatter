@@ -1,5 +1,15 @@
 Poor Man's T-SQL Formatter change log
 
+Version 0.9.7:
+--------------
+
+ - Added command-line formatter
+   - single assembly/executable
+   - supports flags for all the standard formatting options
+   - allows for single files or wildcards, at a specified level or recursive
+   - defaults to ".sql" extensions only, but allows for adding others
+ - Corrected parsing error with GOTO statements
+
 Version 0.9.6:
 --------------
 

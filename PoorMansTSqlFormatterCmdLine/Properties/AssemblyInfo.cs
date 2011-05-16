@@ -22,13 +22,14 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("PoorMansTSqlFormatterLib")]
-[assembly: AssemblyDescription("A simple free (AGPL) T-SQL formatting library for .Net 2.0.")]
+[assembly: AssemblyTitle("PoorMansTSqlFormatterCmdLine")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PoorMansTSqlFormatterLib")]
-[assembly: AssemblyCopyright("Copyright ©  2011 Tao Klerks")]
+[assembly: AssemblyProduct("PoorMansTSqlFormatterCmdLine")]
+[assembly: AssemblyCopyright("Copyright ©  2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
+[assembly: Guid("4dacf3ba-d535-4244-b756-7d9ecfe577ae")]
 [assembly: AssemblyVersion("0.9.7.*")]

@@ -936,6 +936,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     || uppercaseValue.Equals("EXEC")
                     || uppercaseValue.Equals("EXECUTE")
                     || uppercaseValue.Equals("FETCH")
+                    || uppercaseValue.Equals("GOTO")
                     || uppercaseValue.Equals("GRANT")
                     || uppercaseValue.Equals("IF")
                     || uppercaseValue.Equals("INSERT")

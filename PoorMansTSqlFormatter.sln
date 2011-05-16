@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterSSMSAd
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PoorMansTSqlFormatterSSMSAddIn.Setup", "PoorMansTSqlFormatterSSMSAddIn.Setup\PoorMansTSqlFormatterSSMSAddIn.Setup.vdproj", "{5A4006AF-D565-4BB9-9CA4-C246862F51DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterCmdLine", "PoorMansTSqlFormatterCmdLine\PoorMansTSqlFormatterCmdLine.csproj", "{5FA98EDC-12DA-4580-9845-788590C59922}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{BBE30E5A-E867-47BA-92E7-E718AB78CAE1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5A4006AF-D565-4BB9-9CA4-C246862F51DE}.Debug|Any CPU.ActiveCfg = Debug
 		{5A4006AF-D565-4BB9-9CA4-C246862F51DE}.Release|Any CPU.ActiveCfg = Release
+		{5FA98EDC-12DA-4580-9845-788590C59922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FA98EDC-12DA-4580-9845-788590C59922}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FA98EDC-12DA-4580-9845-788590C59922}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FA98EDC-12DA-4580-9845-788590C59922}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
