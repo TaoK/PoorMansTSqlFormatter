@@ -35,7 +35,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
          *  - Manually review the output from all test cases for "strange" effects
          *  - handle Ranking Functions with multiple partition or order by columns/clauses
          *  - parse ON sections, for those who prefer to start ON on the next line and indent from there
-         *  - Fix join phrases from "Compound Keywords" to a nw container, for better whitespace handling.
+         *  - detect table hints, to avoid them looking like function parens
+         *  - Fix join phrases from "Compound Keywords" to a new container, for better whitespace handling.
          *  
          *  - Tests
          *    - Samples illustrating all the tokens and container combinations implemented
@@ -46,7 +47,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
         //for performance, it may make sense to make a singleton of this at some point...
         public Dictionary<string, KeywordType> KeywordList { get; set; }
-        Regex _JoinDetector = new Regex("^(RIGHT|INNER|LEFT|CROSS|FULL) (OUTER )?((HASH|LOOP|MERGE|SOMETHINGELSE) )?(JOIN|APPLY) ");
+        Regex _JoinDetector = new Regex("^(RIGHT|INNER|LEFT|CROSS|FULL) (OUTER )?((HASH|LOOP|MERGE|REMOTE) )?(JOIN|APPLY) ");
 
         public TSqlStandardParser()
         {
@@ -91,7 +92,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_EXPRESSION_PARENS, "", currentContainerNode);
                         else if (IsLatestTokenADDLDetailValue(currentContainerNode))
                             currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_DDLDETAIL_PARENS, "", currentContainerNode);
-                        else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_BLOCK)
+                        else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
+                            || currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
                             || isInsertClause
                             )
                             currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_DDL_PARENS, "", currentContainerNode);
@@ -140,16 +142,26 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         string keywordMatchPhrase = GetKeywordMatchPhrase(tokenList, tokenID, ref compoundKeywordRawStrings, ref compoundKeywordTokenCounts, ref compoundKeywordOverflowNodes);
                         int keywordMatchStringsUsed = 0;
 
-                        if (keywordMatchPhrase.StartsWith("CREATE ")
+                        if (keywordMatchPhrase.StartsWith("CREATE PROC")
+                            || keywordMatchPhrase.StartsWith("CREATE FUNC")
+                            || keywordMatchPhrase.StartsWith("ALTER PROC")
+                            || keywordMatchPhrase.StartsWith("ALTER FUNC")
+                            )
+                        {
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK, "", currentContainerNode);
+                            SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("CREATE ")
                             || keywordMatchPhrase.StartsWith("ALTER ")
                             || keywordMatchPhrase.StartsWith("DECLARE ")
                             )
                         {
                             ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
-                            currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_DDL_BLOCK, "", currentContainerNode);
+                            currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_DDL_OTHER_BLOCK, "", currentContainerNode);
                             SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode);
                         }
-                        else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_BLOCK)
+                        else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
                             && keywordMatchPhrase.StartsWith("RETURNS ")
                             )
                         {
@@ -157,7 +169,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (keywordMatchPhrase.StartsWith("AS "))
                         {
-                            if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_BLOCK))
+                            if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK))
                             {
                                 XmlElement newASBlock = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_DDL_AS_BLOCK, token.Value, currentContainerNode);
                                 currentContainerNode = StartNewStatement(sqlTree, newASBlock);
@@ -231,6 +243,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (keywordMatchPhrase.StartsWith("THEN "))
                         {
+                            EscapeAnyBetweenConditions(ref currentContainerNode);
+
                             if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_CASE_WHEN))
                                 currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_CASE_THEN, token.Value, currentContainerNode);
                             else
@@ -424,12 +438,12 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 }
                                 else
                                 {
-                                    SaveNewElementWithError(sqlTree, SqlXmlConstants.ENAME_OTHERNODE, token.Value, currentContainerNode, ref errorFound);
+                                    SaveNewElementWithError(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode, ref errorFound);
                                 }
                             }
                             else
                             {
-                                SaveNewElementWithError(sqlTree, SqlXmlConstants.ENAME_OTHERNODE, token.Value, currentContainerNode, ref errorFound);
+                                SaveNewElementWithError(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode, ref errorFound);
                             }
                         }
                         else if (keywordMatchPhrase.StartsWith("INSERT INTO "))
@@ -453,6 +467,20 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                     firstNonCommentSibling != null
                                     && firstNonCommentSibling.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
                                     && firstNonCommentSibling.InnerText.ToUpper().StartsWith("INSERT")
+                                    )
+                                )
+                                ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+
+                            ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
+                            SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("SET "))
+                        {
+                            XmlElement firstNonCommentSibling2 = GetFirstNonWhitespaceNonCommentChildElement(currentContainerNode);
+                            if (!(
+                                    firstNonCommentSibling2 != null
+                                    && firstNonCommentSibling2.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
+                                    && firstNonCommentSibling2.InnerText.ToUpper().StartsWith("UPDATE")
                                     )
                                 )
                                 ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
@@ -776,7 +804,9 @@ namespace PoorMansTSqlFormatterLib.Parsers
                 && (escapeEmptyContainer || HasNonWhiteSpaceNonSingleCommentContent(currentContainerNode))
                 )
                 return (XmlElement)currentContainerNode.ParentNode.ParentNode;
-            else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_BLOCK))
+            else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
+                || currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
+                )
                 return (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode;
             else
                 return null;
@@ -864,31 +894,34 @@ namespace PoorMansTSqlFormatterLib.Parsers
         {
             EscapeAnyBetweenConditions(ref currentContainerNode);
 
-            while (true)
+            if (HasNonWhiteSpaceNonCommentContent(currentContainerNode))
             {
-                if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
-                    && currentContainerNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
-                    && (currentContainerNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_IF_STATEMENT)
-                        || currentContainerNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_WHILE_LOOP)
+                while (true)
+                {
+                    if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
+                        && currentContainerNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
+                        && (currentContainerNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_IF_STATEMENT)
+                            || currentContainerNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_WHILE_LOOP)
+                            )
                         )
-                    )
-                {
+                    {
 
-                    //we just ended the one statement of an if or while, and need to pop out to a new statement at the same level as the IF or WHILE
-                    currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode;
-                }
-                else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
-                    && currentContainerNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
-                    && currentContainerNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_ELSE_CLAUSE)
-                    && currentContainerNode.ParentNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_IF_STATEMENT)
-                    )
-                {
-                    //we just ended the one and only statement in an else clause, and need to pop out to a new statement at the same level as the IF
-                    currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode.ParentNode;
-                }
-                else
-                {
-                    break;
+                        //we just ended the one statement of an if or while, and need to pop out to a new statement at the same level as the IF or WHILE
+                        currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode;
+                    }
+                    else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
+                        && currentContainerNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
+                        && currentContainerNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_ELSE_CLAUSE)
+                        && currentContainerNode.ParentNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_IF_STATEMENT)
+                        )
+                    {
+                        //we just ended the one and only statement in an else clause, and need to pop out to a new statement at the same level as the IF
+                        currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode.ParentNode;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
         }

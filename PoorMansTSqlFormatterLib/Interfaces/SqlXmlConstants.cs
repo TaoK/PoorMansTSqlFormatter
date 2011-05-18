@@ -49,7 +49,8 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_CTE_AS_BLOCK = "CTEAsBlock";
         public const string ENAME_COMMIT_TRANSACTION = "CommitTransaction";
         public const string ENAME_ROLLBACK_TRANSACTION = "RollbackTransaction";
-        public const string ENAME_DDL_BLOCK = "DDLBlock";
+        public const string ENAME_DDL_PROCEDURAL_BLOCK = "DDLProceduralBlock";
+        public const string ENAME_DDL_OTHER_BLOCK = "DDLOtherBlock";
         public const string ENAME_DDL_AS_BLOCK = "DDLAsBlock";
         public const string ENAME_DDL_PARENS = "DDLParens";
         public const string ENAME_DDL_RETURNS = "DDLReturns";

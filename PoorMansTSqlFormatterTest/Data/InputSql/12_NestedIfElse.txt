@@ -1,0 +1,7 @@
+﻿	IF @OuterIfCondition = 1
+		IF @InnerIfCondition = 2
+			SET @InnerIfStatement = 3
+		ELSE
+			SET @InnerElseStatement = 4
+	ELSE
+		SET @OuterElseStatement = 5

@@ -101,10 +101,8 @@ SqlFormatter TestFiles\* /is:""  "" /tc /uc-
                 return;
             }
 
-            var tokenizer = new PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer();
-            var parser = new PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser();
             var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(indentString, expandCommaLists, trailingCommas, expandBooleanExpressions, expandCaseStatements, uppercaseKeywords, false);
-            var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(tokenizer, parser, formatter);
+            var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);
 
             string baseDirectoryName = System.IO.Path.GetDirectoryName(remainingArgs[0]);
             if (baseDirectoryName.Length == 0)
@@ -160,50 +158,60 @@ SqlFormatter TestFiles\* /is:""  "" /tc /uc-
         private static void ReFormatFile(System.IO.FileInfo fileInfo, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, bool backups)
         {
             bool failedBackup = false;
-            if (backups)
+            string oldFileContents = "";
+            string newFileContents = "";
+            bool parsingError = false;
+            Exception parseErrorDetail = null;
+
+
+            //TODO: play with / test encoding complexities
+            //TODO: consider using auto-detection - read binary, autodetect, convert.
+            //TODO: consider whether to keep same output encoding as source file, or always use same, and if so whether to make parameter-based.
+            try
+            {
+                oldFileContents = System.IO.File.ReadAllText(fileInfo.FullName);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed to read file contents (aborted): " + fileInfo.FullName);
+                Console.WriteLine(" Error detail: " + ex.Message);
+            }
+            if (oldFileContents.Length > 0)
             {
                 try
                 {
-                    fileInfo.CopyTo(fileInfo.FullName + ".bak", true);
+                    newFileContents = formattingManager.Format(oldFileContents, ref parsingError);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Failed to back up file: " + fileInfo.FullName);
-                    Console.WriteLine(" Skipping formatting for this file.");
-                    Console.WriteLine(" Error detail: " + ex.Message);
-                    failedBackup = true;
+                    parsingError = true;
+                    parseErrorDetail = ex;
+                }
+
+                if (parsingError)
+                {
+                    Console.WriteLine("Encountered error when parsing or formatting file contents (aborted): " + fileInfo.FullName);
+                    if (parseErrorDetail != null)
+                        Console.WriteLine(" Error detail: " + parseErrorDetail.Message);
                 }
             }
-
-            if (!failedBackup)
+            if (newFileContents.Length > 0 && !parsingError && !oldFileContents.Equals(newFileContents))
             {
-                //TODO: play with / test encoding complexities
-                //TODO: consider using auto-detection - read binary, autodetect, convert.
-                //TODO: consider whether to keep same output encoding as source file, or always use same, and if so whether to make parameter-based.
-                string oldFileContents = "";
-                string newFileContents = "";
-                try
-                {
-                    oldFileContents = System.IO.File.ReadAllText(fileInfo.FullName);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Failed to read file contents (aborted): " + fileInfo.FullName);
-                    Console.WriteLine(" Error detail: " + ex.Message);
-                }
-                if (oldFileContents.Length > 0)
+                if (backups)
                 {
                     try
                     {
-                        newFileContents = formattingManager.Format(oldFileContents);
+                        fileInfo.CopyTo(fileInfo.FullName + ".bak", true);
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Failed to parse or format file contents (aborted): " + fileInfo.FullName);
+                        Console.WriteLine("Failed to back up file: " + fileInfo.FullName);
+                        Console.WriteLine(" Skipping formatting for this file.");
                         Console.WriteLine(" Error detail: " + ex.Message);
+                        failedBackup = true;
                     }
                 }
-                if (newFileContents.Length > 0)
+                if (!failedBackup)
                 {
                     try
                     {

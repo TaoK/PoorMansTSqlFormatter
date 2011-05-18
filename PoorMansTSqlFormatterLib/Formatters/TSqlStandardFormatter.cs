@@ -36,6 +36,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
          *    - make this work despite any join hints (loop, hash, merge, remote)
          *    - Insert -> Insert Into
          *    - TRAN -> TRANSACTION
+         *    - PROC -> PROCEDURE
+         *    - DECLARE @Test AS INT -> DECLARE @Test INT
          *    
          *  - Implement text width-based line breaking
          *    - Provide preference option for width and tab spaces?
@@ -103,7 +105,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 && !contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_WHITESPACE)
                 && !contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_SQL_CLAUSE)
                 && !contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT)
-                && !contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_DDL_BLOCK)
+                && !contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
+                && !contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
                 )
                 firstSemanticElement = contentElement;
 
@@ -138,7 +141,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     breakExpected = true;
                     break;
 
-                case Interfaces.SqlXmlConstants.ENAME_DDL_BLOCK:
+                case Interfaces.SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK:
+                case Interfaces.SqlXmlConstants.ENAME_DDL_OTHER_BLOCK:
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected, ref firstSemanticElement);
                     break;
 
@@ -535,7 +539,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 if (target != null 
                     && (target.Name.Equals(Interfaces.SqlXmlConstants.ENAME_SQL_CLAUSE)
-                        || target.Name.Equals(Interfaces.SqlXmlConstants.ENAME_DDL_BLOCK)
+                        || target.Name.Equals(Interfaces.SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
+                        || target.Name.Equals(Interfaces.SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
                         )
                     )
                     contentElement = target;

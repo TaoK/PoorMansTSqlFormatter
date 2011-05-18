@@ -48,6 +48,7 @@ Known Issues / Todo:
  - "Max Line Width" wrapping feature
  - Formatting/indenting of ranking functions and RETURNS clauses
  - Parsing of Join Hints
+ - FxCop checking
 
 Longer-term enhancements / additions:
  - Keyword consistency correction feature (eg LEFT OUTER JOIN -> LEFT JOIN)

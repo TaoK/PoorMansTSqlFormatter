@@ -1,5 +1,15 @@
 Poor Man's T-SQL Formatter change log
 
+Version 0.9.8:
+--------------
+
+ - Fixed parsing error with UPDATE statements in IF blocks
+ - Fixed handling of AS keyword for defining data types
+ - Fixed handling of nested ELSE clauses
+ - Added parse-error-handling to command-line utility
+ - Added easier parse-error-detection and common constructor to formatting manager class
+ - Fixed merged (ilmerge) output type for command-line utility
+
 Version 0.9.7:
 --------------
 

@@ -30,6 +30,9 @@ namespace PoorMansTSqlFormatterLib
         //default to built-in
         public SqlFormattingManager() : this(new Tokenizers.TSqlStandardTokenizer(), new Parsers.TSqlStandardParser(), new Formatters.TSqlStandardFormatter()) { }
 
+        //most common use-case, define only formatter
+        public SqlFormattingManager(Interfaces.ISqlTreeFormatter formatter) : this(new Tokenizers.TSqlStandardTokenizer(), new Parsers.TSqlStandardParser(), formatter) { }
+
         public SqlFormattingManager(Interfaces.ISqlTokenizer tokenizer, Interfaces.ISqlTokenParser parser, Interfaces.ISqlTreeFormatter formatter)
         {
             Tokenizer = tokenizer;
@@ -43,12 +46,25 @@ namespace PoorMansTSqlFormatterLib
 
         public string Format(string inputSQL)
         {
-            return Formatter.FormatSQLTree(Parser.ParseSQL(Tokenizer.TokenizeSQL(inputSQL)));
+            bool error = false;
+            return Format(inputSQL, ref error);
+        }
+
+        public string Format(string inputSQL, ref bool errorEncountered)
+        {
+            XmlDocument sqlTree = Parser.ParseSQL(Tokenizer.TokenizeSQL(inputSQL));
+            errorEncountered = (sqlTree.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", Interfaces.SqlXmlConstants.ENAME_SQL_ROOT, Interfaces.SqlXmlConstants.ANAME_ERRORFOUND)) != null);
+            return Formatter.FormatSQLTree(sqlTree);
         }
 
         public static string DefaultFormat(string inputSQL)
         {
             return new SqlFormattingManager().Format(inputSQL);
+        }
+
+        public static string DefaultFormat(string inputSQL, ref bool errorsEncountered)
+        {
+            return new SqlFormattingManager().Format(inputSQL, ref errorsEncountered);
         }
     }
 }

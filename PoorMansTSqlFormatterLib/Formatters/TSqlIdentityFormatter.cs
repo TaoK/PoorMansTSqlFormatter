@@ -58,7 +58,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_SQL_STATEMENT:
                 case SqlXmlConstants.ENAME_SQL_CLAUSE:
                 case SqlXmlConstants.ENAME_BOOLEAN_EXPRESSION:
-                case SqlXmlConstants.ENAME_DDL_BLOCK:
+                case SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK:
+                case SqlXmlConstants.ENAME_DDL_OTHER_BLOCK:
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"));
                     break;
 

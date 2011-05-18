@@ -45,6 +45,8 @@
   <ItemGroup>
     <Content Include="Data\InputSql\10_UnionTest.txt" />
     <Content Include="Data\InputSql\11_AdHocAccessLikeQueryPaste.txt" />
+    <Content Include="Data\InputSql\12_NestedIfElse.txt" />
+    <Content Include="Data\InputSql\13_DataTypeAS.txt" />
     <Content Include="Data\InputSql\1_simple.txt" />
     <Content Include="Data\InputSql\2_Random_INVALID.txt" />
     <Content Include="Data\InputSql\3_MSSample.txt" />
