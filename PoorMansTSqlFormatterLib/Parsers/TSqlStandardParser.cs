@@ -991,11 +991,10 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
         private static bool IsClauseStarter(IToken token)
         {
+            //Note: some clause starters are handled separately: Joins, RETURNS clauses, etc.
             string uppercaseValue = token.Value.ToUpper();
             return (token.Type == SqlTokenType.OtherNode
                 && (uppercaseValue.Equals("INNER")
-                    || uppercaseValue.Equals("LEFT")
-                    || uppercaseValue.Equals("JOIN")
                     || uppercaseValue.Equals("WHERE")
                     || uppercaseValue.Equals("FROM")
                     || uppercaseValue.Equals("ORDER")

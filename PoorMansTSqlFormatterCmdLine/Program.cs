@@ -163,7 +163,6 @@ SqlFormatter TestFiles\* /is:""  "" /tc /uc-
             bool parsingError = false;
             Exception parseErrorDetail = null;
 
-
             //TODO: play with / test encoding complexities
             //TODO: consider using auto-detection - read binary, autodetect, convert.
             //TODO: consider whether to keep same output encoding as source file, or always use same, and if so whether to make parameter-based.

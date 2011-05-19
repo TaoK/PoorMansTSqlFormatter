@@ -21,14 +21,13 @@ Features:
     or indent that portion correctly). If the parsing fails more catastrophically, a 
     "best effort" will be made and warning displayed (or in the case of interactive 
     use, eg in SSMS, the operation can be aborted).
- 
+
+ - reasonably fast: reformatting 1,500 or so files totalling 4MB takes 30 seconds on a 
+    cheap atom-processor (2009) netbook.
 
 Limitations:
  - This is NOT a full SQL-parsing solution: only "coarse" parsing is performed, the 
     minimum necessary for re-formatting.
-
- - The parsing implementation is not very efficient - little effort has been made to 
-    optimize it.
 
  - The code is very "procedural" - no effort has been made to organize the code 
     according to object-oriented design principles.
@@ -45,14 +44,18 @@ Limitations:
     and procedure parameter declarations.
 	
 Known Issues / Todo:
- - "Max Line Width" wrapping feature
+ - Parsing of DECLARE CURSOR, for better formatting
+ - Parsing of DML WITH clauses, for better formatting
  - Formatting/indenting of ranking functions and RETURNS clauses
- - Parsing of Join Hints
+ - Better handling of indenting in parentheses, esp. in boolean expressions
+ - "Max Line Width" wrapping feature
  - FxCop checking
 
 Longer-term enhancements / additions:
  - Keyword consistency correction feature (eg LEFT OUTER JOIN -> LEFT JOIN)
- - Demo App download, with proper license notices, better layout, etc
+ - Demo App download, with proper license notices, etc
+ - Command-line formatter utility download
+ - SSMS Add-in download
  - Compiled library download
  - Supporting Mono (the library code undoubtedly already does, but I'd like to make it easy to build)
    - Compiled mono library download

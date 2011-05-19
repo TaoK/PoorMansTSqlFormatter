@@ -9,6 +9,8 @@ Version 0.9.8:
  - Added parse-error-handling to command-line utility
  - Added easier parse-error-detection and common constructor to formatting manager class
  - Fixed merged (ilmerge) output type for command-line utility
+ - Fixed multiline comment handling to respect T-SQL comment nesting
+
 
 Version 0.9.7:
 --------------

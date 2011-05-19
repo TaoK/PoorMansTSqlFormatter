@@ -241,7 +241,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         outString.Append(FormatKeyword(" TRY"));
                     else if (contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_CATCH_BLOCK))
                         outString.Append(FormatKeyword(" CATCH"));
-                    breakExpected = true;
+                    // shouldn't this normally be handled by the next statement?
+                    //breakExpected = true;
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_WHILE_LOOP:

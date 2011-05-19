@@ -42,9 +42,11 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             StringReader inputReader = new StringReader(inputSQL);
             SqlTokenizationType? currentTokenizationType;
             StringBuilder currentTokenValue = new StringBuilder();
+            int commentNesting;
 
             currentTokenizationType = null;
             currentTokenValue.Length = 0;
+            commentNesting = 0;
 
             int currentCharInt = inputReader.Read();
             while (currentCharInt >= 0)
@@ -95,6 +97,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                             if (currentCharacter == '*')
                             {
                                 currentTokenizationType = SqlTokenizationType.BlockComment;
+                                commentNesting++;
                             }
                             else if (currentCharacter == '=')
                             {
@@ -132,11 +135,19 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                         case SqlTokenizationType.BlockComment:
                             if (currentCharacter == '*')
                             {
-                                int nextCharInt = inputReader.Peek();
-                                if (nextCharInt == (int)'/')
+                                if (inputReader.Peek() == (int)'/')
                                 {
-                                    inputReader.Read();
-                                    CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                    commentNesting--;
+                                    char nextCharacter = (char)inputReader.Read();
+                                    if (commentNesting > 0)
+                                    {
+                                        currentTokenValue.Append(currentCharacter);
+                                        currentTokenValue.Append(nextCharacter);
+                                    }
+                                    else
+                                    {
+                                        CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                    }
                                 }
                                 else
                                 {
@@ -146,6 +157,12 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                             else
                             {
                                 currentTokenValue.Append(currentCharacter);
+
+                                if (currentCharacter == '/' && inputReader.Peek() == (int)'*')
+                                {
+                                    currentTokenValue.Append((char)inputReader.Read());
+                                    commentNesting++;
+                                }
                             }
                             break;
 
