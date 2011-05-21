@@ -525,6 +525,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode);
                             }
                         }
+                        else if (token.Value.EndsWith(":"))
+                        {
+                            //this is not very tested yet. Labels SEEM to be defined only by the trailing colon,
+                            // but that would also seem to be very different from pretty much everything else in T-SQL!
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            SaveNewElement(sqlTree, SqlXmlConstants.ENAME_LABEL, token.Value, currentContainerNode);
+                        }
                         else
                         {
                             //miscellaneous single-word tokens, which may or may not be statement starters and/or clause starters
@@ -600,13 +607,17 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             SaveNewElement(sqlTree, GetEquivalentSqlNodeName(token.Type), token.Value, currentContainerNode);
                         break;
 
-                    case SqlTokenType.QuotedIdentifier:
+                    case SqlTokenType.BracketQuotedName:
                     case SqlTokenType.Asterisk:
                     case SqlTokenType.Comma:
                     case SqlTokenType.Period:
                     case SqlTokenType.NationalString:
                     case SqlTokenType.String:
+                    case SqlTokenType.QuotedString:
                     case SqlTokenType.OtherOperator:
+                    case SqlTokenType.Number:
+                    case SqlTokenType.BinaryValue:
+                    case SqlTokenType.MonetaryValue:
                         SaveNewElement(sqlTree, GetEquivalentSqlNodeName(token.Type), token.Value, currentContainerNode);
                         break;
                     default:
@@ -656,8 +667,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     return SqlXmlConstants.ENAME_COMMENT_SINGLELINE;
                 case SqlTokenType.MultiLineComment:
                     return SqlXmlConstants.ENAME_COMMENT_MULTILINE;
-                case SqlTokenType.QuotedIdentifier:
-                    return SqlXmlConstants.ENAME_QUOTED_IDENTIFIER;
+                case SqlTokenType.BracketQuotedName:
+                    return SqlXmlConstants.ENAME_BRACKET_QUOTED_NAME;
                 case SqlTokenType.Asterisk:
                     return SqlXmlConstants.ENAME_ASTERISK;
                 case SqlTokenType.Comma:
@@ -668,8 +679,16 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     return SqlXmlConstants.ENAME_NSTRING;
                 case SqlTokenType.String:
                     return SqlXmlConstants.ENAME_STRING;
+                case SqlTokenType.QuotedString:
+                    return SqlXmlConstants.ENAME_QUOTED_STRING;
                 case SqlTokenType.OtherOperator:
                     return SqlXmlConstants.ENAME_OTHEROPERATOR;
+                case SqlTokenType.Number:
+                    return SqlXmlConstants.ENAME_NUMBER_VALUE;
+                case SqlTokenType.MonetaryValue:
+                    return SqlXmlConstants.ENAME_MONETARY_VALUE;
+                case SqlTokenType.BinaryValue:
+                    return SqlXmlConstants.ENAME_BINARY_VALUE;
                 default:
                     throw new Exception("Mapping not found for provided Token Type");
             }
@@ -688,7 +707,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             while (tokenID < tokenList.Count && phraseComponentsFound < 4)
             {
                 if (tokenList[tokenID].Type == SqlTokenType.OtherNode
-                    || tokenList[tokenID].Type == SqlTokenType.QuotedIdentifier
+                    || tokenList[tokenID].Type == SqlTokenType.BracketQuotedName
                     )
                 {
                     phrase += tokenList[tokenID].Value.ToUpper() + " ";
@@ -1050,7 +1069,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             while (currentNode != null)
             {
                 string testValue = currentNode.InnerText.ToUpper();
-                if (currentNode.Name.Equals(SqlXmlConstants.ENAME_QUOTED_IDENTIFIER)
+                if (currentNode.Name.Equals(SqlXmlConstants.ENAME_BRACKET_QUOTED_NAME)
                     || ((currentNode.Name.Equals(SqlXmlConstants.ENAME_OTHERNODE)
                         || currentNode.Name.Equals(SqlXmlConstants.ENAME_FUNCTION_KEYWORD)
                         )

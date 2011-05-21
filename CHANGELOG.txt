@@ -10,7 +10,14 @@ Version 0.9.8:
  - Added easier parse-error-detection and common constructor to formatting manager class
  - Fixed merged (ilmerge) output type for command-line utility
  - Fixed multiline comment handling to respect T-SQL comment nesting
-
+ - Added handling for double quotes, incl. escaping
+ - Added number parsing/tokenization
+ - Added binary/hex value parsing/tokenization
+ - Added money parsing/tokenization
+ - Added tests for number, currency and binary parsing/tokenization edge cases
+ - Fixed grouping of DECLARE, SET, and PRINT statements
+ - Added parsing of Labels as statements
+ 
 
 Version 0.9.7:
 --------------

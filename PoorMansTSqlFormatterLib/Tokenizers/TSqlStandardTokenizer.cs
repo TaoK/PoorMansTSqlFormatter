@@ -30,7 +30,6 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
     {
         /*
          * TODO:
-         *  - WILL NEED TO RESEARCH QUOTED_IDENTIFIER
          *  - Future Extensions
          *    - Scope Resolution Operator (and/or colons in general?)
          *    - Compound operators (SQL 2008), those that end in equals.
@@ -62,6 +61,132 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                     {
                         case SqlTokenizationType.WhiteSpace:
                             if (IsWhitespace(currentCharacter))
+                            {
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            else
+                            {
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
+                            }
+                            break;
+
+                        case SqlTokenizationType.SinglePeriod:
+                            if (currentCharacter >= '0' && currentCharacter <= '9')
+                            {
+                                currentTokenizationType = SqlTokenizationType.DecimalValue;
+                                currentTokenValue.Append('.');
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            else
+                            {
+                                currentTokenValue.Append('.');
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
+                            }
+                            break;
+
+                        case SqlTokenizationType.SingleZero:
+                            if (currentCharacter == 'x' || currentCharacter == 'X')
+                            {
+                                currentTokenizationType = SqlTokenizationType.BinaryValue;
+                                currentTokenValue.Append('0');
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            else if (currentCharacter >= '0' && currentCharacter <= '9')
+                            {
+                                currentTokenizationType = SqlTokenizationType.Number;
+                                currentTokenValue.Append('0');
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            else
+                            {
+                                currentTokenValue.Append('0');
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
+                            }
+                            break;
+
+                        case SqlTokenizationType.Number:
+                            if (currentCharacter == 'e' || currentCharacter == 'E')
+                            {
+                                currentTokenizationType = SqlTokenizationType.FloatValue;
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            else if (currentCharacter == '.')
+                            {
+                                currentTokenizationType = SqlTokenizationType.DecimalValue;
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            else if (currentCharacter >= '0' && currentCharacter <= '9')
+                            {
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            else
+                            {
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
+                            }
+                            break;
+
+                        case SqlTokenizationType.DecimalValue:
+                            if (currentCharacter == 'e' || currentCharacter == 'E')
+                            {
+                                currentTokenizationType = SqlTokenizationType.FloatValue;
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            else if (currentCharacter >= '0' && currentCharacter <= '9')
+                            {
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            else
+                            {
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
+                            }
+                            break;
+
+                        case SqlTokenizationType.FloatValue:
+                            if (currentCharacter >= '0' && currentCharacter <= '9')
+                            {
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            else if (currentCharacter == '-' && currentTokenValue.ToString().EndsWith("e", StringComparison.OrdinalIgnoreCase))
+                            {
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            else
+                            {
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
+                            }
+                            break;
+
+                        case SqlTokenizationType.BinaryValue:
+                            if ((currentCharacter >= '0' && currentCharacter <= '9')
+                                || (currentCharacter >= 'A' && currentCharacter <= 'F')
+                                || (currentCharacter >= 'a' && currentCharacter <= 'f')
+                                )
+                            {
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            else
+                            {
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
+                            }
+                            break;
+
+                        case SqlTokenizationType.MonetaryValue:
+                            if (currentCharacter >= '0' && currentCharacter <= '9')
+                            {
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            else if (currentCharacter == '-' && currentTokenValue.Length == 1)
+                            {
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            else if (currentCharacter == '.' && !currentTokenValue.ToString().Contains("."))
                             {
                                 currentTokenValue.Append(currentCharacter);
                             }
@@ -195,8 +320,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                         case SqlTokenizationType.String:
                             if (currentCharacter == '\'')
                             {
-                                int nextCharInt = inputReader.Peek();
-                                if (nextCharInt == (int)'\'')
+                                if (inputReader.Peek() == (int)'\'')
                                 {
                                     inputReader.Read();
                                     currentTokenValue.Append(currentCharacter);
@@ -212,11 +336,29 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                             }
                             break;
 
-                        case SqlTokenizationType.QuotedIdentifier:
+                        case SqlTokenizationType.QuotedString:
+                            if (currentCharacter == '"')
+                            {
+                                if (inputReader.Peek() == (int)'"')
+                                {
+                                    inputReader.Read();
+                                    currentTokenValue.Append(currentCharacter);
+                                }
+                                else
+                                {
+                                    CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                }
+                            }
+                            else
+                            {
+                                currentTokenValue.Append(currentCharacter);
+                            }
+                            break;
+
+                        case SqlTokenizationType.BracketQuotedName:
                             if (currentCharacter == ']')
                             {
-                                int nextCharInt = inputReader.Peek();
-                                if (nextCharInt == (int)']')
+                                if (inputReader.Peek() == (int)']')
                                 {
                                     inputReader.Read();
                                     currentTokenValue.Append(currentCharacter);
@@ -292,7 +434,8 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                 if (currentTokenizationType.Value == SqlTokenizationType.BlockComment
                     || currentTokenizationType.Value == SqlTokenizationType.String
                     || currentTokenizationType.Value == SqlTokenizationType.NString
-                    || currentTokenizationType.Value == SqlTokenizationType.QuotedIdentifier
+                    || currentTokenizationType.Value == SqlTokenizationType.QuotedString
+                    || currentTokenizationType.Value == SqlTokenizationType.BracketQuotedName
                     )
                     tokenContainer.HasErrors = true;
 
@@ -316,7 +459,9 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             //characters that pop you out of a regular "word" context (maybe into a new word)
             return (IsWhitespace(currentCharacter)
                 || IsOperatorCharacter(currentCharacter)
+                || (IsCurrencyPrefix(currentCharacter) && currentCharacter != '$')
                 || currentCharacter == '\''
+                || currentCharacter == '"'
                 || currentCharacter == ','
                 || currentCharacter == '.'
                 || currentCharacter == '['
@@ -342,6 +487,48 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                 || currentCharacter == '<'
                 || currentCharacter == '>'
                 || currentCharacter == '~'
+                );
+        }
+
+        private static bool IsCurrencyPrefix(char currentCharacter)
+        {
+            //symbols that SQL Server recognizes as currency prefixes - these also happen to 
+            // be word-breakers, except the dollar. Ref:
+            // http://msdn.microsoft.com/en-us/library/ms188688.aspx
+            return (currentCharacter == (char)0x0024
+                || currentCharacter == (char)0x00A2
+                || currentCharacter == (char)0x00A3
+                || currentCharacter == (char)0x00A4
+                || currentCharacter == (char)0x00A5
+                || currentCharacter == (char)0x09F2
+                || currentCharacter == (char)0x09F3
+                || currentCharacter == (char)0x0E3F
+                || currentCharacter == (char)0x17DB
+                || currentCharacter == (char)0x20A0
+                || currentCharacter == (char)0x20A1
+                || currentCharacter == (char)0x20A2
+                || currentCharacter == (char)0x20A3
+                || currentCharacter == (char)0x20A4
+                || currentCharacter == (char)0x20A5
+                || currentCharacter == (char)0x20A6
+                || currentCharacter == (char)0x20A7
+                || currentCharacter == (char)0x20A8
+                || currentCharacter == (char)0x20A9
+                || currentCharacter == (char)0x20AA
+                || currentCharacter == (char)0x20AB
+                || currentCharacter == (char)0x20AC
+                || currentCharacter == (char)0x20AD
+                || currentCharacter == (char)0x20AE
+                || currentCharacter == (char)0x20AF
+                || currentCharacter == (char)0x20B0
+                || currentCharacter == (char)0x20B1
+                || currentCharacter == (char)0xFDFC
+                || currentCharacter == (char)0xFE69
+                || currentCharacter == (char)0xFF04
+                || currentCharacter == (char)0xFFE0
+                || currentCharacter == (char)0xFFE1
+                || currentCharacter == (char)0xFFE5
+                || currentCharacter == (char)0xFFE6
                 );
         }
 
@@ -375,9 +562,13 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             {
                 currentTokenizationType = SqlTokenizationType.String;
             }
+            else if (currentCharacter == '"')
+            {
+                currentTokenizationType = SqlTokenizationType.QuotedString;
+            }
             else if (currentCharacter == '[')
             {
-                currentTokenizationType = SqlTokenizationType.QuotedIdentifier;
+                currentTokenizationType = SqlTokenizationType.BracketQuotedName;
             }
             else if (currentCharacter == '(')
             {
@@ -393,7 +584,21 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             }
             else if (currentCharacter == '.')
             {
-                tokenContainer.Add(new Token(SqlTokenType.Period, ""));
+                currentTokenizationType = SqlTokenizationType.SinglePeriod;
+            }
+            else if (currentCharacter == '0')
+            {
+                currentTokenizationType = SqlTokenizationType.SingleZero;
+            }
+            else if (currentCharacter >= '1' && currentCharacter <= '9')
+            {
+                currentTokenizationType = SqlTokenizationType.Number;
+                currentNodeValue.Append(currentCharacter);
+            }
+            else if (IsCurrencyPrefix(currentCharacter))
+            {
+                currentTokenizationType = SqlTokenizationType.MonetaryValue;
+                currentNodeValue.Append(currentCharacter);
             }
             else if (currentCharacter == ';')
             {
@@ -473,13 +678,40 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                     tokenContainer.Add(new Token(SqlTokenType.String, currentValue.ToString()));
                     break;
 
-                case SqlTokenizationType.QuotedIdentifier:
-                    tokenContainer.Add(new Token(SqlTokenType.QuotedIdentifier, currentValue.ToString()));
+                case SqlTokenizationType.QuotedString:
+                    tokenContainer.Add(new Token(SqlTokenType.QuotedString, currentValue.ToString()));
+                    break;
+
+                case SqlTokenizationType.BracketQuotedName:
+                    tokenContainer.Add(new Token(SqlTokenType.BracketQuotedName, currentValue.ToString()));
                     break;
 
                 case SqlTokenizationType.OtherOperator:
                     tokenContainer.Add(new Token(SqlTokenType.OtherOperator, currentValue.ToString()));
                     break;
+
+                case SqlTokenizationType.SingleZero:
+                    tokenContainer.Add(new Token(SqlTokenType.Number, "0"));
+                    break;
+
+                case SqlTokenizationType.SinglePeriod:
+                    tokenContainer.Add(new Token(SqlTokenType.Period, "."));
+                    break;
+
+                case SqlTokenizationType.Number:
+                case SqlTokenizationType.DecimalValue:
+                case SqlTokenizationType.FloatValue:
+                    tokenContainer.Add(new Token(SqlTokenType.Number, currentValue.ToString()));
+                    break;
+
+                case SqlTokenizationType.BinaryValue:
+                    tokenContainer.Add(new Token(SqlTokenType.BinaryValue, currentValue.ToString()));
+                    break;
+
+                case SqlTokenizationType.MonetaryValue:
+                    tokenContainer.Add(new Token(SqlTokenType.MonetaryValue, currentValue.ToString()));
+                    break;
+
 
                 default:
                     throw new Exception("Unrecognized SQL Node Type");
@@ -497,8 +729,14 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             BlockComment,
             String,
             NString,
-            QuotedIdentifier,
+            QuotedString,
+            BracketQuotedName,
             OtherOperator,
+            Number,
+            BinaryValue,
+            MonetaryValue,
+            DecimalValue,
+            FloatValue,
 
             //temporary types
             SingleHyphen,
@@ -506,7 +744,9 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             SingleN,
             SingleGT,
             SingleLT,
-            SingleExclamation
+            SingleExclamation,
+            SinglePeriod,
+            SingleZero
         }
 
     }

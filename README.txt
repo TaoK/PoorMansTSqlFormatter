@@ -35,10 +35,10 @@ Limitations:
  - The SQL parse tree structure used does not always allow for maintaining all 
     aspects of the original T-SQL code structure: for example, it cannot represent
     a comment inside an "INNER JOIN" compound keyword, like "inner/*test*/join".
-    such specific situations will result in information loss during parsing: the 
-    comment in this case will be moved to after the compound keyword, so the original 
-    ordinal position of the comment is lost. (and such issues are flagged in the 
-    formatted SQL)
+    such specific situations will result in ver minor "information loss" during 
+    parsing: the comment in this case will be moved to after the compound keyword, 
+    so the original ordinal position of the comment is lost. (and such issues are 
+    flagged in the formatted SQL)
 
  - DDL parsing is VERY coarse, the bare minimum to display ordered table column 
     and procedure parameter declarations.

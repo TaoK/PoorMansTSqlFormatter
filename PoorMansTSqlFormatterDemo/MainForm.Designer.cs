@@ -52,12 +52,16 @@ namespace PoorMansTSqlFormatterDemo
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txt_Input = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txt_TokenizedXml = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txt_ParsedXml = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.webBrowser_OutputSql = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.CustomContentWebBrowser();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.radio_Formatting_Identity = new System.Windows.Forms.RadioButton();
@@ -70,10 +74,6 @@ namespace PoorMansTSqlFormatterDemo
             this.chk_TrailingCommas = new System.Windows.Forms.CheckBox();
             this.chk_ExpandCommaLists = new System.Windows.Forms.CheckBox();
             this.timer_TextChangeDelay = new System.Windows.Forms.Timer(this.components);
-            this.txt_Input = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
-            this.txt_TokenizedXml = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
-            this.txt_ParsedXml = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
-            this.webBrowser_OutputSql = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.CustomContentWebBrowser();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -142,6 +142,22 @@ namespace PoorMansTSqlFormatterDemo
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Input SQL";
             // 
+            // txt_Input
+            // 
+            this.txt_Input.AcceptsReturn = true;
+            this.txt_Input.AcceptsTab = true;
+            this.txt_Input.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txt_Input.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_Input.Location = new System.Drawing.Point(3, 16);
+            this.txt_Input.MaxLength = 1000000;
+            this.txt_Input.Multiline = true;
+            this.txt_Input.Name = "txt_Input";
+            this.txt_Input.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txt_Input.Size = new System.Drawing.Size(525, 195);
+            this.txt_Input.TabIndex = 0;
+            this.txt_Input.WordWrap = false;
+            this.txt_Input.TextChanged += new System.EventHandler(this.txt_Input_TextChanged);
+            // 
             // splitContainer5
             // 
             this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -171,6 +187,21 @@ namespace PoorMansTSqlFormatterDemo
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Token List";
             // 
+            // txt_TokenizedXml
+            // 
+            this.txt_TokenizedXml.AcceptsReturn = true;
+            this.txt_TokenizedXml.AcceptsTab = true;
+            this.txt_TokenizedXml.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txt_TokenizedXml.Font = new System.Drawing.Font("Courier New", 9.75F);
+            this.txt_TokenizedXml.Location = new System.Drawing.Point(3, 16);
+            this.txt_TokenizedXml.Multiline = true;
+            this.txt_TokenizedXml.Name = "txt_TokenizedXml";
+            this.txt_TokenizedXml.ReadOnly = true;
+            this.txt_TokenizedXml.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txt_TokenizedXml.Size = new System.Drawing.Size(446, 85);
+            this.txt_TokenizedXml.TabIndex = 0;
+            this.txt_TokenizedXml.WordWrap = false;
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.txt_ParsedXml);
@@ -181,6 +212,21 @@ namespace PoorMansTSqlFormatterDemo
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Parse Tree";
+            // 
+            // txt_ParsedXml
+            // 
+            this.txt_ParsedXml.AcceptsReturn = true;
+            this.txt_ParsedXml.AcceptsTab = true;
+            this.txt_ParsedXml.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txt_ParsedXml.Font = new System.Drawing.Font("Courier New", 9.75F);
+            this.txt_ParsedXml.Location = new System.Drawing.Point(3, 16);
+            this.txt_ParsedXml.Multiline = true;
+            this.txt_ParsedXml.Name = "txt_ParsedXml";
+            this.txt_ParsedXml.ReadOnly = true;
+            this.txt_ParsedXml.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txt_ParsedXml.Size = new System.Drawing.Size(446, 87);
+            this.txt_ParsedXml.TabIndex = 0;
+            this.txt_ParsedXml.WordWrap = false;
             // 
             // splitContainer3
             // 
@@ -219,6 +265,16 @@ namespace PoorMansTSqlFormatterDemo
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(739, 276);
             this.panel1.TabIndex = 2;
+            // 
+            // webBrowser_OutputSql
+            // 
+            this.webBrowser_OutputSql.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser_OutputSql.Location = new System.Drawing.Point(0, 0);
+            this.webBrowser_OutputSql.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser_OutputSql.Name = "webBrowser_OutputSql";
+            this.webBrowser_OutputSql.ScriptErrorsSuppressed = true;
+            this.webBrowser_OutputSql.Size = new System.Drawing.Size(735, 272);
+            this.webBrowser_OutputSql.TabIndex = 1;
             // 
             // groupBox5
             // 
@@ -372,61 +428,6 @@ namespace PoorMansTSqlFormatterDemo
             // 
             this.timer_TextChangeDelay.Interval = 500;
             this.timer_TextChangeDelay.Tick += new System.EventHandler(this.timer_TextChangeDelay_Tick);
-            // 
-            // txt_Input
-            // 
-            this.txt_Input.AcceptsReturn = true;
-            this.txt_Input.AcceptsTab = true;
-            this.txt_Input.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_Input.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_Input.Location = new System.Drawing.Point(3, 16);
-            this.txt_Input.Multiline = true;
-            this.txt_Input.Name = "txt_Input";
-            this.txt_Input.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txt_Input.Size = new System.Drawing.Size(525, 195);
-            this.txt_Input.TabIndex = 0;
-            this.txt_Input.WordWrap = false;
-            this.txt_Input.TextChanged += new System.EventHandler(this.txt_Input_TextChanged);
-            // 
-            // txt_TokenizedXml
-            // 
-            this.txt_TokenizedXml.AcceptsReturn = true;
-            this.txt_TokenizedXml.AcceptsTab = true;
-            this.txt_TokenizedXml.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_TokenizedXml.Font = new System.Drawing.Font("Courier New", 9.75F);
-            this.txt_TokenizedXml.Location = new System.Drawing.Point(3, 16);
-            this.txt_TokenizedXml.Multiline = true;
-            this.txt_TokenizedXml.Name = "txt_TokenizedXml";
-            this.txt_TokenizedXml.ReadOnly = true;
-            this.txt_TokenizedXml.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txt_TokenizedXml.Size = new System.Drawing.Size(446, 85);
-            this.txt_TokenizedXml.TabIndex = 0;
-            this.txt_TokenizedXml.WordWrap = false;
-            // 
-            // txt_ParsedXml
-            // 
-            this.txt_ParsedXml.AcceptsReturn = true;
-            this.txt_ParsedXml.AcceptsTab = true;
-            this.txt_ParsedXml.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txt_ParsedXml.Font = new System.Drawing.Font("Courier New", 9.75F);
-            this.txt_ParsedXml.Location = new System.Drawing.Point(3, 16);
-            this.txt_ParsedXml.Multiline = true;
-            this.txt_ParsedXml.Name = "txt_ParsedXml";
-            this.txt_ParsedXml.ReadOnly = true;
-            this.txt_ParsedXml.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txt_ParsedXml.Size = new System.Drawing.Size(446, 87);
-            this.txt_ParsedXml.TabIndex = 0;
-            this.txt_ParsedXml.WordWrap = false;
-            // 
-            // webBrowser_OutputSql
-            // 
-            this.webBrowser_OutputSql.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser_OutputSql.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser_OutputSql.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser_OutputSql.Name = "webBrowser_OutputSql";
-            this.webBrowser_OutputSql.ScriptErrorsSuppressed = true;
-            this.webBrowser_OutputSql.Size = new System.Drawing.Size(735, 272);
-            this.webBrowser_OutputSql.TabIndex = 1;
             // 
             // MainForm
             // 

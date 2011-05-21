@@ -32,11 +32,15 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         MultiLineComment,
         String,
         NationalString,
-        QuotedIdentifier,
+        BracketQuotedName,
+        QuotedString,
         Comma,
         Period,
         Semicolon,
         Asterisk,
+        MonetaryValue,
+        Number,
+        BinaryValue,
         OtherOperator
     }
 }

@@ -127,7 +127,12 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     outString.Append(contentElement.InnerText.Replace("'", "''"));
                     outString.Append("'");
                     break;
-                case SqlXmlConstants.ENAME_QUOTED_IDENTIFIER:
+                case SqlXmlConstants.ENAME_QUOTED_STRING:
+                    outString.Append("\"");
+                    outString.Append(contentElement.InnerText.Replace("\"", "\"\""));
+                    outString.Append("\"");
+                    break;
+                case SqlXmlConstants.ENAME_BRACKET_QUOTED_NAME:
                     outString.Append("[");
                     outString.Append(contentElement.InnerText.Replace("]", "]]"));
                     outString.Append("]");
@@ -161,6 +166,10 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_DATATYPE_KEYWORD:
                 case SqlXmlConstants.ENAME_DDL_RETURNS:
                 case SqlXmlConstants.ENAME_OTHERKEYWORD:
+                case SqlXmlConstants.ENAME_NUMBER_VALUE:
+                case SqlXmlConstants.ENAME_MONETARY_VALUE:
+                case SqlXmlConstants.ENAME_BINARY_VALUE:
+                case SqlXmlConstants.ENAME_LABEL:
                     outString.Append(contentElement.InnerText);
                     break;
                 default:
@@ -199,7 +208,12 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         outString.Append(entry.Value.Replace("'", "''"));
                         outString.Append("'");
                         break;
-                    case SqlTokenType.QuotedIdentifier:
+                    case SqlTokenType.QuotedString:
+                        outString.Append("\"");
+                        outString.Append(entry.Value.Replace("\"", "\"\""));
+                        outString.Append("\"");
+                        break;
+                    case SqlTokenType.BracketQuotedName:
                         outString.Append("[");
                         outString.Append(entry.Value.Replace("]", "]]"));
                         outString.Append("]");
@@ -230,6 +244,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     case SqlTokenType.OtherNode:
                     case SqlTokenType.WhiteSpace:
                     case SqlTokenType.OtherOperator:
+                    case SqlTokenType.Number:
+                    case SqlTokenType.BinaryValue:
+                    case SqlTokenType.MonetaryValue:
                         outString.Append(entry.Value);
                         break;
                     default:

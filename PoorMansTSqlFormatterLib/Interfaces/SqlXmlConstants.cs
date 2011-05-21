@@ -60,6 +60,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_FUNCTION_KEYWORD = "FunctionKeyword";
         public const string ENAME_DATATYPE_KEYWORD = "DataTypeKeyword";
         public const string ENAME_OTHERKEYWORD = "OtherKeyword";
+        public const string ENAME_LABEL = "Label";
 
         public const string ENAME_WHITESPACE = "WhiteSpace";
         public const string ENAME_OTHERNODE = "Other";
@@ -67,7 +68,8 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_COMMENT_MULTILINE = "MultiLineComment";
         public const string ENAME_STRING = "String";
         public const string ENAME_NSTRING = "NationalString";
-        public const string ENAME_QUOTED_IDENTIFIER = "QuotedIdentifier";
+        public const string ENAME_QUOTED_STRING = "QuotedString";
+        public const string ENAME_BRACKET_QUOTED_NAME = "BracketQuotedName";
         public const string ENAME_COMMA = "Comma";
         public const string ENAME_PERIOD = "Period";
         public const string ENAME_SEMICOLON = "Semicolon";
@@ -79,6 +81,10 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_BETWEEN_CONDITION = "Between";
         public const string ENAME_BETWEEN_LOWERBOUND = "LowerBound";
         public const string ENAME_BETWEEN_UPPERBOUND = "UpperBound";
+
+        public const string ENAME_NUMBER_VALUE = "NumberValue";
+        public const string ENAME_MONETARY_VALUE = "MonetaryValue";
+        public const string ENAME_BINARY_VALUE = "BinaryValue";
 
         //attribute names
         public const string ANAME_ERRORFOUND = "errorFound";

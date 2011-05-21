@@ -49,7 +49,8 @@
     <Content Include="Data\InputSql\13_DataTypeAS.txt" />
     <Content Include="Data\InputSql\14_CommentPositioning.txt" />
     <Content Include="Data\InputSql\15_NestedComments.txt" />
-    <Content Include="Data\InputSql\1_simple.txt" />
+    <Content Include="Data\InputSql\16_CurrencyValues.txt" />
+    <Content Include="Data\InputSql\1_SimpleTypes.txt" />
     <Content Include="Data\InputSql\2_Random_INVALID.txt" />
     <Content Include="Data\InputSql\3_MSSample.txt" />
     <Content Include="Data\InputSql\4_MiscProceduralSample.txt" />
