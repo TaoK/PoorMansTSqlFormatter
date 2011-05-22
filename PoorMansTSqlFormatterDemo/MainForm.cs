@@ -105,5 +105,12 @@ namespace PoorMansTSqlFormatterDemo
 
         }
 
+        private void btn_About_Click(object sender, EventArgs e)
+        {
+            AboutBox about = new AboutBox();
+            about.ShowDialog();
+            about.Dispose();
+        }
+
     }
 }
