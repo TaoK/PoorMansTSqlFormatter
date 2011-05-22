@@ -36,6 +36,18 @@ namespace PoorMansTSqlFormatterWebDemo
         [WebMethod]
         public string FormatTSql(string inputString)
         {
+            return FormatTSql(inputString, "\t", true, false, true, true, true);
+        }
+
+        [WebMethod]
+        public string FormatTSql(string inputString, string indent, bool expandCommaLists, bool trailingCommas, bool expandBooleanExpressions, bool expandCaseStatements, bool uppercaseKeywords)
+        {
+            PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", true, false, true, true, true, true);
+            return FormatTSqlWithFormatter(inputString, formatter);
+        }
+
+        private string FormatTSqlWithFormatter(string inputString, PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter formatter)
+        {
             //free use is all very nice, but I REALLY don't want anyone linking to this web service from some 
             // other site or app: they should just download the library and incorporate or host it directly.
             // (assuming the project is GPL-compatible)
@@ -49,10 +61,7 @@ namespace PoorMansTSqlFormatterWebDemo
                     )
                 )
             {
-                PoorMansTSqlFormatterLib.SqlFormattingManager fullFormatter = new PoorMansTSqlFormatterLib.SqlFormattingManager();
-                PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", true, false, true, true, true, true);
-                PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper wrapper = new PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper(formatter);
-                fullFormatter.Formatter = wrapper;
+                PoorMansTSqlFormatterLib.SqlFormattingManager fullFormatter = new PoorMansTSqlFormatterLib.SqlFormattingManager(new PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper(formatter));
                 return fullFormatter.Format(inputString);
             }
             else

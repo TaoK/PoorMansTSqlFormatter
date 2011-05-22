@@ -17,6 +17,7 @@ Version 0.9.8:
  - Added tests for number, currency and binary parsing/tokenization edge cases
  - Fixed grouping of DECLARE, SET, and PRINT statements
  - Added parsing of Labels as statements
+ - Added merge in winforms demo app's build process, for single-assembly demo
  
 
 Version 0.9.7:
