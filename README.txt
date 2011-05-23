@@ -22,8 +22,12 @@ Features:
     "best effort" will be made and warning displayed (or in the case of interactive 
     use, eg in SSMS, the operation can be aborted).
 
- - reasonably fast: reformatting 1,500 or so files totalling 4MB takes 30 seconds on a 
+ - Reasonably fast: reformatting 1,500 or so files totalling 4MB takes 30 seconds on a 
     cheap atom-processor (2009) netbook.
+	
+ - Works in Microsoft .Net framework, as well as Mono. The Winforms Demo App is not (yet?)
+    available in Mono, but the library itself is fully functional, as is the command-line
+    bulk formatting tool.
 
 Limitations:
  - This is NOT a full SQL-parsing solution: only "coarse" parsing is performed, the 
@@ -57,8 +61,7 @@ Longer-term enhancements / additions:
  - Command-line formatter utility download
  - SSMS Add-in download
  - Compiled library download
- - Supporting Mono (the library code undoubtedly already does, but I'd like to make it easy to build)
-   - Compiled mono library download
+ - Compiled mono library + bulk formatting tool download (eg for use on SVN server)
  - Documentation of Xml structure and class usage
  - Pakaging, NuGet and/or OpenWrap
    - Keeping track of versioning and documentation more carefully: http://semver.org/

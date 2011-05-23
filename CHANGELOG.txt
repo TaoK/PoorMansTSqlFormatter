@@ -1,5 +1,11 @@
 Poor Man's T-SQL Formatter change log
 
+Version 0.9.9:
+--------------
+
+ - Tested library in Mono
+ 
+
 Version 0.9.8:
 --------------
 
