@@ -177,8 +177,9 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             }
                             else
                             {
-                                //TODO: check places where FOR can legally occur.
-                                SaveNewElementWithError(sqlTree, SqlXmlConstants.ENAME_OTHERNODE, token.Value, currentContainerNode, ref errorFound);
+                                //for clause in a select statement... any others?
+                                ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
+                                SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode);
                             }
                         }
                         else if (keywordMatchPhrase.StartsWith("CREATE ")
