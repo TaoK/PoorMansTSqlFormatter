@@ -51,6 +51,7 @@
     <Content Include="Data\InputSql\15_NestedComments.txt" />
     <Content Include="Data\InputSql\16_CurrencyValues.txt" />
     <Content Include="Data\InputSql\17_Cursors.txt" />
+    <Content Include="Data\InputSql\18_BulkInsert.txt" />
     <Content Include="Data\InputSql\1_SimpleTypes.txt" />
     <Content Include="Data\InputSql\2_Random_INVALID.txt" />
     <Content Include="Data\InputSql\3_MSSample.txt" />

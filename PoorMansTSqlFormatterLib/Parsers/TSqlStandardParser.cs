@@ -213,6 +213,14 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode);
                             }
                         }
+                        else if (keywordMatchPhrase.StartsWith("BEGIN DISTRIBUTED TRANSACTION ")
+                            || keywordMatchPhrase.StartsWith("BEGIN DISTRIBUTED TRAN ")
+                            )
+                        {
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            keywordMatchStringsUsed = 3;
+                            ProcessCompoundKeyword(sqlTree, SqlXmlConstants.ENAME_BEGIN_TRANSACTION, ref tokenID, currentContainerNode, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
+                        }
                         else if (keywordMatchPhrase.StartsWith("BEGIN TRANSACTION ")
                             || keywordMatchPhrase.StartsWith("BEGIN TRAN ")
                             )
@@ -223,6 +231,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (keywordMatchPhrase.StartsWith("COMMIT TRANSACTION ")
                             || keywordMatchPhrase.StartsWith("COMMIT TRAN ")
+                            || keywordMatchPhrase.StartsWith("COMMIT WORK ")
                             )
                         {
                             ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
@@ -236,6 +245,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (keywordMatchPhrase.StartsWith("ROLLBACK TRANSACTION ")
                             || keywordMatchPhrase.StartsWith("ROLLBACK TRAN ")
+                            || keywordMatchPhrase.StartsWith("ROLLBACK WORK ")
                             )
                         {
                             ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
