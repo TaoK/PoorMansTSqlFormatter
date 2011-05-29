@@ -49,6 +49,7 @@ Limitations:
 	
 Known Issues / Todo:
  - Parsing of DML WITH clauses, for better formatting
+ - Handling SQL Server 2008 "MERGE" statements: http://technet.microsoft.com/en-us/library/bb510625.aspx
  - Formatting/indenting of ranking functions 
  - Better handling of indenting in parentheses, esp. in boolean expressions
  - "Max Line Width" wrapping feature

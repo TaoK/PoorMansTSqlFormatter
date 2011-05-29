@@ -500,13 +500,23 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
                             SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode);
                         }
+                        else if (keywordMatchPhrase.StartsWith("BULK INSERT "))
+                        {
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
+                            keywordMatchStringsUsed = 2;
+                            string keywordString = GetCompoundKeyword(ref tokenID, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
+                            SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, keywordString, currentContainerNode);
+                        }
                         else if (keywordMatchPhrase.StartsWith("SELECT "))
                         {
                             XmlElement firstNonCommentSibling = GetFirstNonWhitespaceNonCommentChildElement(currentContainerNode);
                             if (!(
                                     firstNonCommentSibling != null
                                     && firstNonCommentSibling.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
-                                    && firstNonCommentSibling.InnerText.ToUpper().StartsWith("INSERT")
+                                    && (firstNonCommentSibling.InnerText.ToUpper().StartsWith("INSERT")
+                                        || firstNonCommentSibling.InnerText.ToUpper().Equals("BULK INSERT")
+                                        )
                                     )
                                 )
                                 ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
@@ -1027,12 +1037,18 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
         private static bool IsStatementStarter(IToken token)
         {
+            //List created from experience, and augmented with individual sections of MSDN:
+            // http://msdn.microsoft.com/en-us/library/ff848799.aspx
+            // http://msdn.microsoft.com/en-us/library/ff848727.aspx
+            // http://msdn.microsoft.com/en-us/library/ms174290.aspx
+            // etc...
             string uppercaseValue = token.Value.ToUpper();
             return (token.Type == SqlTokenType.OtherNode
-                && (uppercaseValue.Equals("SELECT")
-                    || uppercaseValue.Equals("ALTER")
+                && (uppercaseValue.Equals("ALTER")
+                    || uppercaseValue.Equals("BACKUP")
                     || uppercaseValue.Equals("BREAK")
                     || uppercaseValue.Equals("CLOSE")
+                    || uppercaseValue.Equals("CHECKPOINT")
                     || uppercaseValue.Equals("COMMIT")
                     || uppercaseValue.Equals("CONTINUE")
                     || uppercaseValue.Equals("CREATE")
@@ -1053,14 +1069,18 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     || uppercaseValue.Equals("OPEN")
                     || uppercaseValue.Equals("PRINT")
                     || uppercaseValue.Equals("RAISERROR")
+                    || uppercaseValue.Equals("RECONFIGURE")
+                    || uppercaseValue.Equals("RESTORE")
                     || uppercaseValue.Equals("RETURN")
+                    || uppercaseValue.Equals("SELECT")
                     || uppercaseValue.Equals("SET")
                     || uppercaseValue.Equals("SETUSER")
+                    || uppercaseValue.Equals("SHUTDOWN")
                     || uppercaseValue.Equals("TRUNCATE")
                     || uppercaseValue.Equals("UPDATE")
-                    || uppercaseValue.Equals("WHILE")
                     || uppercaseValue.Equals("USE")
                     || uppercaseValue.Equals("WAITFOR")
+                    || uppercaseValue.Equals("WHILE")
                     )
                 );
         }
@@ -1211,6 +1231,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             // http://www.codeproject.com/KB/database/SideBySideSQLComparer.aspx
             // Added some entries that are not strictly speaking keywords, such as 
             // cursor options "READ_ONLY", "FAST_FORWARD", etc.
+            // Could/Should check against MSDN Ref: http://msdn.microsoft.com/en-us/library/ms189822.aspx
             KeywordList = new Dictionary<string, KeywordType>();
             KeywordList.Add("@@CONNECTIONS", KeywordType.FunctionKeyword);
             KeywordList.Add("@@CPU_BUSY", KeywordType.FunctionKeyword);
