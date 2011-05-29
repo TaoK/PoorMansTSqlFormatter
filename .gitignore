@@ -1,6 +1,10 @@
 # LIST RETRIEVED FROM STACK OVERFLOW:
 # http://stackoverflow.com/questions/2143956/gitignore-for-visual-studio-projects-and-solutions
 # enhanced to also omit "pidb" files for MonoDevelop
+#  customized to also omit Deployment folder with binaries
+
+#Custom deployment binaries folder
+Deployment
 
 #OS junk files
 [Tt]humbs.db
