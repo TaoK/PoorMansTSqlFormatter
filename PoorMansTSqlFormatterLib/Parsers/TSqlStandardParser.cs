@@ -31,7 +31,6 @@ namespace PoorMansTSqlFormatterLib.Parsers
     {
         /*
          * TODO:
-         *  - update the demo UI to reference GPL, and publish the program
          *  - Manually review the output from all test cases for "strange" effects
          *  - handle Ranking Functions with multiple partition or order by columns/clauses
          *  - parse ON sections, for those who prefer to start ON on the next line and indent from there
@@ -48,6 +47,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
         //for performance, it may make sense to make a singleton of this at some point...
         public Dictionary<string, KeywordType> KeywordList { get; set; }
         Regex _JoinDetector = new Regex("^(RIGHT|INNER|LEFT|CROSS|FULL) (OUTER )?((HASH|LOOP|MERGE|REMOTE) )?(JOIN|APPLY) ");
+        Regex _CursorDetector = new Regex(@"^DECLARE [\p{L}0-9_\$\@\#]+ ((INSENSITIVE|SCROLL) ){0,2}CURSOR "); //note the use of "unicode letter" in identifier rule
 
         public TSqlStandardParser()
         {
@@ -152,6 +152,35 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK, "", currentContainerNode);
                             SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode);
                         }
+                        else if (_CursorDetector.IsMatch(keywordMatchPhrase))
+                        {
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_CURSOR_DECLARATION, "", currentContainerNode);
+                            SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("FOR "))
+                        {
+                            EscapeAnyBetweenConditions(ref currentContainerNode);
+
+                            if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_CURSOR_DECLARATION))
+                            {
+                                XmlElement newFORBlock = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK, token.Value, currentContainerNode);
+                                currentContainerNode = StartNewStatement(sqlTree, newFORBlock);
+                            }
+                            else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
+                                && currentContainerNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
+                                && currentContainerNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK)
+                                )
+                            {
+                                currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode; //back up to Cursor Declaration
+                                currentContainerNode = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS, token.Value, currentContainerNode);
+                            }
+                            else
+                            {
+                                //TODO: check places where FOR can legally occur.
+                                SaveNewElementWithError(sqlTree, SqlXmlConstants.ENAME_OTHERNODE, token.Value, currentContainerNode, ref errorFound);
+                            }
+                        }
                         else if (keywordMatchPhrase.StartsWith("CREATE ")
                             || keywordMatchPhrase.StartsWith("ALTER ")
                             || keywordMatchPhrase.StartsWith("DECLARE ")
@@ -199,6 +228,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             keywordMatchStringsUsed = 2;
                             ProcessCompoundKeyword(sqlTree, SqlXmlConstants.ENAME_COMMIT_TRANSACTION, ref tokenID, currentContainerNode, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
                         }
+                        else if (keywordMatchPhrase.StartsWith("COMMIT "))
+                        {
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            XmlElement newBeginBlock = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_COMMIT_TRANSACTION, token.Value, currentContainerNode);
+                        }
                         else if (keywordMatchPhrase.StartsWith("ROLLBACK TRANSACTION ")
                             || keywordMatchPhrase.StartsWith("ROLLBACK TRAN ")
                             )
@@ -206,6 +240,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
                             keywordMatchStringsUsed = 2;
                             ProcessCompoundKeyword(sqlTree, SqlXmlConstants.ENAME_ROLLBACK_TRANSACTION, ref tokenID, currentContainerNode, keywordMatchStringsUsed, compoundKeywordTokenCounts, compoundKeywordRawStrings);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("ROLLBACK "))
+                        {
+                            ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            XmlElement newBeginBlock = SaveNewElement(sqlTree, SqlXmlConstants.ENAME_ROLLBACK_TRANSACTION, token.Value, currentContainerNode);
                         }
                         else if (keywordMatchPhrase.StartsWith("BEGIN TRY "))
                         {
@@ -470,8 +509,16 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                     )
                                 )
                                 ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+                            else
+                                ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
 
-                            ConsiderStartingNewClause(sqlTree, ref currentContainerNode);
+                            SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode);
+                        }
+                        else if (keywordMatchPhrase.StartsWith("UPDATE "))
+                        {
+                            if (!currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS))
+                                ConsiderStartingNewStatement(sqlTree, ref currentContainerNode);
+
                             SaveNewElement(sqlTree, SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, currentContainerNode);
                         }
                         else if (keywordMatchPhrase.StartsWith("SET "))
@@ -827,6 +874,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                 || currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
                 )
                 return (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode;
+            else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS))
+                return (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode.ParentNode;
             else
                 return null;
         }
@@ -924,7 +973,6 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             )
                         )
                     {
-
                         //we just ended the one statement of an if or while, and need to pop out to a new statement at the same level as the IF or WHILE
                         currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode;
                     }
@@ -935,6 +983,14 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         )
                     {
                         //we just ended the one and only statement in an else clause, and need to pop out to a new statement at the same level as the IF
+                        currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode.ParentNode;
+                    }
+                    else if (currentContainerNode.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
+                        && currentContainerNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
+                        && currentContainerNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK)
+                        )
+                    {
+                        //we just ended the one select statement in a cursor declaration, and need to pop out to the same level as the cursor
                         currentContainerNode = (XmlElement)currentContainerNode.ParentNode.ParentNode.ParentNode.ParentNode;
                     }
                     else
@@ -1150,8 +1206,10 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
         private void InitializeKeywordList()
         {
-            //List looks pretty comprehensive, it's basically copied from Side by Side SQL Comparer project from CodeProject:
+            //List originally copied from Side by Side SQL Comparer project from CodeProject:
             // http://www.codeproject.com/KB/database/SideBySideSQLComparer.aspx
+            // Added some entries that are not strictly speaking keywords, such as 
+            // cursor options "READ_ONLY", "FAST_FORWARD", etc.
             KeywordList = new Dictionary<string, KeywordType>();
             KeywordList.Add("@@CONNECTIONS", KeywordType.FunctionKeyword);
             KeywordList.Add("@@CPU_BUSY", KeywordType.FunctionKeyword);
@@ -1309,6 +1367,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("DROPCLEANBUFFERS", KeywordType.OtherKeyword);
             KeywordList.Add("DUMMY", KeywordType.OtherKeyword);
             KeywordList.Add("DUMP", KeywordType.OtherKeyword);
+            KeywordList.Add("DYNAMIC", KeywordType.OtherKeyword);
             KeywordList.Add("ELSE", KeywordType.OtherKeyword);
             KeywordList.Add("ERRLVL", KeywordType.OtherKeyword);
             KeywordList.Add("ERROREXIT", KeywordType.OtherKeyword);
@@ -1321,6 +1380,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("EXP", KeywordType.FunctionKeyword);
             KeywordList.Add("EXPAND", KeywordType.OtherKeyword);
             KeywordList.Add("FAST", KeywordType.OtherKeyword);
+            KeywordList.Add("FAST_FORWARD", KeywordType.OtherKeyword);
             KeywordList.Add("FASTFIRSTROW", KeywordType.OtherKeyword);
             KeywordList.Add("FETCH", KeywordType.OtherKeyword);
             KeywordList.Add("FILE", KeywordType.OtherKeyword);
@@ -1343,6 +1403,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("FORCEPLAN", KeywordType.OtherKeyword);
             KeywordList.Add("FOREIGN", KeywordType.OtherKeyword);
             KeywordList.Add("FORMATMESSAGE", KeywordType.FunctionKeyword);
+            KeywordList.Add("FORWARD_ONLY", KeywordType.OtherKeyword);
             KeywordList.Add("FREEPROCCACHE", KeywordType.OtherKeyword);
             KeywordList.Add("FREESESSIONCACHE", KeywordType.OtherKeyword);
             KeywordList.Add("FREESYSTEMCACHE", KeywordType.OtherKeyword);
@@ -1355,6 +1416,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("FUNCTION", KeywordType.OtherKeyword);
             KeywordList.Add("GETANSINULL", KeywordType.FunctionKeyword);
             KeywordList.Add("GETDATE", KeywordType.FunctionKeyword);
+            KeywordList.Add("GLOBAL", KeywordType.OtherKeyword);
             KeywordList.Add("GO", KeywordType.OtherKeyword);
             KeywordList.Add("GOTO", KeywordType.OtherKeyword);
             KeywordList.Add("GRANT", KeywordType.OtherKeyword);
@@ -1385,6 +1447,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("INDEX_COL", KeywordType.FunctionKeyword);
             KeywordList.Add("INNER", KeywordType.OtherKeyword);
             KeywordList.Add("INPUTBUFFER", KeywordType.OtherKeyword);
+            KeywordList.Add("INSENSITIVE", KeywordType.DataTypeKeyword);
             KeywordList.Add("INSERT", KeywordType.OtherKeyword);
             KeywordList.Add("INT", KeywordType.DataTypeKeyword);
             KeywordList.Add("INTERSECT", KeywordType.OtherKeyword);
@@ -1403,6 +1466,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("KEEPFIXED", KeywordType.OtherKeyword);
             KeywordList.Add("KEEPIDENTITY", KeywordType.OtherKeyword);
             KeywordList.Add("KEY", KeywordType.OtherKeyword);
+            KeywordList.Add("KEYSET", KeywordType.OtherKeyword);
             KeywordList.Add("KILL", KeywordType.OtherKeyword);
             KeywordList.Add("LANGUAGE", KeywordType.OtherKeyword);
             KeywordList.Add("LEFT", KeywordType.FunctionKeyword);
@@ -1411,6 +1475,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("LIKE", KeywordType.OperatorKeyword);
             KeywordList.Add("LINENO", KeywordType.OtherKeyword);
             KeywordList.Add("LOAD", KeywordType.OtherKeyword);
+            KeywordList.Add("LOCAL", KeywordType.OtherKeyword);
             KeywordList.Add("LOCK_TIMEOUT", KeywordType.OtherKeyword);
             KeywordList.Add("LOG", KeywordType.FunctionKeyword);
             KeywordList.Add("LOG10", KeywordType.FunctionKeyword);
@@ -1459,6 +1524,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("OPENROWSET", KeywordType.FunctionKeyword);
             KeywordList.Add("OPENTRAN", KeywordType.OtherKeyword);
             KeywordList.Add("OPTIMIZE", KeywordType.OtherKeyword);
+            KeywordList.Add("OPTIMISTIC", KeywordType.OtherKeyword);
             KeywordList.Add("OPTION", KeywordType.OtherKeyword);
             KeywordList.Add("OR", KeywordType.OperatorKeyword);
             KeywordList.Add("ORDER", KeywordType.OtherKeyword);
@@ -1503,6 +1569,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("READPAST", KeywordType.OtherKeyword);
             KeywordList.Add("READTEXT", KeywordType.OtherKeyword);
             KeywordList.Add("READUNCOMMITTED", KeywordType.OtherKeyword);
+            KeywordList.Add("READ_ONLY", KeywordType.OtherKeyword);
             KeywordList.Add("REAL", KeywordType.DataTypeKeyword);
             KeywordList.Add("RECOMPILE", KeywordType.OtherKeyword);
             KeywordList.Add("RECONFIGURE", KeywordType.OtherKeyword);
@@ -1533,6 +1600,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("SCHEMA_ID", KeywordType.FunctionKeyword);
             KeywordList.Add("SCHEMA_NAME", KeywordType.FunctionKeyword);
             KeywordList.Add("SCOPE_IDENTITY", KeywordType.FunctionKeyword);
+            KeywordList.Add("SCROLL", KeywordType.OtherKeyword);
+            KeywordList.Add("SCROLL_LOCKS", KeywordType.OtherKeyword);
             KeywordList.Add("SELECT", KeywordType.OtherKeyword);
             KeywordList.Add("SERIALIZABLE", KeywordType.OtherKeyword);
             KeywordList.Add("SERVERPROPERTY", KeywordType.FunctionKeyword);
@@ -1562,6 +1631,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("SQRT", KeywordType.FunctionKeyword);
             KeywordList.Add("SQUARE", KeywordType.FunctionKeyword);
             KeywordList.Add("STATISTICS", KeywordType.OtherKeyword);
+            KeywordList.Add("STATIC", KeywordType.OtherKeyword);
             KeywordList.Add("STATS_DATE", KeywordType.FunctionKeyword);
             KeywordList.Add("STDEV", KeywordType.FunctionKeyword);
             KeywordList.Add("STDEVP", KeywordType.FunctionKeyword);
@@ -1604,6 +1674,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("TYPEPROPERTY", KeywordType.FunctionKeyword);
             KeywordList.Add("TYPE_ID", KeywordType.FunctionKeyword);
             KeywordList.Add("TYPE_NAME", KeywordType.FunctionKeyword);
+            KeywordList.Add("TYPE_WARNING", KeywordType.OtherKeyword);
             KeywordList.Add("UNCOMMITTED", KeywordType.OtherKeyword);
             KeywordList.Add("UNICODE", KeywordType.FunctionKeyword);
             KeywordList.Add("UNION", KeywordType.OtherKeyword);

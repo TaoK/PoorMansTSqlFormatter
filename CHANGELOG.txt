@@ -4,7 +4,9 @@ Version 0.9.9:
 --------------
 
  - Tested library in Mono
- 
+ - Added single-word "Commit" and "Rollback" keyword support.
+ - Added handling for Cursors, both ISO and MS-specific forms
+ - Added version information in cmdline utility
 
 Version 0.9.8:
 --------------

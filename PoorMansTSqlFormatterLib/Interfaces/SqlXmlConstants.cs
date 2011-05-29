@@ -45,6 +45,9 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_ELSE_CLAUSE = "ElseClause";
         public const string ENAME_BOOLEAN_EXPRESSION = "BooleanExpression";
         public const string ENAME_WHILE_LOOP = "WhileLoop";
+        public const string ENAME_CURSOR_DECLARATION = "CursorDeclaration";
+        public const string ENAME_CURSOR_FOR_BLOCK = "CursorForBlock";
+        public const string ENAME_CURSOR_FOR_OPTIONS = "CursorForOptions";
         public const string ENAME_CTE_WITH_CLAUSE = "CTEWithClause";
         public const string ENAME_CTE_AS_BLOCK = "CTEAsBlock";
         public const string ENAME_COMMIT_TRANSACTION = "CommitTransaction";

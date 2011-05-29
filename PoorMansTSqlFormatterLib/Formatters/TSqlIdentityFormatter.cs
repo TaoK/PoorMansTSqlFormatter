@@ -60,6 +60,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_BOOLEAN_EXPRESSION:
                 case SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK:
                 case SqlXmlConstants.ENAME_DDL_OTHER_BLOCK:
+                case SqlXmlConstants.ENAME_CURSOR_DECLARATION:
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"));
                     break;
 
@@ -89,6 +90,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_BETWEEN_UPPERBOUND:
                 case SqlXmlConstants.ENAME_CTE_WITH_CLAUSE:
                 case SqlXmlConstants.ENAME_CTE_AS_BLOCK:
+                case SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK:
+                case SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS:
                     foreach (XmlNode childNode in contentElement.ChildNodes)
                     {
                         switch (childNode.NodeType)

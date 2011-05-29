@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Reflection;
 using NDesk.Options;
 
 namespace PoorMansTSqlFormatterCmdLine
@@ -29,8 +30,6 @@ namespace PoorMansTSqlFormatterCmdLine
     {
         static void Main(string[] args)
         {
-            System.Diagnostics.Debugger.Break();
-
             string indentString = "\t";
             bool trailingCommas = false;
             bool expandBetweenConditions = true;
@@ -73,8 +72,9 @@ namespace PoorMansTSqlFormatterCmdLine
                 Console.WriteLine(@"
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. Distributed under AGPL v3.
-Copyright (C) 2011 Tao Klerks
-
+Copyright (C) 2011 Tao Klerks");
+                Console.WriteLine("v" + Assembly.GetExecutingAssembly().GetName().Version.ToString());
+                Console.WriteLine(@"
 Usage notes: 
 
 SqlFormatter <filename or pattern> <options>

@@ -48,9 +48,8 @@ Limitations:
     and procedure parameter declarations.
 	
 Known Issues / Todo:
- - Parsing of DECLARE CURSOR, for better formatting
  - Parsing of DML WITH clauses, for better formatting
- - Formatting/indenting of ranking functions and RETURNS clauses
+ - Formatting/indenting of ranking functions 
  - Better handling of indenting in parentheses, esp. in boolean expressions
  - "Max Line Width" wrapping feature
  - FxCop checking

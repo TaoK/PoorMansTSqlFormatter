@@ -144,15 +144,29 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case Interfaces.SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK:
                 case Interfaces.SqlXmlConstants.ENAME_DDL_OTHER_BLOCK:
+                case Interfaces.SqlXmlConstants.ENAME_CURSOR_DECLARATION:
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected, ref firstSemanticElement);
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_DDL_AS_BLOCK:
-                    //newline regardless of whether previous element recommended a break or not.
                     WhiteSpace_BreakToNextLine(outString, indentLevel - 1, ref breakExpected);
                     outString.Append(FormatKeyword("AS"));
                     WhiteSpace_BreakToNextLine(outString, indentLevel - 1, ref breakExpected);
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel - 1, ref breakExpected, ref firstSemanticElementDeadEnd);
+                    break;
+
+                case Interfaces.SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK:
+                    WhiteSpace_BreakToNextLine(outString, indentLevel - 1, ref breakExpected);
+                    outString.Append(FormatKeyword("FOR"));
+                    WhiteSpace_BreakToNextLine(outString, indentLevel - 1, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel - 1, ref breakExpected, ref firstSemanticElementDeadEnd);
+                    break;
+
+                case Interfaces.SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS:
+                    WhiteSpace_BreakToNextLine(outString, indentLevel - 1, ref breakExpected);
+                    outString.Append(FormatKeyword("FOR"));
+                    outString.Append(" ");
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected, ref firstSemanticElementDeadEnd);
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_DDL_RETURNS:
