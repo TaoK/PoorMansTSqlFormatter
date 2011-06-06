@@ -10,7 +10,7 @@ Version 0.9.9:
  - Added BULK INSERT handling
  - Added SAVE TRANSACTION handling
  - Added parsing of (Data) Trigger FOR/AFTER/INSTEAD OF clauses
- - Fixed SSMS 2008 support
+ - Fixed SSMS 2008 support (thanks Tim Costello for my first bug report)
  - Fixed semicolon new-statement detection to handle batch separators and ELSE clauses/statments.
 
  
