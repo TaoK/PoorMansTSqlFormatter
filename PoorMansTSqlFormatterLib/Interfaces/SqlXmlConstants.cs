@@ -34,7 +34,6 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_BEGIN_END_BLOCK = "BeginEndBlock";
         public const string ENAME_TRY_BLOCK = "TryBlock";
         public const string ENAME_CATCH_BLOCK = "CatchBlock";
-        public const string ENAME_BEGIN_TRANSACTION = "BeginTransaction";
         public const string ENAME_BATCH_SEPARATOR = "BatchSeparator";
         public const string ENAME_CASE_STATEMENT = "CaseStatement";
         public const string ENAME_CASE_INPUT = "Input";
@@ -50,18 +49,23 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_CURSOR_FOR_OPTIONS = "CursorForOptions";
         public const string ENAME_CTE_WITH_CLAUSE = "CTEWithClause";
         public const string ENAME_CTE_AS_BLOCK = "CTEAsBlock";
+        public const string ENAME_BEGIN_TRANSACTION = "BeginTransaction";
         public const string ENAME_COMMIT_TRANSACTION = "CommitTransaction";
         public const string ENAME_ROLLBACK_TRANSACTION = "RollbackTransaction";
+        public const string ENAME_SAVE_TRANSACTION = "SaveTransaction";
         public const string ENAME_DDL_PROCEDURAL_BLOCK = "DDLProceduralBlock";
         public const string ENAME_DDL_OTHER_BLOCK = "DDLOtherBlock";
         public const string ENAME_DDL_AS_BLOCK = "DDLAsBlock";
         public const string ENAME_DDL_PARENS = "DDLParens";
+        public const string ENAME_DDL_SUBCLAUSE = "DDLSubClause";
         public const string ENAME_DDL_RETURNS = "DDLReturns";
         public const string ENAME_DDLDETAIL_PARENS = "DDLDetailParens";
+        public const string ENAME_TRIGGER_CONDITION = "TriggerCondition";
         public const string ENAME_EXPRESSION_PARENS = "ExpressionParens";
         public const string ENAME_FUNCTION_PARENS = "FunctionParens";
         public const string ENAME_FUNCTION_KEYWORD = "FunctionKeyword";
         public const string ENAME_DATATYPE_KEYWORD = "DataTypeKeyword";
+        public const string ENAME_COMPOUNDKEYWORD = "CompoundKeyword";
         public const string ENAME_OTHERKEYWORD = "OtherKeyword";
         public const string ENAME_LABEL = "Label";
 
@@ -92,5 +96,6 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         //attribute names
         public const string ANAME_ERRORFOUND = "errorFound";
         public const string ANAME_DATALOSS = "dataLossLimitation";
+        public const string ANAME_SIMPLETEXT = "simpleText";
     }
 }

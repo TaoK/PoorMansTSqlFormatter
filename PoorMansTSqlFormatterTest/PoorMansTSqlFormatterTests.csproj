@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FBBF4CE8-C24D-4A43-9D8C-B54B2E7E3FB7}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -61,6 +61,7 @@
     <Content Include="Data\InputSql\7_ServerTakeoverSample_Brent_Ozar.txt" />
     <Content Include="Data\InputSql\8_ComplexBackupDDL_Ola_Hallengren.txt" />
     <Content Include="Data\InputSql\9_Xml_Selection.txt" />
+    <Content Include="Data\InputSql\19_Trigger.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">

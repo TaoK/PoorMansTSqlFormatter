@@ -50,6 +50,9 @@ Limitations:
 Known Issues / Todo:
  - Parsing of DML WITH clauses, for better formatting
  - Handling SQL Server 2008 "MERGE" statements: http://technet.microsoft.com/en-us/library/bb510625.aspx
+ - Handling SQL Server 2008 "OUTPUT" clauses: http://msdn.microsoft.com/en-us/library/ms177564.aspx
+   - Esp. INSERT INTO ... OUTPUT ... SELECT ... FROM
+ - Handling of DDL Triggers (eg "FOR LOGON")
  - Formatting/indenting of ranking functions 
  - Better handling of indenting in parentheses, esp. in boolean expressions
  - "Max Line Width" wrapping feature
@@ -72,9 +75,14 @@ http://www.gnu.org/licenses/agpl.txt
 The homepage for this project is currently: 
 http://www.architectshack.com/PoorMansTSqlFormatter.ashx
 
-This project currently uses one external library, NDesk.Options, for command-line parsing.
-The NDesk.Options library is licensed under the MIT/X11 license, and its homepage is here:
-http://www.ndesk.org/Options
+This project uses several external libraries:
+
+ - NDesk.Options, for command-line parsing: The NDesk.Options library is licensed under 
+ the MIT/X11 license, and its homepage is here: http://www.ndesk.org/Options
+
+ - LinqBridge, for convenience, supporting extension methods and Linq-to-Objects 
+ despite this being a .Net 2.0 library. LinqBridge is licensed the BSD 3-clause license, 
+ and its homepage is here: http://code.google.com/p/linqbridge/
 
 Please contact me with any questions, concerns, or issues: my email address starts
 with tao, and is hosted at klerks dot biz.

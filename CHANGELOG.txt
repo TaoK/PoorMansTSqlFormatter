@@ -3,12 +3,17 @@ Poor Man's T-SQL Formatter change log
 Version 0.9.9:
 --------------
 
- - Tested library in Mono
+ - Tested library in Mono (but added linqbridge since, might have thrown a spanner in the works)
  - Added single-word "Commit" and "Rollback" keyword support.
  - Added handling for Cursors, both ISO and MS-specific forms
  - Added version information in cmdline utility
  - Added BULK INSERT handling
+ - Added SAVE TRANSACTION handling
+ - Added parsing of (Data) Trigger FOR/AFTER/INSTEAD OF clauses
+ - Fixed SSMS 2008 support
+ - Fixed semicolon new-statement detection to handle batch separators and ELSE clauses/statments.
 
+ 
 Version 0.9.8:
 --------------
 

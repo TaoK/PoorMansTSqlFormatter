@@ -155,6 +155,11 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel - 1, ref breakExpected, ref firstSemanticElementDeadEnd);
                     break;
 
+                case Interfaces.SqlXmlConstants.ENAME_TRIGGER_CONDITION:
+                    WhiteSpace_BreakToNextLine(outString, indentLevel - 1, ref breakExpected);
+                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"), indentLevel, ref breakExpected, ref firstSemanticElementDeadEnd);
+                    break;
+
                 case Interfaces.SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK:
                     WhiteSpace_BreakToNextLine(outString, indentLevel - 1, ref breakExpected);
                     outString.Append(FormatKeyword("FOR"));
@@ -457,6 +462,11 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.SqlXmlConstants.ENAME_OTHEROPERATOR:
                     WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
                     outString.Append(FormatOperator(contentElement.InnerText));
+                    break;
+
+                case Interfaces.SqlXmlConstants.ENAME_COMPOUNDKEYWORD:
+                    WhiteSpace_SeparateWords(contentElement, outString, indentLevel, ref breakExpected);
+                    outString.Append(FormatKeyword(contentElement.Attributes[Interfaces.SqlXmlConstants.ANAME_SIMPLETEXT].Value));
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_OTHERKEYWORD:

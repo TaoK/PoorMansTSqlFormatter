@@ -92,6 +92,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_CTE_AS_BLOCK:
                 case SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK:
                 case SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS:
+                case SqlXmlConstants.ENAME_TRIGGER_CONDITION:
+                case SqlXmlConstants.ENAME_COMPOUNDKEYWORD:
                     foreach (XmlNode childNode in contentElement.ChildNodes)
                     {
                         switch (childNode.NodeType)
@@ -158,6 +160,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlXmlConstants.ENAME_BEGIN_TRANSACTION:
+                case SqlXmlConstants.ENAME_ROLLBACK_TRANSACTION:
+                case SqlXmlConstants.ENAME_SAVE_TRANSACTION:
+                case SqlXmlConstants.ENAME_COMMIT_TRANSACTION:
                 case SqlXmlConstants.ENAME_OTHERNODE:
                 case SqlXmlConstants.ENAME_WHITESPACE:
                 case SqlXmlConstants.ENAME_OTHEROPERATOR:
