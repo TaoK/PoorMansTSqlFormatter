@@ -42,7 +42,7 @@ Limitations:
     such specific situations will result in ver minor "information loss" during 
     parsing: the comment in this case will be moved to after the compound keyword, 
     so the original ordinal position of the comment is lost. (and such issues are 
-    flagged in the formatted SQL)
+    flagged in the formatted SQL). NOTE: this will be corrected soon
 
  - DDL parsing is VERY coarse, the bare minimum to display ordered table column 
     and procedure parameter declarations.
@@ -60,10 +60,6 @@ Known Issues / Todo:
 
 Longer-term enhancements / additions:
  - Keyword consistency correction feature (eg LEFT OUTER JOIN -> LEFT JOIN)
- - Demo App download, with proper license notices, etc
- - Command-line formatter utility download
- - SSMS Add-in download
- - Compiled library download
  - Compiled mono library + bulk formatting tool download (eg for use on SVN server)
  - Documentation of Xml structure and class usage
  - Pakaging, NuGet and/or OpenWrap
@@ -81,8 +77,8 @@ This project uses several external libraries:
  the MIT/X11 license, and its homepage is here: http://www.ndesk.org/Options
 
  - LinqBridge, for convenience, supporting extension methods and Linq-to-Objects 
- despite this being a .Net 2.0 library. LinqBridge is licensed the BSD 3-clause license, 
- and its homepage is here: http://code.google.com/p/linqbridge/
+ despite this being a .Net 2.0 library. LinqBridge is licensed under the BSD 3-clause 
+ license, and its homepage is here: http://code.google.com/p/linqbridge/
 
 Please contact me with any questions, concerns, or issues: my email address starts
 with tao, and is hosted at klerks dot biz.

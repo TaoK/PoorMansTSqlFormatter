@@ -1,4 +1,6 @@
-﻿DECLARE @Test Int
+﻿use master;
+go
+DECLARE @Test Int
 DECLARE Test$Me SCROLL Cursor 
 FOR
 SELECT 1 AS One FOR read only

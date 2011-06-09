@@ -104,19 +104,33 @@ SqlFormatter TestFiles\* /is:""  "" /tc /uc-
             var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(indentString, expandCommaLists, trailingCommas, expandBooleanExpressions, expandCaseStatements, uppercaseKeywords, false);
             var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);
 
+            string searchPattern = System.IO.Path.GetFileName(remainingArgs[0]);
             string baseDirectoryName = System.IO.Path.GetDirectoryName(remainingArgs[0]);
             if (baseDirectoryName.Length == 0)
+            {
                 baseDirectoryName = ".";
-            string searchPattern = System.IO.Path.GetFileName(remainingArgs[0]);
+                if (searchPattern.Equals("."))
+                    searchPattern = "";
+            }
             System.IO.DirectoryInfo baseDirectory = null;
             System.IO.FileSystemInfo[] matchingObjects = null;
             try
             {
                 baseDirectory = new System.IO.DirectoryInfo(baseDirectoryName);
-                if (recursiveSearch)
-                    matchingObjects = baseDirectory.GetFileSystemInfos(searchPattern);
+                if (searchPattern.Length > 0)
+                {
+                    if (recursiveSearch)
+                        matchingObjects = baseDirectory.GetFileSystemInfos(searchPattern);
+                    else
+                        matchingObjects = baseDirectory.GetFiles(searchPattern);
+                }
                 else
-                    matchingObjects = baseDirectory.GetFiles(searchPattern);
+                {
+                    if (recursiveSearch)
+                        matchingObjects = baseDirectory.GetFileSystemInfos();
+                    else
+                        matchingObjects = new System.IO.FileSystemInfo[0];
+                }
             }
             catch (Exception e)
             {

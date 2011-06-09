@@ -1,5 +1,17 @@
 Poor Man's T-SQL Formatter change log
 
+Version 0.9.10:
+--------------
+
+ - Corrected command-line utility to handle "." as path input pattern
+ - Fixed buggy "UNION" parsing and display formatting
+ - Removed attempted quickfix "OUTPUT" clause handling - it messed up stored proc OUTPUT parameters
+ - Fixed buggy interaction of DDL containers (cursors, etc) with control-of-flow statements (begin/end, if/else, etc).
+ - Added linebreak-sensitive comment positioning: comments will be maintained at the end of lines they were defined on.
+ - corrected comment positioning under some specific circumstances
+ - improved "GO" batch separator parsing to match SSMS behaviour, eg allowing single-line comments on the same line 
+ 
+
 Version 0.9.9:
 --------------
 
