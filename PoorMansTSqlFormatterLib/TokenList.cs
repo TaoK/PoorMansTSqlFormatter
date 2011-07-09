@@ -41,5 +41,15 @@ namespace PoorMansTSqlFormatterLib
             }
             return outString.ToString();
         }
+
+        public new IList<IToken> GetRange(int index, int count)
+        {
+            return base.GetRange(index, count);
+        }
+
+        public IList<IToken> GetRangeByIndex(int fromIndex, int toIndex)
+        {
+            return this.GetRange(fromIndex, toIndex - fromIndex + 1);
+        }
     }
 }

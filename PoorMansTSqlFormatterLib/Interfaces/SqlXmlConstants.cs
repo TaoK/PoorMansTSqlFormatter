@@ -31,6 +31,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_SQL_STATEMENT = "SqlStatement";
         public const string ENAME_SQL_CLAUSE = "Clause";
         public const string ENAME_UNION_CLAUSE = "UnionClause";
+        public const string ENAME_INSERT_CLAUSE = "InsertClause";
         public const string ENAME_BEGIN_END_BLOCK = "BeginEndBlock";
         public const string ENAME_TRY_BLOCK = "TryBlock";
         public const string ENAME_CATCH_BLOCK = "CatchBlock";
@@ -68,6 +69,10 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_COMPOUNDKEYWORD = "CompoundKeyword";
         public const string ENAME_OTHERKEYWORD = "OtherKeyword";
         public const string ENAME_LABEL = "Label";
+        public const string ENAME_CONTAINER_OPEN = "ContainerOpen";
+        public const string ENAME_CONTAINER_MULTISTATEMENT = "ContainerMultiStatementBody";
+        public const string ENAME_CONTAINER_SINGLESTATEMENT = "ContainerSingleStatementBody";
+        public const string ENAME_CONTAINER_CLOSE = "ContainerClose";
 
         public const string ENAME_WHITESPACE = "WhiteSpace";
         public const string ENAME_OTHERNODE = "Other";

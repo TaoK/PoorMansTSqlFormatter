@@ -27,5 +27,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
     {
         bool HasErrors { get; set; }
         string PrettyPrint();
+        IList<IToken> GetRange(int index, int count);
+        IList<IToken> GetRangeByIndex(int fromIndex, int toIndex);
     }
 }

@@ -55,15 +55,6 @@ namespace PoorMansTSqlFormatterLib.Formatters
         {
             switch (contentElement.Name)
             {
-                case SqlXmlConstants.ENAME_SQL_STATEMENT:
-                case SqlXmlConstants.ENAME_SQL_CLAUSE:
-                case SqlXmlConstants.ENAME_BOOLEAN_EXPRESSION:
-                case SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK:
-                case SqlXmlConstants.ENAME_DDL_OTHER_BLOCK:
-                case SqlXmlConstants.ENAME_CURSOR_DECLARATION:
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"));
-                    break;
-
                 case SqlXmlConstants.ENAME_DDLDETAIL_PARENS:
                 case SqlXmlConstants.ENAME_DDL_PARENS:
                 case SqlXmlConstants.ENAME_FUNCTION_PARENS:
@@ -73,6 +64,12 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     outString.Append(")");
                     break;
 
+                case SqlXmlConstants.ENAME_SQL_STATEMENT:
+                case SqlXmlConstants.ENAME_SQL_CLAUSE:
+                case SqlXmlConstants.ENAME_BOOLEAN_EXPRESSION:
+                case SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK:
+                case SqlXmlConstants.ENAME_DDL_OTHER_BLOCK:
+                case SqlXmlConstants.ENAME_CURSOR_DECLARATION:
                 case SqlXmlConstants.ENAME_BEGIN_END_BLOCK:
                 case SqlXmlConstants.ENAME_TRY_BLOCK:
                 case SqlXmlConstants.ENAME_CATCH_BLOCK:
@@ -94,6 +91,16 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS:
                 case SqlXmlConstants.ENAME_TRIGGER_CONDITION:
                 case SqlXmlConstants.ENAME_COMPOUNDKEYWORD:
+                case SqlXmlConstants.ENAME_BEGIN_TRANSACTION:
+                case SqlXmlConstants.ENAME_ROLLBACK_TRANSACTION:
+                case SqlXmlConstants.ENAME_SAVE_TRANSACTION:
+                case SqlXmlConstants.ENAME_COMMIT_TRANSACTION:
+                case SqlXmlConstants.ENAME_BATCH_SEPARATOR:
+                case SqlXmlConstants.ENAME_UNION_CLAUSE:
+                case SqlXmlConstants.ENAME_CONTAINER_OPEN:
+                case SqlXmlConstants.ENAME_CONTAINER_MULTISTATEMENT:
+                case SqlXmlConstants.ENAME_CONTAINER_SINGLESTATEMENT:
+                case SqlXmlConstants.ENAME_CONTAINER_CLOSE:
                     foreach (XmlNode childNode in contentElement.ChildNodes)
                     {
                         switch (childNode.NodeType)
@@ -159,20 +166,14 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     outString.Append("*");
                     break;
 
-                case SqlXmlConstants.ENAME_BEGIN_TRANSACTION:
-                case SqlXmlConstants.ENAME_ROLLBACK_TRANSACTION:
-                case SqlXmlConstants.ENAME_SAVE_TRANSACTION:
-                case SqlXmlConstants.ENAME_COMMIT_TRANSACTION:
-                case SqlXmlConstants.ENAME_OTHERNODE:
-                case SqlXmlConstants.ENAME_WHITESPACE:
-                case SqlXmlConstants.ENAME_OTHEROPERATOR:
-                case SqlXmlConstants.ENAME_BATCH_SEPARATOR:
                 case SqlXmlConstants.ENAME_AND_OPERATOR:
                 case SqlXmlConstants.ENAME_OR_OPERATOR:
-                case SqlXmlConstants.ENAME_UNION_CLAUSE:
                 case SqlXmlConstants.ENAME_FUNCTION_KEYWORD:
                 case SqlXmlConstants.ENAME_DATATYPE_KEYWORD:
                 case SqlXmlConstants.ENAME_DDL_RETURNS:
+                case SqlXmlConstants.ENAME_OTHERNODE:
+                case SqlXmlConstants.ENAME_WHITESPACE:
+                case SqlXmlConstants.ENAME_OTHEROPERATOR:
                 case SqlXmlConstants.ENAME_OTHERKEYWORD:
                 case SqlXmlConstants.ENAME_NUMBER_VALUE:
                 case SqlXmlConstants.ENAME_MONETARY_VALUE:
