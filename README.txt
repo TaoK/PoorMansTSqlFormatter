@@ -2,7 +2,7 @@ Poor Man's T-SQL Formatter
 --------------------------
 
 This is a small free .Net 2.0 library (with demo winforms program, web service, SSMS 
-Addin, and Command-line utility) for reformatting T-SQL code.
+Addin, Command-line utility, and WinMerge plugin) for reformatting T-SQL code.
 
 Features:
  - Simple Xml-based parse tree
@@ -48,6 +48,9 @@ Limitations:
     and procedure parameter declarations.
 	
 Known Issues / Todo:
+ - FORMATTING CHANGE: expanded comma lists that don't use trailing commas shouldn't 
+    have a space before the content. People (and tools) that use this format tend
+	to have the comma glued to the content.
  - Parsing of DML WITH clauses, for better formatting
  - Handling SQL Server 2008 "MERGE" statements: http://technet.microsoft.com/en-us/library/bb510625.aspx
  - Handling SQL Server 2008 "OUTPUT" clauses: http://msdn.microsoft.com/en-us/library/ms177564.aspx

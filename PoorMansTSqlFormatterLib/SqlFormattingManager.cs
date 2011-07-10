@@ -22,10 +22,17 @@ using System;
 using System.Xml;
 using System.Text;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace PoorMansTSqlFormatterLib
 {
-    public class SqlFormattingManager
+    //These COM-related attributes exist JUST so that we can use this class from VB6 - there is no need to
+    // expose these classes to COM in order for this library to be used in a .Net project.
+    [Guid("A7FD140A-C3C3-4233-95DB-A64B50C8DF2B")]
+    [ClassInterface(ClassInterfaceType.None)]
+    [ComVisible(true)]
+    [ProgId("PoorMansTSqlFormatter.SqlFormattingManager")]
+    public class SqlFormattingManager : _SqlFormattingManager
     {
         //default to built-in
         public SqlFormattingManager() : this(new Tokenizers.TSqlStandardTokenizer(), new Parsers.TSqlStandardParser(), new Formatters.TSqlStandardFormatter()) { }
@@ -66,5 +73,15 @@ namespace PoorMansTSqlFormatterLib
         {
             return new SqlFormattingManager().Format(inputSQL, ref errorsEncountered);
         }
+    }
+
+    //This COM interface exists JUST so that we can use this class from VB6 - there is no need to expose 
+    // these classes to COM in order for this library to be used in a .Net project.
+    [Guid("A7FD140A-C3C3-4233-95DB-A64B50C8DF2A")]
+    [ComVisible(true)]
+    [InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    public interface _SqlFormattingManager
+    {
+        string Format(string inputSQL);
     }
 }

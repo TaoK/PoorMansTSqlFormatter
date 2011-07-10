@@ -28,7 +28,7 @@ namespace PoorMansTSqlFormatterCmdLine
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             string indentString = "\t";
             bool trailingCommas = false;
@@ -42,6 +42,7 @@ namespace PoorMansTSqlFormatterCmdLine
             List<string> extensions = new List<string>();
             bool backups = true;
             bool recursiveSearch = false;
+            string outputFile = null;
 
             OptionSet p = new OptionSet()
               .Add("is|indentString=", delegate(string v) { indentString = v; })
@@ -54,6 +55,7 @@ namespace PoorMansTSqlFormatterCmdLine
               .Add("e|extensions=", delegate(string v) { extensions.Add((v.StartsWith(".") ? "" : ".") + v); })
               .Add("r|recursive", delegate(string v) { recursiveSearch = v != null; })
               .Add("b|backups", delegate(string v) { backups = v != null; })
+              .Add("o|outputFile=", delegate(string v) { outputFile = v; })
               .Add("h|?|help", delegate(string v) { showUsage = v != null; })
                   ;
 
@@ -89,6 +91,7 @@ uk  uppercaseKeywords (default: true)
 e   extensions (default: sql)
 r   recursive (default: false)
 b   backups (default: true)
+b   outputFile (default: none; if set, overrides the backup option)
 h ? help
 
 Disable boolean options with a trailing minus, enable by just specifying them or with a trailing plus.
@@ -97,8 +100,12 @@ eg:
 
 SqlFormatter TestFiles\* /is:""  "" /tc /uc- 
 
+or 
+
+SqlFormatter test*.sql /o:resultfile.sql
+
 ");
-                return;
+                return 1;
             }
 
             var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(indentString, expandCommaLists, trailingCommas, expandBooleanExpressions, expandCaseStatements, uppercaseKeywords, false);
@@ -135,17 +142,50 @@ SqlFormatter TestFiles\* /is:""  "" /tc /uc-
             catch (Exception e)
             {
                 Console.WriteLine("Error processing requested filename/pattern. Error detail: " + e.Message);
-                return;
+                return 2;
             }
 
-            if (!ProcessSearchResults(extensions, backups, formattingManager, matchingObjects))
+            System.IO.StreamWriter singleFileWriter = null;
+            if (!string.IsNullOrEmpty(outputFile))
+            {
+                //ignore the backups setting - wouldn't make sense to back up the source files if we're 
+                // writing to another file anyway...
+                backups = false;
+
+                try
+                {
+                    //let's not worry too hard about releasing this resource - this is a command-line program, 
+                    // when it ends or dies all will be released anyway.
+                    singleFileWriter = new System.IO.StreamWriter(outputFile);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("The requested output file could not be created. Error detail: " + e.Message);
+                    return 3;
+                }
+            }
+
+            bool warningEncountered = false;
+            if (!ProcessSearchResults(extensions, backups, formattingManager, matchingObjects, singleFileWriter, ref warningEncountered))
             {
                 Console.WriteLine("No files found matching filename/pattern: " + remainingArgs[0]);
-                return;
+                return 4;
             }
+
+            if (singleFileWriter != null)
+            {
+                singleFileWriter.Flush();
+                singleFileWriter.Close();
+                singleFileWriter.Dispose();
+            }
+
+            if (warningEncountered)
+                return 5; //general "there were warnings" return code
+            else
+                return 0; //we got there, did something, and received no (handled) errors!
         }
 
-        private static bool ProcessSearchResults(List<string> extensions, bool backups, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, System.IO.FileSystemInfo[] matchingObjects)
+        private static bool ProcessSearchResults(List<string> extensions, bool backups, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, System.IO.FileSystemInfo[] matchingObjects, System.IO.StreamWriter singleFileWriter, ref bool warningEncountered)
         {
             bool fileFound = false;
 
@@ -155,13 +195,13 @@ SqlFormatter TestFiles\* /is:""  "" /tc /uc-
                 {
                     if (extensions.Contains(fsEntry.Extension))
                     {
-                        ReFormatFile((System.IO.FileInfo)fsEntry, formattingManager, backups);
+                        ReFormatFile((System.IO.FileInfo)fsEntry, formattingManager, backups, singleFileWriter, ref warningEncountered);
                         fileFound = true;
                     }
                 }
                 else
                 {
-                    if (ProcessSearchResults(extensions, backups, formattingManager, ((System.IO.DirectoryInfo)fsEntry).GetFileSystemInfos()))
+                    if (ProcessSearchResults(extensions, backups, formattingManager, ((System.IO.DirectoryInfo)fsEntry).GetFileSystemInfos(), singleFileWriter, ref warningEncountered))
                         fileFound = true;
                 }
             }
@@ -169,7 +209,7 @@ SqlFormatter TestFiles\* /is:""  "" /tc /uc-
             return fileFound;
         }
 
-        private static void ReFormatFile(System.IO.FileInfo fileInfo, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, bool backups)
+        private static void ReFormatFile(System.IO.FileInfo fileInfo, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, bool backups, System.IO.StreamWriter singleFileWriter, ref bool warningEncountered)
         {
             bool failedBackup = false;
             string oldFileContents = "";
@@ -188,6 +228,7 @@ SqlFormatter TestFiles\* /is:""  "" /tc /uc-
             {
                 Console.WriteLine("Failed to read file contents (aborted): " + fileInfo.FullName);
                 Console.WriteLine(" Error detail: " + ex.Message);
+                warningEncountered = true;
             }
             if (oldFileContents.Length > 0)
             {
@@ -206,6 +247,7 @@ SqlFormatter TestFiles\* /is:""  "" /tc /uc-
                     Console.WriteLine("Encountered error when parsing or formatting file contents (aborted): " + fileInfo.FullName);
                     if (parseErrorDetail != null)
                         Console.WriteLine(" Error detail: " + parseErrorDetail.Message);
+                    warningEncountered = true;
                 }
             }
             if (newFileContents.Length > 0 && !parsingError && !oldFileContents.Equals(newFileContents))
@@ -222,19 +264,27 @@ SqlFormatter TestFiles\* /is:""  "" /tc /uc-
                         Console.WriteLine(" Skipping formatting for this file.");
                         Console.WriteLine(" Error detail: " + ex.Message);
                         failedBackup = true;
+                        warningEncountered = true;
                     }
                 }
                 if (!failedBackup)
                 {
                     try
                     {
-                        System.IO.File.WriteAllText(fileInfo.FullName, newFileContents);
+                        if (singleFileWriter != null)
+                        {
+                            singleFileWriter.WriteLine(newFileContents);
+                            singleFileWriter.WriteLine("GO");
+                        }
+                        else
+                            System.IO.File.WriteAllText(fileInfo.FullName, newFileContents);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("Failed to write reformatted contents: " + fileInfo.FullName);
                         Console.WriteLine(" Error detail: " + ex.Message);
                         Console.WriteLine(" NOTE: this file may have been overwritten with partial content!");
+                        warningEncountered = true;
                     }
                 }
             }

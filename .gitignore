@@ -2,6 +2,7 @@
 # http://stackoverflow.com/questions/2143956/gitignore-for-visual-studio-projects-and-solutions
 # enhanced to also omit "pidb" files for MonoDevelop
 #  customized to also omit Deployment folder with binaries
+#  also VB6 additional files added
 
 #Custom deployment binaries folder
 Deployment
@@ -13,6 +14,9 @@ Deployment
 #MonoDevelop optimization and preference files
 *.pidb
 *.userprefs
+
+#VB6 additional files
+*.vbw
 
 #Visual Studio files
 *.[Oo]bj
