@@ -1,5 +1,9 @@
 Poor Man's T-SQL Formatter change log
 
+Version 0.9.11:
+--------------
+ - Added WinMerge plugin (actual plugin implemented in VB6, because I couldn't figure out how to get the COM Interop to work with WinMerge's plugin-loading system directly)
+
 Version 0.9.10:
 --------------
 
