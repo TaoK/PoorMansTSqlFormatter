@@ -1,9 +1,12 @@
 Poor Man's T-SQL Formatter change log
 
-Version 0.9.11:
+Version 0.9.11: Thanks to Loren Halvorson for the feature suggestions!
 --------------
  - Added WinMerge plugin (actual plugin implemented in VB6, because I couldn't figure out how to get the COM Interop to work with WinMerge's plugin-loading system directly)
+ - Added output file option to CmdLine utility, eg for use with file comparison tools that accept commands to execute pre-comparison.
+ - Added return code to CmdLine utility, for feedback to calling programs such as file comparison tools.
 
+ 
 Version 0.9.10:
 --------------
 
@@ -19,7 +22,7 @@ Version 0.9.10:
 Version 0.9.9:
 --------------
 
- - Tested library in Mono (but added linqbridge since, might have thrown a spanner in the works)
+ - Tested library in Mono (but have now added linqbridge since, might have thrown a spanner in the works)
  - Added single-word "Commit" and "Rollback" keyword support.
  - Added handling for Cursors, both ISO and MS-specific forms
  - Added version information in cmdline utility
