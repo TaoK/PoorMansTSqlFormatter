@@ -60,7 +60,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Take(3);
         }
 
-        static Regex _JoinDetector = new Regex("^((RIGHT|INNER|LEFT|CROSS|FULL) (OUTER )?((HASH|LOOP|MERGE|REMOTE) ))?(JOIN|APPLY) ");
+        static Regex _JoinDetector = new Regex("^((RIGHT|INNER|LEFT|CROSS|FULL) (OUTER )?((HASH|LOOP|MERGE|REMOTE) )?)?(JOIN|APPLY) ");
         static Regex _CursorDetector = new Regex(@"^DECLARE [\p{L}0-9_\$\@\#]+ ((INSENSITIVE|SCROLL) ){0,2}CURSOR "); //note the use of "unicode letter" in identifier rule
         static Regex _TriggerConditionDetector = new Regex(@"^(FOR|AFTER|INSTEAD OF)( (INSERT|UPDATE|DELETE) (, (INSERT|UPDATE|DELETE) )?(, (INSERT|UPDATE|DELETE) )?)"); //note the use of "unicode letter" in identifier rule
 
@@ -453,7 +453,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         {
                             sqlTree.ConsiderStartingNewStatement();
                             XmlElement newWhileLoop = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_WHILE_LOOP, "");
-                            sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_OPEN, token.Value, newWhileLoop);
+                            XmlElement whileContainerOpen = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_OPEN, "", newWhileLoop);
+                            sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, whileContainerOpen);
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_BOOLEAN_EXPRESSION, "", newWhileLoop);
                         }
                         else if (significantTokensString.StartsWith("IF "))
@@ -554,6 +555,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
                                 if (firstEntryOfFirstClause != null
                                     && firstEntryOfFirstClause.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
+                                    && firstEntryOfFirstClause.Value != null
                                     && firstEntryOfFirstClause.Value.ToUpper().Equals("INSERT")
                                     )
                                     selectShouldntTryToStartNewStatement = true;
