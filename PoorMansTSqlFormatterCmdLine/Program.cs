@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using System.Reflection;
 using NDesk.Options;
 
@@ -42,7 +43,7 @@ namespace PoorMansTSqlFormatterCmdLine
             List<string> extensions = new List<string>();
             bool backups = true;
             bool recursiveSearch = false;
-            string outputFile = null;
+            string outputFileOrFolder = null;
 
             OptionSet p = new OptionSet()
               .Add("is|indentString=", delegate(string v) { indentString = v; })
@@ -55,7 +56,7 @@ namespace PoorMansTSqlFormatterCmdLine
               .Add("e|extensions=", delegate(string v) { extensions.Add((v.StartsWith(".") ? "" : ".") + v); })
               .Add("r|recursive", delegate(string v) { recursiveSearch = v != null; })
               .Add("b|backups", delegate(string v) { backups = v != null; })
-              .Add("o|outputFile=", delegate(string v) { outputFile = v; })
+              .Add("o|outputFileOrFolder=", delegate(string v) { outputFileOrFolder = v; })
               .Add("h|?|help", delegate(string v) { showUsage = v != null; })
                   ;
 
@@ -91,7 +92,7 @@ uk  uppercaseKeywords (default: true)
 e   extensions (default: sql)
 r   recursive (default: false)
 b   backups (default: true)
-b   outputFile (default: none; if set, overrides the backup option)
+b   outputFileOrFolder (default: none; if set, overrides the backup option)
 h ? help
 
 Disable boolean options with a trailing minus, enable by just specifying them or with a trailing plus.
@@ -108,11 +109,11 @@ SqlFormatter test*.sql /o:resultfile.sql
                 return 1;
             }
 
-            var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(indentString, expandCommaLists, trailingCommas, expandBooleanExpressions, expandCaseStatements, uppercaseKeywords, false);
+            var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(indentString, expandCommaLists, trailingCommas, false, expandBooleanExpressions, expandCaseStatements, true, uppercaseKeywords, false);
             var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);
 
-            string searchPattern = System.IO.Path.GetFileName(remainingArgs[0]);
-            string baseDirectoryName = System.IO.Path.GetDirectoryName(remainingArgs[0]);
+            string searchPattern = Path.GetFileName(remainingArgs[0]);
+            string baseDirectoryName = Path.GetDirectoryName(remainingArgs[0]);
             if (baseDirectoryName.Length == 0)
             {
                 baseDirectoryName = ".";
@@ -136,7 +137,7 @@ SqlFormatter test*.sql /o:resultfile.sql
                     if (recursiveSearch)
                         matchingObjects = baseDirectory.GetFileSystemInfos();
                     else
-                        matchingObjects = new System.IO.FileSystemInfo[0];
+                        matchingObjects = new FileSystemInfo[0];
                 }
             }
             catch (Exception e)
@@ -146,27 +147,39 @@ SqlFormatter test*.sql /o:resultfile.sql
             }
 
             System.IO.StreamWriter singleFileWriter = null;
-            if (!string.IsNullOrEmpty(outputFile))
+            string replaceFromFolderPath = null;
+            string replaceToFolderPath = null;
+            if (!string.IsNullOrEmpty(outputFileOrFolder))
             {
                 //ignore the backups setting - wouldn't make sense to back up the source files if we're 
                 // writing to another file anyway...
                 backups = false;
 
-                try
+                if (Directory.Exists(outputFileOrFolder)
+                    && (File.GetAttributes(outputFileOrFolder) & FileAttributes.Directory) == FileAttributes.Directory
+                    )
                 {
-                    //let's not worry too hard about releasing this resource - this is a command-line program, 
-                    // when it ends or dies all will be released anyway.
-                    singleFileWriter = new System.IO.StreamWriter(outputFile);
+                    replaceFromFolderPath = baseDirectory.FullName;
+                    replaceToFolderPath = new DirectoryInfo(outputFileOrFolder).FullName;
                 }
-                catch (Exception e)
+                else
                 {
-                    Console.WriteLine("The requested output file could not be created. Error detail: " + e.Message);
-                    return 3;
+                    try
+                    {
+                        //let's not worry too hard about releasing this resource - this is a command-line program, 
+                        // when it ends or dies all will be released anyway.
+                        singleFileWriter = new StreamWriter(outputFileOrFolder);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("The requested output file could not be created. Error detail: " + e.Message);
+                        return 3;
+                    }
                 }
             }
 
             bool warningEncountered = false;
-            if (!ProcessSearchResults(extensions, backups, formattingManager, matchingObjects, singleFileWriter, ref warningEncountered))
+            if (!ProcessSearchResults(extensions, backups, formattingManager, matchingObjects, singleFileWriter, replaceFromFolderPath, replaceToFolderPath, ref warningEncountered))
             {
                 Console.WriteLine("No files found matching filename/pattern: " + remainingArgs[0]);
                 return 4;
@@ -185,23 +198,23 @@ SqlFormatter test*.sql /o:resultfile.sql
                 return 0; //we got there, did something, and received no (handled) errors!
         }
 
-        private static bool ProcessSearchResults(List<string> extensions, bool backups, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, System.IO.FileSystemInfo[] matchingObjects, System.IO.StreamWriter singleFileWriter, ref bool warningEncountered)
+        private static bool ProcessSearchResults(List<string> extensions, bool backups, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, FileSystemInfo[] matchingObjects, StreamWriter singleFileWriter, string replaceFromFolderPath, string replaceToFolderPath, ref bool warningEncountered)
         {
             bool fileFound = false;
 
             foreach (var fsEntry in matchingObjects)
             {
-                if (fsEntry is System.IO.FileInfo)
+                if (fsEntry is FileInfo)
                 {
                     if (extensions.Contains(fsEntry.Extension))
                     {
-                        ReFormatFile((System.IO.FileInfo)fsEntry, formattingManager, backups, singleFileWriter, ref warningEncountered);
+                        ReFormatFile((FileInfo)fsEntry, formattingManager, backups, singleFileWriter, replaceFromFolderPath, replaceToFolderPath, ref warningEncountered);
                         fileFound = true;
                     }
                 }
                 else
                 {
-                    if (ProcessSearchResults(extensions, backups, formattingManager, ((System.IO.DirectoryInfo)fsEntry).GetFileSystemInfos(), singleFileWriter, ref warningEncountered))
+                    if (ProcessSearchResults(extensions, backups, formattingManager, ((System.IO.DirectoryInfo)fsEntry).GetFileSystemInfos(), singleFileWriter, replaceFromFolderPath, replaceToFolderPath, ref warningEncountered))
                         fileFound = true;
                 }
             }
@@ -209,7 +222,7 @@ SqlFormatter test*.sql /o:resultfile.sql
             return fileFound;
         }
 
-        private static void ReFormatFile(System.IO.FileInfo fileInfo, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, bool backups, System.IO.StreamWriter singleFileWriter, ref bool warningEncountered)
+        private static void ReFormatFile(FileInfo fileInfo, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, bool backups, StreamWriter singleFileWriter, string replaceFromFolderPath, string replaceToFolderPath, ref bool warningEncountered)
         {
             bool failedBackup = false;
             string oldFileContents = "";
@@ -250,7 +263,16 @@ SqlFormatter test*.sql /o:resultfile.sql
                     warningEncountered = true;
                 }
             }
-            if (newFileContents.Length > 0 && !parsingError && !oldFileContents.Equals(newFileContents))
+            if (!parsingError
+                && (
+                        (newFileContents.Length > 0 
+                        && !oldFileContents.Equals(newFileContents)
+                        )
+                        || singleFileWriter != null
+                        || (replaceFromFolderPath != null && replaceToFolderPath != null)
+                    )
+                )
+
             {
                 if (backups)
                 {
@@ -277,7 +299,18 @@ SqlFormatter test*.sql /o:resultfile.sql
                             singleFileWriter.WriteLine("GO");
                         }
                         else
-                            System.IO.File.WriteAllText(fileInfo.FullName, newFileContents);
+                        {
+                            string fullTargetPath = fileInfo.FullName;
+                            if (replaceFromFolderPath != null && replaceToFolderPath != null)
+                            {
+                                fullTargetPath = fullTargetPath.Replace(replaceFromFolderPath, replaceToFolderPath);
+
+                                string targetFolder = Path.GetDirectoryName(fullTargetPath);
+                                if (!Directory.Exists(targetFolder))
+                                    Directory.CreateDirectory(targetFolder);
+                            }
+                            File.WriteAllText(fullTargetPath, newFileContents);
+                        }
                     }
                     catch (Exception ex)
                     {

@@ -59,6 +59,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_DDL_PARENS:
                 case SqlXmlConstants.ENAME_FUNCTION_PARENS:
                 case SqlXmlConstants.ENAME_EXPRESSION_PARENS:
+                case SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS:
                     outString.Append("(");
                     ProcessSqlNodeList(outString, contentElement.SelectNodes("*"));
                     outString.Append(")");
@@ -100,7 +101,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_CONTAINER_OPEN:
                 case SqlXmlConstants.ENAME_CONTAINER_MULTISTATEMENT:
                 case SqlXmlConstants.ENAME_CONTAINER_SINGLESTATEMENT:
+                case SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT:
                 case SqlXmlConstants.ENAME_CONTAINER_CLOSE:
+                case SqlXmlConstants.ENAME_SELECTIONTARGET:
                     foreach (XmlNode childNode in contentElement.ChildNodes)
                     {
                         switch (childNode.NodeType)

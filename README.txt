@@ -36,17 +36,22 @@ Limitations:
  - The code is very "procedural" - no effort has been made to organize the code 
     according to object-oriented design principles.
 
- - The SQL parse tree structure used does not always allow for maintaining all 
-    aspects of the original T-SQL code structure: for example, it cannot represent
-    a comment inside an "INNER JOIN" compound keyword, like "inner/*test*/join".
-    such specific situations will result in ver minor "information loss" during 
-    parsing: the comment in this case will be moved to after the compound keyword, 
-    so the original ordinal position of the comment is lost. (and such issues are 
-    flagged in the formatted SQL). NOTE: this will be corrected soon
+ - The standard formatter does not always maintain the order of comments in the code;
+    a comment inside an "INNER JOIN" compound keyword, like "inner/*test*/join", would
+    get moved out, to "INNER JOIN /*test*/". The original data is maintaned in the 
+    parse tree, but the standard formatter shuffles comments in cases like this for 
+    clarity.
 
  - DDL parsing is VERY coarse, the bare minimum to display ordered table column 
     and procedure parameter declarations.
 	
+ - No effort has been made to support compatibility level 70 (SQL Server 7)
+	
+ - Where there is ambiguity between different compatibility levels (eg cross apply 
+    parens in compatibility level 90 vs table hints without "WITH" keyword in 
+    compatibility level 80), no approach has been decided. For now, table hints 
+	without WITH are considered to be arguments to a function.
+ 
 Known Issues / Todo:
  - FORMATTING CHANGE: expanded comma lists that don't use trailing commas shouldn't 
     have a space before the content. People (and tools) that use this format tend
@@ -57,7 +62,6 @@ Known Issues / Todo:
    - Esp. INSERT INTO ... OUTPUT ... SELECT ... FROM
  - Handling of DDL Triggers (eg "FOR LOGON")
  - Formatting/indenting of ranking functions 
- - Better handling of indenting in parentheses, esp. in boolean expressions
  - "Max Line Width" wrapping feature
  - FxCop checking
 

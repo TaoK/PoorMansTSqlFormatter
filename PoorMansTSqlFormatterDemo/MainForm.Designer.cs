@@ -62,20 +62,22 @@ namespace PoorMansTSqlFormatterDemo
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.webBrowser_OutputSql = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.CustomContentWebBrowser();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.radio_Formatting_Identity = new System.Windows.Forms.RadioButton();
             this.radio_Formatting_Standard = new System.Windows.Forms.RadioButton();
             this.grp_Options = new System.Windows.Forms.GroupBox();
+            this.chk_SpaceAfterComma = new System.Windows.Forms.CheckBox();
             this.chk_Coloring = new System.Windows.Forms.CheckBox();
             this.chk_UppercaseKeywords = new System.Windows.Forms.CheckBox();
             this.chk_ExpandCaseStatements = new System.Windows.Forms.CheckBox();
             this.chk_ExpandBooleanExpressions = new System.Windows.Forms.CheckBox();
             this.chk_TrailingCommas = new System.Windows.Forms.CheckBox();
             this.chk_ExpandCommaLists = new System.Windows.Forms.CheckBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.timer_TextChangeDelay = new System.Windows.Forms.Timer(this.components);
             this.btn_About = new System.Windows.Forms.Button();
+            this.timer_TextChangeDelay = new System.Windows.Forms.Timer(this.components);
+            this.chk_ExpandBetweenConditions = new System.Windows.Forms.CheckBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -93,10 +95,10 @@ namespace PoorMansTSqlFormatterDemo
             this.splitContainer3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.grp_Options.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -113,8 +115,8 @@ namespace PoorMansTSqlFormatterDemo
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer3);
-            this.splitContainer1.Size = new System.Drawing.Size(987, 513);
-            this.splitContainer1.SplitterDistance = 214;
+            this.splitContainer1.Size = new System.Drawing.Size(991, 573);
+            this.splitContainer1.SplitterDistance = 231;
             this.splitContainer1.TabIndex = 0;
             // 
             // splitContainer4
@@ -130,8 +132,8 @@ namespace PoorMansTSqlFormatterDemo
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.splitContainer5);
-            this.splitContainer4.Size = new System.Drawing.Size(987, 214);
-            this.splitContainer4.SplitterDistance = 531;
+            this.splitContainer4.Size = new System.Drawing.Size(991, 231);
+            this.splitContainer4.SplitterDistance = 533;
             this.splitContainer4.TabIndex = 1;
             // 
             // groupBox1
@@ -140,7 +142,7 @@ namespace PoorMansTSqlFormatterDemo
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(531, 214);
+            this.groupBox1.Size = new System.Drawing.Size(533, 231);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Input SQL";
@@ -156,7 +158,7 @@ namespace PoorMansTSqlFormatterDemo
             this.txt_Input.Multiline = true;
             this.txt_Input.Name = "txt_Input";
             this.txt_Input.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txt_Input.Size = new System.Drawing.Size(525, 195);
+            this.txt_Input.Size = new System.Drawing.Size(527, 212);
             this.txt_Input.TabIndex = 0;
             this.txt_Input.WordWrap = false;
             this.txt_Input.TextChanged += new System.EventHandler(this.txt_Input_TextChanged);
@@ -175,8 +177,8 @@ namespace PoorMansTSqlFormatterDemo
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.groupBox3);
-            this.splitContainer5.Size = new System.Drawing.Size(452, 214);
-            this.splitContainer5.SplitterDistance = 104;
+            this.splitContainer5.Size = new System.Drawing.Size(454, 231);
+            this.splitContainer5.SplitterDistance = 112;
             this.splitContainer5.TabIndex = 0;
             // 
             // groupBox2
@@ -185,7 +187,7 @@ namespace PoorMansTSqlFormatterDemo
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(452, 104);
+            this.groupBox2.Size = new System.Drawing.Size(454, 112);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Token List";
@@ -201,7 +203,7 @@ namespace PoorMansTSqlFormatterDemo
             this.txt_TokenizedXml.Name = "txt_TokenizedXml";
             this.txt_TokenizedXml.ReadOnly = true;
             this.txt_TokenizedXml.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txt_TokenizedXml.Size = new System.Drawing.Size(446, 85);
+            this.txt_TokenizedXml.Size = new System.Drawing.Size(448, 93);
             this.txt_TokenizedXml.TabIndex = 0;
             this.txt_TokenizedXml.WordWrap = false;
             // 
@@ -211,7 +213,7 @@ namespace PoorMansTSqlFormatterDemo
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(452, 106);
+            this.groupBox3.Size = new System.Drawing.Size(454, 115);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Parse Tree";
@@ -227,7 +229,7 @@ namespace PoorMansTSqlFormatterDemo
             this.txt_ParsedXml.Name = "txt_ParsedXml";
             this.txt_ParsedXml.ReadOnly = true;
             this.txt_ParsedXml.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txt_ParsedXml.Size = new System.Drawing.Size(446, 87);
+            this.txt_ParsedXml.Size = new System.Drawing.Size(448, 96);
             this.txt_ParsedXml.TabIndex = 0;
             this.txt_ParsedXml.WordWrap = false;
             // 
@@ -244,8 +246,8 @@ namespace PoorMansTSqlFormatterDemo
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.tableLayoutPanel1);
-            this.splitContainer3.Size = new System.Drawing.Size(987, 295);
-            this.splitContainer3.SplitterDistance = 745;
+            this.splitContainer3.Size = new System.Drawing.Size(991, 338);
+            this.splitContainer3.SplitterDistance = 748;
             this.splitContainer3.TabIndex = 2;
             // 
             // groupBox4
@@ -254,7 +256,7 @@ namespace PoorMansTSqlFormatterDemo
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(745, 295);
+            this.groupBox4.Size = new System.Drawing.Size(748, 338);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Output SQL";
@@ -266,7 +268,7 @@ namespace PoorMansTSqlFormatterDemo
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 16);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(739, 276);
+            this.panel1.Size = new System.Drawing.Size(742, 319);
             this.panel1.TabIndex = 2;
             // 
             // webBrowser_OutputSql
@@ -276,8 +278,23 @@ namespace PoorMansTSqlFormatterDemo
             this.webBrowser_OutputSql.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser_OutputSql.Name = "webBrowser_OutputSql";
             this.webBrowser_OutputSql.ScriptErrorsSuppressed = true;
-            this.webBrowser_OutputSql.Size = new System.Drawing.Size(735, 272);
+            this.webBrowser_OutputSql.Size = new System.Drawing.Size(738, 315);
             this.webBrowser_OutputSql.TabIndex = 1;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.groupBox5, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btn_About, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(239, 338);
+            this.tableLayoutPanel1.TabIndex = 2;
             // 
             // groupBox5
             // 
@@ -285,7 +302,7 @@ namespace PoorMansTSqlFormatterDemo
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(3, 3);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(232, 259);
+            this.groupBox5.Size = new System.Drawing.Size(233, 302);
             this.groupBox5.TabIndex = 1;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Options";
@@ -293,7 +310,7 @@ namespace PoorMansTSqlFormatterDemo
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.radio_Formatting_Identity, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.radio_Formatting_Standard, 0, 0);
@@ -303,17 +320,17 @@ namespace PoorMansTSqlFormatterDemo
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 4;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 170F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 210F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(226, 240);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(227, 283);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // radio_Formatting_Identity
             // 
             this.radio_Formatting_Identity.AutoSize = true;
             this.tableLayoutPanel2.SetColumnSpan(this.radio_Formatting_Identity, 2);
-            this.radio_Formatting_Identity.Location = new System.Drawing.Point(3, 198);
+            this.radio_Formatting_Identity.Location = new System.Drawing.Point(3, 238);
             this.radio_Formatting_Identity.Name = "radio_Formatting_Identity";
             this.radio_Formatting_Identity.Size = new System.Drawing.Size(159, 17);
             this.radio_Formatting_Identity.TabIndex = 2;
@@ -337,6 +354,8 @@ namespace PoorMansTSqlFormatterDemo
             // 
             // grp_Options
             // 
+            this.grp_Options.Controls.Add(this.chk_ExpandBetweenConditions);
+            this.grp_Options.Controls.Add(this.chk_SpaceAfterComma);
             this.grp_Options.Controls.Add(this.chk_Coloring);
             this.grp_Options.Controls.Add(this.chk_UppercaseKeywords);
             this.grp_Options.Controls.Add(this.chk_ExpandCaseStatements);
@@ -344,19 +363,30 @@ namespace PoorMansTSqlFormatterDemo
             this.grp_Options.Controls.Add(this.chk_TrailingCommas);
             this.grp_Options.Controls.Add(this.chk_ExpandCommaLists);
             this.grp_Options.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grp_Options.Location = new System.Drawing.Point(53, 28);
+            this.grp_Options.Location = new System.Drawing.Point(43, 28);
             this.grp_Options.Name = "grp_Options";
-            this.grp_Options.Size = new System.Drawing.Size(170, 164);
+            this.grp_Options.Size = new System.Drawing.Size(181, 204);
             this.grp_Options.TabIndex = 4;
             this.grp_Options.TabStop = false;
             this.grp_Options.Text = "Standard Formatting Options";
+            // 
+            // chk_SpaceAfterComma
+            // 
+            this.chk_SpaceAfterComma.AutoSize = true;
+            this.chk_SpaceAfterComma.Location = new System.Drawing.Point(39, 65);
+            this.chk_SpaceAfterComma.Name = "chk_SpaceAfterComma";
+            this.chk_SpaceAfterComma.Size = new System.Drawing.Size(120, 17);
+            this.chk_SpaceAfterComma.TabIndex = 9;
+            this.chk_SpaceAfterComma.Text = "Space After Comma";
+            this.chk_SpaceAfterComma.UseVisualStyleBackColor = true;
+            this.chk_SpaceAfterComma.CheckedChanged += new System.EventHandler(this.SettingsControlChanged);
             // 
             // chk_Coloring
             // 
             this.chk_Coloring.AutoSize = true;
             this.chk_Coloring.Checked = true;
             this.chk_Coloring.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chk_Coloring.Location = new System.Drawing.Point(7, 135);
+            this.chk_Coloring.Location = new System.Drawing.Point(6, 180);
             this.chk_Coloring.Name = "chk_Coloring";
             this.chk_Coloring.Size = new System.Drawing.Size(100, 17);
             this.chk_Coloring.TabIndex = 8;
@@ -369,7 +399,7 @@ namespace PoorMansTSqlFormatterDemo
             this.chk_UppercaseKeywords.AutoSize = true;
             this.chk_UppercaseKeywords.Checked = true;
             this.chk_UppercaseKeywords.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chk_UppercaseKeywords.Location = new System.Drawing.Point(6, 111);
+            this.chk_UppercaseKeywords.Location = new System.Drawing.Point(6, 157);
             this.chk_UppercaseKeywords.Name = "chk_UppercaseKeywords";
             this.chk_UppercaseKeywords.Size = new System.Drawing.Size(127, 17);
             this.chk_UppercaseKeywords.TabIndex = 7;
@@ -382,7 +412,7 @@ namespace PoorMansTSqlFormatterDemo
             this.chk_ExpandCaseStatements.AutoSize = true;
             this.chk_ExpandCaseStatements.Checked = true;
             this.chk_ExpandCaseStatements.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chk_ExpandCaseStatements.Location = new System.Drawing.Point(6, 88);
+            this.chk_ExpandCaseStatements.Location = new System.Drawing.Point(6, 111);
             this.chk_ExpandCaseStatements.Name = "chk_ExpandCaseStatements";
             this.chk_ExpandCaseStatements.Size = new System.Drawing.Size(149, 17);
             this.chk_ExpandCaseStatements.TabIndex = 6;
@@ -395,7 +425,7 @@ namespace PoorMansTSqlFormatterDemo
             this.chk_ExpandBooleanExpressions.AutoSize = true;
             this.chk_ExpandBooleanExpressions.Checked = true;
             this.chk_ExpandBooleanExpressions.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chk_ExpandBooleanExpressions.Location = new System.Drawing.Point(6, 65);
+            this.chk_ExpandBooleanExpressions.Location = new System.Drawing.Point(6, 88);
             this.chk_ExpandBooleanExpressions.Name = "chk_ExpandBooleanExpressions";
             this.chk_ExpandBooleanExpressions.Size = new System.Drawing.Size(163, 17);
             this.chk_ExpandBooleanExpressions.TabIndex = 5;
@@ -427,42 +457,40 @@ namespace PoorMansTSqlFormatterDemo
             this.chk_ExpandCommaLists.UseVisualStyleBackColor = true;
             this.chk_ExpandCommaLists.CheckedChanged += new System.EventHandler(this.SettingsControlChanged);
             // 
-            // tableLayoutPanel1
+            // btn_About
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.groupBox5, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btn_About, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(238, 295);
-            this.tableLayoutPanel1.TabIndex = 2;
+            this.btn_About.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btn_About.Location = new System.Drawing.Point(3, 311);
+            this.btn_About.Name = "btn_About";
+            this.btn_About.Size = new System.Drawing.Size(233, 24);
+            this.btn_About.TabIndex = 2;
+            this.btn_About.Text = "About / License...";
+            this.btn_About.UseVisualStyleBackColor = true;
+            this.btn_About.Click += new System.EventHandler(this.btn_About_Click);
             // 
             // timer_TextChangeDelay
             // 
             this.timer_TextChangeDelay.Interval = 500;
             this.timer_TextChangeDelay.Tick += new System.EventHandler(this.timer_TextChangeDelay_Tick);
             // 
-            // btn_About
+            // chk_ExpandBetweenConditions
             // 
-            this.btn_About.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_About.Location = new System.Drawing.Point(3, 268);
-            this.btn_About.Name = "btn_About";
-            this.btn_About.Size = new System.Drawing.Size(232, 24);
-            this.btn_About.TabIndex = 2;
-            this.btn_About.Text = "About / License...";
-            this.btn_About.UseVisualStyleBackColor = true;
-            this.btn_About.Click += new System.EventHandler(this.btn_About_Click);
+            this.chk_ExpandBetweenConditions.AutoSize = true;
+            this.chk_ExpandBetweenConditions.Checked = true;
+            this.chk_ExpandBetweenConditions.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chk_ExpandBetweenConditions.Location = new System.Drawing.Point(6, 134);
+            this.chk_ExpandBetweenConditions.Name = "chk_ExpandBetweenConditions";
+            this.chk_ExpandBetweenConditions.Size = new System.Drawing.Size(171, 17);
+            this.chk_ExpandBetweenConditions.TabIndex = 10;
+            this.chk_ExpandBetweenConditions.Text = "Expand BETWEEN Conditions";
+            this.chk_ExpandBetweenConditions.UseVisualStyleBackColor = true;
+            this.chk_ExpandBetweenConditions.CheckedChanged += new System.EventHandler(this.SettingsControlChanged);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(987, 513);
+            this.ClientSize = new System.Drawing.Size(991, 573);
             this.Controls.Add(this.splitContainer1);
             this.Name = "MainForm";
             this.Text = "SQL Formatter";
@@ -486,12 +514,12 @@ namespace PoorMansTSqlFormatterDemo
             this.splitContainer3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.grp_Options.ResumeLayout(false);
             this.grp_Options.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -525,6 +553,8 @@ namespace PoorMansTSqlFormatterDemo
         private System.Windows.Forms.Timer timer_TextChangeDelay;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button btn_About;
+        private System.Windows.Forms.CheckBox chk_SpaceAfterComma;
+        private System.Windows.Forms.CheckBox chk_ExpandBetweenConditions;
     }
 }
 

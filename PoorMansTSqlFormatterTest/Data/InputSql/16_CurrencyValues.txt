@@ -34,3 +34,6 @@ SELECT (€)-.0
 
 --This is just a bit of fun
 SELECT €.-.0e
+
+--This is a case that once caused a strange bug:
+SELECT 0.0

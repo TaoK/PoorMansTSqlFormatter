@@ -43,10 +43,26 @@ namespace PoorMansTSqlFormatterTests
         {
             _tokenizer = new TSqlStandardTokenizer();
             _parser = new TSqlStandardParser();
-            _treeFormatter = new TSqlStandardFormatter("\t", true, false, true, true, true, false);
+            _treeFormatter = new TSqlStandardFormatter("\t", true, false, false, true, true, true, true, false);
         }
 
         string TestDataFolder { get { return Utils.GetTestContentFolder("InputSql"); } }
+
+        [TestMethod]
+        public void CheckThatReformattingOutputSqlYieldsSameSql()
+        {
+            foreach (string inputSQL in Utils.FolderTextFileIterator(TestDataFolder))
+            {
+                ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
+                XmlDocument parsed = _parser.ParseSQL(tokenized);
+                string outputSQL = _treeFormatter.FormatSQLTree(parsed);
+                ITokenList tokenizedAgain = _tokenizer.TokenizeSQL(outputSQL);
+                XmlDocument parsedAgain = _parser.ParseSQL(tokenizedAgain);
+                string formattedAgain = _treeFormatter.FormatSQLTree(parsedAgain);
+                if (!inputSQL.Contains("KNOWN SQL REFORMATTING INCONSISTENCY"))
+                    Assert.AreEqual<string>(outputSQL, formattedAgain, "reformatted SQL should be the same as first pass of formatting");
+            }
+        }
 
         [TestMethod]
         public void CheckThatReparsingOutputSqlYieldsEquivalentTree()
@@ -60,7 +76,8 @@ namespace PoorMansTSqlFormatterTests
                 XmlDocument parsedAgain = _parser.ParseSQL(tokenizedAgain);
                 Utils.StripWhiteSpaceFromSqlTree(parsed);
                 Utils.StripWhiteSpaceFromSqlTree(parsedAgain);
-                Assert.AreEqual<string>(parsed.OuterXml.ToUpper(), parsedAgain.OuterXml.ToUpper(), "parsed SQL trees should be the same");
+                if (!inputSQL.Contains("KNOWN SQL REFORMATTING INCONSISTENCY"))
+                    Assert.AreEqual<string>(parsed.OuterXml.ToUpper(), parsedAgain.OuterXml.ToUpper(), "parsed SQL trees should be the same");
             }
         }
     }

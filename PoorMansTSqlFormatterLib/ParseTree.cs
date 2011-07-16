@@ -102,6 +102,13 @@ namespace PoorMansTSqlFormatterLib
             return newElement;
         }
 
+        internal void StartNewContainer(string newElementName, string containerOpenValue, string containerType)
+        {
+            CurrentContainer = SaveNewElement(newElementName, "");
+            XmlElement containerOpen = SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_OPEN, "");
+            SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, containerOpenValue, containerOpen);
+            CurrentContainer = SaveNewElement(containerType, "");
+        }
 
         internal void StartNewStatement()
         {
@@ -128,23 +135,27 @@ namespace PoorMansTSqlFormatterLib
         {
             if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
                                     && CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
-                                    && CurrentContainer.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK)
+                                    && CurrentContainer.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                    && CurrentContainer.ParentNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK)
                                     )
             {
                 //we just ended the one select statement in a cursor declaration, and need to pop out to the same level as the cursor
-                CurrentContainer = (XmlElement)CurrentContainer.ParentNode.ParentNode.ParentNode.ParentNode;
+                CurrentContainer = (XmlElement)CurrentContainer.ParentNode.ParentNode.ParentNode.ParentNode.ParentNode;
             }
             else if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
                     || CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
                     )
                 CurrentContainer = (XmlElement)CurrentContainer.ParentNode;
-            else if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS))
-                CurrentContainer = (XmlElement)CurrentContainer.ParentNode.ParentNode;
+            else if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                    && CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS)
+                )
+                CurrentContainer = (XmlElement)CurrentContainer.ParentNode.ParentNode.ParentNode;
         }
 
         internal void EscapeAnySingleOrPartialStatementContainers()
         {
             EscapeAnyBetweenConditions();
+            EscapeAnySelectionTarget();
 
             if (HasNonWhiteSpaceNonCommentContent(CurrentContainer))
             {
@@ -263,6 +274,7 @@ namespace PoorMansTSqlFormatterLib
         internal void ConsiderStartingNewStatement()
         {
             EscapeAnyBetweenConditions();
+            EscapeAnySelectionTarget();
 
             //before single-statement-escaping
             XmlElement previousContainerElement = CurrentContainer;
@@ -283,6 +295,7 @@ namespace PoorMansTSqlFormatterLib
 
         internal void ConsiderStartingNewClause()
         {
+            EscapeAnySelectionTarget();
             EscapeAnyBetweenConditions();
 
             if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
@@ -295,6 +308,7 @@ namespace PoorMansTSqlFormatterLib
                 MigrateApplicableCommentsFromContainer(previousContainerElement);
             }
             else if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS)
+                || CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS)
                 || CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT))
             {
                 //create new clause and set context to it.
@@ -302,12 +316,20 @@ namespace PoorMansTSqlFormatterLib
             }
         }
 
+        internal void EscapeAnySelectionTarget()
+        {
+            if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SELECTIONTARGET))
+                CurrentContainer = (XmlElement)CurrentContainer.ParentNode;
+        }
+
         internal bool FindValidBatchEnd()
         {
             XmlElement nextStatementContainer = EscapeAndLocateNextStatementContainer(true);
             return nextStatementContainer != null
                 && (nextStatementContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_ROOT)
-                    || nextStatementContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_AS_BLOCK)
+                    || (nextStatementContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                        && nextStatementContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_DDL_AS_BLOCK)
+                        )
                     );
         }
 
@@ -353,6 +375,24 @@ namespace PoorMansTSqlFormatterLib
                     return (XmlElement)currentNode;
             }
             return null;
+        }
+
+        internal void MoveToAncestorContainer(int levelsUp)
+        {
+            MoveToAncestorContainer(levelsUp, null);
+        }
+        internal void MoveToAncestorContainer(int levelsUp, string targetContainerName)
+        {
+            XmlElement candidateContainer = CurrentContainer;
+            while (levelsUp > 0)
+            {
+                candidateContainer = (XmlElement)candidateContainer.ParentNode;
+                levelsUp--;
+            }
+            if (string.IsNullOrEmpty(targetContainerName) || candidateContainer.Name.Equals(targetContainerName))
+                CurrentContainer = candidateContainer;
+            else
+                throw new Exception("Ancestor node does not match expected name!");
         }
     }
 }

@@ -99,6 +99,12 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                                 currentTokenValue.Append('0');
                                 currentTokenValue.Append(currentCharacter);
                             }
+                            else if (currentCharacter == '.')
+                            {
+                                currentTokenizationType = SqlTokenizationType.DecimalValue;
+                                currentTokenValue.Append('0');
+                                currentTokenValue.Append(currentCharacter);
+                            }
                             else
                             {
                                 currentTokenValue.Append('0');

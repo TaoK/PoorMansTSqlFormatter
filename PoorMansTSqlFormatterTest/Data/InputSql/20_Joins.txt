@@ -1,0 +1,15 @@
+﻿SELECT * FROM Someplace S 
+OUTER APPLY dbo.fn_GetAllPlaces(S.PlaceID) 
+GO
+SELECT * FROM Someplace S 
+JOIN Elsewhere ON 1=1 
+GO
+SELECT * FROM Someplace S 
+JOIN Elsewhere (HOLDLOCK) ON 1=1 
+GO
+SELECT * FROM Someplace S 
+JOIN Elsewhere AS E (HOLDLOCK) ON 1=1 
+GO
+SELECT * FROM Someplace S 
+FULL OUTER JOIN Elsewhere AS E WITH (HOLDLOCK, INDEX(IX_TEST)) ON 1=1 
+GO

@@ -62,6 +62,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_DDL_RETURNS = "DDLReturns";
         public const string ENAME_DDLDETAIL_PARENS = "DDLDetailParens";
         public const string ENAME_TRIGGER_CONDITION = "TriggerCondition";
+        public const string ENAME_SELECTIONTARGET_PARENS = "SelectionTargetParens";
         public const string ENAME_EXPRESSION_PARENS = "ExpressionParens";
         public const string ENAME_FUNCTION_PARENS = "FunctionParens";
         public const string ENAME_FUNCTION_KEYWORD = "FunctionKeyword";
@@ -72,7 +73,9 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_CONTAINER_OPEN = "ContainerOpen";
         public const string ENAME_CONTAINER_MULTISTATEMENT = "ContainerMultiStatementBody";
         public const string ENAME_CONTAINER_SINGLESTATEMENT = "ContainerSingleStatementBody";
+        public const string ENAME_CONTAINER_GENERALCONTENT = "ContainerContentBody";
         public const string ENAME_CONTAINER_CLOSE = "ContainerClose";
+        public const string ENAME_SELECTIONTARGET = "SelectionTarget";
 
         public const string ENAME_WHITESPACE = "WhiteSpace";
         public const string ENAME_OTHERNODE = "Other";

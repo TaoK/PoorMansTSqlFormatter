@@ -36,13 +36,13 @@ namespace PoorMansTSqlFormatterWebDemo
         [WebMethod]
         public string FormatTSql(string inputString)
         {
-            return FormatTSqlWithOptions(inputString, "\t", true, false, true, true, true);
+            return FormatTSqlWithOptions(inputString, "\t", true, false, false, true, true, true, true, true);
         }
 
         [WebMethod]
-        public string FormatTSqlWithOptions(string inputString, string indent, bool expandCommaLists, bool trailingCommas, bool expandBooleanExpressions, bool expandCaseStatements, bool uppercaseKeywords)
+        public string FormatTSqlWithOptions(string inputString, string indent, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool uppercaseKeywords, bool coloring)
         {
-            PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter("\t", true, false, true, true, true, true);
+            PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(indent, expandCommaLists, trailingCommas, spaceAfterExpandedComma, expandBooleanExpressions, expandCaseStatements, expandBetweenConditions, uppercaseKeywords, coloring);
             return FormatTSqlWithFormatter(inputString, formatter);
         }
 

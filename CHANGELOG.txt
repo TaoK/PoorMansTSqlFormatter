@@ -1,5 +1,21 @@
 Poor Man's T-SQL Formatter change log
 
+Version 0.9.12: 
+--------------
+ - Corrected expanded-comma-list default to not include spaces between commas and subsequent content, with new "SpaceAfterExpandedComma" option - thanks to Loren Halvorson again for the suggestion!
+ - New option "ExpandBetweenConditions", meaning hopefully clear
+ - Significant changes to Parse Tree Xml structure, to better handle compound keywords and various containers
+ - Major refactoring of standard parser and formatter - hopefully much clearer and more maintainable now.
+ - Corrected handling of whitespace within compound keywords like "BEGIN TRAN"
+ - Added indenting on arbitrary expression parens
+ - Added new parens type "selection target" to avoid over-indenting derived tables
+ - Corrected detection of new "SELECT" statements immediately following "INSERT ... SELECT ..." and "INSERT ... VALUES ..." statements
+ - Bugfix: web service "WithOptions" method was actually ignoring the options provided
+ - Corrected INSTEAD OF trigger type parsing
+ - Added ability in CmdLine utility to use an output path, instead of an output file (same parameter).
+ - Bugfix: tokenization of decimal values starting with a single "0", eg "0.0", was yielding two separate numbers.
+
+
 Version 0.9.11: Thanks to Loren Halvorson for the feature suggestions!
 --------------
  - Added WinMerge plugin (actual plugin implemented in VB6, because I couldn't figure out how to get the COM Interop to work with WinMerge's plugin-loading system directly)

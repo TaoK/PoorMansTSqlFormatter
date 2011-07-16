@@ -1,0 +1,7 @@
+﻿--THIS FILE CONTAINS A KNOWN SQL REFORMATTING INCONSISTENCY
+
+SELECT 1 --a comment attached
+
+--A free standing comment
+
+FROM SomeTable
