@@ -323,7 +323,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case Interfaces.SqlXmlConstants.ENAME_COMMENT_SINGLELINE:
                     WhiteSpace_SeparateComment(contentElement, state);
-                    state.AddOutputContent("--" + contentElement.InnerText.Replace("\r", "").Replace("\n", "") + "*/", Interfaces.SqlHtmlConstants.CLASS_COMMENT);
+                    state.AddOutputContent("--" + contentElement.InnerText.Replace("\r", "").Replace("\n", ""), Interfaces.SqlHtmlConstants.CLASS_COMMENT);
                     state.BreakExpected = true;
                     state.SourceBreakPending = true;
                     break;
