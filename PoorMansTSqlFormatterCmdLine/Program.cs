@@ -228,6 +228,7 @@ SqlFormatter test*.sql /o:resultfile.sql
             string oldFileContents = "";
             string newFileContents = "";
             bool parsingError = false;
+            bool failedFolder = false;
             Exception parseErrorDetail = null;
 
             //TODO: play with / test encoding complexities
@@ -291,33 +292,49 @@ SqlFormatter test*.sql /o:resultfile.sql
                 }
                 if (!failedBackup)
                 {
-                    try
+                    if (singleFileWriter != null)
                     {
-                        if (singleFileWriter != null)
+                        //we'll assume that running out of disk space, and other while-you-are-writing errors, and not worth worrying about
+                        singleFileWriter.WriteLine(newFileContents);
+                        singleFileWriter.WriteLine("GO");
+                    }
+                    else
+                    {
+                        string fullTargetPath = fileInfo.FullName;
+                        if (replaceFromFolderPath != null && replaceToFolderPath != null)
                         {
-                            singleFileWriter.WriteLine(newFileContents);
-                            singleFileWriter.WriteLine("GO");
-                        }
-                        else
-                        {
-                            string fullTargetPath = fileInfo.FullName;
-                            if (replaceFromFolderPath != null && replaceToFolderPath != null)
-                            {
-                                fullTargetPath = fullTargetPath.Replace(replaceFromFolderPath, replaceToFolderPath);
+                            fullTargetPath = fullTargetPath.Replace(replaceFromFolderPath, replaceToFolderPath);
 
-                                string targetFolder = Path.GetDirectoryName(fullTargetPath);
+                            string targetFolder = Path.GetDirectoryName(fullTargetPath);
+                            try
+                            {
                                 if (!Directory.Exists(targetFolder))
                                     Directory.CreateDirectory(targetFolder);
                             }
-                            File.WriteAllText(fullTargetPath, newFileContents);
+                            catch
+                            {
+                                Console.WriteLine("Failed to create target folder: " + targetFolder);
+                                Console.WriteLine(" Error detail: " + ex.Message);
+                                failedFolder = true;
+                                warningEncountered = true;
+                            }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Failed to write reformatted contents: " + fileInfo.FullName);
-                        Console.WriteLine(" Error detail: " + ex.Message);
-                        Console.WriteLine(" NOTE: this file may have been overwritten with partial content!");
-                        warningEncountered = true;
+
+                        if (!failedFolder)
+                        {
+                            try
+                            {
+                                File.WriteAllText(fullTargetPath, newFileContents);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("Failed to write reformatted contents: " + fileInfo.FullName);
+                                Console.WriteLine(" Error detail: " + ex.Message);
+                                if (replaceFromFolderPath == null || replaceToFolderPath == null)
+                                    Console.WriteLine(" NOTE: this file may have been overwritten with partial content!");
+                                warningEncountered = true;
+                            }
+                        }
                     }
                 }
             }
