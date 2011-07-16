@@ -42,26 +42,39 @@ namespace PoorMansTSqlFormatterSSMSAddIn
 
         private void btn_Save_Click(object sender, EventArgs e)
         {
-            SetSettingsFromControlValues();
-            Properties.Settings.Default.Save();
+            try
+            {
+                SetSettingsFromControlValues();
+                Properties.Settings.Default.Save();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error saving settings. Detail: " + ex.Message);
+            }
         }
 
         private void LoadControlValuesFromSettings()
         {
             txt_IndentString.Text = Properties.Settings.Default.IndentString;
             txt_Hotkey.Text = Properties.Settings.Default.Hotkey;
+            txt_MaxLineWidth.Text = Properties.Settings.Default.MaxLineWidth.ToString();
+            txt_SpacesPerTab.Text = Properties.Settings.Default.SpacesPerTab.ToString();
             chk_ExpandBetweenConditions.Checked = Properties.Settings.Default.ExpandBetweenConditions;
             chk_ExpandBooleanExpressions.Checked = Properties.Settings.Default.ExpandBooleanExpressions;
             chk_ExpandCaseStatements.Checked = Properties.Settings.Default.ExpandCaseStatements;
             chk_ExpandCommaLists.Checked = Properties.Settings.Default.ExpandCommaLists;
             chk_TrailingCommas.Checked = Properties.Settings.Default.TrailingCommas;
             chk_UppercaseKeywords.Checked = Properties.Settings.Default.UppercaseKeywords;
+            chk_SpaceAfterExpandedComma.Checked = Properties.Settings.Default.SpaceAfterExpandedComma;
         }
 
         private void SetSettingsFromControlValues()
         {
             Properties.Settings.Default.IndentString = txt_IndentString.Text.Replace("\t", "\\t");
             Properties.Settings.Default.Hotkey = txt_Hotkey.Text;
+            Properties.Settings.Default.MaxLineWidth = int.Parse(txt_MaxLineWidth.Text);
+            Properties.Settings.Default.SpacesPerTab = int.Parse(txt_SpacesPerTab.Text);
+            Properties.Settings.Default.SpaceAfterExpandedComma = chk_SpaceAfterExpandedComma.Checked;
             Properties.Settings.Default.ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked;
             Properties.Settings.Default.ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked;
             Properties.Settings.Default.ExpandCaseStatements = chk_ExpandCaseStatements.Checked;

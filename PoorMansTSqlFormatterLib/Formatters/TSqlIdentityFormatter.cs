@@ -28,30 +28,38 @@ namespace PoorMansTSqlFormatterLib.Formatters
     public class TSqlIdentityFormatter : Interfaces.ISqlTokenFormatter, Interfaces.ISqlTreeFormatter
     {
 
-        public bool HTMLFormatted { get { return false; } }
+        public TSqlIdentityFormatter() { }
+        public TSqlIdentityFormatter(bool htmlColoring)
+        {
+            HTMLColoring = htmlColoring;
+        }
+
+        public bool HTMLColoring { get; set; }
+        public bool HTMLFormatted { get { return HTMLColoring; } }
 
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
             string rootElement = SqlXmlConstants.ENAME_SQL_ROOT;
-            StringBuilder outString = new StringBuilder();
+            BaseFormatterState state = new BaseFormatterState(HTMLColoring);
             if (sqlTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", rootElement, SqlXmlConstants.ANAME_ERRORFOUND)) != null)
-                outString.AppendLine("--WARNING! ERRORS ENCOUNTERED DURING PARSING!");
+            {
+                state.AddOutputContent("--WARNING! ERRORS ENCOUNTERED DURING PARSING!");
+                state.AddOutputLineBreak();
+            }
 
             XmlNodeList rootList = sqlTreeDoc.SelectNodes(string.Format("/{0}/*", rootElement));
-            ProcessSqlNodeList(outString, rootList);
+            ProcessSqlNodeList(state, rootList);
 
-            return outString.ToString();
+            return state.DumpOutput();
         }
 
-        private static void ProcessSqlNodeList(StringBuilder outString, XmlNodeList rootList)
+        private static void ProcessSqlNodeList(BaseFormatterState state, XmlNodeList rootList)
         {
             foreach (XmlElement contentElement in rootList)
-            {
-                ProcessSqlNode(outString, contentElement);
-            }
+                ProcessSqlNode(state, contentElement);
         }
 
-        private static void ProcessSqlNode(StringBuilder outString, XmlElement contentElement)
+        private static void ProcessSqlNode(BaseFormatterState state, XmlElement contentElement)
         {
             switch (contentElement.Name)
             {
@@ -60,9 +68,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_FUNCTION_PARENS:
                 case SqlXmlConstants.ENAME_EXPRESSION_PARENS:
                 case SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS:
-                    outString.Append("(");
-                    ProcessSqlNodeList(outString, contentElement.SelectNodes("*"));
-                    outString.Append(")");
+                    state.AddOutputContent("(");
+                    ProcessSqlNodeList(state, contentElement.SelectNodes("*"));
+                    state.AddOutputContent(")");
                     break;
 
                 case SqlXmlConstants.ENAME_SQL_STATEMENT:
@@ -108,12 +116,11 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     {
                         switch (childNode.NodeType)
                         {
-                            case XmlNodeType.Text:
-                                outString.Append(childNode.InnerText);
-                                break;
                             case XmlNodeType.Element:
-                                ProcessSqlNode(outString, (XmlElement)childNode);
+                                ProcessSqlNode(state, (XmlElement)childNode);
                                 break;
+                            case XmlNodeType.Text:
+                                //ignore; all valid text is now in appropriate containers
                             case XmlNodeType.Comment:
                                 //ignore; actual displayable T-SQL comments are elements.
                                 break;
@@ -124,65 +131,63 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlXmlConstants.ENAME_COMMENT_MULTILINE:
-                    outString.Append("/*");
-                    outString.Append(contentElement.InnerText);
-                    outString.Append("*/");
+                    state.AddOutputContent("/*" + contentElement.InnerText + "*/", Interfaces.SqlHtmlConstants.CLASS_COMMENT);
                     break;
                 case SqlXmlConstants.ENAME_COMMENT_SINGLELINE:
-                    outString.Append("--");
-                    outString.Append(contentElement.InnerText);
+                    state.AddOutputContent("--" + contentElement.InnerText, Interfaces.SqlHtmlConstants.CLASS_COMMENT);
                     break;
                 case SqlXmlConstants.ENAME_STRING:
-                    outString.Append("'");
-                    outString.Append(contentElement.InnerText.Replace("'", "''"));
-                    outString.Append("'");
+                    state.AddOutputContent("'" + contentElement.InnerText.Replace("'", "''") + "'", Interfaces.SqlHtmlConstants.CLASS_STRING);
                     break;
                 case SqlXmlConstants.ENAME_NSTRING:
-                    outString.Append("N'");
-                    outString.Append(contentElement.InnerText.Replace("'", "''"));
-                    outString.Append("'");
+                    state.AddOutputContent("N'" + contentElement.InnerText.Replace("'", "''") + "'", Interfaces.SqlHtmlConstants.CLASS_STRING);
                     break;
                 case SqlXmlConstants.ENAME_QUOTED_STRING:
-                    outString.Append("\"");
-                    outString.Append(contentElement.InnerText.Replace("\"", "\"\""));
-                    outString.Append("\"");
+                    state.AddOutputContent("\"" + contentElement.InnerText.Replace("\"", "\"\"") + "\"");
                     break;
                 case SqlXmlConstants.ENAME_BRACKET_QUOTED_NAME:
-                    outString.Append("[");
-                    outString.Append(contentElement.InnerText.Replace("]", "]]"));
-                    outString.Append("]");
+                    state.AddOutputContent("[" + contentElement.InnerText.Replace("]", "]]") + "]");
                     break;
 
                 case SqlXmlConstants.ENAME_COMMA:
-                    outString.Append(",");
+                    state.AddOutputContent(",", Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                     break;
 
                 case SqlXmlConstants.ENAME_PERIOD:
-                    outString.Append(".");
+                    state.AddOutputContent(".", Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                     break;
 
                 case SqlXmlConstants.ENAME_SEMICOLON:
-                    outString.Append(";");
+                    state.AddOutputContent(";", Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                     break;
 
                 case SqlXmlConstants.ENAME_ASTERISK:
-                    outString.Append("*");
+                    state.AddOutputContent("*", Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                     break;
 
                 case SqlXmlConstants.ENAME_AND_OPERATOR:
                 case SqlXmlConstants.ENAME_OR_OPERATOR:
+                case SqlXmlConstants.ENAME_OTHEROPERATOR:
+                    state.AddOutputContent(contentElement.InnerText, Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
+                    break;
+
                 case SqlXmlConstants.ENAME_FUNCTION_KEYWORD:
+                    state.AddOutputContent(contentElement.InnerText, Interfaces.SqlHtmlConstants.CLASS_FUNCTION);
+                    break;
+
+                case SqlXmlConstants.ENAME_OTHERKEYWORD:
                 case SqlXmlConstants.ENAME_DATATYPE_KEYWORD:
                 case SqlXmlConstants.ENAME_DDL_RETURNS:
+                    state.AddOutputContent(contentElement.InnerText, Interfaces.SqlHtmlConstants.CLASS_KEYWORD);
+                    break;
+
                 case SqlXmlConstants.ENAME_OTHERNODE:
                 case SqlXmlConstants.ENAME_WHITESPACE:
-                case SqlXmlConstants.ENAME_OTHEROPERATOR:
-                case SqlXmlConstants.ENAME_OTHERKEYWORD:
                 case SqlXmlConstants.ENAME_NUMBER_VALUE:
                 case SqlXmlConstants.ENAME_MONETARY_VALUE:
                 case SqlXmlConstants.ENAME_BINARY_VALUE:
                 case SqlXmlConstants.ENAME_LABEL:
-                    outString.Append(contentElement.InnerText);
+                    state.AddOutputContent(contentElement.InnerText);
                     break;
                 default:
                     throw new Exception("Unrecognized element in SQL Xml!");

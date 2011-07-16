@@ -39,16 +39,15 @@ namespace PoorMansTSqlFormatterLib.Formatters
          *    - PROC -> PROCEDURE
          *    - DECLARE @Test AS INT -> DECLARE @Test INT
          *    
-         *  - Implement text width-based line breaking
-         *    - Provide preference option for width and tab spaces?
-         *  
          */
 
-        public TSqlStandardFormatter() : this("\t", true, false, false, true, true, true, true, false) {}
+        public TSqlStandardFormatter() : this("\t", 4, 999, true, false, false, true, true, true, true, false) {}
 
-        public TSqlStandardFormatter(string indentString, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool uppercaseKeywords, bool htmlColoring)
+        public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool uppercaseKeywords, bool htmlColoring)
         {
             IndentString = indentString;
+            SpacesPerTab = spacesPerTab;
+            MaxLineWidth = maxLineWidth;
             ExpandCommaLists = expandCommaLists;
             TrailingCommas = trailingCommas;
             SpaceAfterExpandedComma = spaceAfterExpandedComma;
@@ -59,7 +58,20 @@ namespace PoorMansTSqlFormatterLib.Formatters
             HTMLColoring = htmlColoring;
         }
 
-        public string IndentString { get; set; }
+        private string _indentString;
+        public string IndentString { 
+            get 
+            {
+                return _indentString;
+            } 
+            set
+            {
+                _indentString = value.Replace("\\t", "\t");
+            } 
+        }
+
+        public int SpacesPerTab { get; set; }
+        public int MaxLineWidth { get; set; }
         public bool ExpandCommaLists { get; set; }
         public bool TrailingCommas { get; set; }
         public bool SpaceAfterExpandedComma { get; set; }
@@ -68,28 +80,31 @@ namespace PoorMansTSqlFormatterLib.Formatters
         public bool ExpandBetweenConditions { get; set; }
         public bool UppercaseKeywords { get; set; }
         public bool HTMLColoring { get; set; }
+
         public bool HTMLFormatted { get { return HTMLColoring; } }
 
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
             //thread-safe - each call to FormatSQLTree() gets its own independent state object
-            TSqlFormattingState state = new TSqlFormattingState();
+            TSqlFormattingState state = new TSqlFormattingState(HTMLColoring, IndentString, SpacesPerTab, MaxLineWidth, 0);
+
             if (sqlTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", Interfaces.SqlXmlConstants.ENAME_SQL_ROOT, Interfaces.SqlXmlConstants.ANAME_ERRORFOUND)) != null)
-                state.OutBuilder.AppendLine("--WARNING! ERRORS ENCOUNTERED DURING PARSING! (formatted SQL could be incorrect / logically different) ");
+            {
+                state.AddOutputContent("--WARNING! ERRORS ENCOUNTERED DURING PARSING! (formatted SQL could be incorrect / logically different) ");
+                state.AddOutputLineBreak();
+            }
 
             XmlNodeList rootList = sqlTreeDoc.SelectNodes(string.Format("/{0}/*", Interfaces.SqlXmlConstants.ENAME_SQL_ROOT));
             ProcessSqlNodeList(rootList, state);
             WhiteSpace_BreakAsExpected(state);
 
-            return state.OutBuilder.ToString();
+            return state.DumpOutput();
         }
 
         private void ProcessSqlNodeList(XmlNodeList rootList, TSqlFormattingState state)
         {
             foreach (XmlElement contentElement in rootList)
-            {
                 ProcessSqlNode(contentElement, state);
-            }
         }
 
         private void ProcessSqlNode(XmlElement contentElement, TSqlFormattingState state)
@@ -113,8 +128,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_UNION_CLAUSE:
-                    WhiteSpace_BreakToNextLine(state.DecrementIndent()); //this is the one already recommended by the start of the clause
-                    WhiteSpace_BreakToNextLine(state); //this is the one we additionally want to apply
+                    state.DecrementIndent();
+                    state.WhiteSpace_BreakToNextLine(); //this is the one already recommended by the start of the clause
+                    state.WhiteSpace_BreakToNextLine(); //this is the one we additionally want to apply
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), state.IncrementIndent());
                     state.BreakExpected = true;
                     state.AdditionalBreakExpected = true;
@@ -122,7 +138,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case Interfaces.SqlXmlConstants.ENAME_BATCH_SEPARATOR:
                     //newline regardless of whether previous element recommended a break or not.
-                    WhiteSpace_BreakToNextLine(state);
+                    state.WhiteSpace_BreakToNextLine();
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), state);
                     state.BreakExpected = true;
                     break;
@@ -174,7 +190,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_TRIGGER_CONDITION:
-                    WhiteSpace_BreakToNextLine(state.DecrementIndent());
+                    state.DecrementIndent();
+                    state.WhiteSpace_BreakToNextLine();
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), state.IncrementIndent());
                     break;
 
@@ -208,11 +225,11 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     //simply process sub-nodes - don't add space or expect any linebreaks (but respect linebreaks if necessary)
                     state.WordSeparatorExpected = false;
                     WhiteSpace_BreakAsExpected(state);
-                    state.OutBuilder.Append(FormatOperator("("));
+                    state.AddOutputContent(FormatOperator("("), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), state.IncrementIndent());
                     state.DecrementIndent();
                     WhiteSpace_BreakAsExpected(state);
-                    state.OutBuilder.Append(FormatOperator(")"));
+                    state.AddOutputContent(FormatOperator(")"), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                     state.WordSeparatorExpected = true;
                     break;
 
@@ -222,22 +239,21 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     WhiteSpace_SeparateWords(state);
                     if (contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_EXPRESSION_PARENS))
                         state.IncrementIndent();
-                    state.OutBuilder.Append(FormatOperator("("));
-                    TSqlFormattingState innerState = new TSqlFormattingState(state.IndentLevel);
+                    state.AddOutputContent(FormatOperator("("), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
+                    TSqlFormattingState innerState = new TSqlFormattingState(state);
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), innerState);
-                    string innerString = innerState.OutBuilder.ToString();
                     //if there was a linebreak in the parens content, or if it wanted one to follow, then put linebreaks before and after.
-                    if (innerState.BreakExpected || Regex.IsMatch(innerString, @"(\r|\n)+"))
+                    if (innerState.BreakExpected || innerState.OutputContainsLineBreak)
                     {
-                        WhiteSpace_BreakToNextLine(state);
-                        state.OutBuilder.Append(innerString);
-                        WhiteSpace_BreakToNextLine(state);
+                        state.WhiteSpace_BreakToNextLine();
+                        state.Assimilate(innerState);
+                        state.WhiteSpace_BreakToNextLine();
                     }
                     else
                     {
-                        state.OutBuilder.Append(innerString);
+                        state.Assimilate(innerState);
                     }
-                    state.OutBuilder.Append(FormatOperator(")"));
+                    state.AddOutputContent(FormatOperator(")"), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                     if (contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_EXPRESSION_PARENS))
                         state.DecrementIndent();
                     state.WordSeparatorExpected = true;
@@ -296,33 +312,18 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case Interfaces.SqlXmlConstants.ENAME_COMMENT_MULTILINE:
                     WhiteSpace_SeparateComment(contentElement, state);
-                    if (HTMLColoring)
-                        state.OutBuilder.Append(@"<span class=""SQLComment"">");
-                    state.OutBuilder.Append("/*");
-                    if (HTMLColoring)
-                        state.OutBuilder.Append(System.Web.HttpUtility.HtmlEncode(contentElement.InnerText));
-                    else
-                        state.OutBuilder.Append(contentElement.InnerText);
-                    state.OutBuilder.Append("*/");
-                    if (HTMLColoring)
-                        state.OutBuilder.Append("</span>");
+                    state.AddOutputContent("/*" + contentElement.InnerText + "*/", Interfaces.SqlHtmlConstants.CLASS_COMMENT);
                     if (contentElement.ParentNode.Name.Equals(Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT))
                         state.BreakExpected = true;
                     else
+                    {
                         state.WordSeparatorExpected = true;
+                    }
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_COMMENT_SINGLELINE:
                     WhiteSpace_SeparateComment(contentElement, state);
-                    if (HTMLColoring)
-                        state.OutBuilder.Append(@"<span class=""SQLComment"">");
-                    state.OutBuilder.Append("--");
-                    if (HTMLColoring)
-                        state.OutBuilder.Append(System.Web.HttpUtility.HtmlEncode(contentElement.InnerText.Replace("\r", "").Replace("\n", "")));
-                    else
-                        state.OutBuilder.Append(contentElement.InnerText.Replace("\r", "").Replace("\n", ""));
-                    if (HTMLColoring)
-                        state.OutBuilder.Append("</span>");
+                    state.AddOutputContent("--" + contentElement.InnerText.Replace("\r", "").Replace("\n", "") + "*/", Interfaces.SqlHtmlConstants.CLASS_COMMENT);
                     state.BreakExpected = true;
                     state.SourceBreakPending = true;
                     break;
@@ -330,46 +331,24 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.SqlXmlConstants.ENAME_STRING:
                 case Interfaces.SqlXmlConstants.ENAME_NSTRING:
                     WhiteSpace_SeparateWords(state);
+                    string outValue = null;
                     if (contentElement.Name.Equals(Interfaces.SqlXmlConstants.ENAME_NSTRING))
-                        state.OutBuilder.Append("N");
-
-                    if (HTMLColoring)
-                        state.OutBuilder.Append(@"<span class=""SQLString"">");
-
-                    state.OutBuilder.Append("'");
-
-                    if (HTMLColoring)
-                        state.OutBuilder.Append(System.Web.HttpUtility.HtmlEncode(contentElement.InnerText.Replace("'", "''")));
+                        outValue = "N'" + contentElement.InnerText.Replace("'", "''") + "'";
                     else
-                        state.OutBuilder.Append(contentElement.InnerText.Replace("'", "''"));
-
-                    state.OutBuilder.Append("'");
-                    
-                    if (HTMLColoring)
-                        state.OutBuilder.Append("</span>");
-
+                        outValue = "'" + contentElement.InnerText.Replace("'", "''") + "'";
+                    state.AddOutputContent(outValue, Interfaces.SqlHtmlConstants.CLASS_STRING);
                     state.WordSeparatorExpected = true;
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_BRACKET_QUOTED_NAME:
                     WhiteSpace_SeparateWords(state);
-                    state.OutBuilder.Append("[");
-                    if (HTMLColoring)
-                        state.OutBuilder.Append(System.Web.HttpUtility.HtmlEncode(contentElement.InnerText.Replace("]", "]]")));
-                    else
-                        state.OutBuilder.Append(contentElement.InnerText.Replace("]", "]]"));
-                    state.OutBuilder.Append("]");
+                    state.AddOutputContent("[" + contentElement.InnerText.Replace("]", "]]") + "]");
                     state.WordSeparatorExpected = true;
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_QUOTED_STRING:
                     WhiteSpace_SeparateWords(state);
-                    state.OutBuilder.Append("\"");
-                    if (HTMLColoring)
-                        state.OutBuilder.Append(System.Web.HttpUtility.HtmlEncode(contentElement.InnerText.Replace("\"", "\"\"")));
-                    else
-                        state.OutBuilder.Append(contentElement.InnerText.Replace("\"", "\"\""));
-                    state.OutBuilder.Append("\"");
+                    state.AddOutputContent("\"" + contentElement.InnerText.Replace("\"", "\"\"") + "\"");
                     state.WordSeparatorExpected = true;
                     break;
 
@@ -377,7 +356,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     //comma always ignores requested word spacing
                     if (TrailingCommas)
                     {
-                        state.OutBuilder.Append(FormatOperator(","));
+                        state.AddOutputContent(FormatOperator(","), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
 
                         if (ExpandCommaLists
                             && !(contentElement.ParentNode.Name.Equals(Interfaces.SqlXmlConstants.ENAME_DDLDETAIL_PARENS)
@@ -396,15 +375,15 @@ namespace PoorMansTSqlFormatterLib.Formatters
                                 )
                             )
                         {
-                            WhiteSpace_BreakToNextLine(state);
-                            state.OutBuilder.Append(FormatOperator(","));
+                            state.WhiteSpace_BreakToNextLine();
+                            state.AddOutputContent(FormatOperator(","), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                             if (SpaceAfterExpandedComma)
                                 state.WordSeparatorExpected = true;
                         }
                         else
                         {
                             WhiteSpace_BreakAsExpected(state);
-                            state.OutBuilder.Append(FormatOperator(","));
+                            state.AddOutputContent(FormatOperator(","), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                             state.WordSeparatorExpected = true;
                         }
 
@@ -413,7 +392,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case Interfaces.SqlXmlConstants.ENAME_ASTERISK:
                     WhiteSpace_SeparateWords(state);
-                    state.OutBuilder.Append(FormatOperator("*"));
+                    state.AddOutputContent(FormatOperator("*"), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                     state.WordSeparatorExpected = true;
                     break;
 
@@ -421,24 +400,24 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     //always ignores requested word spacing, and doesn't request a following space either.
                     state.WordSeparatorExpected = false;
                     WhiteSpace_BreakAsExpected(state);
-                    state.OutBuilder.Append(FormatOperator("."));
+                    state.AddOutputContent(FormatOperator("."), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_SEMICOLON:
                     WhiteSpace_BreakAsExpected(state);
-                    state.OutBuilder.Append(FormatOperator(";"));
+                    state.AddOutputContent(FormatOperator(";"), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_OTHEROPERATOR:
                     WhiteSpace_SeparateWords(state);
-                    state.OutBuilder.Append(FormatOperator(contentElement.InnerText));
+                    state.AddOutputContent(FormatOperator(contentElement.InnerText), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                     state.WordSeparatorExpected = true;
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_COMPOUNDKEYWORD:
                     WhiteSpace_SeparateWords(state);
                     state.SetRecentKeyword(contentElement.Attributes[Interfaces.SqlXmlConstants.ANAME_SIMPLETEXT].Value);
-                    state.OutBuilder.Append(FormatKeyword(contentElement.Attributes[Interfaces.SqlXmlConstants.ANAME_SIMPLETEXT].Value));
+                    state.AddOutputContent(FormatKeyword(contentElement.Attributes[Interfaces.SqlXmlConstants.ANAME_SIMPLETEXT].Value), Interfaces.SqlHtmlConstants.CLASS_KEYWORD);
                     state.WordSeparatorExpected = true;
                     ProcessSqlNodeList(contentElement.SelectNodes(Interfaces.SqlXmlConstants.ENAME_COMMENT_MULTILINE + " | " + Interfaces.SqlXmlConstants.ENAME_COMMENT_SINGLELINE), state.IncrementIndent());
                     state.DecrementIndent();
@@ -449,21 +428,14 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.SqlXmlConstants.ENAME_DATATYPE_KEYWORD:
                     WhiteSpace_SeparateWords(state);
                     state.SetRecentKeyword(contentElement.InnerText);
-                    state.OutBuilder.Append(FormatKeyword(contentElement.InnerText));
+                    state.AddOutputContent(FormatKeyword(contentElement.InnerText), Interfaces.SqlHtmlConstants.CLASS_KEYWORD);
                     state.WordSeparatorExpected = true;
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_FUNCTION_KEYWORD:
                     WhiteSpace_SeparateWords(state);
                     state.SetRecentKeyword(contentElement.InnerText);
-                    if (HTMLColoring)
-                    {
-                        state.OutBuilder.Append(@"<span class=""SQLFunction"">");
-                        state.OutBuilder.Append(System.Web.HttpUtility.HtmlEncode(contentElement.InnerText));
-                        state.OutBuilder.Append("</span>");
-                    }
-                    else
-                        state.OutBuilder.Append(contentElement.InnerText);
+                    state.AddOutputContent(contentElement.InnerText, Interfaces.SqlHtmlConstants.CLASS_FUNCTION);
                     state.WordSeparatorExpected = true;
                     break;
 
@@ -473,10 +445,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.SqlXmlConstants.ENAME_BINARY_VALUE:
                 case Interfaces.SqlXmlConstants.ENAME_LABEL:
                     WhiteSpace_SeparateWords(state);
-                    if (HTMLColoring)
-                        state.OutBuilder.Append(System.Web.HttpUtility.HtmlEncode(contentElement.InnerText));
-                    else
-                        state.OutBuilder.Append(contentElement.InnerText);
+                    state.AddOutputContent(contentElement.InnerText);
                     state.WordSeparatorExpected = true;
                     break;
 
@@ -495,32 +464,18 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
         private string FormatKeyword(string keyword)
         {
-            string keywordOut = null;
-
             if (UppercaseKeywords)
-                keywordOut = keyword.ToUpper();
+                return keyword.ToUpper();
             else
-                keywordOut = keyword.ToLower();
-
-            if (HTMLColoring)
-                return @"<span class=""SQLKeyword"">" + keywordOut + "</span>"; //no need for HTMLencoding... keywords are never bad
-            else
-                return keywordOut;
+                return keyword.ToLower();
         }
 
         private string FormatOperator(string operatorValue)
         {
-            string operatorOut = null;
-
             if (UppercaseKeywords)
-                operatorOut = operatorValue.ToUpper();
+                return operatorValue.ToUpper();
             else
-                operatorOut = operatorValue.ToLower();
-
-            if (HTMLColoring)
-                return @"<span class=""SQLOperator"">" + System.Web.HttpUtility.HtmlEncode(operatorOut) + "</span>";
-            else
-                return operatorOut;
+                return operatorValue.ToLower();
         }
 
         private void WhiteSpace_SeparateStatements(XmlElement contentElement, TSqlFormattingState state)
@@ -543,10 +498,10 @@ namespace PoorMansTSqlFormatterLib.Formatters
                             )
                         )
                     ))
-                    state.OutBuilder.Append(Environment.NewLine);
+                    state.AddOutputLineBreak();
 
-                state.OutBuilder.Append(Environment.NewLine);
-                Indent(state.OutBuilder, state.IndentLevel);
+                state.AddOutputLineBreak();
+                state.Indent(state.IndentLevel);
                 state.BreakExpected = false;
                 state.SourceBreakPending = false;
                 state.StatementBreakExpected = false;
@@ -590,7 +545,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             }
             else if (state.WordSeparatorExpected)
             {
-                state.OutBuilder.Append(" ");
+                state.AddOutputSpace();
                 state.IsStartOfClause = false;
             }
             state.SourceBreakPending = false;
@@ -602,7 +557,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (state.BreakExpected && state.SourceBreakPending)
                 WhiteSpace_BreakAsExpected(state);
             else if (state.WordSeparatorExpected)
-                state.OutBuilder.Append(" ");
+                state.AddOutputSpace();
             state.SourceBreakPending = false;
             state.WordSeparatorExpected = false;
         }
@@ -610,38 +565,46 @@ namespace PoorMansTSqlFormatterLib.Formatters
         private void WhiteSpace_BreakAsExpected(TSqlFormattingState state)
         {
             if (state.BreakExpected)
-                WhiteSpace_BreakToNextLine(state);
+                state.WhiteSpace_BreakToNextLine();
             if (state.AdditionalBreakExpected)
             {
-                WhiteSpace_BreakToNextLine(state);
+                state.WhiteSpace_BreakToNextLine();
                 state.AdditionalBreakExpected = false;
             }
         }
 
-        private void WhiteSpace_BreakToNextLine(TSqlFormattingState state)
+        class TSqlFormattingState : BaseFormatterState
         {
-            state.OutBuilder.Append(Environment.NewLine);
-            Indent(state.OutBuilder, state.IndentLevel);
-            state.BreakExpected = false;
-            state.SourceBreakPending = false;
-            state.WordSeparatorExpected = false;
-        }
-
-        private void Indent(StringBuilder outString, int indentLevel)
-        {
-            for (int i = 0; i < indentLevel; i++)
-            {
-                outString.Append(IndentString);
-            }
-        }
-
-        class TSqlFormattingState
-        {
-            public TSqlFormattingState() : this(0) { }
-            public TSqlFormattingState(int initialIndentLevel) 
+            //normal constructor
+            public TSqlFormattingState(bool htmlOutput, string indentString, int spacesPerTab, int maxLineWidth, int initialIndentLevel) : base(htmlOutput)
             {
                 IndentLevel = initialIndentLevel;
+                HtmlOutput = htmlOutput;
+                IndentString = indentString;
+                MaxLineWidth = maxLineWidth;
+
+                int tabCount = indentString.Split('\t').Length - 1;
+                int tabExtraCharacters = tabCount * (spacesPerTab - 1);
+                IndentLength = indentString.Length + tabExtraCharacters;
             }
+
+            //special "we want isolated state, but inheriting existing conditions" constructor
+            public TSqlFormattingState(TSqlFormattingState sourceState) : base(sourceState.HtmlOutput)
+            {
+                IndentLevel = sourceState.IndentLevel;
+                HtmlOutput = sourceState.HtmlOutput;
+                IndentString = sourceState.IndentString;
+                IndentLength = sourceState.IndentLength;
+                MaxLineWidth = sourceState.MaxLineWidth;
+                //TODO: find a way out of the cross-dependent wrapping maze...
+                //CurrentLineLength = sourceState.CurrentLineLength;
+                CurrentLineLength = IndentLevel * IndentLength;
+                CurrentLineHasContent = sourceState.CurrentLineHasContent;
+            }
+
+            private string IndentString { get; set; }
+            private int IndentLength { get; set; }
+            private int MaxLineWidth { get; set; }
 
             public bool StatementBreakExpected { get; set; }
             public bool BreakExpected { get; set; }
@@ -651,9 +614,75 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
             public bool IsStartOfClause { get; set; }
             public int IndentLevel { get; private set; }
+            public int CurrentLineLength { get; private set; }
+            public bool CurrentLineHasContent { get; private set; }
 
-            StringBuilder _outBuilder = new StringBuilder();
-            public StringBuilder OutBuilder { get { return _outBuilder; } }
+            public void AddOutputContent(string content)
+            {
+                AddOutputContent(content, null);
+            }
+
+            public void AddOutputContent(string content, string htmlClassName)
+            {
+                if (CurrentLineHasContent && (content.Length + CurrentLineLength > MaxLineWidth))
+                    WhiteSpace_BreakToNextLine();
+
+                base.AddOutputContent(content, htmlClassName);
+
+                CurrentLineHasContent = true;
+                CurrentLineLength += content.Length;
+            }
+
+            public override void AddOutputLineBreak()
+            {
+#if DEBUG
+                //hints for debugging line-width issues:
+                //_outBuilder.Append(" (" + CurrentLineLength.ToString(System.Globalization.CultureInfo.InvariantCulture) + ")");
+#endif
+
+                //if linebreaks are added directly in the content (eg in comments or strings), they 
+                // won't be accounted for here - that's ok.
+                base.AddOutputLineBreak();
+                CurrentLineLength = 0;
+                CurrentLineHasContent = false;
+            }
+
+            internal void AddOutputSpace()
+            {
+                _outBuilder.Append(" ");
+            }
+
+            public void Indent(int indentLevel)
+            {
+                for (int i = 0; i < indentLevel; i++)
+                {
+                    _outBuilder.Append(IndentString);
+                    CurrentLineLength += IndentLength;
+                }
+            }
+
+            internal void WhiteSpace_BreakToNextLine()
+            {
+                AddOutputLineBreak();
+                Indent(IndentLevel);
+                BreakExpected = false;
+                SourceBreakPending = false;
+                WordSeparatorExpected = false;
+            }
+
+            //for linebreak detection, use actual string content rather than counting "AddOutputLineBreak()" calls,
+            // because we also want to detect the content of strings and comments.
+            private static Regex _lineBreakMatcher = new Regex(@"(\r|\n)+", RegexOptions.Compiled);
+            public bool OutputContainsLineBreak { get { return _lineBreakMatcher.IsMatch(_outBuilder.ToString()); } }
+
+            public void Assimilate(TSqlFormattingState partialState)
+            {
+                //TODO: find a way out of the cross-dependent wrapping maze...
+                CurrentLineLength = CurrentLineLength + partialState.CurrentLineLength;
+                CurrentLineHasContent = CurrentLineHasContent || partialState.CurrentLineHasContent;
+                _outBuilder.Append(partialState.DumpOutput());
+            }
+
 
             private Dictionary<int, string> _mostRecentKeywordsAtEachLevel = new Dictionary<int, string>();
 

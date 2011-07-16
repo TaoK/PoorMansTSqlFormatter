@@ -46,6 +46,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
 	font-weight: bold;
 	font-family: monospace;;
 	white-space: pre;
+    -o-tab-size: 4;
+    -moz-tab-size: 4;
+    -webkit-tab-size: 4;
 }}
 .SQLComment {{
 	color: #00AA00;

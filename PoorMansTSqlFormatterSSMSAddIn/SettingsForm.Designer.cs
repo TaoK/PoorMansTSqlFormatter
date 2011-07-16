@@ -65,6 +65,12 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.llbl_HotkeyHint = new System.Windows.Forms.LinkLabel();
             this.btn_About = new System.Windows.Forms.Button();
             this.btn_Reset = new System.Windows.Forms.Button();
+            this.txt_SpacesPerTab = new System.Windows.Forms.TextBox();
+            this.txt_MaxLineWidth = new System.Windows.Forms.TextBox();
+            this.lbl_SpacesPerTab = new System.Windows.Forms.Label();
+            this.lbl_SpacesPerTab_Extra = new System.Windows.Forms.Label();
+            this.lbl_MaxLineWidth = new System.Windows.Forms.Label();
+            this.chk_SpaceAfterExpandedComma = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,7 +78,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             // 
             this.btn_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_Save.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btn_Save.Location = new System.Drawing.Point(199, 156);
+            this.btn_Save.Location = new System.Drawing.Point(215, 240);
             this.btn_Save.Name = "btn_Save";
             this.btn_Save.Size = new System.Drawing.Size(75, 23);
             this.btn_Save.TabIndex = 0;
@@ -84,7 +90,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             // 
             this.btn_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btn_Cancel.Location = new System.Drawing.Point(280, 156);
+            this.btn_Cancel.Location = new System.Drawing.Point(296, 240);
             this.btn_Cancel.Name = "btn_Cancel";
             this.btn_Cancel.Size = new System.Drawing.Size(75, 23);
             this.btn_Cancel.TabIndex = 1;
@@ -102,9 +108,10 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.flowLayoutPanel1.Controls.Add(this.chk_ExpandCaseStatements);
             this.flowLayoutPanel1.Controls.Add(this.chk_ExpandBetweenConditions);
             this.flowLayoutPanel1.Controls.Add(this.chk_UppercaseKeywords);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 64);
+            this.flowLayoutPanel1.Controls.Add(this.chk_SpaceAfterExpandedComma);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 123);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(343, 86);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(359, 111);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
             // chk_ExpandCommaLists
@@ -223,7 +230,8 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             // 
             // btn_About
             // 
-            this.btn_About.Location = new System.Drawing.Point(12, 156);
+            this.btn_About.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btn_About.Location = new System.Drawing.Point(12, 240);
             this.btn_About.Name = "btn_About";
             this.btn_About.Size = new System.Drawing.Size(75, 23);
             this.btn_About.TabIndex = 12;
@@ -233,7 +241,8 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             // 
             // btn_Reset
             // 
-            this.btn_Reset.Location = new System.Drawing.Point(93, 156);
+            this.btn_Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btn_Reset.Location = new System.Drawing.Point(93, 240);
             this.btn_Reset.Name = "btn_Reset";
             this.btn_Reset.Size = new System.Drawing.Size(75, 23);
             this.btn_Reset.TabIndex = 13;
@@ -241,13 +250,69 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.btn_Reset.UseVisualStyleBackColor = true;
             this.btn_Reset.Click += new System.EventHandler(this.btn_Reset_Click);
             // 
+            // txt_SpacesPerTab
+            // 
+            this.txt_SpacesPerTab.Location = new System.Drawing.Point(99, 90);
+            this.txt_SpacesPerTab.Name = "txt_SpacesPerTab";
+            this.txt_SpacesPerTab.Size = new System.Drawing.Size(128, 20);
+            this.txt_SpacesPerTab.TabIndex = 14;
+            // 
+            // txt_MaxLineWidth
+            // 
+            this.txt_MaxLineWidth.Location = new System.Drawing.Point(99, 64);
+            this.txt_MaxLineWidth.Name = "txt_MaxLineWidth";
+            this.txt_MaxLineWidth.Size = new System.Drawing.Size(128, 20);
+            this.txt_MaxLineWidth.TabIndex = 15;
+            // 
+            // lbl_SpacesPerTab
+            // 
+            this.lbl_SpacesPerTab.AutoSize = true;
+            this.lbl_SpacesPerTab.Location = new System.Drawing.Point(12, 93);
+            this.lbl_SpacesPerTab.Name = "lbl_SpacesPerTab";
+            this.lbl_SpacesPerTab.Size = new System.Drawing.Size(87, 13);
+            this.lbl_SpacesPerTab.TabIndex = 16;
+            this.lbl_SpacesPerTab.Text = "Spaces Per Tab:";
+            // 
+            // lbl_SpacesPerTab_Extra
+            // 
+            this.lbl_SpacesPerTab_Extra.AutoSize = true;
+            this.lbl_SpacesPerTab_Extra.Location = new System.Drawing.Point(233, 93);
+            this.lbl_SpacesPerTab_Extra.Name = "lbl_SpacesPerTab_Extra";
+            this.lbl_SpacesPerTab_Extra.Size = new System.Drawing.Size(115, 13);
+            this.lbl_SpacesPerTab_Extra.TabIndex = 17;
+            this.lbl_SpacesPerTab_Extra.Text = "(for Max Width feature)";
+            // 
+            // lbl_MaxLineWidth
+            // 
+            this.lbl_MaxLineWidth.AutoSize = true;
+            this.lbl_MaxLineWidth.Location = new System.Drawing.Point(12, 67);
+            this.lbl_MaxLineWidth.Name = "lbl_MaxLineWidth";
+            this.lbl_MaxLineWidth.Size = new System.Drawing.Size(84, 13);
+            this.lbl_MaxLineWidth.TabIndex = 18;
+            this.lbl_MaxLineWidth.Text = "Max Line Width:";
+            // 
+            // chk_SpaceAfterExpandedComma
+            // 
+            this.chk_SpaceAfterExpandedComma.AutoSize = true;
+            this.chk_SpaceAfterExpandedComma.Location = new System.Drawing.Point(3, 72);
+            this.chk_SpaceAfterExpandedComma.Name = "chk_SpaceAfterExpandedComma";
+            this.chk_SpaceAfterExpandedComma.Size = new System.Drawing.Size(170, 17);
+            this.chk_SpaceAfterExpandedComma.TabIndex = 9;
+            this.chk_SpaceAfterExpandedComma.Text = "Space after Expanded Comma";
+            this.chk_SpaceAfterExpandedComma.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             this.AcceptButton = this.btn_Save;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btn_Cancel;
-            this.ClientSize = new System.Drawing.Size(367, 191);
+            this.ClientSize = new System.Drawing.Size(383, 275);
+            this.Controls.Add(this.lbl_MaxLineWidth);
+            this.Controls.Add(this.lbl_SpacesPerTab_Extra);
+            this.Controls.Add(this.lbl_SpacesPerTab);
+            this.Controls.Add(this.txt_MaxLineWidth);
+            this.Controls.Add(this.txt_SpacesPerTab);
             this.Controls.Add(this.btn_Reset);
             this.Controls.Add(this.btn_About);
             this.Controls.Add(this.llbl_HotkeyHint);
@@ -289,5 +354,11 @@ namespace PoorMansTSqlFormatterSSMSAddIn
         private System.Windows.Forms.LinkLabel llbl_HotkeyHint;
         private System.Windows.Forms.Button btn_About;
         private System.Windows.Forms.Button btn_Reset;
+        private System.Windows.Forms.TextBox txt_SpacesPerTab;
+        private System.Windows.Forms.TextBox txt_MaxLineWidth;
+        private System.Windows.Forms.Label lbl_SpacesPerTab;
+        private System.Windows.Forms.Label lbl_SpacesPerTab_Extra;
+        private System.Windows.Forms.Label lbl_MaxLineWidth;
+        private System.Windows.Forms.CheckBox chk_SpaceAfterExpandedComma;
     }
 }

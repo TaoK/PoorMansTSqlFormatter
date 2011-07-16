@@ -29,5 +29,14 @@
     <Setting Name="Hotkey" Type="System.String" Scope="User">
       <Value Profile="(Default)">Text Editor::Ctrl+K, Ctrl+F</Value>
     </Setting>
+    <Setting Name="SpaceAfterExpandedComma" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SpacesPerTab" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4</Value>
+    </Setting>
+    <Setting Name="MaxLineWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">999</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

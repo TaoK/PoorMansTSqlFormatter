@@ -130,5 +130,41 @@ namespace PoorMansTSqlFormatterSSMSAddIn.Properties {
                 this["Hotkey"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SpaceAfterExpandedComma {
+            get {
+                return ((bool)(this["SpaceAfterExpandedComma"]));
+            }
+            set {
+                this["SpaceAfterExpandedComma"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int SpacesPerTab {
+            get {
+                return ((int)(this["SpacesPerTab"]));
+            }
+            set {
+                this["SpacesPerTab"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("999")]
+        public int MaxLineWidth {
+            get {
+                return ((int)(this["MaxLineWidth"]));
+            }
+            set {
+                this["MaxLineWidth"] = value;
+            }
+        }
     }
 }

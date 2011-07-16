@@ -41,10 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseFormatterState.cs" />
     <Compile Include="Formatters\HtmlPageWrapper.cs" />
     <Compile Include="Formatters\TSqlIdentityFormatter.cs" />
     <Compile Include="Formatters\TSqlStandardFormatter.cs" />
     <Compile Include="Interfaces\IParseTree.cs" />
+    <Compile Include="Interfaces\SqlHtmlConstants.cs" />
     <Compile Include="Interfaces\SqlXmlConstants.cs" />
     <Compile Include="Interfaces\ISqlTokenFormatter.cs" />
     <Compile Include="Interfaces\ISqlTokenizer.cs" />

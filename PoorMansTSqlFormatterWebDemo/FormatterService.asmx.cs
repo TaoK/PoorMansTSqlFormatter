@@ -36,13 +36,13 @@ namespace PoorMansTSqlFormatterWebDemo
         [WebMethod]
         public string FormatTSql(string inputString)
         {
-            return FormatTSqlWithOptions(inputString, "\t", true, false, false, true, true, true, true, true);
+            return FormatTSqlWithOptions(inputString, "\t", 4, 999, true, false, false, true, true, true, true, true);
         }
 
         [WebMethod]
-        public string FormatTSqlWithOptions(string inputString, string indent, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool uppercaseKeywords, bool coloring)
+        public string FormatTSqlWithOptions(string inputString, string indent, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool uppercaseKeywords, bool coloring)
         {
-            PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(indent, expandCommaLists, trailingCommas, spaceAfterExpandedComma, expandBooleanExpressions, expandCaseStatements, expandBetweenConditions, uppercaseKeywords, coloring);
+            PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(indent, spacesPerTab, maxLineWidth, expandCommaLists, trailingCommas, spaceAfterExpandedComma, expandBooleanExpressions, expandCaseStatements, expandBetweenConditions, uppercaseKeywords, coloring);
             return FormatTSqlWithFormatter(inputString, formatter);
         }
 

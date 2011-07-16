@@ -32,12 +32,16 @@ namespace PoorMansTSqlFormatterCmdLine
         static int Main(string[] args)
         {
             string indentString = "\t";
+            int spacesPerTab = 4;
+            int maxLineWidth = 999;
             bool trailingCommas = false;
+            bool spaceAfterExpandedComma = false;
             bool expandBetweenConditions = true;
             bool expandBooleanExpressions = true;
             bool expandCaseStatements = true;
             bool expandCommaLists = true;
             bool uppercaseKeywords = true;
+
 
             bool showUsage = false;
             List<string> extensions = new List<string>();
@@ -47,7 +51,10 @@ namespace PoorMansTSqlFormatterCmdLine
 
             OptionSet p = new OptionSet()
               .Add("is|indentString=", delegate(string v) { indentString = v; })
+              .Add("st|spacesPerTab=", delegate(string v) { spacesPerTab = int.Parse(v); })
+              .Add("mw|maxLineWidth=", delegate(string v) { maxLineWidth = int.Parse(v); })
               .Add("tc|trailingCommas", delegate(string v) { trailingCommas = v != null; })
+              .Add("sac|spaceAfterExpandedComma", delegate(string v) { spaceAfterExpandedComma = v != null; })
               .Add("ebc|expandBetweenConditions", delegate(string v) { expandBetweenConditions = v != null; })
               .Add("ebe|expandBooleanExpressions", delegate(string v) { expandBooleanExpressions = v != null; })
               .Add("ecs|expandCaseStatements", delegate(string v) { expandCaseStatements = v != null; })
@@ -83,7 +90,10 @@ Usage notes:
 SqlFormatter <filename or pattern> <options>
 
 is  indentString (default: \t)
+st  spacesPerTab (default: 4)
+mw  maxLineWidth (default: 999)
 tc  trailingCommas (default: false)
+sac spaceAfterExpandedComma (default: false)
 ebc expandBetweenConditions (default: true)
 ebe expandBooleanExpressions (default: true)
 ecs expandCaseStatements (default: true)
@@ -109,7 +119,18 @@ SqlFormatter test*.sql /o:resultfile.sql
                 return 1;
             }
 
-            var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(indentString, expandCommaLists, trailingCommas, false, expandBooleanExpressions, expandCaseStatements, true, uppercaseKeywords, false);
+            var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(
+                indentString, 
+                spacesPerTab, 
+                maxLineWidth, 
+                expandCommaLists, 
+                trailingCommas, 
+                spaceAfterExpandedComma, 
+                expandBooleanExpressions, 
+                expandCaseStatements,
+                expandBetweenConditions, 
+                uppercaseKeywords, 
+                false);
             var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);
 
             string searchPattern = Path.GetFileName(remainingArgs[0]);
@@ -311,7 +332,7 @@ SqlFormatter test*.sql /o:resultfile.sql
                                 if (!Directory.Exists(targetFolder))
                                     Directory.CreateDirectory(targetFolder);
                             }
-                            catch
+                            catch (Exception ex)
                             {
                                 Console.WriteLine("Failed to create target folder: " + targetFolder);
                                 Console.WriteLine(" Error detail: " + ex.Message);

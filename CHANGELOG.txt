@@ -14,6 +14,8 @@ Version 0.9.12:
  - Corrected INSTEAD OF trigger type parsing
  - Added ability in CmdLine utility to use an output path, instead of an output file (same parameter).
  - Bugfix: tokenization of decimal values starting with a single "0", eg "0.0", was yielding two separate numbers.
+ - Implemented basic(!) width-based wrapping
+ - Implemented coloring-only option in the identityformatter
 
 
 Version 0.9.11: Thanks to Loren Halvorson for the feature suggestions!
