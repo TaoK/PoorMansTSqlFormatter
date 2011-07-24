@@ -28,13 +28,6 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
 {
     public class TSqlStandardTokenizer : ISqlTokenizer
     {
-        /*
-         * TODO:
-         *  - Future Extensions
-         *    - Scope Resolution Operator (and/or colons in general?)
-         *    - Compound operators (SQL 2008), those that end in equals.
-         */
-
         public Interfaces.ITokenList TokenizeSQL(string inputSQL)
         {
             TokenList tokenContainer = new TokenList();
@@ -395,8 +388,22 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                             }
                             break;
 
-                        case SqlTokenizationType.SingleGT:
-                            currentTokenValue.Append('>');
+                        case SqlTokenizationType.SingleAsterisk:
+                            currentTokenValue.Append('*');
+                            if (currentCharacter == '=')
+                            {
+                                currentTokenValue.Append(currentCharacter);
+                                currentTokenizationType = SqlTokenizationType.OtherOperator;
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                            }
+                            else
+                            {
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
+                            }
+                            break;
+
+                        case SqlTokenizationType.SingleOtherCompoundableOperator:
                             currentTokenizationType = SqlTokenizationType.OtherOperator;
                             if (currentCharacter == '=')
                             {
@@ -475,12 +482,29 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                 || currentCharacter == ')'
                 || currentCharacter == '!'
                 || currentCharacter == ';'
+                || currentCharacter == ':'
+                );
+        }
+
+        private static bool IsCompoundableOperatorCharacter(char currentCharacter)
+        {
+            //operator characters that can be compounded by a subsequent space
+            return (currentCharacter == '/'
+                || currentCharacter == '-'
+                || currentCharacter == '+'
+                || currentCharacter == '*'
+                || currentCharacter == '%'
+                || currentCharacter == '&'
+                || currentCharacter == '^'
+                || currentCharacter == '|'
+                || currentCharacter == '<'
+                || currentCharacter == '>'
                 );
         }
 
         private static bool IsOperatorCharacter(char currentCharacter)
         {
-            //characters that pop you out of a regular "word" context (maybe into a new word)
+            //operator characters
             return (currentCharacter == '/'
                 || currentCharacter == '-'
                 || currentCharacter == '+'
@@ -578,15 +602,15 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             }
             else if (currentCharacter == '(')
             {
-                tokenContainer.Add(new Token(SqlTokenType.OpenParens, ""));
+                tokenContainer.Add(new Token(SqlTokenType.OpenParens, currentCharacter.ToString()));
             }
             else if (currentCharacter == ')')
             {
-                tokenContainer.Add(new Token(SqlTokenType.CloseParens, ""));
+                tokenContainer.Add(new Token(SqlTokenType.CloseParens, currentCharacter.ToString()));
             }
             else if (currentCharacter == ',')
             {
-                tokenContainer.Add(new Token(SqlTokenType.Comma, ""));
+                tokenContainer.Add(new Token(SqlTokenType.Comma, currentCharacter.ToString()));
             }
             else if (currentCharacter == '.')
             {
@@ -608,15 +632,15 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             }
             else if (currentCharacter == ';')
             {
-                tokenContainer.Add(new Token(SqlTokenType.Semicolon, ""));
+                tokenContainer.Add(new Token(SqlTokenType.Semicolon, currentCharacter.ToString()));
+            }
+            else if (currentCharacter == ':')
+            {
+                tokenContainer.Add(new Token(SqlTokenType.Colon, currentCharacter.ToString()));
             }
             else if (currentCharacter == '*')
             {
-                tokenContainer.Add(new Token(SqlTokenType.Asterisk, ""));
-            }
-            else if (currentCharacter == '>')
-            {
-                currentTokenizationType = SqlTokenizationType.SingleGT;
+                tokenContainer.Add(new Token(SqlTokenType.Asterisk, currentCharacter.ToString()));
             }
             else if (currentCharacter == '<')
             {
@@ -625,6 +649,11 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             else if (currentCharacter == '!')
             {
                 currentTokenizationType = SqlTokenizationType.SingleExclamation;
+            }
+            else if (IsCompoundableOperatorCharacter(currentCharacter))
+            {
+                currentTokenizationType = SqlTokenizationType.SingleOtherCompoundableOperator;
+                currentNodeValue.Append(currentCharacter);
             }
             else if (IsOperatorCharacter(currentCharacter))
             {
@@ -693,6 +722,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                     break;
 
                 case SqlTokenizationType.OtherOperator:
+                case SqlTokenizationType.SingleOtherCompoundableOperator:
                     tokenContainer.Add(new Token(SqlTokenType.OtherOperator, currentValue.ToString()));
                     break;
 
@@ -702,6 +732,10 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
 
                 case SqlTokenizationType.SinglePeriod:
                     tokenContainer.Add(new Token(SqlTokenType.Period, "."));
+                    break;
+
+                case SqlTokenizationType.SingleAsterisk:
+                    tokenContainer.Add(new Token(SqlTokenType.Asterisk, currentValue.ToString()));
                     break;
 
                 case SqlTokenizationType.Number:
@@ -745,14 +779,15 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             FloatValue,
 
             //temporary types
+            SingleAsterisk,
             SingleHyphen,
             SingleSlash,
             SingleN,
-            SingleGT,
             SingleLT,
             SingleExclamation,
             SinglePeriod,
-            SingleZero
+            SingleZero,
+            SingleOtherCompoundableOperator
         }
 
     }

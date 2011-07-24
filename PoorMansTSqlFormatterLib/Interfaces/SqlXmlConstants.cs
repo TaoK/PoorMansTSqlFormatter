@@ -30,7 +30,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_SQL_ROOT = "SqlRoot";
         public const string ENAME_SQL_STATEMENT = "SqlStatement";
         public const string ENAME_SQL_CLAUSE = "Clause";
-        public const string ENAME_UNION_CLAUSE = "UnionClause";
+        public const string ENAME_SET_OPERATOR_CLAUSE = "SetOperatorClause";
         public const string ENAME_INSERT_CLAUSE = "InsertClause";
         public const string ENAME_BEGIN_END_BLOCK = "BeginEndBlock";
         public const string ENAME_TRY_BLOCK = "TryBlock";
@@ -61,6 +61,11 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_DDL_SUBCLAUSE = "DDLSubClause";
         public const string ENAME_DDL_RETURNS = "DDLReturns";
         public const string ENAME_DDLDETAIL_PARENS = "DDLDetailParens";
+        public const string ENAME_DDL_WITH_CLAUSE = "DDLWith";
+        public const string ENAME_PERMISSIONS_BLOCK = "PermissionsBlock";
+        public const string ENAME_PERMISSIONS_DETAIL = "PermissionsDetail";
+        public const string ENAME_PERMISSIONS_TARGET = "PermissionsTarget";
+        public const string ENAME_PERMISSIONS_RECIPIENT = "PermissionsRecipient";
         public const string ENAME_TRIGGER_CONDITION = "TriggerCondition";
         public const string ENAME_SELECTIONTARGET_PARENS = "SelectionTargetParens";
         public const string ENAME_EXPRESSION_PARENS = "ExpressionParens";
@@ -88,6 +93,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_COMMA = "Comma";
         public const string ENAME_PERIOD = "Period";
         public const string ENAME_SEMICOLON = "Semicolon";
+        public const string ENAME_SCOPERESOLUTIONOPERATOR = "ScopeResolutionOperator";
         public const string ENAME_ASTERISK = "Asterisk";
         public const string ENAME_OTHEROPERATOR = "OtherOperator";
 

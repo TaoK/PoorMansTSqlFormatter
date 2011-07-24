@@ -43,28 +43,28 @@
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\InputSql\10_UnionTest.txt" />
-    <Content Include="Data\InputSql\11_AdHocAccessLikeQueryPaste.txt" />
+    <Content Include="Data\InputSql\10_Unions.txt" />
+    <Content Include="Data\InputSql\11_MSAccess_Pasted.txt" />
     <Content Include="Data\InputSql\12_NestedIfElse.txt" />
-    <Content Include="Data\InputSql\13_DataTypeAS.txt" />
     <Content Include="Data\InputSql\14_CommentPositioning.txt" />
     <Content Include="Data\InputSql\15_NestedComments.txt" />
-    <Content Include="Data\InputSql\16_CurrencyValues.txt" />
+    <Content Include="Data\InputSql\16_CurrencyParsingStrangeness.txt" />
     <Content Include="Data\InputSql\17_Cursors.txt" />
     <Content Include="Data\InputSql\18_BulkInsert.txt" />
-    <Content Include="Data\InputSql\01_SimpleTypes.txt" />
+    <Content Include="Data\InputSql\01_SimpleTypes_StrangeRules.txt" />
     <Content Include="Data\InputSql\20_Joins.txt" />
     <Content Include="Data\InputSql\02_Random_INVALID.txt" />
-    <Content Include="Data\InputSql\03_MSSample.txt" />
-    <Content Include="Data\InputSql\04_MiscProceduralSample.txt" />
+    <Content Include="Data\InputSql\03_SimpleSelect_MS.txt" />
+    <Content Include="Data\InputSql\04_MiscProceduralSample_Unstructured.txt" />
     <Content Include="Data\InputSql\05_ComplexDDL.txt" />
-    <Content Include="Data\InputSql\06_MiscMSCTESample.txt" />
+    <Content Include="Data\InputSql\06_CTE_Sample_MS.txt" />
     <Content Include="Data\InputSql\07_ServerTakeoverSample_Brent_Ozar.txt" />
     <Content Include="Data\InputSql\08_ComplexBackupDDL_Ola_Hallengren.txt" />
-    <Content Include="Data\InputSql\09_Xml_Selection.txt" />
-    <Content Include="Data\InputSql\19_Trigger.txt" />
-    <Content Include="Data\InputSql\21_ComplexExpressions.txt" />
+    <Content Include="Data\InputSql\09_Xml_Selection_Function.txt" />
+    <Content Include="Data\InputSql\19_DMLTrigger.txt" />
+    <Content Include="Data\InputSql\13_NestedBooleanExpressions.txt" />
     <Content Include="Data\InputSql\22_ReparsingInconsistency.txt" />
+    <Content Include="Data\InputSql\21_DDL_Permissions.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">

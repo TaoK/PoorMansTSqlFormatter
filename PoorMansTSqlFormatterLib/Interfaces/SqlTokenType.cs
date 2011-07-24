@@ -37,6 +37,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         Comma,
         Period,
         Semicolon,
+        Colon,
         Asterisk,
         MonetaryValue,
         Number,

@@ -1,6 +1,6 @@
 ﻿Create Table #ValueTable (Id nvarchar(5))
 declare @MonthIDs nvarchar(4000)
-declare @WorkingString nvarchar(4000)
+declare @WorkingString AS nvarchar(4000)
 select @MonthIDs = '3,5,6,8,11'
 select @WorkingString = @MonthIDs
 WHILE len(@WorkingString) > 0

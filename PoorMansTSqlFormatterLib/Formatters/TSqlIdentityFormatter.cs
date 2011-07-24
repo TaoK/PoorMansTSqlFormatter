@@ -105,13 +105,18 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_SAVE_TRANSACTION:
                 case SqlXmlConstants.ENAME_COMMIT_TRANSACTION:
                 case SqlXmlConstants.ENAME_BATCH_SEPARATOR:
-                case SqlXmlConstants.ENAME_UNION_CLAUSE:
+                case SqlXmlConstants.ENAME_SET_OPERATOR_CLAUSE:
                 case SqlXmlConstants.ENAME_CONTAINER_OPEN:
                 case SqlXmlConstants.ENAME_CONTAINER_MULTISTATEMENT:
                 case SqlXmlConstants.ENAME_CONTAINER_SINGLESTATEMENT:
                 case SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT:
                 case SqlXmlConstants.ENAME_CONTAINER_CLOSE:
                 case SqlXmlConstants.ENAME_SELECTIONTARGET:
+                case SqlXmlConstants.ENAME_PERMISSIONS_BLOCK:
+                case SqlXmlConstants.ENAME_PERMISSIONS_DETAIL:
+                case SqlXmlConstants.ENAME_PERMISSIONS_TARGET:
+                case SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT:
+                case SqlXmlConstants.ENAME_DDL_WITH_CLAUSE:
                     foreach (XmlNode childNode in contentElement.ChildNodes)
                     {
                         switch (childNode.NodeType)
@@ -120,9 +125,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                                 ProcessSqlNode(state, (XmlElement)childNode);
                                 break;
                             case XmlNodeType.Text:
-                                //ignore; all valid text is now in appropriate containers
                             case XmlNodeType.Comment:
-                                //ignore; actual displayable T-SQL comments are elements.
+                                //ignore; valid text is in appropriate containers, displayable T-SQL comments are elements.
                                 break;
                             default:
                                 throw new Exception("Unexpected xml node type encountered!");
@@ -150,21 +154,10 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlXmlConstants.ENAME_COMMA:
-                    state.AddOutputContent(",", Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
-                    break;
-
                 case SqlXmlConstants.ENAME_PERIOD:
-                    state.AddOutputContent(".", Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
-                    break;
-
                 case SqlXmlConstants.ENAME_SEMICOLON:
-                    state.AddOutputContent(";", Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
-                    break;
-
                 case SqlXmlConstants.ENAME_ASTERISK:
-                    state.AddOutputContent("*", Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
-                    break;
-
+                case SqlXmlConstants.ENAME_SCOPERESOLUTIONOPERATOR:
                 case SqlXmlConstants.ENAME_AND_OPERATOR:
                 case SqlXmlConstants.ENAME_OR_OPERATOR:
                 case SqlXmlConstants.ENAME_OTHEROPERATOR:
@@ -235,29 +228,14 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         outString.Append(entry.Value.Replace("]", "]]"));
                         outString.Append("]");
                         break;
+
                     case SqlTokenType.OpenParens:
-                        outString.Append("(");
-                        break;
                     case SqlTokenType.CloseParens:
-                        outString.Append(")");
-                        break;
-
                     case SqlTokenType.Comma:
-                        outString.Append(",");
-                        break;
-
                     case SqlTokenType.Period:
-                        outString.Append(".");
-                        break;
-
                     case SqlTokenType.Semicolon:
-                        outString.Append(";");
-                        break;
-
+                    case SqlTokenType.Colon:
                     case SqlTokenType.Asterisk:
-                        outString.Append("*");
-                        break;
-
                     case SqlTokenType.OtherNode:
                     case SqlTokenType.WhiteSpace:
                     case SqlTokenType.OtherOperator:

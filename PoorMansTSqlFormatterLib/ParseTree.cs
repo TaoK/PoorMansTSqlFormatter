@@ -140,16 +140,25 @@ namespace PoorMansTSqlFormatterLib
                                     )
             {
                 //we just ended the one select statement in a cursor declaration, and need to pop out to the same level as the cursor
-                CurrentContainer = (XmlElement)CurrentContainer.ParentNode.ParentNode.ParentNode.ParentNode.ParentNode;
+                MoveToAncestorContainer(5);
             }
             else if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
                     || CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
                     )
-                CurrentContainer = (XmlElement)CurrentContainer.ParentNode;
+                MoveToAncestorContainer(1);
             else if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
                     && CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS)
                 )
-                CurrentContainer = (XmlElement)CurrentContainer.ParentNode.ParentNode.ParentNode;
+                MoveToAncestorContainer(3);
+            else if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                    && CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT)
+                )
+                MoveToAncestorContainer(3);
+            else if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                    && CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_DDL_WITH_CLAUSE)
+                    && CurrentContainer.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_BLOCK)
+                )
+                MoveToAncestorContainer(3);
         }
 
         internal void EscapeAnySingleOrPartialStatementContainers()

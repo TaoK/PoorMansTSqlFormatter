@@ -60,7 +60,7 @@ namespace PoorMansTSqlFormatterTests
                 ITokenList tokenizedAgain = _tokenizer.TokenizeSQL(outputSQL);
                 XmlDocument parsedAgain = _parser.ParseSQL(tokenizedAgain);
                 string formattedAgain = _treeFormatter.FormatSQLTree(parsedAgain);
-                if (!inputSQL.Contains("KNOWN SQL REFORMATTING INCONSISTENCY"))
+                if (!inputSQL.Contains("KNOWN SQL REFORMATTING INCONSISTENCY") && !inputSQL.Contains("THIS TEST FILE IS NOT VALID SQL"))
                     Assert.AreEqual<string>(outputSQL, formattedAgain, "reformatted SQL should be the same as first pass of formatting");
             }
         }
@@ -77,7 +77,7 @@ namespace PoorMansTSqlFormatterTests
                 XmlDocument parsedAgain = _parser.ParseSQL(tokenizedAgain);
                 Utils.StripWhiteSpaceFromSqlTree(parsed);
                 Utils.StripWhiteSpaceFromSqlTree(parsedAgain);
-                if (!inputSQL.Contains("KNOWN SQL REFORMATTING INCONSISTENCY"))
+                if (!inputSQL.Contains("KNOWN SQL REFORMATTING INCONSISTENCY") && !inputSQL.Contains("THIS TEST FILE IS NOT VALID SQL"))
                     Assert.AreEqual<string>(parsed.OuterXml.ToUpper(), parsedAgain.OuterXml.ToUpper(), "parsed SQL trees should be the same");
             }
         }

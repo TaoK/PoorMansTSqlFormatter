@@ -127,7 +127,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     state.BreakExpected = true;
                     break;
 
-                case Interfaces.SqlXmlConstants.ENAME_UNION_CLAUSE:
+                case Interfaces.SqlXmlConstants.ENAME_SET_OPERATOR_CLAUSE:
                     state.DecrementIndent();
                     state.WhiteSpace_BreakToNextLine(); //this is the one already recommended by the start of the clause
                     state.WhiteSpace_BreakToNextLine(); //this is the one we additionally want to apply
@@ -157,6 +157,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.SqlXmlConstants.ENAME_SELECTIONTARGET:
                 case Interfaces.SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT:
                 case Interfaces.SqlXmlConstants.ENAME_CTE_WITH_CLAUSE:
+                case Interfaces.SqlXmlConstants.ENAME_PERMISSIONS_BLOCK:
+                case Interfaces.SqlXmlConstants.ENAME_PERMISSIONS_DETAIL:
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), state);
                     break;
 
@@ -173,6 +175,13 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     state.BreakExpected = true;
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), state);
                     state.StatementBreakExpected = false; //the responsibility for breaking will be with the OUTER statement; there should be no consequence propagating out from statements in this container;
+                    break;
+
+                case Interfaces.SqlXmlConstants.ENAME_PERMISSIONS_TARGET:
+                case Interfaces.SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT:
+                case Interfaces.SqlXmlConstants.ENAME_DDL_WITH_CLAUSE:
+                    state.BreakExpected = true;
+                    ProcessSqlNodeList(contentElement.SelectNodes("*"), state);
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_ELSE_CLAUSE:
@@ -390,24 +399,16 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     }
                     break;
 
-                case Interfaces.SqlXmlConstants.ENAME_ASTERISK:
-                    WhiteSpace_SeparateWords(state);
-                    state.AddOutputContent(FormatOperator("*"), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
-                    state.WordSeparatorExpected = true;
-                    break;
-
                 case Interfaces.SqlXmlConstants.ENAME_PERIOD:
+                case Interfaces.SqlXmlConstants.ENAME_SEMICOLON:
+                case Interfaces.SqlXmlConstants.ENAME_SCOPERESOLUTIONOPERATOR:
                     //always ignores requested word spacing, and doesn't request a following space either.
                     state.WordSeparatorExpected = false;
                     WhiteSpace_BreakAsExpected(state);
-                    state.AddOutputContent(FormatOperator("."), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
+                    state.AddOutputContent(FormatOperator(contentElement.InnerText), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                     break;
 
-                case Interfaces.SqlXmlConstants.ENAME_SEMICOLON:
-                    WhiteSpace_BreakAsExpected(state);
-                    state.AddOutputContent(FormatOperator(";"), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
-                    break;
-
+                case Interfaces.SqlXmlConstants.ENAME_ASTERISK:
                 case Interfaces.SqlXmlConstants.ENAME_OTHEROPERATOR:
                     WhiteSpace_SeparateWords(state);
                     state.AddOutputContent(FormatOperator(contentElement.InnerText), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);

@@ -1,3 +1,0 @@
-﻿
-DECLARE @TestValue AS Int
-GO

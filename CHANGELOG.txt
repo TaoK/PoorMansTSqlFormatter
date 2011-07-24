@@ -1,5 +1,15 @@
 Poor Man's T-SQL Formatter change log
 
+Version 0.9.13: 
+--------------
+ - Added handling of scope resolution operator ("::")
+ - Corrected handling of colon, as NOT being a valid in-word character
+ - Added handling of remaining SQL 2008 compound operators (eg "+=")
+ - Added handling of GRANT/REVOKE/DENY statements
+ - Added numerous keywords that were not handled (including XML datatype!)
+ - Added handling of EXCEPT and INTERSECT set operators
+ - Cleaned up the test files a bit, as they are now referenced publically
+
 Version 0.9.12: 
 --------------
  - Corrected expanded-comma-list default to not include spaces between commas and subsequent content, with new "SpaceAfterExpandedComma" option - thanks to Loren Halvorson again for the suggestion!

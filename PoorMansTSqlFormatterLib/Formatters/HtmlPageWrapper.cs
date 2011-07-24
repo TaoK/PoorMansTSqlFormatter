@@ -40,6 +40,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
         private const string HTML_OUTER_PAGE = @"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
 <html>
 <head>
+</head>
+<body>
 <style type=""text/css"">
 .SQLCode {{
 	font-size: 13px;
@@ -68,9 +70,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
 
 </style>
-</head>
-<body>
-<div class=""SQLCode"">{0}</div>
+<pre class=""SQLCode"">{0}</pre>
 </body>
 </html>
 ";

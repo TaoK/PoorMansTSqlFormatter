@@ -34,13 +34,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
          * TODO:
          *  - Manually review the output from all test cases for "strange" effects
          *  - handle Ranking Functions with multiple partition or order by columns/clauses
-         *  - parse ON sections, for those who prefer to start ON on the next line and indent from there
+         *  - parse ON sections of JOINs, for those who prefer to start ON on the next line and indent from there
          *  - detect table hints, to avoid them looking like function parens
          *  - Handle DDL triggers
          *  - Handle DDL WITH clauses
          *  - Detect ALTER keywords that are clauses of other statements, vs those that are statements
-         *  - Handle GRANT EXECUTE 
-         *  - (possibly) detect parens that contain Clauses, as a new type of parens container for different formatting.
          *  
          *  - Tests
          *    - Samples illustrating all the tokens and container combinations implemented
@@ -105,7 +103,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             )
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS, "");
                         else if (firstNonCommentParensSibling != null
-                            && firstNonCommentParensSibling.Name.Equals(SqlXmlConstants.ENAME_UNION_CLAUSE)
+                            && firstNonCommentParensSibling.Name.Equals(SqlXmlConstants.ENAME_SET_OPERATOR_CLAUSE)
                             )
                         {
                             sqlTree.ConsiderStartingNewClause();
@@ -166,7 +164,30 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         List<int> significantTokenPositions = GetSignificantTokenPositions(tokenList, tokenID, 7);
                         string significantTokensString = ExtractTokensString(tokenList, significantTokenPositions);
 
-                        if (significantTokensString.StartsWith("CREATE PROC")
+                        if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_DETAIL))
+                        {
+                            //if we're in a permissions detail clause, we can expect all sorts of statements 
+                            // starters and should ignore them all; the only possible keywords to escape are
+                            // "ON" and "TO".
+                            if (significantTokensString.StartsWith("ON "))
+                            {
+                                sqlTree.MoveToAncestorContainer(1, SqlXmlConstants.ENAME_PERMISSIONS_BLOCK);
+                                sqlTree.StartNewContainer(SqlXmlConstants.ENAME_PERMISSIONS_TARGET, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
+                            }
+                            else if (significantTokensString.StartsWith("TO ")
+                                || significantTokensString.StartsWith("FROM ")
+                                )
+                            {
+                                sqlTree.MoveToAncestorContainer(1, SqlXmlConstants.ENAME_PERMISSIONS_BLOCK);
+                                sqlTree.StartNewContainer(SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
+                            }
+                            else 
+                            {
+                                //default to "some classification of permission"
+                                sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
+                            }
+                        }
+                        else if (significantTokensString.StartsWith("CREATE PROC")
                             || significantTokensString.StartsWith("CREATE FUNC")
                             || significantTokensString.StartsWith("CREATE TRIGGER ")
                             || significantTokensString.StartsWith("CREATE VIEW ")
@@ -241,6 +262,27 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             sqlTree.ConsiderStartingNewStatement();
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_DDL_OTHER_BLOCK, "");
                             sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
+                        }
+                        else if (significantTokensString.StartsWith("GRANT ")
+                            || significantTokensString.StartsWith("DENY ")
+                            || significantTokensString.StartsWith("REVOKE ")
+                            )
+                        {
+                            if (significantTokensString.StartsWith("GRANT ")
+                                && sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_DDL_WITH_CLAUSE)
+                                && sqlTree.CurrentContainer.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_BLOCK)
+                                && sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer) == null
+                                )
+                            {
+                                //this MUST be a "WITH GRANT OPTION" option...
+                                sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
+                            }
+                            else
+                            {
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.StartNewContainer(SqlXmlConstants.ENAME_PERMISSIONS_BLOCK, token.Value, SqlXmlConstants.ENAME_PERMISSIONS_DETAIL);
+                            }
                         }
                         else if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
                             && significantTokensString.StartsWith("RETURNS ")
@@ -486,19 +528,22 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         {
                             sqlTree.ConsiderStartingNewClause();
                             string joinText = _JoinDetector.Match(significantTokensString).Value;
-                            int targetKeywordCount =joinText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
+                            int targetKeywordCount = joinText.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
                             ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, targetKeywordCount);
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_SELECTIONTARGET, "");
                         }
                         else if (significantTokensString.StartsWith("UNION ALL "))
                         {
                             sqlTree.ConsiderStartingNewClause();
-                            ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.SaveNewElement(SqlXmlConstants.ENAME_UNION_CLAUSE, ""), ref tokenID, significantTokenPositions, 2);
+                            ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.SaveNewElement(SqlXmlConstants.ENAME_SET_OPERATOR_CLAUSE, ""), ref tokenID, significantTokenPositions, 2);
                         }
-                        else if (significantTokensString.StartsWith("UNION "))
+                        else if (significantTokensString.StartsWith("UNION ")
+                            || significantTokensString.StartsWith("INTERSECT ")
+                            || significantTokensString.StartsWith("EXCEPT ")
+                            )
                         {
                             sqlTree.ConsiderStartingNewClause();
-                            XmlElement unionClause = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_UNION_CLAUSE, "");
+                            XmlElement unionClause = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_SET_OPERATOR_CLAUSE, "");
                             sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, unionClause);
                         }
                         else if (significantTokensString.StartsWith("WHILE "))
@@ -624,7 +669,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 }
 
                                 XmlElement firstEntryOfThisClause = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
-                                if (firstEntryOfThisClause != null && firstEntryOfThisClause.Name.Equals(SqlXmlConstants.ENAME_UNION_CLAUSE))
+                                if (firstEntryOfThisClause != null && firstEntryOfThisClause.Name.Equals(SqlXmlConstants.ENAME_SET_OPERATOR_CLAUSE))
                                     selectShouldntTryToStartNewStatement = true;
                             }
                             else if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS)
@@ -653,11 +698,47 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
                             sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                         }
+                        else if (significantTokensString.StartsWith("TO "))
+                        {
+                            if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_TARGET)
+                                )
+                            {
+                                sqlTree.MoveToAncestorContainer(2, SqlXmlConstants.ENAME_PERMISSIONS_BLOCK);
+                                sqlTree.StartNewContainer(SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
+                            }
+                            else
+                            {
+                                //I don't currently know whether there is any other place where "TO" can be used in T-SQL...
+                                // TODO: look into that.
+                                // -> for now, we'll just save as a random keyword without raising an error.
+                                sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
+                            }
+                        }
                         else if (significantTokensString.StartsWith("FROM "))
                         {
-                            sqlTree.ConsiderStartingNewClause();
+                            if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_TARGET)
+                                )
+                            {
+                                sqlTree.MoveToAncestorContainer(2, SqlXmlConstants.ENAME_PERMISSIONS_BLOCK);
+                                sqlTree.StartNewContainer(SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
+                            }
+                            else
+                            {
+                                sqlTree.ConsiderStartingNewClause();
+                                sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_SELECTIONTARGET, "");
+                            }
+                        }
+                        else if (significantTokensString.StartsWith("CASCADE ")
+                            && sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                            && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT)
+                            )
+                        {
+                            sqlTree.MoveToAncestorContainer(2, SqlXmlConstants.ENAME_PERMISSIONS_BLOCK);
+                            sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT, "", sqlTree.SaveNewElement(SqlXmlConstants.ENAME_DDL_WITH_CLAUSE, ""));
                             sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
-                            sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_SELECTIONTARGET, "");
                         }
                         else if (significantTokensString.StartsWith("SET "))
                         {
@@ -712,17 +793,29 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_OPEN, ""));
                                 sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT, "");
                             }
+                            else if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT)
+                                )
+                            {
+                                sqlTree.MoveToAncestorContainer(2, SqlXmlConstants.ENAME_PERMISSIONS_BLOCK);
+                                sqlTree.StartNewContainer(SqlXmlConstants.ENAME_DDL_WITH_CLAUSE, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
+                            }
                             else
                             {
+
                                 sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                             }
                         }
-                        else if (token.Value.EndsWith(":"))
+                        else if (tokenList.Count > tokenID + 1
+                            && tokenList[tokenID + 1].Type == SqlTokenType.Colon
+                            && !(tokenList.Count > tokenID + 2
+                                && tokenList[tokenID + 2].Type == SqlTokenType.Colon
+                                )
+                            )
                         {
-                            //this is not very tested yet. Labels SEEM to be defined only by the trailing colon,
-                            // but that would also seem to be very different from pretty much everything else in T-SQL!
                             sqlTree.ConsiderStartingNewStatement();
-                            sqlTree.SaveNewElement(SqlXmlConstants.ENAME_LABEL, token.Value);
+                            sqlTree.SaveNewElement(SqlXmlConstants.ENAME_LABEL, token.Value + tokenList[tokenID + 1].Value);
+                            tokenID++;
                         }
                         else
                         {
@@ -744,7 +837,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             KeywordType matchedKeywordType;
                             if (KeywordList.TryGetValue(token.Value.ToUpper(), out matchedKeywordType))
                             {
-                                switch(matchedKeywordType)
+                                switch (matchedKeywordType)
                                 {
                                     case KeywordType.OperatorKeyword:
                                         newNodeName = SqlXmlConstants.ENAME_OTHEROPERATOR;
@@ -771,6 +864,20 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     case SqlTokenType.Semicolon:
                         sqlTree.SaveNewElement(SqlXmlConstants.ENAME_SEMICOLON, token.Value);
                         sqlTree.NewStatementDue = true;
+                        break;
+
+                    case SqlTokenType.Colon:
+                        if (tokenList.Count > tokenID + 1
+                            && tokenList[tokenID + 1].Type == SqlTokenType.Colon
+                            )
+                        {
+                            sqlTree.SaveNewElement(SqlXmlConstants.ENAME_SCOPERESOLUTIONOPERATOR, token.Value + tokenList[tokenID + 1].Value);
+                            tokenID++;
+                        }
+                        else
+                        {
+                            sqlTree.SaveNewElementWithError(SqlXmlConstants.ENAME_OTHEROPERATOR, token.Value);
+                        }
                         break;
 
                     case SqlTokenType.MultiLineComment:
@@ -1054,6 +1161,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     || uppercaseValue.Equals("RECONFIGURE")
                     || uppercaseValue.Equals("RESTORE")
                     || uppercaseValue.Equals("RETURN")
+                    || uppercaseValue.Equals("REVERT")
+                    || uppercaseValue.Equals("REVOKE")
                     || uppercaseValue.Equals("SELECT")
                     || uppercaseValue.Equals("SET")
                     || uppercaseValue.Equals("SETUSER")
@@ -1072,11 +1181,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
             //Note: some clause starters are handled separately: Joins, RETURNS clauses, etc.
             string uppercaseValue = token.Value.ToUpper();
             return (token.Type == SqlTokenType.OtherNode
-                && (uppercaseValue.Equals("FOR")
+                && (uppercaseValue.Equals("EXCEPT")
+                    || uppercaseValue.Equals("FOR")
                     || uppercaseValue.Equals("FROM")
                     || uppercaseValue.Equals("GROUP")
                     || uppercaseValue.Equals("HAVING")
                     || uppercaseValue.Equals("INNER")
+                    || uppercaseValue.Equals("INTERSECT")
                     || uppercaseValue.Equals("INTO")
                     || uppercaseValue.Equals("ORDER")
                     //TODO: figure out how to handle OUTPUT...
@@ -1097,22 +1208,22 @@ namespace PoorMansTSqlFormatterLib.Parsers
             XmlNode currentNode = sqlTree.CurrentContainer.LastChild;
             while (currentNode != null)
             {
-                if ((currentNode.Name.Equals(SqlXmlConstants.ENAME_OTHERNODE)
+                if (currentNode.Name.Equals(SqlXmlConstants.ENAME_OTHERNODE)
                         || currentNode.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
                         || currentNode.Name.Equals(SqlXmlConstants.ENAME_DATATYPE_KEYWORD)
                         )
-                    && (
-                        currentNode.InnerText.ToUpper().Equals("NVARCHAR")
-                        || currentNode.InnerText.ToUpper().Equals("VARCHAR")
-                        || currentNode.InnerText.ToUpper().Equals("DECIMAL")
-                        || currentNode.InnerText.ToUpper().Equals("NUMERIC")
-                        || currentNode.InnerText.ToUpper().Equals("VARBINARY")
-                        || currentNode.InnerText.ToUpper().Equals("DEFAULT")
-                        || currentNode.InnerText.ToUpper().Equals("IDENTITY")
-                        )
-                    )
                 {
-                    return true;
+                    string uppercaseText = currentNode.InnerText.ToUpper();
+                    return (
+                        uppercaseText.Equals("NVARCHAR")
+                        || uppercaseText.Equals("VARCHAR")
+                        || uppercaseText.Equals("DECIMAL")
+                        || uppercaseText.Equals("NUMERIC")
+                        || uppercaseText.Equals("VARBINARY")
+                        || uppercaseText.Equals("DEFAULT")
+                        || uppercaseText.Equals("IDENTITY")
+                        || uppercaseText.Equals("XML")
+                        );
                 }
                 else if (ParseTree.IsCommentOrWhiteSpace(currentNode.Name))
                 {
@@ -1274,6 +1385,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("CASCADE", KeywordType.OtherKeyword);
             KeywordList.Add("CASE", KeywordType.FunctionKeyword);
             KeywordList.Add("CAST", KeywordType.FunctionKeyword);
+            KeywordList.Add("CATALOG", KeywordType.OtherKeyword);
             KeywordList.Add("CEILING", KeywordType.FunctionKeyword);
             KeywordList.Add("CHAR", KeywordType.DataTypeKeyword);
             KeywordList.Add("CHARINDEX", KeywordType.FunctionKeyword);
@@ -1293,6 +1405,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("CLUSTERED", KeywordType.OtherKeyword);
             KeywordList.Add("COALESCE", KeywordType.FunctionKeyword);
             KeywordList.Add("COLLATIONPROPERTY", KeywordType.FunctionKeyword);
+            KeywordList.Add("COLLECTION", KeywordType.OtherKeyword);
             KeywordList.Add("COLUMN", KeywordType.OtherKeyword);
             KeywordList.Add("COLUMNPROPERTY", KeywordType.FunctionKeyword);
             KeywordList.Add("COL_LENGTH", KeywordType.FunctionKeyword);
@@ -1308,6 +1421,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("CONTAINS", KeywordType.OtherKeyword);
             KeywordList.Add("CONTAINSTABLE", KeywordType.FunctionKeyword);
             KeywordList.Add("CONTINUE", KeywordType.OtherKeyword);
+            KeywordList.Add("CONTROL", KeywordType.OtherKeyword);
             KeywordList.Add("CONTROLROW", KeywordType.OtherKeyword);
             KeywordList.Add("CONVERT", KeywordType.FunctionKeyword);
             KeywordList.Add("COS", KeywordType.FunctionKeyword);
@@ -1346,6 +1460,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("DECIMAL", KeywordType.DataTypeKeyword);
             KeywordList.Add("DECLARE", KeywordType.OtherKeyword);
             KeywordList.Add("DEFAULT", KeywordType.OtherKeyword);
+            KeywordList.Add("DEFINITION", KeywordType.OtherKeyword);
             KeywordList.Add("DEGREES", KeywordType.FunctionKeyword);
             KeywordList.Add("DELAY", KeywordType.OtherKeyword);
             KeywordList.Add("DELETE", KeywordType.OtherKeyword);
@@ -1404,6 +1519,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("FREETEXTTABLE", KeywordType.FunctionKeyword);
             KeywordList.Add("FROM", KeywordType.OtherKeyword);
             KeywordList.Add("FULL", KeywordType.OtherKeyword);
+            KeywordList.Add("FULLTEXT", KeywordType.OtherKeyword);
             KeywordList.Add("FULLTEXTCATALOGPROPERTY", KeywordType.FunctionKeyword);
             KeywordList.Add("FULLTEXTSERVICEPROPERTY", KeywordType.FunctionKeyword);
             KeywordList.Add("FUNCTION", KeywordType.OtherKeyword);
@@ -1503,6 +1619,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("NVARCHAR", KeywordType.DataTypeKeyword);
             KeywordList.Add("OBJECTPROPERTY", KeywordType.FunctionKeyword);
             KeywordList.Add("OBJECTPROPERTYEX", KeywordType.FunctionKeyword);
+            KeywordList.Add("OBJECT", KeywordType.OtherKeyword);
             KeywordList.Add("OBJECT_ID", KeywordType.FunctionKeyword);
             KeywordList.Add("OBJECT_NAME", KeywordType.FunctionKeyword);
             KeywordList.Add("OF", KeywordType.OtherKeyword);
@@ -1579,9 +1696,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("RETURN", KeywordType.OtherKeyword);
             KeywordList.Add("RETURNS", KeywordType.OtherKeyword);
             KeywordList.Add("REVERSE", KeywordType.FunctionKeyword);
+            KeywordList.Add("REVERT", KeywordType.OtherKeyword);
             KeywordList.Add("REVOKE", KeywordType.OtherKeyword);
             KeywordList.Add("RIGHT", KeywordType.FunctionKeyword);
             KeywordList.Add("ROBUST", KeywordType.OtherKeyword);
+            KeywordList.Add("ROLE", KeywordType.OtherKeyword);
             KeywordList.Add("ROLLBACK", KeywordType.OtherKeyword);
             KeywordList.Add("ROUND", KeywordType.FunctionKeyword);
             KeywordList.Add("ROWCOUNT", KeywordType.OtherKeyword);
@@ -1598,6 +1717,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("SCROLL_LOCKS", KeywordType.OtherKeyword);
             KeywordList.Add("SELECT", KeywordType.OtherKeyword);
             KeywordList.Add("SERIALIZABLE", KeywordType.OtherKeyword);
+            KeywordList.Add("SERVER", KeywordType.OtherKeyword);
             KeywordList.Add("SERVERPROPERTY", KeywordType.FunctionKeyword);
             KeywordList.Add("SESSIONPROPERTY", KeywordType.FunctionKeyword);
             KeywordList.Add("SESSION_USER", KeywordType.FunctionKeyword);
@@ -1624,11 +1744,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("SQL_VARIANT_PROPERTY", KeywordType.FunctionKeyword);
             KeywordList.Add("SQRT", KeywordType.FunctionKeyword);
             KeywordList.Add("SQUARE", KeywordType.FunctionKeyword);
+            KeywordList.Add("STATE", KeywordType.OtherKeyword);
             KeywordList.Add("STATISTICS", KeywordType.OtherKeyword);
             KeywordList.Add("STATIC", KeywordType.OtherKeyword);
             KeywordList.Add("STATS_DATE", KeywordType.FunctionKeyword);
             KeywordList.Add("STDEV", KeywordType.FunctionKeyword);
             KeywordList.Add("STDEVP", KeywordType.FunctionKeyword);
+            KeywordList.Add("STOPLIST", KeywordType.OtherKeyword);
             KeywordList.Add("STR", KeywordType.FunctionKeyword);
             KeywordList.Add("STUFF", KeywordType.FunctionKeyword);
             KeywordList.Add("SUBSTRING", KeywordType.FunctionKeyword);
@@ -1701,6 +1823,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("WRITETEXT", KeywordType.OtherKeyword);
             KeywordList.Add("XACT_ABORT", KeywordType.OtherKeyword);
             KeywordList.Add("XLOCK", KeywordType.OtherKeyword);
+            KeywordList.Add("XML", KeywordType.DataTypeKeyword);
             KeywordList.Add("YEAR", KeywordType.FunctionKeyword);
         }
 

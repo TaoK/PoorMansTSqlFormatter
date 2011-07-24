@@ -33,17 +33,14 @@ Limitations:
  - This is NOT a full SQL-parsing solution: only "coarse" parsing is performed, the 
     minimum necessary for re-formatting.
 
- - The code is very "procedural" - no effort has been made to organize the code 
-    according to object-oriented design principles.
-
  - The standard formatter does not always maintain the order of comments in the code;
     a comment inside an "INNER JOIN" compound keyword, like "inner/*test*/join", would
     get moved out, to "INNER JOIN /*test*/". The original data is maintaned in the 
     parse tree, but the standard formatter shuffles comments in cases like this for 
     clarity.
 
- - DDL parsing is VERY coarse, the bare minimum to display ordered table column 
-    and procedure parameter declarations.
+ - DDL parsing, in particular, is VERY coarse - the bare minimum to display ordered table 
+    column and procedure parameter declarations.
 	
  - No effort has been made to support compatibility level 70 (SQL Server 7)
 	
@@ -53,13 +50,14 @@ Limitations:
 	without WITH are considered to be arguments to a function.
  
 Known Issues / Todo:
- - Parsing of DML WITH clauses, for better formatting
+ - Parsing of DDL WITH clauses, for better formatting
  - Handling SQL Server 2008 "MERGE" statements: http://technet.microsoft.com/en-us/library/bb510625.aspx
- - Handling SQL Server 2008 "OUTPUT" clauses: http://msdn.microsoft.com/en-us/library/ms177564.aspx
+ - Handling SQL Server 2005 "OUTPUT" clauses: http://msdn.microsoft.com/en-us/library/ms177564.aspx
    - Esp. INSERT INTO ... OUTPUT ... SELECT ... FROM
  - Handling of DDL Triggers (eg "FOR LOGON")
  - Formatting/indenting of ranking functions 
  - FxCop checking
+ - And other stuff that is tracked in the GitHub issues list
 
 Longer-term enhancements / additions:
  - Keyword consistency correction feature (eg LEFT OUTER JOIN -> LEFT JOIN)
