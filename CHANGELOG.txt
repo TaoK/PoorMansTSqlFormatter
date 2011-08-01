@@ -9,7 +9,9 @@ Version 0.9.13:
  - Added numerous keywords that were not handled (including XML datatype!)
  - Added handling of EXCEPT and INTERSECT set operators
  - Cleaned up the test files a bit, as they are now referenced publically
- - Added general DDL "WITH" clause handling, including "EXECUTE AS".
+ - Added general DDL "WITH" clause handling, including "EXECUTE AS"
+ - Refactoring / reducing direct XmlDocument dependency
+ - Added basic initial keyword standardization (or arbitrary mapping), eg "LEFT OUTER JOIN" -> "LEFT JOIN"
 
 Version 0.9.12: 
 --------------
