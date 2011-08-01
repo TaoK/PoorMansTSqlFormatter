@@ -1619,6 +1619,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("LOCK_TIMEOUT", KeywordType.OtherKeyword);
             KeywordList.Add("LOG", KeywordType.FunctionKeyword);
             KeywordList.Add("LOG10", KeywordType.FunctionKeyword);
+            KeywordList.Add("LOGIN", KeywordType.OtherKeyword);
             KeywordList.Add("LOOP", KeywordType.OtherKeyword);
             KeywordList.Add("LOWER", KeywordType.FunctionKeyword);
             KeywordList.Add("LTRIM", KeywordType.FunctionKeyword);

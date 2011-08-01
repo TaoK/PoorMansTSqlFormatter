@@ -33,4 +33,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("0.9.12.*")]
+[assembly: AssemblyVersion("0.9.13.*")]
