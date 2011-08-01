@@ -63,8 +63,9 @@
     <Content Include="Data\InputSql\09_Xml_Selection_Function.txt" />
     <Content Include="Data\InputSql\19_DMLTrigger.txt" />
     <Content Include="Data\InputSql\13_NestedBooleanExpressions.txt" />
-    <Content Include="Data\InputSql\22_ReparsingInconsistency.txt" />
+    <Content Include="Data\InputSql\23_ReparsingInconsistency.txt" />
     <Content Include="Data\InputSql\21_DDL_Permissions.txt" />
+    <Content Include="Data\InputSql\22_DDL_WithClauses.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">

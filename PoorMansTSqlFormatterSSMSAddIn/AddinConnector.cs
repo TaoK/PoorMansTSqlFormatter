@@ -247,7 +247,8 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                             Properties.Settings.Default.ExpandCaseStatements,
                             Properties.Settings.Default.ExpandBetweenConditions,
                             Properties.Settings.Default.UppercaseKeywords, 
-                            false
+                            false,
+                            Properties.Settings.Default.KeywordStandardization
                             );
                         var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);
                         bool errorsFound = false;

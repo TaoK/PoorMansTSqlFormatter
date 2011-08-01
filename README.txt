@@ -50,7 +50,6 @@ Limitations:
 	without WITH are considered to be arguments to a function.
  
 Known Issues / Todo:
- - Parsing of DDL WITH clauses, for better formatting
  - Handling SQL Server 2008 "MERGE" statements: http://technet.microsoft.com/en-us/library/bb510625.aspx
  - Handling SQL Server 2005 "OUTPUT" clauses: http://msdn.microsoft.com/en-us/library/ms177564.aspx
    - Esp. INSERT INTO ... OUTPUT ... SELECT ... FROM
@@ -60,7 +59,6 @@ Known Issues / Todo:
  - And other stuff that is tracked in the GitHub issues list
 
 Longer-term enhancements / additions:
- - Keyword consistency correction feature (eg LEFT OUTER JOIN -> LEFT JOIN)
  - Compiled mono library + bulk formatting tool download (eg for use on SVN server)
  - Documentation of Xml structure and class usage
  - Pakaging, NuGet and/or OpenWrap

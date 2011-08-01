@@ -59,6 +59,7 @@
     <Compile Include="ParseTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlFormattingManager.cs" />
+    <Compile Include="StandardKeywordRemapping.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="Tokenizers\TSqlStandardTokenizer.cs" />
     <Compile Include="TokenList.cs" />

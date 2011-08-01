@@ -57,6 +57,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.chk_ExpandCaseStatements = new System.Windows.Forms.CheckBox();
             this.chk_ExpandBetweenConditions = new System.Windows.Forms.CheckBox();
             this.chk_UppercaseKeywords = new System.Windows.Forms.CheckBox();
+            this.chk_SpaceAfterExpandedComma = new System.Windows.Forms.CheckBox();
             this.txt_IndentString = new System.Windows.Forms.TextBox();
             this.lbl_IndentString = new System.Windows.Forms.Label();
             this.lbl_IndentHint = new System.Windows.Forms.Label();
@@ -70,7 +71,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.lbl_SpacesPerTab = new System.Windows.Forms.Label();
             this.lbl_SpacesPerTab_Extra = new System.Windows.Forms.Label();
             this.lbl_MaxLineWidth = new System.Windows.Forms.Label();
-            this.chk_SpaceAfterExpandedComma = new System.Windows.Forms.CheckBox();
+            this.chk_StandardizeKeywords = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,6 +110,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.flowLayoutPanel1.Controls.Add(this.chk_ExpandBetweenConditions);
             this.flowLayoutPanel1.Controls.Add(this.chk_UppercaseKeywords);
             this.flowLayoutPanel1.Controls.Add(this.chk_SpaceAfterExpandedComma);
+            this.flowLayoutPanel1.Controls.Add(this.chk_StandardizeKeywords);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 123);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(359, 111);
@@ -173,6 +175,16 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.chk_UppercaseKeywords.TabIndex = 8;
             this.chk_UppercaseKeywords.Text = "Uppercase Keywords";
             this.chk_UppercaseKeywords.UseVisualStyleBackColor = true;
+            // 
+            // chk_SpaceAfterExpandedComma
+            // 
+            this.chk_SpaceAfterExpandedComma.AutoSize = true;
+            this.chk_SpaceAfterExpandedComma.Location = new System.Drawing.Point(3, 72);
+            this.chk_SpaceAfterExpandedComma.Name = "chk_SpaceAfterExpandedComma";
+            this.chk_SpaceAfterExpandedComma.Size = new System.Drawing.Size(170, 17);
+            this.chk_SpaceAfterExpandedComma.TabIndex = 9;
+            this.chk_SpaceAfterExpandedComma.Text = "Space after Expanded Comma";
+            this.chk_SpaceAfterExpandedComma.UseVisualStyleBackColor = true;
             // 
             // txt_IndentString
             // 
@@ -291,15 +303,15 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.lbl_MaxLineWidth.TabIndex = 18;
             this.lbl_MaxLineWidth.Text = "Max Line Width:";
             // 
-            // chk_SpaceAfterExpandedComma
+            // chk_StandardizeKeywords
             // 
-            this.chk_SpaceAfterExpandedComma.AutoSize = true;
-            this.chk_SpaceAfterExpandedComma.Location = new System.Drawing.Point(3, 72);
-            this.chk_SpaceAfterExpandedComma.Name = "chk_SpaceAfterExpandedComma";
-            this.chk_SpaceAfterExpandedComma.Size = new System.Drawing.Size(170, 17);
-            this.chk_SpaceAfterExpandedComma.TabIndex = 9;
-            this.chk_SpaceAfterExpandedComma.Text = "Space after Expanded Comma";
-            this.chk_SpaceAfterExpandedComma.UseVisualStyleBackColor = true;
+            this.chk_StandardizeKeywords.AutoSize = true;
+            this.chk_StandardizeKeywords.Location = new System.Drawing.Point(179, 72);
+            this.chk_StandardizeKeywords.Name = "chk_StandardizeKeywords";
+            this.chk_StandardizeKeywords.Size = new System.Drawing.Size(131, 17);
+            this.chk_StandardizeKeywords.TabIndex = 10;
+            this.chk_StandardizeKeywords.Text = "Standardize Keywords";
+            this.chk_StandardizeKeywords.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
@@ -360,5 +372,6 @@ namespace PoorMansTSqlFormatterSSMSAddIn
         private System.Windows.Forms.Label lbl_SpacesPerTab_Extra;
         private System.Windows.Forms.Label lbl_MaxLineWidth;
         private System.Windows.Forms.CheckBox chk_SpaceAfterExpandedComma;
+        private System.Windows.Forms.CheckBox chk_StandardizeKeywords;
     }
 }

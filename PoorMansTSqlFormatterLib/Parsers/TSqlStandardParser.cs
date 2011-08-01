@@ -37,7 +37,6 @@ namespace PoorMansTSqlFormatterLib.Parsers
          *  - parse ON sections of JOINs, for those who prefer to start ON on the next line and indent from there
          *  - detect table hints, to avoid them looking like function parens
          *  - Handle DDL triggers
-         *  - Handle DDL WITH clauses
          *  - Detect ALTER keywords that are clauses of other statements, vs those that are statements
          *  
          *  - Tests
@@ -164,7 +163,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         List<int> significantTokenPositions = GetSignificantTokenPositions(tokenList, tokenID, 7);
                         string significantTokensString = ExtractTokensString(tokenList, significantTokenPositions);
 
-                        if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_DETAIL))
+                        if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_PERMISSIONS_DETAIL))
                         {
                             //if we're in a permissions detail clause, we can expect all sorts of statements 
                             // starters and should ignore them all; the only possible keywords to escape are
@@ -207,7 +206,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CURSOR_DECLARATION, "");
                             sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                         }
-                        else if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
+                        else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
                             && _TriggerConditionDetector.IsMatch(significantTokensString)
                             )
                         {
@@ -233,15 +232,15 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             sqlTree.EscapeAnyBetweenConditions();
                             sqlTree.EscapeAnySelectionTarget();
 
-                            if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CURSOR_DECLARATION))
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CURSOR_DECLARATION))
                             {
                                 sqlTree.StartNewContainer(SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
                                 sqlTree.StartNewStatement();
                             }
-                            else if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
-                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
-                                && sqlTree.CurrentContainer.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                && sqlTree.CurrentContainer.ParentNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK)
+                            else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
+                                && sqlTree.PathNameMatches(2, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(3, SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK)
                                 )
                             {
                                 sqlTree.MoveToAncestorContainer(4, SqlXmlConstants.ENAME_CURSOR_DECLARATION);
@@ -249,7 +248,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             }
                             else
                             {
-                                //for clause in a select statement... any others?
+                                //for (xml) clause in a select statement... any others?
                                 sqlTree.ConsiderStartingNewClause();
                                 sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                             }
@@ -269,9 +268,9 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             )
                         {
                             if (significantTokensString.StartsWith("GRANT ")
-                                && sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_DDL_WITH_CLAUSE)
-                                && sqlTree.CurrentContainer.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_BLOCK)
+                                && sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_DDL_WITH_CLAUSE)
+                                && sqlTree.PathNameMatches(2, SqlXmlConstants.ENAME_PERMISSIONS_BLOCK)
                                 && sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer) == null
                                 )
                             {
@@ -292,13 +291,22 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (significantTokensString.StartsWith("AS "))
                         {
-                            if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK))
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK))
                             {
                                 sqlTree.StartNewContainer(SqlXmlConstants.ENAME_DDL_AS_BLOCK, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
                                 sqlTree.StartNewStatement();
                             }
-                            else if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CTE_WITH_CLAUSE)
+                            else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_DDL_WITH_CLAUSE)
+                                && sqlTree.PathNameMatches(2, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
+                                )
+                            {
+                                sqlTree.MoveToAncestorContainer(2, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK);
+                                sqlTree.StartNewContainer(SqlXmlConstants.ENAME_DDL_AS_BLOCK, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                sqlTree.StartNewStatement();
+                            }
+                            else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_CTE_WITH_CLAUSE)
                                 )
                             {
                                 sqlTree.MoveToAncestorContainer(1, SqlXmlConstants.ENAME_CTE_WITH_CLAUSE);
@@ -386,13 +394,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (significantTokensString.StartsWith("WHEN "))
                         {
-                            if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CASE_INPUT)
-                                || (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                    && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CASE_THEN)
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CASE_INPUT)
+                                || (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                    && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_CASE_THEN)
                                     )
                                 )
                             {
-                                if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CASE_INPUT))
+                                if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CASE_INPUT))
                                     sqlTree.MoveToAncestorContainer(1, SqlXmlConstants.ENAME_CASE_STATEMENT);
                                 else
                                     sqlTree.MoveToAncestorContainer(3, SqlXmlConstants.ENAME_CASE_STATEMENT);
@@ -406,8 +414,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         {
                             sqlTree.EscapeAnyBetweenConditions();
 
-                            if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CASE_WHEN)
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_CASE_WHEN)
                                 )
                             {
                                 sqlTree.MoveToAncestorContainer(1, SqlXmlConstants.ENAME_CASE_WHEN);
@@ -420,10 +428,10 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         {
                             sqlTree.EscapeAnySingleOrPartialStatementContainers();
 
-                            if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
-                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
-                                && sqlTree.CurrentContainer.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_MULTISTATEMENT)
-                                && sqlTree.CurrentContainer.ParentNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_TRY_BLOCK)
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
+                                && sqlTree.PathNameMatches(2, SqlXmlConstants.ENAME_CONTAINER_MULTISTATEMENT)
+                                && sqlTree.PathNameMatches(3, SqlXmlConstants.ENAME_TRY_BLOCK)
                                 )
                             {
                                 //clause.statement.multicontainer.try
@@ -441,10 +449,10 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         {
                             sqlTree.EscapeAnySingleOrPartialStatementContainers();
 
-                            if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
-                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
-                                && sqlTree.CurrentContainer.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_MULTISTATEMENT)
-                                && sqlTree.CurrentContainer.ParentNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CATCH_BLOCK)
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
+                                && sqlTree.PathNameMatches(2, SqlXmlConstants.ENAME_CONTAINER_MULTISTATEMENT)
+                                && sqlTree.PathNameMatches(3, SqlXmlConstants.ENAME_CATCH_BLOCK)
                                 )
                             {
                                 //clause.statement.multicontainer.catch
@@ -460,16 +468,16 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (significantTokensString.StartsWith("END "))
                         {
-                            if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CASE_THEN)
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_CASE_THEN)
                                 )
                             {
                                 sqlTree.MoveToAncestorContainer(3, SqlXmlConstants.ENAME_CASE_STATEMENT);
                                 sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_CLOSE, ""));
                                 sqlTree.MoveToAncestorContainer(1); //unnamed container
                             }
-                            else if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CASE_ELSE)
+                            else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_CASE_ELSE)
                                 )
                             {
                                 sqlTree.MoveToAncestorContainer(2, SqlXmlConstants.ENAME_CASE_STATEMENT);
@@ -481,10 +489,10 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 //Begin/End block handling
                                 sqlTree.EscapeAnySingleOrPartialStatementContainers();
 
-                                if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
-                                    && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
-                                    && sqlTree.CurrentContainer.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_MULTISTATEMENT)
-                                    && sqlTree.CurrentContainer.ParentNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_BEGIN_END_BLOCK)
+                                if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
+                                    && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
+                                    && sqlTree.PathNameMatches(2, SqlXmlConstants.ENAME_CONTAINER_MULTISTATEMENT)
+                                    && sqlTree.PathNameMatches(3, SqlXmlConstants.ENAME_BEGIN_END_BLOCK)
                                     )
                                 {
                                     XmlElement beginBlock = (XmlElement)sqlTree.CurrentContainer.ParentNode.ParentNode.ParentNode;
@@ -564,8 +572,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             sqlTree.EscapeAnyBetweenConditions();
                             sqlTree.EscapeAnySelectionTarget();
 
-                            if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CASE_THEN)
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_CASE_THEN)
                                 )
                             {
                                 sqlTree.MoveToAncestorContainer(3, SqlXmlConstants.ENAME_CASE_STATEMENT);
@@ -575,9 +583,9 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             {
                                 sqlTree.EscapePartialStatementContainers();
 
-                                if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
-                                    && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
-                                    && sqlTree.CurrentContainer.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_SINGLESTATEMENT)
+                                if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
+                                    && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
+                                    && sqlTree.PathNameMatches(2, SqlXmlConstants.ENAME_CONTAINER_SINGLESTATEMENT)
                                     )
                                 {
                                     //we need to pop up the single-statement containers stack to the next "if" that doesn't have an "else" (if any; else error).
@@ -586,7 +594,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                     bool stopSearching = false;
                                     while (!stopSearching)
                                     {
-                                        if (currentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_IF_STATEMENT))
+                                        if (sqlTree.PathNameMatches(currentNode, 1, SqlXmlConstants.ENAME_IF_STATEMENT))
                                         {
                                             //if this is in an "If", then the "Else" must still be available - yay!
                                             sqlTree.CurrentContainer = (XmlElement)currentNode.ParentNode;
@@ -594,13 +602,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                             sqlTree.StartNewStatement();
                                             stopSearching = true;
                                         }
-                                        else if (currentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_ELSE_CLAUSE))
+                                        else if (sqlTree.PathNameMatches(currentNode, 1, SqlXmlConstants.ENAME_ELSE_CLAUSE))
                                         {
                                             //If this is in an "Else", we should skip its parent "IF" altogether, and go to the next singlestatementcontainer candidate.
                                             //singlestatementcontainer.else.if.clause.statement.NEWCANDIDATE
                                             currentNode = (XmlElement)currentNode.ParentNode.ParentNode.ParentNode.ParentNode.ParentNode;
                                         }
-                                        else if (currentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_WHILE_LOOP))
+                                        else if (sqlTree.PathNameMatches(currentNode, 1, SqlXmlConstants.ENAME_WHILE_LOOP))
                                         {
                                             //If this is in a "While", we should skip to the next singlestatementcontainer candidate.
                                             //singlestatementcontainer.while.clause.statement.NEWCANDIDATE
@@ -645,7 +653,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
                             bool selectShouldntTryToStartNewStatement = false;
 
-                            if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE))
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE))
                             {
                                 bool isPrecededByInsertStatement = false;
                                 XmlElement firstStatementClause = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer.ParentNode);
@@ -672,8 +680,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 if (firstEntryOfThisClause != null && firstEntryOfThisClause.Name.Equals(SqlXmlConstants.ENAME_SET_OPERATOR_CLAUSE))
                                     selectShouldntTryToStartNewStatement = true;
                             }
-                            else if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS)
-                                || sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS)
+                            else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS)
+                                || sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_EXPRESSION_PARENS)
                                 )
                                 //we're just starting a new select expression, haven't created the clause container yet)
                                 selectShouldntTryToStartNewStatement = true;
@@ -690,8 +698,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             if (sqlTree.NewStatementDue)
                                 sqlTree.ConsiderStartingNewStatement();
 
-                            if (!(sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                    && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS)
+                            if (!(sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                    && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS)
                                     )
                                 )
                                 sqlTree.ConsiderStartingNewStatement();
@@ -700,8 +708,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (significantTokensString.StartsWith("TO "))
                         {
-                            if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_TARGET)
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_PERMISSIONS_TARGET)
                                 )
                             {
                                 sqlTree.MoveToAncestorContainer(2, SqlXmlConstants.ENAME_PERMISSIONS_BLOCK);
@@ -717,8 +725,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (significantTokensString.StartsWith("FROM "))
                         {
-                            if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_TARGET)
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_PERMISSIONS_TARGET)
                                 )
                             {
                                 sqlTree.MoveToAncestorContainer(2, SqlXmlConstants.ENAME_PERMISSIONS_BLOCK);
@@ -732,8 +740,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             }
                         }
                         else if (significantTokensString.StartsWith("CASCADE ")
-                            && sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                            && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT)
+                            && sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                            && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT)
                             )
                         {
                             sqlTree.MoveToAncestorContainer(2, SqlXmlConstants.ENAME_PERMISSIONS_BLOCK);
@@ -762,7 +770,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (significantTokensString.StartsWith("AND "))
                         {
-                            if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_BETWEEN_LOWERBOUND))
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_BETWEEN_LOWERBOUND))
                             {
                                 sqlTree.MoveToAncestorContainer(1, SqlXmlConstants.ENAME_BETWEEN_CONDITION);
                                 sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_CLOSE, ""));
@@ -784,8 +792,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             if (sqlTree.NewStatementDue)
                                 sqlTree.ConsiderStartingNewStatement();
 
-                            if (sqlTree.CurrentContainer.Name.Equals(Interfaces.SqlXmlConstants.ENAME_SQL_CLAUSE)
-                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(Interfaces.SqlXmlConstants.ENAME_SQL_STATEMENT)
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
                                 && !sqlTree.HasNonWhiteSpaceNonCommentContent(sqlTree.CurrentContainer)
                                 )
                             {
@@ -793,16 +801,35 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_OPEN, ""));
                                 sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT, "");
                             }
-                            else if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT)
+                            else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT)
                                 )
                             {
                                 sqlTree.MoveToAncestorContainer(2, SqlXmlConstants.ENAME_PERMISSIONS_BLOCK);
                                 sqlTree.StartNewContainer(SqlXmlConstants.ENAME_DDL_WITH_CLAUSE, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
                             }
+                            else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
+                                || sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
+                                )
+                            {
+                                sqlTree.StartNewContainer(SqlXmlConstants.ENAME_DDL_WITH_CLAUSE, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
+                            }
                             else
                             {
-
+                                sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
+                            }
+                        }
+                        else if (significantTokensString.StartsWith("EXECUTE AS "))
+                        {
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_DDL_WITH_CLAUSE)
+                                )
+                            {
+                                //process as a "compound keyword", to avoid a panic (avoid treating the "AS" as the beginning of a DDL AS block)
+                                ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, 2);
+                            }
+                            else
+                            {
                                 sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                             }
                         }
@@ -835,7 +862,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
                             string newNodeName = SqlXmlConstants.ENAME_OTHERNODE;
                             KeywordType matchedKeywordType;
-                            if (KeywordList.TryGetValue(token.Value.ToUpper(), out matchedKeywordType))
+                            if (KeywordList.TryGetValue(token.Value, out matchedKeywordType))
                             {
                                 switch (matchedKeywordType)
                                 {
@@ -884,8 +911,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     case SqlTokenType.SingleLineComment:
                     case SqlTokenType.WhiteSpace:
                         //create in statement rather than clause if there are no siblings yet
-                        if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
-                            && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
+                        if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
+                            && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
                             && sqlTree.CurrentContainer.SelectSingleNode("*") == null
                             )
                             sqlTree.SaveNewElementAsPriorSibling(GetEquivalentSqlNodeName(token.Type), token.Value, sqlTree.CurrentContainer);
@@ -1314,7 +1341,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             // Added some entries that are not strictly speaking keywords, such as 
             // cursor options "READ_ONLY", "FAST_FORWARD", etc.
             // Could/Should check against MSDN Ref: http://msdn.microsoft.com/en-us/library/ms189822.aspx
-            KeywordList = new Dictionary<string, KeywordType>();
+            KeywordList = new Dictionary<string, KeywordType>(StringComparer.OrdinalIgnoreCase);
             KeywordList.Add("@@CONNECTIONS", KeywordType.FunctionKeyword);
             KeywordList.Add("@@CPU_BUSY", KeywordType.FunctionKeyword);
             KeywordList.Add("@@CURSOR_ROWS", KeywordType.FunctionKeyword);
@@ -1350,6 +1377,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("@@VERSION", KeywordType.FunctionKeyword);
             KeywordList.Add("ABS", KeywordType.FunctionKeyword);
             KeywordList.Add("ACOS", KeywordType.FunctionKeyword);
+            KeywordList.Add("ACTIVATION", KeywordType.OtherKeyword);
             KeywordList.Add("ADD", KeywordType.OtherKeyword);
             KeywordList.Add("ALL", KeywordType.OperatorKeyword);
             KeywordList.Add("ALTER", KeywordType.OtherKeyword);
@@ -1382,6 +1410,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("BROWSE", KeywordType.OtherKeyword);
             KeywordList.Add("BULK", KeywordType.OtherKeyword);
             KeywordList.Add("BY", KeywordType.OtherKeyword);
+            KeywordList.Add("CALLER", KeywordType.OtherKeyword);
             KeywordList.Add("CASCADE", KeywordType.OtherKeyword);
             KeywordList.Add("CASE", KeywordType.FunctionKeyword);
             KeywordList.Add("CAST", KeywordType.FunctionKeyword);
@@ -1477,6 +1506,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("DUMP", KeywordType.OtherKeyword);
             KeywordList.Add("DYNAMIC", KeywordType.OtherKeyword);
             KeywordList.Add("ELSE", KeywordType.OtherKeyword);
+            KeywordList.Add("ENCRYPTION", KeywordType.OtherKeyword);
             KeywordList.Add("ERRLVL", KeywordType.OtherKeyword);
             KeywordList.Add("ERROREXIT", KeywordType.OtherKeyword);
             KeywordList.Add("ESCAPE", KeywordType.OtherKeyword);
@@ -1487,6 +1517,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("EXIT", KeywordType.OtherKeyword);
             KeywordList.Add("EXP", KeywordType.FunctionKeyword);
             KeywordList.Add("EXPAND", KeywordType.OtherKeyword);
+            KeywordList.Add("EXTERNAL", KeywordType.OtherKeyword);
             KeywordList.Add("FAST", KeywordType.OtherKeyword);
             KeywordList.Add("FAST_FORWARD", KeywordType.OtherKeyword);
             KeywordList.Add("FASTFIRSTROW", KeywordType.OtherKeyword);
@@ -1592,6 +1623,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("LOWER", KeywordType.FunctionKeyword);
             KeywordList.Add("LTRIM", KeywordType.FunctionKeyword);
             KeywordList.Add("MAX", KeywordType.FunctionKeyword);
+            KeywordList.Add("MAX_QUEUE_READERS", KeywordType.OtherKeyword);
             KeywordList.Add("MAXDOP", KeywordType.OtherKeyword);
             KeywordList.Add("MAXRECURSION", KeywordType.OtherKeyword);
             KeywordList.Add("MERGE", KeywordType.OtherKeyword);
@@ -1599,6 +1631,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("MIRROREXIT", KeywordType.OtherKeyword);
             KeywordList.Add("MONEY", KeywordType.DataTypeKeyword);
             KeywordList.Add("MONTH", KeywordType.FunctionKeyword);
+            KeywordList.Add("NAME", KeywordType.OtherKeyword);
             KeywordList.Add("NCHAR", KeywordType.DataTypeKeyword);
             KeywordList.Add("NEWID", KeywordType.FunctionKeyword);
             KeywordList.Add("NEXT", KeywordType.OtherKeyword);
@@ -1642,6 +1675,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("OUTPUT", KeywordType.OtherKeyword);
             KeywordList.Add("OUTPUTBUFFER", KeywordType.OtherKeyword);
             KeywordList.Add("OVER", KeywordType.OtherKeyword);
+            KeywordList.Add("OWNER", KeywordType.OtherKeyword);
             KeywordList.Add("PAGLOCK", KeywordType.OtherKeyword);
             KeywordList.Add("PARAMETERIZATION", KeywordType.OtherKeyword);
             KeywordList.Add("PARSENAME", KeywordType.FunctionKeyword);
@@ -1664,11 +1698,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("PROC", KeywordType.OtherKeyword);
             KeywordList.Add("PROCCACHE", KeywordType.OtherKeyword);
             KeywordList.Add("PROCEDURE", KeywordType.OtherKeyword);
+            KeywordList.Add("PROCEDURE_NAME", KeywordType.OtherKeyword);
             KeywordList.Add("PROCESSEXIT", KeywordType.OtherKeyword);
             KeywordList.Add("PROCID", KeywordType.OtherKeyword);
             KeywordList.Add("PROFILE", KeywordType.OtherKeyword);
             KeywordList.Add("PUBLIC", KeywordType.OtherKeyword);
             KeywordList.Add("QUERY_GOVERNOR_COST_LIMIT", KeywordType.OtherKeyword);
+            KeywordList.Add("QUEUE", KeywordType.OtherKeyword);
             KeywordList.Add("QUOTED_IDENTIFIER", KeywordType.OtherKeyword);
             KeywordList.Add("QUOTENAME", KeywordType.FunctionKeyword);
             KeywordList.Add("RADIANS", KeywordType.FunctionKeyword);
@@ -1716,6 +1752,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("SCROLL", KeywordType.OtherKeyword);
             KeywordList.Add("SCROLL_LOCKS", KeywordType.OtherKeyword);
             KeywordList.Add("SELECT", KeywordType.OtherKeyword);
+            KeywordList.Add("SELF", KeywordType.OtherKeyword);
             KeywordList.Add("SERIALIZABLE", KeywordType.OtherKeyword);
             KeywordList.Add("SERVER", KeywordType.OtherKeyword);
             KeywordList.Add("SERVERPROPERTY", KeywordType.FunctionKeyword);
@@ -1748,6 +1785,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("STATISTICS", KeywordType.OtherKeyword);
             KeywordList.Add("STATIC", KeywordType.OtherKeyword);
             KeywordList.Add("STATS_DATE", KeywordType.FunctionKeyword);
+            KeywordList.Add("STATUS", KeywordType.OtherKeyword);
             KeywordList.Add("STDEV", KeywordType.FunctionKeyword);
             KeywordList.Add("STDEVP", KeywordType.FunctionKeyword);
             KeywordList.Add("STOPLIST", KeywordType.OtherKeyword);

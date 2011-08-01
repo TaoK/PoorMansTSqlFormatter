@@ -123,40 +123,42 @@ namespace PoorMansTSqlFormatterLib
 
         internal void EscapeAnyBetweenConditions()
         {
-            if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_BETWEEN_UPPERBOUND)
-                && CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_BETWEEN_CONDITION))
+            if (PathNameMatches(0, SqlXmlConstants.ENAME_BETWEEN_UPPERBOUND)
+                && PathNameMatches(1, SqlXmlConstants.ENAME_BETWEEN_CONDITION)
+                )
             {
                 //we just ended the upper bound of a "BETWEEN" condition, need to pop back to the enclosing context
-                CurrentContainer = (XmlElement)CurrentContainer.ParentNode.ParentNode;
+                MoveToAncestorContainer(2);
             }
         }
 
         internal void EscapePartialStatementContainers()
         {
-            if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
-                                    && CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
-                                    && CurrentContainer.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                    && CurrentContainer.ParentNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK)
-                                    )
-            {
+            if (PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
+                && PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
+                && PathNameMatches(2, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                && PathNameMatches(3, SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK)
+                )
                 //we just ended the one select statement in a cursor declaration, and need to pop out to the same level as the cursor
                 MoveToAncestorContainer(5);
-            }
-            else if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
-                    || CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
-                    )
+            else if (PathNameMatches(0, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
+                || PathNameMatches(0, SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
+                )
                 MoveToAncestorContainer(1);
-            else if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                    && CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS)
+            else if (PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                && PathNameMatches(1, SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS)
                 )
                 MoveToAncestorContainer(3);
-            else if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                    && CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT)
+            else if (PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                && PathNameMatches(1, SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT)
                 )
                 MoveToAncestorContainer(3);
-            else if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                    && CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_DDL_WITH_CLAUSE)
-                    && CurrentContainer.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_PERMISSIONS_BLOCK)
+            else if (PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                    && PathNameMatches(1, SqlXmlConstants.ENAME_DDL_WITH_CLAUSE)
+                    && (PathNameMatches(2, SqlXmlConstants.ENAME_PERMISSIONS_BLOCK)
+                        || PathNameMatches(2, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
+                        || PathNameMatches(2, SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
+                        )
                 )
                 MoveToAncestorContainer(3);
         }
@@ -172,13 +174,13 @@ namespace PoorMansTSqlFormatterLib
 
                 while (true)
                 {
-                    if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
-                        && CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
-                        && CurrentContainer.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_SINGLESTATEMENT)
+                    if (PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
+                        && PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
+                        && PathNameMatches(2, SqlXmlConstants.ENAME_CONTAINER_SINGLESTATEMENT)
                         )
                     {
                         XmlNode currentSingleContainer = CurrentContainer.ParentNode.ParentNode;
-                        if (currentSingleContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_ELSE_CLAUSE))
+                        if (PathNameMatches(currentSingleContainer, 1, SqlXmlConstants.ENAME_ELSE_CLAUSE))
                         {
                             //we just ended the one and only statement in an else clause, and need to pop out to the same level as its parent if
                             // singleContainer.else.if.CANDIDATE
@@ -203,17 +205,17 @@ namespace PoorMansTSqlFormatterLib
         {
             EscapeAnySingleOrPartialStatementContainers();
 
-            if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_BOOLEAN_EXPRESSION)
-                && (CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_IF_STATEMENT)
-                    || CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_WHILE_LOOP)
+            if (PathNameMatches(0, SqlXmlConstants.ENAME_BOOLEAN_EXPRESSION)
+                && (PathNameMatches(1, SqlXmlConstants.ENAME_IF_STATEMENT)
+                    || PathNameMatches(1, SqlXmlConstants.ENAME_WHILE_LOOP)
                     )
                 )
             {
                 //we just ended the boolean clause of an if or while, and need to pop to the single-statement container.
                 return SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_SINGLESTATEMENT, "", (XmlElement)CurrentContainer.ParentNode);
             }
-            else if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
-                && CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
+            else if (PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
+                && PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
                 && (escapeEmptyContainer || HasNonWhiteSpaceNonSingleCommentContent(CurrentContainer))
                 )
                 return (XmlElement)CurrentContainer.ParentNode.ParentNode;
@@ -327,7 +329,7 @@ namespace PoorMansTSqlFormatterLib
 
         internal void EscapeAnySelectionTarget()
         {
-            if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SELECTIONTARGET))
+            if (PathNameMatches(0, SqlXmlConstants.ENAME_SELECTIONTARGET))
                 CurrentContainer = (XmlElement)CurrentContainer.ParentNode;
         }
 
@@ -340,6 +342,22 @@ namespace PoorMansTSqlFormatterLib
                         && nextStatementContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_DDL_AS_BLOCK)
                         )
                     );
+        }
+
+        internal bool PathNameMatches(int levelsUp, string nameToMatch)
+        {
+            return PathNameMatches(CurrentContainer, levelsUp, nameToMatch);
+        }
+
+        internal bool PathNameMatches(XmlNode targetNode, int levelsUp, string nameToMatch)
+        {
+            XmlNode currentNode = targetNode;
+            while (levelsUp > 0)
+            {
+                currentNode = currentNode.ParentNode;
+                levelsUp--;
+            }
+            return currentNode.Name.Equals(nameToMatch);
         }
 
         private static bool HasNonWhiteSpaceNonSingleCommentContent(XmlElement containerNode)

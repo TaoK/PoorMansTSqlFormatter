@@ -41,6 +41,7 @@ namespace PoorMansTSqlFormatterCmdLine
             bool expandCaseStatements = true;
             bool expandCommaLists = true;
             bool uppercaseKeywords = true;
+            bool standardizeKeywords = true;
 
 
             bool showUsage = false;
@@ -60,6 +61,7 @@ namespace PoorMansTSqlFormatterCmdLine
               .Add("ecs|expandCaseStatements", delegate(string v) { expandCaseStatements = v != null; })
               .Add("ecl|expandCommaLists", delegate(string v) { expandCommaLists = v != null; })
               .Add("uk|uppercaseKeywords", delegate(string v) { uppercaseKeywords = v != null; })
+              .Add("sk|standardizeKeywords", delegate(string v) { standardizeKeywords = v != null; })
               .Add("e|extensions=", delegate(string v) { extensions.Add((v.StartsWith(".") ? "" : ".") + v); })
               .Add("r|recursive", delegate(string v) { recursiveSearch = v != null; })
               .Add("b|backups", delegate(string v) { backups = v != null; })
@@ -99,6 +101,7 @@ ebe expandBooleanExpressions (default: true)
 ecs expandCaseStatements (default: true)
 ecl expandCommaLists (default: true)
 uk  uppercaseKeywords (default: true)
+sk  standardizeKeywords (default: false)
 e   extensions (default: sql)
 r   recursive (default: false)
 b   backups (default: true)
@@ -130,7 +133,8 @@ SqlFormatter test*.sql /o:resultfile.sql
                 expandCaseStatements,
                 expandBetweenConditions, 
                 uppercaseKeywords, 
-                false);
+                false,
+                standardizeKeywords);
             var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);
 
             string searchPattern = Path.GetFileName(remainingArgs[0]);

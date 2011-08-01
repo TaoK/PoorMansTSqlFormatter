@@ -9,6 +9,7 @@ Version 0.9.13:
  - Added numerous keywords that were not handled (including XML datatype!)
  - Added handling of EXCEPT and INTERSECT set operators
  - Cleaned up the test files a bit, as they are now referenced publically
+ - Added general DDL "WITH" clause handling, including "EXECUTE AS".
 
 Version 0.9.12: 
 --------------

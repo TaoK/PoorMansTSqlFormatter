@@ -46,3 +46,7 @@ GO
 REVOKE REFERENCES (SomeColumn) ON OBJECT::SomeSchema.SomeView
     FROM ThatOldUser CASCADE;
 GO
+
+EXEC AS User = 'SomeUser'
+SELECT 1
+GO

@@ -66,6 +66,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             chk_TrailingCommas.Checked = Properties.Settings.Default.TrailingCommas;
             chk_UppercaseKeywords.Checked = Properties.Settings.Default.UppercaseKeywords;
             chk_SpaceAfterExpandedComma.Checked = Properties.Settings.Default.SpaceAfterExpandedComma;
+            chk_StandardizeKeywords.Checked = Properties.Settings.Default.KeywordStandardization;
         }
 
         private void SetSettingsFromControlValues()
@@ -81,6 +82,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             Properties.Settings.Default.ExpandCommaLists = chk_ExpandCommaLists.Checked;
             Properties.Settings.Default.TrailingCommas = chk_TrailingCommas.Checked;
             Properties.Settings.Default.UppercaseKeywords = chk_UppercaseKeywords.Checked;
+            Properties.Settings.Default.KeywordStandardization = chk_StandardizeKeywords.Checked;
         }
 
         private void llbl_HotkeyHint_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

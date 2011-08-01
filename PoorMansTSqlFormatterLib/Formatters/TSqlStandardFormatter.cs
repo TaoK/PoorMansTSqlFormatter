@@ -28,22 +28,10 @@ namespace PoorMansTSqlFormatterLib.Formatters
 {
     public class TSqlStandardFormatter : Interfaces.ISqlTreeFormatter
     {
-        /*
-         * TODO:
-         *  - (optionally?) perform some syntantical consistency fixes:
-         *    - eliminate redundant "Outer" keyword from "left", "right" and "full" join clauses
-         *    - change plain "join" to "inner join"
-         *    - make this work despite any join hints (loop, hash, merge, remote)
-         *    - Insert -> Insert Into
-         *    - TRAN -> TRANSACTION
-         *    - PROC -> PROCEDURE
-         *    - DECLARE @Test AS INT -> DECLARE @Test INT
-         *    
-         */
 
-        public TSqlStandardFormatter() : this("\t", 4, 999, true, false, false, true, true, true, true, false) {}
+        public TSqlStandardFormatter() : this("\t", 4, 999, true, false, false, true, true, true, true, false, false) {}
 
-        public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool uppercaseKeywords, bool htmlColoring)
+        public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool uppercaseKeywords, bool htmlColoring, bool keywordStandardization)
         {
             IndentString = indentString;
             SpacesPerTab = spacesPerTab;
@@ -56,6 +44,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
             ExpandCaseStatements = expandCaseStatements;
             UppercaseKeywords = uppercaseKeywords;
             HTMLColoring = htmlColoring;
+            if (keywordStandardization)
+                KeywordMapping = StandardKeywordRemapping.Instance;
         }
 
         private string _indentString;
@@ -70,6 +60,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
             } 
         }
 
+        public IDictionary<string, string> KeywordMapping = new Dictionary<string, string>();
+
         public int SpacesPerTab { get; set; }
         public int MaxLineWidth { get; set; }
         public bool ExpandCommaLists { get; set; }
@@ -80,6 +72,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
         public bool ExpandBetweenConditions { get; set; }
         public bool UppercaseKeywords { get; set; }
         public bool HTMLColoring { get; set; }
+        public bool Keyword { get; set; }
 
         public bool HTMLFormatted { get { return HTMLColoring; } }
 
@@ -121,7 +114,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_SQL_CLAUSE:
-                    state.IsStartOfClause = true;
+                    state.UnIndentInitialBreak = true;
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), state.IncrementIndent());
                     state.DecrementIndent();
                     state.BreakExpected = true;
@@ -181,7 +174,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case Interfaces.SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT:
                 case Interfaces.SqlXmlConstants.ENAME_DDL_WITH_CLAUSE:
                     state.BreakExpected = true;
-                    ProcessSqlNodeList(contentElement.SelectNodes("*"), state);
+                    state.UnIndentInitialBreak = true;
+                    ProcessSqlNodeList(contentElement.SelectNodes("*"), state.IncrementIndent());
+                    state.DecrementIndent();
                     break;
 
                 case Interfaces.SqlXmlConstants.ENAME_ELSE_CLAUSE:
@@ -465,10 +460,14 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
         private string FormatKeyword(string keyword)
         {
+            string outputKeyword;
+            if (!KeywordMapping.TryGetValue(keyword, out outputKeyword))
+                outputKeyword = keyword;
+
             if (UppercaseKeywords)
-                return keyword.ToUpper();
+                return outputKeyword.ToUpper();
             else
-                return keyword.ToLower();
+                return outputKeyword.ToLower();
         }
 
         private string FormatOperator(string operatorValue)
@@ -538,16 +537,16 @@ namespace PoorMansTSqlFormatterLib.Formatters
         {
             if (state.BreakExpected || state.AdditionalBreakExpected)
             {
-                bool wasStartOfClause = state.IsStartOfClause;
-                if (wasStartOfClause) state.DecrementIndent();
+                bool wasUnIndent = state.UnIndentInitialBreak;
+                if (wasUnIndent) state.DecrementIndent();
                 WhiteSpace_BreakAsExpected(state);
-                if (wasStartOfClause) state.IncrementIndent();
-                state.IsStartOfClause = false;
+                if (wasUnIndent) state.IncrementIndent();
+                state.UnIndentInitialBreak = false;
             }
             else if (state.WordSeparatorExpected)
             {
                 state.AddOutputSpace();
-                state.IsStartOfClause = false;
+                state.UnIndentInitialBreak = false;
             }
             state.SourceBreakPending = false;
             state.WordSeparatorExpected = false;
@@ -613,7 +612,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             public bool SourceBreakPending { get; set; }
             public bool AdditionalBreakExpected { get; set; }
 
-            public bool IsStartOfClause { get; set; }
+            public bool UnIndentInitialBreak { get; set; }
             public int IndentLevel { get; private set; }
             public int CurrentLineLength { get; private set; }
             public bool CurrentLineHasContent { get; private set; }
