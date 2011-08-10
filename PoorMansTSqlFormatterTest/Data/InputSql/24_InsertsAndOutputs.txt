@@ -1,0 +1,57 @@
+﻿--Selects, execs and inserts
+DECLARE @Test1 TABLE (Value1 INT)
+
+INSERT @Test1
+
+EXEC ('SELECT 1')
+
+SELECT 1
+
+INSERT @Test1
+
+SELECT 2
+
+EXEC ('SELECT 2')
+
+SELECT *
+
+FROM @Test1
+
+
+--Outputs converting inserts to derived tables
+CREATE TABLE #Test1(TestCol Int)
+CREATE TABLE #Test2(TestCol Int)
+
+INSERT INTO #Test2
+SELECT *
+FROM (
+	INSERT INTO #Test1
+	OUTPUT INSERTED.*
+	SELECT 1
+)
+AS TEST1
+
+INSERT INTO #Test2
+SELECT *
+FROM (
+	DELETE #Test1
+	OUTPUT 2 AS Whatever
+)
+AS TEST1
+
+INSERT INTO #Test2
+SELECT *
+FROM (
+	UPDATE #Test2
+	SET TestCol = TestCol - 1
+	OUTPUT deleted.TestCol + 500 AS Whatever
+)
+AS TEST1
+
+SELECT * FROM #Test1
+SELECT * FROM #Test2
+
+
+--Outputs on simple inserts
+DECLARE @Test1 TABLE (Test2 Int)
+INSERT INTO @Test1 OUTPUT INSERTED.* SELECT Value2 FROM (SELECT 2 AS Value2) AS SampleData

@@ -50,9 +50,6 @@ Limitations:
 	without WITH are considered to be arguments to a function.
  
 Known Issues / Todo:
- - Handling SQL Server 2008 "MERGE" statements: http://technet.microsoft.com/en-us/library/bb510625.aspx
- - Handling SQL Server 2005 "OUTPUT" clauses: http://msdn.microsoft.com/en-us/library/ms177564.aspx
-   - Esp. INSERT INTO ... OUTPUT ... SELECT ... FROM
  - Handling of DDL Triggers (eg "FOR LOGON")
  - Formatting/indenting of ranking functions 
  - FxCop checking

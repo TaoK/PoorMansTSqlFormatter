@@ -76,7 +76,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                 {
                     case SqlTokenType.OpenParens:
                         XmlElement firstNonCommentParensSibling = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
-                        bool isInsertClause = (
+                        bool isInsertOrValuesClause = (
                             firstNonCommentParensSibling != null
                             && (
                                 (firstNonCommentParensSibling.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
@@ -85,6 +85,10 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 || 
                                 (firstNonCommentParensSibling.Name.Equals(SqlXmlConstants.ENAME_COMPOUNDKEYWORD)
                                    && firstNonCommentParensSibling.GetAttribute(SqlXmlConstants.ANAME_SIMPLETEXT).ToUpper().StartsWith("INSERT ")
+                                   )
+                                ||
+                                (firstNonCommentParensSibling.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
+                                   && firstNonCommentParensSibling.InnerText.ToUpper().StartsWith("VALUES")
                                    )
                                )
                             );
@@ -112,7 +116,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_DDLDETAIL_PARENS, "");
                         else if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
                             || sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
-                            || isInsertClause
+                            || isInsertOrValuesClause
                             )
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_DDL_PARENS, "");
                         else if (IsLatestTokenAMiscName(sqlTree.CurrentContainer))
@@ -122,8 +126,10 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         break;
 
                     case SqlTokenType.CloseParens:
-                        sqlTree.EscapeAnyBetweenConditions();
-                        sqlTree.EscapeAnySelectionTarget();
+                        //we're not likely to actually have a "SingleStatement" in parens, but 
+                        // we definitely want the side-effects (all the lower-level escapes)
+                        sqlTree.EscapeAnySingleOrPartialStatementContainers();
+
                         //check whether we expected to end the parens...
                         if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDLDETAIL_PARENS)
                             || sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_PARENS)
@@ -388,12 +394,46 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             sqlTree.StartNewContainer(SqlXmlConstants.ENAME_BEGIN_END_BLOCK, token.Value, SqlXmlConstants.ENAME_CONTAINER_MULTISTATEMENT);
                             sqlTree.StartNewStatement();
                         }
+                        else if (significantTokensString.StartsWith("MERGE "))
+                        {
+                            //According to BOL, MERGE is a fully reserved keyword from compat 100 onwards, for the MERGE statement only.
+                            sqlTree.ConsiderStartingNewStatement();
+                            sqlTree.ConsiderStartingNewClause();
+                            sqlTree.StartNewContainer(SqlXmlConstants.ENAME_MERGE_CLAUSE, token.Value, SqlXmlConstants.ENAME_MERGE_TARGET);
+                        }
+                        else if (significantTokensString.StartsWith("USING "))
+                        {
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_MERGE_TARGET))
+                            {
+                                sqlTree.MoveToAncestorContainer(1, SqlXmlConstants.ENAME_MERGE_CLAUSE);
+                                sqlTree.StartNewContainer(SqlXmlConstants.ENAME_MERGE_USING, token.Value, SqlXmlConstants.ENAME_SELECTIONTARGET);
+                            }
+                            else
+                                sqlTree.SaveNewElementWithError(SqlXmlConstants.ENAME_OTHERNODE, token.Value);
+                        }
+                        else if (significantTokensString.StartsWith("ON "))
+                        {
+                            sqlTree.EscapeAnySelectionTarget();
+
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_MERGE_USING))
+                            {
+                                sqlTree.MoveToAncestorContainer(1, SqlXmlConstants.ENAME_MERGE_CLAUSE);
+                                sqlTree.StartNewContainer(SqlXmlConstants.ENAME_MERGE_CONDITION, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
+                            }
+                            else
+                            {
+                                //TODO: This is where the ON Clauses of JOINS will need to be handled.
+                                sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
+                            }
+                        }
                         else if (significantTokensString.StartsWith("CASE "))
                         {
                             sqlTree.StartNewContainer(SqlXmlConstants.ENAME_CASE_STATEMENT, token.Value, SqlXmlConstants.ENAME_CASE_INPUT);
                         }
                         else if (significantTokensString.StartsWith("WHEN "))
                         {
+                            sqlTree.EscapeMergeAction();
+
                             if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CASE_INPUT)
                                 || (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
                                     && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_CASE_THEN)
@@ -406,6 +446,19 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                     sqlTree.MoveToAncestorContainer(3, SqlXmlConstants.ENAME_CASE_STATEMENT);
 
                                 sqlTree.StartNewContainer(SqlXmlConstants.ENAME_CASE_WHEN, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
+                            }
+                            else if ((sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                    && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_MERGE_CONDITION)
+                                    )
+                                || sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_MERGE_WHEN)
+                                )
+                            {
+                                if (sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_MERGE_CONDITION))
+                                    sqlTree.MoveToAncestorContainer(2, SqlXmlConstants.ENAME_MERGE_CLAUSE);
+                                else
+                                    sqlTree.MoveToAncestorContainer(1, SqlXmlConstants.ENAME_MERGE_CLAUSE);
+
+                                sqlTree.StartNewContainer(SqlXmlConstants.ENAME_MERGE_WHEN, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
                             }
                             else
                                 sqlTree.SaveNewElementWithError(SqlXmlConstants.ENAME_OTHERNODE, token.Value);
@@ -421,8 +474,46 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 sqlTree.MoveToAncestorContainer(1, SqlXmlConstants.ENAME_CASE_WHEN);
                                 sqlTree.StartNewContainer(SqlXmlConstants.ENAME_CASE_THEN, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
                             }
+                            else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_MERGE_WHEN)
+                                )
+                            {
+                                sqlTree.MoveToAncestorContainer(1, SqlXmlConstants.ENAME_MERGE_WHEN);
+                                sqlTree.StartNewContainer(SqlXmlConstants.ENAME_MERGE_THEN, token.Value, SqlXmlConstants.ENAME_MERGE_ACTION);
+                                sqlTree.StartNewStatement();
+                            }
                             else
                                 sqlTree.SaveNewElementWithError(SqlXmlConstants.ENAME_OTHERNODE, token.Value);
+                        }
+                        else if (significantTokensString.StartsWith("OUTPUT "))
+                        {
+                            bool isSprocArgument = false;
+
+                            //We're looking for sproc calls - they can't be nested inside anything else (as far as I know)
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
+                                && (ContentStartsWithKeyword(sqlTree.CurrentContainer, "EXEC")
+                                    || ContentStartsWithKeyword(sqlTree.CurrentContainer, "EXECUTE")
+                                    || ContentStartsWithKeyword(sqlTree.CurrentContainer, null)
+                                    )
+                                )
+                            {
+                                isSprocArgument = true;
+                            }
+
+                            if (!isSprocArgument)
+                            {
+                                sqlTree.EscapeMergeAction();
+                                sqlTree.ConsiderStartingNewClause();
+                            }
+
+                            sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
+                        }
+                        else if (significantTokensString.StartsWith("OPTION "))
+                        {
+                            sqlTree.EscapeMergeAction();
+                            sqlTree.ConsiderStartingNewClause();
+                            sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                         }
                         else if (significantTokensString.StartsWith("END TRY "))
                         {
@@ -531,6 +622,31 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             {
                                 sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                             }
+                        }
+                        else if (significantTokensString.StartsWith("EXEC ")
+                            || significantTokensString.StartsWith("EXECUTE ")
+                            )
+                        {
+                            bool execShouldntTryToStartNewStatement = false;
+
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
+                                && (ContentStartsWithKeyword(sqlTree.CurrentContainer, "INSERT")
+                                    || ContentStartsWithKeyword(sqlTree.CurrentContainer, "INSERT INTO")
+                                    )
+                                )
+                            {
+                                int existingClauseCount = sqlTree.CurrentContainer.SelectNodes(string.Format("../{0}", SqlXmlConstants.ENAME_SQL_CLAUSE)).Count;
+                                if (existingClauseCount == 1)
+                                    execShouldntTryToStartNewStatement = true;
+                            }
+
+                            if (!execShouldntTryToStartNewStatement)
+                                sqlTree.ConsiderStartingNewStatement();
+
+                            sqlTree.ConsiderStartingNewClause();
+
+                            sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                         }
                         else if (_JoinDetector.IsMatch(significantTokensString))
                         {
@@ -672,7 +788,16 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                         if (ContentStartsWithKeyword(clause, "VALUES"))
                                             existingValuesClauseFound = true;
 
-                                    if (!existingSelectClauseFound && !existingValuesClauseFound)
+                                    bool existingExecClauseFound = false;
+                                    foreach (XmlElement clause in sqlTree.CurrentContainer.ParentNode.SelectNodes(SqlXmlConstants.ENAME_SQL_CLAUSE))
+                                        if (ContentStartsWithKeyword(clause, "EXEC")
+                                            || ContentStartsWithKeyword(clause, "EXECUTE"))
+                                            existingExecClauseFound = true;
+
+                                    if (!existingSelectClauseFound 
+                                        && !existingValuesClauseFound 
+                                        && !existingExecClauseFound
+                                        )
                                         selectShouldntTryToStartNewStatement = true;
                                 }
 
@@ -680,16 +805,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 if (firstEntryOfThisClause != null && firstEntryOfThisClause.Name.Equals(SqlXmlConstants.ENAME_SET_OPERATOR_CLAUSE))
                                     selectShouldntTryToStartNewStatement = true;
                             }
-                            else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS)
-                                || sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_EXPRESSION_PARENS)
-                                )
-                                //we're just starting a new select expression, haven't created the clause container yet)
-                                selectShouldntTryToStartNewStatement = true;
 
-                            if (selectShouldntTryToStartNewStatement)
-                                sqlTree.ConsiderStartingNewClause();
-                            else
+                            if (!selectShouldntTryToStartNewStatement)
                                 sqlTree.ConsiderStartingNewStatement();
+
+                            sqlTree.ConsiderStartingNewClause();
 
                             sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                         }
@@ -702,7 +822,10 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                     && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS)
                                     )
                                 )
+                            {
                                 sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.ConsiderStartingNewClause();
+                            }
 
                             sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                         }
@@ -931,6 +1054,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     case SqlTokenType.Number:
                     case SqlTokenType.BinaryValue:
                     case SqlTokenType.MonetaryValue:
+                    case SqlTokenType.PseudoName:
                         sqlTree.SaveNewElement(GetEquivalentSqlNodeName(token.Type), token.Value);
                         break;
                     default:
@@ -952,19 +1076,28 @@ namespace PoorMansTSqlFormatterLib.Parsers
             ParseTree parentDoc = (ParseTree)providedContainer.OwnerDocument;
             XmlElement firstEntryOfProvidedContainer = parentDoc.GetFirstNonWhitespaceNonCommentChildElement(providedContainer);
             bool targetFound = false;
+            string keywordUpperValue = null;
 
             if (firstEntryOfProvidedContainer != null
                 && firstEntryOfProvidedContainer.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
                 && firstEntryOfProvidedContainer.InnerText != null
-                && firstEntryOfProvidedContainer.InnerText.ToUpper().Equals(contentToMatch)
                 )
-                targetFound = true;
+                keywordUpperValue = firstEntryOfProvidedContainer.InnerText.ToUpper();
 
             if (firstEntryOfProvidedContainer != null
                 && firstEntryOfProvidedContainer.Name.Equals(SqlXmlConstants.ENAME_COMPOUNDKEYWORD)
-                && firstEntryOfProvidedContainer.GetAttribute(SqlXmlConstants.ANAME_SIMPLETEXT).StartsWith(contentToMatch + " ")
                 )
-                targetFound = true;
+                keywordUpperValue = firstEntryOfProvidedContainer.GetAttribute(SqlXmlConstants.ANAME_SIMPLETEXT);
+
+            if (keywordUpperValue != null)
+            {
+                targetFound = keywordUpperValue.Equals(contentToMatch) || keywordUpperValue.StartsWith(contentToMatch + " ");
+            }
+            else
+            {
+                //if contentToMatch was passed in as null, means we were looking for a NON-keyword.
+                targetFound = contentToMatch == null;
+            }
 
             return targetFound;
         }
@@ -1045,6 +1178,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     return SqlXmlConstants.ENAME_MONETARY_VALUE;
                 case SqlTokenType.BinaryValue:
                     return SqlXmlConstants.ENAME_BINARY_VALUE;
+                case SqlTokenType.PseudoName:
+                    return SqlXmlConstants.ENAME_PSEUDONAME;
                 default:
                     throw new Exception("Mapping not found for provided Token Type");
             }
@@ -1182,6 +1317,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     || uppercaseValue.Equals("IF")
                     || uppercaseValue.Equals("INSERT")
                     || uppercaseValue.Equals("KILL")
+                    || uppercaseValue.Equals("MERGE")
                     || uppercaseValue.Equals("OPEN")
                     || uppercaseValue.Equals("PRINT")
                     || uppercaseValue.Equals("RAISERROR")
@@ -1208,7 +1344,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
             //Note: some clause starters are handled separately: Joins, RETURNS clauses, etc.
             string uppercaseValue = token.Value.ToUpper();
             return (token.Type == SqlTokenType.OtherNode
-                && (uppercaseValue.Equals("EXCEPT")
+                && (uppercaseValue.Equals("DELETE")
+                    || uppercaseValue.Equals("EXCEPT")
                     || uppercaseValue.Equals("FOR")
                     || uppercaseValue.Equals("FROM")
                     || uppercaseValue.Equals("GROUP")
@@ -1216,14 +1353,17 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     || uppercaseValue.Equals("INNER")
                     || uppercaseValue.Equals("INTERSECT")
                     || uppercaseValue.Equals("INTO")
+                    || uppercaseValue.Equals("INSERT")
+                    || uppercaseValue.Equals("MERGE")
                     || uppercaseValue.Equals("ORDER")
-                    //TODO: figure out how to handle OUTPUT...
-                    //|| uppercaseValue.Equals("OUTPUT") //this is complicated... in sprocs output means something else!
+                    || uppercaseValue.Equals("OUTPUT") //this is complicated... in sprocs output means something else!
                     || uppercaseValue.Equals("PIVOT")
                     || uppercaseValue.Equals("RETURNS")
                     || uppercaseValue.Equals("SELECT")
                     || uppercaseValue.Equals("UNION")
                     || uppercaseValue.Equals("UNPIVOT")
+                    || uppercaseValue.Equals("UPDATE")
+                    || uppercaseValue.Equals("USING")
                     || uppercaseValue.Equals("VALUES")
                     || uppercaseValue.Equals("WHERE")
                     )
@@ -1289,6 +1429,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             || testValue.EndsWith(" JOIN")
                             || testValue.Equals("UNION")
                             || testValue.Equals("UNION ALL")
+                            || testValue.Equals("USING")
                             || testValue.Equals("AS")
                             || testValue.EndsWith(" APPLY")
                             )
@@ -1340,6 +1481,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             // http://www.codeproject.com/KB/database/SideBySideSQLComparer.aspx
             // Added some entries that are not strictly speaking keywords, such as 
             // cursor options "READ_ONLY", "FAST_FORWARD", etc.
+            // also added numerous missing entries, such as "Xml", etc
             // Could/Should check against MSDN Ref: http://msdn.microsoft.com/en-us/library/ms189822.aspx
             KeywordList = new Dictionary<string, KeywordType>(StringComparer.OrdinalIgnoreCase);
             KeywordList.Add("@@CONNECTIONS", KeywordType.FunctionKeyword);
@@ -1623,6 +1765,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("LOOP", KeywordType.OtherKeyword);
             KeywordList.Add("LOWER", KeywordType.FunctionKeyword);
             KeywordList.Add("LTRIM", KeywordType.FunctionKeyword);
+            KeywordList.Add("MATCHED", KeywordType.OtherKeyword);
             KeywordList.Add("MAX", KeywordType.FunctionKeyword);
             KeywordList.Add("MAX_QUEUE_READERS", KeywordType.OtherKeyword);
             KeywordList.Add("MAXDOP", KeywordType.OtherKeyword);
@@ -1846,6 +1989,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("USEROPTIONS", KeywordType.OtherKeyword);
             KeywordList.Add("USER_ID", KeywordType.FunctionKeyword);
             KeywordList.Add("USER_NAME", KeywordType.FunctionKeyword);
+            KeywordList.Add("USING", KeywordType.OtherKeyword);
             KeywordList.Add("VALUES", KeywordType.OtherKeyword);
             KeywordList.Add("VAR", KeywordType.FunctionKeyword);
             KeywordList.Add("VARBINARY", KeywordType.DataTypeKeyword);

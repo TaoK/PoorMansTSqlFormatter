@@ -35,7 +35,8 @@ namespace PoorMansTSqlFormatterLib
             Instance.Add("RIGHT OUTER JOIN", "RIGHT JOIN");
             Instance.Add("FULL OUTER JOIN", "FULL JOIN");
             Instance.Add("JOIN", "INNER JOIN");
-            Instance.Add("INSERT", "INSERT INTO");
+            //TODO: This is now wrong in MERGE statements... we now need a scope-limitation strategy :(
+            //Instance.Add("INSERT", "INSERT INTO");
             Instance.Add("TRAN", "TRANSACTION");
             Instance.Add("BEGIN TRAN", "BEGIN TRANSACTION");
             Instance.Add("COMMIT TRAN", "COMMIT TRANSACTION");

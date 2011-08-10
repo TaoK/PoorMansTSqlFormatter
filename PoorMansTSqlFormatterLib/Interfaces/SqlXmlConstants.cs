@@ -81,7 +81,15 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_CONTAINER_GENERALCONTENT = "ContainerContentBody";
         public const string ENAME_CONTAINER_CLOSE = "ContainerClose";
         public const string ENAME_SELECTIONTARGET = "SelectionTarget";
+        public const string ENAME_MERGE_CLAUSE = "MergeClause";
+        public const string ENAME_MERGE_TARGET = "MergeTarget";
+        public const string ENAME_MERGE_USING = "MergeUsing";
+        public const string ENAME_MERGE_CONDITION = "MergeCondition";
+        public const string ENAME_MERGE_WHEN = "MergeWhen";
+        public const string ENAME_MERGE_THEN = "MergeThen";
+        public const string ENAME_MERGE_ACTION = "MergeAction";
 
+        public const string ENAME_PSEUDONAME = "PseudoName";
         public const string ENAME_WHITESPACE = "WhiteSpace";
         public const string ENAME_OTHERNODE = "Other";
         public const string ENAME_COMMENT_SINGLELINE = "SingleLineComment";

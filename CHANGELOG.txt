@@ -1,5 +1,12 @@
 Poor Man's T-SQL Formatter change log
 
+Version 1.0.1: 
+--------------
+ - Added MERGE clause and statement support
+ - Added OUTPUT and OUTPUT ... INTO ... clause support
+ - Corrected INSERT ... EXEC parsing/formatting
+ - Corrected VALUES ... indenting
+
 Version 0.9.13: 
 --------------
  - Added handling of scope resolution operator ("::")

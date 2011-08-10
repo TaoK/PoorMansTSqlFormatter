@@ -117,6 +117,13 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_PERMISSIONS_TARGET:
                 case SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT:
                 case SqlXmlConstants.ENAME_DDL_WITH_CLAUSE:
+                case SqlXmlConstants.ENAME_MERGE_CLAUSE:
+                case SqlXmlConstants.ENAME_MERGE_TARGET:
+                case SqlXmlConstants.ENAME_MERGE_USING:
+                case SqlXmlConstants.ENAME_MERGE_CONDITION:
+                case SqlXmlConstants.ENAME_MERGE_WHEN:
+                case SqlXmlConstants.ENAME_MERGE_THEN:
+                case SqlXmlConstants.ENAME_MERGE_ACTION:
                     foreach (XmlNode childNode in contentElement.ChildNodes)
                     {
                         switch (childNode.NodeType)
@@ -171,6 +178,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_OTHERKEYWORD:
                 case SqlXmlConstants.ENAME_DATATYPE_KEYWORD:
                 case SqlXmlConstants.ENAME_DDL_RETURNS:
+                case SqlXmlConstants.ENAME_PSEUDONAME:
                     state.AddOutputContent(contentElement.InnerText, Interfaces.SqlHtmlConstants.CLASS_KEYWORD);
                     break;
 
@@ -242,6 +250,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     case SqlTokenType.Number:
                     case SqlTokenType.BinaryValue:
                     case SqlTokenType.MonetaryValue:
+                    case SqlTokenType.PseudoName:
                         outString.Append(entry.Value);
                         break;
                     default:

@@ -42,6 +42,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         MonetaryValue,
         Number,
         BinaryValue,
-        OtherOperator
+        OtherOperator,
+        PseudoName
     }
 }

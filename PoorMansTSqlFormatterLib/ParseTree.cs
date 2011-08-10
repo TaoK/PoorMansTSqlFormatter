@@ -132,6 +132,16 @@ namespace PoorMansTSqlFormatterLib
             }
         }
 
+        internal void EscapeMergeAction()
+        {
+            if (PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
+                    && PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
+                    && PathNameMatches(2, SqlXmlConstants.ENAME_MERGE_ACTION)
+                    && HasNonWhiteSpaceNonCommentContent(CurrentContainer)
+                )
+                MoveToAncestorContainer(4);
+        }
+
         internal void EscapePartialStatementContainers()
         {
             if (PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
@@ -161,6 +171,9 @@ namespace PoorMansTSqlFormatterLib
                         )
                 )
                 MoveToAncestorContainer(3);
+            else if (PathNameMatches(0, SqlXmlConstants.ENAME_MERGE_WHEN))
+                MoveToAncestorContainer(2);
+
         }
 
         internal void EscapeAnySingleOrPartialStatementContainers()
@@ -170,6 +183,7 @@ namespace PoorMansTSqlFormatterLib
 
             if (HasNonWhiteSpaceNonCommentContent(CurrentContainer))
             {
+                EscapeMergeAction();
                 EscapePartialStatementContainers();
 
                 while (true)
@@ -308,6 +322,7 @@ namespace PoorMansTSqlFormatterLib
         {
             EscapeAnySelectionTarget();
             EscapeAnyBetweenConditions();
+            EscapePartialStatementContainers();
 
             if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
                 && HasNonWhiteSpaceNonSingleCommentContent(CurrentContainer)

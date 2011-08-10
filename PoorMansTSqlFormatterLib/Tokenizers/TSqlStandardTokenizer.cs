@@ -176,6 +176,19 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                             }
                             break;
 
+                        case SqlTokenizationType.SingleDollar:
+                            currentTokenValue.Append('$');
+                            currentTokenValue.Append(currentCharacter);
+
+                            if ((currentCharacter >= 'A' && currentCharacter <= 'Z')
+                                || (currentCharacter >= 'a' && currentCharacter <= 'z')
+                                )
+                                currentTokenizationType = SqlTokenizationType.PseudoName;
+                            else
+                                currentTokenizationType = SqlTokenizationType.MonetaryValue;
+
+                            break;
+
                         case SqlTokenizationType.MonetaryValue:
                             if (currentCharacter >= '0' && currentCharacter <= '9')
                             {
@@ -291,6 +304,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                             break;
 
                         case SqlTokenizationType.OtherNode:
+                        case SqlTokenizationType.PseudoName:
                             if (IsNonWordCharacter(currentCharacter))
                             {
                                 CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
@@ -580,6 +594,10 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             {
                 currentTokenizationType = SqlTokenizationType.SingleHyphen;
             }
+            else if (currentCharacter == '$')
+            {
+                currentTokenizationType = SqlTokenizationType.SingleDollar;
+            }
             else if (currentCharacter == '/')
             {
                 currentTokenizationType = SqlTokenizationType.SingleSlash;
@@ -681,12 +699,20 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                     tokenContainer.Add(new Token(SqlTokenType.OtherNode, currentValue.ToString()));
                     break;
 
+                case SqlTokenizationType.PseudoName:
+                    tokenContainer.Add(new Token(SqlTokenType.PseudoName, currentValue.ToString()));
+                    break;
+
                 case SqlTokenizationType.SingleLineComment:
                     tokenContainer.Add(new Token(SqlTokenType.SingleLineComment, currentValue.ToString()));
                     break;
 
                 case SqlTokenizationType.SingleHyphen:
                     tokenContainer.Add(new Token(SqlTokenType.OtherOperator, "-"));
+                    break;
+
+                case SqlTokenizationType.SingleDollar:
+                    tokenContainer.Add(new Token(SqlTokenType.MonetaryValue, "$"));
                     break;
 
                 case SqlTokenizationType.SingleSlash:
@@ -777,9 +803,11 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             MonetaryValue,
             DecimalValue,
             FloatValue,
+            PseudoName,
 
             //temporary types
             SingleAsterisk,
+            SingleDollar,
             SingleHyphen,
             SingleSlash,
             SingleN,

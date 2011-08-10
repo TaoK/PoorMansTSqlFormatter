@@ -66,6 +66,8 @@
     <Content Include="Data\InputSql\23_ReparsingInconsistency.txt" />
     <Content Include="Data\InputSql\21_DDL_Permissions.txt" />
     <Content Include="Data\InputSql\22_DDL_WithClauses.txt" />
+    <Content Include="Data\InputSql\24_InsertsAndOutputs.txt" />
+    <Content Include="Data\InputSql\25_Merges.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">
