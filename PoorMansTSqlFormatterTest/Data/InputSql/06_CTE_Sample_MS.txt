@@ -21,3 +21,18 @@ FROM EmployeeDemo AS O
 JOIN Paths AS P 
    ON O.EmployeeID = P.EmployeeID
 GO
+
+--similar sample, with 2 CTEs in the same query
+WITH FirstCTE
+AS (
+SELECT 1 AS FirstColumn
+),
+SecondCTE (AnotherColumn)
+AS (
+SELECT 2
+)
+SELECT * FROM FirstCTE
+UNION 
+SELECT * FROM SecondCTE
+GO
+

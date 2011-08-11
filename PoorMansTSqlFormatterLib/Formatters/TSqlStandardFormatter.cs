@@ -185,6 +185,11 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     state.DecrementIndent();
                     break;
 
+                case SqlXmlConstants.ENAME_CTE_ALIAS:
+                    state.UnIndentInitialBreak = true;
+                    ProcessSqlNodeList(contentElement.SelectNodes("*"), state);
+                    break;
+
                 case SqlXmlConstants.ENAME_ELSE_CLAUSE:
                     ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_CONTAINER_OPEN), state.DecrementIndent());
                     ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_CONTAINER_SINGLESTATEMENT), state.IncrementIndent());

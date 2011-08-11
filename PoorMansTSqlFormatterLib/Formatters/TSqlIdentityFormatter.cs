@@ -95,6 +95,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_BETWEEN_LOWERBOUND:
                 case SqlXmlConstants.ENAME_BETWEEN_UPPERBOUND:
                 case SqlXmlConstants.ENAME_CTE_WITH_CLAUSE:
+                case SqlXmlConstants.ENAME_CTE_ALIAS:
                 case SqlXmlConstants.ENAME_CTE_AS_BLOCK:
                 case SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK:
                 case SqlXmlConstants.ENAME_CURSOR_FOR_OPTIONS:

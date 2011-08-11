@@ -6,6 +6,7 @@ Version 1.0.1:
  - Added OUTPUT and OUTPUT ... INTO ... clause support
  - Corrected INSERT ... EXEC parsing/formatting
  - Corrected VALUES ... indenting
+ - Corrected handling of multiple CTEs in a single statement
 
 Version 0.9.13: 
 --------------

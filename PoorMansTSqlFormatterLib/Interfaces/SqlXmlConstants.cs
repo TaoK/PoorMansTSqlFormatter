@@ -49,6 +49,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_CURSOR_FOR_BLOCK = "CursorForBlock";
         public const string ENAME_CURSOR_FOR_OPTIONS = "CursorForOptions";
         public const string ENAME_CTE_WITH_CLAUSE = "CTEWithClause";
+        public const string ENAME_CTE_ALIAS = "CTEAlias";
         public const string ENAME_CTE_AS_BLOCK = "CTEAsBlock";
         public const string ENAME_BEGIN_TRANSACTION = "BeginTransaction";
         public const string ENAME_COMMIT_TRANSACTION = "CommitTransaction";

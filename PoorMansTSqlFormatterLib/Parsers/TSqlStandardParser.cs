@@ -93,7 +93,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                )
                             );
 
-                        if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                        if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_CTE_ALIAS)
                             && sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CTE_WITH_CLAUSE)
                             )
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_DDL_PARENS, "");
@@ -146,7 +146,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 && sqlTree.CurrentContainer.ParentNode.ParentNode.ParentNode.Name.Equals(SqlXmlConstants.ENAME_CTE_AS_BLOCK)
                                 )
                         {
-                            sqlTree.MoveToAncestorContainer(5, SqlXmlConstants.ENAME_SQL_CLAUSE);
+                            sqlTree.MoveToAncestorContainer(4, SqlXmlConstants.ENAME_CTE_WITH_CLAUSE);
+                            sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT, "");
                         }
                         else if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
                                 && (
@@ -311,7 +312,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 sqlTree.StartNewContainer(SqlXmlConstants.ENAME_DDL_AS_BLOCK, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
                                 sqlTree.StartNewStatement();
                             }
-                            else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                            else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CTE_ALIAS)
                                 && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_CTE_WITH_CLAUSE)
                                 )
                             {
@@ -771,10 +772,12 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
                             if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE))
                             {
-                                bool isPrecededByInsertStatement = false;
                                 XmlElement firstStatementClause = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer.ParentNode);
 
-                                isPrecededByInsertStatement = ContentStartsWithKeyword(firstStatementClause, "INSERT");
+                                bool isPrecededByInsertStatement = false;
+                                foreach (XmlElement clause in sqlTree.CurrentContainer.ParentNode.SelectNodes(SqlXmlConstants.ENAME_SQL_CLAUSE))
+                                    if (ContentStartsWithKeyword(clause, "INSERT"))
+                                        isPrecededByInsertStatement = true;
 
                                 if (isPrecededByInsertStatement)
                                 {
@@ -922,7 +925,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             {
                                 sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CTE_WITH_CLAUSE, "");
                                 sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value, sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_OPEN, ""));
-                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT, "");
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CTE_ALIAS, "");
                             }
                             else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
                                 && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_PERMISSIONS_RECIPIENT)
@@ -1030,6 +1033,20 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         break;
 
+                    case SqlTokenType.Comma:
+                        bool isCTESplitter = (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                            && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_CTE_WITH_CLAUSE)
+                            );
+
+                        sqlTree.SaveNewElement(GetEquivalentSqlNodeName(token.Type), token.Value);
+
+                        if (isCTESplitter)
+                        {
+                            sqlTree.MoveToAncestorContainer(1, SqlXmlConstants.ENAME_CTE_WITH_CLAUSE);
+                            sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CTE_ALIAS, "");
+                        }
+                        break;
+
                     case SqlTokenType.MultiLineComment:
                     case SqlTokenType.SingleLineComment:
                     case SqlTokenType.WhiteSpace:
@@ -1045,7 +1062,6 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
                     case SqlTokenType.BracketQuotedName:
                     case SqlTokenType.Asterisk:
-                    case SqlTokenType.Comma:
                     case SqlTokenType.Period:
                     case SqlTokenType.NationalString:
                     case SqlTokenType.String:

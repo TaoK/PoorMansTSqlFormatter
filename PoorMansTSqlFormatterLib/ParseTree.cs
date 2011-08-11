@@ -173,7 +173,10 @@ namespace PoorMansTSqlFormatterLib
                 MoveToAncestorContainer(3);
             else if (PathNameMatches(0, SqlXmlConstants.ENAME_MERGE_WHEN))
                 MoveToAncestorContainer(2);
-
+            else if (PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                && PathNameMatches(1, SqlXmlConstants.ENAME_CTE_WITH_CLAUSE)
+                )
+                MoveToAncestorContainer(2);
         }
 
         internal void EscapeAnySingleOrPartialStatementContainers()
