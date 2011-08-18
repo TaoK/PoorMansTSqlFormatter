@@ -1785,6 +1785,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("FULLTEXTCATALOGPROPERTY", KeywordType.FunctionKeyword);
             KeywordList.Add("FULLTEXTSERVICEPROPERTY", KeywordType.FunctionKeyword);
             KeywordList.Add("FUNCTION", KeywordType.OtherKeyword);
+            KeywordList.Add("GEOGRAPHY", KeywordType.DataTypeKeyword);
             KeywordList.Add("GETANCESTOR", KeywordType.FunctionKeyword);
             KeywordList.Add("GETANSINULL", KeywordType.FunctionKeyword);
             KeywordList.Add("GETDATE", KeywordType.FunctionKeyword);

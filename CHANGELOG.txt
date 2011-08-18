@@ -9,7 +9,7 @@ Version 1.0.1:
  - Corrected handling of multiple CTEs in a single statement
  - Corrected handling of AS in stored procedure argument data type specification
  - Added handling of ISO data type synonyms, with keyword consistency correction to Sql Server datatypes
- - Added missing SQL Server 2008 datatypes, Date/Time-related and HierarchyID
+ - Added missing SQL Server 2008 datatypes, Date/Time-related, HierarchyID, and Geography
 
 Version 0.9.13: 
 --------------
