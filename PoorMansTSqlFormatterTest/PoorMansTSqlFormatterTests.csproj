@@ -68,6 +68,7 @@
     <Content Include="Data\InputSql\22_DDL_WithClauses.txt" />
     <Content Include="Data\InputSql\24_InsertsAndOutputs.txt" />
     <Content Include="Data\InputSql\25_Merges.txt" />
+    <Content Include="Data\InputSql\26_DataTypesAndSynonyms.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">

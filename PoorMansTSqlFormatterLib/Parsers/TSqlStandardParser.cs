@@ -300,8 +300,25 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         {
                             if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK))
                             {
-                                sqlTree.StartNewContainer(SqlXmlConstants.ENAME_DDL_AS_BLOCK, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
-                                sqlTree.StartNewStatement();
+                                KeywordType nextKeywordType;
+                                bool isDataTypeDefinition = false;
+                                if (significantTokenPositions.Count > 1
+                                    && KeywordList.TryGetValue(tokenList[significantTokenPositions[1]].Value, out nextKeywordType)
+                                    )
+                                    if (nextKeywordType == KeywordType.DataTypeKeyword)
+                                        isDataTypeDefinition = true;
+
+                                if (isDataTypeDefinition)
+                                {
+                                    //this is actually a data type declaration (redundant "AS"...), save as regular token.
+                                    sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
+                                }
+                                else
+                                {
+                                    //this is the start of the object content definition
+                                    sqlTree.StartNewContainer(SqlXmlConstants.ENAME_DDL_AS_BLOCK, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                    sqlTree.StartNewStatement();
+                                }
                             }
                             else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
                                 && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_DDL_WITH_CLAUSE)
@@ -749,6 +766,43 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         {
                             sqlTree.ConsiderStartingNewStatement();
                             sqlTree.ConsiderStartingNewClause();
+                            ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, 2);
+                        }
+                        else if (significantTokensString.StartsWith("NATIONAL CHARACTER VARYING "))
+                        {
+                            ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, 3);
+                        }
+                        else if (significantTokensString.StartsWith("NATIONAL CHAR VARYING "))
+                        {
+                            ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, 3);
+                        }
+                        else if (significantTokensString.StartsWith("BINARY VARYING "))
+                        {
+                            //TODO: Figure out how to handle "Compound Keyword Datatypes" so they are still correctly highlighted
+                            ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, 2);
+                        }
+                        else if (significantTokensString.StartsWith("CHAR VARYING "))
+                        {
+                            ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, 2);
+                        }
+                        else if (significantTokensString.StartsWith("CHARACTER VARYING "))
+                        {
+                            ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, 2);
+                        }
+                        else if (significantTokensString.StartsWith("DOUBLE PRECISION "))
+                        {
+                            ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, 2);
+                        }
+                        else if (significantTokensString.StartsWith("NATIONAL CHARACTER "))
+                        {
+                            ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, 2);
+                        }
+                        else if (significantTokensString.StartsWith("NATIONAL CHAR "))
+                        {
+                            ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, 2);
+                        }
+                        else if (significantTokensString.StartsWith("NATIONAL TEXT "))
+                        {
                             ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, 2);
                         }
                         else if (significantTokensString.StartsWith("INSERT "))
@@ -1391,21 +1445,34 @@ namespace PoorMansTSqlFormatterLib.Parsers
             XmlNode currentNode = sqlTree.CurrentContainer.LastChild;
             while (currentNode != null)
             {
-                if (currentNode.Name.Equals(SqlXmlConstants.ENAME_OTHERNODE)
-                        || currentNode.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
+                if (currentNode.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
                         || currentNode.Name.Equals(SqlXmlConstants.ENAME_DATATYPE_KEYWORD)
+                        || currentNode.Name.Equals(SqlXmlConstants.ENAME_COMPOUNDKEYWORD)
                         )
                 {
-                    string uppercaseText = currentNode.InnerText.ToUpper();
+                    string uppercaseText = null;
+                    if (currentNode.Name.Equals(SqlXmlConstants.ENAME_COMPOUNDKEYWORD))
+                        uppercaseText = currentNode.Attributes[SqlXmlConstants.ANAME_SIMPLETEXT].Value;
+                    else
+                        uppercaseText = currentNode.InnerText.ToUpper();
+
                     return (
                         uppercaseText.Equals("NVARCHAR")
                         || uppercaseText.Equals("VARCHAR")
                         || uppercaseText.Equals("DECIMAL")
+                        || uppercaseText.Equals("DEC")
                         || uppercaseText.Equals("NUMERIC")
                         || uppercaseText.Equals("VARBINARY")
                         || uppercaseText.Equals("DEFAULT")
                         || uppercaseText.Equals("IDENTITY")
                         || uppercaseText.Equals("XML")
+                        || uppercaseText.EndsWith("VARYING")
+                        || uppercaseText.EndsWith("CHAR")
+                        || uppercaseText.EndsWith("CHARACTER")
+                        || uppercaseText.Equals("FLOAT")
+                        || uppercaseText.Equals("DATETIMEOFFSET")
+                        || uppercaseText.Equals("DATETIME2")
+                        || uppercaseText.Equals("TIME")
                         );
                 }
                 else if (ParseTree.IsCommentOrWhiteSpace(currentNode.Name))
@@ -1575,6 +1642,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("CATALOG", KeywordType.OtherKeyword);
             KeywordList.Add("CEILING", KeywordType.FunctionKeyword);
             KeywordList.Add("CHAR", KeywordType.DataTypeKeyword);
+            KeywordList.Add("CHARACTER", KeywordType.DataTypeKeyword);
             KeywordList.Add("CHARINDEX", KeywordType.FunctionKeyword);
             KeywordList.Add("CHECK", KeywordType.OtherKeyword);
             KeywordList.Add("CHECKALLOC", KeywordType.OtherKeyword);
@@ -1634,8 +1702,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("DATEFIRST", KeywordType.OtherKeyword);
             KeywordList.Add("DATEFORMAT", KeywordType.OtherKeyword);
             KeywordList.Add("DATENAME", KeywordType.FunctionKeyword);
+            KeywordList.Add("DATE", KeywordType.DataTypeKeyword);
             KeywordList.Add("DATEPART", KeywordType.FunctionKeyword);
             KeywordList.Add("DATETIME", KeywordType.DataTypeKeyword);
+            KeywordList.Add("DATETIME2", KeywordType.DataTypeKeyword);
+            KeywordList.Add("DATETIMEOFFSET", KeywordType.DataTypeKeyword);
             KeywordList.Add("DAY", KeywordType.FunctionKeyword);
             KeywordList.Add("DBCC", KeywordType.OtherKeyword);
             KeywordList.Add("DBREINDEX", KeywordType.OtherKeyword);
@@ -1644,6 +1715,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("DB_NAME", KeywordType.FunctionKeyword);
             KeywordList.Add("DEADLOCK_PRIORITY", KeywordType.OtherKeyword);
             KeywordList.Add("DEALLOCATE", KeywordType.OtherKeyword);
+            KeywordList.Add("DEC", KeywordType.DataTypeKeyword);
             KeywordList.Add("DECIMAL", KeywordType.DataTypeKeyword);
             KeywordList.Add("DECLARE", KeywordType.OtherKeyword);
             KeywordList.Add("DEFAULT", KeywordType.OtherKeyword);
@@ -1658,6 +1730,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("DISK", KeywordType.OtherKeyword);
             KeywordList.Add("DISTINCT", KeywordType.OtherKeyword);
             KeywordList.Add("DISTRIBUTED", KeywordType.OtherKeyword);
+            KeywordList.Add("DOUBLE", KeywordType.DataTypeKeyword);
             KeywordList.Add("DROP", KeywordType.OtherKeyword);
             KeywordList.Add("DROPCLEANBUFFERS", KeywordType.OtherKeyword);
             KeywordList.Add("DUMMY", KeywordType.OtherKeyword);
@@ -1712,8 +1785,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("FULLTEXTCATALOGPROPERTY", KeywordType.FunctionKeyword);
             KeywordList.Add("FULLTEXTSERVICEPROPERTY", KeywordType.FunctionKeyword);
             KeywordList.Add("FUNCTION", KeywordType.OtherKeyword);
+            KeywordList.Add("GETANCESTOR", KeywordType.FunctionKeyword);
             KeywordList.Add("GETANSINULL", KeywordType.FunctionKeyword);
             KeywordList.Add("GETDATE", KeywordType.FunctionKeyword);
+            KeywordList.Add("GETDESCENDANT", KeywordType.FunctionKeyword);
+            KeywordList.Add("GETLEVEL", KeywordType.FunctionKeyword);
+            KeywordList.Add("GETREPARENTEDVALUE", KeywordType.FunctionKeyword);
+            KeywordList.Add("GETROOT", KeywordType.FunctionKeyword);
             KeywordList.Add("GLOBAL", KeywordType.OtherKeyword);
             KeywordList.Add("GO", KeywordType.OtherKeyword);
             KeywordList.Add("GOTO", KeywordType.OtherKeyword);
@@ -1723,6 +1801,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("HASH", KeywordType.OtherKeyword);
             KeywordList.Add("HAVING", KeywordType.OtherKeyword);
             KeywordList.Add("HELP", KeywordType.OtherKeyword);
+            KeywordList.Add("HIERARCHYID", KeywordType.DataTypeKeyword);
             KeywordList.Add("HOLDLOCK", KeywordType.OtherKeyword);
             KeywordList.Add("HOST_ID", KeywordType.FunctionKeyword);
             KeywordList.Add("HOST_NAME", KeywordType.FunctionKeyword);
@@ -1748,11 +1827,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("INSENSITIVE", KeywordType.DataTypeKeyword);
             KeywordList.Add("INSERT", KeywordType.OtherKeyword);
             KeywordList.Add("INT", KeywordType.DataTypeKeyword);
+            KeywordList.Add("INTEGER", KeywordType.DataTypeKeyword);
             KeywordList.Add("INTERSECT", KeywordType.OtherKeyword);
             KeywordList.Add("INTO", KeywordType.OtherKeyword);
             KeywordList.Add("IO", KeywordType.OtherKeyword);
             KeywordList.Add("IS", KeywordType.OtherKeyword);
             KeywordList.Add("ISDATE", KeywordType.FunctionKeyword);
+            KeywordList.Add("ISDESCENDANTOF", KeywordType.FunctionKeyword);
             KeywordList.Add("ISNULL", KeywordType.FunctionKeyword);
             KeywordList.Add("ISNUMERIC", KeywordType.FunctionKeyword);
             KeywordList.Add("ISOLATION", KeywordType.OtherKeyword);
@@ -1789,14 +1870,17 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("MERGE", KeywordType.OtherKeyword);
             KeywordList.Add("MIN", KeywordType.FunctionKeyword);
             KeywordList.Add("MIRROREXIT", KeywordType.OtherKeyword);
+            KeywordList.Add("MODIFY", KeywordType.FunctionKeyword);
             KeywordList.Add("MONEY", KeywordType.DataTypeKeyword);
             KeywordList.Add("MONTH", KeywordType.FunctionKeyword);
             KeywordList.Add("NAME", KeywordType.OtherKeyword);
+            KeywordList.Add("NATIONAL", KeywordType.DataTypeKeyword);
             KeywordList.Add("NCHAR", KeywordType.DataTypeKeyword);
             KeywordList.Add("NEWID", KeywordType.FunctionKeyword);
             KeywordList.Add("NEXT", KeywordType.OtherKeyword);
             KeywordList.Add("NOCHECK", KeywordType.OtherKeyword);
             KeywordList.Add("NOCOUNT", KeywordType.OtherKeyword);
+            KeywordList.Add("NODES", KeywordType.FunctionKeyword);
             KeywordList.Add("NOEXEC", KeywordType.OtherKeyword);
             KeywordList.Add("NOEXPAND", KeywordType.OtherKeyword);
             KeywordList.Add("NOLOCK", KeywordType.OtherKeyword);
@@ -1838,6 +1922,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("OWNER", KeywordType.OtherKeyword);
             KeywordList.Add("PAGLOCK", KeywordType.OtherKeyword);
             KeywordList.Add("PARAMETERIZATION", KeywordType.OtherKeyword);
+            KeywordList.Add("PARSE", KeywordType.FunctionKeyword);
             KeywordList.Add("PARSENAME", KeywordType.FunctionKeyword);
             KeywordList.Add("PARSEONLY", KeywordType.OtherKeyword);
             KeywordList.Add("PARTITION", KeywordType.OtherKeyword);
@@ -1863,6 +1948,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("PROCID", KeywordType.OtherKeyword);
             KeywordList.Add("PROFILE", KeywordType.OtherKeyword);
             KeywordList.Add("PUBLIC", KeywordType.OtherKeyword);
+            KeywordList.Add("QUERY", KeywordType.FunctionKeyword);
             KeywordList.Add("QUERY_GOVERNOR_COST_LIMIT", KeywordType.OtherKeyword);
             KeywordList.Add("QUEUE", KeywordType.OtherKeyword);
             KeywordList.Add("QUOTED_IDENTIFIER", KeywordType.OtherKeyword);
@@ -1902,6 +1988,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("ROWCOUNT", KeywordType.OtherKeyword);
             KeywordList.Add("ROWGUIDCOL", KeywordType.OtherKeyword);
             KeywordList.Add("ROWLOCK", KeywordType.OtherKeyword);
+            KeywordList.Add("ROWVERSION", KeywordType.DataTypeKeyword);
             KeywordList.Add("RTRIM", KeywordType.FunctionKeyword);
             KeywordList.Add("RULE", KeywordType.OtherKeyword);
             KeywordList.Add("SAVE", KeywordType.OtherKeyword);
@@ -1972,11 +2059,12 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("TEXTSIZE", KeywordType.OtherKeyword);
             KeywordList.Add("TEXTVALID", KeywordType.FunctionKeyword);
             KeywordList.Add("THEN", KeywordType.OtherKeyword);
-            KeywordList.Add("TIME", KeywordType.OtherKeyword);
+            KeywordList.Add("TIME", KeywordType.DataTypeKeyword); //not strictly-speaking true, can also be keyword in WAITFOR TIME
             KeywordList.Add("TIMESTAMP", KeywordType.DataTypeKeyword);
             KeywordList.Add("TINYINT", KeywordType.DataTypeKeyword);
             KeywordList.Add("TO", KeywordType.OtherKeyword);
             KeywordList.Add("TOP", KeywordType.OtherKeyword);
+            KeywordList.Add("TOSTRING", KeywordType.FunctionKeyword);
             KeywordList.Add("TRACEOFF", KeywordType.OtherKeyword);
             KeywordList.Add("TRACEON", KeywordType.OtherKeyword);
             KeywordList.Add("TRACESTATUS", KeywordType.OtherKeyword);
@@ -2006,11 +2094,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("USER_ID", KeywordType.FunctionKeyword);
             KeywordList.Add("USER_NAME", KeywordType.FunctionKeyword);
             KeywordList.Add("USING", KeywordType.OtherKeyword);
+            KeywordList.Add("VALUE", KeywordType.FunctionKeyword);
             KeywordList.Add("VALUES", KeywordType.OtherKeyword);
             KeywordList.Add("VAR", KeywordType.FunctionKeyword);
             KeywordList.Add("VARBINARY", KeywordType.DataTypeKeyword);
             KeywordList.Add("VARCHAR", KeywordType.DataTypeKeyword);
             KeywordList.Add("VARP", KeywordType.FunctionKeyword);
+            KeywordList.Add("VARYING", KeywordType.OtherKeyword);
             KeywordList.Add("VIEW", KeywordType.OtherKeyword);
             KeywordList.Add("VIEWS", KeywordType.OtherKeyword);
             KeywordList.Add("WAITFOR", KeywordType.OtherKeyword);
@@ -2019,6 +2109,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("WHILE", KeywordType.OtherKeyword);
             KeywordList.Add("WITH", KeywordType.OtherKeyword);
             KeywordList.Add("WORK", KeywordType.OtherKeyword);
+            KeywordList.Add("WRITE", KeywordType.FunctionKeyword);
             KeywordList.Add("WRITETEXT", KeywordType.OtherKeyword);
             KeywordList.Add("XACT_ABORT", KeywordType.OtherKeyword);
             KeywordList.Add("XLOCK", KeywordType.OtherKeyword);
