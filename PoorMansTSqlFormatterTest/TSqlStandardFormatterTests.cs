@@ -47,12 +47,13 @@ namespace PoorMansTSqlFormatterTests
             _treeFormatter.HTMLColoring = false;
         }
 
-        string TestDataFolder { get { return Utils.GetTestContentFolder("InputSql"); } }
+        string InputDataFolder { get { return Utils.GetTestContentFolder("InputSql"); } }
+        string FormattedDataFolder { get { return Utils.GetTestContentFolder("StandardFormatSql"); } }
 
         [TestMethod]
         public void CheckThatReformattingOutputSqlYieldsSameSql()
         {
-            foreach (string inputSQL in Utils.FolderTextFileIterator(TestDataFolder))
+            foreach (string inputSQL in Utils.FolderTextFileIterator(InputDataFolder))
             {
                 ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
                 XmlDocument parsed = _parser.ParseSQL(tokenized);
@@ -68,7 +69,7 @@ namespace PoorMansTSqlFormatterTests
         [TestMethod]
         public void CheckThatReparsingOutputSqlYieldsEquivalentTree()
         {
-            foreach (string inputSQL in Utils.FolderTextFileIterator(TestDataFolder))
+            foreach (string inputSQL in Utils.FolderTextFileIterator(InputDataFolder))
             {
                 ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
                 XmlDocument parsed = _parser.ParseSQL(tokenized);
@@ -81,5 +82,22 @@ namespace PoorMansTSqlFormatterTests
                     Assert.AreEqual<string>(parsed.OuterXml.ToUpper(), parsedAgain.OuterXml.ToUpper(), "parsed SQL trees should be the same");
             }
         }
+
+        [TestMethod]
+        public void CheckThatStandardOutputSqlMatchesExpectedStandardOutputSql()
+        {
+            foreach (FileInfo expectedFormatFile in new DirectoryInfo(FormattedDataFolder).GetFiles())
+            {
+                string expectedSql = File.ReadAllText(expectedFormatFile.FullName);
+                string inputSql = File.ReadAllText(Path.Combine(InputDataFolder, expectedFormatFile.Name));
+
+                ITokenList tokenized = _tokenizer.TokenizeSQL(inputSql);
+                XmlDocument parsed = _parser.ParseSQL(tokenized);
+                string formatted = _treeFormatter.FormatSQLTree(parsed);
+
+                Assert.AreEqual<string>(expectedSql, formatted, string.Format("Formatted Sql does not match expected result for file {0}", expectedFormatFile.Name));
+            }
+        }
+
     }
 }

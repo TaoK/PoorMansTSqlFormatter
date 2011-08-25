@@ -1,0 +1,68 @@
+﻿<SqlRoot><SqlStatement><Clause><IfStatement><ContainerOpen><OtherKeyword>if</OtherKeyword></ContainerOpen><BooleanExpression><WhiteSpace> </WhiteSpace><OtherOperator>exists</OtherOperator><WhiteSpace> </WhiteSpace><ExpressionParens><Clause><OtherKeyword>select</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>from</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>dbo</Other><Period>.</Period><Other>sysobjects</Other><WhiteSpace> </WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>where</OtherKeyword><WhiteSpace> </WhiteSpace><Other>id</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>object_id</FunctionKeyword><FunctionParens><String>MyTestProc</String></FunctionParens><WhiteSpace> </WhiteSpace><And><OtherKeyword>and</OtherKeyword></And><WhiteSpace> </WhiteSpace><FunctionKeyword>OBJECTPROPERTY</FunctionKeyword><FunctionParens><Other>id</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><NationalString>IsProcedure</NationalString></FunctionParens><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue></Clause></ExpressionParens><WhiteSpace>
+</WhiteSpace></BooleanExpression><ContainerSingleStatementBody><SqlStatement><Clause><OtherKeyword>drop</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>procedure</OtherKeyword><WhiteSpace> </WhiteSpace><Other>MyTestProc</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement></ContainerSingleStatementBody></IfStatement></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+
+</WhiteSpace><Clause><DDLProceduralBlock><OtherKeyword>CREATE</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>PROCEDURE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>MyTestProc</Other><WhiteSpace>
+</WhiteSpace><DDLWith><ContainerOpen><OtherKeyword>WITH</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> 
+</WhiteSpace><OtherKeyword>RECOMPILE</OtherKeyword><WhiteSpace>
+</WhiteSpace></ContainerContentBody></DDLWith><DDLAsBlock><ContainerOpen><OtherKeyword>AS</OtherKeyword></ContainerOpen><ContainerContentBody><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><BeginEndBlock><ContainerOpen><OtherKeyword>BEGIN</OtherKeyword></ContainerOpen><ContainerMultiStatementBody><SqlStatement><WhiteSpace>
+</WhiteSpace><MultiLineComment>
+
+This is where some explanation of the proc's purpose and usage might go.
+
+</MultiLineComment><WhiteSpace>
+
+	</WhiteSpace><SingleLineComment>Set some initial stuff
+</SingleLineComment><WhiteSpace>	</WhiteSpace><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>NOCOUNT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>ON</OtherKeyword><WhiteSpace> 
+	</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>XACT_ABORT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>ON</OtherKeyword><WhiteSpace>
+
+	</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>declare some variables (keep them grouped for clarity)
+</SingleLineComment><WhiteSpace>	</WhiteSpace><Clause><DDLOtherBlock><OtherKeyword>DECLARE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Var1</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>Int</DataTypeKeyword><WhiteSpace>
+	</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><DDLOtherBlock><OtherKeyword>DECLARE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Var2</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>Int</DataTypeKeyword><WhiteSpace>
+	</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><DDLOtherBlock><OtherKeyword>DECLARE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Var3</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>nvarchar</DataTypeKeyword><DDLDetailParens><NumberValue>50</NumberValue></DDLDetailParens><WhiteSpace>
+
+	</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><SingleLineComment>set a variable with SET (groupable)
+</SingleLineComment><WhiteSpace>	</WhiteSpace><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Var3</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><String>Empty</String><WhiteSpace>
+	</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>then set a variable value with SELECT (not groupable)
+</SingleLineComment><WhiteSpace>	</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@DaysAfterDelivery</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>Max</FunctionKeyword><FunctionParens><FunctionKeyword>Convert</FunctionKeyword><FunctionParens><DataTypeKeyword>Int</DataTypeKeyword><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>ParameterValue</Other></FunctionParens></FunctionParens><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>CompanyOrderNotification</Other><WhiteSpace> </WhiteSpace><FunctionParens><OtherKeyword>NOLOCK</OtherKeyword></FunctionParens><WhiteSpace> </WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>WHERE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>CID</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>@CID</Other><WhiteSpace> </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>NotificationID</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>43</NumberValue><WhiteSpace> </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><FunctionKeyword>DATALENGTH</FunctionKeyword><FunctionParens><Other>Notificationtext</Other></FunctionParens><WhiteSpace> </WhiteSpace><OtherOperator>&gt;</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace> </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><FunctionKeyword>IsNumeric</FunctionKeyword><FunctionParens><Other>ParameterValue</Other></FunctionParens><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> </WhiteSpace><SingleLineComment>attach a comment to the end of this
+</SingleLineComment><WhiteSpace>
+	</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>and place another comment before the cursor
+</SingleLineComment><WhiteSpace>	</WhiteSpace><Clause><CursorDeclaration><OtherKeyword>DECLARE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>SomeCursor</Other><WhiteSpace> </WhiteSpace><OtherKeyword>CURSOR</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>READ_ONLY</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>FAST_FORWARD</OtherKeyword><WhiteSpace> 
+	</WhiteSpace><CursorForBlock><ContainerOpen><OtherKeyword>FOR</OtherKeyword></ContainerOpen><ContainerContentBody><SqlStatement><WhiteSpace>
+	</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><BracketQuotedName>Some</BracketQuotedName><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>Things</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>here</Other><WhiteSpace>
+	</WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>SomeTable</Other><WhiteSpace>
+	</WhiteSpace></SelectionTarget></Clause><Clause><CompoundKeyword simpleText="LEFT JOIN"><OtherKeyword>LEFT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>JOIN</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><BracketQuotedName>Some Other Table</BracketQuotedName><WhiteSpace> </WhiteSpace><FunctionParens><OtherKeyword>NOLOCK</OtherKeyword></FunctionParens><WhiteSpace> 
+		</WhiteSpace></SelectionTarget><OtherKeyword>ON</OtherKeyword><WhiteSpace> </WhiteSpace><Other>sometable</Other><Period>.</Period><Other>Col1</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><BracketQuotedName>Some Other Table</BracketQuotedName><Period>.</Period><Other>Col1</Other><WhiteSpace>
+		</WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>sometable</Other><Period>.</Period><Other>Col2</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><BracketQuotedName>Some Other Table</BracketQuotedName><Period>.</Period><Other>Col2</Other><WhiteSpace>
+		
+		</WhiteSpace></Clause></SqlStatement></ContainerContentBody></CursorForBlock></CursorDeclaration></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>OPEN</OtherKeyword><WhiteSpace> </WhiteSpace><Other>SomeCursor</Other><WhiteSpace>
+		
+		</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>FETCH</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>NEXT</OtherKeyword><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>SomeCursor</Other><WhiteSpace>
+		</WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>INTO</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Var1</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@Var2</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@Var3</Other><WhiteSpace>
+		
+		</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><WhileLoop><ContainerOpen><OtherKeyword>WHILE</OtherKeyword></ContainerOpen><BooleanExpression><WhiteSpace> </WhiteSpace><FunctionKeyword>@@FETCH_STATUS</FunctionKeyword><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace>
+		</WhiteSpace></BooleanExpression><ContainerSingleStatementBody><SqlStatement><Clause><BeginEndBlock><ContainerOpen><OtherKeyword>BEGIN</OtherKeyword></ContainerOpen><ContainerMultiStatementBody><SqlStatement><WhiteSpace>
+			</WhiteSpace><SingleLineComment>another comment explaining something
+</SingleLineComment><WhiteSpace>			</WhiteSpace><Clause><OtherKeyword>PRINT</OtherKeyword><WhiteSpace> </WhiteSpace><String>Var 1 is </String><WhiteSpace> </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>Convert</FunctionKeyword><FunctionParens><DataTypeKeyword>NVarChar</DataTypeKeyword><DDLDetailParens><NumberValue>10</NumberValue></DDLDetailParens><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@Var1</Other></FunctionParens><WhiteSpace>
+
+			</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment> A multiline comment on its own 
+			but separated from the previous statement </MultiLineComment><WhiteSpace>
+			
+			</WhiteSpace><MultiLineComment> a multiline comment attached </MultiLineComment><WhiteSpace>
+			</WhiteSpace><Clause><OtherKeyword>PRINT</OtherKeyword><WhiteSpace> </WhiteSpace><String>Var 2 is </String><WhiteSpace> </WhiteSpace><SingleLineComment>mid-statement comment
+</SingleLineComment><WhiteSpace>							</WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>Cast</FunctionKeyword><FunctionParens><Other>@Var2</Other><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><DataTypeKeyword>NVarChar</DataTypeKeyword><DDLDetailParens><NumberValue>10</NumberValue></DDLDetailParens></FunctionParens><WhiteSpace>
+
+			</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>FETCH</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>NEXT</OtherKeyword><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>SomeCursor</Other><WhiteSpace>
+			</WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>INTO</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Var1</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@Var2</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@Var3</Other><WhiteSpace>
+		</WhiteSpace></Clause></SqlStatement></ContainerMultiStatementBody><ContainerClose><OtherKeyword>END</OtherKeyword></ContainerClose></BeginEndBlock><WhiteSpace> </WhiteSpace><MultiLineComment> comment explaining what ends here </MultiLineComment><WhiteSpace>
+		
+		</WhiteSpace></Clause></SqlStatement></ContainerSingleStatementBody></WhileLoop></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>CLOSE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>SomeCursor</Other><WhiteSpace>
+		</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>DEALLOCATE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>SomeCursor</Other><WhiteSpace>
+
+
+	</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>XACT_ABORT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>OFF</OtherKeyword><WhiteSpace>
+	</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>NOCOUNT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>OFF</OtherKeyword><WhiteSpace>
+	
+</WhiteSpace></Clause></SqlStatement></ContainerMultiStatementBody><ContainerClose><OtherKeyword>END</OtherKeyword></ContainerClose></BeginEndBlock><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement></ContainerContentBody></DDLAsBlock></DDLProceduralBlock></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><Clause></Clause></SqlStatement></SqlRoot>

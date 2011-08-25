@@ -1,0 +1,51 @@
+﻿<SqlRoot><SqlStatement><Clause><OtherKeyword>use</OtherKeyword><WhiteSpace> </WhiteSpace><Other>master</Other><Semicolon>;</Semicolon><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>go</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><DDLOtherBlock><OtherKeyword>DECLARE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Test</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>Int</DataTypeKeyword><WhiteSpace>
+</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><CursorDeclaration><OtherKeyword>DECLARE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Test$Me</Other><WhiteSpace> </WhiteSpace><OtherKeyword>SCROLL</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>Cursor</OtherKeyword><WhiteSpace> 
+</WhiteSpace><CursorForBlock><ContainerOpen><OtherKeyword>FOR</OtherKeyword></ContainerOpen><ContainerContentBody><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>One</Other><WhiteSpace> </WhiteSpace></Clause></SqlStatement></ContainerContentBody></CursorForBlock><CursorForOptions><ContainerOpen><OtherKeyword>FOR</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><OtherKeyword>read</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>only</OtherKeyword><WhiteSpace>
+
+
+</WhiteSpace></ContainerContentBody></CursorForOptions></CursorDeclaration></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>OPEN</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Test$Me</Other><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>FETCH</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>NEXT</OtherKeyword><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>Test$Me</Other><WhiteSpace> 
+</WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>INTO</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Test</Other><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><WhileLoop><ContainerOpen><OtherKeyword>WHILE</OtherKeyword></ContainerOpen><BooleanExpression><WhiteSpace> </WhiteSpace><FunctionKeyword>@@FETCH_STATUS</FunctionKeyword><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace>
+</WhiteSpace></BooleanExpression><ContainerSingleStatementBody><SqlStatement><Clause><BeginEndBlock><ContainerOpen><OtherKeyword>BEGIN</OtherKeyword></ContainerOpen><ContainerMultiStatementBody><SqlStatement><WhiteSpace>
+	</WhiteSpace><Clause><OtherKeyword>PRINT</OtherKeyword><WhiteSpace> </WhiteSpace><String>I was here!</String><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>FETCH</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>NEXT</OtherKeyword><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>Test$Me</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>INTO</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Test</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement></ContainerMultiStatementBody><ContainerClose><OtherKeyword>END</OtherKeyword></ContainerClose></BeginEndBlock><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement></ContainerSingleStatementBody></WhileLoop></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>CLOSE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Test$Me</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>DEALLOCATE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Test$Me</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>go</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+
+
+</WhiteSpace><Clause><DDLOtherBlock><OtherKeyword>CREATE</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>TABLE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#CursorFodder</Other><WhiteSpace> </WhiteSpace><DDLParens><Other>One</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>int</DataTypeKeyword><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>Two</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>int</DataTypeKeyword></DDLParens><WhiteSpace>
+
+</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>NOCOUNT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>ON</OtherKeyword><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><CompoundKeyword simpleText="INSERT INTO"><OtherKeyword>INSERT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>INTO</OtherKeyword></CompoundKeyword><WhiteSpace> </WhiteSpace><Other>#CursorFodder</Other><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>VALUES</OtherKeyword><WhiteSpace> </WhiteSpace><DDLParens><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue></DDLParens><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>NOCOUNT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>OFF</OtherKeyword><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><DDLOtherBlock><OtherKeyword>DECLARE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Test2</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>Int</DataTypeKeyword><WhiteSpace>
+</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><CursorDeclaration><OtherKeyword>DECLARE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Test$Me_Again_François</Other><WhiteSpace> </WhiteSpace><OtherKeyword>Cursor</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>OPTIMISTIC</OtherKeyword><WhiteSpace>
+</WhiteSpace><CursorForBlock><ContainerOpen><OtherKeyword>FOR</OtherKeyword></ContainerOpen><ContainerContentBody><SqlStatement><WhiteSpace> </WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>One</Other><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>#CursorFodder</Other><WhiteSpace> 
+</WhiteSpace></SelectionTarget></Clause></SqlStatement></ContainerContentBody></CursorForBlock><CursorForOptions><ContainerOpen><OtherKeyword>FOR</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><OtherKeyword>UPDATE</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>of</OtherKeyword><WhiteSpace> </WhiteSpace><Other>One</Other><WhiteSpace>
+
+
+</WhiteSpace></ContainerContentBody></CursorForOptions></CursorDeclaration></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>OPEN</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Test$Me_Again_François</Other><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>FETCH</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>NEXT</OtherKeyword><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>Test$Me_Again_François</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>INTO</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Test2</Other><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><WhileLoop><ContainerOpen><OtherKeyword>WHILE</OtherKeyword></ContainerOpen><BooleanExpression><WhiteSpace> </WhiteSpace><FunctionKeyword>@@FETCH_STATUS</FunctionKeyword><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace>
+</WhiteSpace></BooleanExpression><ContainerSingleStatementBody><SqlStatement><Clause><BeginEndBlock><ContainerOpen><OtherKeyword>BEGIN</OtherKeyword></ContainerOpen><ContainerMultiStatementBody><SqlStatement><WhiteSpace>
+	</WhiteSpace><Clause><OtherKeyword>PRINT</OtherKeyword><WhiteSpace> </WhiteSpace><String>I was here!</String><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>FETCH</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>NEXT</OtherKeyword><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>Test$Me_Again_François</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>INTO</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Test2</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement></ContainerMultiStatementBody><ContainerClose><OtherKeyword>END</OtherKeyword></ContainerClose></BeginEndBlock><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement></ContainerSingleStatementBody></WhileLoop></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>CLOSE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Test$Me_Again_François</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>DEALLOCATE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Test$Me_Again_François</Other><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>DROP</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>TABLE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#CursorFodder</Other><WhiteSpace> </WhiteSpace></Clause></SqlStatement></SqlRoot>

@@ -1,0 +1,78 @@
+﻿--Examples taken from BOL, specific pages linked from:
+-- http://msdn.microsoft.com/en-us/library/ms187965.aspx
+USE SomeDB;
+
+GRANT VIEW DEFINITION
+	ON ROLE::SomeRole
+	TO SomeUser
+	WITH GRANT OPTION
+GO
+
+GRANT CONTROL
+	ON USER::OneUser
+	TO SomeRole;
+GO
+
+GRANT REFERENCES (SomeColumn)
+	ON OBJECT::SomeSchema.SomeTable
+	TO SomeUser
+	WITH GRANT OPTION;
+GO
+
+GRANT SELECT
+	ON sys.sql_logins
+	TO LuckyUser;
+
+GRANT VIEW SERVER STATE
+	TO LuckyUser;
+GO
+
+GRANT EXECUTE
+	ON XML SCHEMA COLLECTION::SomeSchema.SomeXmlSchemaCollection
+	TO UnluckyUser;
+GO
+
+GRANT CONTROL
+	ON FULLTEXT CATALOG::SearchCatalog1
+	TO JimmyBob
+GO
+
+USE master;
+
+GRANT CONTROL SERVER
+	TO ReallyLuckyUser;
+GO
+
+USE SomeDB;
+
+GRANT CREATE VIEW
+	TO SomeUser
+	WITH GRANT OPTION
+
+--check that subsequent EXECUTE AS is counted as new statement
+EXECUTE AS User = 'tklerks'
+GO
+
+DENY VIEW DEFINITION
+	ON ROLE::SomeRole
+	TO SomeUser
+	CASCADE;
+GO
+
+REVOKE EXECUTE
+	ON OBJECT::SomeSchema.SomeProc
+	TO OverExtendedRole;
+GO
+
+REVOKE REFERENCES (SomeColumn)
+	ON OBJECT::SomeSchema.SomeView
+	FROM ThatOldUser
+	CASCADE;
+GO
+
+EXEC AS User = 'SomeUser'
+
+SELECT 1
+GO
+
+

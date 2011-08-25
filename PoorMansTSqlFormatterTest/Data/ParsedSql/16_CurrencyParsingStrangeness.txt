@@ -1,0 +1,42 @@
+﻿<SqlRoot><SqlStatement><SingleLineComment>Unquoted euros aren't considered part of names/words, like most 
+</SingleLineComment><SingleLineComment> currency symbols recognized
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><MonetaryValue>€0</MonetaryValue><Other>EurosApparently</Other><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>But unquoted dollars ARE part of names, as are other "random" symbols
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><OtherOperator>-</OtherOperator><MonetaryValue>$0</MonetaryValue><Other>DollarIsValidInName$SeeHighOsAreTooº</Other><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>Thankfully, the meaning of commas does not magically change when parsing money.
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><MonetaryValue>$5</MonetaryValue><Comma>,</Comma><NumberValue>420.00</NumberValue><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>ActuallyJust420</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>23.14</NumberValue><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>AnotherNumber</Other><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>Currency indicator processing is broken in T-SQL (2005). It appears to be the 
+</SingleLineComment><SingleLineComment> one place where a distinction is made between spaces and linebreaks. I can't 
+</SingleLineComment><SingleLineComment> (or don't want to) handle this, so I will assume that any whitespace between 
+</SingleLineComment><SingleLineComment> the currency symbol and a subsequent number means a 0-value currency amount and 
+</SingleLineComment><SingleLineComment> a subsequent subtracted number. This is NOT exactly how SQL Server handles it.
+</SingleLineComment><SingleLineComment>This is a currency value
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><MonetaryValue>€</MonetaryValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>This is a currency value
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><MonetaryValue>€.</MonetaryValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>This is a currency value
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><MonetaryValue>€-</MonetaryValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>This is a currency value
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><MonetaryValue>€-.</MonetaryValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>This is a currency value with column name "e"
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><MonetaryValue>€-.0</MonetaryValue><Other>e</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>This is a currency value (but we're NOT going to handle this case as SQL server 
+</SingleLineComment><SingleLineComment> does, for the sake of sanity).
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><MonetaryValue>€</MonetaryValue><WhiteSpace>  </WhiteSpace><OtherOperator>-</OtherOperator><NumberValue>.0</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>This is NOT just a currency value: it's a currency value of 0, minus a decimal 
+</SingleLineComment><SingleLineComment> 0.0. But the only difference between this and the previous version was the line 
+</SingleLineComment><SingleLineComment> break!
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><MonetaryValue>€</MonetaryValue><WhiteSpace>
+</WhiteSpace><OtherOperator>-</OtherOperator><NumberValue>.0</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>This is not valid (for some unknown inconsistent reason)
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><MonetaryValue>€</MonetaryValue><ExpressionParens><OtherOperator>-</OtherOperator><NumberValue>.0</NumberValue></ExpressionParens><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>But this is (and is same as having a linebreak in-between the currency symbol 
+</SingleLineComment><SingleLineComment> and the subsequent number)
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><ExpressionParens><MonetaryValue>€</MonetaryValue></ExpressionParens><OtherOperator>-</OtherOperator><NumberValue>.0</NumberValue><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>This is just a bit of fun
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><MonetaryValue>€.</MonetaryValue><OtherOperator>-</OtherOperator><NumberValue>.0e</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement></SqlRoot>

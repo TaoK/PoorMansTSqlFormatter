@@ -37,13 +37,14 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TSqlIdentityFormatterTests.cs" />
     <Compile Include="TSqlStandardFormatterTests.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\InputSql\10_Unions.txt" />
+    <Content Include="Data\InputSql\10_SetOperators_Union.txt" />
     <Content Include="Data\InputSql\11_MSAccess_Pasted.txt" />
     <Content Include="Data\InputSql\12_NestedIfElse.txt" />
     <Content Include="Data\InputSql\14_CommentPositioning.txt" />
@@ -69,16 +70,52 @@
     <Content Include="Data\InputSql\24_InsertsAndOutputs.txt" />
     <Content Include="Data\InputSql\25_Merges.txt" />
     <Content Include="Data\InputSql\26_DataTypesAndSynonyms.txt" />
+    <Content Include="Data\ParsedSql\01_SimpleTypes_StrangeRules.txt" />
+    <Content Include="Data\ParsedSql\03_SimpleSelect_MS.txt" />
+    <Content Include="Data\ParsedSql\04_MiscProceduralSample_Unstructured.txt" />
+    <Content Include="Data\ParsedSql\05_ComplexDDL.txt" />
+    <Content Include="Data\ParsedSql\06_CTE_Sample_MS.txt" />
+    <Content Include="Data\ParsedSql\07_ServerTakeoverSample_Brent_Ozar.txt" />
+    <Content Include="Data\ParsedSql\08_ComplexBackupDDL_Ola_Hallengren.txt" />
+    <Content Include="Data\ParsedSql\10_SetOperators_Union.txt" />
+    <Content Include="Data\ParsedSql\12_NestedIfElse.txt" />
+    <Content Include="Data\ParsedSql\14_CommentPositioning.txt" />
+    <Content Include="Data\ParsedSql\15_NestedComments.txt" />
+    <Content Include="Data\ParsedSql\16_CurrencyParsingStrangeness.txt" />
+    <Content Include="Data\ParsedSql\17_Cursors.txt" />
+    <Content Include="Data\ParsedSql\19_DMLTrigger.txt" />
+    <Content Include="Data\ParsedSql\20_Joins.txt" />
+    <Content Include="Data\ParsedSql\21_DDL_Permissions.txt" />
+    <Content Include="Data\ParsedSql\22_DDL_WithClauses.txt" />
+    <Content Include="Data\ParsedSql\24_InsertsAndOutputs.txt" />
+    <Content Include="Data\ParsedSql\25_Merges.txt" />
+    <Content Include="Data\ParsedSql\26_DataTypesAndSynonyms.txt" />
+    <Content Include="Data\StandardFormatSql\01_SimpleTypes_StrangeRules.txt" />
+    <Content Include="Data\StandardFormatSql\03_SimpleSelect_MS.txt" />
+    <Content Include="Data\StandardFormatSql\04_MiscProceduralSample_Unstructured.txt" />
+    <Content Include="Data\StandardFormatSql\05_ComplexDDL.txt" />
+    <Content Include="Data\StandardFormatSql\06_CTE_Sample_MS.txt" />
+    <Content Include="Data\StandardFormatSql\07_ServerTakeoverSample_Brent_Ozar.txt" />
+    <Content Include="Data\StandardFormatSql\08_ComplexBackupDDL_Ola_Hallengren.txt" />
+    <Content Include="Data\StandardFormatSql\10_SetOperators_Union.txt" />
+    <Content Include="Data\StandardFormatSql\12_NestedIfElse.txt" />
+    <Content Include="Data\StandardFormatSql\14_CommentPositioning.txt" />
+    <Content Include="Data\StandardFormatSql\15_NestedComments.txt" />
+    <Content Include="Data\StandardFormatSql\16_CurrencyParsingStrangeness.txt" />
+    <Content Include="Data\StandardFormatSql\17_Cursors.txt" />
+    <Content Include="Data\StandardFormatSql\19_DMLTrigger.txt" />
+    <Content Include="Data\StandardFormatSql\20_Joins.txt" />
+    <Content Include="Data\StandardFormatSql\21_DDL_Permissions.txt" />
+    <Content Include="Data\StandardFormatSql\22_DDL_WithClauses.txt" />
+    <Content Include="Data\StandardFormatSql\24_InsertsAndOutputs.txt" />
+    <Content Include="Data\StandardFormatSql\25_Merges.txt" />
+    <Content Include="Data\StandardFormatSql\26_DataTypesAndSynonyms.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">
       <Project>{ADBDFDCA-CAB6-4569-9151-0BD42E65B400}</Project>
       <Name>PoorMansTSqlFormatterLib</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\StandardFormatSql\" />
-    <Folder Include="Data\TokenizedSql\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

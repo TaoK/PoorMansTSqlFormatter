@@ -1,0 +1,64 @@
+﻿<SqlRoot><SqlStatement><SingleLineComment>Selects, execs and inserts
+</SingleLineComment><Clause><DDLOtherBlock><OtherKeyword>DECLARE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Test1</Other><WhiteSpace> </WhiteSpace><OtherKeyword>TABLE</OtherKeyword><WhiteSpace> </WhiteSpace><DDLParens><Other>Value1</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>INT</DataTypeKeyword></DDLParens><WhiteSpace>
+
+</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>INSERT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Test1</Other><WhiteSpace>
+
+</WhiteSpace></Clause><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><ExpressionParens><String>SELECT 1</String></ExpressionParens><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>INSERT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Test1</Other><WhiteSpace>
+
+</WhiteSpace></Clause><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><ExpressionParens><String>SELECT 2</String></ExpressionParens><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace>
+
+</WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>@Test1</Other><WhiteSpace>
+
+
+</WhiteSpace></SelectionTarget></Clause></SqlStatement><SqlStatement><SingleLineComment>Outputs converting inserts to derived tables
+</SingleLineComment><Clause><DDLOtherBlock><OtherKeyword>CREATE</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>TABLE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#Test1</Other><DDLParens><Other>TestCol</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>Int</DataTypeKeyword></DDLParens><WhiteSpace>
+</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><DDLOtherBlock><OtherKeyword>CREATE</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>TABLE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#Test2</Other><DDLParens><Other>TestCol</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>Int</DataTypeKeyword></DDLParens><WhiteSpace>
+
+</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><CompoundKeyword simpleText="INSERT INTO"><OtherKeyword>INSERT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>INTO</OtherKeyword></CompoundKeyword><WhiteSpace> </WhiteSpace><Other>#Test2</Other><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><SelectionTargetParens><WhiteSpace>
+	</WhiteSpace><Clause><CompoundKeyword simpleText="INSERT INTO"><OtherKeyword>INSERT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>INTO</OtherKeyword></CompoundKeyword><WhiteSpace> </WhiteSpace><Other>#Test1</Other><WhiteSpace>
+	</WhiteSpace></Clause><Clause><OtherKeyword>OUTPUT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>INSERTED</Other><Period>.</Period><Asterisk>*</Asterisk><WhiteSpace>
+	</WhiteSpace></Clause><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SelectionTargetParens><WhiteSpace>
+</WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>TEST1</Other><WhiteSpace>
+
+</WhiteSpace></SelectionTarget></Clause></SqlStatement><SqlStatement><Clause><CompoundKeyword simpleText="INSERT INTO"><OtherKeyword>INSERT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>INTO</OtherKeyword></CompoundKeyword><WhiteSpace> </WhiteSpace><Other>#Test2</Other><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><SelectionTargetParens><WhiteSpace>
+	</WhiteSpace><Clause><OtherKeyword>DELETE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#Test1</Other><WhiteSpace>
+	</WhiteSpace></Clause><Clause><OtherKeyword>OUTPUT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Whatever</Other><WhiteSpace>
+</WhiteSpace></Clause></SelectionTargetParens><WhiteSpace>
+</WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>TEST1</Other><WhiteSpace>
+
+</WhiteSpace></SelectionTarget></Clause></SqlStatement><SqlStatement><Clause><CompoundKeyword simpleText="INSERT INTO"><OtherKeyword>INSERT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>INTO</OtherKeyword></CompoundKeyword><WhiteSpace> </WhiteSpace><Other>#Test2</Other><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><SelectionTargetParens><WhiteSpace>
+	</WhiteSpace><Clause><OtherKeyword>UPDATE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#Test2</Other><WhiteSpace>
+	</WhiteSpace></Clause><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace> </WhiteSpace><Other>TestCol</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>TestCol</Other><WhiteSpace> </WhiteSpace><OtherOperator>-</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace>
+	</WhiteSpace></Clause><Clause><OtherKeyword>OUTPUT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>deleted</Other><Period>.</Period><Other>TestCol</Other><WhiteSpace> </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>500</NumberValue><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Whatever</Other><WhiteSpace>
+</WhiteSpace></Clause></SelectionTargetParens><WhiteSpace>
+</WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>TEST1</Other><WhiteSpace>
+
+</WhiteSpace></SelectionTarget></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>DELETE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#Test2</Other><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>OUTPUT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>deleted</Other><Period>.</Period><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>INTO</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#Test1</Other><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>#Test1</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>#Test2</Other><WhiteSpace>
+
+</WhiteSpace></SelectionTarget></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>DROP</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>TABLE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#Test1</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>DROP</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>TABLE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#Test2</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+
+</WhiteSpace><SingleLineComment>Outputs on simple inserts
+</SingleLineComment><Clause><DDLOtherBlock><OtherKeyword>DECLARE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@Test1</Other><WhiteSpace> </WhiteSpace><OtherKeyword>TABLE</OtherKeyword><WhiteSpace> </WhiteSpace><DDLParens><Other>Test2</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>Int</DataTypeKeyword></DDLParens><WhiteSpace>
+</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><CompoundKeyword simpleText="INSERT INTO"><OtherKeyword>INSERT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>INTO</OtherKeyword></CompoundKeyword><WhiteSpace> </WhiteSpace><Other>@Test1</Other><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>OUTPUT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>INSERTED</Other><Period>.</Period><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Value2</Other><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><SelectionTargetParens><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Value2</Other></Clause></SelectionTargetParens><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>SampleData</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause></SqlStatement></SqlRoot>

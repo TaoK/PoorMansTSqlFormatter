@@ -1,0 +1,51 @@
+﻿<SqlRoot><SqlStatement><SingleLineComment>Miscellaneous tokenization challenges:
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><String>Tom's Test</String><OtherKeyword>AS</OtherKeyword><QuotedString>Test "Testing" tests</QuotedString><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><OtherKeyword>AS</OtherKeyword><BracketQuotedName>[Test]</BracketQuotedName><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1e0</NumberValue><OtherKeyword>AS</OtherKeyword><String>Test</String><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><OtherOperator>-</OtherOperator><NumberValue>0</NumberValue><Other>Zero0_IsOK</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><Other>x1IsJustANumber</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><BinaryValue>0x0A</BinaryValue><Other>IsBinary</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1e</NumberValue><Asterisk>*</Asterisk><NumberValue>1.</NumberValue><Other>OneAgain</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1.1</NumberValue><Asterisk>*</Asterisk><NumberValue>.1</NumberValue><String>LessThanOne</String><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment> John Arnott's "T-SQL Parsing Crazy Eights" question
+</SingleLineComment><SingleLineComment>  from SQLServerCentral's Question Of The Day quiz:
+</SingleLineComment><Clause><OtherKeyword>Select</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1.8</NumberValue><WhiteSpace> </WhiteSpace><Other>E</Other><Comma>,</Comma><NumberValue>1.8E</NumberValue><Comma>,</Comma><NumberValue>1.E</NumberValue><Other>ight</Other><Comma>,</Comma><NumberValue>3</NumberValue><OtherOperator>+</OtherOperator><NumberValue>8E8</NumberValue><Other>Eight</Other><Comma>,</Comma><WhiteSpace> 
+ </WhiteSpace><NumberValue>3</NumberValue><OtherOperator>+</OtherOperator><NumberValue>8</NumberValue><WhiteSpace> </WhiteSpace><Other>E8E</Other><Comma>,</Comma><String>Six</String><OtherOperator>+</OtherOperator><String>Seven</String><WhiteSpace> </WhiteSpace><String>Eight</String><Comma>,</Comma><String>Six</String><OtherOperator>+</OtherOperator><String>Seven</String><OtherOperator>+</OtherOperator><String>Eight</String><Comma>,</Comma><WhiteSpace>
+ </WhiteSpace><NumberValue>8.8E</NumberValue><Other>ight</Other><Comma>,</Comma><String>Six'Seven</String><WhiteSpace> </WhiteSpace><String>Eight</String><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>Interestingly, the SSMS (2005) syntax highlighter gets 
+</SingleLineComment><SingleLineComment> this one wrong, misses the AS... but it does fine if you 
+</SingleLineComment><SingleLineComment> replace the 0 with a 1!!
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>A</Other><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>And another edge case where the SSMS syntax highlighting 
+</SingleLineComment><SingleLineComment> team and parser team don't quite see eye-to-eye...
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>0.e</NumberValue><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>A</Other><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>But here we're all friends again
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>0.e-</NumberValue><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>A</Other><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>Not sure whether we'll handle this correctly. the minus 
+</SingleLineComment><SingleLineComment> should probably end up "stuck" to its number... The rule 
+</SingleLineComment><SingleLineComment> would be something like "omit the space between minus and 
+</SingleLineComment><SingleLineComment> number when the thing before the number is neither a 
+</SingleLineComment><SingleLineComment> parenthesis expression, nor another number". Not sure it's 
+</SingleLineComment><SingleLineComment> worth handling this...
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><NumberValue>.0</NumberValue><OtherOperator>+</OtherOperator><OtherOperator>-</OtherOperator><NumberValue>1.0</NumberValue><Other>Test</Other><Comma>,</Comma><OtherOperator>-</OtherOperator><NumberValue>1e0</NumberValue><QuotedString>2nd</QuotedString><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>playing silly buggers with negative exponents
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1.1</NumberValue><Asterisk>*</Asterisk><NumberValue>.1e-1</NumberValue><String>ExponentionallyComplex</String><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>I have to include this just because of the fun insight into 
+</SingleLineComment><SingleLineComment> T-SQL processing. When you run this, the error message is 
+</SingleLineComment><SingleLineComment> "Incorrect syntax near '0x0a'." - so the tokenizer
+</SingleLineComment><SingleLineComment> converts the "0XA" to "0x0a" before the parser gets to the 
+</SingleLineComment><SingleLineComment> structure of the SQL, and doesn't appear to know that the 
+</SingleLineComment><SingleLineComment> value has changed! (or it would be too much of a pain to 
+</SingleLineComment><SingleLineComment> keep the original value around just for the error message...?)
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><String></String><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><BinaryValue>0XA</BinaryValue><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>This is a simplistic case that once caused a strange bug:
+</SingleLineComment><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>0.0</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement></SqlRoot>

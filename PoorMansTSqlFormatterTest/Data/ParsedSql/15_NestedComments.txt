@@ -1,0 +1,20 @@
+﻿<SqlRoot><SqlStatement><SingleLineComment>Taken from SQL Server Central question of the day, Feb 11 2009:
+</SingleLineComment><SingleLineComment> http://www.sqlservercentral.com/questions/T-SQL/65712/
+</SingleLineComment><SingleLineComment>Discussion here:
+</SingleLineComment><SingleLineComment> http://www.sqlservercentral.com/Forums/Topic654391-1181-1.aspx
+</SingleLineComment><SingleLineComment> (interestingly, most online formatting tools get this wrong - afaik GuDu is the only 
+</SingleLineComment><SingleLineComment>   other one that doesn't. Query analyser didn't get this right either, but SSMS does.)
+</SingleLineComment><SingleLineComment>  
+</SingleLineComment><Clause><OtherKeyword>PRINT</OtherKeyword><WhiteSpace> </WhiteSpace><String>1</String><WhiteSpace> </WhiteSpace><SingleLineComment> /* ;PRINT '2' */ ;PRINT '3' /*
+</SingleLineComment></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>PRINT</OtherKeyword><WhiteSpace> </WhiteSpace><String>4</String><WhiteSpace> </WhiteSpace><SingleLineComment>*/
+</SingleLineComment><SingleLineComment>/*
+</SingleLineComment></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>PRINT</OtherKeyword><WhiteSpace> </WhiteSpace><String>5</String><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>*/
+</SingleLineComment><MultiLineComment>
+PRINT '6'
+--/* point here is that 7 is still commented, because T-SQL supports nested multiline comments.
+*/
+PRINT '7'
+--</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>PRINT</OtherKeyword><WhiteSpace> </WhiteSpace><String>8</String><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement></SqlRoot>

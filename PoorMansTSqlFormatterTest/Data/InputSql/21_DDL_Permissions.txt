@@ -3,7 +3,7 @@
 
 USE SomeDB;
 GRANT VIEW DEFINITION ON ROLE::SomeRole
-    TO SomeUser WITH GRANT OPTION;
+    TO SomeUser WITH GRANT OPTION
 GO
 
 GRANT CONTROL ON USER::OneUser TO SomeRole;
@@ -23,7 +23,7 @@ GO
 
 GRANT CONTROL
     ON FULLTEXT CATALOG :: SearchCatalog1
-    TO JimmyBob ;
+    TO JimmyBob 
 
 GO
 
@@ -32,7 +32,9 @@ GRANT CONTROL SERVER TO ReallyLuckyUser;
 GO
 
 USE SomeDB;
-GRANT CREATE VIEW TO SomeUser WITH GRANT OPTION;
+GRANT CREATE VIEW TO SomeUser WITH GRANT OPTION
+--check that subsequent EXECUTE AS is counted as new statement
+EXECUTE AS User = 'tklerks'
 GO
 
 DENY VIEW DEFINITION ON ROLE::SomeRole

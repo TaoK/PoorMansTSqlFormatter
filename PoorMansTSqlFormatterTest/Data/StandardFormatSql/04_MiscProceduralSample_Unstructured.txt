@@ -1,0 +1,40 @@
+﻿CREATE TABLE #ValueTable (Id NVARCHAR(5))
+
+DECLARE @MonthIDs NVARCHAR(4000)
+DECLARE @WorkingString AS NVARCHAR(4000)
+
+SELECT @MonthIDs = '3,5,6,8,11'
+
+SELECT @WorkingString = @MonthIDs
+
+WHILE len(@WorkingString) > 0
+BEGIN
+	--Printing the current temp string and the position of the first comma in it
+	--Print @WorkingString
+	--Print patindex('%,%',@WorkingString)
+	-- Inserting the string before the first comma
+	INSERT #ValueTable (Id)
+	VALUES (substring(@WorkingString, 1, patindex('%,%', @WorkingString) - 1))
+
+	--resetting the temporary string to start after the first comma in the previous temp string
+	SELECT @WorkingString = substring(@WorkingString, patindex('%,%', @WorkingString) + 1, Len(@WorkingString))
+
+	--Checking if there is no more commas 
+	IF patindex('%,%', @WorkingString) <= 0
+	BEGIN
+		--Inserting the last ID
+		INSERT #ValueTable (Id)
+		VALUES (@WorkingString)
+
+		BREAK
+	END
+	ELSE
+		CONTINUE
+END
+
+-- Getting the Employee Data
+SELECT *
+FROM HumanResources.Employee e
+JOIN #ValueTable t ON month(e.BirthDate) = t.Id
+
+DROP TABLE #ValueTable

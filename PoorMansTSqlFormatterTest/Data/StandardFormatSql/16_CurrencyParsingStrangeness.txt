@@ -1,0 +1,50 @@
+﻿--Unquoted euros aren't considered part of names/words, like most 
+-- currency symbols recognized
+SELECT €0 EurosApparently
+
+--But unquoted dollars ARE part of names, as are other "random" symbols
+SELECT - $0 DollarIsValidInName$SeeHighOsAreTooº
+
+--Thankfully, the meaning of commas does not magically change when parsing money.
+SELECT $5
+	,420.00 AS ActuallyJust420
+	,23.14 AS AnotherNumber
+
+--Currency indicator processing is broken in T-SQL (2005). It appears to be the 
+-- one place where a distinction is made between spaces and linebreaks. I can't 
+-- (or don't want to) handle this, so I will assume that any whitespace between 
+-- the currency symbol and a subsequent number means a 0-value currency amount and 
+-- a subsequent subtracted number. This is NOT exactly how SQL Server handles it.
+--This is a currency value
+SELECT €
+
+--This is a currency value
+SELECT €.
+
+--This is a currency value
+SELECT €-
+
+--This is a currency value
+SELECT €-.
+
+--This is a currency value with column name "e"
+SELECT €-.0 e
+
+--This is a currency value (but we're NOT going to handle this case as SQL server 
+-- does, for the sake of sanity).
+SELECT € - .0
+
+--This is NOT just a currency value: it's a currency value of 0, minus a decimal 
+-- 0.0. But the only difference between this and the previous version was the line 
+-- break!
+SELECT € - .0
+
+--This is not valid (for some unknown inconsistent reason)
+SELECT € (- .0)
+
+--But this is (and is same as having a linebreak in-between the currency symbol 
+-- and the subsequent number)
+SELECT (€) - .0
+
+--This is just a bit of fun
+SELECT €. - .0e

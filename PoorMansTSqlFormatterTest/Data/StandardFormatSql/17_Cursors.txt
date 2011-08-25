@@ -1,0 +1,73 @@
+﻿USE master;
+GO
+
+DECLARE @Test INT
+
+DECLARE Test$Me SCROLL CURSOR
+FOR
+SELECT 1 AS One
+FOR READ ONLY
+
+OPEN Test$Me
+
+FETCH NEXT
+FROM Test$Me
+INTO @Test
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	PRINT 'I was here!'
+
+	FETCH NEXT
+	FROM Test$Me
+	INTO @Test
+END
+
+CLOSE Test$Me
+
+DEALLOCATE Test$Me
+GO
+
+CREATE TABLE #CursorFodder (
+	One INT
+	,Two INT
+	)
+
+SET NOCOUNT ON
+
+INSERT INTO #CursorFodder
+VALUES (
+	1
+	,2
+	)
+
+SET NOCOUNT OFF
+
+DECLARE @Test2 INT
+
+DECLARE Test$Me_Again_François CURSOR OPTIMISTIC
+FOR
+SELECT One
+FROM #CursorFodder
+FOR UPDATE OF One
+
+OPEN Test$Me_Again_François
+
+FETCH NEXT
+FROM Test$Me_Again_François
+INTO @Test2
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	PRINT 'I was here!'
+
+	FETCH NEXT
+	FROM Test$Me_Again_François
+	INTO @Test2
+END
+
+CLOSE Test$Me_Again_François
+
+DEALLOCATE Test$Me_Again_François
+
+DROP TABLE #CursorFodder

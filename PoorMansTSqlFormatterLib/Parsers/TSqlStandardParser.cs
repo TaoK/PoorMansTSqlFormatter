@@ -255,8 +255,10 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             }
                             else
                             {
-                                //for (xml) clause in a select statement... any others?
+                                //Assume FOR clause if we're at clause level
+                                // (otherwise, eg in OPTIMIZE FOR UNKNOWN, this will just not do anything)
                                 sqlTree.ConsiderStartingNewClause();
+
                                 sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                             }
                         }
@@ -529,8 +531,17 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (significantTokensString.StartsWith("OPTION "))
                         {
-                            sqlTree.EscapeMergeAction();
-                            sqlTree.ConsiderStartingNewClause();
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_DDL_WITH_CLAUSE)
+                                )
+                            {
+                                //"OPTION" keyword here is NOT indicative of a new clause.
+                            }
+                            else
+                            {
+                                sqlTree.EscapeMergeAction();
+                                sqlTree.ConsiderStartingNewClause();
+                            }
                             sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                         }
                         else if (significantTokensString.StartsWith("END TRY "))
@@ -640,6 +651,25 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             {
                                 sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                             }
+                        }
+                        else if (significantTokensString.StartsWith("EXECUTE AS "))
+                        {
+                            bool executeAsInWithOptions = false;
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_DDL_WITH_CLAUSE)
+                                && (IsLatestTokenAComma(sqlTree)
+                                    || !sqlTree.HasNonWhiteSpaceNonCommentContent(sqlTree.CurrentContainer)
+                                    )
+                                )
+                                executeAsInWithOptions = true;
+
+                            if (!executeAsInWithOptions)
+                            {
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.ConsiderStartingNewClause();
+                            }
+
+                            ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, 2);
                         }
                         else if (significantTokensString.StartsWith("EXEC ")
                             || significantTokensString.StartsWith("EXECUTE ")
@@ -993,20 +1023,6 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 )
                             {
                                 sqlTree.StartNewContainer(SqlXmlConstants.ENAME_DDL_WITH_CLAUSE, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
-                            }
-                            else
-                            {
-                                sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
-                            }
-                        }
-                        else if (significantTokensString.StartsWith("EXECUTE AS "))
-                        {
-                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_DDL_WITH_CLAUSE)
-                                )
-                            {
-                                //process as a "compound keyword", to avoid a panic (avoid treating the "AS" as the beginning of a DDL AS block)
-                                ProcessCompoundKeyword(tokenList, sqlTree, sqlTree.CurrentContainer, ref tokenID, significantTokenPositions, 2);
                             }
                             else
                             {
@@ -1479,7 +1495,22 @@ namespace PoorMansTSqlFormatterLib.Parsers
                 {
                     currentNode = currentNode.PreviousSibling;
                 }
-                else 
+                else
+                    currentNode = null;
+            }
+            return false;
+        }
+
+        private bool IsLatestTokenAComma(ParseTree sqlTree)
+        {
+            XmlNode currentNode = sqlTree.CurrentContainer.LastChild;
+            while (currentNode != null)
+            {
+                if (currentNode.Name.Equals(SqlXmlConstants.ENAME_COMMA))
+                    return true;
+                else if (ParseTree.IsCommentOrWhiteSpace(currentNode.Name))
+                    currentNode = currentNode.PreviousSibling;
+                else
                     currentNode = null;
             }
             return false;
@@ -2083,6 +2114,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("UNION", KeywordType.OtherKeyword);
             KeywordList.Add("UNIQUE", KeywordType.OtherKeyword);
             KeywordList.Add("UNIQUEIDENTIFIER", KeywordType.DataTypeKeyword);
+            KeywordList.Add("UNKNOWN", KeywordType.OtherKeyword);
             KeywordList.Add("UNPINTABLE", KeywordType.OtherKeyword);
             KeywordList.Add("UPDATE", KeywordType.OtherKeyword);
             KeywordList.Add("UPDATETEXT", KeywordType.OtherKeyword);

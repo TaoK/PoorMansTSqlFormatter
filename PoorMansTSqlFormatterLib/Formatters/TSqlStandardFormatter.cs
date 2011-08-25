@@ -172,6 +172,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     state.BreakExpected = true;
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), state);
                     state.StatementBreakExpected = false; //the responsibility for breaking will be with the OUTER statement; there should be no consequence propagating out from statements in this container;
+                    state.UnIndentInitialBreak = false; //if there was no word spacing after the last content statement's clause starter, doesn't mean the unIndent should propagate to the following content!
                     break;
 
                 case SqlXmlConstants.ENAME_PERMISSIONS_TARGET:

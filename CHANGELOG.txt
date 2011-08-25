@@ -10,6 +10,8 @@ Version 1.0.1:
  - Corrected handling of AS in stored procedure argument data type specification
  - Added handling of ISO data type synonyms, with keyword consistency correction to Sql Server datatypes
  - Added missing SQL Server 2008 datatypes, Date/Time-related, HierarchyID, and Geography
+ - Corrected minor indenting bug with single-word clauses at the end of multi-statement container content
+ - Added Expected SQL Parse Tree and Standard Output Sql tests in test suite - parse Xml format and output SQL format effectively finalized.
 
 Version 0.9.13: 
 --------------

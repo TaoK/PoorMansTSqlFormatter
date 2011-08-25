@@ -1,0 +1,871 @@
+﻿<SqlRoot><SqlStatement><SingleLineComment> Sample script from Brent Ozar:
+</SingleLineComment><SingleLineComment>  http://www.brentozar.com/sql/blitz-minute-sql-server-takeovers/
+</SingleLineComment><WhiteSpace>
+</WhiteSpace><MultiLineComment>
+Script:       BLITZ! 60 Minute Server Takeovers by Brent Ozar
+Version:      1.1 - May 18, 2010
+Source:       http://www.brentozar.com/sql/blitz-minute-sql-server-takeovers/
+License:      Creative Commons.  For more information, see
+              http://www.brentozar.com/what-i-do/using-material-from-my-blog/
+Description:  Shows what I look for when I take over existing servers.
+              Don't just hit F5 - read through each step to learn what I'm
+              checking for, and how to fix things when they indicate problems.
+</MultiLineComment><WhiteSpace>
+
+
+</WhiteSpace><MultiLineComment> 
+   Backups!  First and foremost, before we touch anything, check backups.
+   Check when each database has been backed up.  If databases aren't being
+   backed up, check the maintenance plans or scripts.  If you don't have
+   scripts, check http://ola.hallengren.com.
+</MultiLineComment><WhiteSpace>
+
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><Comma>,</Comma><WhiteSpace> </WhiteSpace><FunctionKeyword>MAX</FunctionKeyword><FunctionParens><Other>b</Other><Period>.</Period><Other>backup_finish_date</Other></FunctionParens><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>last_backup_finish_date</Other><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>master</Other><Period>.</Period><Other>sys</Other><Period>.</Period><Other>databases</Other><WhiteSpace> </WhiteSpace><Other>d</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause><Clause><CompoundKeyword simpleText="LEFT OUTER JOIN"><OtherKeyword>LEFT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>OUTER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>JOIN</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>backupset</Other><WhiteSpace> </WhiteSpace><Other>b</Other><WhiteSpace> </WhiteSpace></SelectionTarget><OtherKeyword>ON</OtherKeyword><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>b</Other><Period>.</Period><Other>database_name</Other><WhiteSpace> </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>b</Other><Period>.</Period><Other>type</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><String>D</String><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>WHERE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><Other>database_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherOperator>IN</OtherOperator><WhiteSpace> </WhiteSpace><ExpressionParens><NumberValue>2</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>3</NumberValue></ExpressionParens><WhiteSpace>  </WhiteSpace><SingleLineComment> Bonus points if you know what that means
+</SingleLineComment></Clause><Clause><OtherKeyword>GROUP</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>BY</OtherKeyword><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>ORDER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>BY</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue><WhiteSpace> </WhiteSpace><OtherKeyword>DESC</OtherKeyword><WhiteSpace>
+
+
+
+
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	Where are the backups going?  Ideally, we want them on a different server.
+	If the backups are being taken to this same server, and the server's RAID
+	card or motherboard goes bad, we're in trouble.  We sort by media_set_id
+	descending because it's the primary key on the table, so it'll fly even
+	when MSDB is on really slow drives.
+	
+	For more information about where your backups should go, check out:
+	http://www.brentozar.com/sql/backup-best-practices/
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>TOP</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>100</NumberValue><WhiteSpace> </WhiteSpace><Other>physical_device_name</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>backupmediafamily</Other><WhiteSpace> </WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>ORDER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>BY</OtherKeyword><WhiteSpace> </WhiteSpace><Other>media_set_id</Other><WhiteSpace> </WhiteSpace><OtherKeyword>DESC</OtherKeyword><WhiteSpace>
+
+
+
+
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment>
+   Transaction log backups - do we have any databases in full recovery mode
+   that haven't had t-log backups?  If so, we should think about putting it in
+   simple recovery mode or doing t-log backups.
+</MultiLineComment><WhiteSpace>
+
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><Other>recovery_model</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><Other>recovery_model_desc</Other><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>master</Other><Period>.</Period><Other>sys</Other><Period>.</Period><Other>databases</Other><WhiteSpace> </WhiteSpace><Other>d</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause><Clause><CompoundKeyword simpleText="LEFT OUTER JOIN"><OtherKeyword>LEFT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>OUTER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>JOIN</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>backupset</Other><WhiteSpace> </WhiteSpace><Other>b</Other><WhiteSpace> </WhiteSpace></SelectionTarget><OtherKeyword>ON</OtherKeyword><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>b</Other><Period>.</Period><Other>database_name</Other><WhiteSpace> </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>b</Other><Period>.</Period><Other>type</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><String>L</String><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>WHERE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><Other>recovery_model</Other><WhiteSpace> </WhiteSpace><OtherOperator>IN</OtherOperator><WhiteSpace> </WhiteSpace><ExpressionParens><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue></ExpressionParens><WhiteSpace> </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>b</Other><Period>.</Period><Other>type</Other><WhiteSpace> </WhiteSpace><OtherKeyword>IS</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><WhiteSpace> </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><Other>database_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherOperator>IN</OtherOperator><WhiteSpace> </WhiteSpace><ExpressionParens><NumberValue>2</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>3</NumberValue></ExpressionParens><WhiteSpace>
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment>
+   If there are any databases in full recovery mode with no t-log backups,
+   show the filesize of the according ldf.
+</MultiLineComment><WhiteSpace>
+
+ </WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> 
+	</WhiteSpace><Other>d</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><BracketQuotedName>db_name</BracketQuotedName><WhiteSpace>
+  </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>f</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><BracketQuotedName>ldf_name</BracketQuotedName><WhiteSpace>
+  </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>f</Other><Period>.</Period><Other>physical_name</Other><WhiteSpace>
+  </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>f</Other><Period>.</Period><Other>size</Other><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace><NumberValue>8</NumberValue><WhiteSpace> </WhiteSpace><OtherOperator>/</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>1024.00</NumberValue><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><BracketQuotedName>size_in_mb</BracketQuotedName><WhiteSpace>
+  </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><Other>recovery_model_desc</Other><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>master_files</Other><WhiteSpace> </WhiteSpace><Other>f</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause><Clause><CompoundKeyword simpleText="JOIN"><OtherKeyword>JOIN</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>databases</Other><WhiteSpace> </WhiteSpace><Other>d</Other><WhiteSpace> </WhiteSpace></SelectionTarget><OtherKeyword>ON</OtherKeyword><WhiteSpace> </WhiteSpace><Other>f</Other><Period>.</Period><Other>database_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><Other>database_id</Other><WhiteSpace>
+</WhiteSpace></Clause><Clause><CompoundKeyword simpleText="LEFT OUTER JOIN"><OtherKeyword>LEFT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>OUTER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>JOIN</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>backupset</Other><WhiteSpace> </WhiteSpace><Other>b</Other><WhiteSpace> </WhiteSpace></SelectionTarget><OtherKeyword>ON</OtherKeyword><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>b</Other><Period>.</Period><Other>database_name</Other><WhiteSpace> </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>b</Other><Period>.</Period><Other>type</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><String>L</String><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>WHERE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><Other>recovery_model</Other><WhiteSpace> </WhiteSpace><OtherOperator>IN</OtherOperator><WhiteSpace> </WhiteSpace><ExpressionParens><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue></ExpressionParens><WhiteSpace> </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>b</Other><Period>.</Period><Other>type</Other><WhiteSpace> </WhiteSpace><OtherKeyword>IS</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><WhiteSpace> </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><Other>database_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherOperator>IN</OtherOperator><WhiteSpace> </WhiteSpace><ExpressionParens><NumberValue>2</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>3</NumberValue></ExpressionParens><WhiteSpace> </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>f</Other><Period>.</Period><Other>type</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> </WhiteSpace><SingleLineComment> only show log files
+</SingleLineComment></Clause><Clause><OtherKeyword>ORDER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>BY</OtherKeyword><WhiteSpace> </WhiteSpace><Other>f</Other><Period>.</Period><Other>size</Other><WhiteSpace> </WhiteSpace><OtherKeyword>DESC</OtherKeyword><WhiteSpace>
+
+
+
+
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment> 
+   Is the MSDB backup history cleaned up? If you have data older than a couple
+   of months, this is a problem.  You need to set up backup cleanup jobs.  
+   
+   For more information on why this can be a problem?
+   http://www.brentozar.com/archive/2009/09/checking-your-msdb-cleanup-jobs/
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>TOP</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> </WhiteSpace><Other>backup_start_date</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>backupset</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>ORDER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>BY</OtherKeyword><WhiteSpace> </WhiteSpace><Other>backup_set_id</Other><WhiteSpace> </WhiteSpace><OtherKeyword>ASC</OtherKeyword><WhiteSpace>
+
+
+
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment>
+   When was the last time DBCC finished successfully?
+   DBCC CHECKDB checks databases for corruption.  You won't know 
+   Script is from http://sqlserverpedia.com/wiki/Last_clean_DBCC_CHECKDB_date
+   To get sample corrupt databases - http://sqlskills.com/pastConferences.asp
+    
+</MultiLineComment><WhiteSpace>
+
+</WhiteSpace><Clause><DDLOtherBlock><OtherKeyword>CREATE</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>TABLE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#temp</Other><WhiteSpace> </WhiteSpace><DDLParens><WhiteSpace>          
+       </WhiteSpace><Other>ParentObject</Other><WhiteSpace>     </WhiteSpace><DataTypeKeyword>VARCHAR</DataTypeKeyword><DDLDetailParens><NumberValue>255</NumberValue></DDLDetailParens><WhiteSpace>
+       </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><BracketQuotedName>Object</BracketQuotedName><WhiteSpace>       </WhiteSpace><DataTypeKeyword>VARCHAR</DataTypeKeyword><DDLDetailParens><NumberValue>255</NumberValue></DDLDetailParens><WhiteSpace>
+       </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>Field</Other><WhiteSpace>          </WhiteSpace><DataTypeKeyword>VARCHAR</DataTypeKeyword><DDLDetailParens><NumberValue>255</NumberValue></DDLDetailParens><WhiteSpace>
+       </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><BracketQuotedName>Value</BracketQuotedName><WhiteSpace>        </WhiteSpace><DataTypeKeyword>VARCHAR</DataTypeKeyword><DDLDetailParens><NumberValue>255</NumberValue></DDLDetailParens><WhiteSpace>   
+   </WhiteSpace></DDLParens><WhiteSpace>   
+   
+</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><DDLOtherBlock><OtherKeyword>CREATE</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>TABLE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#DBCCResults</Other><WhiteSpace> </WhiteSpace><DDLParens><WhiteSpace>
+        </WhiteSpace><Other>ServerName</Other><WhiteSpace>           </WhiteSpace><DataTypeKeyword>VARCHAR</DataTypeKeyword><DDLDetailParens><NumberValue>255</NumberValue></DDLDetailParens><WhiteSpace>
+        </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>DBName</Other><WhiteSpace>             </WhiteSpace><DataTypeKeyword>VARCHAR</DataTypeKeyword><DDLDetailParens><NumberValue>255</NumberValue></DDLDetailParens><WhiteSpace>
+        </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>LastCleanDBCCDate</Other><WhiteSpace>  </WhiteSpace><DataTypeKeyword>DATETIME</DataTypeKeyword><WhiteSpace>   
+    </WhiteSpace></DDLParens><WhiteSpace>   
+    
+</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>master</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_MSforeachdb</Other><WhiteSpace>       
+           </WhiteSpace><Other>@command1</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><String>USE [?] INSERT INTO #temp EXECUTE ('DBCC DBINFO WITH TABLERESULTS')</String><WhiteSpace>
+           </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@command2</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><String>INSERT INTO #DBCCResults SELECT @@SERVERNAME, '?', Value FROM #temp WHERE Field = 'dbi_dbccLastKnownGood'</String><WhiteSpace>
+           </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@command3</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><String>TRUNCATE TABLE #temp</String><WhiteSpace>   
+   
+   </WhiteSpace><SingleLineComment>Delete duplicates due to a bug in SQL Server 2008
+</SingleLineComment><WhiteSpace>   
+   </WhiteSpace><Semicolon>;</Semicolon></Clause></SqlStatement><SqlStatement><Clause><CTEWithClause><ContainerOpen><OtherKeyword>WITH</OtherKeyword></ContainerOpen><CTEAlias><WhiteSpace> </WhiteSpace><Other>DBCC_CTE</Other><WhiteSpace> </WhiteSpace></CTEAlias><CTEAsBlock><ContainerOpen><OtherKeyword>AS</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace>
+   </WhiteSpace><SelectionTargetParens><WhiteSpace>
+       </WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>ROW_NUMBER</Other><FunctionParens></FunctionParens><WhiteSpace> </WhiteSpace><OtherKeyword>OVER</OtherKeyword><WhiteSpace> </WhiteSpace><ExpressionParens><OtherKeyword>PARTITION</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>BY</OtherKeyword><WhiteSpace> </WhiteSpace><Other>ServerName</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>DBName</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>LastCleanDBCCDate</Other><WhiteSpace> </WhiteSpace><Clause><OtherKeyword>ORDER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>BY</OtherKeyword><WhiteSpace> </WhiteSpace><Other>LastCleanDBCCDate</Other></Clause></ExpressionParens><WhiteSpace> </WhiteSpace><Other>RowID</Other><WhiteSpace>
+       </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>#DBCCResults</Other><WhiteSpace>
+   </WhiteSpace></SelectionTarget></Clause></SelectionTargetParens></ContainerContentBody></CTEAsBlock><ContainerContentBody><WhiteSpace>
+   </WhiteSpace></ContainerContentBody></CTEWithClause></Clause><Clause><OtherKeyword>DELETE</OtherKeyword><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>DBCC_CTE</Other><WhiteSpace> </WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>WHERE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>RowID</Other><WhiteSpace> </WhiteSpace><OtherOperator>&gt;</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><Semicolon>;</Semicolon><WhiteSpace>
+   
+    </WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace>        
+           </WhiteSpace><Other>ServerName</Other><WhiteSpace>       
+           </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>DBName</Other><WhiteSpace>       
+           </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><CaseStatement><ContainerOpen><OtherKeyword>CASE</OtherKeyword></ContainerOpen><Input><WhiteSpace> </WhiteSpace><Other>LastCleanDBCCDate</Other><WhiteSpace> 
+                   </WhiteSpace></Input><When><ContainerOpen><OtherKeyword>WHEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><String>1900-01-01 00:00:00.000</String><WhiteSpace> </WhiteSpace></ContainerContentBody><Then><ContainerOpen><OtherKeyword>THEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><String>Never ran DBCC CHECKDB</String><WhiteSpace> 
+                   </WhiteSpace></ContainerContentBody></Then></When><CaseElse><ContainerOpen><OtherKeyword>ELSE</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><FunctionKeyword>CAST</FunctionKeyword><FunctionParens><Other>LastCleanDBCCDate</Other><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><DataTypeKeyword>VARCHAR</DataTypeKeyword></FunctionParens><WhiteSpace> </WhiteSpace></ContainerContentBody></CaseElse><ContainerClose><OtherKeyword>END</OtherKeyword></ContainerClose></CaseStatement><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>LastCleanDBCCDate</Other><WhiteSpace>    
+   </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>#DBCCResults</Other><WhiteSpace>   
+   </WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>ORDER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>BY</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>3</NumberValue><WhiteSpace>
+   
+   </WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>DROP</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>TABLE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#temp</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>#DBCCResults</Other><Semicolon>;</Semicolon><WhiteSpace>
+
+
+
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	If any databases have never experienced the magic of DBCC, consider doing that
+	as soon as practical.  DBCC CHECKDB is a CPU &amp; IO intensive operation, so
+	consider doing it after business hours.  For more information:
+	http://www.sqlskills.com/blogs/paul/post/CHECKDB-From-Every-Angle-Consistency-Checking-Options-for-a-VLDB.aspx
+	For the demo, we'll run it on a small database right away.  This won't work on
+	your machine unless you have a database named TimeTracking.
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><SingleLineComment>DBCC CHECKDB(TimeTracking)
+</SingleLineComment><WhiteSpace>
+
+
+
+
+
+
+
+</WhiteSpace><MultiLineComment>
+	Maybe there were DBCC jobs that aren't running.
+	Speaking of which, are jobs failing, and who owns them?
+</MultiLineComment><WhiteSpace>
+
+</WhiteSpace><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace>  </WhiteSpace><OtherKeyword>NOCOUNT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>ON</OtherKeyword><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><DDLOtherBlock><OtherKeyword>DECLARE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@MaxLength</Other><WhiteSpace>   </WhiteSpace><DataTypeKeyword>INT</DataTypeKeyword><WhiteSpace>
+</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@MaxLength</Other><WhiteSpace>   </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>50</NumberValue><WhiteSpace>
+ 
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><DDLOtherBlock><OtherKeyword>DECLARE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@xp_results</Other><WhiteSpace> </WhiteSpace><OtherKeyword>TABLE</OtherKeyword><WhiteSpace> </WhiteSpace><DDLParens><WhiteSpace>
+                       </WhiteSpace><Other>job_id</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>uniqueidentifier</DataTypeKeyword><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><Comma>,</Comma><WhiteSpace>
+                       </WhiteSpace><Other>last_run_date</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>nvarchar</DataTypeKeyword><WhiteSpace> </WhiteSpace><DDLDetailParens><NumberValue>20</NumberValue></DDLDetailParens><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><Comma>,</Comma><WhiteSpace>
+                       </WhiteSpace><Other>last_run_time</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>nvarchar</DataTypeKeyword><WhiteSpace> </WhiteSpace><DDLDetailParens><NumberValue>20</NumberValue></DDLDetailParens><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><Comma>,</Comma><WhiteSpace>
+                       </WhiteSpace><Other>next_run_date</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>nvarchar</DataTypeKeyword><WhiteSpace> </WhiteSpace><DDLDetailParens><NumberValue>20</NumberValue></DDLDetailParens><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><Comma>,</Comma><WhiteSpace>
+                       </WhiteSpace><Other>next_run_time</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>nvarchar</DataTypeKeyword><WhiteSpace> </WhiteSpace><DDLDetailParens><NumberValue>20</NumberValue></DDLDetailParens><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><Comma>,</Comma><WhiteSpace>
+                       </WhiteSpace><Other>next_run_schedule_id</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>INT</DataTypeKeyword><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><Comma>,</Comma><WhiteSpace>
+                       </WhiteSpace><Other>requested_to_run</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>INT</DataTypeKeyword><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><Comma>,</Comma><WhiteSpace>
+                       </WhiteSpace><Other>request_source</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>INT</DataTypeKeyword><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><Comma>,</Comma><WhiteSpace>
+                       </WhiteSpace><Other>request_source_id</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>sysname</DataTypeKeyword><WhiteSpace>
+                             </WhiteSpace><Other>COLLATE</Other><WhiteSpace> </WhiteSpace><Other>database_default</Other><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><Comma>,</Comma><WhiteSpace>
+                       </WhiteSpace><Other>running</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>INT</DataTypeKeyword><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><Comma>,</Comma><WhiteSpace>
+                       </WhiteSpace><Other>current_step</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>INT</DataTypeKeyword><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><Comma>,</Comma><WhiteSpace>
+                       </WhiteSpace><Other>current_retry_attempt</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>INT</DataTypeKeyword><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><Comma>,</Comma><WhiteSpace>
+                       </WhiteSpace><Other>job_state</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>INT</DataTypeKeyword><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><WhiteSpace>
+                    </WhiteSpace></DDLParens><WhiteSpace>
+ 
+</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><DDLOtherBlock><OtherKeyword>DECLARE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@job_owner</Other><WhiteSpace>   </WhiteSpace><DataTypeKeyword>sysname</DataTypeKeyword><WhiteSpace>
+ 
+</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><DDLOtherBlock><OtherKeyword>DECLARE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@is_sysadmin</Other><WhiteSpace>   </WhiteSpace><DataTypeKeyword>INT</DataTypeKeyword><WhiteSpace>
+</WhiteSpace></DDLOtherBlock></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@is_sysadmin</Other><WhiteSpace>   </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>isnull</FunctionKeyword><WhiteSpace> </WhiteSpace><FunctionParens><FunctionKeyword>is_srvrolemember</FunctionKeyword><WhiteSpace> </WhiteSpace><FunctionParens><String>sysadmin</String></FunctionParens><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue></FunctionParens><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@job_owner</Other><WhiteSpace>   </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>suser_sname</FunctionKeyword><WhiteSpace> </WhiteSpace><FunctionParens></FunctionParens><WhiteSpace>
+ 
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><CompoundKeyword simpleText="INSERT INTO"><OtherKeyword>INSERT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>INTO</OtherKeyword></CompoundKeyword><WhiteSpace> </WhiteSpace><Other>@xp_results</Other><WhiteSpace>
+   </WhiteSpace></Clause><Clause><OtherKeyword>EXECUTE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>xp_sqlagent_enum_jobs</Other><WhiteSpace> </WhiteSpace><Other>@is_sysadmin</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@job_owner</Other><WhiteSpace>
+ 
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>UPDATE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@xp_results</Other><WhiteSpace>
+   </WhiteSpace></Clause><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace> </WhiteSpace><Other>last_run_time</Other><WhiteSpace>    </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>right</FunctionKeyword><WhiteSpace> </WhiteSpace><FunctionParens><String>000000</String><WhiteSpace> </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><Other>last_run_time</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>6</NumberValue></FunctionParens><Comma>,</Comma><WhiteSpace>
+       </WhiteSpace><Other>next_run_time</Other><WhiteSpace>    </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>right</FunctionKeyword><WhiteSpace> </WhiteSpace><FunctionParens><String>000000</String><WhiteSpace> </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><Other>next_run_time</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>6</NumberValue></FunctionParens><WhiteSpace>
+ 
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>j</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>JobName</Other><Comma>,</Comma><WhiteSpace>
+       </WhiteSpace><Other>j</Other><Period>.</Period><Other>enabled</Other><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Enabled</Other><Comma>,</Comma><WhiteSpace>
+       </WhiteSpace><Other>sl</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>OwnerName</Other><Comma>,</Comma><WhiteSpace>
+       </WhiteSpace><CaseStatement><ContainerOpen><OtherKeyword>CASE</OtherKeyword></ContainerOpen><Input><WhiteSpace> </WhiteSpace><Other>x</Other><Period>.</Period><Other>running</Other><WhiteSpace>
+          </WhiteSpace></Input><When><ContainerOpen><OtherKeyword>WHEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace>
+          </WhiteSpace></ContainerContentBody><Then><ContainerOpen><OtherKeyword>THEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace>
+             </WhiteSpace><String>Running</String><WhiteSpace>
+          </WhiteSpace></ContainerContentBody></Then></When><CaseElse><ContainerOpen><OtherKeyword>ELSE</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace>
+             </WhiteSpace><CaseStatement><ContainerOpen><OtherKeyword>CASE</OtherKeyword></ContainerOpen><Input><WhiteSpace> </WhiteSpace><Other>h</Other><Period>.</Period><Other>run_status</Other><WhiteSpace>
+                </WhiteSpace></Input><When><ContainerOpen><OtherKeyword>WHEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue><WhiteSpace> </WhiteSpace></ContainerContentBody><Then><ContainerOpen><OtherKeyword>THEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><String>Inactive</String><WhiteSpace>
+                </WhiteSpace></ContainerContentBody></Then></When><When><ContainerOpen><OtherKeyword>WHEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><NumberValue>4</NumberValue><WhiteSpace> </WhiteSpace></ContainerContentBody><Then><ContainerOpen><OtherKeyword>THEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><String>Inactive</String><WhiteSpace>
+                </WhiteSpace></ContainerContentBody></Then></When><CaseElse><ContainerOpen><OtherKeyword>ELSE</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><String>Completed</String><WhiteSpace>
+             </WhiteSpace></ContainerContentBody></CaseElse><ContainerClose><OtherKeyword>END</OtherKeyword></ContainerClose></CaseStatement><WhiteSpace>
+       </WhiteSpace></ContainerContentBody></CaseElse><ContainerClose><OtherKeyword>END</OtherKeyword></ContainerClose></CaseStatement><WhiteSpace>
+          </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>CurrentStatus</Other><Comma>,</Comma><WhiteSpace>
+       </WhiteSpace><FunctionKeyword>coalesce</FunctionKeyword><WhiteSpace> </WhiteSpace><FunctionParens><Other>x</Other><Period>.</Period><Other>current_step</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue></FunctionParens><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>CurrentStepNbr</Other><Comma>,</Comma><WhiteSpace>
+       </WhiteSpace><CaseStatement><ContainerOpen><OtherKeyword>CASE</OtherKeyword></ContainerOpen><Input><WhiteSpace>
+          </WhiteSpace></Input><When><ContainerOpen><OtherKeyword>WHEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><Other>x</Other><Period>.</Period><Other>last_run_date</Other><WhiteSpace> </WhiteSpace><OtherOperator>&gt;</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace>
+          </WhiteSpace></ContainerContentBody><Then><ContainerOpen><OtherKeyword>THEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace>
+             </WhiteSpace><FunctionKeyword>convert</FunctionKeyword><WhiteSpace> </WhiteSpace><FunctionParens><DataTypeKeyword>datetime</DataTypeKeyword><Comma>,</Comma><WhiteSpace>
+                        </WhiteSpace><FunctionKeyword>substring</FunctionKeyword><WhiteSpace> </WhiteSpace><FunctionParens><Other>x</Other><Period>.</Period><Other>last_run_date</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>4</NumberValue></FunctionParens><WhiteSpace>
+                      </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><String>-</String><WhiteSpace>
+                      </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>substring</FunctionKeyword><WhiteSpace> </WhiteSpace><FunctionParens><Other>x</Other><Period>.</Period><Other>last_run_date</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>5</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue></FunctionParens><WhiteSpace>
+                      </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><String>-</String><WhiteSpace>
+                      </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>substring</FunctionKeyword><WhiteSpace> </WhiteSpace><FunctionParens><Other>x</Other><Period>.</Period><Other>last_run_date</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>7</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue></FunctionParens><WhiteSpace>
+                      </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><String> </String><WhiteSpace>
+                      </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>substring</FunctionKeyword><WhiteSpace> </WhiteSpace><FunctionParens><Other>x</Other><Period>.</Period><Other>last_run_time</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue></FunctionParens><WhiteSpace>
+                      </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><String>:</String><WhiteSpace>
+                      </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>substring</FunctionKeyword><WhiteSpace> </WhiteSpace><FunctionParens><Other>x</Other><Period>.</Period><Other>last_run_time</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>3</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue></FunctionParens><WhiteSpace>
+                      </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><String>:</String><WhiteSpace>
+                      </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>substring</FunctionKeyword><WhiteSpace> </WhiteSpace><FunctionParens><Other>x</Other><Period>.</Period><Other>last_run_time</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>5</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue></FunctionParens><WhiteSpace>
+                      </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><String>.000</String><Comma>,</Comma><WhiteSpace>
+                      </WhiteSpace><NumberValue>121</NumberValue><WhiteSpace>
+             </WhiteSpace></FunctionParens><WhiteSpace>
+          </WhiteSpace></ContainerContentBody></Then></When><CaseElse><ContainerOpen><OtherKeyword>ELSE</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace>
+             </WhiteSpace><OtherKeyword>NULL</OtherKeyword><WhiteSpace>
+       </WhiteSpace></ContainerContentBody></CaseElse><ContainerClose><OtherKeyword>END</OtherKeyword></ContainerClose></CaseStatement><WhiteSpace>
+          </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>LastRunTime</Other><Comma>,</Comma><WhiteSpace>
+       </WhiteSpace><CaseStatement><ContainerOpen><OtherKeyword>CASE</OtherKeyword></ContainerOpen><Input><WhiteSpace> </WhiteSpace><Other>h</Other><Period>.</Period><Other>run_status</Other><WhiteSpace>
+          </WhiteSpace></Input><When><ContainerOpen><OtherKeyword>WHEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace> </WhiteSpace></ContainerContentBody><Then><ContainerOpen><OtherKeyword>THEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><String>Fail</String><WhiteSpace>
+          </WhiteSpace></ContainerContentBody></Then></When><When><ContainerOpen><OtherKeyword>WHEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> </WhiteSpace></ContainerContentBody><Then><ContainerOpen><OtherKeyword>THEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><String>Success</String><WhiteSpace>
+          </WhiteSpace></ContainerContentBody></Then></When><When><ContainerOpen><OtherKeyword>WHEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue><WhiteSpace> </WhiteSpace></ContainerContentBody><Then><ContainerOpen><OtherKeyword>THEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><String>Retry</String><WhiteSpace>
+          </WhiteSpace></ContainerContentBody></Then></When><When><ContainerOpen><OtherKeyword>WHEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><NumberValue>3</NumberValue><WhiteSpace> </WhiteSpace></ContainerContentBody><Then><ContainerOpen><OtherKeyword>THEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><String>Cancel</String><WhiteSpace>
+          </WhiteSpace></ContainerContentBody></Then></When><When><ContainerOpen><OtherKeyword>WHEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><NumberValue>4</NumberValue><WhiteSpace> </WhiteSpace></ContainerContentBody><Then><ContainerOpen><OtherKeyword>THEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><String>In progress</String><WhiteSpace>
+       </WhiteSpace></ContainerContentBody></Then></When><ContainerClose><OtherKeyword>END</OtherKeyword></ContainerClose></CaseStatement><WhiteSpace>
+          </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>LastRunOutcome</Other><Comma>,</Comma><WhiteSpace>
+       </WhiteSpace><CaseStatement><ContainerOpen><OtherKeyword>CASE</OtherKeyword></ContainerOpen><Input><WhiteSpace>
+          </WhiteSpace></Input><When><ContainerOpen><OtherKeyword>WHEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><Other>h</Other><Period>.</Period><Other>run_duration</Other><WhiteSpace> </WhiteSpace><OtherOperator>&gt;</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace>
+          </WhiteSpace></ContainerContentBody><Then><ContainerOpen><OtherKeyword>THEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace>
+               </WhiteSpace><ExpressionParens><Other>h</Other><Period>.</Period><Other>run_duration</Other><WhiteSpace> </WhiteSpace><OtherOperator>/</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>1000000</NumberValue></ExpressionParens><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace><ExpressionParens><NumberValue>3600</NumberValue><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace><NumberValue>24</NumberValue></ExpressionParens><WhiteSpace>
+             </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><ExpressionParens><Other>h</Other><Period>.</Period><Other>run_duration</Other><WhiteSpace> </WhiteSpace><OtherOperator>/</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>10000</NumberValue><WhiteSpace> </WhiteSpace><OtherOperator>%</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>100</NumberValue></ExpressionParens><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace><NumberValue>3600</NumberValue><WhiteSpace>
+             </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><ExpressionParens><Other>h</Other><Period>.</Period><Other>run_duration</Other><WhiteSpace> </WhiteSpace><OtherOperator>/</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>100</NumberValue><WhiteSpace> </WhiteSpace><OtherOperator>%</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>100</NumberValue></ExpressionParens><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace><NumberValue>60</NumberValue><WhiteSpace>
+             </WhiteSpace><OtherOperator>+</OtherOperator><WhiteSpace> </WhiteSpace><ExpressionParens><Other>h</Other><Period>.</Period><Other>run_duration</Other><WhiteSpace> </WhiteSpace><OtherOperator>%</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>100</NumberValue></ExpressionParens><WhiteSpace>
+          </WhiteSpace></ContainerContentBody></Then></When><CaseElse><ContainerOpen><OtherKeyword>ELSE</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace>
+             </WhiteSpace><OtherKeyword>NULL</OtherKeyword><WhiteSpace>
+       </WhiteSpace></ContainerContentBody></CaseElse><ContainerClose><OtherKeyword>END</OtherKeyword></ContainerClose></CaseStatement><WhiteSpace>
+          </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>LastRunDuration</Other><WhiteSpace>
+  </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace>          </WhiteSpace><Other>@xp_results</Other><WhiteSpace> </WhiteSpace><Other>x</Other><WhiteSpace>
+             </WhiteSpace></SelectionTarget></Clause><Clause><CompoundKeyword simpleText="LEFT JOIN"><OtherKeyword>LEFT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>JOIN</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace>
+                </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sysjobs</Other><WhiteSpace> </WhiteSpace><Other>j</Other><WhiteSpace>
+             </WhiteSpace></SelectionTarget><OtherKeyword>ON</OtherKeyword><WhiteSpace> </WhiteSpace><Other>x</Other><Period>.</Period><Other>job_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>j</Other><Period>.</Period><Other>job_id</Other><WhiteSpace>
+          </WhiteSpace></Clause><Clause><CompoundKeyword simpleText="LEFT OUTER JOIN"><OtherKeyword>LEFT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>OUTER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>JOIN</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace>
+             </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>syscategories</Other><WhiteSpace> </WhiteSpace><Other>c</Other><WhiteSpace>
+          </WhiteSpace></SelectionTarget><OtherKeyword>ON</OtherKeyword><WhiteSpace> </WhiteSpace><Other>j</Other><Period>.</Period><Other>category_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>c</Other><Period>.</Period><Other>category_id</Other><WhiteSpace>
+       </WhiteSpace></Clause><Clause><CompoundKeyword simpleText="LEFT OUTER JOIN"><OtherKeyword>LEFT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>OUTER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>JOIN</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace>
+          </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sysjobhistory</Other><WhiteSpace> </WhiteSpace><Other>h</Other><WhiteSpace>
+       </WhiteSpace></SelectionTarget><OtherKeyword>ON</OtherKeyword><WhiteSpace>     </WhiteSpace><Other>x</Other><Period>.</Period><Other>job_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>h</Other><Period>.</Period><Other>job_id</Other><WhiteSpace>
+          </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>x</Other><Period>.</Period><Other>last_run_date</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>h</Other><Period>.</Period><Other>run_date</Other><WhiteSpace>
+          </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>x</Other><Period>.</Period><Other>last_run_time</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>h</Other><Period>.</Period><Other>run_time</Other><WhiteSpace>
+          </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>h</Other><Period>.</Period><Other>step_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace>
+		</WhiteSpace></Clause><Clause><CompoundKeyword simpleText="LEFT OUTER JOIN"><OtherKeyword>LEFT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>OUTER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>JOIN</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>syslogins</Other><WhiteSpace> </WhiteSpace><Other>sl</Other><WhiteSpace> </WhiteSpace></SelectionTarget><OtherKeyword>ON</OtherKeyword><WhiteSpace> </WhiteSpace><Other>j</Other><Period>.</Period><Other>owner_sid</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>sl</Other><Period>.</Period><Other>sid</Other><WhiteSpace>
+ 
+
+
+
+
+
+
+
+
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	Right up there with data integrity, security's really important.
+	Who else has sysadmin or securityadmin rights on this instance?
+	I care about securityadmin users because they can add themselves to the SA
+	role at any time to do their dirty work, then remove themselves back out.
+	
+	Don't think of them as other sysadmins.  
+	Think of them as users who can get you fired.
+</MultiLineComment><WhiteSpace>
+
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>l</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>l</Other><Period>.</Period><Other>denylogin</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>l</Other><Period>.</Period><Other>isntname</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>l</Other><Period>.</Period><Other>isntgroup</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>l</Other><Period>.</Period><Other>isntuser</Other><WhiteSpace>
+  </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>master</Other><Period>.</Period><Other>sys</Other><Period>.</Period><Other>syslogins</Other><WhiteSpace> </WhiteSpace><Other>l</Other><WhiteSpace>
+  </WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>WHERE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>l</Other><Period>.</Period><Other>sysadmin</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> </WhiteSpace><Or><OtherKeyword>OR</OtherKeyword></Or><WhiteSpace> </WhiteSpace><Other>l</Other><Period>.</Period><Other>securityadmin</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace>
+  </WhiteSpace></Clause><Clause><OtherKeyword>ORDER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>BY</OtherKeyword><WhiteSpace> </WhiteSpace><Other>l</Other><Period>.</Period><Other>isntgroup</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>l</Other><Period>.</Period><Other>isntname</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>l</Other><Period>.</Period><Other>isntuser</Other><WhiteSpace>
+
+
+
+
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	Now would be an excellent time to open up a Word doc and start documenting
+	your findings, which helps you prove your worth as a DBA.  And for every
+	SQL authentication user in that list, try logging in with a blank password.
+
+	In your Blitz document, if SA includes Builtin\Administrators, list the 
+	server's local administrators.
+</MultiLineComment><WhiteSpace>
+
+
+
+
+
+
+</WhiteSpace><MultiLineComment>
+	Let's review some server-level security &amp; configuration settings.
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>dbo</Other><Period>.</Period><Other>sp_configure</Other><WhiteSpace> </WhiteSpace><String>show advanced options</String><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>RECONFIGURE</OtherKeyword><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>dbo</Other><Period>.</Period><Other>sp_configure</Other><WhiteSpace>
+
+
+
+
+
+
+
+
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	Look for anything that's been changed from the default value.
+	What?  You don't know the defaults by heart?  Well, me neither.
+	In SSMS, go into the Object Explorer, then right-click on the server name.
+	Click Reports, Standard Reports, Server Dashboard, and then expand the
+	section Non Default Configuration Options.  It'll show everything that
+	deviates from the defaults.
+
+
+	Below, I set advanced options off, but that's just for demo purposes.
+	You can leave that on if you like.
+
+EXEC dbo.sp_configure 'show advanced options', 0
+GO
+RECONFIGURE
+GO
+</MultiLineComment><WhiteSpace>
+
+
+
+
+
+
+
+
+</WhiteSpace><MultiLineComment>
+	Check for startup stored procedures.  These live in the master database, and
+	they run automatically when SQL Server starts up.  They're sometimes left
+	behind by ambitious auditors or evil employees.
+	
+	For more information about startup stored procs, read:
+	http://www.mssqltips.com/tip.asp?tip=1574
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>USE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>master</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>master</Other><Period>.</Period><Other>INFORMATION_SCHEMA</Other><Period>.</Period><Other>ROUTINES</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>WHERE</OtherKeyword><WhiteSpace> </WhiteSpace><FunctionKeyword>OBJECTPROPERTY</FunctionKeyword><FunctionParens><FunctionKeyword>OBJECT_ID</FunctionKeyword><FunctionParens><Other>ROUTINE_NAME</Other></FunctionParens><Comma>,</Comma><String>ExecIsStartup</String></FunctionParens><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> 
+
+
+
+
+
+
+
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment> 
+	SQL Server 2008 &amp; above only - is auditing enabled?  If so, it might be
+	writing to an audit path that will fill up, or the server might be set to
+	stop if the file path isn't available.  Let's see if there's any audits.
+	
+	For a video explaining the SQL Server auditing options, check out:
+	http://sqlserverpedia.com/blog/sql-server-2008/guest-podcast-auditing-your-database-server/
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>dm_server_audit_status</Other><WhiteSpace>
+
+
+
+
+
+
+
+
+
+
+
+
+</WhiteSpace></SelectionTarget></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	Server settings can be made outside of sp_configure too.  The easiest way
+	to check out the service settings are to go into Start, Programs,
+	Microsoft SQL Server, Configuration Tools, SQL Server Configuration Manager.
+	Go there now, and drill into SQL Server Services, then right-click on each
+	service and hit Properties.  The advanced properties for the SQL Server
+	service itself can hide some startup parameters.
+
+	
+	Next, check Instant File Initialization.  Take a note of the service account
+	SQL Server is using, and then run secpol.msc.  Go into Local Policy, User
+	Rights Assignment, Perform Volume Maintenance Tasks.  Double-click on that
+	and add the SQL Server service account.  This lets SQL Server grow data
+	files instantly.  For more info:
+	http://www.sqlskills.com/blogs/kimberly/post/Instant-Initialization-What-Why-and-How.aspx
+
+
+	There's a few more server-level things I like to check, but I use the SSMS
+	GUI.  Go into Server Objects, and check out what's under Endpoints, Linked
+	Servers, Resource Governor, and Triggers.  If any of these objects exist, you
+	want to research to find out what they're being used for.
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>endpoints</Other><WhiteSpace> </WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>WHERE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>type</Other><WhiteSpace> </WhiteSpace><OtherOperator>&lt;&gt;</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>resource_governor_configuration</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>server_triggers</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>servers</Other><WhiteSpace>
+
+
+
+
+
+
+
+
+
+
+</WhiteSpace></SelectionTarget></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	Then go into Management, Resource Governor - that's another landmine.
+
+
+	Now as long as we're in the SSMS GUI, let's set up Database Mail.  It's
+	possible to script that out, but I like the GUI for that since I often use
+	wildly different parameters for different clients or departments.
+
+	Once Database Mail is set up, the below script will test it.
+
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_send_dbmail</Other><WhiteSpace>
+    </WhiteSpace><Other>@recipients</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><String>email@domain.com</String><Comma>,</Comma><WhiteSpace>
+    </WhiteSpace><Other>@body</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>@@SERVERNAME</FunctionKeyword><Comma>,</Comma><WhiteSpace>
+    </WhiteSpace><Other>@subject</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><String>Testing SQL Server Database Mail - see body for server name</String><Semicolon>;</Semicolon><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+
+
+
+
+
+</WhiteSpace><MultiLineComment>
+	After enabling Database Mail, the below script sets up a default set of
+	notifications for problems.  In this section, replace these strings:
+	- 'The Database Administrator' - your name goes here
+	- 'YourEmailAddress@Hotmail.com' - your email
+	- '8005551212@cingularme.com' - your phone/pager's email address
+</MultiLineComment><WhiteSpace>
+
+
+</WhiteSpace><Clause><OtherKeyword>USE</OtherKeyword><WhiteSpace> </WhiteSpace><BracketQuotedName>msdb</BracketQuotedName><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_operator</Other><WhiteSpace> </WhiteSpace><Other>@name</Other><OtherOperator>=</OtherOperator><NationalString>The Database Administrator</NationalString><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@enabled</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@weekday_pager_start_time</Other><OtherOperator>=</OtherOperator><NumberValue>0</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@weekday_pager_end_time</Other><OtherOperator>=</OtherOperator><NumberValue>235959</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@saturday_pager_start_time</Other><OtherOperator>=</OtherOperator><NumberValue>0</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@saturday_pager_end_time</Other><OtherOperator>=</OtherOperator><NumberValue>235959</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@sunday_pager_start_time</Other><OtherOperator>=</OtherOperator><NumberValue>0</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@sunday_pager_end_time</Other><OtherOperator>=</OtherOperator><NumberValue>235959</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@pager_days</Other><OtherOperator>=</OtherOperator><NumberValue>127</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@email_address</Other><OtherOperator>=</OtherOperator><NationalString>YourEmailAddress@Hotmail.com</NationalString><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@pager_address</Other><OtherOperator>=</OtherOperator><NationalString>8005551212@cingularme.com</NationalString><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@category_name</Other><OtherOperator>=</OtherOperator><NationalString>[Uncategorized]</NationalString><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_alert</Other><WhiteSpace> </WhiteSpace><Other>@name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 016</NationalString><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@message_id</Other><OtherOperator>=</OtherOperator><NumberValue>0</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@severity</Other><OtherOperator>=</OtherOperator><NumberValue>16</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@enabled</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@delay_between_responses</Other><OtherOperator>=</OtherOperator><NumberValue>60</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@include_event_description_in</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@job_id</Other><OtherOperator>=</OtherOperator><NationalString>00000000-0000-0000-0000-000000000000</NationalString><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_notification</Other><WhiteSpace> </WhiteSpace><Other>@alert_name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 016</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@operator_name</Other><OtherOperator>=</OtherOperator><NationalString>The Database Administrator</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@notification_method</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>7</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_alert</Other><WhiteSpace> </WhiteSpace><Other>@name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 017</NationalString><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@message_id</Other><OtherOperator>=</OtherOperator><NumberValue>0</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@severity</Other><OtherOperator>=</OtherOperator><NumberValue>17</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@enabled</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@delay_between_responses</Other><OtherOperator>=</OtherOperator><NumberValue>60</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@include_event_description_in</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@job_id</Other><OtherOperator>=</OtherOperator><NationalString>00000000-0000-0000-0000-000000000000</NationalString><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_notification</Other><WhiteSpace> </WhiteSpace><Other>@alert_name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 017</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@operator_name</Other><OtherOperator>=</OtherOperator><NationalString>The Database Administrator</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@notification_method</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>7</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_alert</Other><WhiteSpace> </WhiteSpace><Other>@name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 018</NationalString><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@message_id</Other><OtherOperator>=</OtherOperator><NumberValue>0</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@severity</Other><OtherOperator>=</OtherOperator><NumberValue>18</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@enabled</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@delay_between_responses</Other><OtherOperator>=</OtherOperator><NumberValue>60</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@include_event_description_in</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@job_id</Other><OtherOperator>=</OtherOperator><NationalString>00000000-0000-0000-0000-000000000000</NationalString><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_notification</Other><WhiteSpace> </WhiteSpace><Other>@alert_name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 018</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@operator_name</Other><OtherOperator>=</OtherOperator><NationalString>The Database Administrator</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@notification_method</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>7</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_alert</Other><WhiteSpace> </WhiteSpace><Other>@name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 019</NationalString><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@message_id</Other><OtherOperator>=</OtherOperator><NumberValue>0</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@severity</Other><OtherOperator>=</OtherOperator><NumberValue>19</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@enabled</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@delay_between_responses</Other><OtherOperator>=</OtherOperator><NumberValue>60</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@include_event_description_in</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@job_id</Other><OtherOperator>=</OtherOperator><NationalString>00000000-0000-0000-0000-000000000000</NationalString><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_notification</Other><WhiteSpace> </WhiteSpace><Other>@alert_name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 019</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@operator_name</Other><OtherOperator>=</OtherOperator><NationalString>The Database Administrator</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@notification_method</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>7</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_alert</Other><WhiteSpace> </WhiteSpace><Other>@name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 020</NationalString><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@message_id</Other><OtherOperator>=</OtherOperator><NumberValue>0</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@severity</Other><OtherOperator>=</OtherOperator><NumberValue>20</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@enabled</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@delay_between_responses</Other><OtherOperator>=</OtherOperator><NumberValue>60</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@include_event_description_in</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@job_id</Other><OtherOperator>=</OtherOperator><NationalString>00000000-0000-0000-0000-000000000000</NationalString><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_notification</Other><WhiteSpace> </WhiteSpace><Other>@alert_name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 020</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@operator_name</Other><OtherOperator>=</OtherOperator><NationalString>The Database Administrator</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@notification_method</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>7</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_alert</Other><WhiteSpace> </WhiteSpace><Other>@name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 021</NationalString><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@message_id</Other><OtherOperator>=</OtherOperator><NumberValue>0</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@severity</Other><OtherOperator>=</OtherOperator><NumberValue>21</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@enabled</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@delay_between_responses</Other><OtherOperator>=</OtherOperator><NumberValue>60</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@include_event_description_in</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@job_id</Other><OtherOperator>=</OtherOperator><NationalString>00000000-0000-0000-0000-000000000000</NationalString><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_notification</Other><WhiteSpace> </WhiteSpace><Other>@alert_name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 021</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@operator_name</Other><OtherOperator>=</OtherOperator><NationalString>The Database Administrator</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@notification_method</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>7</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_alert</Other><WhiteSpace> </WhiteSpace><Other>@name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 022</NationalString><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@message_id</Other><OtherOperator>=</OtherOperator><NumberValue>0</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@severity</Other><OtherOperator>=</OtherOperator><NumberValue>22</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@enabled</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@delay_between_responses</Other><OtherOperator>=</OtherOperator><NumberValue>60</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@include_event_description_in</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@job_id</Other><OtherOperator>=</OtherOperator><NationalString>00000000-0000-0000-0000-000000000000</NationalString><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_notification</Other><WhiteSpace> </WhiteSpace><Other>@alert_name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 022</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@operator_name</Other><OtherOperator>=</OtherOperator><NationalString>The Database Administrator</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@notification_method</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>7</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_alert</Other><WhiteSpace> </WhiteSpace><Other>@name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 023</NationalString><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@message_id</Other><OtherOperator>=</OtherOperator><NumberValue>0</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@severity</Other><OtherOperator>=</OtherOperator><NumberValue>23</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@enabled</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@delay_between_responses</Other><OtherOperator>=</OtherOperator><NumberValue>60</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@include_event_description_in</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@job_id</Other><OtherOperator>=</OtherOperator><NationalString>00000000-0000-0000-0000-000000000000</NationalString><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_notification</Other><WhiteSpace> </WhiteSpace><Other>@alert_name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 023</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@operator_name</Other><OtherOperator>=</OtherOperator><NationalString>The Database Administrator</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@notification_method</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>7</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_alert</Other><WhiteSpace> </WhiteSpace><Other>@name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 024</NationalString><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@message_id</Other><OtherOperator>=</OtherOperator><NumberValue>0</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@severity</Other><OtherOperator>=</OtherOperator><NumberValue>24</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@enabled</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@delay_between_responses</Other><OtherOperator>=</OtherOperator><NumberValue>60</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@include_event_description_in</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@job_id</Other><OtherOperator>=</OtherOperator><NationalString>00000000-0000-0000-0000-000000000000</NationalString><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_notification</Other><WhiteSpace> </WhiteSpace><Other>@alert_name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 024</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@operator_name</Other><OtherOperator>=</OtherOperator><NationalString>The Database Administrator</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@notification_method</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>7</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_alert</Other><WhiteSpace> </WhiteSpace><Other>@name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 025</NationalString><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@message_id</Other><OtherOperator>=</OtherOperator><NumberValue>0</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@severity</Other><OtherOperator>=</OtherOperator><NumberValue>25</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@enabled</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@delay_between_responses</Other><OtherOperator>=</OtherOperator><NumberValue>60</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@include_event_description_in</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@job_id</Other><OtherOperator>=</OtherOperator><NationalString>00000000-0000-0000-0000-000000000000</NationalString><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_notification</Other><WhiteSpace> </WhiteSpace><Other>@alert_name</Other><OtherOperator>=</OtherOperator><NationalString>Severity 025</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@operator_name</Other><OtherOperator>=</OtherOperator><NationalString>The Database Administrator</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@notification_method</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>7</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+
+</WhiteSpace><MultiLineComment> Specific Alert for Error 825 
+http://www.sqlskills.com/BLOGS/PAUL/post/A-little-known-sign-of-impending-doom-error-825.aspx
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_alert</Other><WhiteSpace> </WhiteSpace><Other>@name</Other><OtherOperator>=</OtherOperator><NationalString>Error 825</NationalString><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@message_id</Other><OtherOperator>=</OtherOperator><NumberValue>825</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@severity</Other><OtherOperator>=</OtherOperator><NumberValue>0</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@enabled</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@delay_between_responses</Other><OtherOperator>=</OtherOperator><NumberValue>60</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@include_event_description_in</Other><OtherOperator>=</OtherOperator><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> 
+		</WhiteSpace><Other>@job_id</Other><OtherOperator>=</OtherOperator><NationalString>00000000-0000-0000-0000-000000000000</NationalString><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>msdb</Other><Period>.</Period><Other>dbo</Other><Period>.</Period><Other>sp_add_notification</Other><WhiteSpace> </WhiteSpace><Other>@alert_name</Other><OtherOperator>=</OtherOperator><NationalString>Error 825</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@operator_name</Other><OtherOperator>=</OtherOperator><NationalString>The Database Administrator</NationalString><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>@notification_method</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>7</NumberValue><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+
+
+
+
+
+</WhiteSpace><MultiLineComment>
+	A few more checks at the server level.  Go into the Windows Event Logs,
+	and review any errors in the System and Application events.  This is where
+	hardware-level errors can show up too, like failed hard drives.
+</MultiLineComment><WhiteSpace>
+
+
+
+
+
+
+</WhiteSpace><MultiLineComment>
+	I don't like any surprises in the system databases.  Let's check the list of
+	objects in master and model.  I don't want to see any rows returned from
+	these four queries - if there are objects in the system databases, I want to
+	ask why, and get them removed if possible.
+</MultiLineComment><WhiteSpace>
+
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>master</Other><Period>.</Period><Other>sys</Other><Period>.</Period><Other>tables</Other><WhiteSpace> </WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>WHERE</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>name</OtherKeyword><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherOperator>IN</OtherOperator><WhiteSpace> </WhiteSpace><ExpressionParens><String>spt_fallback_db</String><Comma>,</Comma><WhiteSpace> </WhiteSpace><String>spt_fallback_dev</String><Comma>,</Comma><WhiteSpace> </WhiteSpace><String>spt_fallback_usg</String><Comma>,</Comma><WhiteSpace> </WhiteSpace><String>spt_monitor</String><Comma>,</Comma><WhiteSpace> </WhiteSpace><String>spt_values</String><Comma>,</Comma><WhiteSpace> </WhiteSpace><String>MSreplication_options</String></ExpressionParens><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>master</Other><Period>.</Period><Other>sys</Other><Period>.</Period><Other>procedures</Other><WhiteSpace> </WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>WHERE</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>name</OtherKeyword><WhiteSpace> </WhiteSpace><OtherOperator>NOT</OtherOperator><WhiteSpace> </WhiteSpace><OtherOperator>IN</OtherOperator><WhiteSpace> </WhiteSpace><ExpressionParens><String>sp_MSrepl_startup</String><Comma>,</Comma><WhiteSpace> </WhiteSpace><String>sp_MScleanupmergepublisher</String></ExpressionParens><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>model</Other><Period>.</Period><Other>sys</Other><Period>.</Period><Other>tables</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>model</Other><Period>.</Period><Other>sys</Other><Period>.</Period><Other>procedures</Other><WhiteSpace>
+
+
+
+
+
+
+
+</WhiteSpace></SelectionTarget></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	Alright, we're done with the server level!  Let's check databases.  We could
+	right-click on each database and click Properties, but it can be easier to
+	scan across the results of sys.databases.  I look for any variations - are
+	there some databases that have different settings than others?
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>databases</Other><WhiteSpace>
+
+
+
+
+
+
+
+
+
+
+</WhiteSpace></SelectionTarget></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	SQL 2008 &amp; above only - are any databases encrypted?  Transparent Data
+	Encryption is all too transparent.  You won't notice that databases are
+	encrypted if you just glance at SSMS.
+	
+	If this query returns any results, you need to start asking if the certificate
+	has been backed up and where the password is.  If you don't have both the
+	cert and the password to unlock it, then the database can't be restored.
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>k</Other><Period>.</Period><Asterisk>*</Asterisk><WhiteSpace> 
+  </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>dm_database_encryption_keys</Other><WhiteSpace> </WhiteSpace><Other>k</Other><WhiteSpace>
+  </WhiteSpace></SelectionTarget></Clause><Clause><CompoundKeyword simpleText="INNER JOIN"><OtherKeyword>INNER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>JOIN</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>databases</Other><WhiteSpace> </WhiteSpace><Other>d</Other><WhiteSpace> </WhiteSpace></SelectionTarget><OtherKeyword>ON</OtherKeyword><WhiteSpace> </WhiteSpace><Other>k</Other><Period>.</Period><Other>database_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><Other>database_id</Other><WhiteSpace>
+  </WhiteSpace></Clause><Clause><OtherKeyword>ORDER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>BY</OtherKeyword><WhiteSpace> </WhiteSpace><Other>d</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><WhiteSpace>
+
+
+
+
+
+
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	Are any of the databases using features that are Enterprise Edition only?
+	If a database is using something like partitioning, compression, or
+	Transparent Data Encryption, then I won't be able to restore it onto a
+	Standard Edition server.
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>dbo</Other><Period>.</Period><Other>sp_MSforeachdb</Other><WhiteSpace> </WhiteSpace><String>SELECT '[?]' AS DatabaseName, * FROM [?].sys.dm_db_persisted_sku_features</String><WhiteSpace>
+
+
+
+
+
+
+
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	Data files - where are they?  Are any on the C drive?  We want to avoid that
+	because if they grow, they can fill up the OS drive, and that can lead to a
+	very nasty crash.  Let's look at where the databases live.  For tips on how to move databases off the C drive:
+	http://support.microsoft.com/kb/224071
+	In the results, also check the number of data and log files for all databases.
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>select</OtherKeyword><WhiteSpace> </WhiteSpace><FunctionKeyword>db_name</FunctionKeyword><FunctionParens><Other>database_id</Other></FunctionParens><Comma>,</Comma><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>from</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>master_files</Other><WhiteSpace>
+
+
+
+
+
+
+
+
+
+
+
+</WhiteSpace></SelectionTarget></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	Check for triggers in any database.  I can't change these right away, but I
+	want to know if they're present, because it'll help me troubleshoot faster.
+	If I didn't know the database had triggers, I probably wouldn't think to look.
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>EXEC</OtherKeyword><WhiteSpace> </WhiteSpace><Other>dbo</Other><Period>.</Period><Other>sp_MSforeachdb</Other><WhiteSpace> </WhiteSpace><String>SELECT '[?]' AS database_name, o.name AS table_name, t.* FROM [?].sys.triggers t INNER JOIN [?].sys.objects o ON t.parent_id = o.object_id</String><WhiteSpace>
+
+
+
+
+
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	We've hit the major pain points on reliability and security.  Now let's do a
+	little poking around in performance.  Let's query the server's wait stats,
+	which tell us what things the server has been waiting on since the last
+	restart.  For more about wait stats, check out:
+	http://sqlserverpedia.com/wiki/Wait_Types
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><Comma>,</Comma><WhiteSpace> </WhiteSpace><ExpressionParens><Other>wait_time_ms</Other><WhiteSpace> </WhiteSpace><OtherOperator>-</OtherOperator><WhiteSpace> </WhiteSpace><Other>signal_wait_time_ms</Other></ExpressionParens><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>real_wait_time_ms</Other><WhiteSpace> 
+</WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>dm_os_wait_stats</Other><WhiteSpace> 
+</WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>ORDER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>BY</OtherKeyword><WhiteSpace> </WhiteSpace><ExpressionParens><Other>wait_time_ms</Other><WhiteSpace> </WhiteSpace><OtherOperator>-</OtherOperator><WhiteSpace> </WhiteSpace><Other>signal_wait_time_ms</Other></ExpressionParens><WhiteSpace> </WhiteSpace><OtherKeyword>DESC</OtherKeyword><WhiteSpace>
+
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	Do we have any duplicate indexes?  This query from Adam Machanic checks for
+	indexes on exactly the same fields.  You have to run it in each database
+	you want to check, and it's extremely fast.
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>select</OtherKeyword><WhiteSpace> 
+    </WhiteSpace><Other>t</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>as</OtherKeyword><WhiteSpace> </WhiteSpace><Other>tableName</Other><Comma>,</Comma><WhiteSpace>
+    </WhiteSpace><Other>p</Other><Period>.</Period><Asterisk>*</Asterisk><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>from</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>tables</Other><WhiteSpace> </WhiteSpace><OtherKeyword>as</OtherKeyword><WhiteSpace> </WhiteSpace><Other>t</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause><Clause><CompoundKeyword simpleText="INNER JOIN"><OtherKeyword>inner</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>join</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>indexes</Other><WhiteSpace> </WhiteSpace><OtherKeyword>as</OtherKeyword><WhiteSpace> </WhiteSpace><Other>i1</Other><WhiteSpace> </WhiteSpace></SelectionTarget><OtherKeyword>on</OtherKeyword><WhiteSpace>
+    </WhiteSpace><Other>i1</Other><Period>.</Period><FunctionKeyword>object_id</FunctionKeyword><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>t</Other><Period>.</Period><FunctionKeyword>object_id</FunctionKeyword><WhiteSpace>
+</WhiteSpace></Clause><Clause><CompoundKeyword simpleText="CROSS APPLY"><OtherKeyword>cross</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>apply</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace>
+</WhiteSpace><SelectionTargetParens><WhiteSpace>
+    </WhiteSpace><Clause><OtherKeyword>select</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>top</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace>
+        </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace>
+    </WhiteSpace></Clause><Clause><OtherKeyword>from</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>indexes</Other><WhiteSpace> </WhiteSpace><OtherKeyword>as</OtherKeyword><WhiteSpace> </WhiteSpace><Other>i</Other><WhiteSpace>
+    </WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>where</OtherKeyword><WhiteSpace>
+        </WhiteSpace><Other>i</Other><Period>.</Period><FunctionKeyword>object_id</FunctionKeyword><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>i1</Other><Period>.</Period><FunctionKeyword>object_id</FunctionKeyword><WhiteSpace>
+        </WhiteSpace><And><OtherKeyword>and</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>i</Other><Period>.</Period><Other>index_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>&gt;</OtherOperator><WhiteSpace> </WhiteSpace><Other>i1</Other><Period>.</Period><Other>index_id</Other><WhiteSpace>
+        </WhiteSpace><And><OtherKeyword>and</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>i</Other><Period>.</Period><Other>type_desc</Other><WhiteSpace> </WhiteSpace><OtherOperator>&lt;&gt;</OtherOperator><WhiteSpace> </WhiteSpace><String>xml</String><WhiteSpace>
+    </WhiteSpace></Clause><Clause><OtherKeyword>order</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>by</OtherKeyword><WhiteSpace>
+        </WhiteSpace><Other>i</Other><Period>.</Period><Other>index_id</Other><WhiteSpace>
+</WhiteSpace></Clause></SelectionTargetParens><WhiteSpace> </WhiteSpace><OtherKeyword>as</OtherKeyword><WhiteSpace> </WhiteSpace><Other>i2</Other><WhiteSpace> 
+</WhiteSpace></SelectionTarget></Clause><Clause><CompoundKeyword simpleText="CROSS APPLY"><OtherKeyword>cross</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>apply</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace>
+</WhiteSpace><SelectionTargetParens><WhiteSpace>
+    </WhiteSpace><Clause><OtherKeyword>select</OtherKeyword><WhiteSpace>
+        </WhiteSpace><FunctionKeyword>min</FunctionKeyword><FunctionParens><Other>a</Other><Period>.</Period><Other>index_id</Other></FunctionParens><WhiteSpace> </WhiteSpace><OtherKeyword>as</OtherKeyword><WhiteSpace> </WhiteSpace><Other>ind1</Other><Comma>,</Comma><WhiteSpace>
+        </WhiteSpace><FunctionKeyword>min</FunctionKeyword><FunctionParens><Other>b</Other><Period>.</Period><Other>index_id</Other></FunctionParens><WhiteSpace> </WhiteSpace><OtherKeyword>as</OtherKeyword><WhiteSpace> </WhiteSpace><Other>ind2</Other><WhiteSpace>
+    </WhiteSpace></Clause><Clause><OtherKeyword>from</OtherKeyword><SelectionTarget><WhiteSpace> 
+    </WhiteSpace><SelectionTargetParens><WhiteSpace>
+        </WhiteSpace><Clause><OtherKeyword>select</OtherKeyword><WhiteSpace> </WhiteSpace><Other>ic</Other><Period>.</Period><Asterisk>*</Asterisk><WhiteSpace>
+        </WhiteSpace></Clause><Clause><OtherKeyword>from</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>index_columns</Other><WhiteSpace> </WhiteSpace><Other>ic</Other><WhiteSpace>
+        </WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>where</OtherKeyword><WhiteSpace>
+            </WhiteSpace><Other>ic</Other><Period>.</Period><FunctionKeyword>object_id</FunctionKeyword><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace>  </WhiteSpace><Other>i1</Other><Period>.</Period><FunctionKeyword>object_id</FunctionKeyword><WhiteSpace>
+            </WhiteSpace><And><OtherKeyword>and</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>ic</Other><Period>.</Period><Other>index_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>i1</Other><Period>.</Period><Other>index_id</Other><WhiteSpace>
+            </WhiteSpace><And><OtherKeyword>and</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>ic</Other><Period>.</Period><Other>is_included_column</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace>
+    </WhiteSpace></Clause></SelectionTargetParens><WhiteSpace> </WhiteSpace><OtherKeyword>as</OtherKeyword><WhiteSpace> </WhiteSpace><Other>a</Other><WhiteSpace>
+    </WhiteSpace></SelectionTarget></Clause><Clause><CompoundKeyword simpleText="FULL OUTER JOIN"><OtherKeyword>full</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>outer</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>join</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace>
+    </WhiteSpace><SelectionTargetParens><WhiteSpace>
+        </WhiteSpace><Clause><OtherKeyword>select</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace>
+        </WhiteSpace></Clause><Clause><OtherKeyword>from</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>index_columns</Other><WhiteSpace> </WhiteSpace><OtherKeyword>as</OtherKeyword><WhiteSpace> </WhiteSpace><Other>ic</Other><WhiteSpace>
+        </WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>where</OtherKeyword><WhiteSpace>
+            </WhiteSpace><Other>ic</Other><Period>.</Period><FunctionKeyword>object_id</FunctionKeyword><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace>  </WhiteSpace><Other>i2</Other><Period>.</Period><FunctionKeyword>object_id</FunctionKeyword><WhiteSpace>
+            </WhiteSpace><And><OtherKeyword>and</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>ic</Other><Period>.</Period><Other>index_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>i2</Other><Period>.</Period><Other>index_id</Other><WhiteSpace>
+            </WhiteSpace><And><OtherKeyword>and</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>ic</Other><Period>.</Period><Other>is_included_column</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace>
+    </WhiteSpace></Clause></SelectionTargetParens><WhiteSpace> </WhiteSpace><OtherKeyword>as</OtherKeyword><WhiteSpace> </WhiteSpace><Other>b</Other><WhiteSpace> </WhiteSpace></SelectionTarget><OtherKeyword>on</OtherKeyword><WhiteSpace>
+        </WhiteSpace><Other>a</Other><Period>.</Period><Other>index_column_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>b</Other><Period>.</Period><Other>index_column_id</Other><WhiteSpace>
+        </WhiteSpace><And><OtherKeyword>and</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>a</Other><Period>.</Period><Other>column_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>b</Other><Period>.</Period><Other>column_id</Other><WhiteSpace>
+        </WhiteSpace><And><OtherKeyword>and</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>a</Other><Period>.</Period><Other>key_ordinal</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>b</Other><Period>.</Period><Other>key_ordinal</Other><WhiteSpace>
+    </WhiteSpace></Clause><Clause><OtherKeyword>having</OtherKeyword><WhiteSpace>
+        </WhiteSpace><FunctionKeyword>count</FunctionKeyword><FunctionParens><CaseStatement><ContainerOpen><OtherKeyword>case</OtherKeyword></ContainerOpen><Input><WhiteSpace> </WhiteSpace></Input><When><ContainerOpen><OtherKeyword>when</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><Other>a</Other><Period>.</Period><Other>index_id</Other><WhiteSpace> </WhiteSpace><OtherKeyword>is</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>null</OtherKeyword><WhiteSpace> </WhiteSpace></ContainerContentBody><Then><ContainerOpen><OtherKeyword>then</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> </WhiteSpace></ContainerContentBody></Then></When><ContainerClose><OtherKeyword>end</OtherKeyword></ContainerClose></CaseStatement></FunctionParens><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace>
+        </WhiteSpace><And><OtherKeyword>and</OtherKeyword></And><WhiteSpace> </WhiteSpace><FunctionKeyword>count</FunctionKeyword><FunctionParens><CaseStatement><ContainerOpen><OtherKeyword>case</OtherKeyword></ContainerOpen><Input><WhiteSpace> </WhiteSpace></Input><When><ContainerOpen><OtherKeyword>when</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><Other>b</Other><Period>.</Period><Other>index_id</Other><WhiteSpace> </WhiteSpace><OtherKeyword>is</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>null</OtherKeyword><WhiteSpace> </WhiteSpace></ContainerContentBody><Then><ContainerOpen><OtherKeyword>then</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> </WhiteSpace></ContainerContentBody></Then></When><ContainerClose><OtherKeyword>end</OtherKeyword></ContainerClose></CaseStatement></FunctionParens><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace>
+        </WhiteSpace><And><OtherKeyword>and</OtherKeyword></And><WhiteSpace> </WhiteSpace><FunctionKeyword>count</FunctionKeyword><FunctionParens><Other>a</Other><Period>.</Period><Other>index_id</Other></FunctionParens><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><FunctionKeyword>count</FunctionKeyword><FunctionParens><Other>b</Other><Period>.</Period><Other>index_id</Other></FunctionParens><WhiteSpace>
+</WhiteSpace></Clause></SelectionTargetParens><WhiteSpace> </WhiteSpace><OtherKeyword>as</OtherKeyword><WhiteSpace> </WhiteSpace><Other>p</Other><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause><Clause><OtherKeyword>where</OtherKeyword><WhiteSpace>
+    </WhiteSpace><Other>i1</Other><Period>.</Period><Other>type_desc</Other><WhiteSpace> </WhiteSpace><OtherOperator>&lt;&gt;</OtherOperator><WhiteSpace> </WhiteSpace><String>xml</String><WhiteSpace>
+
+
+
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><MultiLineComment>
+	Index fragmentation is the leading cause of DBA heartburn. It's a lot like
+	file fragmentation, but it happens inside of the database.  The below script
+	shows fragmented objects that might be a concern.
+	
+	This is an IO-intensive operation, so start by running it in a small database.
+	To run it for all databases, go to the line with this:
+	
+	INNER JOIN sys.dm_db_index_physical_stats (DB_ID(), NULL, NULL , NULL, N'Limited') ps
+	
+	and replace it with:
+	
+	INNER JOIN sys.dm_db_index_physical_stats (NULL, NULL, NULL , NULL, N'Limited') ps	
+	
+	But be careful - that can run VERY long on large database systems, like hours.
+	For more about index fragmentation, check out this page with a video:
+	http://sqlserverpedia.com/wiki/Index_Maintenance
+</MultiLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace>
+      </WhiteSpace><Other>db</Other><Period>.</Period><OtherKeyword>name</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>databaseName</Other><WhiteSpace>
+    </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><FunctionKeyword>SCHEMA_NAME</FunctionKeyword><FunctionParens><Other>obj</Other><Period>.</Period><FunctionKeyword>schema_id</FunctionKeyword></FunctionParens><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>schemaName</Other><WhiteSpace>
+    </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><FunctionKeyword>OBJECT_NAME</FunctionKeyword><FunctionParens><Other>ps</Other><Period>.</Period><FunctionKeyword>OBJECT_ID</FunctionKeyword></FunctionParens><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>tableName</Other><WhiteSpace>
+    </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>ps</Other><Period>.</Period><FunctionKeyword>OBJECT_ID</FunctionKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>objectID</Other><WhiteSpace>
+    </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>ps</Other><Period>.</Period><Other>index_id</Other><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>indexID</Other><WhiteSpace>
+    </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>ps</Other><Period>.</Period><Other>partition_number</Other><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>partitionNumber</Other><WhiteSpace>
+    </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>ps</Other><Period>.</Period><Other>avg_fragmentation_in_percent</Other><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>fragmentation</Other><WhiteSpace>
+    </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>ps</Other><Period>.</Period><Other>page_count</Other><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>databases</Other><WhiteSpace> </WhiteSpace><Other>db</Other><WhiteSpace>
+  </WhiteSpace></SelectionTarget></Clause><Clause><CompoundKeyword simpleText="INNER JOIN"><OtherKeyword>INNER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>JOIN</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>dm_db_index_physical_stats</Other><WhiteSpace> </WhiteSpace><FunctionParens><FunctionKeyword>DB_ID</FunctionKeyword><FunctionParens></FunctionParens><Comma>,</Comma><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><Comma>,</Comma><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><WhiteSpace> </WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><OtherKeyword>NULL</OtherKeyword><Comma>,</Comma><WhiteSpace> </WhiteSpace><NationalString>Limited</NationalString></FunctionParens><WhiteSpace> </WhiteSpace><Other>ps</Other><WhiteSpace>
+      </WhiteSpace></SelectionTarget><OtherKeyword>ON</OtherKeyword><WhiteSpace> </WhiteSpace><Other>db</Other><Period>.</Period><Other>database_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>ps</Other><Period>.</Period><Other>database_id</Other><WhiteSpace>
+  </WhiteSpace></Clause><Clause><CompoundKeyword simpleText="INNER JOIN"><OtherKeyword>INNER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>JOIN</OtherKeyword></CompoundKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>sys</Other><Period>.</Period><Other>objects</Other><WhiteSpace> </WhiteSpace><Other>obj</Other><WhiteSpace> </WhiteSpace></SelectionTarget><OtherKeyword>ON</OtherKeyword><WhiteSpace> </WhiteSpace><Other>ps</Other><Period>.</Period><FunctionKeyword>object_id</FunctionKeyword><WhiteSpace> </WhiteSpace><OtherOperator>=</OtherOperator><WhiteSpace> </WhiteSpace><Other>obj</Other><Period>.</Period><FunctionKeyword>object_id</FunctionKeyword><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>WHERE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>ps</Other><Period>.</Period><Other>index_id</Other><WhiteSpace> </WhiteSpace><OtherOperator>&gt;</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace> 
+   </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>ps</Other><Period>.</Period><Other>page_count</Other><WhiteSpace> </WhiteSpace><OtherOperator>&gt;</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>100</NumberValue><WhiteSpace> 
+   </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>ps</Other><Period>.</Period><Other>avg_fragmentation_in_percent</Other><WhiteSpace> </WhiteSpace><OtherOperator>&gt;</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>30</NumberValue><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>ORDER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>BY</OtherKeyword><WhiteSpace> </WhiteSpace><Other>databaseName</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>schemaName</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>tableName</Other><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>OPTION</OtherKeyword><WhiteSpace> </WhiteSpace><ExpressionParens><OtherKeyword>MaxDop</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue></ExpressionParens><Semicolon>;</Semicolon><WhiteSpace>
+
+
+
+
+
+
+
+
+
+</WhiteSpace><MultiLineComment>
+	Finally, let's go back to the users and ask questions:
+	- Can the business operate if this server is down?
+	- How many employees have to stop working if this server goes down?
+	- Who should I call when the server goes down?
+	- Is this server covered by any security or compliance regulations?
+	We can use their answers to build a good backup &amp; recovery solution.
+	
+	Is there anything you think should be added here?  You can edit this script!
+	Go to the script's home page:
+	http://sqlserverpedia.com/wiki/Audit_a_SQL_Server_Configuration
+	Log into SQLServerPedia (it's free to create an account).  After you've
+	logged in, you'll see an Edit button at the top of the page.  Click that,
+	and you can edit this script right now to add your own contributions!
+</MultiLineComment></Clause></SqlStatement></SqlRoot>

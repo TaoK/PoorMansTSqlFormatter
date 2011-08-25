@@ -1,0 +1,9 @@
+﻿--random sample from msdn library: http://msdn.microsoft.com/en-us/library/bb264565(v=sql.90).aspx
+SELECT EmployeeID
+	,FirstName
+	,LastName
+	,HireDate
+	,City
+FROM Employees
+WHERE HireDate NOT BETWEEN '1-june-1992'
+		AND '15-december-1993'

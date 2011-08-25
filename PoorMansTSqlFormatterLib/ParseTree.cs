@@ -144,14 +144,7 @@ namespace PoorMansTSqlFormatterLib
 
         internal void EscapePartialStatementContainers()
         {
-            if (PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
-                && PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
-                && PathNameMatches(2, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                && PathNameMatches(3, SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK)
-                )
-                //we just ended the one select statement in a cursor declaration, and need to pop out to the same level as the cursor
-                MoveToAncestorContainer(5);
-            else if (PathNameMatches(0, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
+            if (PathNameMatches(0, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
                 || PathNameMatches(0, SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
                 )
                 MoveToAncestorContainer(1);
@@ -186,6 +179,7 @@ namespace PoorMansTSqlFormatterLib
 
             if (HasNonWhiteSpaceNonCommentContent(CurrentContainer))
             {
+                EscapeCursorForBlock();
                 EscapeMergeAction();
                 EscapePartialStatementContainers();
 
@@ -218,6 +212,18 @@ namespace PoorMansTSqlFormatterLib
             }
         }
 
+        private void EscapeCursorForBlock()
+        {
+            if (PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
+                && PathNameMatches(1, SqlXmlConstants.ENAME_SQL_STATEMENT)
+                && PathNameMatches(2, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                && PathNameMatches(3, SqlXmlConstants.ENAME_CURSOR_FOR_BLOCK)
+                && HasNonWhiteSpaceNonCommentContent(CurrentContainer)
+                )
+                //we just ended the one select statement in a cursor declaration, and need to pop out to the same level as the cursor
+                MoveToAncestorContainer(5);
+        }
+
         private XmlElement EscapeAndLocateNextStatementContainer(bool escapeEmptyContainer)
         {
             EscapeAnySingleOrPartialStatementContainers();
@@ -242,6 +248,7 @@ namespace PoorMansTSqlFormatterLib
 
         private void MigrateApplicableCommentsFromContainer(XmlElement previousContainerElement)
         {
+            XmlNode migrationContext = previousContainerElement;
             XmlNode migrationCandidate = previousContainerElement.LastChild;
 
             //keep track of where we're going to be prepending - this will change as we go moving stuff.
@@ -273,9 +280,9 @@ namespace PoorMansTSqlFormatterLib
                         )
                     {
                         //we have a match, so migrate everything considered so far (backwards from the end). need to keep track of where we're inserting.
-                        while (!previousContainerElement.LastChild.Equals(migrationCandidate))
+                        while (!migrationContext.LastChild.Equals(migrationCandidate))
                         {
-                            XmlElement movingNode = (XmlElement)previousContainerElement.LastChild;
+                            XmlElement movingNode = (XmlElement)migrationContext.LastChild;
                             CurrentContainer.ParentNode.InsertBefore(movingNode, insertBeforeNode);
                             insertBeforeNode = movingNode;
                         }
@@ -283,7 +290,7 @@ namespace PoorMansTSqlFormatterLib
                         insertBeforeNode = (XmlElement)migrationCandidate;
 
                         //move on to the next candidate element for consideration.
-                        migrationCandidate = previousContainerElement.LastChild;
+                        migrationCandidate = migrationContext.LastChild;
                     }
                     else
                     {
@@ -291,10 +298,16 @@ namespace PoorMansTSqlFormatterLib
                         migrationCandidate = migrationCandidate.PreviousSibling;
                     }
                 }
+                else if (migrationCandidate.NodeType == XmlNodeType.Text && !string.IsNullOrEmpty(migrationCandidate.InnerText))
+                {
+                    //we found a non-whitespace non-comment node with text content. Stop trying to migrate comments.
+                    migrationCandidate = null;
+                }
                 else
                 {
-                    //we found a non-whitespace non-comment node. Stop trying to migrate comments.
-                    migrationCandidate = null;
+                    //walk up the last found node, in case the comment got trapped in some substructure.
+                    migrationContext = migrationCandidate;
+                    migrationCandidate = migrationCandidate.LastChild;
                 }
             }
         }
