@@ -123,7 +123,8 @@ CREATE TABLE #DBCCResults (
 
 EXEC master.dbo.sp_MSforeachdb @command1 = 'USE [?] INSERT INTO #temp EXECUTE (''DBCC DBINFO WITH TABLERESULTS'')'
 	,@command2 = 'INSERT INTO #DBCCResults SELECT @@SERVERNAME, ''?'', Value FROM #temp WHERE Field = ''dbi_dbccLastKnownGood'''
-	,@command3 = 'TRUNCATE TABLE #temp' --Delete duplicates due to a bug in SQL Server 2008
+	,@command3 = 'TRUNCATE TABLE #temp'
+	--Delete duplicates due to a bug in SQL Server 2008
 	;
 
 WITH DBCC_CTE

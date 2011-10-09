@@ -572,8 +572,11 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
         private void WhiteSpace_SeparateComment(XmlElement contentElement, TSqlFormattingState state)
         {
-            if (state.BreakExpected && state.SourceBreakPending)
+            if ((state.BreakExpected || state.WordSeparatorExpected) && state.SourceBreakPending)
+            {
+                state.BreakExpected = true;
                 WhiteSpace_BreakAsExpected(state);
+            }
             else if (state.WordSeparatorExpected)
                 state.AddOutputSpace();
             state.SourceBreakPending = false;
