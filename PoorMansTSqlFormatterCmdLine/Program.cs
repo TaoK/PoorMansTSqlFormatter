@@ -44,6 +44,7 @@ namespace PoorMansTSqlFormatterCmdLine
             bool standardizeKeywords = true;
 
 
+            bool allowParsingErrors = false;
             bool showUsage = false;
             List<string> extensions = new List<string>();
             bool backups = true;
@@ -62,6 +63,7 @@ namespace PoorMansTSqlFormatterCmdLine
               .Add("ecl|expandCommaLists", delegate(string v) { expandCommaLists = v != null; })
               .Add("uk|uppercaseKeywords", delegate(string v) { uppercaseKeywords = v != null; })
               .Add("sk|standardizeKeywords", delegate(string v) { standardizeKeywords = v != null; })
+              .Add("ae|allowParsingErrors", delegate(string v) { allowParsingErrors = v != null; })
               .Add("e|extensions=", delegate(string v) { extensions.Add((v.StartsWith(".") ? "" : ".") + v); })
               .Add("r|recursive", delegate(string v) { recursiveSearch = v != null; })
               .Add("b|backups", delegate(string v) { backups = v != null; })
@@ -102,6 +104,7 @@ ecs expandCaseStatements (default: true)
 ecl expandCommaLists (default: true)
 uk  uppercaseKeywords (default: true)
 sk  standardizeKeywords (default: false)
+ae  allowParsingErrors (default: false)
 e   extensions (default: sql)
 r   recursive (default: false)
 b   backups (default: true)
@@ -204,7 +207,7 @@ SqlFormatter test*.sql /o:resultfile.sql
             }
 
             bool warningEncountered = false;
-            if (!ProcessSearchResults(extensions, backups, formattingManager, matchingObjects, singleFileWriter, replaceFromFolderPath, replaceToFolderPath, ref warningEncountered))
+            if (!ProcessSearchResults(extensions, backups, allowParsingErrors, formattingManager, matchingObjects, singleFileWriter, replaceFromFolderPath, replaceToFolderPath, ref warningEncountered))
             {
                 Console.WriteLine("No files found matching filename/pattern: " + remainingArgs[0]);
                 return 4;
@@ -223,7 +226,7 @@ SqlFormatter test*.sql /o:resultfile.sql
                 return 0; //we got there, did something, and received no (handled) errors!
         }
 
-        private static bool ProcessSearchResults(List<string> extensions, bool backups, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, FileSystemInfo[] matchingObjects, StreamWriter singleFileWriter, string replaceFromFolderPath, string replaceToFolderPath, ref bool warningEncountered)
+        private static bool ProcessSearchResults(List<string> extensions, bool backups, bool allowParsingErrors, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, FileSystemInfo[] matchingObjects, StreamWriter singleFileWriter, string replaceFromFolderPath, string replaceToFolderPath, ref bool warningEncountered)
         {
             bool fileFound = false;
 
@@ -233,13 +236,13 @@ SqlFormatter test*.sql /o:resultfile.sql
                 {
                     if (extensions.Contains(fsEntry.Extension))
                     {
-                        ReFormatFile((FileInfo)fsEntry, formattingManager, backups, singleFileWriter, replaceFromFolderPath, replaceToFolderPath, ref warningEncountered);
+                        ReFormatFile((FileInfo)fsEntry, formattingManager, backups, allowParsingErrors, singleFileWriter, replaceFromFolderPath, replaceToFolderPath, ref warningEncountered);
                         fileFound = true;
                     }
                 }
                 else
                 {
-                    if (ProcessSearchResults(extensions, backups, formattingManager, ((System.IO.DirectoryInfo)fsEntry).GetFileSystemInfos(), singleFileWriter, replaceFromFolderPath, replaceToFolderPath, ref warningEncountered))
+                    if (ProcessSearchResults(extensions, backups, allowParsingErrors, formattingManager, ((System.IO.DirectoryInfo)fsEntry).GetFileSystemInfos(), singleFileWriter, replaceFromFolderPath, replaceToFolderPath, ref warningEncountered))
                         fileFound = true;
                 }
             }
@@ -247,14 +250,14 @@ SqlFormatter test*.sql /o:resultfile.sql
             return fileFound;
         }
 
-        private static void ReFormatFile(FileInfo fileInfo, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, bool backups, StreamWriter singleFileWriter, string replaceFromFolderPath, string replaceToFolderPath, ref bool warningEncountered)
+        private static void ReFormatFile(FileInfo fileInfo, PoorMansTSqlFormatterLib.SqlFormattingManager formattingManager, bool backups, bool allowParsingErrors, StreamWriter singleFileWriter, string replaceFromFolderPath, string replaceToFolderPath, ref bool warningEncountered)
         {
             bool failedBackup = false;
             string oldFileContents = "";
             string newFileContents = "";
             bool parsingError = false;
             bool failedFolder = false;
-            Exception parseErrorDetail = null;
+            Exception parseException = null;
 
             //TODO: play with / test encoding complexities
             //TODO: consider using auto-detection - read binary, autodetect, convert.
@@ -274,18 +277,21 @@ SqlFormatter test*.sql /o:resultfile.sql
                 try
                 {
                     newFileContents = formattingManager.Format(oldFileContents, ref parsingError);
+
+                    //hide any handled parsing issues if they were requested to be allowed
+                    if (allowParsingErrors) parsingError = false;
                 }
                 catch (Exception ex)
                 {
+                    parseException = ex;
                     parsingError = true;
-                    parseErrorDetail = ex;
                 }
 
                 if (parsingError)
                 {
                     Console.WriteLine("Encountered error when parsing or formatting file contents (aborted): " + fileInfo.FullName);
-                    if (parseErrorDetail != null)
-                        Console.WriteLine(" Error detail: " + parseErrorDetail.Message);
+                    if (parseException != null)
+                        Console.WriteLine(" Error detail: " + parseException.Message);
                     warningEncountered = true;
                 }
             }
