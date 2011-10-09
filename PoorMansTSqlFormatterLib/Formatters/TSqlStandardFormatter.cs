@@ -560,13 +560,12 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 if (wasUnIndent) state.DecrementIndent();
                 WhiteSpace_BreakAsExpected(state);
                 if (wasUnIndent) state.IncrementIndent();
-                state.UnIndentInitialBreak = false;
             }
             else if (state.WordSeparatorExpected)
             {
                 state.AddOutputSpace();
-                state.UnIndentInitialBreak = false;
             }
+            state.UnIndentInitialBreak = false;
             state.SourceBreakPending = false;
             state.WordSeparatorExpected = false;
         }
