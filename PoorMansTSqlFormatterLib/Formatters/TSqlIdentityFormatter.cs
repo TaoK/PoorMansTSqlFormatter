@@ -32,20 +32,20 @@ namespace PoorMansTSqlFormatterLib.Formatters
         public TSqlIdentityFormatter(bool htmlColoring)
         {
             HTMLColoring = htmlColoring;
+            ErrorOutputPrefix = Interfaces.MessagingConstants.FormatErrorDefaultMessage + Environment.NewLine;
         }
 
         public bool HTMLColoring { get; set; }
         public bool HTMLFormatted { get { return HTMLColoring; } }
+        public string ErrorOutputPrefix { get; set; }
 
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
             string rootElement = SqlXmlConstants.ENAME_SQL_ROOT;
             BaseFormatterState state = new BaseFormatterState(HTMLColoring);
+
             if (sqlTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", rootElement, SqlXmlConstants.ANAME_ERRORFOUND)) != null)
-            {
-                state.AddOutputContent("--WARNING! ERRORS ENCOUNTERED DURING PARSING!");
-                state.AddOutputLineBreak();
-            }
+                state.AddOutputContent(ErrorOutputPrefix);
 
             XmlNodeList rootList = sqlTreeDoc.SelectNodes(string.Format("/{0}/*", rootElement));
             ProcessSqlNodeList(state, rootList);
@@ -202,7 +202,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             StringBuilder outString = new StringBuilder();
 
             if (sqlTokenList.HasErrors)
-                outString.AppendLine("--WARNING! ERRORS ENCOUNTERED DURING TOKENIZING!");
+                outString.Append(ErrorOutputPrefix);
 
             foreach (var entry in sqlTokenList)
             {

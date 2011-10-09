@@ -76,6 +76,16 @@ namespace PoorMansTSqlFormatterLib.Formatters
 ";
 
         public bool HTMLFormatted { get { return true; } }
+        public string ErrorOutputPrefix { 
+            get 
+            { 
+                return _underlyingFormatter.ErrorOutputPrefix; 
+            } 
+            set 
+            {
+                throw new NotSupportedException("Error output prefix should be set on the underlying formatter - it cannot be set on the Html Page Wrapper.");
+            }
+        }
 
         public string FormatSQLTree(System.Xml.XmlDocument sqlTree)
         {

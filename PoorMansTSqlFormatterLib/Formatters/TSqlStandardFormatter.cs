@@ -47,6 +47,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             HTMLColoring = htmlColoring;
             if (keywordStandardization)
                 KeywordMapping = StandardKeywordRemapping.Instance;
+            ErrorOutputPrefix = Interfaces.MessagingConstants.FormatErrorDefaultMessage + Environment.NewLine;
         }
 
         private string _indentString;
@@ -76,6 +77,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
         public bool Keyword { get; set; }
 
         public bool HTMLFormatted { get { return HTMLColoring; } }
+        public string ErrorOutputPrefix { get; set; }
 
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
@@ -83,10 +85,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             TSqlFormattingState state = new TSqlFormattingState(HTMLColoring, IndentString, SpacesPerTab, MaxLineWidth, 0);
 
             if (sqlTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", SqlXmlConstants.ENAME_SQL_ROOT, SqlXmlConstants.ANAME_ERRORFOUND)) != null)
-            {
-                state.AddOutputContent("--WARNING! ERRORS ENCOUNTERED DURING PARSING! (formatted SQL could be incorrect / logically different) ");
-                state.AddOutputLineBreak();
-            }
+                state.AddOutputContent(ErrorOutputPrefix);
 
             XmlNodeList rootList = sqlTreeDoc.SelectNodes(string.Format("/{0}/*", SqlXmlConstants.ENAME_SQL_ROOT));
             ProcessSqlNodeList(rootList, state);
