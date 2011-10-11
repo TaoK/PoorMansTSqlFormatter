@@ -23,6 +23,7 @@ JOIN Paths AS P
 GO
 
 --similar sample, with 2 CTEs in the same query
+BEGIN
 WITH FirstCTE
 AS (
 SELECT 1 AS FirstColumn
@@ -34,5 +35,6 @@ SELECT 2
 SELECT * FROM FirstCTE
 UNION 
 SELECT * FROM SecondCTE
+END
 GO
 

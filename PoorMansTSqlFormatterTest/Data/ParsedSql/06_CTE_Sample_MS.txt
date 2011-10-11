@@ -23,7 +23,8 @@
 </WhiteSpace></ContainerContentBody></JoinOn></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
 
 </WhiteSpace><SingleLineComment>similar sample, with 2 CTEs in the same query
-</SingleLineComment><Clause><CTEWithClause><ContainerOpen><OtherKeyword>WITH</OtherKeyword></ContainerOpen><CTEAlias><WhiteSpace> </WhiteSpace><Other>FirstCTE</Other><WhiteSpace>
+</SingleLineComment><Clause><BeginEndBlock><ContainerOpen><OtherKeyword>BEGIN</OtherKeyword></ContainerOpen><ContainerMultiStatementBody><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><CTEWithClause><ContainerOpen><OtherKeyword>WITH</OtherKeyword></ContainerOpen><CTEAlias><WhiteSpace> </WhiteSpace><Other>FirstCTE</Other><WhiteSpace>
 </WhiteSpace></CTEAlias><CTEAsBlock><ContainerOpen><OtherKeyword>AS</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><SelectionTargetParens><WhiteSpace>
 </WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>FirstColumn</Other><WhiteSpace>
 </WhiteSpace></Clause></SelectionTargetParens></ContainerContentBody></CTEAsBlock><ContainerContentBody><Comma>,</Comma></ContainerContentBody><CTEAlias><WhiteSpace>
@@ -34,6 +35,7 @@
 </WhiteSpace></ContainerContentBody></CTEWithClause></Clause><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>FirstCTE</Other><WhiteSpace>
 </WhiteSpace></SelectionTarget></Clause><Clause><SetOperatorClause><OtherKeyword>UNION</OtherKeyword></SetOperatorClause><WhiteSpace> 
 </WhiteSpace></Clause><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Asterisk>*</Asterisk><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>SecondCTE</Other><WhiteSpace>
-</WhiteSpace></SelectionTarget></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+</WhiteSpace></SelectionTarget></Clause></SqlStatement></ContainerMultiStatementBody><ContainerClose><OtherKeyword>END</OtherKeyword></ContainerClose></BeginEndBlock><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
 
 </WhiteSpace><Clause></Clause></SqlStatement></SqlRoot>
