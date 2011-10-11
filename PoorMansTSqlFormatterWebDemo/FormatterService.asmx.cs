@@ -36,15 +36,44 @@ namespace PoorMansTSqlFormatterWebDemo
         [WebMethod]
         public string FormatTSql(string inputString)
         {
-            return FormatTSqlWithOptions(inputString, true, "\t", 4, 999, true, false, false, true, true, true, true, true, false);
+            return FormatTSqlWithOptions(
+                inputString, 
+                true, 
+                "\t", 
+                4, 
+                999, 
+                true, 
+                false, 
+                false, 
+                true, 
+                true, 
+                true,
+                false,
+                true, 
+                true, 
+                false);
         }
 
         [WebMethod]
-        public string FormatTSqlWithOptions(string inputString, bool reFormat, string indent, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool uppercaseKeywords, bool coloring, bool keywordStandardization)
+        public string FormatTSqlWithOptions(string inputString, bool reFormat, string indent, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool breakJoinOnSections, bool uppercaseKeywords, bool coloring, bool keywordStandardization)
         {
             PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter formatter = null;
             if (reFormat)
-                formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(indent, spacesPerTab, maxLineWidth, expandCommaLists, trailingCommas, spaceAfterExpandedComma, expandBooleanExpressions, expandCaseStatements, expandBetweenConditions, uppercaseKeywords, coloring, keywordStandardization);
+                formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(
+                    indent, 
+                    spacesPerTab, 
+                    maxLineWidth, 
+                    expandCommaLists, 
+                    trailingCommas, 
+                    spaceAfterExpandedComma, 
+                    expandBooleanExpressions, 
+                    expandCaseStatements, 
+                    expandBetweenConditions,
+                    breakJoinOnSections,
+                    uppercaseKeywords, 
+                    coloring, 
+                    keywordStandardization
+                    );
             else
                 formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter(coloring);
 

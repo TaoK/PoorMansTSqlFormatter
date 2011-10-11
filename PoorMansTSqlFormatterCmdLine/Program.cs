@@ -40,6 +40,7 @@ namespace PoorMansTSqlFormatterCmdLine
             bool expandBooleanExpressions = true;
             bool expandCaseStatements = true;
             bool expandCommaLists = true;
+            bool breakJoinOnSections = false;
             bool uppercaseKeywords = true;
             bool standardizeKeywords = true;
 
@@ -61,6 +62,7 @@ namespace PoorMansTSqlFormatterCmdLine
               .Add("ebe|expandBooleanExpressions", delegate(string v) { expandBooleanExpressions = v != null; })
               .Add("ecs|expandCaseStatements", delegate(string v) { expandCaseStatements = v != null; })
               .Add("ecl|expandCommaLists", delegate(string v) { expandCommaLists = v != null; })
+              .Add("bjo|breakJoinOnSections", delegate(string v) { breakJoinOnSections = v != null; })
               .Add("uk|uppercaseKeywords", delegate(string v) { uppercaseKeywords = v != null; })
               .Add("sk|standardizeKeywords", delegate(string v) { standardizeKeywords = v != null; })
               .Add("ae|allowParsingErrors", delegate(string v) { allowParsingErrors = v != null; })
@@ -134,10 +136,12 @@ SqlFormatter test*.sql /o:resultfile.sql
                 spaceAfterExpandedComma, 
                 expandBooleanExpressions, 
                 expandCaseStatements,
-                expandBetweenConditions, 
+                expandBetweenConditions,
+                breakJoinOnSections,
                 uppercaseKeywords, 
                 false,
-                standardizeKeywords);
+                standardizeKeywords
+                );
             var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);
 
             string searchPattern = Path.GetFileName(remainingArgs[0]);

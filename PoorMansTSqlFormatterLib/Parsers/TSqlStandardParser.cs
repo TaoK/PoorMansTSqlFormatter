@@ -34,7 +34,6 @@ namespace PoorMansTSqlFormatterLib.Parsers
          * TODO:
          *  - Manually review the output from all test cases for "strange" effects
          *  - handle Ranking Functions with multiple partition or order by columns/clauses
-         *  - parse ON sections of JOINs, for those who prefer to start ON on the next line and indent from there
          *  - detect table hints, to avoid them looking like function parens
          *  - Handle DDL triggers
          *  - Detect ALTER keywords that are clauses of other statements, vs those that are statements
@@ -238,6 +237,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         {
                             sqlTree.EscapeAnyBetweenConditions();
                             sqlTree.EscapeAnySelectionTarget();
+                            sqlTree.EscapeJoinCondition();
 
                             if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CURSOR_DECLARATION))
                             {
@@ -440,9 +440,16 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 sqlTree.MoveToAncestorContainer(1, SqlXmlConstants.ENAME_MERGE_CLAUSE);
                                 sqlTree.StartNewContainer(SqlXmlConstants.ENAME_MERGE_CONDITION, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
                             }
+                            else if (!sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
+                                && !sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
+                                && !sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_DDL_WITH_CLAUSE)
+                                && !ContentStartsWithKeyword(sqlTree.CurrentContainer, "SET")
+                                )
+                            {
+                                sqlTree.StartNewContainer(SqlXmlConstants.ENAME_JOIN_ON_SECTION, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
+                            }
                             else
                             {
-                                //TODO: This is where the ON Clauses of JOINS will need to be handled.
                                 sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                             }
                         }
@@ -735,6 +742,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         {
                             sqlTree.EscapeAnyBetweenConditions();
                             sqlTree.EscapeAnySelectionTarget();
+                            sqlTree.EscapeJoinCondition();
 
                             if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
                                 && sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_CASE_THEN)

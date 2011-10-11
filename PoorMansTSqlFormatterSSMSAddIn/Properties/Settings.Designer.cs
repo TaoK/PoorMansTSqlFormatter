@@ -178,5 +178,17 @@ namespace PoorMansTSqlFormatterSSMSAddIn.Properties {
                 this["KeywordStandardization"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BreakJoinOnSections {
+            get {
+                return ((bool)(this["BreakJoinOnSections"]));
+            }
+            set {
+                this["BreakJoinOnSections"] = value;
+            }
+        }
     }
 }

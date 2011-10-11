@@ -30,9 +30,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
     public class TSqlStandardFormatter : Interfaces.ISqlTreeFormatter
     {
 
-        public TSqlStandardFormatter() : this("\t", 4, 999, true, false, false, true, true, true, true, false, false) {}
+        public TSqlStandardFormatter() : this("\t", 4, 999, true, false, false, true, true, true, false, true, false, false) { }
 
-        public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool uppercaseKeywords, bool htmlColoring, bool keywordStandardization)
+        public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool breakJoinOnSections, bool uppercaseKeywords, bool htmlColoring, bool keywordStandardization)
         {
             IndentString = indentString;
             SpacesPerTab = spacesPerTab;
@@ -44,6 +44,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             ExpandBetweenConditions = expandBetweenConditions;
             ExpandCaseStatements = expandCaseStatements;
             UppercaseKeywords = uppercaseKeywords;
+            BreakJoinOnSections = breakJoinOnSections;
             HTMLColoring = htmlColoring;
             if (keywordStandardization)
                 KeywordMapping = StandardKeywordRemapping.Instance;
@@ -73,8 +74,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
         public bool ExpandCaseStatements { get; set; }
         public bool ExpandBetweenConditions { get; set; }
         public bool UppercaseKeywords { get; set; }
+        public bool BreakJoinOnSections { get; set; }
         public bool HTMLColoring { get; set; }
-        public bool Keyword { get; set; }
 
         public bool HTMLFormatted { get { return HTMLColoring; } }
         public string ErrorOutputPrefix { get; set; }
@@ -183,6 +184,17 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     state.UnIndentInitialBreak = true;
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), state.IncrementIndent());
                     state.DecrementIndent();
+                    break;
+
+                case SqlXmlConstants.ENAME_JOIN_ON_SECTION:
+                    if (BreakJoinOnSections)
+                        state.BreakExpected = true;
+                    ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_CONTAINER_OPEN), state);
+                    if (BreakJoinOnSections)
+                        state.IncrementIndent();
+                    ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT), state);
+                    if (BreakJoinOnSections)
+                        state.DecrementIndent();
                     break;
 
                 case SqlXmlConstants.ENAME_CTE_ALIAS:

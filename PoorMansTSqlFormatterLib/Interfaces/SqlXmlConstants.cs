@@ -89,6 +89,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_MERGE_WHEN = "MergeWhen";
         public const string ENAME_MERGE_THEN = "MergeThen";
         public const string ENAME_MERGE_ACTION = "MergeAction";
+        public const string ENAME_JOIN_ON_SECTION = "JoinOn";
 
         public const string ENAME_PSEUDONAME = "PseudoName";
         public const string ENAME_WHITESPACE = "WhiteSpace";

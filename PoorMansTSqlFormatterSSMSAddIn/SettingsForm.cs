@@ -64,6 +64,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             chk_ExpandCaseStatements.Checked = Properties.Settings.Default.ExpandCaseStatements;
             chk_ExpandCommaLists.Checked = Properties.Settings.Default.ExpandCommaLists;
             chk_TrailingCommas.Checked = Properties.Settings.Default.TrailingCommas;
+            chk_BreakJoinOnSections.Checked = Properties.Settings.Default.BreakJoinOnSections;
             chk_UppercaseKeywords.Checked = Properties.Settings.Default.UppercaseKeywords;
             chk_SpaceAfterExpandedComma.Checked = Properties.Settings.Default.SpaceAfterExpandedComma;
             chk_StandardizeKeywords.Checked = Properties.Settings.Default.KeywordStandardization;
@@ -81,6 +82,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             Properties.Settings.Default.ExpandCaseStatements = chk_ExpandCaseStatements.Checked;
             Properties.Settings.Default.ExpandCommaLists = chk_ExpandCommaLists.Checked;
             Properties.Settings.Default.TrailingCommas = chk_TrailingCommas.Checked;
+            Properties.Settings.Default.BreakJoinOnSections = chk_BreakJoinOnSections.Checked;
             Properties.Settings.Default.UppercaseKeywords = chk_UppercaseKeywords.Checked;
             Properties.Settings.Default.KeywordStandardization = chk_StandardizeKeywords.Checked;
         }

@@ -176,6 +176,7 @@ namespace PoorMansTSqlFormatterLib
         {
             EscapeAnyBetweenConditions();
             EscapeAnySelectionTarget();
+            EscapeJoinCondition();
 
             if (HasNonWhiteSpaceNonCommentContent(CurrentContainer))
             {
@@ -316,6 +317,7 @@ namespace PoorMansTSqlFormatterLib
         {
             EscapeAnyBetweenConditions();
             EscapeAnySelectionTarget();
+            EscapeJoinCondition();
 
             //before single-statement-escaping
             XmlElement previousContainerElement = CurrentContainer;
@@ -339,6 +341,7 @@ namespace PoorMansTSqlFormatterLib
             EscapeAnySelectionTarget();
             EscapeAnyBetweenConditions();
             EscapePartialStatementContainers();
+            EscapeJoinCondition();
 
             if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
                 && HasNonWhiteSpaceNonSingleCommentContent(CurrentContainer)
@@ -362,6 +365,14 @@ namespace PoorMansTSqlFormatterLib
         {
             if (PathNameMatches(0, SqlXmlConstants.ENAME_SELECTIONTARGET))
                 CurrentContainer = (XmlElement)CurrentContainer.ParentNode;
+        }
+
+        internal void EscapeJoinCondition()
+        {
+            if (PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
+                && PathNameMatches(1, SqlXmlConstants.ENAME_JOIN_ON_SECTION)
+                )
+                MoveToAncestorContainer(2);
         }
 
         internal bool FindValidBatchEnd()

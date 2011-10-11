@@ -90,6 +90,7 @@
     <Content Include="Data\ParsedSql\24_InsertsAndOutputs.txt" />
     <Content Include="Data\ParsedSql\25_Merges.txt" />
     <Content Include="Data\ParsedSql\26_DataTypesAndSynonyms.txt" />
+    <Content Include="Data\ParsedSql\11_MSAccess_Pasted.txt" />
     <Content Include="Data\StandardFormatSql\01_SimpleTypes_StrangeRules.txt" />
     <Content Include="Data\StandardFormatSql\03_SimpleSelect_MS.txt" />
     <Content Include="Data\StandardFormatSql\04_MiscProceduralSample_Unstructured.txt" />
@@ -98,6 +99,7 @@
     <Content Include="Data\StandardFormatSql\07_ServerTakeoverSample_Brent_Ozar.txt" />
     <Content Include="Data\StandardFormatSql\08_ComplexBackupDDL_Ola_Hallengren.txt" />
     <Content Include="Data\StandardFormatSql\10_SetOperators_Union.txt" />
+    <Content Include="Data\StandardFormatSql\11_MSAccess_Pasted.txt" />
     <Content Include="Data\StandardFormatSql\12_NestedIfElse.txt" />
     <Content Include="Data\StandardFormatSql\14_CommentPositioning.txt" />
     <Content Include="Data\StandardFormatSql\15_NestedComments.txt" />

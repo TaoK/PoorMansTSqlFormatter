@@ -58,6 +58,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.chk_ExpandBetweenConditions = new System.Windows.Forms.CheckBox();
             this.chk_UppercaseKeywords = new System.Windows.Forms.CheckBox();
             this.chk_SpaceAfterExpandedComma = new System.Windows.Forms.CheckBox();
+            this.chk_StandardizeKeywords = new System.Windows.Forms.CheckBox();
             this.txt_IndentString = new System.Windows.Forms.TextBox();
             this.lbl_IndentString = new System.Windows.Forms.Label();
             this.lbl_IndentHint = new System.Windows.Forms.Label();
@@ -71,7 +72,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.lbl_SpacesPerTab = new System.Windows.Forms.Label();
             this.lbl_SpacesPerTab_Extra = new System.Windows.Forms.Label();
             this.lbl_MaxLineWidth = new System.Windows.Forms.Label();
-            this.chk_StandardizeKeywords = new System.Windows.Forms.CheckBox();
+            this.chk_BreakJoinOnSections = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,7 +80,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             // 
             this.btn_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_Save.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btn_Save.Location = new System.Drawing.Point(215, 240);
+            this.btn_Save.Location = new System.Drawing.Point(217, 254);
             this.btn_Save.Name = "btn_Save";
             this.btn_Save.Size = new System.Drawing.Size(75, 23);
             this.btn_Save.TabIndex = 0;
@@ -91,7 +92,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             // 
             this.btn_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btn_Cancel.Location = new System.Drawing.Point(296, 240);
+            this.btn_Cancel.Location = new System.Drawing.Point(298, 254);
             this.btn_Cancel.Name = "btn_Cancel";
             this.btn_Cancel.Size = new System.Drawing.Size(75, 23);
             this.btn_Cancel.TabIndex = 1;
@@ -110,10 +111,11 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.flowLayoutPanel1.Controls.Add(this.chk_ExpandBetweenConditions);
             this.flowLayoutPanel1.Controls.Add(this.chk_UppercaseKeywords);
             this.flowLayoutPanel1.Controls.Add(this.chk_SpaceAfterExpandedComma);
+            this.flowLayoutPanel1.Controls.Add(this.chk_BreakJoinOnSections);
             this.flowLayoutPanel1.Controls.Add(this.chk_StandardizeKeywords);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 123);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(359, 111);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(361, 125);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
             // chk_ExpandCommaLists
@@ -186,6 +188,16 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.chk_SpaceAfterExpandedComma.Text = "Space after Expanded Comma";
             this.chk_SpaceAfterExpandedComma.UseVisualStyleBackColor = true;
             // 
+            // chk_StandardizeKeywords
+            // 
+            this.chk_StandardizeKeywords.AutoSize = true;
+            this.chk_StandardizeKeywords.Location = new System.Drawing.Point(3, 95);
+            this.chk_StandardizeKeywords.Name = "chk_StandardizeKeywords";
+            this.chk_StandardizeKeywords.Size = new System.Drawing.Size(131, 17);
+            this.chk_StandardizeKeywords.TabIndex = 10;
+            this.chk_StandardizeKeywords.Text = "Standardize Keywords";
+            this.chk_StandardizeKeywords.UseVisualStyleBackColor = true;
+            // 
             // txt_IndentString
             // 
             this.txt_IndentString.Location = new System.Drawing.Point(99, 12);
@@ -243,7 +255,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             // btn_About
             // 
             this.btn_About.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_About.Location = new System.Drawing.Point(12, 240);
+            this.btn_About.Location = new System.Drawing.Point(12, 254);
             this.btn_About.Name = "btn_About";
             this.btn_About.Size = new System.Drawing.Size(75, 23);
             this.btn_About.TabIndex = 12;
@@ -254,7 +266,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             // btn_Reset
             // 
             this.btn_Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_Reset.Location = new System.Drawing.Point(93, 240);
+            this.btn_Reset.Location = new System.Drawing.Point(93, 254);
             this.btn_Reset.Name = "btn_Reset";
             this.btn_Reset.Size = new System.Drawing.Size(75, 23);
             this.btn_Reset.TabIndex = 13;
@@ -303,15 +315,15 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.lbl_MaxLineWidth.TabIndex = 18;
             this.lbl_MaxLineWidth.Text = "Max Line Width:";
             // 
-            // chk_StandardizeKeywords
+            // chk_BreakJoinOnSections
             // 
-            this.chk_StandardizeKeywords.AutoSize = true;
-            this.chk_StandardizeKeywords.Location = new System.Drawing.Point(179, 72);
-            this.chk_StandardizeKeywords.Name = "chk_StandardizeKeywords";
-            this.chk_StandardizeKeywords.Size = new System.Drawing.Size(131, 17);
-            this.chk_StandardizeKeywords.TabIndex = 10;
-            this.chk_StandardizeKeywords.Text = "Standardize Keywords";
-            this.chk_StandardizeKeywords.UseVisualStyleBackColor = true;
+            this.chk_BreakJoinOnSections.AutoSize = true;
+            this.chk_BreakJoinOnSections.Location = new System.Drawing.Point(179, 72);
+            this.chk_BreakJoinOnSections.Name = "chk_BreakJoinOnSections";
+            this.chk_BreakJoinOnSections.Size = new System.Drawing.Size(139, 17);
+            this.chk_BreakJoinOnSections.TabIndex = 11;
+            this.chk_BreakJoinOnSections.Text = "Break Join ON Sections";
+            this.chk_BreakJoinOnSections.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
@@ -319,7 +331,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btn_Cancel;
-            this.ClientSize = new System.Drawing.Size(383, 275);
+            this.ClientSize = new System.Drawing.Size(385, 289);
             this.Controls.Add(this.lbl_MaxLineWidth);
             this.Controls.Add(this.lbl_SpacesPerTab_Extra);
             this.Controls.Add(this.lbl_SpacesPerTab);
@@ -373,5 +385,6 @@ namespace PoorMansTSqlFormatterSSMSAddIn
         private System.Windows.Forms.Label lbl_MaxLineWidth;
         private System.Windows.Forms.CheckBox chk_SpaceAfterExpandedComma;
         private System.Windows.Forms.CheckBox chk_StandardizeKeywords;
+        private System.Windows.Forms.CheckBox chk_BreakJoinOnSections;
     }
 }

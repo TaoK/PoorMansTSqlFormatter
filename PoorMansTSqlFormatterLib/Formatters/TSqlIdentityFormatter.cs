@@ -125,6 +125,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_MERGE_WHEN:
                 case SqlXmlConstants.ENAME_MERGE_THEN:
                 case SqlXmlConstants.ENAME_MERGE_ACTION:
+                case SqlXmlConstants.ENAME_JOIN_ON_SECTION:
                     foreach (XmlNode childNode in contentElement.ChildNodes)
                     {
                         switch (childNode.NodeType)

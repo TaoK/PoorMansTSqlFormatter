@@ -246,6 +246,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                             Properties.Settings.Default.ExpandBooleanExpressions, 
                             Properties.Settings.Default.ExpandCaseStatements,
                             Properties.Settings.Default.ExpandBetweenConditions,
+                            Properties.Settings.Default.BreakJoinOnSections,
                             Properties.Settings.Default.UppercaseKeywords, 
                             false,
                             Properties.Settings.Default.KeywordStandardization
