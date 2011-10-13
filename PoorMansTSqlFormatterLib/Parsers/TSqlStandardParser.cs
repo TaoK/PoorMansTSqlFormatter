@@ -32,7 +32,6 @@ namespace PoorMansTSqlFormatterLib.Parsers
     {
         /*
          * TODO:
-         *  - Manually review the output from all test cases for "strange" effects
          *  - handle Ranking Functions with multiple partition or order by columns/clauses
          *  - detect table hints, to avoid them looking like function parens
          *  - Handle DDL triggers

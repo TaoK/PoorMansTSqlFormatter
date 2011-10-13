@@ -27,6 +27,8 @@ namespace PoorMansTSqlFormatterDemo
 {
     public partial class MainForm : Form
     {
+        const string FORMATTER_STANDARD = "Standard";
+        const string FORMATTER_IDENTITY = "Identity";
 
         PoorMansTSqlFormatterLib.Interfaces.ISqlTokenizer _tokenizer;
         PoorMansTSqlFormatterLib.Interfaces.ISqlTokenParser _parser;
@@ -34,19 +36,80 @@ namespace PoorMansTSqlFormatterDemo
 
         bool _queuedRefresh = false;
         object _refreshLock = new object();
+        bool _settingsLoaded = false;
 
         public MainForm()
         {
             InitializeComponent();
             _tokenizer = new PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer();
             _parser = new PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser();
+
+            if (!Properties.Settings.Default.UpgradeCompleted)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.UpgradeCompleted = true;
+                Properties.Settings.Default.Save();
+            }
+
+            displayTokenListToolStripMenuItem.Checked = Properties.Settings.Default.DisplayTokenList;
+            displayParsedSqlToolStripMenuItem.Checked = Properties.Settings.Default.DisplayParsedSqlXml;
+            displayFormattingOptionsAreaToolStripMenuItem.Checked = Properties.Settings.Default.DisplayFormattingOptions;
+
+            radio_Formatting_Standard.Checked = Properties.Settings.Default.Formatter.Equals(FORMATTER_STANDARD, StringComparison.InvariantCultureIgnoreCase);
+            txt_Indent.Text = Properties.Settings.Default.Indent;
+            txt_IndentWidth.Text = Properties.Settings.Default.IndentWidth.ToString();
+            txt_MaxWidth.Text =  Properties.Settings.Default.MaxWidth.ToString();
+            chk_ExpandCommaLists.Checked = Properties.Settings.Default.ExpandCommaLists;
+            chk_TrailingCommas.Checked = Properties.Settings.Default.TrailingCommas;
+            chk_SpaceAfterComma.Checked = Properties.Settings.Default.SpaceAfterComma;
+            chk_ExpandBooleanExpressions.Checked = Properties.Settings.Default.ExpandBooleanExpressions;
+            chk_ExpandCaseStatements.Checked = Properties.Settings.Default.ExpandCaseStatements;
+            chk_ExpandBetweenConditions.Checked = Properties.Settings.Default.ExpandBetweenConditions;
+            chk_BreakJoinOnSections.Checked = Properties.Settings.Default.BreakJoinOnSections;
+            chk_UppercaseKeywords.Checked = Properties.Settings.Default.UppercaseKeywords;
+            chk_Coloring.Checked = Properties.Settings.Default.StandardColoring;
+            chk_EnableKeywordStandardization.Checked = Properties.Settings.Default.EnableKeywordStandardization;
+
+            radio_Formatting_Identity.Checked = Properties.Settings.Default.Formatter.Equals(FORMATTER_IDENTITY, StringComparison.InvariantCultureIgnoreCase);
+            chk_IdentityColoring.Checked = Properties.Settings.Default.IdentityColoring;
+
+            _settingsLoaded = true;
+
             SetFormatter();
+            UpdateDisplayLayout();
         }
 
-        private void SettingsControlChanged(object sender, EventArgs e)
+        private void FormatSettingsControlChanged(object sender, EventArgs e)
         {
-            SetFormatter();
-            TryToDoFormatting();
+            if (_settingsLoaded)
+            {
+                SaveFormatSettings();
+                SetFormatter();
+                TryToDoFormatting();
+            }
+        }
+
+        private void SaveFormatSettings()
+        {
+            if (radio_Formatting_Standard.Checked) Properties.Settings.Default.Formatter = FORMATTER_STANDARD;
+            Properties.Settings.Default.Indent = txt_Indent.Text;
+            Properties.Settings.Default.IndentWidth = int.Parse(txt_IndentWidth.Text);
+            Properties.Settings.Default.MaxWidth = int.Parse(txt_MaxWidth.Text);
+            Properties.Settings.Default.ExpandCommaLists = chk_ExpandCommaLists.Checked;
+            Properties.Settings.Default.TrailingCommas = chk_TrailingCommas.Checked;
+            Properties.Settings.Default.SpaceAfterComma = chk_SpaceAfterComma.Checked;
+            Properties.Settings.Default.ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked;
+            Properties.Settings.Default.ExpandCaseStatements = chk_ExpandCaseStatements.Checked;
+            Properties.Settings.Default.ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked;
+            Properties.Settings.Default.BreakJoinOnSections = chk_BreakJoinOnSections.Checked;
+            Properties.Settings.Default.UppercaseKeywords = chk_UppercaseKeywords.Checked;
+            Properties.Settings.Default.StandardColoring = chk_Coloring.Checked;
+            Properties.Settings.Default.EnableKeywordStandardization = chk_EnableKeywordStandardization.Checked;
+
+            if (radio_Formatting_Identity.Checked) Properties.Settings.Default.Formatter = FORMATTER_IDENTITY; 
+            chk_IdentityColoring.Checked = Properties.Settings.Default.IdentityColoring;
+
+            Properties.Settings.Default.Save();
         }
 
         private void SetFormatter()
@@ -79,9 +142,15 @@ namespace PoorMansTSqlFormatterDemo
         private void DoFormatting()
         {
             var tokenizedSql = _tokenizer.TokenizeSQL(txt_Input.Text);
-            txt_TokenizedXml.Text = tokenizedSql.PrettyPrint();
+
+            if (!splitContainer4.Panel2Collapsed && !splitContainer5.Panel1Collapsed)
+                txt_TokenizedSql.Text = tokenizedSql.PrettyPrint();
+
             var parsedSql = _parser.ParseSQL(tokenizedSql);
-            txt_ParsedXml.Text = parsedSql.OuterXml;
+            
+            if (!splitContainer4.Panel2Collapsed && !splitContainer5.Panel2Collapsed)
+                txt_ParsedXml.Text = parsedSql.OuterXml;
+
             webBrowser_OutputSql.SetHTML(_formatter.FormatSQLTree(parsedSql));
         }
 
@@ -119,11 +188,48 @@ namespace PoorMansTSqlFormatterDemo
 
         }
 
-        private void btn_About_Click(object sender, EventArgs e)
+        private void UpdateDisplayLayout()
         {
-            AboutBox about = new AboutBox();
-            about.ShowDialog();
-            about.Dispose();
+            //Update main upper splitter right panel for collapse state
+            if (splitContainer4.Panel2Collapsed && (Properties.Settings.Default.DisplayTokenList || Properties.Settings.Default.DisplayParsedSqlXml))
+                splitContainer4.Panel2Collapsed = false;
+            else if (!splitContainer4.Panel2Collapsed && (!Properties.Settings.Default.DisplayTokenList && !Properties.Settings.Default.DisplayParsedSqlXml))
+                splitContainer4.Panel2Collapsed = true;
+
+            //Update Upper right splitter for upper or lower collapse
+            if (splitContainer5.Panel1Collapsed && Properties.Settings.Default.DisplayTokenList)
+                splitContainer5.Panel1Collapsed = false;
+            else if (!splitContainer5.Panel1Collapsed && !Properties.Settings.Default.DisplayTokenList)
+                splitContainer5.Panel1Collapsed = true;
+
+            if (splitContainer5.Panel2Collapsed && Properties.Settings.Default.DisplayParsedSqlXml)
+                splitContainer5.Panel2Collapsed = false;
+            else if (!splitContainer5.Panel2Collapsed && !Properties.Settings.Default.DisplayParsedSqlXml)
+                splitContainer5.Panel2Collapsed = true;
+
+            //Update Lower splitter for right panel collapse
+            if (splitContainer3.Panel2Collapsed && Properties.Settings.Default.DisplayFormattingOptions)
+                splitContainer3.Panel2Collapsed = false;
+            else if (!splitContainer3.Panel2Collapsed && !Properties.Settings.Default.DisplayFormattingOptions)
+                splitContainer3.Panel2Collapsed = true;
+        }
+
+        private void displaySettingsHandler(object sender, EventArgs e)
+        {
+            if (_settingsLoaded)
+            {
+                Properties.Settings.Default.DisplayFormattingOptions = displayFormattingOptionsAreaToolStripMenuItem.Checked;
+                Properties.Settings.Default.DisplayParsedSqlXml = displayParsedSqlToolStripMenuItem.Checked;
+                Properties.Settings.Default.DisplayTokenList = displayTokenListToolStripMenuItem.Checked;
+                Properties.Settings.Default.Save();
+                UpdateDisplayLayout();
+            }
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (AboutBox about = new AboutBox())
+                about.ShowDialog();
         }
 
     }
