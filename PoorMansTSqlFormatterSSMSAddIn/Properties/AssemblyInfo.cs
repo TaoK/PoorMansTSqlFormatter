@@ -22,6 +22,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("PoorMansTSQLFormatterSSMSAddin")]
+//Note, this is also in resources file for localization!
 [assembly: AssemblyDescription("A simple free (AGPL) T-SQL Formatting Addin for SSMS and SSMS Express, 2005 and 2008.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]

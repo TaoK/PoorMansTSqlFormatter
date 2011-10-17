@@ -22,6 +22,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace PoorMansTSqlFormatterDemo
 {
@@ -29,6 +30,10 @@ namespace PoorMansTSqlFormatterDemo
     {
         const string FORMATTER_STANDARD = "Standard";
         const string FORMATTER_IDENTITY = "Identity";
+
+        const string UILANGUAGE_EN = "EN";
+        const string UILANGUAGE_FR = "FR";
+        const string UILANGUAGE_ES = "ES";
 
         PoorMansTSqlFormatterLib.Interfaces.ISqlTokenizer _tokenizer;
         PoorMansTSqlFormatterLib.Interfaces.ISqlTokenParser _parser;
@@ -38,18 +43,41 @@ namespace PoorMansTSqlFormatterDemo
         object _refreshLock = new object();
         bool _settingsLoaded = false;
 
+        private FrameworkClassReplacements.SingleAssemblyResourceManager _generalResourceManager;
+
         public MainForm()
         {
-            InitializeComponent();
-            _tokenizer = new PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer();
-            _parser = new PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser();
-
             if (!Properties.Settings.Default.UpgradeCompleted)
             {
                 Properties.Settings.Default.Upgrade();
+                if (!Properties.Settings.Default.UpgradeCompleted)
+                {
+                    //this is an initial install - detect language if possible
+                    if (Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName.Equals(UILANGUAGE_FR, StringComparison.InvariantCultureIgnoreCase))
+                        Properties.Settings.Default.UILanguage = UILANGUAGE_FR;
+                    else if (Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName.Equals(UILANGUAGE_ES, StringComparison.InvariantCultureIgnoreCase))
+                        Properties.Settings.Default.UILanguage = UILANGUAGE_ES;
+                    else
+                        Properties.Settings.Default.UILanguage = UILANGUAGE_EN;
+                }
                 Properties.Settings.Default.UpgradeCompleted = true;
                 Properties.Settings.Default.Save();
             }
+
+            //set the UI language BEFORE initializeComponent...
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Properties.Settings.Default.UILanguage);
+            System.Globalization.CultureInfo test1 = Thread.CurrentThread.CurrentUICulture;
+            _generalResourceManager = new FrameworkClassReplacements.SingleAssemblyResourceManager("GeneralLanguageContent", System.Reflection.Assembly.GetExecutingAssembly(), typeof(Program));
+
+            InitializeComponent();
+
+            _tokenizer = new PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer();
+            _parser = new PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser();
+
+            //Now that controls exist, update UI from settings.
+            if (Properties.Settings.Default.UILanguage.Equals(UILANGUAGE_EN)) englishToolStripMenuItem.Checked = true;
+            if (Properties.Settings.Default.UILanguage.Equals(UILANGUAGE_FR)) frenchToolStripMenuItem.Checked = true;
+            if (Properties.Settings.Default.UILanguage.Equals(UILANGUAGE_ES)) spanishToolStripMenuItem.Checked = true;
 
             displayTokenListToolStripMenuItem.Checked = Properties.Settings.Default.DisplayTokenList;
             displayParsedSqlToolStripMenuItem.Checked = Properties.Settings.Default.DisplayParsedSqlXml;
@@ -136,6 +164,7 @@ namespace PoorMansTSqlFormatterDemo
             else
                 innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter(chk_IdentityColoring.Checked);
 
+            innerFormatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix");
             _formatter = new PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper(innerFormatter);
         }
 
@@ -223,6 +252,37 @@ namespace PoorMansTSqlFormatterDemo
                 Properties.Settings.Default.DisplayTokenList = displayTokenListToolStripMenuItem.Checked;
                 Properties.Settings.Default.Save();
                 UpdateDisplayLayout();
+            }
+        }
+
+        private void languageSettingsHandler(object sender, EventArgs e)
+        {
+            if (_settingsLoaded)
+            {
+                bool changeHappened = false;
+
+                if (englishToolStripMenuItem.Checked && !Properties.Settings.Default.UILanguage.Equals(UILANGUAGE_EN))
+                {
+                    Properties.Settings.Default.UILanguage = UILANGUAGE_EN;
+                    changeHappened = true;
+                }
+                else if (frenchToolStripMenuItem.Checked && !Properties.Settings.Default.UILanguage.Equals(UILANGUAGE_FR))
+                {
+                    Properties.Settings.Default.UILanguage = UILANGUAGE_FR;
+                    changeHappened = true;
+                }
+                else if (spanishToolStripMenuItem.Checked && !Properties.Settings.Default.UILanguage.Equals(UILANGUAGE_ES))
+                {
+                    Properties.Settings.Default.UILanguage = UILANGUAGE_ES;
+                    changeHappened = true;
+                }
+
+                if (changeHappened)
+                {
+                    Properties.Settings.Default.Save();
+                    Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Properties.Settings.Default.UILanguage);
+                    MessageBox.Show(_generalResourceManager.GetString("LanguageChangeWarningMessage"), _generalResourceManager.GetString("LanguageChangeWarningTitle"));
+                }
             }
         }
 

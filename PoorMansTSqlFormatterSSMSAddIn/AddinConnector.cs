@@ -38,6 +38,8 @@ namespace PoorMansTSqlFormatterSSMSAddIn
         private AddIn _addInInstance;
         private Command _formatCommand;
 
+        private ResourceManager _generalResourceManager = new ResourceManager("GeneralLanguageContent", Assembly.GetExecutingAssembly());
+
         /// <summary>Constructor - non-environment-related initialization here.</summary>
 		public AddinConnector()
 		{
@@ -75,8 +77,8 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                 Command formatCommand = commandsList.AddNamedCommand2(
                     _addInInstance,
                     "FormatSelectionOrActiveWindow",
-                    "Format T-SQL Code",
-                    "Formats the selected T-SQL code (or all the code in the active window, if none selected)",
+                    _generalResourceManager.GetString("FormatButtonText"),
+                    _generalResourceManager.GetString("FormatButtonToolTip"),
                     true,
                     59,
                     ref contextGUIDS,
@@ -92,8 +94,8 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                 Command optionsCommand = commandsList.AddNamedCommand2(
                     _addInInstance,
                     "FormattingOptions",
-                    "T-SQL Formating Options...",
-                    "Allows you to edit the Poor Man's T-SQL Formatter options",
+                    _generalResourceManager.GetString("OptionsButtonText"),
+                    _generalResourceManager.GetString("OptionsButtonToolTip"),
                     true,
                     59,
                     ref contextGUIDS,
@@ -223,7 +225,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                     bool isSqlFile = fileExtension.ToUpper().Equals(".SQL");
 
                     if (isSqlFile ||
-                        MessageBox.Show("The active document is not listed as a \".sql\" file - are you sure you want to format?", "Non-SQL File", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        MessageBox.Show(_generalResourceManager.GetString("FileTypeWarningMessage"), _generalResourceManager.GetString("FileTypeWarningMessageTitle"), MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         string fullText = SelectAllCodeFromDocument(_applicationObject.ActiveDocument);
                         TextSelection selection = (TextSelection)_applicationObject.ActiveDocument.Selection;
@@ -251,13 +253,14 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                             false,
                             Properties.Settings.Default.KeywordStandardization
                             );
+                        formatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix");
                         var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);
                         bool errorsFound = false;
                         string formattedText = formattingManager.Format(textToFormat, ref errorsFound);
 
                         bool abortFormatting = false;
                         if (errorsFound)
-                            abortFormatting = MessageBox.Show("Errors found during SQL parsing. Would you like to apply formatting anyway?", "Errors found. Continue?", MessageBoxButtons.YesNo) != DialogResult.Yes;
+                            abortFormatting = MessageBox.Show(_generalResourceManager.GetString("ParseErrorWarningMessage"), _generalResourceManager.GetString("ParseErrorWarningMessageTitle"), MessageBoxButtons.YesNo) != DialogResult.Yes;
 
                         if (!abortFormatting)
                         {
@@ -294,10 +297,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             }
             catch (Exception e)
             {
-                MessageBox.Show("T-SQL Formatter hotkey binding failed - please revise hotkey setting." + Environment.NewLine
-                    + "Error Details:" + Environment.NewLine
-                    + e.ToString()
-                    );
+                MessageBox.Show(string.Format(_generalResourceManager.GetString("HotkeyBindingFailureMessage"), Environment.NewLine, e.ToString()));
             }
         }
 

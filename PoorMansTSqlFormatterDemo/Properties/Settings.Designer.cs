@@ -250,5 +250,17 @@ namespace PoorMansTSqlFormatterDemo.Properties {
                 this["EnableKeywordStandardization"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("EN")]
+        public string UILanguage {
+            get {
+                return ((string)(this["UILanguage"]));
+            }
+            set {
+                this["UILanguage"] = value;
+            }
+        }
     }
 }

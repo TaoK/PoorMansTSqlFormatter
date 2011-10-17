@@ -49,7 +49,8 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error saving settings. Detail: " + ex.Message);
+                var _generalResourceManager = new System.Resources.ResourceManager("GeneralLanguageContent", System.Reflection.Assembly.GetExecutingAssembly());
+                MessageBox.Show(string.Format(_generalResourceManager.GetString("SettingsSavingErrorMessage"), Environment.NewLine, ex.Message));
             }
         }
 

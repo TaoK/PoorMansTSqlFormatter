@@ -23,6 +23,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("PoorMansTSqlFormatterDemo")]
+//Note, this is also in resources file for localization!
 [assembly: AssemblyDescription("Winforms Demo app for the free Poor Man's T-SQL Formatter library")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]

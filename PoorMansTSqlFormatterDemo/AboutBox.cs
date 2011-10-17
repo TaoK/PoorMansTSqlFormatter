@@ -30,13 +30,16 @@ namespace PoorMansTSqlFormatterDemo
 {
     partial class AboutBox : Form
     {
+        private FrameworkClassReplacements.SingleAssemblyResourceManager _generalResourceManager = new FrameworkClassReplacements.SingleAssemblyResourceManager("GeneralLanguageContent", System.Reflection.Assembly.GetExecutingAssembly(), typeof(Program));
+
         public AboutBox()
         {
+
             InitializeComponent();
-            this.Text = String.Format("About {0} {0}", AssemblyTitle);
+            this.Text = String.Format(_generalResourceManager.GetString("AboutTitleLabel"), AssemblyTitle);
             this.labelProductName.Text = String.Format("{0}, v{1}", AssemblyProduct, AssemblyVersion);
             this.labelCopyright.Text = AssemblyCopyright;
-            this.textBoxDescription.Text = AssemblyDescription;
+            this.textBoxDescription.Text = _generalResourceManager.GetString("ProjectAboutDescription");
 
             string GPLText = "";
             try  
@@ -80,19 +83,6 @@ namespace PoorMansTSqlFormatterDemo
             get
             {
                 return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
-        }
-
-        public string AssemblyDescription
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyDescriptionAttribute)attributes[0]).Description;
             }
         }
 

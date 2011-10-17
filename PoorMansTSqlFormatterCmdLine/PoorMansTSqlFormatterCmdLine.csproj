@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5FA98EDC-12DA-4580-9845-788590C59922}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -37,6 +37,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrameworkClassReplacements\SingleAssemblyResourceManager.cs" />
+    <Compile Include="GeneralLanguageContent.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GeneralLanguageContent.resx</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="References\NDesk.Options\Options.cs" />
@@ -48,8 +54,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Merge.bat" />
+    <None Include="Postbuild_Merge.bat" />
     <None Include="References\NDesk.Options\NDesk.Options.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GeneralLanguageContent.es.resx" />
+    <EmbeddedResource Include="GeneralLanguageContent.fr.resx" />
+    <EmbeddedResource Include="GeneralLanguageContent.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GeneralLanguageContent.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -60,6 +74,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>Call ..\..\Merge.bat .\</PostBuildEvent>
+    <PostBuildEvent>Call $(ProjectDir)Postbuild_Merge.bat $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
 </Project>

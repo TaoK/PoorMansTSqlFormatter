@@ -48,6 +48,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.btn_Save = new System.Windows.Forms.Button();
             this.btn_Cancel = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -58,6 +59,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.chk_ExpandBetweenConditions = new System.Windows.Forms.CheckBox();
             this.chk_UppercaseKeywords = new System.Windows.Forms.CheckBox();
             this.chk_SpaceAfterExpandedComma = new System.Windows.Forms.CheckBox();
+            this.chk_BreakJoinOnSections = new System.Windows.Forms.CheckBox();
             this.chk_StandardizeKeywords = new System.Windows.Forms.CheckBox();
             this.txt_IndentString = new System.Windows.Forms.TextBox();
             this.lbl_IndentString = new System.Windows.Forms.Label();
@@ -72,38 +74,27 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.lbl_SpacesPerTab = new System.Windows.Forms.Label();
             this.lbl_SpacesPerTab_Extra = new System.Windows.Forms.Label();
             this.lbl_MaxLineWidth = new System.Windows.Forms.Label();
-            this.chk_BreakJoinOnSections = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_Save
             // 
-            this.btn_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.btn_Save, "btn_Save");
             this.btn_Save.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btn_Save.Location = new System.Drawing.Point(217, 254);
             this.btn_Save.Name = "btn_Save";
-            this.btn_Save.Size = new System.Drawing.Size(75, 23);
-            this.btn_Save.TabIndex = 0;
-            this.btn_Save.Text = "Save";
             this.btn_Save.UseVisualStyleBackColor = true;
             this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
             // 
             // btn_Cancel
             // 
-            this.btn_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.btn_Cancel, "btn_Cancel");
             this.btn_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btn_Cancel.Location = new System.Drawing.Point(298, 254);
             this.btn_Cancel.Name = "btn_Cancel";
-            this.btn_Cancel.Size = new System.Drawing.Size(75, 23);
-            this.btn_Cancel.TabIndex = 1;
-            this.btn_Cancel.Text = "Cancel";
             this.btn_Cancel.UseVisualStyleBackColor = true;
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Controls.Add(this.chk_ExpandCommaLists);
             this.flowLayoutPanel1.Controls.Add(this.chk_TrailingCommas);
             this.flowLayoutPanel1.Controls.Add(this.chk_ExpandBooleanExpressions);
@@ -113,225 +104,140 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.flowLayoutPanel1.Controls.Add(this.chk_SpaceAfterExpandedComma);
             this.flowLayoutPanel1.Controls.Add(this.chk_BreakJoinOnSections);
             this.flowLayoutPanel1.Controls.Add(this.chk_StandardizeKeywords);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 123);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(361, 125);
-            this.flowLayoutPanel1.TabIndex = 2;
             // 
             // chk_ExpandCommaLists
             // 
-            this.chk_ExpandCommaLists.AutoSize = true;
-            this.chk_ExpandCommaLists.Location = new System.Drawing.Point(3, 3);
+            resources.ApplyResources(this.chk_ExpandCommaLists, "chk_ExpandCommaLists");
             this.chk_ExpandCommaLists.Name = "chk_ExpandCommaLists";
-            this.chk_ExpandCommaLists.Size = new System.Drawing.Size(124, 17);
-            this.chk_ExpandCommaLists.TabIndex = 2;
-            this.chk_ExpandCommaLists.Text = "Expand Comma Lists";
             this.chk_ExpandCommaLists.UseVisualStyleBackColor = true;
             // 
             // chk_TrailingCommas
             // 
-            this.chk_TrailingCommas.AutoSize = true;
-            this.chk_TrailingCommas.Location = new System.Drawing.Point(133, 3);
+            resources.ApplyResources(this.chk_TrailingCommas, "chk_TrailingCommas");
             this.chk_TrailingCommas.Name = "chk_TrailingCommas";
-            this.chk_TrailingCommas.Size = new System.Drawing.Size(103, 17);
-            this.chk_TrailingCommas.TabIndex = 4;
-            this.chk_TrailingCommas.Text = "Trailing Commas";
             this.chk_TrailingCommas.UseVisualStyleBackColor = true;
             // 
             // chk_ExpandBooleanExpressions
             // 
-            this.chk_ExpandBooleanExpressions.AutoSize = true;
-            this.chk_ExpandBooleanExpressions.Location = new System.Drawing.Point(3, 26);
+            resources.ApplyResources(this.chk_ExpandBooleanExpressions, "chk_ExpandBooleanExpressions");
             this.chk_ExpandBooleanExpressions.Name = "chk_ExpandBooleanExpressions";
-            this.chk_ExpandBooleanExpressions.Size = new System.Drawing.Size(163, 17);
-            this.chk_ExpandBooleanExpressions.TabIndex = 5;
-            this.chk_ExpandBooleanExpressions.Text = "Expand Boolean Expressions";
             this.chk_ExpandBooleanExpressions.UseVisualStyleBackColor = true;
             // 
             // chk_ExpandCaseStatements
             // 
-            this.chk_ExpandCaseStatements.AutoSize = true;
-            this.chk_ExpandCaseStatements.Location = new System.Drawing.Point(172, 26);
+            resources.ApplyResources(this.chk_ExpandCaseStatements, "chk_ExpandCaseStatements");
             this.chk_ExpandCaseStatements.Name = "chk_ExpandCaseStatements";
-            this.chk_ExpandCaseStatements.Size = new System.Drawing.Size(145, 17);
-            this.chk_ExpandCaseStatements.TabIndex = 6;
-            this.chk_ExpandCaseStatements.Text = "Expand Case Statements";
             this.chk_ExpandCaseStatements.UseVisualStyleBackColor = true;
             // 
             // chk_ExpandBetweenConditions
             // 
-            this.chk_ExpandBetweenConditions.AutoSize = true;
-            this.chk_ExpandBetweenConditions.Location = new System.Drawing.Point(3, 49);
+            resources.ApplyResources(this.chk_ExpandBetweenConditions, "chk_ExpandBetweenConditions");
             this.chk_ExpandBetweenConditions.Name = "chk_ExpandBetweenConditions";
-            this.chk_ExpandBetweenConditions.Size = new System.Drawing.Size(159, 17);
-            this.chk_ExpandBetweenConditions.TabIndex = 7;
-            this.chk_ExpandBetweenConditions.Text = "Expand Between Conditions";
             this.chk_ExpandBetweenConditions.UseVisualStyleBackColor = true;
             // 
             // chk_UppercaseKeywords
             // 
-            this.chk_UppercaseKeywords.AutoSize = true;
-            this.chk_UppercaseKeywords.Location = new System.Drawing.Point(168, 49);
+            resources.ApplyResources(this.chk_UppercaseKeywords, "chk_UppercaseKeywords");
             this.chk_UppercaseKeywords.Name = "chk_UppercaseKeywords";
-            this.chk_UppercaseKeywords.Size = new System.Drawing.Size(127, 17);
-            this.chk_UppercaseKeywords.TabIndex = 8;
-            this.chk_UppercaseKeywords.Text = "Uppercase Keywords";
             this.chk_UppercaseKeywords.UseVisualStyleBackColor = true;
             // 
             // chk_SpaceAfterExpandedComma
             // 
-            this.chk_SpaceAfterExpandedComma.AutoSize = true;
-            this.chk_SpaceAfterExpandedComma.Location = new System.Drawing.Point(3, 72);
+            resources.ApplyResources(this.chk_SpaceAfterExpandedComma, "chk_SpaceAfterExpandedComma");
             this.chk_SpaceAfterExpandedComma.Name = "chk_SpaceAfterExpandedComma";
-            this.chk_SpaceAfterExpandedComma.Size = new System.Drawing.Size(170, 17);
-            this.chk_SpaceAfterExpandedComma.TabIndex = 9;
-            this.chk_SpaceAfterExpandedComma.Text = "Space after Expanded Comma";
             this.chk_SpaceAfterExpandedComma.UseVisualStyleBackColor = true;
+            // 
+            // chk_BreakJoinOnSections
+            // 
+            resources.ApplyResources(this.chk_BreakJoinOnSections, "chk_BreakJoinOnSections");
+            this.chk_BreakJoinOnSections.Name = "chk_BreakJoinOnSections";
+            this.chk_BreakJoinOnSections.UseVisualStyleBackColor = true;
             // 
             // chk_StandardizeKeywords
             // 
-            this.chk_StandardizeKeywords.AutoSize = true;
-            this.chk_StandardizeKeywords.Location = new System.Drawing.Point(3, 95);
+            resources.ApplyResources(this.chk_StandardizeKeywords, "chk_StandardizeKeywords");
             this.chk_StandardizeKeywords.Name = "chk_StandardizeKeywords";
-            this.chk_StandardizeKeywords.Size = new System.Drawing.Size(131, 17);
-            this.chk_StandardizeKeywords.TabIndex = 10;
-            this.chk_StandardizeKeywords.Text = "Standardize Keywords";
             this.chk_StandardizeKeywords.UseVisualStyleBackColor = true;
             // 
             // txt_IndentString
             // 
-            this.txt_IndentString.Location = new System.Drawing.Point(99, 12);
+            resources.ApplyResources(this.txt_IndentString, "txt_IndentString");
             this.txt_IndentString.Name = "txt_IndentString";
-            this.txt_IndentString.Size = new System.Drawing.Size(128, 20);
-            this.txt_IndentString.TabIndex = 0;
             // 
             // lbl_IndentString
             // 
-            this.lbl_IndentString.AutoSize = true;
-            this.lbl_IndentString.Location = new System.Drawing.Point(12, 15);
+            resources.ApplyResources(this.lbl_IndentString, "lbl_IndentString");
             this.lbl_IndentString.Name = "lbl_IndentString";
-            this.lbl_IndentString.Size = new System.Drawing.Size(70, 13);
-            this.lbl_IndentString.TabIndex = 1;
-            this.lbl_IndentString.Text = "Indent String:";
             // 
             // lbl_IndentHint
             // 
-            this.lbl_IndentHint.AutoSize = true;
-            this.lbl_IndentHint.Location = new System.Drawing.Point(233, 15);
+            resources.ApplyResources(this.lbl_IndentHint, "lbl_IndentHint");
             this.lbl_IndentHint.Name = "lbl_IndentHint";
-            this.lbl_IndentHint.Size = new System.Drawing.Size(74, 13);
-            this.lbl_IndentHint.TabIndex = 3;
-            this.lbl_IndentHint.Text = "(use \\t for tab)";
             // 
             // txt_Hotkey
             // 
-            this.txt_Hotkey.Location = new System.Drawing.Point(99, 38);
+            resources.ApplyResources(this.txt_Hotkey, "txt_Hotkey");
             this.txt_Hotkey.Name = "txt_Hotkey";
-            this.txt_Hotkey.Size = new System.Drawing.Size(128, 20);
-            this.txt_Hotkey.TabIndex = 9;
             // 
             // lbl_Hotkey
             // 
-            this.lbl_Hotkey.AutoSize = true;
-            this.lbl_Hotkey.Location = new System.Drawing.Point(12, 41);
+            resources.ApplyResources(this.lbl_Hotkey, "lbl_Hotkey");
             this.lbl_Hotkey.Name = "lbl_Hotkey";
-            this.lbl_Hotkey.Size = new System.Drawing.Size(78, 13);
-            this.lbl_Hotkey.TabIndex = 10;
-            this.lbl_Hotkey.Text = "SSMS HotKey:";
             // 
             // llbl_HotkeyHint
             // 
-            this.llbl_HotkeyHint.AutoSize = true;
-            this.llbl_HotkeyHint.LinkArea = new System.Windows.Forms.LinkArea(5, 16);
-            this.llbl_HotkeyHint.Location = new System.Drawing.Point(233, 41);
+            resources.ApplyResources(this.llbl_HotkeyHint, "llbl_HotkeyHint");
             this.llbl_HotkeyHint.Name = "llbl_HotkeyHint";
-            this.llbl_HotkeyHint.Size = new System.Drawing.Size(125, 17);
-            this.llbl_HotkeyHint.TabIndex = 11;
             this.llbl_HotkeyHint.TabStop = true;
-            this.llbl_HotkeyHint.Text = "(see VS documentation)";
             this.llbl_HotkeyHint.UseCompatibleTextRendering = true;
             this.llbl_HotkeyHint.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llbl_HotkeyHint_LinkClicked);
             // 
             // btn_About
             // 
-            this.btn_About.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_About.Location = new System.Drawing.Point(12, 254);
+            resources.ApplyResources(this.btn_About, "btn_About");
             this.btn_About.Name = "btn_About";
-            this.btn_About.Size = new System.Drawing.Size(75, 23);
-            this.btn_About.TabIndex = 12;
-            this.btn_About.Text = "About...";
             this.btn_About.UseVisualStyleBackColor = true;
             this.btn_About.Click += new System.EventHandler(this.btn_About_Click);
             // 
             // btn_Reset
             // 
-            this.btn_Reset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btn_Reset.Location = new System.Drawing.Point(93, 254);
+            resources.ApplyResources(this.btn_Reset, "btn_Reset");
             this.btn_Reset.Name = "btn_Reset";
-            this.btn_Reset.Size = new System.Drawing.Size(75, 23);
-            this.btn_Reset.TabIndex = 13;
-            this.btn_Reset.Text = "Reset";
             this.btn_Reset.UseVisualStyleBackColor = true;
             this.btn_Reset.Click += new System.EventHandler(this.btn_Reset_Click);
             // 
             // txt_SpacesPerTab
             // 
-            this.txt_SpacesPerTab.Location = new System.Drawing.Point(99, 90);
+            resources.ApplyResources(this.txt_SpacesPerTab, "txt_SpacesPerTab");
             this.txt_SpacesPerTab.Name = "txt_SpacesPerTab";
-            this.txt_SpacesPerTab.Size = new System.Drawing.Size(128, 20);
-            this.txt_SpacesPerTab.TabIndex = 14;
             // 
             // txt_MaxLineWidth
             // 
-            this.txt_MaxLineWidth.Location = new System.Drawing.Point(99, 64);
+            resources.ApplyResources(this.txt_MaxLineWidth, "txt_MaxLineWidth");
             this.txt_MaxLineWidth.Name = "txt_MaxLineWidth";
-            this.txt_MaxLineWidth.Size = new System.Drawing.Size(128, 20);
-            this.txt_MaxLineWidth.TabIndex = 15;
             // 
             // lbl_SpacesPerTab
             // 
-            this.lbl_SpacesPerTab.AutoSize = true;
-            this.lbl_SpacesPerTab.Location = new System.Drawing.Point(12, 93);
+            resources.ApplyResources(this.lbl_SpacesPerTab, "lbl_SpacesPerTab");
             this.lbl_SpacesPerTab.Name = "lbl_SpacesPerTab";
-            this.lbl_SpacesPerTab.Size = new System.Drawing.Size(87, 13);
-            this.lbl_SpacesPerTab.TabIndex = 16;
-            this.lbl_SpacesPerTab.Text = "Spaces Per Tab:";
             // 
             // lbl_SpacesPerTab_Extra
             // 
-            this.lbl_SpacesPerTab_Extra.AutoSize = true;
-            this.lbl_SpacesPerTab_Extra.Location = new System.Drawing.Point(233, 93);
+            resources.ApplyResources(this.lbl_SpacesPerTab_Extra, "lbl_SpacesPerTab_Extra");
             this.lbl_SpacesPerTab_Extra.Name = "lbl_SpacesPerTab_Extra";
-            this.lbl_SpacesPerTab_Extra.Size = new System.Drawing.Size(115, 13);
-            this.lbl_SpacesPerTab_Extra.TabIndex = 17;
-            this.lbl_SpacesPerTab_Extra.Text = "(for Max Width feature)";
             // 
             // lbl_MaxLineWidth
             // 
-            this.lbl_MaxLineWidth.AutoSize = true;
-            this.lbl_MaxLineWidth.Location = new System.Drawing.Point(12, 67);
+            resources.ApplyResources(this.lbl_MaxLineWidth, "lbl_MaxLineWidth");
             this.lbl_MaxLineWidth.Name = "lbl_MaxLineWidth";
-            this.lbl_MaxLineWidth.Size = new System.Drawing.Size(84, 13);
-            this.lbl_MaxLineWidth.TabIndex = 18;
-            this.lbl_MaxLineWidth.Text = "Max Line Width:";
-            // 
-            // chk_BreakJoinOnSections
-            // 
-            this.chk_BreakJoinOnSections.AutoSize = true;
-            this.chk_BreakJoinOnSections.Location = new System.Drawing.Point(179, 72);
-            this.chk_BreakJoinOnSections.Name = "chk_BreakJoinOnSections";
-            this.chk_BreakJoinOnSections.Size = new System.Drawing.Size(139, 17);
-            this.chk_BreakJoinOnSections.TabIndex = 11;
-            this.chk_BreakJoinOnSections.Text = "Break Join ON Sections";
-            this.chk_BreakJoinOnSections.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
             this.AcceptButton = this.btn_Save;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btn_Cancel;
-            this.ClientSize = new System.Drawing.Size(385, 289);
             this.Controls.Add(this.lbl_MaxLineWidth);
             this.Controls.Add(this.lbl_SpacesPerTab_Extra);
             this.Controls.Add(this.lbl_SpacesPerTab);
@@ -348,9 +254,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.Controls.Add(this.btn_Cancel);
             this.Controls.Add(this.btn_Save);
             this.Controls.Add(this.txt_Hotkey);
-            this.MinimumSize = new System.Drawing.Size(360, 206);
             this.Name = "SettingsForm";
-            this.Text = "Poor Man\'s T-Sql Formatter SSMS Addin - Settings";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();

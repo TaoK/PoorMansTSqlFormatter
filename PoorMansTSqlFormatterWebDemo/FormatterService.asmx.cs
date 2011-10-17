@@ -51,11 +51,30 @@ namespace PoorMansTSqlFormatterWebDemo
                 false,
                 true, 
                 true, 
-                false);
+                false,
+                false
+                );
         }
 
         [WebMethod]
-        public string FormatTSqlWithOptions(string inputString, bool reFormat, string indent, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool breakJoinOnSections, bool uppercaseKeywords, bool coloring, bool keywordStandardization)
+        public string FormatTSqlWithOptions(
+            string inputString, 
+            bool reFormat, 
+            string indent, 
+            int spacesPerTab, 
+            int maxLineWidth, 
+            bool expandCommaLists, 
+            bool trailingCommas, 
+            bool spaceAfterExpandedComma, 
+            bool expandBooleanExpressions, 
+            bool expandCaseStatements, 
+            bool expandBetweenConditions, 
+            bool breakJoinOnSections, 
+            bool uppercaseKeywords, 
+            bool coloring,
+            bool keywordStandardization,
+            bool useParseErrorPlaceholder
+            )
         {
             PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter formatter = null;
             if (reFormat)
@@ -76,6 +95,9 @@ namespace PoorMansTSqlFormatterWebDemo
                     );
             else
                 formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter(coloring);
+
+            if (useParseErrorPlaceholder)
+                formatter.ErrorOutputPrefix = "{PARSEERRORPLACEHOLDER}";
 
             return FormatTSqlWithFormatter(inputString, formatter);
         }

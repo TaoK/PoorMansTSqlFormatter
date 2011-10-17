@@ -117,4 +117,679 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btn_Save.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btn_Save.Location" type="System.Drawing.Point, System.Drawing">
+    <value>217, 254</value>
+  </data>
+  <data name="btn_Save.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btn_Save.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="btn_Save.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="&gt;&gt;btn_Save.Name" xml:space="preserve">
+    <value>btn_Save</value>
+  </data>
+  <data name="&gt;&gt;btn_Save.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btn_Save.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btn_Save.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="btn_Cancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="btn_Cancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>298, 254</value>
+  </data>
+  <data name="btn_Cancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btn_Cancel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="btn_Cancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="&gt;&gt;btn_Cancel.Name" xml:space="preserve">
+    <value>btn_Cancel</value>
+  </data>
+  <data name="&gt;&gt;btn_Cancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btn_Cancel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btn_Cancel.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="flowLayoutPanel1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="chk_ExpandCommaLists.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_ExpandCommaLists.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="chk_ExpandCommaLists.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 17</value>
+  </data>
+  <data name="chk_ExpandCommaLists.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="chk_ExpandCommaLists.Text" xml:space="preserve">
+    <value>Expand Comma Lists</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCommaLists.Name" xml:space="preserve">
+    <value>chk_ExpandCommaLists</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCommaLists.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCommaLists.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCommaLists.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="chk_TrailingCommas.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_TrailingCommas.Location" type="System.Drawing.Point, System.Drawing">
+    <value>133, 3</value>
+  </data>
+  <data name="chk_TrailingCommas.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 17</value>
+  </data>
+  <data name="chk_TrailingCommas.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="chk_TrailingCommas.Text" xml:space="preserve">
+    <value>Trailing Commas</value>
+  </data>
+  <data name="&gt;&gt;chk_TrailingCommas.Name" xml:space="preserve">
+    <value>chk_TrailingCommas</value>
+  </data>
+  <data name="&gt;&gt;chk_TrailingCommas.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_TrailingCommas.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;chk_TrailingCommas.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="chk_ExpandBooleanExpressions.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_ExpandBooleanExpressions.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 26</value>
+  </data>
+  <data name="chk_ExpandBooleanExpressions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 17</value>
+  </data>
+  <data name="chk_ExpandBooleanExpressions.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="chk_ExpandBooleanExpressions.Text" xml:space="preserve">
+    <value>Expand Boolean Expressions</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBooleanExpressions.Name" xml:space="preserve">
+    <value>chk_ExpandBooleanExpressions</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBooleanExpressions.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBooleanExpressions.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBooleanExpressions.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="chk_ExpandCaseStatements.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_ExpandCaseStatements.Location" type="System.Drawing.Point, System.Drawing">
+    <value>172, 26</value>
+  </data>
+  <data name="chk_ExpandCaseStatements.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 17</value>
+  </data>
+  <data name="chk_ExpandCaseStatements.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="chk_ExpandCaseStatements.Text" xml:space="preserve">
+    <value>Expand Case Statements</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCaseStatements.Name" xml:space="preserve">
+    <value>chk_ExpandCaseStatements</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCaseStatements.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCaseStatements.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCaseStatements.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="chk_ExpandBetweenConditions.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_ExpandBetweenConditions.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 49</value>
+  </data>
+  <data name="chk_ExpandBetweenConditions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>159, 17</value>
+  </data>
+  <data name="chk_ExpandBetweenConditions.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="chk_ExpandBetweenConditions.Text" xml:space="preserve">
+    <value>Expand Between Conditions</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBetweenConditions.Name" xml:space="preserve">
+    <value>chk_ExpandBetweenConditions</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBetweenConditions.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBetweenConditions.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBetweenConditions.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="chk_UppercaseKeywords.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_UppercaseKeywords.Location" type="System.Drawing.Point, System.Drawing">
+    <value>168, 49</value>
+  </data>
+  <data name="chk_UppercaseKeywords.Size" type="System.Drawing.Size, System.Drawing">
+    <value>127, 17</value>
+  </data>
+  <data name="chk_UppercaseKeywords.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="chk_UppercaseKeywords.Text" xml:space="preserve">
+    <value>Uppercase Keywords</value>
+  </data>
+  <data name="&gt;&gt;chk_UppercaseKeywords.Name" xml:space="preserve">
+    <value>chk_UppercaseKeywords</value>
+  </data>
+  <data name="&gt;&gt;chk_UppercaseKeywords.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_UppercaseKeywords.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;chk_UppercaseKeywords.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="chk_SpaceAfterExpandedComma.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_SpaceAfterExpandedComma.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 72</value>
+  </data>
+  <data name="chk_SpaceAfterExpandedComma.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 17</value>
+  </data>
+  <data name="chk_SpaceAfterExpandedComma.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="chk_SpaceAfterExpandedComma.Text" xml:space="preserve">
+    <value>Space after Expanded Comma</value>
+  </data>
+  <data name="&gt;&gt;chk_SpaceAfterExpandedComma.Name" xml:space="preserve">
+    <value>chk_SpaceAfterExpandedComma</value>
+  </data>
+  <data name="&gt;&gt;chk_SpaceAfterExpandedComma.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_SpaceAfterExpandedComma.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;chk_SpaceAfterExpandedComma.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="chk_BreakJoinOnSections.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_BreakJoinOnSections.Location" type="System.Drawing.Point, System.Drawing">
+    <value>179, 72</value>
+  </data>
+  <data name="chk_BreakJoinOnSections.Size" type="System.Drawing.Size, System.Drawing">
+    <value>139, 17</value>
+  </data>
+  <data name="chk_BreakJoinOnSections.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="chk_BreakJoinOnSections.Text" xml:space="preserve">
+    <value>Break Join ON Sections</value>
+  </data>
+  <data name="&gt;&gt;chk_BreakJoinOnSections.Name" xml:space="preserve">
+    <value>chk_BreakJoinOnSections</value>
+  </data>
+  <data name="&gt;&gt;chk_BreakJoinOnSections.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_BreakJoinOnSections.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;chk_BreakJoinOnSections.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="chk_StandardizeKeywords.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chk_StandardizeKeywords.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 95</value>
+  </data>
+  <data name="chk_StandardizeKeywords.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 17</value>
+  </data>
+  <data name="chk_StandardizeKeywords.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="chk_StandardizeKeywords.Text" xml:space="preserve">
+    <value>Standardize Keywords</value>
+  </data>
+  <data name="&gt;&gt;chk_StandardizeKeywords.Name" xml:space="preserve">
+    <value>chk_StandardizeKeywords</value>
+  </data>
+  <data name="&gt;&gt;chk_StandardizeKeywords.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_StandardizeKeywords.Parent" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;chk_StandardizeKeywords.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="flowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 123</value>
+  </data>
+  <data name="flowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>361, 125</value>
+  </data>
+  <data name="flowLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel1.Name" xml:space="preserve">
+    <value>flowLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;flowLayoutPanel1.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="txt_IndentString.Location" type="System.Drawing.Point, System.Drawing">
+    <value>99, 12</value>
+  </data>
+  <data name="txt_IndentString.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 20</value>
+  </data>
+  <data name="txt_IndentString.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;txt_IndentString.Name" xml:space="preserve">
+    <value>txt_IndentString</value>
+  </data>
+  <data name="&gt;&gt;txt_IndentString.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_IndentString.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;txt_IndentString.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="lbl_IndentString.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbl_IndentString.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 15</value>
+  </data>
+  <data name="lbl_IndentString.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 13</value>
+  </data>
+  <data name="lbl_IndentString.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="lbl_IndentString.Text" xml:space="preserve">
+    <value>Indent String:</value>
+  </data>
+  <data name="&gt;&gt;lbl_IndentString.Name" xml:space="preserve">
+    <value>lbl_IndentString</value>
+  </data>
+  <data name="&gt;&gt;lbl_IndentString.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_IndentString.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbl_IndentString.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="lbl_IndentHint.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbl_IndentHint.Location" type="System.Drawing.Point, System.Drawing">
+    <value>233, 15</value>
+  </data>
+  <data name="lbl_IndentHint.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 13</value>
+  </data>
+  <data name="lbl_IndentHint.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="lbl_IndentHint.Text" xml:space="preserve">
+    <value>(use \t for tab)</value>
+  </data>
+  <data name="&gt;&gt;lbl_IndentHint.Name" xml:space="preserve">
+    <value>lbl_IndentHint</value>
+  </data>
+  <data name="&gt;&gt;lbl_IndentHint.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_IndentHint.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbl_IndentHint.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="txt_Hotkey.Location" type="System.Drawing.Point, System.Drawing">
+    <value>99, 38</value>
+  </data>
+  <data name="txt_Hotkey.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 20</value>
+  </data>
+  <data name="txt_Hotkey.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;txt_Hotkey.Name" xml:space="preserve">
+    <value>txt_Hotkey</value>
+  </data>
+  <data name="&gt;&gt;txt_Hotkey.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Hotkey.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;txt_Hotkey.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="lbl_Hotkey.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbl_Hotkey.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 41</value>
+  </data>
+  <data name="lbl_Hotkey.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 13</value>
+  </data>
+  <data name="lbl_Hotkey.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="lbl_Hotkey.Text" xml:space="preserve">
+    <value>SSMS HotKey:</value>
+  </data>
+  <data name="&gt;&gt;lbl_Hotkey.Name" xml:space="preserve">
+    <value>lbl_Hotkey</value>
+  </data>
+  <data name="&gt;&gt;lbl_Hotkey.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_Hotkey.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbl_Hotkey.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="llbl_HotkeyHint.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="llbl_HotkeyHint.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
+    <value>5, 16</value>
+  </data>
+  <data name="llbl_HotkeyHint.Location" type="System.Drawing.Point, System.Drawing">
+    <value>233, 41</value>
+  </data>
+  <data name="llbl_HotkeyHint.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 17</value>
+  </data>
+  <data name="llbl_HotkeyHint.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="llbl_HotkeyHint.Text" xml:space="preserve">
+    <value>(see VS documentation)</value>
+  </data>
+  <data name="&gt;&gt;llbl_HotkeyHint.Name" xml:space="preserve">
+    <value>llbl_HotkeyHint</value>
+  </data>
+  <data name="&gt;&gt;llbl_HotkeyHint.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;llbl_HotkeyHint.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;llbl_HotkeyHint.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="btn_About.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="btn_About.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 254</value>
+  </data>
+  <data name="btn_About.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btn_About.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="btn_About.Text" xml:space="preserve">
+    <value>About...</value>
+  </data>
+  <data name="&gt;&gt;btn_About.Name" xml:space="preserve">
+    <value>btn_About</value>
+  </data>
+  <data name="&gt;&gt;btn_About.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btn_About.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btn_About.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="btn_Reset.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="btn_Reset.Location" type="System.Drawing.Point, System.Drawing">
+    <value>93, 254</value>
+  </data>
+  <data name="btn_Reset.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btn_Reset.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="btn_Reset.Text" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="&gt;&gt;btn_Reset.Name" xml:space="preserve">
+    <value>btn_Reset</value>
+  </data>
+  <data name="&gt;&gt;btn_Reset.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btn_Reset.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btn_Reset.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="txt_SpacesPerTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>99, 90</value>
+  </data>
+  <data name="txt_SpacesPerTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 20</value>
+  </data>
+  <data name="txt_SpacesPerTab.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;txt_SpacesPerTab.Name" xml:space="preserve">
+    <value>txt_SpacesPerTab</value>
+  </data>
+  <data name="&gt;&gt;txt_SpacesPerTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_SpacesPerTab.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;txt_SpacesPerTab.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="txt_MaxLineWidth.Location" type="System.Drawing.Point, System.Drawing">
+    <value>99, 64</value>
+  </data>
+  <data name="txt_MaxLineWidth.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 20</value>
+  </data>
+  <data name="txt_MaxLineWidth.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;txt_MaxLineWidth.Name" xml:space="preserve">
+    <value>txt_MaxLineWidth</value>
+  </data>
+  <data name="&gt;&gt;txt_MaxLineWidth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_MaxLineWidth.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;txt_MaxLineWidth.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lbl_SpacesPerTab.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbl_SpacesPerTab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 93</value>
+  </data>
+  <data name="lbl_SpacesPerTab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 13</value>
+  </data>
+  <data name="lbl_SpacesPerTab.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="lbl_SpacesPerTab.Text" xml:space="preserve">
+    <value>Spaces Per Tab:</value>
+  </data>
+  <data name="&gt;&gt;lbl_SpacesPerTab.Name" xml:space="preserve">
+    <value>lbl_SpacesPerTab</value>
+  </data>
+  <data name="&gt;&gt;lbl_SpacesPerTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_SpacesPerTab.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbl_SpacesPerTab.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lbl_SpacesPerTab_Extra.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbl_SpacesPerTab_Extra.Location" type="System.Drawing.Point, System.Drawing">
+    <value>233, 93</value>
+  </data>
+  <data name="lbl_SpacesPerTab_Extra.Size" type="System.Drawing.Size, System.Drawing">
+    <value>115, 13</value>
+  </data>
+  <data name="lbl_SpacesPerTab_Extra.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="lbl_SpacesPerTab_Extra.Text" xml:space="preserve">
+    <value>(for Max Width feature)</value>
+  </data>
+  <data name="&gt;&gt;lbl_SpacesPerTab_Extra.Name" xml:space="preserve">
+    <value>lbl_SpacesPerTab_Extra</value>
+  </data>
+  <data name="&gt;&gt;lbl_SpacesPerTab_Extra.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_SpacesPerTab_Extra.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbl_SpacesPerTab_Extra.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lbl_MaxLineWidth.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbl_MaxLineWidth.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 67</value>
+  </data>
+  <data name="lbl_MaxLineWidth.Size" type="System.Drawing.Size, System.Drawing">
+    <value>84, 13</value>
+  </data>
+  <data name="lbl_MaxLineWidth.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="lbl_MaxLineWidth.Text" xml:space="preserve">
+    <value>Max Line Width:</value>
+  </data>
+  <data name="&gt;&gt;lbl_MaxLineWidth.Name" xml:space="preserve">
+    <value>lbl_MaxLineWidth</value>
+  </data>
+  <data name="&gt;&gt;lbl_MaxLineWidth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_MaxLineWidth.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbl_MaxLineWidth.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>385, 289</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>360, 206</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Poor Man's T-Sql Formatter SSMS Addin - Settings</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>SettingsForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

@@ -49,8 +49,18 @@
     <Compile Include="FrameworkClassReplacements\CustomContentWebBrowser.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="FrameworkClassReplacements\RadioToolStripMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FrameworkClassReplacements\SelectableTextBox.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FrameworkClassReplacements\SingleAssemblyComponentResourceManager.cs" />
+    <Compile Include="FrameworkClassReplacements\SingleAssemblyResourceManager.cs" />
+    <Compile Include="GeneralLanguageContent.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GeneralLanguageContent.resx</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -79,7 +89,8 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="Merge.bat" />
+    <None Include="Postbuild_Merge.bat" />
+    <None Include="PreBuild_Replace.bat" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -97,7 +108,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GeneralLanguageContent.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GeneralLanguageContent.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="LICENSE.txt" />
+    <EmbeddedResource Include="MainForm.es.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.fr.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -108,6 +129,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>Call ..\..\Merge.bat .\</PostBuildEvent>
+    <PostBuildEvent>Call $(ProjectDir)Postbuild_Merge.bat $(TargetDir)</PostBuildEvent>
+    <PreBuildEvent>Call $(ProjectDir)\PreBuild_Replace.bat $(SolutionDir) $(ProjectDir)</PreBuildEvent>
   </PropertyGroup>
 </Project>

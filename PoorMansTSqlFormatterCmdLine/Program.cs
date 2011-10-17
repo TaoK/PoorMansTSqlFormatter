@@ -29,6 +29,12 @@ namespace PoorMansTSqlFormatterCmdLine
 {
     class Program
     {
+        private static FrameworkClassReplacements.SingleAssemblyResourceManager _generalResourceManager = null;
+
+        const string UILANGUAGE_EN = "EN";
+        const string UILANGUAGE_FR = "FR";
+        const string UILANGUAGE_ES = "ES";
+
         static int Main(string[] args)
         {
             string indentString = "\t";
@@ -44,13 +50,13 @@ namespace PoorMansTSqlFormatterCmdLine
             bool uppercaseKeywords = true;
             bool standardizeKeywords = true;
 
-
             bool allowParsingErrors = false;
             bool showUsage = false;
             List<string> extensions = new List<string>();
             bool backups = true;
             bool recursiveSearch = false;
             string outputFileOrFolder = null;
+            string uiLangCode = null;
 
             OptionSet p = new OptionSet()
               .Add("is|indentString=", delegate(string v) { indentString = v; })
@@ -70,60 +76,50 @@ namespace PoorMansTSqlFormatterCmdLine
               .Add("r|recursive", delegate(string v) { recursiveSearch = v != null; })
               .Add("b|backups", delegate(string v) { backups = v != null; })
               .Add("o|outputFileOrFolder=", delegate(string v) { outputFileOrFolder = v; })
+              .Add("l|languageCode=", delegate(string v) { uiLangCode = v; })
               .Add("h|?|help", delegate(string v) { showUsage = v != null; })
                   ;
 
+            //first parse the args
             List<string> remainingArgs = p.Parse(args);
+
+            //then switch language if necessary
+            if (uiLangCode != null)
+            {
+                if (!uiLangCode.Equals(UILANGUAGE_EN)
+                    && !uiLangCode.Equals(UILANGUAGE_FR)
+                    && !uiLangCode.Equals(UILANGUAGE_ES)
+                    )
+                {
+                    showUsage = true;
+                    //get the resource manager with default language, before displaying error.
+                    _generalResourceManager = new FrameworkClassReplacements.SingleAssemblyResourceManager("GeneralLanguageContent", Assembly.GetExecutingAssembly(), typeof(Program));
+                    Console.WriteLine(_generalResourceManager.GetString("UnrecognizedLanguageErrorMessage"));
+                }
+                else
+                {
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(uiLangCode);
+                    _generalResourceManager = new FrameworkClassReplacements.SingleAssemblyResourceManager("GeneralLanguageContent", Assembly.GetExecutingAssembly(), typeof(Program));
+                    //get the resource manager AFTER setting language as requested.
+                }
+            }
+
+            //then complain about any unrecognized args
             if (remainingArgs.Count != 1)
             {
                 showUsage = true;
-                Console.WriteLine("Unrecognized arguments found!");
+                Console.WriteLine(_generalResourceManager.GetString("UnrecognizedArgumentsErrorMessage"));
             }
+
 
             if (extensions.Count == 0)
                 extensions.Add(".sql");
 
             if (showUsage)
             {
-                Console.WriteLine(@"
-Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
-library for .Net 2.0, written in C#. Distributed under AGPL v3.
-Copyright (C) 2011 Tao Klerks");
+                Console.WriteLine(_generalResourceManager.GetString("ProgramSummary"));
                 Console.WriteLine("v" + Assembly.GetExecutingAssembly().GetName().Version.ToString());
-                Console.WriteLine(@"
-Usage notes: 
-
-SqlFormatter <filename or pattern> <options>
-
-is  indentString (default: \t)
-st  spacesPerTab (default: 4)
-mw  maxLineWidth (default: 999)
-tc  trailingCommas (default: false)
-sac spaceAfterExpandedComma (default: false)
-ebc expandBetweenConditions (default: true)
-ebe expandBooleanExpressions (default: true)
-ecs expandCaseStatements (default: true)
-ecl expandCommaLists (default: true)
-uk  uppercaseKeywords (default: true)
-sk  standardizeKeywords (default: false)
-ae  allowParsingErrors (default: false)
-e   extensions (default: sql)
-r   recursive (default: false)
-b   backups (default: true)
-b   outputFileOrFolder (default: none; if set, overrides the backup option)
-h ? help
-
-Disable boolean options with a trailing minus, enable by just specifying them or with a trailing plus.
-
-eg:
-
-SqlFormatter TestFiles\* /is:""  "" /tc /uc- 
-
-or 
-
-SqlFormatter test*.sql /o:resultfile.sql
-
-");
+                Console.WriteLine(_generalResourceManager.GetString("ProgramUsageNotes"));
                 return 1;
             }
 
@@ -142,6 +138,7 @@ SqlFormatter test*.sql /o:resultfile.sql
                 false,
                 standardizeKeywords
                 );
+            formatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix");
             var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);
 
             string searchPattern = Path.GetFileName(remainingArgs[0]);
@@ -174,7 +171,7 @@ SqlFormatter test*.sql /o:resultfile.sql
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error processing requested filename/pattern. Error detail: " + e.Message);
+                Console.WriteLine(string.Format(_generalResourceManager.GetString("PathPatternErrorMessage"), e.Message));
                 return 2;
             }
 
@@ -204,7 +201,7 @@ SqlFormatter test*.sql /o:resultfile.sql
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine("The requested output file could not be created. Error detail: " + e.Message);
+                        Console.WriteLine(string.Format(_generalResourceManager.GetString("OutputFileCreationErrorMessage"), e.Message));
                         return 3;
                     }
                 }
@@ -213,7 +210,7 @@ SqlFormatter test*.sql /o:resultfile.sql
             bool warningEncountered = false;
             if (!ProcessSearchResults(extensions, backups, allowParsingErrors, formattingManager, matchingObjects, singleFileWriter, replaceFromFolderPath, replaceToFolderPath, ref warningEncountered))
             {
-                Console.WriteLine("No files found matching filename/pattern: " + remainingArgs[0]);
+                Console.WriteLine(string.Format(_generalResourceManager.GetString("NoFilesFoundWarningMessage"), remainingArgs[0]));
                 return 4;
             }
 
@@ -272,8 +269,8 @@ SqlFormatter test*.sql /o:resultfile.sql
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Failed to read file contents (aborted): " + fileInfo.FullName);
-                Console.WriteLine(" Error detail: " + ex.Message);
+                Console.WriteLine(string.Format(_generalResourceManager.GetString("FileReadFailureWarningMessage"), fileInfo.FullName));
+                Console.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), ex.Message));
                 warningEncountered = true;
             }
             if (oldFileContents.Length > 0)
@@ -293,9 +290,9 @@ SqlFormatter test*.sql /o:resultfile.sql
 
                 if (parsingError)
                 {
-                    Console.WriteLine("Encountered error when parsing or formatting file contents (aborted): " + fileInfo.FullName);
+                    Console.WriteLine(string.Format(_generalResourceManager.GetString("ParsingErrorWarningMessage"), fileInfo.FullName));
                     if (parseException != null)
-                        Console.WriteLine(" Error detail: " + parseException.Message);
+                        Console.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), parseException.Message));
                     warningEncountered = true;
                 }
             }
@@ -318,9 +315,8 @@ SqlFormatter test*.sql /o:resultfile.sql
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Failed to back up file: " + fileInfo.FullName);
-                        Console.WriteLine(" Skipping formatting for this file.");
-                        Console.WriteLine(" Error detail: " + ex.Message);
+                        Console.WriteLine(string.Format(_generalResourceManager.GetString("BackupFailureWarningMessage"), fileInfo.FullName, Environment.NewLine));
+                        Console.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), ex.Message));
                         failedBackup = true;
                         warningEncountered = true;
                     }
@@ -348,8 +344,8 @@ SqlFormatter test*.sql /o:resultfile.sql
                             }
                             catch (Exception ex)
                             {
-                                Console.WriteLine("Failed to create target folder: " + targetFolder);
-                                Console.WriteLine(" Error detail: " + ex.Message);
+                                Console.WriteLine(string.Format(_generalResourceManager.GetString("FolderCreationFailureWarningMessage"), targetFolder));
+                                Console.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), ex.Message));
                                 failedFolder = true;
                                 warningEncountered = true;
                             }
@@ -363,10 +359,10 @@ SqlFormatter test*.sql /o:resultfile.sql
                             }
                             catch (Exception ex)
                             {
-                                Console.WriteLine("Failed to write reformatted contents: " + fileInfo.FullName);
-                                Console.WriteLine(" Error detail: " + ex.Message);
+                                Console.WriteLine(string.Format(_generalResourceManager.GetString("ContentWriteFailureWarningMessage"), fileInfo.FullName));
+                                Console.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), ex.Message));
                                 if (replaceFromFolderPath == null || replaceToFolderPath == null)
-                                    Console.WriteLine(" NOTE: this file may have been overwritten with partial content!");
+                                    Console.WriteLine(_generalResourceManager.GetString("PossiblePartialWriteWarningMessage"));
                                 warningEncountered = true;
                             }
                         }
