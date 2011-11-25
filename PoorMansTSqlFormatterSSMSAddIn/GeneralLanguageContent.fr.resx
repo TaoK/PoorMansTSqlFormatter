@@ -117,86 +117,45 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="UnrecognizedArgumentsErrorMessage" xml:space="preserve">
-    <value>Hemos encontrado argumentos no reconocidos!</value>
+  <data name="AboutTitleLabel" xml:space="preserve">
+    <value>À propos de {0}</value>
   </data>
-  <data name="BackupFailureWarningMessage" xml:space="preserve">
-    <value>Copia de seguridad fallada: {0}{1} Saltando este archivo.</value>
-    <comment>{0} is the filename, {1} is a linebreak.</comment>
+  <data name="FileTypeWarningMessage" xml:space="preserve">
+    <value>Le document actif n'est pas un fichier "sql" - êtes-vous sûr de vouloir le formatter?</value>
   </data>
-  <data name="ContentWriteFailureWarningMessage" xml:space="preserve">
-    <value>Error al escribir el archivo formateado: {0}</value>
+  <data name="FileTypeWarningMessageTitle" xml:space="preserve">
+    <value>Fichier non SQL</value>
   </data>
-  <data name="ErrorDetailMessageFragment" xml:space="preserve">
-    <value> Detalle del error: {0}</value>
+  <data name="FormatButtonText" xml:space="preserve">
+    <value>Formatter le code T-SQL</value>
   </data>
-  <data name="FileReadFailureWarningMessage" xml:space="preserve">
-    <value>Error al abrir el archivo (abandonando): {0}</value>
+  <data name="FormatButtonToolTip" xml:space="preserve">
+    <value>Formate le code T-SQL sélectionné (ou tout le code dans la fenêtre active, si aucun n'est sélectionné)</value>
   </data>
-  <data name="FolderCreationFailureWarningMessage" xml:space="preserve">
-    <value>Error al crear la carpeta: {0}</value>
+  <data name="HotkeyBindingFailureMessage" xml:space="preserve">
+    <value>L'installation du raccourci clavier du formatteur T-SQL a échoué - s'il vous plaït, vérifiez ou changez le raccourci.{0}Détails de l'erreur:{0}{1}</value>
+    <comment>{0} is a newline, {1} is the detailed exception</comment>
   </data>
-  <data name="NoFilesFoundWarningMessage" xml:space="preserve">
-    <value>Ningun archivo se encontró con este nombre o patrón: {0}</value>
+  <data name="OptionsButtonText" xml:space="preserve">
+    <value>Options du Formateur T-SQL...</value>
   </data>
-  <data name="OutputFileCreationErrorMessage" xml:space="preserve">
-    <value>El archivo de destino indicado no se pudo crear. Detalle del error: {0}</value>
+  <data name="OptionsButtonToolTip" xml:space="preserve">
+    <value>Permet de changer les options du formateur Poor Man's T-SQL Formatter</value>
+  </data>
+  <data name="ParseErrorWarningMessage" xml:space="preserve">
+    <value>Erreurs trouvées pendant l'analyse du code SQL. Voulez-vous formatter le code de toute façon?</value>
+  </data>
+  <data name="ParseErrorWarningMessageTitle" xml:space="preserve">
+    <value>Erreurs trouvées. Continuer?</value>
   </data>
   <data name="ParseErrorWarningPrefix" xml:space="preserve">
-    <value>--ALERTA! SE ENCONTRARON ERRORES AL ANALIZAR EL CODIGO SQL!</value>
+    <value>--ATTENTION! DES ERREURS ON ÉTÉS DÉTECTÉES PENDANT L'ANALYSE DU CODE SQL!</value>
   </data>
-  <data name="ParsingErrorWarningMessage" xml:space="preserve">
-    <value>Se encontró un error analizando los contenidos del archivo (abandonado): {0}</value>
+  <data name="ProjectAboutDescription" xml:space="preserve">
+    <value>Plug-in gratuit (AGPL) de Formattage de T-SQL, pour SSMS et SSMS Express, 2005 y 2008.</value>
   </data>
-  <data name="PathPatternErrorMessage" xml:space="preserve">
-    <value>Se encontró un error procesando este nombre de archivo o patrón. Detalle del error: {0}</value>
-  </data>
-  <data name="PossiblePartialWriteWarningMessage" xml:space="preserve">
-    <value> AVISO: es posible que este archivo haya sido sobrescrito con contenidos partiales!</value>
-  </data>
-  <data name="ProgramSummary" xml:space="preserve">
-    <value>Poor Man's T-SQL Formatter - una biblioteca pequeña y gratuita 
-para el formateado de T-SQL (Transact-SQL) para .Net 2.0, 
-escrita en C#. Distribuida bajo licencia AGPL v3.
-Copyright (C) 2011 Tao Klerks</value>
-  </data>
-  <data name="ProgramUsageNotes" xml:space="preserve">
-    <value>
-Notas de uso: 
-
-SqlFormatter &lt;archivo or patrón&gt; &lt;opciones&gt;
-
-is  indentString (predeterminado: \t)
-st  spacesPerTab (predeterminado: 4)
-mw  maxLineWidth (predeterminado: 999)
-tc  trailingCommas (predeterminado: falso)
-sac spaceAfterExpandedComma (predeterminado: falso)
-ebc expandBetweenConditions (predeterminado: verdadero)
-ebe expandBooleanExpressions (predeterminado: verdadero)
-ecs expandCaseStatements (predeterminado: verdadero)
-ecl expandCommaLists (predeterminado: verdadero)
-uk  uppercaseKeywords (predeterminado: verdadero)
-sk  standardizeKeywords (predeterminado: falso)
-ae  allowParsingErrors (predeterminado: falso)
-e   extensions (predeterminado: sql)
-r   recursive (predeterminado: falso)
-b   backups (predeterminado: verdadero)
-b   outputFileOrFolder (predeterminado: ninguno; si se incluye, anula la option "backups")
-l   languageCode (predeterminado: idioma actual si es soportado; optiones soportadas incluyen EN, FR y ES)
-h ? help
-
-Se pueden desactivar opciones booleanas siguendolas de un "menos", o activarlas con solo incluirlas o siguendolas de un "mas".
-
-p. ej.:
-
-SqlFormatter TestFiles\* /is:"  " /tc /uc- 
-
-o 
-
-SqlFormatter test*.sql /o:resultfile.sql
-</value>
-  </data>
-  <data name="UnrecognizedLanguageErrorMessage" xml:space="preserve">
-    <value>No se reconoció el codigo de idioma proporcionado.</value>
+  <data name="SettingsSavingErrorMessage" xml:space="preserve">
+    <value>Erreur pendant la sauvegarde de la configuration. Détails:{0}{1}</value>
+    <comment>{0} is a newline, {1} is the detailed exception</comment>
   </data>
 </root>

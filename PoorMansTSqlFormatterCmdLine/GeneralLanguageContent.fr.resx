@@ -120,4 +120,83 @@
   <data name="UnrecognizedArgumentsErrorMessage" xml:space="preserve">
     <value>Paramètres inconnus trouvés!</value>
   </data>
+  <data name="BackupFailureWarningMessage" xml:space="preserve">
+    <value>Sauvegarde échoué: {0}{1} On saute la mise en forme pour ce fichier.</value>
+    <comment>{0} is the filename, {1} is a linebreak.</comment>
+  </data>
+  <data name="ContentWriteFailureWarningMessage" xml:space="preserve">
+    <value>L'écriture du contenu mis en forme a échoué: {0}</value>
+  </data>
+  <data name="ErrorDetailMessageFragment" xml:space="preserve">
+    <value> Détail de l'erreur: {0}</value>
+  </data>
+  <data name="FileReadFailureWarningMessage" xml:space="preserve">
+    <value>La lecture du contenu du fichier a échoué (abandonné): {0}</value>
+  </data>
+  <data name="FolderCreationFailureWarningMessage" xml:space="preserve">
+    <value>La création du dossier a échoué: {0}</value>
+  </data>
+  <data name="NoFilesFoundWarningMessage" xml:space="preserve">
+    <value>Aucun fichier trouvé pour ce nom ou modèle de nom: {0}</value>
+  </data>
+  <data name="OutputFileCreationErrorMessage" xml:space="preserve">
+    <value>Le fichier de destination n'a pas pu se créer. Détail de l'erreur: {0}</value>
+  </data>
+  <data name="ParseErrorWarningPrefix" xml:space="preserve">
+    <value>--ATTENTION! DES ERREURS ON ÉTÉS DÉTECTÉES PENDANT L'ANALYSE DU CODE SQL!</value>
+  </data>
+  <data name="ParsingErrorWarningMessage" xml:space="preserve">
+    <value>Une erreur s'est produite pendant l'analyse ou la mise en forme des contenus de ce fichier (abandonné): {0}</value>
+  </data>
+  <data name="PathPatternErrorMessage" xml:space="preserve">
+    <value>Une erreur s'est produite pendant le traitement du nom de fichier ou modèle. Détail de l'erreur: {0}</value>
+  </data>
+  <data name="PossiblePartialWriteWarningMessage" xml:space="preserve">
+    <value> AVIS: il se peut que se fichier ait été écrasé par des contenus partiels!</value>
+  </data>
+  <data name="ProgramSummary" xml:space="preserve">
+    <value>Poor Man's T-SQL Formatter - une petite bibliothèque gratuite de mise 
+en page de T-SQL (Transact-SQL) pour .Net 2.0, écrite en C#. 
+Distribuée sous AGPL v3.
+Copyright (C) 2011 Tao Klerks</value>
+  </data>
+  <data name="ProgramUsageNotes" xml:space="preserve">
+    <value>
+Notes d'usage: 
+
+SqlFormatter &lt;nom de fichier ou modèle&gt; &lt;options&gt;
+
+is  indentString (par défaut: \t)
+st  spacesPerTab (par défaut: 4)
+mw  maxLineWidth (par défaut: 999)
+tc  trailingCommas (par défaut: faux)
+sac spaceAfterExpandedComma (par défaut: faux)
+ebc expandBetweenConditions (par défaut: vrai)
+ebe expandBooleanExpressions (par défaut: vrai)
+ecs expandCaseStatements (par défaut: vrai)
+ecl expandCommaLists (par défaut: vrai)
+uk  uppercaseKeywords (par défaut: vrai)
+sk  standardizeKeywords (par défaut: faux)
+ae  allowParsingErrors (par défaut: faux)
+e   extensions (par défaut: sql)
+r   recursive (par défaut: faux)
+b   backups (par défaut: vrai)
+b   outputFileOrFolder (par défaut: aucun; s'il est spécifié, overrides the backup option)
+l   languageCode (par défaut: langue actuelle si elle est supportée; valeurs valables sont EN, FR et ES)
+h ? help
+
+On peut désactiver les options booléennes les suivant d'un "moins", et les activer simplement en les spécifiant, ou aussi en les suivant d'un "plus".
+
+eg:
+
+SqlFormatter TestFiles\* /is:"  " /tc /uc- 
+
+or 
+
+SqlFormatter test*.sql /o:resultfile.sql
+</value>
+  </data>
+  <data name="UnrecognizedLanguageErrorMessage" xml:space="preserve">
+    <value>Le code de langue fourni n'est pas valable.</value>
+  </data>
 </root>

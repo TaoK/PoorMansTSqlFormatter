@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -668,5 +668,713 @@
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>992, 653</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Formateador de SQL</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>MainForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;aboutToolStripMenuItem.Name" xml:space="preserve">
+    <value>aboutToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;aboutToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_BreakJoinOnSections.Name" xml:space="preserve">
+    <value>chk_BreakJoinOnSections</value>
+  </data>
+  <data name="&gt;&gt;chk_BreakJoinOnSections.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;chk_BreakJoinOnSections.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_BreakJoinOnSections.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;chk_Coloring.Name" xml:space="preserve">
+    <value>chk_Coloring</value>
+  </data>
+  <data name="&gt;&gt;chk_Coloring.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;chk_Coloring.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_Coloring.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;chk_EnableKeywordStandardization.Name" xml:space="preserve">
+    <value>chk_EnableKeywordStandardization</value>
+  </data>
+  <data name="&gt;&gt;chk_EnableKeywordStandardization.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;chk_EnableKeywordStandardization.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_EnableKeywordStandardization.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBetweenConditions.Name" xml:space="preserve">
+    <value>chk_ExpandBetweenConditions</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBetweenConditions.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBetweenConditions.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBetweenConditions.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBooleanExpressions.Name" xml:space="preserve">
+    <value>chk_ExpandBooleanExpressions</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBooleanExpressions.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBooleanExpressions.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandBooleanExpressions.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCaseStatements.Name" xml:space="preserve">
+    <value>chk_ExpandCaseStatements</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCaseStatements.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCaseStatements.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCaseStatements.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCommaLists.Name" xml:space="preserve">
+    <value>chk_ExpandCommaLists</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCommaLists.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCommaLists.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_ExpandCommaLists.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;chk_IdentityColoring.Name" xml:space="preserve">
+    <value>chk_IdentityColoring</value>
+  </data>
+  <data name="&gt;&gt;chk_IdentityColoring.Parent" xml:space="preserve">
+    <value>grp_IdentityFormattingOptions</value>
+  </data>
+  <data name="&gt;&gt;chk_IdentityColoring.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_IdentityColoring.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;chk_SpaceAfterComma.Name" xml:space="preserve">
+    <value>chk_SpaceAfterComma</value>
+  </data>
+  <data name="&gt;&gt;chk_SpaceAfterComma.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;chk_SpaceAfterComma.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_SpaceAfterComma.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;chk_TrailingCommas.Name" xml:space="preserve">
+    <value>chk_TrailingCommas</value>
+  </data>
+  <data name="&gt;&gt;chk_TrailingCommas.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;chk_TrailingCommas.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_TrailingCommas.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;chk_UppercaseKeywords.Name" xml:space="preserve">
+    <value>chk_UppercaseKeywords</value>
+  </data>
+  <data name="&gt;&gt;chk_UppercaseKeywords.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;chk_UppercaseKeywords.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_UppercaseKeywords.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;displayFormattingOptionsAreaToolStripMenuItem.Name" xml:space="preserve">
+    <value>displayFormattingOptionsAreaToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;displayFormattingOptionsAreaToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;displayParsedSqlToolStripMenuItem.Name" xml:space="preserve">
+    <value>displayParsedSqlToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;displayParsedSqlToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;displayTokenListToolStripMenuItem.Name" xml:space="preserve">
+    <value>displayTokenListToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;displayTokenListToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;englishToolStripMenuItem.Name" xml:space="preserve">
+    <value>englishToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;englishToolStripMenuItem.Type" xml:space="preserve">
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.0.1.23936, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;frenchToolStripMenuItem.Name" xml:space="preserve">
+    <value>frenchToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;frenchToolStripMenuItem.Type" xml:space="preserve">
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.0.1.23936, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>splitContainer4.Panel1</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Name" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Parent" xml:space="preserve">
+    <value>splitContainer5.Panel1</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Name" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Parent" xml:space="preserve">
+    <value>splitContainer5.Panel2</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox3.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Name" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Parent" xml:space="preserve">
+    <value>splitContainer3.Panel1</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox4.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;groupBox5.Name" xml:space="preserve">
+    <value>groupBox5</value>
+  </data>
+  <data name="&gt;&gt;groupBox5.Parent" xml:space="preserve">
+    <value>splitContainer3.Panel2</value>
+  </data>
+  <data name="&gt;&gt;groupBox5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox5.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;grp_IdentityFormattingOptions.Name" xml:space="preserve">
+    <value>grp_IdentityFormattingOptions</value>
+  </data>
+  <data name="&gt;&gt;grp_IdentityFormattingOptions.Parent" xml:space="preserve">
+    <value>tableLayoutPanel2</value>
+  </data>
+  <data name="&gt;&gt;grp_IdentityFormattingOptions.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grp_IdentityFormattingOptions.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;grp_Options.Name" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;grp_Options.Parent" xml:space="preserve">
+    <value>tableLayoutPanel2</value>
+  </data>
+  <data name="&gt;&gt;grp_Options.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grp_Options.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;languageToolStripMenuItem.Name" xml:space="preserve">
+    <value>languageToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;languageToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_Indent.Name" xml:space="preserve">
+    <value>lbl_Indent</value>
+  </data>
+  <data name="&gt;&gt;lbl_Indent.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;lbl_Indent.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_Indent.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;lbl_IndentWidth.Name" xml:space="preserve">
+    <value>lbl_IndentWidth</value>
+  </data>
+  <data name="&gt;&gt;lbl_IndentWidth.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;lbl_IndentWidth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_IndentWidth.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;lbl_MaxWidth.Name" xml:space="preserve">
+    <value>lbl_MaxWidth</value>
+  </data>
+  <data name="&gt;&gt;lbl_MaxWidth.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;lbl_MaxWidth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_MaxWidth.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;optionsToolStripMenuItem.Name" xml:space="preserve">
+    <value>optionsToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;optionsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>groupBox4</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;radio_Formatting_Identity.Name" xml:space="preserve">
+    <value>radio_Formatting_Identity</value>
+  </data>
+  <data name="&gt;&gt;radio_Formatting_Identity.Parent" xml:space="preserve">
+    <value>tableLayoutPanel2</value>
+  </data>
+  <data name="&gt;&gt;radio_Formatting_Identity.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_Formatting_Identity.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;radio_Formatting_Standard.Name" xml:space="preserve">
+    <value>radio_Formatting_Standard</value>
+  </data>
+  <data name="&gt;&gt;radio_Formatting_Standard.Parent" xml:space="preserve">
+    <value>tableLayoutPanel2</value>
+  </data>
+  <data name="&gt;&gt;radio_Formatting_Standard.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;radio_Formatting_Standard.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;spanishToolStripMenuItem.Name" xml:space="preserve">
+    <value>spanishToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;spanishToolStripMenuItem.Type" xml:space="preserve">
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.0.1.23936, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Name" xml:space="preserve">
+    <value>splitContainer1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel1.Name" xml:space="preserve">
+    <value>splitContainer1.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel1.Parent" xml:space="preserve">
+    <value>splitContainer1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel2.Name" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel2.Parent" xml:space="preserve">
+    <value>splitContainer1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer3.Name" xml:space="preserve">
+    <value>splitContainer3</value>
+  </data>
+  <data name="&gt;&gt;splitContainer3.Panel1.Name" xml:space="preserve">
+    <value>splitContainer3.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer3.Panel1.Parent" xml:space="preserve">
+    <value>splitContainer3</value>
+  </data>
+  <data name="&gt;&gt;splitContainer3.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer3.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer3.Panel2.Name" xml:space="preserve">
+    <value>splitContainer3.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splitContainer3.Panel2.Parent" xml:space="preserve">
+    <value>splitContainer3</value>
+  </data>
+  <data name="&gt;&gt;splitContainer3.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer3.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer3.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splitContainer3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer3.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer4.Name" xml:space="preserve">
+    <value>splitContainer4</value>
+  </data>
+  <data name="&gt;&gt;splitContainer4.Panel1.Name" xml:space="preserve">
+    <value>splitContainer4.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer4.Panel1.Parent" xml:space="preserve">
+    <value>splitContainer4</value>
+  </data>
+  <data name="&gt;&gt;splitContainer4.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer4.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer4.Panel2.Name" xml:space="preserve">
+    <value>splitContainer4.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splitContainer4.Panel2.Parent" xml:space="preserve">
+    <value>splitContainer4</value>
+  </data>
+  <data name="&gt;&gt;splitContainer4.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer4.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer4.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer4.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Name" xml:space="preserve">
+    <value>splitContainer5</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel1.Name" xml:space="preserve">
+    <value>splitContainer5.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel1.Parent" xml:space="preserve">
+    <value>splitContainer5</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel2.Name" xml:space="preserve">
+    <value>splitContainer5.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel2.Parent" xml:space="preserve">
+    <value>splitContainer5</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Parent" xml:space="preserve">
+    <value>splitContainer4.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer5.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel2.Name" xml:space="preserve">
+    <value>tableLayoutPanel2</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel2.Parent" xml:space="preserve">
+    <value>groupBox5</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;timer_TextChangeDelay.Name" xml:space="preserve">
+    <value>timer_TextChangeDelay</value>
+  </data>
+  <data name="&gt;&gt;timer_TextChangeDelay.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Indent.Name" xml:space="preserve">
+    <value>txt_Indent</value>
+  </data>
+  <data name="&gt;&gt;txt_Indent.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;txt_Indent.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_Indent.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;txt_IndentWidth.Name" xml:space="preserve">
+    <value>txt_IndentWidth</value>
+  </data>
+  <data name="&gt;&gt;txt_IndentWidth.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;txt_IndentWidth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_IndentWidth.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;txt_Input.Name" xml:space="preserve">
+    <value>txt_Input</value>
+  </data>
+  <data name="&gt;&gt;txt_Input.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;txt_Input.Type" xml:space="preserve">
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.0.1.23936, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;txt_Input.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;txt_MaxWidth.Name" xml:space="preserve">
+    <value>txt_MaxWidth</value>
+  </data>
+  <data name="&gt;&gt;txt_MaxWidth.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;txt_MaxWidth.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_MaxWidth.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;txt_ParsedXml.Name" xml:space="preserve">
+    <value>txt_ParsedXml</value>
+  </data>
+  <data name="&gt;&gt;txt_ParsedXml.Parent" xml:space="preserve">
+    <value>groupBox3</value>
+  </data>
+  <data name="&gt;&gt;txt_ParsedXml.Type" xml:space="preserve">
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.0.1.23936, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;txt_ParsedXml.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;txt_TokenizedSql.Name" xml:space="preserve">
+    <value>txt_TokenizedSql</value>
+  </data>
+  <data name="&gt;&gt;txt_TokenizedSql.Parent" xml:space="preserve">
+    <value>groupBox2</value>
+  </data>
+  <data name="&gt;&gt;txt_TokenizedSql.Type" xml:space="preserve">
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.0.1.23936, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;txt_TokenizedSql.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;webBrowser_OutputSql.Name" xml:space="preserve">
+    <value>webBrowser_OutputSql</value>
+  </data>
+  <data name="&gt;&gt;webBrowser_OutputSql.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;webBrowser_OutputSql.Type" xml:space="preserve">
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.CustomContentWebBrowser, PoorMansTSqlFormatterDemo, Version=1.0.1.23936, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;webBrowser_OutputSql.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
+    <value>Acerca de</value>
+  </data>
+  <data name="chk_BreakJoinOnSections.Text" xml:space="preserve">
+    <value>Salto en Secciones ON</value>
+  </data>
+  <data name="chk_Coloring.Text" xml:space="preserve">
+    <value>Activar Coloreado</value>
+  </data>
+  <data name="chk_EnableKeywordStandardization.Text" xml:space="preserve">
+    <value>Activar Estandarización de Palabras Clave</value>
+  </data>
+  <data name="chk_ExpandBetweenConditions.Text" xml:space="preserve">
+    <value>Expandir Condiciones BETWEEN</value>
+  </data>
+  <data name="chk_ExpandBooleanExpressions.Text" xml:space="preserve">
+    <value>Expandir Expresiones Booleanas</value>
+  </data>
+  <data name="chk_ExpandCaseStatements.Text" xml:space="preserve">
+    <value>Expandir Declaraciones CASE</value>
+  </data>
+  <data name="chk_ExpandCommaLists.Text" xml:space="preserve">
+    <value>Expandir Listas de Comma</value>
+  </data>
+  <data name="chk_IdentityColoring.Text" xml:space="preserve">
+    <value>Activar Coloreado</value>
+  </data>
+  <data name="chk_SpaceAfterComma.Text" xml:space="preserve">
+    <value>Espacio Después de Coma</value>
+  </data>
+  <data name="chk_TrailingCommas.Text" xml:space="preserve">
+    <value>Comas Traseras</value>
+  </data>
+  <data name="chk_UppercaseKeywords.Text" xml:space="preserve">
+    <value>Palabras Clave en Mayúsculas</value>
+  </data>
+  <data name="displayFormattingOptionsAreaToolStripMenuItem.Text" xml:space="preserve">
+    <value>Mostrar Opciones de Formatteado</value>
+  </data>
+  <data name="displayParsedSqlToolStripMenuItem.Text" xml:space="preserve">
+    <value>Mostrar Zona de SQL Par (Xml)</value>
+  </data>
+  <data name="displayTokenListToolStripMenuItem.Text" xml:space="preserve">
+    <value>Mostrar Zona del Listado de Elementos</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>SQL de Entrada</value>
+  </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>Listado de Elementos</value>
+  </data>
+  <data name="groupBox3.Text" xml:space="preserve">
+    <value>Árbol de Análisis Sintactico</value>
+  </data>
+  <data name="groupBox4.Text" xml:space="preserve">
+    <value>SQL de Salida</value>
+  </data>
+  <data name="groupBox5.Text" xml:space="preserve">
+    <value>Opciones de Formateado</value>
+  </data>
+  <data name="grp_IdentityFormattingOptions.Text" xml:space="preserve">
+    <value>Opciones de Formateado Preservado</value>
+  </data>
+  <data name="grp_Options.Text" xml:space="preserve">
+    <value>Opciones de Formateado Estándar</value>
+  </data>
+  <data name="languageToolStripMenuItem.Text" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="lbl_Indent.Text" xml:space="preserve">
+    <value>Texto de Indentación:</value>
+  </data>
+  <data name="lbl_IndentWidth.Text" xml:space="preserve">
+    <value>Ancho de Indentación:</value>
+  </data>
+  <data name="lbl_MaxWidth.Text" xml:space="preserve">
+    <value>Ancho Máximo:</value>
+  </data>
+  <data name="menuStrip1.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="optionsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Opciones</value>
+  </data>
+  <data name="radio_Formatting_Identity.Text" xml:space="preserve">
+    <value>Formateado Preservado</value>
+  </data>
+  <data name="radio_Formatting_Standard.Text" xml:space="preserve">
+    <value>Formateado Estándar</value>
+  </data>
+  <data name="txt_Indent.Text" xml:space="preserve">
+    <value>\t</value>
+  </data>
+  <data name="txt_IndentWidth.Text" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="txt_MaxWidth.Text" xml:space="preserve">
+    <value>999</value>
   </data>
 </root>
