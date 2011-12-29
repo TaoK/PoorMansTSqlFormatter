@@ -1,7 +1,7 @@
-"c:\Program Files\Microsoft\ILMerge\ILMerge.exe" /t:exe /out:%1SqlFormatterTemp.exe %1SqlFormatterExeAssembly.exe %1PoorMansTSqlFormatterLib.dll %1NDesk.Options.dll %1LinqBridge.dll %1es\SqlFormatterExeAssembly.resources.dll
+"%ProgramFiles%\Microsoft\ILMerge\ILMerge.exe" /t:exe /out:%1SqlFormatterTemp.exe %1SqlFormatterExeAssembly.exe %1PoorMansTSqlFormatterLib.dll %1NDesk.Options.dll %1LinqBridge.dll %1es\SqlFormatterExeAssembly.resources.dll
 IF %ERRORLEVEL% NEQ 0 GOTO END
 
-"c:\Program Files\Microsoft\ILMerge\ILMerge.exe" /t:exe /out:%1SqlFormatter.exe %1SqlFormatterTemp.exe %1fr\SqlFormatterExeAssembly.resources.dll
+"%ProgramFiles%\Microsoft\ILMerge\ILMerge.exe" /t:exe /out:%1SqlFormatter.exe %1SqlFormatterTemp.exe %1fr\SqlFormatterExeAssembly.resources.dll
 IF %ERRORLEVEL% NEQ 0 GOTO END
 
 del %1LinqBridge.dll

@@ -108,6 +108,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GeneralLanguageContent.es.resx" />
+    <EmbeddedResource Include="GeneralLanguageContent.fr.resx" />
     <EmbeddedResource Include="GeneralLanguageContent.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>GeneralLanguageContent.Designer.cs</LastGenOutput>

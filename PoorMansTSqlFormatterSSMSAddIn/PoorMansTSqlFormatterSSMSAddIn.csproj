@@ -137,6 +137,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CommandBar.es.resx" />
+    <EmbeddedResource Include="CommandBar.fr.resx" />
+    <EmbeddedResource Include="GeneralLanguageContent.es.resx" />
+    <EmbeddedResource Include="GeneralLanguageContent.fr.resx" />
     <EmbeddedResource Include="GeneralLanguageContent.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>GeneralLanguageContent.Designer.cs</LastGenOutput>
