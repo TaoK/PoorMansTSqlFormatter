@@ -496,7 +496,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 outputKeyword = keyword;
 
             if (UppercaseKeywords)
-                return outputKeyword.ToUpper();
+                return outputKeyword.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
             else
                 return outputKeyword.ToLower();
         }
@@ -504,7 +504,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
         private string FormatOperator(string operatorValue)
         {
             if (UppercaseKeywords)
-                return operatorValue.ToUpper();
+                return operatorValue.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
             else
                 return operatorValue.ToLower();
         }
@@ -518,13 +518,13 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 if (!(thisClauseStarter != null
                     && thisClauseStarter.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
                     && state.GetRecentKeyword() != null
-                    && ((thisClauseStarter.InnerXml.ToUpper().Equals("SET")
+                    && ((thisClauseStarter.InnerXml.ToUpper(System.Globalization.CultureInfo.InvariantCulture).Equals("SET")
                             && state.GetRecentKeyword().Equals("SET")
                             )
-                        || (thisClauseStarter.InnerXml.ToUpper().Equals("DECLARE")
+                        || (thisClauseStarter.InnerXml.ToUpper(System.Globalization.CultureInfo.InvariantCulture).Equals("DECLARE")
                             && state.GetRecentKeyword().Equals("DECLARE")
                             )
-                        || (thisClauseStarter.InnerXml.ToUpper().Equals("PRINT")
+                        || (thisClauseStarter.InnerXml.ToUpper(System.Globalization.CultureInfo.InvariantCulture).Equals("PRINT")
                             && state.GetRecentKeyword().Equals("PRINT")
                             )
                         )
@@ -650,12 +650,12 @@ namespace PoorMansTSqlFormatterLib.Formatters
             public int CurrentLineLength { get; private set; }
             public bool CurrentLineHasContent { get; private set; }
 
-            public void AddOutputContent(string content)
+            public override void AddOutputContent(string content)
             {
                 AddOutputContent(content, null);
             }
 
-            public void AddOutputContent(string content, string htmlClassName)
+            public override void AddOutputContent(string content, string htmlClassName)
             {
                 if (CurrentLineHasContent && (content.Length + CurrentLineLength > MaxLineWidth))
                     WhiteSpace_BreakToNextLine();
@@ -734,7 +734,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             public void SetRecentKeyword(string ElementName)
             {
                 if (!_mostRecentKeywordsAtEachLevel.ContainsKey(IndentLevel))
-                    _mostRecentKeywordsAtEachLevel.Add(IndentLevel, ElementName.ToUpper());
+                    _mostRecentKeywordsAtEachLevel.Add(IndentLevel, ElementName.ToUpper(System.Globalization.CultureInfo.InvariantCulture));
             }
 
             public string GetRecentKeyword()

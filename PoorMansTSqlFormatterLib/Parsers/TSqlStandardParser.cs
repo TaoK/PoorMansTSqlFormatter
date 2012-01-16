@@ -78,15 +78,15 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             firstNonCommentParensSibling != null
                             && (
                                 (firstNonCommentParensSibling.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
-                                   && firstNonCommentParensSibling.InnerText.ToUpper().StartsWith("INSERT")
+                                   && firstNonCommentParensSibling.InnerText.ToUpper(System.Globalization.CultureInfo.InvariantCulture).StartsWith("INSERT")
                                    )
                                 || 
                                 (firstNonCommentParensSibling.Name.Equals(SqlXmlConstants.ENAME_COMPOUNDKEYWORD)
-                                   && firstNonCommentParensSibling.GetAttribute(SqlXmlConstants.ANAME_SIMPLETEXT).ToUpper().StartsWith("INSERT ")
+                                   && firstNonCommentParensSibling.GetAttribute(SqlXmlConstants.ANAME_SIMPLETEXT).ToUpper(System.Globalization.CultureInfo.InvariantCulture).StartsWith("INSERT ")
                                    )
                                 ||
                                 (firstNonCommentParensSibling.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
-                                   && firstNonCommentParensSibling.InnerText.ToUpper().StartsWith("VALUES")
+                                   && firstNonCommentParensSibling.InnerText.ToUpper(System.Globalization.CultureInfo.InvariantCulture).StartsWith("VALUES")
                                    )
                                )
                             );
@@ -971,7 +971,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             if (!(
                                     firstNonCommentSibling2 != null
                                     && firstNonCommentSibling2.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
-                                    && firstNonCommentSibling2.InnerText.ToUpper().StartsWith("UPDATE")
+                                    && firstNonCommentSibling2.InnerText.ToUpper(System.Globalization.CultureInfo.InvariantCulture).StartsWith("UPDATE")
                                     )
                                 )
                                 sqlTree.ConsiderStartingNewStatement();
@@ -1175,7 +1175,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                 && firstEntryOfProvidedContainer.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
                 && firstEntryOfProvidedContainer.InnerText != null
                 )
-                keywordUpperValue = firstEntryOfProvidedContainer.InnerText.ToUpper();
+                keywordUpperValue = firstEntryOfProvidedContainer.InnerText.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
 
             if (firstEntryOfProvidedContainer != null
                 && firstEntryOfProvidedContainer.Name.Equals(SqlXmlConstants.ENAME_COMPOUNDKEYWORD)
@@ -1233,7 +1233,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                 if (tokenList[tokenPos].Type == SqlTokenType.Comma)
                     keywordSB.Append(",");
                 else
-                    keywordSB.Append(tokenList[tokenPos].Value.ToUpper());
+                    keywordSB.Append(tokenList[tokenPos].Value.ToUpper(System.Globalization.CultureInfo.InvariantCulture));
                 keywordSB.Append(" ");
             }
             return keywordSB.ToString();
@@ -1295,7 +1295,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     || tokenList[tokenID].Type == SqlTokenType.Comma
                     )
                 {
-                    phrase += tokenList[tokenID].Value.ToUpper() + " ";
+                    phrase += tokenList[tokenID].Value.ToUpper(System.Globalization.CultureInfo.InvariantCulture) + " ";
                     phraseComponentsFound++;
                     rawKeywordParts.Add(precedingWhitespace + tokenList[tokenID].Value);
 
@@ -1386,7 +1386,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             // http://msdn.microsoft.com/en-us/library/ff848727.aspx
             // http://msdn.microsoft.com/en-us/library/ms174290.aspx
             // etc...
-            string uppercaseValue = token.Value.ToUpper();
+            string uppercaseValue = token.Value.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
             return (token.Type == SqlTokenType.OtherNode
                 && (uppercaseValue.Equals("ALTER")
                     || uppercaseValue.Equals("BACKUP")
@@ -1435,7 +1435,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
         private static bool IsClauseStarter(IToken token)
         {
             //Note: some clause starters are handled separately: Joins, RETURNS clauses, etc.
-            string uppercaseValue = token.Value.ToUpper();
+            string uppercaseValue = token.Value.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
             return (token.Type == SqlTokenType.OtherNode
                 && (uppercaseValue.Equals("DELETE")
                     || uppercaseValue.Equals("EXCEPT")
@@ -1477,7 +1477,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     if (currentNode.Name.Equals(SqlXmlConstants.ENAME_COMPOUNDKEYWORD))
                         uppercaseText = currentNode.Attributes[SqlXmlConstants.ANAME_SIMPLETEXT].Value;
                     else
-                        uppercaseText = currentNode.InnerText.ToUpper();
+                        uppercaseText = currentNode.InnerText.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
 
                     return (
                         uppercaseText.Equals("NVARCHAR")
@@ -1528,7 +1528,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             XmlNode currentNode = currentContainerElement.LastChild;
             while (currentNode != null)
             {
-                string testValue = currentNode.InnerText.ToUpper();
+                string testValue = currentNode.InnerText.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
                 if (currentNode.Name.Equals(SqlXmlConstants.ENAME_BRACKET_QUOTED_NAME)
                     || ((currentNode.Name.Equals(SqlXmlConstants.ENAME_OTHERNODE)
                         || currentNode.Name.Equals(SqlXmlConstants.ENAME_FUNCTION_KEYWORD)
