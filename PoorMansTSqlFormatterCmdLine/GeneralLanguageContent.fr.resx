@@ -155,8 +155,8 @@
     <value> AVIS: il se peut que se fichier ait été écrasé par des contenus partiels!</value>
   </data>
   <data name="ProgramSummary" xml:space="preserve">
-    <value>Poor Man's T-SQL Formatter - une petite bibliothèque gratuite de mise 
-en page de T-SQL (Transact-SQL) pour .Net 2.0, écrite en C#. 
+    <value>Poor Man's T-SQL Formatter - une petite bibliothèque gratuite de 
+formattage de T-SQL (Transact-SQL) pour .Net 2.0, écrite en C#. 
 Distribuée sous AGPL v3.
 Copyright (C) 2011 Tao Klerks</value>
   </data>
@@ -191,7 +191,7 @@ eg:
 
 SqlFormatter TestFiles\* /is:"  " /tc /uc- 
 
-or 
+ou 
 
 SqlFormatter test*.sql /o:resultfile.sql
 </value>

@@ -451,7 +451,7 @@
     <value>Expandir Declaraciones CASE</value>
   </data>
   <data name="chk_ExpandCommaLists.Text" xml:space="preserve">
-    <value>Expandir Listas de Comma</value>
+    <value>Expandir Listas de Coma</value>
   </data>
   <data name="chk_SpaceAfterExpandedComma.Text" xml:space="preserve">
     <value>Espacio Después de Coma</value>
