@@ -41,20 +41,13 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             this.textBoxDescription.Text = _generalResourceManager.GetString("ProjectAboutDescription");
 
             string GPLText = "";
-            try  
-            {  
-                Stream fileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof(AddinConnector).Namespace + ".LICENSE.txt");  
-                StreamReader textReader = new StreamReader(fileStream, System.Text.Encoding.ASCII);
-                GPLText = textReader.ReadToEnd();
-                textReader.Close();
-                fileStream.Close();
-            }  
-            catch (Exception ex)
+
+            using (Stream fileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof(AddinConnector).Namespace + ".LICENSE.txt"))
+            using (StreamReader textReader = new StreamReader(fileStream, System.Text.Encoding.ASCII))
             {
-#if (DEBUG)
-                MessageBox.Show("Exception! " + ex.ToString());
-#endif
-            }
+                GPLText = textReader.ReadToEnd();
+            }  
+
             this.textBoxDescription.Text += System.Environment.NewLine + System.Environment.NewLine + GPLText;
         }
 
