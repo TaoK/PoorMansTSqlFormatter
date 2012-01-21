@@ -1031,8 +1031,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             {
                                 sqlTree.StartNewContainer(SqlXmlConstants.ENAME_DDL_WITH_CLAUSE, token.Value, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT);
                             }
+                            else if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SELECTIONTARGET))
+                            {
+                                sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
+                            }
                             else
                             {
+                                sqlTree.ConsiderStartingNewClause();
                                 sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                             }
                         }
@@ -1459,6 +1464,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     || uppercaseValue.Equals("USING")
                     || uppercaseValue.Equals("VALUES")
                     || uppercaseValue.Equals("WHERE")
+                    || uppercaseValue.Equals("WITH")
                     )
                 );
         }
@@ -1912,6 +1918,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("MODIFY", KeywordType.FunctionKeyword);
             KeywordList.Add("MONEY", KeywordType.DataTypeKeyword);
             KeywordList.Add("MONTH", KeywordType.FunctionKeyword);
+            KeywordList.Add("MOVE", KeywordType.OtherKeyword);
             KeywordList.Add("NAME", KeywordType.OtherKeyword);
             KeywordList.Add("NATIONAL", KeywordType.DataTypeKeyword);
             KeywordList.Add("NCHAR", KeywordType.DataTypeKeyword);

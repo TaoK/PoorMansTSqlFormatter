@@ -127,7 +127,8 @@ BEGIN
 			@StartMessage
 			,10
 			,1
-			) WITH NOWAIT
+			)
+	WITH NOWAIT
 
 	----------------------------------------------------------------------------------------------------
 	--// Select databases                                                                           //--
@@ -141,7 +142,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -167,7 +169,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -187,7 +190,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -224,7 +228,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -294,7 +299,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -322,7 +328,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -343,7 +350,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -360,7 +368,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -377,7 +386,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -425,7 +435,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -453,7 +464,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -470,7 +482,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -487,7 +500,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -505,7 +519,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -524,7 +539,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -543,7 +559,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -562,7 +579,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -579,7 +597,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -609,7 +628,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -631,7 +651,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -654,7 +675,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -673,7 +695,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -714,7 +737,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -731,7 +755,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -754,7 +779,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -773,7 +799,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -790,7 +817,8 @@ BEGIN
 				@ErrorMessage
 				,16
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		SET @Error = @@ERROR
 	END
@@ -954,7 +982,8 @@ BEGIN
 				@DatabaseMessage
 				,10
 				,1
-				) WITH NOWAIT
+				)
+		WITH NOWAIT
 
 		IF DATABASEPROPERTYEX(@CurrentDatabase, 'Status') = 'ONLINE'
 			AND NOT (
@@ -1578,7 +1607,8 @@ BEGIN
 			@EndMessage
 			,10
 			,1
-			) WITH NOWAIT
+			)
+	WITH NOWAIT
 		----------------------------------------------------------------------------------------------------
 END
 GO
