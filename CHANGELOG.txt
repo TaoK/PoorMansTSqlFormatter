@@ -2,8 +2,9 @@ Poor Man's T-SQL Formatter change log
 
 Version 1.1.1: 
 --------------
- - Softcoded parsing error message in library (for translation + optional removal of warning)
- - Translated programs + website into French and Spanish - thanks to Threeplicate for Amanuens, a free (for open-source projects) localization tool that makes managing transltions much easier!
+ - Translated programs, ssms plugin + website into French and Spanish 
+   - thanks to Threeplicate for Amanuens, a free (for open-source projects) localization tool that makes managing translations much easier!
+   - and thanks to my wife for proofreading... technical translations are always a mess, but at least I got a second pair of eyes on it!
  - Initial Beta of Notepad++ plugin [thanks UFO and Robert Giesecke for the .Net managed plugin template!]
    - See http://sourceforge.net/projects/notepad-plus/forums/forum/482781/topic/4911359 to get the plugin beta
  - Github Issue 22: [Bugfix] Indenting of "AS" clause on 2nd or later CTE in a query
@@ -14,6 +15,7 @@ Version 1.1.1:
  - GitHub Issue 25: [Feature Request] Settings persistence and optional display simplification in Winforms demo app [thanks Gokhan Varol for the request]
  - GitHub Issue 33: [Bugfix] Culture-specific uppercasing bug (Turkish) [thanks Recep Guzel]
  - GitHub Issue 35: [Enhancement] WITH clause breaking [thanks Lane Duncan for the suggestion]
+ - Softcoded parsing error message in library (for translation + optional removal of warning)
 
 
 Version 1.0.1: 

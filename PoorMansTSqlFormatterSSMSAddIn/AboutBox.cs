@@ -30,7 +30,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
 {
     partial class AboutBox : Form
     {
-        private System.Resources.ResourceManager _generalResourceManager = new System.Resources.ResourceManager("GeneralLanguageContent", System.Reflection.Assembly.GetExecutingAssembly());
+        private System.Resources.ResourceManager _generalResourceManager = new System.Resources.ResourceManager("PoorMansTSqlFormatterSSMSAddIn.GeneralLanguageContent", System.Reflection.Assembly.GetExecutingAssembly());
 
         public AboutBox()
         {

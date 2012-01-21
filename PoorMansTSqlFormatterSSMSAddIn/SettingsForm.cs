@@ -49,7 +49,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             }
             catch (Exception ex)
             {
-                var _generalResourceManager = new System.Resources.ResourceManager("GeneralLanguageContent", System.Reflection.Assembly.GetExecutingAssembly());
+                var _generalResourceManager = new System.Resources.ResourceManager("PoorMansTSqlFormatterSSMSAddIn.GeneralLanguageContent", System.Reflection.Assembly.GetExecutingAssembly());
                 MessageBox.Show(string.Format(_generalResourceManager.GetString("SettingsSavingErrorMessage"), Environment.NewLine, ex.Message));
             }
         }

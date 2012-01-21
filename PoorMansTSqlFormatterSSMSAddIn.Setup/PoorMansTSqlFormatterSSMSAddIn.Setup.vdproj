@@ -124,6 +124,12 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3C03C2866238AB39B8AD50B21802E91F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_88FCDE46ACDBE50951311E4E007F5427"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -143,12 +149,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3C03C2866238AB39B8AD50B21802E91F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -317,7 +317,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=1.0.1.33478, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=1.0.1.29278, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_3C03C2866238AB39B8AD50B21802E91F"
@@ -625,7 +625,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PoorMansTSqlFormatterSSMSAddIn"
         "ProductCode" = "8:{70B6311E-1B36-4567-B666-30D93AD23228}"
-        "PackageCode" = "8:{3E47E774-D21C-4FA4-94A3-739FA0EED32D}"
+        "PackageCode" = "8:{8C201687-48F8-4726-9415-C00665FA2FE2}"
         "UpgradeCode" = "8:{55982D41-85A8-4CF3-B1CA-DD99132FEE6E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -1509,7 +1509,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2BF7F7F6C8CB4035B429BD26AABE1B79"
             {
-            "SourcePath" = "8:..\\PoorMansTSqlFormatterSSMSAddIn\\obj\\Release\\PoorMansTSqlFormatterSSMSAddIn.dll"
+            "SourcePath" = "8:..\\PoorMansTSqlFormatterSSMSAddIn\\obj\\Debug\\PoorMansTSqlFormatterSSMSAddIn.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
@@ -1529,6 +1529,34 @@
             "ProjectOutputGroupRegister" = "3:2"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{BBE30E5A-E867-47BA-92E7-E718AB78CAE1}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AE268DA3E22F49DCB37DA8D5289472BB"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:LocalizedResourceDlls"
             "OutputProjectGuid" = "8:{BBE30E5A-E867-47BA-92E7-E718AB78CAE1}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"

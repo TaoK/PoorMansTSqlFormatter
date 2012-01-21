@@ -38,7 +38,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
         private AddIn _addInInstance;
         private Command _formatCommand;
 
-        private ResourceManager _generalResourceManager = new ResourceManager("GeneralLanguageContent", Assembly.GetExecutingAssembly());
+        private ResourceManager _generalResourceManager = new ResourceManager("PoorMansTSqlFormatterSSMSAddIn.GeneralLanguageContent", Assembly.GetExecutingAssembly());
 
         /// <summary>Constructor - non-environment-related initialization here.</summary>
 		public AddinConnector()

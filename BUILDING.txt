@@ -14,6 +14,7 @@ Some are additional external dependencies for different components of the soluti
  - Robert Giesecke's Unmanaged Exports technique, used in the Notepad++ plugin project, also requires a full Visual Studio
  - The SSMS plugin installer and Winmerge plugin installer projects also require a full version of Visual Studio
  - The Winmerge Plugin requires VB6 (eg Visual Studio 6), to expose a COM object properly to WinMerge's plugin-loading framework
+ - The SSMS Plugin project by default points to SSMS 2008 in the x86 program files folder, for debugging. This can be changed to an available copy of SSMS as required.
 
 The formatting library and commandline utility have been compiled under Mono (a long time ago - not recently attempted), and 
 should theoretically work fine. The WinForms app, however, does not (or did not the last time I tried): the "WebBrowser" 
