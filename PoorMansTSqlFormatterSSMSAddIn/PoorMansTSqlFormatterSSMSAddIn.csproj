@@ -146,6 +146,12 @@
       <LastGenOutput>GeneralLanguageContent.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="LICENSE.txt" />
+    <EmbeddedResource Include="SettingsForm.es.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsForm.fr.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>
