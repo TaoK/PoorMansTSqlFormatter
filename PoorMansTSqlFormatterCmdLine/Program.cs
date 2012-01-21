@@ -103,6 +103,10 @@ namespace PoorMansTSqlFormatterCmdLine
                     //get the resource manager AFTER setting language as requested.
                 }
             }
+            else
+            {
+                _generalResourceManager = new FrameworkClassReplacements.SingleAssemblyResourceManager("GeneralLanguageContent", Assembly.GetExecutingAssembly(), typeof(Program));
+            }
 
             //then complain about any unrecognized args
             if (remainingArgs.Count != 1)
