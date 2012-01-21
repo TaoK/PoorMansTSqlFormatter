@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PoorMansTSqlFormatterLib")]
-[assembly: AssemblyCopyright("Copyright ©  2011 Tao Klerks")]
+[assembly: AssemblyCopyright("Copyright ©  2011-2012 Tao Klerks")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: CLSCompliant(true)]

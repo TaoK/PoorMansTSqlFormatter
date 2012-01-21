@@ -15,14 +15,8 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_055C67A9029216D980424C4160F8FAC4"
-        "OwnerKey" = "8:_1D924B6F9AE511226F43C37C2A5FDDD2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1CC18F0E185018608DE331D2F3BDEE90"
-        "OwnerKey" = "8:_88FCDE46ACDBE50951311E4E007F5427"
+        "MsmKey" = "8:_18AFF8DCCC7F991003229281AC4DF008"
+        "OwnerKey" = "8:_AB1DC323CF6DC77991D7809E149D2BF8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -35,6 +29,12 @@
         {
         "MsmKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3C03C2866238AB39B8AD50B21802E91F"
+        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -57,38 +57,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_71E88C7110DEA4EAF2F19085A5B24B25"
-        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
+        "MsmKey" = "8:_650F21B0676848928571D43C29FEAC60"
+        "OwnerKey" = "8:_4DAF8C15EF563D2321F9B768CC7183F7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_71E88C7110DEA4EAF2F19085A5B24B25"
-        "OwnerKey" = "8:_8489D774AD255BD4FCDA56BED3F7B8D2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8489D774AD255BD4FCDA56BED3F7B8D2"
-        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
+        "MsmKey" = "8:_75C4CA4C350159EA521B41F35FABE90F"
+        "OwnerKey" = "8:_88FCDE46ACDBE50951311E4E007F5427"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_88FCDE46ACDBE50951311E4E007F5427"
         "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9B74DADB956F9C63F07B71B9717E8B78"
-        "OwnerKey" = "8:_AB1DC323CF6DC77991D7809E149D2BF8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9C7F521201EF0B96F5B53FB8CE9ED6CD"
-        "OwnerKey" = "8:_4DAF8C15EF563D2321F9B768CC7183F7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -117,6 +99,24 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E074E7DD040183197E0A40E7B41E3567"
+        "OwnerKey" = "8:_1D924B6F9AE511226F43C37C2A5FDDD2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E9927D8AA73652A30E96A1AC78167F00"
+        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E9927D8AA73652A30E96A1AC78167F00"
+        "OwnerKey" = "8:_3C03C2866238AB39B8AD50B21802E91F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_AB1DC323CF6DC77991D7809E149D2BF8"
         "MsmSig" = "8:_UNDEFINED"
@@ -148,13 +148,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8489D774AD255BD4FCDA56BED3F7B8D2"
+        "OwnerKey" = "8:_3C03C2866238AB39B8AD50B21802E91F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_71E88C7110DEA4EAF2F19085A5B24B25"
+        "OwnerKey" = "8:_E9927D8AA73652A30E96A1AC78167F00"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -262,30 +262,10 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_055C67A9029216D980424C4160F8FAC4"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_18AFF8DCCC7F991003229281AC4DF008"
             {
-            "SourcePath" = "8:dte90.olb"
-            "TargetName" = "8:dte90.olb"
-            "Tag" = "8:"
-            "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1CC18F0E185018608DE331D2F3BDEE90"
-            {
-            "SourcePath" = "8:vsmso.olb"
-            "TargetName" = "8:vsmso.olb"
+            "SourcePath" = "8:dte80a.olb"
+            "TargetName" = "8:dte80a.olb"
             "Tag" = "8:"
             "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
             "Condition" = "8:"
@@ -330,6 +310,37 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3C03C2866238AB39B8AD50B21802E91F"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=1.0.1.33478, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_3C03C2866238AB39B8AD50B21802E91F"
+                    {
+                    "Name" = "8:PoorMansTSqlFormatterLib.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:PoorMansTSqlFormatterLib.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -384,21 +395,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_71E88C7110DEA4EAF2F19085A5B24B25"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_650F21B0676848928571D43C29FEAC60"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:LinqBridge, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c2b14eb747628076, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_71E88C7110DEA4EAF2F19085A5B24B25"
-                    {
-                    "Name" = "8:LinqBridge.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:LinqBridge.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:dte80.olb"
+            "TargetName" = "8:dte80.olb"
             "Tag" = "8:"
             "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
             "Condition" = "8:"
@@ -411,25 +411,14 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8489D774AD255BD4FCDA56BED3F7B8D2"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_75C4CA4C350159EA521B41F35FABE90F"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=0.9.13.3838, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_8489D774AD255BD4FCDA56BED3F7B8D2"
-                    {
-                    "Name" = "8:PoorMansTSqlFormatterLib.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:PoorMansTSqlFormatterLib.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:vsmso.olb"
+            "TargetName" = "8:vsmso.olb"
             "Tag" = "8:"
             "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
             "Condition" = "8:"
@@ -442,7 +431,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:FALSE"
+            "Exclude" = "11:TRUE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -461,46 +450,6 @@
                 }
             "SourcePath" = "8:Microsoft.VisualStudio.CommandBars.dll"
             "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9B74DADB956F9C63F07B71B9717E8B78"
-            {
-            "SourcePath" = "8:dte80a.olb"
-            "TargetName" = "8:dte80a.olb"
-            "Tag" = "8:"
-            "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9C7F521201EF0B96F5B53FB8CE9ED6CD"
-            {
-            "SourcePath" = "8:dte80.olb"
-            "TargetName" = "8:dte80.olb"
             "Tag" = "8:"
             "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
             "Condition" = "8:"
@@ -568,6 +517,57 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E074E7DD040183197E0A40E7B41E3567"
+            {
+            "SourcePath" = "8:dte90.olb"
+            "TargetName" = "8:dte90.olb"
+            "Tag" = "8:"
+            "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E9927D8AA73652A30E96A1AC78167F00"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:LinqBridge, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c2b14eb747628076, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E9927D8AA73652A30E96A1AC78167F00"
+                    {
+                    "Name" = "8:LinqBridge.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:LinqBridge.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -631,7 +631,7 @@
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.1"
+        "ProductVersion" = "8:1.1.1"
         "Manufacturer" = "8:Tao Klerks"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

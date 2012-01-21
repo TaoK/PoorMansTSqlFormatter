@@ -1,0 +1,31 @@
+﻿
+This project/solution is designed to be built in Microsoft Visual Studio 2008 (or 2008 express) or later, 
+and has a few build-time dependencies.
+
+Some dependencies are internal/bundled:
+ - fart.exe, a GPLv2 file search-replace tool used for pre-build "ComponentResourceManager" replacement
+ - LinqBridge, a collection-handling convenience library for .Net 2.0 under Visual Studio 2008, released under a BSD-style license
+ - NDesk.Options, a command-line-option-parsing library released under a MIT/X11-style license
+
+Some are additional external dependencies for different components of the solution:
+ - The CommandLine formatter and Winforms App use Microsoft's ILMerge to create a single executable for easy deployment/versioning
+   - ILMerge can be downloaded online: http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=17630
+ - The tests project uses a Visual Studio Test project, so does not work on Express versions
+ - Robert Giesecke's Unmanaged Exports technique, used in the Notepad++ plugin project, also requires a full Visual Studio
+ - The SSMS plugin installer and Winmerge plugin installer projects also require a full version of Visual Studio
+ - The Winmerge Plugin requires VB6 (eg Visual Studio 6), to expose a COM object properly to WinMerge's plugin-loading framework
+
+The formatting library and commandline utility have been compiled under Mono (a long time ago - not recently attempted), and 
+should theoretically work fine. The WinForms app, however, does not (or did not the last time I tried): the "WebBrowser" 
+implementation was simply not close enough to the microsoft one for it to work. I may come back to this over the coming months.
+
+The packaging and release process is currently completely manual:
+ - Ensure AssemblyInfo versions are updated
+ - Rebuild solution in Release mode
+ - Copy Binaries for simple executables and setup files into dedicated folders, zip them up and version-number the zip files.
+ - Upload the archives to website
+ - Change website to reference the new archives
+
+If you encounter any issues building this project, please don't hesitate to contact me: my email address starts with tao, and is 
+hosted at klerks dot biz.
+
