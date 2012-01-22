@@ -86,6 +86,7 @@ namespace PoorMansTSqlFormatterCmdLine
             //then switch language if necessary
             if (uiLangCode != null)
             {
+                uiLangCode = uiLangCode.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
                 if (!uiLangCode.Equals(UILANGUAGE_EN)
                     && !uiLangCode.Equals(UILANGUAGE_FR)
                     && !uiLangCode.Equals(UILANGUAGE_ES)
