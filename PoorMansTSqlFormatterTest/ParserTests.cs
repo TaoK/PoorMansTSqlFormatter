@@ -44,24 +44,24 @@ namespace PoorMansTSqlFormatterTests
             _parser = new TSqlStandardParser();
         }
 
-        string ParsedDataFolder { get { return Utils.GetTestContentFolder("ParsedSql"); } }
-        string InputDataFolder { get { return Utils.GetTestContentFolder("InputSql"); } }
-
-        [Test]
-        public void CheckThatParseTreeMatchesExpectedParseTree()
+        public IEnumerable<string> GetParsedSqlFileNames()
         {
-            foreach (FileInfo xmlFile in new DirectoryInfo(ParsedDataFolder).GetFiles())
-            {
-                XmlDocument expectedXmlDoc = new XmlDocument();
-                expectedXmlDoc.PreserveWhitespace = true;
-                expectedXmlDoc.Load(xmlFile.FullName);
-                string inputSql = File.ReadAllText(Path.Combine(InputDataFolder, xmlFile.Name));
-
-                ITokenList tokenized = _tokenizer.TokenizeSQL(inputSql);
-                XmlDocument parsed = _parser.ParseSQL(tokenized);
-
-                Assert.AreEqual(expectedXmlDoc.OuterXml, parsed.OuterXml, string.Format("Parse Tree Xml does not match for file {0}", xmlFile.Name));
-            }
+            return Utils.FolderFileNameIterator(Utils.GetTestContentFolder(Utils.PARSEDSQLFOLDER));
         }
+
+        [Test, TestCaseSource("GetParsedSqlFileNames")]
+        public void ExpectedParseTree(string FileName)
+        {
+            XmlDocument expectedXmlDoc = new XmlDocument();
+            expectedXmlDoc.PreserveWhitespace = true;
+            expectedXmlDoc.Load(Path.Combine(Utils.GetTestContentFolder(Utils.PARSEDSQLFOLDER), FileName));
+            string inputSql = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
+
+            ITokenList tokenized = _tokenizer.TokenizeSQL(inputSql);
+            XmlDocument parsed = _parser.ParseSQL(tokenized);
+
+            Assert.AreEqual(expectedXmlDoc.OuterXml, parsed.OuterXml);
+        }
+
     }
 }

@@ -47,56 +47,41 @@ namespace PoorMansTSqlFormatterTests
             _treeFormatter.HTMLColoring = false;
         }
 
-        string InputDataFolder { get { return Utils.GetTestContentFolder("InputSql"); } }
-        string FormattedDataFolder { get { return Utils.GetTestContentFolder("StandardFormatSql"); } }
-
-        [Test]
-        public void CheckThatReformattingOutputSqlYieldsSameSql()
+        [Test, TestCaseSource(typeof(Utils), "GetInputSqlFileNames")]
+        public void StandardFormatReparsingReformatting(string FileName)
         {
-            foreach (string inputSQL in Utils.FolderTextFileIterator(InputDataFolder))
+            string inputSQL = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
+            ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
+            XmlDocument parsed = _parser.ParseSQL(tokenized);
+            string outputSQL = _treeFormatter.FormatSQLTree(parsed);
+            ITokenList tokenizedAgain = _tokenizer.TokenizeSQL(outputSQL);
+            XmlDocument parsedAgain = _parser.ParseSQL(tokenizedAgain);
+            string formattedAgain = _treeFormatter.FormatSQLTree(parsedAgain);
+            if (!inputSQL.Contains(Utils.REFORMATTING_INCONSISTENCY_WARNING) && !inputSQL.Contains(Utils.INVALID_SQL_WARNING))
             {
-                ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
-                XmlDocument parsed = _parser.ParseSQL(tokenized);
-                string outputSQL = _treeFormatter.FormatSQLTree(parsed);
-                ITokenList tokenizedAgain = _tokenizer.TokenizeSQL(outputSQL);
-                XmlDocument parsedAgain = _parser.ParseSQL(tokenizedAgain);
-                string formattedAgain = _treeFormatter.FormatSQLTree(parsedAgain);
-                if (!inputSQL.Contains("KNOWN SQL REFORMATTING INCONSISTENCY") && !inputSQL.Contains("THIS TEST FILE IS NOT VALID SQL"))
-                    Assert.AreEqual(outputSQL, formattedAgain, "reformatted SQL should be the same as first pass of formatting");
-            }
-        }
-
-        [Test]
-        public void CheckThatReparsingOutputSqlYieldsEquivalentTree()
-        {
-            foreach (string inputSQL in Utils.FolderTextFileIterator(InputDataFolder))
-            {
-                ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
-                XmlDocument parsed = _parser.ParseSQL(tokenized);
-                string outputSQL = _treeFormatter.FormatSQLTree(parsed);
-                ITokenList tokenizedAgain = _tokenizer.TokenizeSQL(outputSQL);
-                XmlDocument parsedAgain = _parser.ParseSQL(tokenizedAgain);
+                Assert.AreEqual(outputSQL, formattedAgain, "first-pass formatted vs reformatted");
                 Utils.StripWhiteSpaceFromSqlTree(parsed);
                 Utils.StripWhiteSpaceFromSqlTree(parsedAgain);
-                if (!inputSQL.Contains("KNOWN SQL REFORMATTING INCONSISTENCY") && !inputSQL.Contains("THIS TEST FILE IS NOT VALID SQL"))
-                    Assert.AreEqual(parsed.OuterXml.ToUpper(), parsedAgain.OuterXml.ToUpper(), "parsed SQL trees should be the same");
+                Assert.AreEqual(parsed.OuterXml.ToUpper(), parsedAgain.OuterXml.ToUpper(), "first parse xml vs reparse xml");
             }
         }
 
-        [Test]
-        public void CheckThatStandardOutputSqlMatchesExpectedStandardOutputSql()
+        public IEnumerable<string> GetStandardFormatSqlFileNames()
         {
-            foreach (FileInfo expectedFormatFile in new DirectoryInfo(FormattedDataFolder).GetFiles())
-            {
-                string expectedSql = File.ReadAllText(expectedFormatFile.FullName);
-                string inputSql = File.ReadAllText(Path.Combine(InputDataFolder, expectedFormatFile.Name));
+            return Utils.FolderFileNameIterator(Utils.GetTestContentFolder("StandardFormatSql"));
+        }
 
-                ITokenList tokenized = _tokenizer.TokenizeSQL(inputSql);
-                XmlDocument parsed = _parser.ParseSQL(tokenized);
-                string formatted = _treeFormatter.FormatSQLTree(parsed);
+        [Test, TestCaseSource("GetStandardFormatSqlFileNames")]
+        public void StandardFormatExpectedOutput(string FileName)
+        {
+            string expectedSql = Utils.GetTestFileContent(FileName, Utils.STANDARDFORMATSQLFOLDER);
+            string inputSql = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
 
-                Assert.AreEqual(expectedSql, formatted, string.Format("Formatted Sql does not match expected result for file {0}", expectedFormatFile.Name));
-            }
+            ITokenList tokenized = _tokenizer.TokenizeSQL(inputSql);
+            XmlDocument parsed = _parser.ParseSQL(tokenized);
+            string formatted = _treeFormatter.FormatSQLTree(parsed);
+
+            Assert.AreEqual(expectedSql, formatted);
         }
 
     }

@@ -48,31 +48,25 @@ namespace PoorMansTSqlFormatterTests
             _treeFormatter = (ISqlTreeFormatter)_tokenFormatter;
         }
 
-        string TestDataFolder { get { return Utils.GetTestContentFolder("InputSql"); } }
-
-        [Test]
-        public void CheckThatValidSqlRemainsUnchangedByIdentityTokenFormatter()
+        [Test, TestCaseSource(typeof(Utils), "GetInputSqlFileNames")]
+        public void ContentUnchangedByIdentityTokenFormatter(string FileName)
         {
-            foreach (string inputSQL in Utils.FolderTextFileIterator(TestDataFolder))
-            {
-                ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
-                string outputSQL = _tokenFormatter.FormatSQLTokens(tokenized);
-                if (!inputSQL.Contains("THIS TEST FILE IS NOT VALID SQL"))
-                    Assert.AreEqual(outputSQL, inputSQL, "input and output should be the same, as this is a valid SQL file");
-            }
+            string inputSQL = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
+            ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
+            string outputSQL = _tokenFormatter.FormatSQLTokens(tokenized);
+            if (!inputSQL.Contains(Utils.INVALID_SQL_WARNING))
+                Assert.AreEqual(outputSQL, inputSQL);
         }
 
-        [Test]
-        public void CheckThatValidSqlRemainsUnchangedByIdentityTreeFormatter()
+        [Test, TestCaseSource(typeof(Utils), "GetInputSqlFileNames")]
+        public void ContentUnchangedByIdentityTreeFormatter(string FileName)
         {
-            foreach (string inputSQL in Utils.FolderTextFileIterator(TestDataFolder))
-            {
-                ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
-                XmlDocument parsed = _parser.ParseSQL(tokenized);
-                string outputSQL = _treeFormatter.FormatSQLTree(parsed);
-                if (!inputSQL.Contains("THIS TEST FILE IS NOT VALID SQL"))
-                    Assert.AreEqual(outputSQL, inputSQL, "input and output should be the same, as this is a valid SQL file");
-            }
+            string inputSQL = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
+            ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
+            XmlDocument parsed = _parser.ParseSQL(tokenized);
+            string outputSQL = _treeFormatter.FormatSQLTree(parsed);
+            if (!inputSQL.Contains(Utils.INVALID_SQL_WARNING))
+                Assert.AreEqual(outputSQL, inputSQL);
         }
     }
 }

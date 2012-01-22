@@ -22,25 +22,33 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using NUnit.Framework;
 
 namespace PoorMansTSqlFormatterTests
 {
     static class Utils
     {
+        public const string DATAFOLDER = "Data";
+        public const string INPUTSQLFOLDER = "InputSql";
+        public const string PARSEDSQLFOLDER = "ParsedSql";
+        public const string STANDARDFORMATSQLFOLDER = "StandardFormatSql";
+
+        public const string INVALID_SQL_WARNING = "THIS TEST FILE IS NOT VALID SQL";
+        public const string REFORMATTING_INCONSISTENCY_WARNING = "KNOWN SQL REFORMATTING INCONSISTENCY";
+
         public static string GetTestContentFolder(string folderName)
         {
             DirectoryInfo thisDirectory = new DirectoryInfo(".");
-            return Path.Combine(Path.Combine(Path.Combine(thisDirectory.Parent.Parent.Parent.FullName, "PoorMansTSqlFormatterTest"), "Data"), folderName);
+            return Path.Combine(Path.Combine(thisDirectory.Parent.Parent.FullName, DATAFOLDER), folderName);
         }
 
-        public static IEnumerable<string> FolderTextFileIterator(string path)
+        public static IEnumerable<string> FolderFileNameIterator(string path)
         {
             DirectoryInfo textFileFolder = new DirectoryInfo(path);
             foreach (FileInfo sampleFile in textFileFolder.GetFiles())
             {
-                yield return File.ReadAllText(sampleFile.FullName);
+                yield return sampleFile.Name;
             }
-
         }
 
         public static void StripWhiteSpaceFromSqlTree(XmlDocument sqlTree)
@@ -48,6 +56,16 @@ namespace PoorMansTSqlFormatterTests
             XmlNodeList deletionCandidates = sqlTree.SelectNodes(string.Format("//*[local-name() = '{0}']", PoorMansTSqlFormatterLib.Interfaces.SqlXmlConstants.ENAME_WHITESPACE));
             foreach (XmlElement deletionCandidate in deletionCandidates)
                 deletionCandidate.ParentNode.RemoveChild(deletionCandidate);
+        }
+
+        public static IEnumerable<string> GetInputSqlFileNames()
+        {
+            return FolderFileNameIterator(GetTestContentFolder("InputSql"));
+        }
+
+        public static string GetTestFileContent(string FileName, string TestFolder)
+        {
+            return File.ReadAllText(Path.Combine(Utils.GetTestContentFolder(TestFolder), FileName));
         }
     }
 }
