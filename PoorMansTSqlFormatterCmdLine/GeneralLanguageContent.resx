@@ -134,7 +134,8 @@
     <value>Failed to create target folder: {0}</value>
   </data>
   <data name="NoFilesFoundWarningMessage" xml:space="preserve">
-    <value>No files found matching filename/pattern: {0}</value>
+    <value>No files found matching filename/pattern ({0}) and extension ({1})</value>
+    <comment>{0} is the filename pattern, {1} is the requested extensions </comment>
   </data>
   <data name="OutputFileCreationErrorMessage" xml:space="preserve">
     <value>The requested output file could not be created. Error detail: {0}</value>

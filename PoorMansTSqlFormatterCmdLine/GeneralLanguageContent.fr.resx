@@ -137,7 +137,8 @@
     <value>La création du dossier a échoué: {0}</value>
   </data>
   <data name="NoFilesFoundWarningMessage" xml:space="preserve">
-    <value>Aucun fichier trouvé pour ce nom ou modèle de nom: {0}</value>
+    <value>Aucun fichier trouvé pour ce nom ou modèle de nom ({0}) et extension (({1})</value>
+    <comment>{0} is the filename pattern, {1} is the requested extensions</comment>
   </data>
   <data name="OutputFileCreationErrorMessage" xml:space="preserve">
     <value>Le fichier de destination n'a pas pu se créer. Détail de l'erreur: {0}</value>

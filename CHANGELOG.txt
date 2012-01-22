@@ -1,5 +1,10 @@
 Poor Man's T-SQL Formatter change log
 
+Version 1.1.2: 
+--------------
+ - Enhanced Cmdline Utility "no files found" message to include extensions detail
+
+
 Version 1.1.1: 
 --------------
  - Translated programs, ssms plugin + website into French and Spanish 
