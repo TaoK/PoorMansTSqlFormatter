@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.IO;
 using System.Xml;
 using System.Text.RegularExpressions;
@@ -32,7 +32,7 @@ using PoorMansTSqlFormatterLib.Tokenizers;
 
 namespace PoorMansTSqlFormatterTests
 {
-    [TestClass]
+    [TestFixture]
     public class ParserTests
     {
         ISqlTokenizer _tokenizer;
@@ -47,7 +47,7 @@ namespace PoorMansTSqlFormatterTests
         string ParsedDataFolder { get { return Utils.GetTestContentFolder("ParsedSql"); } }
         string InputDataFolder { get { return Utils.GetTestContentFolder("InputSql"); } }
 
-        [TestMethod]
+        [Test]
         public void CheckThatParseTreeMatchesExpectedParseTree()
         {
             foreach (FileInfo xmlFile in new DirectoryInfo(ParsedDataFolder).GetFiles())
@@ -60,7 +60,7 @@ namespace PoorMansTSqlFormatterTests
                 ITokenList tokenized = _tokenizer.TokenizeSQL(inputSql);
                 XmlDocument parsed = _parser.ParseSQL(tokenized);
 
-                Assert.AreEqual<string>(expectedXmlDoc.OuterXml, parsed.OuterXml, string.Format("Parse Tree Xml does not match for file {0}", xmlFile.Name));
+                Assert.AreEqual(expectedXmlDoc.OuterXml, parsed.OuterXml, string.Format("Parse Tree Xml does not match for file {0}", xmlFile.Name));
             }
         }
     }

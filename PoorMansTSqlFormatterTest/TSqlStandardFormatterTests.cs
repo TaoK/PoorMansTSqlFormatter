@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.IO;
 using System.Xml;
 using System.Text.RegularExpressions;
@@ -32,7 +32,7 @@ using PoorMansTSqlFormatterLib.Tokenizers;
 
 namespace PoorMansTSqlFormatterTests
 {
-    [TestClass]
+    [TestFixture]
     public class TSqlStandardFormatterTests
     {
         ISqlTokenizer _tokenizer;
@@ -50,7 +50,7 @@ namespace PoorMansTSqlFormatterTests
         string InputDataFolder { get { return Utils.GetTestContentFolder("InputSql"); } }
         string FormattedDataFolder { get { return Utils.GetTestContentFolder("StandardFormatSql"); } }
 
-        [TestMethod]
+        [Test]
         public void CheckThatReformattingOutputSqlYieldsSameSql()
         {
             foreach (string inputSQL in Utils.FolderTextFileIterator(InputDataFolder))
@@ -62,11 +62,11 @@ namespace PoorMansTSqlFormatterTests
                 XmlDocument parsedAgain = _parser.ParseSQL(tokenizedAgain);
                 string formattedAgain = _treeFormatter.FormatSQLTree(parsedAgain);
                 if (!inputSQL.Contains("KNOWN SQL REFORMATTING INCONSISTENCY") && !inputSQL.Contains("THIS TEST FILE IS NOT VALID SQL"))
-                    Assert.AreEqual<string>(outputSQL, formattedAgain, "reformatted SQL should be the same as first pass of formatting");
+                    Assert.AreEqual(outputSQL, formattedAgain, "reformatted SQL should be the same as first pass of formatting");
             }
         }
 
-        [TestMethod]
+        [Test]
         public void CheckThatReparsingOutputSqlYieldsEquivalentTree()
         {
             foreach (string inputSQL in Utils.FolderTextFileIterator(InputDataFolder))
@@ -79,11 +79,11 @@ namespace PoorMansTSqlFormatterTests
                 Utils.StripWhiteSpaceFromSqlTree(parsed);
                 Utils.StripWhiteSpaceFromSqlTree(parsedAgain);
                 if (!inputSQL.Contains("KNOWN SQL REFORMATTING INCONSISTENCY") && !inputSQL.Contains("THIS TEST FILE IS NOT VALID SQL"))
-                    Assert.AreEqual<string>(parsed.OuterXml.ToUpper(), parsedAgain.OuterXml.ToUpper(), "parsed SQL trees should be the same");
+                    Assert.AreEqual(parsed.OuterXml.ToUpper(), parsedAgain.OuterXml.ToUpper(), "parsed SQL trees should be the same");
             }
         }
 
-        [TestMethod]
+        [Test]
         public void CheckThatStandardOutputSqlMatchesExpectedStandardOutputSql()
         {
             foreach (FileInfo expectedFormatFile in new DirectoryInfo(FormattedDataFolder).GetFiles())
@@ -95,7 +95,7 @@ namespace PoorMansTSqlFormatterTests
                 XmlDocument parsed = _parser.ParseSQL(tokenized);
                 string formatted = _treeFormatter.FormatSQLTree(parsed);
 
-                Assert.AreEqual<string>(expectedSql, formatted, string.Format("Formatted Sql does not match expected result for file {0}", expectedFormatFile.Name));
+                Assert.AreEqual(expectedSql, formatted, string.Format("Formatted Sql does not match expected result for file {0}", expectedFormatFile.Name));
             }
         }
 

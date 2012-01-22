@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.IO;
 using System.Xml;
 using System.Text.RegularExpressions;
@@ -32,7 +32,7 @@ using PoorMansTSqlFormatterLib.Tokenizers;
 
 namespace PoorMansTSqlFormatterTests
 {
-    [TestClass]
+    [TestFixture]
     public class TSqlIdentityFormatterTest
     {
         ISqlTokenizer _tokenizer;
@@ -50,7 +50,7 @@ namespace PoorMansTSqlFormatterTests
 
         string TestDataFolder { get { return Utils.GetTestContentFolder("InputSql"); } }
 
-        [TestMethod]
+        [Test]
         public void CheckThatValidSqlRemainsUnchangedByIdentityTokenFormatter()
         {
             foreach (string inputSQL in Utils.FolderTextFileIterator(TestDataFolder))
@@ -58,11 +58,11 @@ namespace PoorMansTSqlFormatterTests
                 ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
                 string outputSQL = _tokenFormatter.FormatSQLTokens(tokenized);
                 if (!inputSQL.Contains("THIS TEST FILE IS NOT VALID SQL"))
-                    Assert.AreEqual<string>(outputSQL, inputSQL, "input and output should be the same, as this is a valid SQL file");
+                    Assert.AreEqual(outputSQL, inputSQL, "input and output should be the same, as this is a valid SQL file");
             }
         }
 
-        [TestMethod]
+        [Test]
         public void CheckThatValidSqlRemainsUnchangedByIdentityTreeFormatter()
         {
             foreach (string inputSQL in Utils.FolderTextFileIterator(TestDataFolder))
@@ -71,7 +71,7 @@ namespace PoorMansTSqlFormatterTests
                 XmlDocument parsed = _parser.ParseSQL(tokenized);
                 string outputSQL = _treeFormatter.FormatSQLTree(parsed);
                 if (!inputSQL.Contains("THIS TEST FILE IS NOT VALID SQL"))
-                    Assert.AreEqual<string>(outputSQL, inputSQL, "input and output should be the same, as this is a valid SQL file");
+                    Assert.AreEqual(outputSQL, inputSQL, "input and output should be the same, as this is a valid SQL file");
             }
         }
     }
