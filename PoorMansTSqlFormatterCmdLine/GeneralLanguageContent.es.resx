@@ -187,14 +187,16 @@ l   languageCode (predeterminado: idioma actual si es soportado; optiones soport
 h ? help
 
 Se pueden desactivar opciones booleanas siguendolas de un "menos", o activarlas con solo incluirlas o siguendolas de un "mas".
+Se puede proporcionar el codigo SQL por tubería (pipe) en vez de proporcionar un nombre de archivo, pero tiene que ser codificado con UTF-8.
 
-p. ej.:
+Exemplos:
 
 SqlFormatter TestFiles\* /is:"  " /tc /uc- 
 
-o 
-
 SqlFormatter test*.sql /o:resultfile.sql
+
+echo select algunacolumna from algunatabla | SqlFormatter 
+    
 </value>
   </data>
   <data name="UnrecognizedLanguageErrorMessage" xml:space="preserve">

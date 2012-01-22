@@ -183,14 +183,16 @@ l   languageCode (default: current if supported or EN; valid values include EN, 
 h ? help
 
 Disable boolean options with a trailing minus, enable by just specifying them or with a trailing plus.
+You can also pipe the SQL to be formatted in (UTF-8 encoding), and then no input path is expected.
 
-eg:
+Examples:
 
 SqlFormatter TestFiles\* /is:"  " /tc /uc- 
 
-or 
-
 SqlFormatter test*.sql /o:resultfile.sql
+
+echo select somecolumn from sometable | SqlFormatter 
+
 </value>
   </data>
   <data name="UnrecognizedArgumentsErrorMessage" xml:space="preserve">

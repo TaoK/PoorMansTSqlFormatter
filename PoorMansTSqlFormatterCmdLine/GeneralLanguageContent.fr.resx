@@ -186,15 +186,17 @@ b   outputFileOrFolder (par défaut: aucun; s'il est spécifié, overrides the b
 l   languageCode (par défaut: langue actuelle si elle est supportée; valeurs valables sont EN, FR et ES)
 h ? help
 
-On peut désactiver les options booléennes les suivant d'un "moins", et les activer simplement en les spécifiant, ou aussi en les suivant d'un "plus".
+On peut désactiver les options booléennes en les suivant d'un "moins", et les activer simplement en les spécifiant, ou aussi en les suivant d'un "plus".
+Vous pouvez aussi utilizer un Tube (/tuyeau/pipe) pour proportionner le SQL d'entree (en codage UTF-8), et alors aucun nom de fichier est attenu.
 
-eg:
+Par exemple:
 
 SqlFormatter TestFiles\* /is:"  " /tc /uc- 
 
-ou 
-
 SqlFormatter test*.sql /o:resultfile.sql
+
+echo select unecolonnequelconque from untableauquelconque | SqlFormatter 
+
 </value>
   </data>
   <data name="UnrecognizedLanguageErrorMessage" xml:space="preserve">

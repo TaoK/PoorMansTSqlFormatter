@@ -51,7 +51,8 @@ namespace PoorMansTSqlFormatterCmdLine
             bool standardizeKeywords = true;
 
             bool allowParsingErrors = false;
-            bool showUsage = false;
+            bool showUsageFriendly = false;
+            bool showUsageError = false;
             List<string> extensions = new List<string>();
             bool backups = true;
             bool recursiveSearch = false;
@@ -77,7 +78,7 @@ namespace PoorMansTSqlFormatterCmdLine
               .Add("b|backups", delegate(string v) { backups = v != null; })
               .Add("o|outputFileOrFolder=", delegate(string v) { outputFileOrFolder = v; })
               .Add("l|languageCode=", delegate(string v) { uiLangCode = v; })
-              .Add("h|?|help", delegate(string v) { showUsage = v != null; })
+              .Add("h|?|help", delegate(string v) { showUsageFriendly = v != null; })
                   ;
 
             //first parse the args
@@ -92,10 +93,10 @@ namespace PoorMansTSqlFormatterCmdLine
                     && !uiLangCode.Equals(UILANGUAGE_ES)
                     )
                 {
-                    showUsage = true;
+                    showUsageError = true;
                     //get the resource manager with default language, before displaying error.
                     _generalResourceManager = new FrameworkClassReplacements.SingleAssemblyResourceManager("GeneralLanguageContent", Assembly.GetExecutingAssembly(), typeof(Program));
-                    Console.WriteLine(_generalResourceManager.GetString("UnrecognizedLanguageErrorMessage"));
+                    Console.Error.WriteLine(_generalResourceManager.GetString("UnrecognizedLanguageErrorMessage"));
                 }
                 else
                 {
@@ -109,121 +110,181 @@ namespace PoorMansTSqlFormatterCmdLine
                 _generalResourceManager = new FrameworkClassReplacements.SingleAssemblyResourceManager("GeneralLanguageContent", Assembly.GetExecutingAssembly(), typeof(Program));
             }
 
-            //then complain about any unrecognized args
-            if (remainingArgs.Count != 1)
+            //nasty trick to figure out whether we're in a pipeline or not
+            bool throwAwayValue;
+            string stdInput = null;
+            try
             {
-                showUsage = true;
-                Console.WriteLine(_generalResourceManager.GetString("UnrecognizedArgumentsErrorMessage"));
+                throwAwayValue = System.Console.KeyAvailable;
+            }
+            catch (InvalidOperationException)
+            {
+                Console.InputEncoding = Encoding.UTF8;
+                stdInput = System.Console.In.ReadToEnd();
             }
 
+            //then complain about missing input or unrecognized args
+            if (string.IsNullOrEmpty(stdInput) && remainingArgs.Count == 0)
+            {
+                showUsageError = true;
+                Console.Error.WriteLine(_generalResourceManager.GetString("NoInputErrorMessage"));
+            }
+            else if ((!string.IsNullOrEmpty(stdInput) && remainingArgs.Count == 1) || remainingArgs.Count > 1)
+            {
+                showUsageError = true;
+                Console.Error.WriteLine(_generalResourceManager.GetString("UnrecognizedArgumentsErrorMessage"));
+            }
 
             if (extensions.Count == 0)
                 extensions.Add(".sql");
 
-            if (showUsage)
+            if (showUsageFriendly || showUsageError)
             {
-                Console.WriteLine(_generalResourceManager.GetString("ProgramSummary"));
-                Console.WriteLine("v" + Assembly.GetExecutingAssembly().GetName().Version.ToString());
-                Console.WriteLine(_generalResourceManager.GetString("ProgramUsageNotes"));
+                TextWriter outStream = showUsageFriendly ? Console.Out : Console.Error;
+                outStream.WriteLine(_generalResourceManager.GetString("ProgramSummary"));
+                outStream.WriteLine("v" + Assembly.GetExecutingAssembly().GetName().Version.ToString());
+                outStream.WriteLine(_generalResourceManager.GetString("ProgramUsageNotes"));
                 return 1;
             }
 
             var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(
-                indentString, 
-                spacesPerTab, 
-                maxLineWidth, 
-                expandCommaLists, 
-                trailingCommas, 
-                spaceAfterExpandedComma, 
-                expandBooleanExpressions, 
+                indentString,
+                spacesPerTab,
+                maxLineWidth,
+                expandCommaLists,
+                trailingCommas,
+                spaceAfterExpandedComma,
+                expandBooleanExpressions,
                 expandCaseStatements,
                 expandBetweenConditions,
                 breakJoinOnSections,
-                uppercaseKeywords, 
+                uppercaseKeywords,
                 false,
                 standardizeKeywords
                 );
             formatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix");
             var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);
 
-            string searchPattern = Path.GetFileName(remainingArgs[0]);
-            string baseDirectoryName = Path.GetDirectoryName(remainingArgs[0]);
-            if (baseDirectoryName.Length == 0)
-            {
-                baseDirectoryName = ".";
-                if (searchPattern.Equals("."))
-                    searchPattern = "";
-            }
-            System.IO.DirectoryInfo baseDirectory = null;
-            System.IO.FileSystemInfo[] matchingObjects = null;
-            try
-            {
-                baseDirectory = new System.IO.DirectoryInfo(baseDirectoryName);
-                if (searchPattern.Length > 0)
-                {
-                    if (recursiveSearch)
-                        matchingObjects = baseDirectory.GetFileSystemInfos(searchPattern);
-                    else
-                        matchingObjects = baseDirectory.GetFiles(searchPattern);
-                }
-                else
-                {
-                    if (recursiveSearch)
-                        matchingObjects = baseDirectory.GetFileSystemInfos();
-                    else
-                        matchingObjects = new FileSystemInfo[0];
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(string.Format(_generalResourceManager.GetString("PathPatternErrorMessage"), e.Message));
-                return 2;
-            }
-
-            System.IO.StreamWriter singleFileWriter = null;
-            string replaceFromFolderPath = null;
-            string replaceToFolderPath = null;
-            if (!string.IsNullOrEmpty(outputFileOrFolder))
-            {
-                //ignore the backups setting - wouldn't make sense to back up the source files if we're 
-                // writing to another file anyway...
-                backups = false;
-
-                if (Directory.Exists(outputFileOrFolder)
-                    && (File.GetAttributes(outputFileOrFolder) & FileAttributes.Directory) == FileAttributes.Directory
-                    )
-                {
-                    replaceFromFolderPath = baseDirectory.FullName;
-                    replaceToFolderPath = new DirectoryInfo(outputFileOrFolder).FullName;
-                }
-                else
-                {
-                    try
-                    {
-                        //let's not worry too hard about releasing this resource - this is a command-line program, 
-                        // when it ends or dies all will be released anyway.
-                        singleFileWriter = new StreamWriter(outputFileOrFolder);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(string.Format(_generalResourceManager.GetString("OutputFileCreationErrorMessage"), e.Message));
-                        return 3;
-                    }
-                }
-            }
-
             bool warningEncountered = false;
-            if (!ProcessSearchResults(extensions, backups, allowParsingErrors, formattingManager, matchingObjects, singleFileWriter, replaceFromFolderPath, replaceToFolderPath, ref warningEncountered))
+            if (!string.IsNullOrEmpty(stdInput))
             {
-                Console.WriteLine(string.Format(_generalResourceManager.GetString("NoFilesFoundWarningMessage"), remainingArgs[0], string.Join(",", extensions.ToArray())));
-                return 4;
-            }
+                string formattedOutput = null;
+                bool parsingError = false;
+                Exception parseException = null;
+                try
+                {
+                    formattedOutput = formattingManager.Format(stdInput, ref parsingError);
 
-            if (singleFileWriter != null)
+                    //hide any handled parsing issues if they were requested to be allowed
+                    if (allowParsingErrors) parsingError = false;
+                }
+                catch (Exception ex)
+                {
+                    parseException = ex;
+                    parsingError = true;
+                }
+
+                if (parsingError)
+                {
+                    Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("ParsingErrorWarningMessage"), "STDIN"));
+                    if (parseException != null)
+                        Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), parseException.Message));
+                    warningEncountered = true;
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(outputFileOrFolder))
+                    {
+                        WriteResultFile(outputFileOrFolder, null, null, ref warningEncountered, formattedOutput);
+                    }
+                    else
+                    {
+                        Console.OutputEncoding = Encoding.UTF8;
+                        Console.Out.WriteLine(formattedOutput);
+                    }
+                }
+
+            }
+            else
             {
-                singleFileWriter.Flush();
-                singleFileWriter.Close();
-                singleFileWriter.Dispose();
+                System.IO.DirectoryInfo baseDirectory = null;
+                string searchPattern = Path.GetFileName(remainingArgs[0]);
+                string baseDirectoryName = Path.GetDirectoryName(remainingArgs[0]);
+                if (baseDirectoryName.Length == 0)
+                {
+                    baseDirectoryName = ".";
+                    if (searchPattern.Equals("."))
+                        searchPattern = "";
+                }
+                System.IO.FileSystemInfo[] matchingObjects = null;
+                try
+                {
+                    baseDirectory = new System.IO.DirectoryInfo(baseDirectoryName);
+                    if (searchPattern.Length > 0)
+                    {
+                        if (recursiveSearch)
+                            matchingObjects = baseDirectory.GetFileSystemInfos(searchPattern);
+                        else
+                            matchingObjects = baseDirectory.GetFiles(searchPattern);
+                    }
+                    else
+                    {
+                        if (recursiveSearch)
+                            matchingObjects = baseDirectory.GetFileSystemInfos();
+                        else
+                            matchingObjects = new FileSystemInfo[0];
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("PathPatternErrorMessage"), e.Message));
+                    return 2;
+                }
+
+                System.IO.StreamWriter singleFileWriter = null;
+                string replaceFromFolderPath = null;
+                string replaceToFolderPath = null;
+                if (!string.IsNullOrEmpty(outputFileOrFolder))
+                {
+                    //ignore the backups setting - wouldn't make sense to back up the source files if we're 
+                    // writing to another file anyway...
+                    backups = false;
+
+                    if (Directory.Exists(outputFileOrFolder)
+                        && (File.GetAttributes(outputFileOrFolder) & FileAttributes.Directory) == FileAttributes.Directory
+                        )
+                    {
+                        replaceFromFolderPath = baseDirectory.FullName;
+                        replaceToFolderPath = new DirectoryInfo(outputFileOrFolder).FullName;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            //let's not worry too hard about releasing this resource - this is a command-line program, 
+                            // when it ends or dies all will be released anyway.
+                            singleFileWriter = new StreamWriter(outputFileOrFolder);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("OutputFileCreationErrorMessage"), e.Message));
+                            return 3;
+                        }
+                    }
+                }
+
+                if (!ProcessSearchResults(extensions, backups, allowParsingErrors, formattingManager, matchingObjects, singleFileWriter, replaceFromFolderPath, replaceToFolderPath, ref warningEncountered))
+                {
+                    Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("NoFilesFoundWarningMessage"), remainingArgs[0], string.Join(",", extensions.ToArray())));
+                    return 4;
+                }
+
+                if (singleFileWriter != null)
+                {
+                    singleFileWriter.Flush();
+                    singleFileWriter.Close();
+                    singleFileWriter.Dispose();
+                }
             }
 
             if (warningEncountered)
@@ -274,8 +335,8 @@ namespace PoorMansTSqlFormatterCmdLine
             }
             catch (Exception ex)
             {
-                Console.WriteLine(string.Format(_generalResourceManager.GetString("FileReadFailureWarningMessage"), fileInfo.FullName));
-                Console.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), ex.Message));
+                Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("FileReadFailureWarningMessage"), fileInfo.FullName));
+                Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), ex.Message));
                 warningEncountered = true;
             }
             if (oldFileContents.Length > 0)
@@ -295,9 +356,9 @@ namespace PoorMansTSqlFormatterCmdLine
 
                 if (parsingError)
                 {
-                    Console.WriteLine(string.Format(_generalResourceManager.GetString("ParsingErrorWarningMessage"), fileInfo.FullName));
+                    Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("ParsingErrorWarningMessage"), fileInfo.FullName));
                     if (parseException != null)
-                        Console.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), parseException.Message));
+                        Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), parseException.Message));
                     warningEncountered = true;
                 }
             }
@@ -320,8 +381,8 @@ namespace PoorMansTSqlFormatterCmdLine
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(string.Format(_generalResourceManager.GetString("BackupFailureWarningMessage"), fileInfo.FullName, Environment.NewLine));
-                        Console.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), ex.Message));
+                        Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("BackupFailureWarningMessage"), fileInfo.FullName, Environment.NewLine));
+                        Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), ex.Message));
                         failedBackup = true;
                         warningEncountered = true;
                     }
@@ -349,8 +410,8 @@ namespace PoorMansTSqlFormatterCmdLine
                             }
                             catch (Exception ex)
                             {
-                                Console.WriteLine(string.Format(_generalResourceManager.GetString("FolderCreationFailureWarningMessage"), targetFolder));
-                                Console.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), ex.Message));
+                                Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("FolderCreationFailureWarningMessage"), targetFolder));
+                                Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), ex.Message));
                                 failedFolder = true;
                                 warningEncountered = true;
                             }
@@ -358,21 +419,26 @@ namespace PoorMansTSqlFormatterCmdLine
 
                         if (!failedFolder)
                         {
-                            try
-                            {
-                                File.WriteAllText(fullTargetPath, newFileContents);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(string.Format(_generalResourceManager.GetString("ContentWriteFailureWarningMessage"), fileInfo.FullName));
-                                Console.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), ex.Message));
-                                if (replaceFromFolderPath == null || replaceToFolderPath == null)
-                                    Console.WriteLine(_generalResourceManager.GetString("PossiblePartialWriteWarningMessage"));
-                                warningEncountered = true;
-                            }
+                            WriteResultFile(fullTargetPath, replaceFromFolderPath, replaceToFolderPath, ref warningEncountered, newFileContents);
                         }
                     }
                 }
+            }
+        }
+
+        private static void WriteResultFile(string targetFilePath, string replaceFromFolderPath, string replaceToFolderPath, ref bool warningEncountered, string newFileContents)
+        {
+            try
+            {
+                File.WriteAllText(targetFilePath, newFileContents);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("ContentWriteFailureWarningMessage"), targetFilePath));
+                Console.Error.WriteLine(string.Format(_generalResourceManager.GetString("ErrorDetailMessageFragment"), ex.Message));
+                if (replaceFromFolderPath == null || replaceToFolderPath == null)
+                    Console.Error.WriteLine(_generalResourceManager.GetString("PossiblePartialWriteWarningMessage"));
+                warningEncountered = true;
             }
         }
     }

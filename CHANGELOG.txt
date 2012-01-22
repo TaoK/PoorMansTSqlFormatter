@@ -2,6 +2,9 @@ Poor Man's T-SQL Formatter change log
 
 Version 1.1.2: 
 --------------
+ - Github Issue 32: [Feature Request] Enhanced Cmdline Utility to support pipeline input (and output) [thanks William Lin for the request]
+   - but default behaviour unchanged, still expect to act on files directly unless piped input provided
+   - expected encoding is UTF-8... in powershell, for example, run "$OutputEncoding = [System.Text.Encoding]::UTF8" first.
  - Enhanced Cmdline Utility "no files found" message to include extensions detail
 
 
