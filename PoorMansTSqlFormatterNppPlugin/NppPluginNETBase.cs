@@ -1,9 +1,31 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 
 namespace NppPluginNET
 {
     class PluginBase
     {
+        #region " Set-up of standard supporting assembly location "
+        static PluginBase()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(LoadFromPluginSubFolder);
+        }
+
+        static Assembly LoadFromPluginSubFolder(object sender, ResolveEventArgs args)
+        {
+            string pluginPath = typeof(PluginBase).Assembly.Location;
+            string pluginName = Path.GetFileNameWithoutExtension(pluginPath);
+            string pluginSubFolder = Path.Combine(Path.GetDirectoryName(pluginPath), pluginName);
+            string assemblyPath = Path.Combine(pluginSubFolder, new AssemblyName(args.Name).Name + ".dll");
+
+            if (File.Exists(assemblyPath))
+                return Assembly.LoadFrom(assemblyPath);
+            else
+                return null;
+        }
+        #endregion
+
         #region " Fields "
         internal static NppData nppData;
         internal static FuncItems _funcItems = new FuncItems();

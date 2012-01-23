@@ -56,47 +56,19 @@ namespace PoorMansTSqlFormatterNppPlugin
         static ResourceManager _generalResourceManager = new ResourceManager("PoorMansTSqlFormatterNppPlugin.GeneralLanguageContent", Assembly.GetExecutingAssembly());
         #endregion
 
-        #region " Set-up of standard supporting assembly location "
-        static Main()
-        {
-            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(LoadFromPluginSubFolder);
-        }
-
-        static Assembly LoadFromPluginSubFolder(object sender, ResolveEventArgs args)
-        {
-            string pluginPath = typeof(Main).Assembly.Location;
-            string pluginName = Path.GetFileNameWithoutExtension(pluginPath);
-            string pluginSubFolder = Path.Combine(Path.GetDirectoryName(pluginPath), pluginName);
-            string assemblyPath = Path.Combine(pluginSubFolder, new AssemblyName(args.Name).Name + ".dll");
-
-            if (File.Exists(assemblyPath))
-                return Assembly.LoadFrom(assemblyPath);
-            else
-                return null;
-        }
-        #endregion
-
         #region " StartUp/CleanUp "
         internal static void CommandMenuInit()
         {
             //this is where I'd really like access to language info from Notepad++ context...
             //MessageBox.Show(string.Format("Cult: {0}; UICult: {1}", System.Threading.Thread.CurrentThread.CurrentCulture.EnglishName, System.Threading.Thread.CurrentThread.CurrentUICulture.EnglishName));
 
-            //get settings from notepad++-assigned plugin data folder
+            //get settings from notepad++-assigned plugin data folder, and set for settings provider.
             StringBuilder sbIniFilePath = new StringBuilder(Win32.MAX_PATH);
             Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_GETPLUGINSCONFIGDIR, Win32.MAX_PATH, sbIniFilePath);
-            iniFilePath = sbIniFilePath.ToString();
-            if (!Directory.Exists(iniFilePath)) Directory.CreateDirectory(iniFilePath);
-            iniFilePath = Path.Combine(iniFilePath, PluginName + ".ini.xml");
-            //someSetting = (Win32.GetPrivateProfileInt("SomeSection", "SomeKey", 0, iniFilePath) != 0);
-
-            //upgrade settings if necessary.
-            if (!Properties.Settings.Default.UpgradeCompleted)
-            {
-                Properties.Settings.Default.Upgrade();
-                Properties.Settings.Default.UpgradeCompleted = true;
-                Properties.Settings.Default.Save();
-            }
+            string iniFolder = sbIniFilePath.ToString();
+            if (!Directory.Exists(iniFolder)) Directory.CreateDirectory(iniFolder);
+            iniFilePath = Path.Combine(iniFolder, PluginName + ".ini.xml");
+            Properties.Settings.Default.Context["settingsPath"] = iniFilePath;
 
             _formattingManager = Utils.GetFormattingManager(Properties.Settings.Default);
 
@@ -105,10 +77,10 @@ namespace PoorMansTSqlFormatterNppPlugin
             PluginBase.SetCommand(1, _generalResourceManager.GetString("OptionsButtonText"), formattingOptionsCommand, new ShortcutKey(false, false, false, Keys.None));
         }
 
-
         internal static void PluginCleanUp()
         {
         }
+
         #endregion
 
         #region " Menu functions "
@@ -163,7 +135,6 @@ namespace PoorMansTSqlFormatterNppPlugin
                 _formattingManager = Utils.GetFormattingManager(Properties.Settings.Default);
             }
             settings.Dispose();
-
         }
         #endregion
 
