@@ -120,6 +120,9 @@
   <data name="AboutTitleLabel" xml:space="preserve">
     <value>À propos de {0}</value>
   </data>
+  <data name="ParseErrorWarningPrefix" xml:space="preserve">
+    <value>--ATTENTION! DES ERREURS ON ÉTÉS DÉTECTÉES PENDANT L'ANALYSE DU CODE SQL!</value>
+  </data>
   <data name="SettingsSavingErrorMessage" xml:space="preserve">
     <value>Erreur pendant la sauvegarde de la configuration. Détails:{0}{1}</value>
     <comment>{0} is a newline, {1} is the detailed exception</comment>

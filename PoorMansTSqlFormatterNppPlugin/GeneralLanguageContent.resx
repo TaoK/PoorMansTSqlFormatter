@@ -117,4 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FormatButtonText" xml:space="preserve">
+    <value>Format T-SQL Code</value>
+  </data>
+  <data name="OptionsButtonText" xml:space="preserve">
+    <value>T-SQL Formating Options...</value>
+  </data>
+  <data name="ParseErrorWarningMessage" xml:space="preserve">
+    <value>Errors found during SQL parsing. Would you like to apply formatting anyway?</value>
+  </data>
+  <data name="ParseErrorWarningMessageTitle" xml:space="preserve">
+    <value>Errors found. Continue?</value>
+  </data>
+  <data name="ProjectAboutDescription" xml:space="preserve">
+    <value>A simple free (AGPL) T-SQL Formatting Plugin for Notepad++.</value>
+  </data>
 </root>

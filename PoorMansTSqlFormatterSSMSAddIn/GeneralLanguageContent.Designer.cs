@@ -142,15 +142,6 @@ namespace PoorMansTSqlFormatterSSMSAddIn {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to --WARNING! ERRORS ENCOUNTERED DURING SQL PARSING!.
-        /// </summary>
-        internal static string ParseErrorWarningPrefix {
-            get {
-                return ResourceManager.GetString("ParseErrorWarningPrefix", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to A simple free (AGPL) T-SQL Formatting Addin for SSMS and SSMS Express, 2005 and 2008..
         /// </summary>
         internal static string ProjectAboutDescription {

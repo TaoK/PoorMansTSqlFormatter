@@ -145,9 +145,6 @@
   <data name="ParseErrorWarningMessageTitle" xml:space="preserve">
     <value>Errores encontrados. ¿Continuar?</value>
   </data>
-  <data name="ParseErrorWarningPrefix" xml:space="preserve">
-    <value>--ALERTA! SE ENCONTRARON ERRORES AL ANALIZAR EL CODIGO SQL!</value>
-  </data>
   <data name="ProjectAboutDescription" xml:space="preserve">
     <value>Plug-in gratuito (AGPL) de Formateado de T-SQL, para SSMS y SSMS Express, 2005 y 2008.</value>
   </data>

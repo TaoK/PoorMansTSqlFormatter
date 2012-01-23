@@ -24,9 +24,11 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Resources;
 using System.Windows.Forms;
 using NppPluginNET;
 using System.Reflection;
+using PoorMansTSqlFormatterPluginShared;
 
 namespace PoorMansTSqlFormatterNppPlugin
 {
@@ -40,17 +42,18 @@ namespace PoorMansTSqlFormatterNppPlugin
          *     - If a parsing error is encountered, requests confirmation before continuing
          *  - Keyboards shortcut can be assigned using notepad++ built-in feature: Settings -> Shortcut Mapper...
          *     - If anyone has a suggestion for a default mapping, I'm all ears (the default MS ones are taken I think)
+         *  - Formatting options can be set, and "About" dialog is available from options window.
          *  
-         * Future functionality (for first "Official" release):
-         *  - Default file extension check with warning if doesn't appear to be a sql file
-         *    - option to customize list file extensions that are expected to be SQL
-         *  - Formatting options, like in SSMS plugin or UI program.
-         *  - Translation? (don't know how locale information is propagated to plugins in notepad++ yet)
+         * Wishlist:
+         *  - Translation per user preference - apparently there is currently no way for plugins to access the UI language setting
+         *    - I believe translation should already be working automatically according to user's general locale, just not following Notepad++ setting.
          */
 
         #region " Fields "
         internal const string PluginName = "PoorMansTSqlFormatter";
         static string iniFilePath = null;
+        static PoorMansTSqlFormatterLib.SqlFormattingManager _formattingManager = null;
+        static ResourceManager _generalResourceManager = new ResourceManager("PoorMansTSqlFormatterNppPlugin.GeneralLanguageContent", Assembly.GetExecutingAssembly());
         #endregion
 
         #region " Set-up of standard supporting assembly location "
@@ -76,7 +79,7 @@ namespace PoorMansTSqlFormatterNppPlugin
         #region " StartUp/CleanUp "
         internal static void CommandMenuInit()
         {
-            //this i where I'd really like access to language info from Notepad++ context...
+            //this is where I'd really like access to language info from Notepad++ context...
             //MessageBox.Show(string.Format("Cult: {0}; UICult: {1}", System.Threading.Thread.CurrentThread.CurrentCulture.EnglishName, System.Threading.Thread.CurrentThread.CurrentUICulture.EnglishName));
 
             //get settings from notepad++-assigned plugin data folder
@@ -84,11 +87,22 @@ namespace PoorMansTSqlFormatterNppPlugin
             Win32.SendMessage(PluginBase.nppData._nppHandle, NppMsg.NPPM_GETPLUGINSCONFIGDIR, Win32.MAX_PATH, sbIniFilePath);
             iniFilePath = sbIniFilePath.ToString();
             if (!Directory.Exists(iniFilePath)) Directory.CreateDirectory(iniFilePath);
-            iniFilePath = Path.Combine(iniFilePath, PluginName + ".ini");
+            iniFilePath = Path.Combine(iniFilePath, PluginName + ".ini.xml");
             //someSetting = (Win32.GetPrivateProfileInt("SomeSection", "SomeKey", 0, iniFilePath) != 0);
 
+            //upgrade settings if necessary.
+            if (!Properties.Settings.Default.UpgradeCompleted)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.UpgradeCompleted = true;
+                Properties.Settings.Default.Save();
+            }
+
+            _formattingManager = Utils.GetFormattingManager(Properties.Settings.Default);
+
             //set up menu items
-            PluginBase.SetCommand(0, "Format T-SQL", formatSqlCommand, new ShortcutKey(false, false, false, Keys.None));
+            PluginBase.SetCommand(0, _generalResourceManager.GetString("FormatButtonText"), formatSqlCommand, new ShortcutKey(false, false, false, Keys.None));
+            PluginBase.SetCommand(1, _generalResourceManager.GetString("OptionsButtonText"), formattingOptionsCommand, new ShortcutKey(false, false, false, Keys.None));
         }
 
 
@@ -126,10 +140,10 @@ namespace PoorMansTSqlFormatterNppPlugin
 
             bool errorsEncountered = false;
             bool abortReplacement = false;
-            StringBuilder outBuffer = new StringBuilder(PoorMansTSqlFormatterLib.SqlFormattingManager.DefaultFormat(textBuffer.ToString(), ref errorsEncountered));
+            StringBuilder outBuffer = new StringBuilder(_formattingManager.Format(textBuffer.ToString(), ref errorsEncountered));
 
             if (errorsEncountered)
-                if (MessageBox.Show("Errors encountered during SQL parsing, formatting may result in data loss. Try to format anyway?", "Parsing failed. Continue?", MessageBoxButtons.OKCancel) != DialogResult.OK)
+                if (MessageBox.Show(_generalResourceManager.GetString("ParseErrorWarningMessage"), _generalResourceManager.GetString("ParseErrorWarningMessageTitle"), MessageBoxButtons.OKCancel) != DialogResult.OK)
                     abortReplacement = true;
 
             if (!abortReplacement)
@@ -139,6 +153,17 @@ namespace PoorMansTSqlFormatterNppPlugin
                 else
                     Win32.SendMessage(currentScintilla, SciMsg.SCI_SETTEXT, 0, outBuffer);
             }
+        }
+
+        internal static void formattingOptionsCommand()
+        {
+            SettingsForm settings = new SettingsForm(Properties.Settings.Default, Assembly.GetExecutingAssembly(), _generalResourceManager.GetString("ProjectAboutDescription"));
+            if (settings.ShowDialog() == DialogResult.OK)
+            {
+                _formattingManager = Utils.GetFormattingManager(Properties.Settings.Default);
+            }
+            settings.Dispose();
+
         }
         #endregion
 

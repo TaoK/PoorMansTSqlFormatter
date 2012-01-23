@@ -40,6 +40,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
         private Command _formatCommand;
 
         private ResourceManager _generalResourceManager = new ResourceManager("PoorMansTSqlFormatterSSMSAddIn.GeneralLanguageContent", Assembly.GetExecutingAssembly());
+        private PoorMansTSqlFormatterLib.SqlFormattingManager _formattingManager = null; 
 
         /// <summary>Constructor - non-environment-related initialization here.</summary>
 		public AddinConnector()
@@ -51,6 +52,9 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                 Properties.Settings.Default.UpgradeCompleted = true;
                 Properties.Settings.Default.Save();
             }
+
+            //set up formatter
+            _formattingManager = Utils.GetFormattingManager(Properties.Settings.Default);
 		}
 
 		/// <summary>Environment situation established here.</summary>
@@ -239,25 +243,8 @@ namespace PoorMansTSqlFormatterSSMSAddIn
 
 
                         string textToFormat = formatSelectionOnly ? selectionText : fullText;
-                        var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(
-                            Properties.Settings.Default.IndentString.Replace("\\t", "\t"),
-                            Properties.Settings.Default.SpacesPerTab,
-                            Properties.Settings.Default.MaxLineWidth,
-                            Properties.Settings.Default.ExpandCommaLists,
-                            Properties.Settings.Default.TrailingCommas,
-                            Properties.Settings.Default.SpaceAfterExpandedComma,
-                            Properties.Settings.Default.ExpandBooleanExpressions, 
-                            Properties.Settings.Default.ExpandCaseStatements,
-                            Properties.Settings.Default.ExpandBetweenConditions,
-                            Properties.Settings.Default.BreakJoinOnSections,
-                            Properties.Settings.Default.UppercaseKeywords, 
-                            false,
-                            Properties.Settings.Default.KeywordStandardization
-                            );
-                        formatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix");
-                        var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);
                         bool errorsFound = false;
-                        string formattedText = formattingManager.Format(textToFormat, ref errorsFound);
+                        string formattedText = _formattingManager.Format(textToFormat, ref errorsFound);
 
                         bool abortFormatting = false;
                         if (errorsFound)
@@ -284,6 +271,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                     if (settings.ShowDialog() == DialogResult.OK)
                     {
                         SetFormatHotkey();
+                        _formattingManager = Utils.GetFormattingManager(Properties.Settings.Default);
                     }
                     settings.Dispose();
                 }

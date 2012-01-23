@@ -70,6 +70,15 @@ namespace PoorMansTSqlFormatterPluginShared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to --WARNING! ERRORS ENCOUNTERED DURING SQL PARSING!.
+        /// </summary>
+        internal static string ParseErrorWarningPrefix {
+            get {
+                return ResourceManager.GetString("ParseErrorWarningPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error saving settings. Detail:{0}{1}.
         /// </summary>
         internal static string SettingsSavingErrorMessage {

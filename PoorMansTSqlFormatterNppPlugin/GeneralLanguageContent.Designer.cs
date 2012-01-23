@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PoorMansTSqlFormatterNppPlugin.Properties {
+namespace PoorMansTSqlFormatterNppPlugin {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class GeneralLanguageContent {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal GeneralLanguageContent() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PoorMansTSqlFormatterNppPlugin.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PoorMansTSqlFormatterNppPlugin.GeneralLanguageContent", typeof(GeneralLanguageContent).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,51 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format T-SQL Code.
+        /// </summary>
+        internal static string FormatButtonText {
+            get {
+                return ResourceManager.GetString("FormatButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T-SQL Formating Options....
+        /// </summary>
+        internal static string OptionsButtonText {
+            get {
+                return ResourceManager.GetString("OptionsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Errors found during SQL parsing. Would you like to apply formatting anyway?.
+        /// </summary>
+        internal static string ParseErrorWarningMessage {
+            get {
+                return ResourceManager.GetString("ParseErrorWarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Errors found. Continue?.
+        /// </summary>
+        internal static string ParseErrorWarningMessageTitle {
+            get {
+                return ResourceManager.GetString("ParseErrorWarningMessageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A simple free (AGPL) T-SQL Formatting Plugin for Notepad++..
+        /// </summary>
+        internal static string ProjectAboutDescription {
+            get {
+                return ResourceManager.GetString("ProjectAboutDescription", resourceCulture);
             }
         }
     }

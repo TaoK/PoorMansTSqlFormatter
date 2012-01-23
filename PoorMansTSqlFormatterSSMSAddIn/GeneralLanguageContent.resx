@@ -145,9 +145,6 @@
   <data name="ParseErrorWarningMessageTitle" xml:space="preserve">
     <value>Errors found. Continue?</value>
   </data>
-  <data name="ParseErrorWarningPrefix" xml:space="preserve">
-    <value>--WARNING! ERRORS ENCOUNTERED DURING SQL PARSING!</value>
-  </data>
   <data name="ProjectAboutDescription" xml:space="preserve">
     <value>A simple free (AGPL) T-SQL Formatting Addin for SSMS and SSMS Express, 2005 and 2008.</value>
   </data>
