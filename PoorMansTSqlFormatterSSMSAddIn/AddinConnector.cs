@@ -28,6 +28,7 @@ using System.Reflection;
 using System.Globalization;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using PoorMansTSqlFormatterPluginShared;
 
 namespace PoorMansTSqlFormatterSSMSAddIn
 {
@@ -279,7 +280,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                 }
                 if (commandName.Equals("PoorMansTSqlFormatterSSMSAddIn.AddinConnector.FormattingOptions"))
                 {
-                    SettingsForm settings = new SettingsForm();
+                    SettingsForm settings = new SettingsForm(Properties.Settings.Default, Assembly.GetExecutingAssembly(), _generalResourceManager.GetString("ProjectAboutDescription"));
                     if (settings.ShowDialog() == DialogResult.OK)
                     {
                         SetFormatHotkey();

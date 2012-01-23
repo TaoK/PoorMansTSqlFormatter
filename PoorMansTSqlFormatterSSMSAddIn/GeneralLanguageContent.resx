@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutTitleLabel" xml:space="preserve">
-    <value>About {0}</value>
-  </data>
   <data name="FileTypeWarningMessage" xml:space="preserve">
     <value>The active document is not listed as a ".sql" file - are you sure you want to format?</value>
   </data>
@@ -153,9 +150,5 @@
   </data>
   <data name="ProjectAboutDescription" xml:space="preserve">
     <value>A simple free (AGPL) T-SQL Formatting Addin for SSMS and SSMS Express, 2005 and 2008.</value>
-  </data>
-  <data name="SettingsSavingErrorMessage" xml:space="preserve">
-    <value>Error saving settings. Detail:{0}{1}</value>
-    <comment>{0} is a newline, {1} is the detailed exception</comment>
   </data>
 </root>
