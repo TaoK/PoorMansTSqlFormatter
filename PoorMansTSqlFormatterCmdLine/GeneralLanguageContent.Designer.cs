@@ -115,6 +115,15 @@ namespace PoorMansTSqlFormatterCmdLine {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No input (filename(s) or piped input) has been provided..
+        /// </summary>
+        internal static string NoInputErrorMessage {
+            get {
+                return ResourceManager.GetString("NoInputErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The requested output file could not be created. Error detail: {0}.
         /// </summary>
         internal static string OutputFileCreationErrorMessage {

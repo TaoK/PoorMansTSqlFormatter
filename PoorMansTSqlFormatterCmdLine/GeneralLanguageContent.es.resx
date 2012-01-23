@@ -202,4 +202,7 @@ echo select algunacolumna from algunatabla | SqlFormatter
   <data name="UnrecognizedLanguageErrorMessage" xml:space="preserve">
     <value>No se reconoció el codigo de idioma proporcionado.</value>
   </data>
+  <data name="NoInputErrorMessage" xml:space="preserve">
+    <value>Ningun archivo de entrada (o tubería/pipe) ha sido proporcionado.</value>
+  </data>
 </root>

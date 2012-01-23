@@ -202,4 +202,7 @@ echo select unecolonnequelconque from untableauquelconque | SqlFormatter
   <data name="UnrecognizedLanguageErrorMessage" xml:space="preserve">
     <value>Le code de langue fourni n'est pas valable.</value>
   </data>
+  <data name="NoInputErrorMessage" xml:space="preserve">
+    <value>Aucun fichier d'entrée (ou tube/pipe) n'a été proportionné.</value>
+  </data>
 </root>
