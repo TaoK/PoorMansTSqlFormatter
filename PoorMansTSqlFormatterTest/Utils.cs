@@ -63,9 +63,89 @@ namespace PoorMansTSqlFormatterTests
             return FolderFileNameIterator(GetTestContentFolder("InputSql"));
         }
 
-        public static string GetTestFileContent(string FileName, string TestFolder)
+        public static string GetTestFileContent(string fileName, string testFolderPath)
         {
-            return File.ReadAllText(Path.Combine(Utils.GetTestContentFolder(TestFolder), FileName));
+            return File.ReadAllText(Path.Combine(Utils.GetTestContentFolder(testFolderPath), fileName));
         }
+
+        public static string StripFileConfigString(string fileName)
+        {
+            int openParens = fileName.IndexOf("(");
+            if (openParens >= 0)
+            {
+                int closeParens = fileName.IndexOf(")", openParens);
+                if (closeParens >= 0)
+                {
+                    return fileName.Substring(0, openParens) + fileName.Substring(closeParens + 1);
+                }
+                return fileName;
+            }
+            return fileName;
+        }
+
+        public static string GetFileConfigString(string fileName)
+        {
+            int openParens = fileName.IndexOf("(");
+            if (openParens >= 0)
+            {
+                int closeParens = fileName.IndexOf(")", openParens);
+                if (closeParens >= 0)
+                {
+                    return fileName.Substring(openParens + 1, (closeParens - openParens) - 1);
+                }
+                return "";
+            }
+            return "";
+        }
+
+        internal static Dictionary<string, string> GetConfigKeyCollection(string configString)
+        {
+            Dictionary<string, string> configKeys = new Dictionary<string,string>();
+            if (configString != "")
+            {
+                var pairs = configString.Split(',');
+                foreach (var pair in pairs)
+                {
+                    var vals = pair.Split('=');
+                    if (vals.Length == 2)
+                    {
+                        configKeys.Add(vals[0], vals[1]);
+                    }
+                    else
+                    {
+                        throw new Exception(string.Format("Test file config parens '{0}' contained invalid pair!", configString));
+                    }
+                }
+            }
+            return configKeys;
+        }
+
+        internal static void SetObjectPropertiesFromConfigString(string configString, object targetObject)
+        {
+            Dictionary<string, string> configKeys = Utils.GetConfigKeyCollection(configString);
+            foreach (string key in configKeys.Keys)
+            {
+                var property = targetObject.GetType().GetProperty(key);
+                if (property != null)
+                {
+                    //Should probably change this to use TypeConverter, now that I know about it...
+                    //http://stackoverflow.com/questions/476589/how-do-i-get-from-a-type-to-the-tryparse-method
+                    var propertyTypeParseMethod = property.PropertyType.GetMethod("Parse", new Type[] {typeof(string)});
+                    object propertyValue;
+
+                    if (propertyTypeParseMethod != null)
+                        propertyValue = propertyTypeParseMethod.Invoke(null, new object[] { configKeys[key] });
+                    else
+                        propertyValue = configKeys[key];
+
+                    property.SetValue(targetObject, propertyValue, null);
+                }
+                else
+                {
+                    throw new Exception(string.Format("Property {0} not found in type {1}.", key, targetObject.GetType().Name));
+                }
+            }
+        }
+
     }
 }

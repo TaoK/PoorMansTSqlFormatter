@@ -1,0 +1,697 @@
+﻿-- Sample script from Brent Ozar:
+--  http://www.brentozar.com/sql/blitz-minute-sql-server-takeovers/
+/*
+Script:       BLITZ! 60 Minute Server Takeovers by Brent Ozar
+Version:      1.1 - May 18, 2010
+Source:       http://www.brentozar.com/sql/blitz-minute-sql-server-takeovers/
+License:      Creative Commons.  For more information, see
+              http://www.brentozar.com/what-i-do/using-material-from-my-blog/
+Description:  Shows what I look for when I take over existing servers.
+              Don't just hit F5 - read through each step to learn what I'm
+              checking for, and how to fix things when they indicate problems.
+*/
+/* 
+   Backups!  First and foremost, before we touch anything, check backups.
+   Check when each database has been backed up.  If databases aren't being
+   backed up, check the maintenance plans or scripts.  If you don't have
+   scripts, check http://ola.hallengren.com.
+*/
+SELECT d.NAME
+	, MAX(b.backup_finish_date) AS last_backup_finish_date
+FROM master.sys.databases d
+LEFT OUTER JOIN msdb.dbo.backupset b ON d.NAME = b.database_name AND b.type = 'D'
+WHERE d.database_id NOT IN (
+		2
+		, 3
+		) -- Bonus points if you know what that means
+GROUP BY d.NAME
+ORDER BY 2 DESC
+
+/*
+	Where are the backups going?  Ideally, we want them on a different server.
+	If the backups are being taken to this same server, and the server's RAID
+	card or motherboard goes bad, we're in trouble.  We sort by media_set_id
+	descending because it's the primary key on the table, so it'll fly even
+	when MSDB is on really slow drives.
+	
+	For more information about where your backups should go, check out:
+	http://www.brentozar.com/sql/backup-best-practices/
+*/
+SELECT TOP 100 physical_device_name
+	, *
+FROM msdb.dbo.backupmediafamily
+ORDER BY media_set_id DESC
+
+/*
+   Transaction log backups - do we have any databases in full recovery mode
+   that haven't had t-log backups?  If so, we should think about putting it in
+   simple recovery mode or doing t-log backups.
+*/
+SELECT d.NAME
+	, d.recovery_model
+	, d.recovery_model_desc
+FROM master.sys.databases d
+LEFT OUTER JOIN msdb.dbo.backupset b ON d.NAME = b.database_name AND b.type = 'L'
+WHERE d.recovery_model IN (
+		1
+		, 2
+		) AND b.type IS NULL AND d.database_id NOT IN (
+		2
+		, 3
+		)
+
+/*
+   If there are any databases in full recovery mode with no t-log backups,
+   show the filesize of the according ldf.
+*/
+SELECT d.NAME AS [db_name]
+	, f.NAME AS [ldf_name]
+	, f.physical_name
+	, f.size * 8 / 1024.00 AS [size_in_mb]
+	, d.recovery_model_desc
+FROM sys.master_files f
+JOIN sys.databases d ON f.database_id = d.database_id
+LEFT OUTER JOIN msdb.dbo.backupset b ON d.NAME = b.database_name AND b.type = 'L'
+WHERE d.recovery_model IN (
+		1
+		, 2
+		) AND b.type IS NULL AND d.database_id NOT IN (
+		2
+		, 3
+		) AND f.type = 1 -- only show log files
+ORDER BY f.size DESC
+
+/* 
+   Is the MSDB backup history cleaned up? If you have data older than a couple
+   of months, this is a problem.  You need to set up backup cleanup jobs.  
+   
+   For more information on why this can be a problem?
+   http://www.brentozar.com/archive/2009/09/checking-your-msdb-cleanup-jobs/
+*/
+SELECT TOP 1 backup_start_date
+	, *
+FROM msdb.dbo.backupset
+ORDER BY backup_set_id ASC
+
+/*
+   When was the last time DBCC finished successfully?
+   DBCC CHECKDB checks databases for corruption.  You won't know 
+   Script is from http://sqlserverpedia.com/wiki/Last_clean_DBCC_CHECKDB_date
+   To get sample corrupt databases - http://sqlskills.com/pastConferences.asp
+    
+*/
+CREATE TABLE #temp (
+	ParentObject VARCHAR(255)
+	, [Object] VARCHAR(255)
+	, Field VARCHAR(255)
+	, [Value] VARCHAR(255)
+	)
+
+CREATE TABLE #DBCCResults (
+	ServerName VARCHAR(255)
+	, DBName VARCHAR(255)
+	, LastCleanDBCCDate DATETIME
+	)
+
+EXEC master.dbo.sp_MSforeachdb @command1 = 'USE [?] INSERT INTO #temp EXECUTE (''DBCC DBINFO WITH TABLERESULTS'')'
+	, @command2 = 'INSERT INTO #DBCCResults SELECT @@SERVERNAME, ''?'', Value FROM #temp WHERE Field = ''dbi_dbccLastKnownGood'''
+	, @command3 = 'TRUNCATE TABLE #temp'
+	--Delete duplicates due to a bug in SQL Server 2008
+	;
+
+WITH DBCC_CTE
+AS (
+	SELECT ROW_NUMBER() OVER (
+			PARTITION BY ServerName
+			, DBName
+			, LastCleanDBCCDate ORDER BY LastCleanDBCCDate
+			) RowID
+	FROM #DBCCResults
+	)
+DELETE
+FROM DBCC_CTE
+WHERE RowID > 1;
+
+SELECT ServerName
+	, DBName
+	, CASE LastCleanDBCCDate WHEN '1900-01-01 00:00:00.000' THEN 'Never ran DBCC CHECKDB' ELSE CAST(LastCleanDBCCDate AS VARCHAR) END AS LastCleanDBCCDate
+FROM #DBCCResults
+ORDER BY 3
+
+DROP TABLE #temp
+	, #DBCCResults;
+
+/*
+	If any databases have never experienced the magic of DBCC, consider doing that
+	as soon as practical.  DBCC CHECKDB is a CPU & IO intensive operation, so
+	consider doing it after business hours.  For more information:
+	http://www.sqlskills.com/blogs/paul/post/CHECKDB-From-Every-Angle-Consistency-Checking-Options-for-a-VLDB.aspx
+	For the demo, we'll run it on a small database right away.  This won't work on
+	your machine unless you have a database named TimeTracking.
+*/
+--DBCC CHECKDB(TimeTracking)
+/*
+	Maybe there were DBCC jobs that aren't running.
+	Speaking of which, are jobs failing, and who owns them?
+*/
+SET NOCOUNT ON
+
+DECLARE @MaxLength INT
+
+SET @MaxLength = 50
+
+DECLARE @xp_results TABLE (
+	job_id UNIQUEIDENTIFIER NOT NULL
+	, last_run_date NVARCHAR(20) NOT NULL
+	, last_run_time NVARCHAR(20) NOT NULL
+	, next_run_date NVARCHAR(20) NOT NULL
+	, next_run_time NVARCHAR(20) NOT NULL
+	, next_run_schedule_id INT NOT NULL
+	, requested_to_run INT NOT NULL
+	, request_source INT NOT NULL
+	, request_source_id SYSNAME COLLATE database_default NULL
+	, running INT NOT NULL
+	, current_step INT NOT NULL
+	, current_retry_attempt INT NOT NULL
+	, job_state INT NOT NULL
+	)
+DECLARE @job_owner SYSNAME
+DECLARE @is_sysadmin INT
+
+SET @is_sysadmin = isnull(is_srvrolemember('sysadmin'), 0)
+SET @job_owner = suser_sname()
+
+INSERT INTO @xp_results
+EXECUTE sys.xp_sqlagent_enum_jobs @is_sysadmin
+	, @job_owner
+
+UPDATE @xp_results
+SET last_run_time = right('000000' + last_run_time, 6)
+	, next_run_time = right('000000' + next_run_time, 6)
+
+SELECT j.NAME AS JobName
+	, j.enabled AS Enabled
+	, sl.NAME AS OwnerName
+	, CASE x.running WHEN 1 THEN 'Running' ELSE CASE h.run_status WHEN 2 THEN 'Inactive' WHEN 4 THEN 'Inactive' ELSE 'Completed' END END AS CurrentStatus
+	, coalesce(x.current_step, 0) AS CurrentStepNbr
+	, CASE WHEN x.last_run_date > 0 THEN convert(DATETIME, substring(x.last_run_date, 1, 4) + '-' + substring(x.last_run_date, 5, 2) + '-' + substring(x.last_run_date, 7, 2) + ' ' + substring(x.last_run_time, 1, 2) + ':' + substring(x.last_run_time, 3, 2) + ':' + substring(x.last_run_time, 5, 2) + '.000', 121) ELSE NULL END AS LastRunTime
+	, CASE h.run_status WHEN 0 THEN 'Fail' WHEN 1 THEN 'Success' WHEN 2 THEN 'Retry' WHEN 3 THEN 'Cancel' WHEN 4 THEN 'In progress' END AS LastRunOutcome
+	, CASE WHEN h.run_duration > 0 THEN (h.run_duration / 1000000) * (3600 * 24) + (h.run_duration / 10000 % 100) * 3600 + (h.run_duration / 100 % 100) * 60 + (h.run_duration % 100) ELSE NULL END AS LastRunDuration
+FROM @xp_results x
+LEFT JOIN msdb.dbo.sysjobs j ON x.job_id = j.job_id
+LEFT OUTER JOIN msdb.dbo.syscategories c ON j.category_id = c.category_id
+LEFT OUTER JOIN msdb.dbo.sysjobhistory h ON x.job_id = h.job_id AND x.last_run_date = h.run_date AND x.last_run_time = h.run_time AND h.step_id = 0
+LEFT OUTER JOIN sys.syslogins sl ON j.owner_sid = sl.sid
+
+/*
+	Right up there with data integrity, security's really important.
+	Who else has sysadmin or securityadmin rights on this instance?
+	I care about securityadmin users because they can add themselves to the SA
+	role at any time to do their dirty work, then remove themselves back out.
+	
+	Don't think of them as other sysadmins.  
+	Think of them as users who can get you fired.
+*/
+SELECT l.NAME
+	, l.denylogin
+	, l.isntname
+	, l.isntgroup
+	, l.isntuser
+FROM master.sys.syslogins l
+WHERE l.sysadmin = 1 OR l.securityadmin = 1
+ORDER BY l.isntgroup
+	, l.isntname
+	, l.isntuser
+
+/*
+	Now would be an excellent time to open up a Word doc and start documenting
+	your findings, which helps you prove your worth as a DBA.  And for every
+	SQL authentication user in that list, try logging in with a blank password.
+
+	In your Blitz document, if SA includes Builtin\Administrators, list the 
+	server's local administrators.
+*/
+/*
+	Let's review some server-level security & configuration settings.
+*/
+EXEC dbo.sp_configure 'show advanced options'
+	, 1
+GO
+
+RECONFIGURE
+GO
+
+EXEC dbo.sp_configure
+
+/*
+	Look for anything that's been changed from the default value.
+	What?  You don't know the defaults by heart?  Well, me neither.
+	In SSMS, go into the Object Explorer, then right-click on the server name.
+	Click Reports, Standard Reports, Server Dashboard, and then expand the
+	section Non Default Configuration Options.  It'll show everything that
+	deviates from the defaults.
+
+
+	Below, I set advanced options off, but that's just for demo purposes.
+	You can leave that on if you like.
+
+EXEC dbo.sp_configure 'show advanced options', 0
+GO
+RECONFIGURE
+GO
+*/
+/*
+	Check for startup stored procedures.  These live in the master database, and
+	they run automatically when SQL Server starts up.  They're sometimes left
+	behind by ambitious auditors or evil employees.
+	
+	For more information about startup stored procs, read:
+	http://www.mssqltips.com/tip.asp?tip=1574
+*/
+USE master
+GO
+
+SELECT *
+FROM master.INFORMATION_SCHEMA.ROUTINES
+WHERE OBJECTPROPERTY(OBJECT_ID(ROUTINE_NAME), 'ExecIsStartup') = 1
+
+/* 
+	SQL Server 2008 & above only - is auditing enabled?  If so, it might be
+	writing to an audit path that will fill up, or the server might be set to
+	stop if the file path isn't available.  Let's see if there's any audits.
+	
+	For a video explaining the SQL Server auditing options, check out:
+	http://sqlserverpedia.com/blog/sql-server-2008/guest-podcast-auditing-your-database-server/
+*/
+SELECT *
+FROM sys.dm_server_audit_status
+
+/*
+	Server settings can be made outside of sp_configure too.  The easiest way
+	to check out the service settings are to go into Start, Programs,
+	Microsoft SQL Server, Configuration Tools, SQL Server Configuration Manager.
+	Go there now, and drill into SQL Server Services, then right-click on each
+	service and hit Properties.  The advanced properties for the SQL Server
+	service itself can hide some startup parameters.
+
+	
+	Next, check Instant File Initialization.  Take a note of the service account
+	SQL Server is using, and then run secpol.msc.  Go into Local Policy, User
+	Rights Assignment, Perform Volume Maintenance Tasks.  Double-click on that
+	and add the SQL Server service account.  This lets SQL Server grow data
+	files instantly.  For more info:
+	http://www.sqlskills.com/blogs/kimberly/post/Instant-Initialization-What-Why-and-How.aspx
+
+
+	There's a few more server-level things I like to check, but I use the SSMS
+	GUI.  Go into Server Objects, and check out what's under Endpoints, Linked
+	Servers, Resource Governor, and Triggers.  If any of these objects exist, you
+	want to research to find out what they're being used for.
+*/
+SELECT *
+FROM sys.endpoints
+WHERE type <> 2
+
+SELECT *
+FROM sys.resource_governor_configuration
+
+SELECT *
+FROM sys.server_triggers
+
+SELECT *
+FROM sys.servers
+
+/*
+	Then go into Management, Resource Governor - that's another landmine.
+
+
+	Now as long as we're in the SSMS GUI, let's set up Database Mail.  It's
+	possible to script that out, but I like the GUI for that since I often use
+	wildly different parameters for different clients or departments.
+
+	Once Database Mail is set up, the below script will test it.
+
+*/
+EXEC msdb.dbo.sp_send_dbmail @recipients = 'email@domain.com'
+	, @body = @@SERVERNAME
+	, @subject = 'Testing SQL Server Database Mail - see body for server name';
+GO
+
+/*
+	After enabling Database Mail, the below script sets up a default set of
+	notifications for problems.  In this section, replace these strings:
+	- 'The Database Administrator' - your name goes here
+	- 'YourEmailAddress@Hotmail.com' - your email
+	- '8005551212@cingularme.com' - your phone/pager's email address
+*/
+USE [msdb]
+GO
+
+EXEC msdb.dbo.sp_add_operator @name = N'The Database Administrator'
+	, @enabled = 1
+	, @weekday_pager_start_time = 0
+	, @weekday_pager_end_time = 235959
+	, @saturday_pager_start_time = 0
+	, @saturday_pager_end_time = 235959
+	, @sunday_pager_start_time = 0
+	, @sunday_pager_end_time = 235959
+	, @pager_days = 127
+	, @email_address = N'YourEmailAddress@Hotmail.com'
+	, @pager_address = N'8005551212@cingularme.com'
+	, @category_name = N'[Uncategorized]'
+GO
+
+EXEC msdb.dbo.sp_add_alert @name = N'Severity 016'
+	, @message_id = 0
+	, @severity = 16
+	, @enabled = 1
+	, @delay_between_responses = 60
+	, @include_event_description_in = 1
+	, @job_id = N'00000000-0000-0000-0000-000000000000'
+GO
+
+EXEC msdb.dbo.sp_add_notification @alert_name = N'Severity 016'
+	, @operator_name = N'The Database Administrator'
+	, @notification_method = 7
+GO
+
+EXEC msdb.dbo.sp_add_alert @name = N'Severity 017'
+	, @message_id = 0
+	, @severity = 17
+	, @enabled = 1
+	, @delay_between_responses = 60
+	, @include_event_description_in = 1
+	, @job_id = N'00000000-0000-0000-0000-000000000000'
+GO
+
+EXEC msdb.dbo.sp_add_notification @alert_name = N'Severity 017'
+	, @operator_name = N'The Database Administrator'
+	, @notification_method = 7
+GO
+
+EXEC msdb.dbo.sp_add_alert @name = N'Severity 018'
+	, @message_id = 0
+	, @severity = 18
+	, @enabled = 1
+	, @delay_between_responses = 60
+	, @include_event_description_in = 1
+	, @job_id = N'00000000-0000-0000-0000-000000000000'
+GO
+
+EXEC msdb.dbo.sp_add_notification @alert_name = N'Severity 018'
+	, @operator_name = N'The Database Administrator'
+	, @notification_method = 7
+GO
+
+EXEC msdb.dbo.sp_add_alert @name = N'Severity 019'
+	, @message_id = 0
+	, @severity = 19
+	, @enabled = 1
+	, @delay_between_responses = 60
+	, @include_event_description_in = 1
+	, @job_id = N'00000000-0000-0000-0000-000000000000'
+GO
+
+EXEC msdb.dbo.sp_add_notification @alert_name = N'Severity 019'
+	, @operator_name = N'The Database Administrator'
+	, @notification_method = 7
+GO
+
+EXEC msdb.dbo.sp_add_alert @name = N'Severity 020'
+	, @message_id = 0
+	, @severity = 20
+	, @enabled = 1
+	, @delay_between_responses = 60
+	, @include_event_description_in = 1
+	, @job_id = N'00000000-0000-0000-0000-000000000000'
+GO
+
+EXEC msdb.dbo.sp_add_notification @alert_name = N'Severity 020'
+	, @operator_name = N'The Database Administrator'
+	, @notification_method = 7
+GO
+
+EXEC msdb.dbo.sp_add_alert @name = N'Severity 021'
+	, @message_id = 0
+	, @severity = 21
+	, @enabled = 1
+	, @delay_between_responses = 60
+	, @include_event_description_in = 1
+	, @job_id = N'00000000-0000-0000-0000-000000000000'
+GO
+
+EXEC msdb.dbo.sp_add_notification @alert_name = N'Severity 021'
+	, @operator_name = N'The Database Administrator'
+	, @notification_method = 7
+GO
+
+EXEC msdb.dbo.sp_add_alert @name = N'Severity 022'
+	, @message_id = 0
+	, @severity = 22
+	, @enabled = 1
+	, @delay_between_responses = 60
+	, @include_event_description_in = 1
+	, @job_id = N'00000000-0000-0000-0000-000000000000'
+GO
+
+EXEC msdb.dbo.sp_add_notification @alert_name = N'Severity 022'
+	, @operator_name = N'The Database Administrator'
+	, @notification_method = 7
+GO
+
+EXEC msdb.dbo.sp_add_alert @name = N'Severity 023'
+	, @message_id = 0
+	, @severity = 23
+	, @enabled = 1
+	, @delay_between_responses = 60
+	, @include_event_description_in = 1
+	, @job_id = N'00000000-0000-0000-0000-000000000000'
+GO
+
+EXEC msdb.dbo.sp_add_notification @alert_name = N'Severity 023'
+	, @operator_name = N'The Database Administrator'
+	, @notification_method = 7
+GO
+
+EXEC msdb.dbo.sp_add_alert @name = N'Severity 024'
+	, @message_id = 0
+	, @severity = 24
+	, @enabled = 1
+	, @delay_between_responses = 60
+	, @include_event_description_in = 1
+	, @job_id = N'00000000-0000-0000-0000-000000000000'
+GO
+
+EXEC msdb.dbo.sp_add_notification @alert_name = N'Severity 024'
+	, @operator_name = N'The Database Administrator'
+	, @notification_method = 7
+GO
+
+EXEC msdb.dbo.sp_add_alert @name = N'Severity 025'
+	, @message_id = 0
+	, @severity = 25
+	, @enabled = 1
+	, @delay_between_responses = 60
+	, @include_event_description_in = 1
+	, @job_id = N'00000000-0000-0000-0000-000000000000'
+GO
+
+EXEC msdb.dbo.sp_add_notification @alert_name = N'Severity 025'
+	, @operator_name = N'The Database Administrator'
+	, @notification_method = 7
+GO
+
+/* Specific Alert for Error 825 
+http://www.sqlskills.com/BLOGS/PAUL/post/A-little-known-sign-of-impending-doom-error-825.aspx
+*/
+EXEC msdb.dbo.sp_add_alert @name = N'Error 825'
+	, @message_id = 825
+	, @severity = 0
+	, @enabled = 1
+	, @delay_between_responses = 60
+	, @include_event_description_in = 1
+	, @job_id = N'00000000-0000-0000-0000-000000000000'
+GO
+
+EXEC msdb.dbo.sp_add_notification @alert_name = N'Error 825'
+	, @operator_name = N'The Database Administrator'
+	, @notification_method = 7
+GO
+
+/*
+	A few more checks at the server level.  Go into the Windows Event Logs,
+	and review any errors in the System and Application events.  This is where
+	hardware-level errors can show up too, like failed hard drives.
+*/
+/*
+	I don't like any surprises in the system databases.  Let's check the list of
+	objects in master and model.  I don't want to see any rows returned from
+	these four queries - if there are objects in the system databases, I want to
+	ask why, and get them removed if possible.
+*/
+SELECT *
+FROM master.sys.tables
+WHERE NAME NOT IN (
+		'spt_fallback_db'
+		, 'spt_fallback_dev'
+		, 'spt_fallback_usg'
+		, 'spt_monitor'
+		, 'spt_values'
+		, 'MSreplication_options'
+		)
+
+SELECT *
+FROM master.sys.procedures
+WHERE NAME NOT IN (
+		'sp_MSrepl_startup'
+		, 'sp_MScleanupmergepublisher'
+		)
+
+SELECT *
+FROM model.sys.tables
+
+SELECT *
+FROM model.sys.procedures
+
+/*
+	Alright, we're done with the server level!  Let's check databases.  We could
+	right-click on each database and click Properties, but it can be easier to
+	scan across the results of sys.databases.  I look for any variations - are
+	there some databases that have different settings than others?
+*/
+SELECT *
+FROM sys.databases
+
+/*
+	SQL 2008 & above only - are any databases encrypted?  Transparent Data
+	Encryption is all too transparent.  You won't notice that databases are
+	encrypted if you just glance at SSMS.
+	
+	If this query returns any results, you need to start asking if the certificate
+	has been backed up and where the password is.  If you don't have both the
+	cert and the password to unlock it, then the database can't be restored.
+*/
+SELECT d.NAME
+	, k.*
+FROM sys.dm_database_encryption_keys k
+INNER JOIN sys.databases d ON k.database_id = d.database_id
+ORDER BY d.NAME
+
+/*
+	Are any of the databases using features that are Enterprise Edition only?
+	If a database is using something like partitioning, compression, or
+	Transparent Data Encryption, then I won't be able to restore it onto a
+	Standard Edition server.
+*/
+EXEC dbo.sp_MSforeachdb 'SELECT ''[?]'' AS DatabaseName, * FROM [?].sys.dm_db_persisted_sku_features'
+
+/*
+	Data files - where are they?  Are any on the C drive?  We want to avoid that
+	because if they grow, they can fill up the OS drive, and that can lead to a
+	very nasty crash.  Let's look at where the databases live.  For tips on how to move databases off the C drive:
+	http://support.microsoft.com/kb/224071
+	In the results, also check the number of data and log files for all databases.
+*/
+SELECT db_name(database_id)
+	, *
+FROM sys.master_files
+
+/*
+	Check for triggers in any database.  I can't change these right away, but I
+	want to know if they're present, because it'll help me troubleshoot faster.
+	If I didn't know the database had triggers, I probably wouldn't think to look.
+*/
+EXEC dbo.sp_MSforeachdb 'SELECT ''[?]'' AS database_name, o.name AS table_name, t.* FROM [?].sys.triggers t INNER JOIN [?].sys.objects o ON t.parent_id = o.object_id'
+
+/*
+	We've hit the major pain points on reliability and security.  Now let's do a
+	little poking around in performance.  Let's query the server's wait stats,
+	which tell us what things the server has been waiting on since the last
+	restart.  For more about wait stats, check out:
+	http://sqlserverpedia.com/wiki/Wait_Types
+*/
+SELECT *
+	, (wait_time_ms - signal_wait_time_ms) AS real_wait_time_ms
+FROM sys.dm_os_wait_stats
+ORDER BY (wait_time_ms - signal_wait_time_ms) DESC
+
+/*
+	Do we have any duplicate indexes?  This query from Adam Machanic checks for
+	indexes on exactly the same fields.  You have to run it in each database
+	you want to check, and it's extremely fast.
+*/
+SELECT t.NAME AS tableName
+	, p.*
+FROM sys.tables AS t
+INNER JOIN sys.indexes AS i1 ON i1.object_id = t.object_id
+CROSS APPLY (
+	SELECT TOP 1 *
+	FROM sys.indexes AS i
+	WHERE i.object_id = i1.object_id AND i.index_id > i1.index_id AND i.type_desc <> 'xml'
+	ORDER BY i.index_id
+	) AS i2
+CROSS APPLY (
+	SELECT min(a.index_id) AS ind1
+		, min(b.index_id) AS ind2
+	FROM (
+		SELECT ic.*
+		FROM sys.index_columns ic
+		WHERE ic.object_id = i1.object_id AND ic.index_id = i1.index_id AND ic.is_included_column = 0
+		) AS a
+	FULL OUTER JOIN (
+		SELECT *
+		FROM sys.index_columns AS ic
+		WHERE ic.object_id = i2.object_id AND ic.index_id = i2.index_id AND ic.is_included_column = 0
+		) AS b ON a.index_column_id = b.index_column_id AND a.column_id = b.column_id AND a.key_ordinal = b.key_ordinal
+	HAVING count(CASE WHEN a.index_id IS NULL THEN 1 END) = 0 AND count(CASE WHEN b.index_id IS NULL THEN 1 END) = 0 AND count(a.index_id) = count(b.index_id)
+	) AS p
+WHERE i1.type_desc <> 'xml'
+
+/*
+	Index fragmentation is the leading cause of DBA heartburn. It's a lot like
+	file fragmentation, but it happens inside of the database.  The below script
+	shows fragmented objects that might be a concern.
+	
+	This is an IO-intensive operation, so start by running it in a small database.
+	To run it for all databases, go to the line with this:
+	
+	INNER JOIN sys.dm_db_index_physical_stats (DB_ID(), NULL, NULL , NULL, N'Limited') ps
+	
+	and replace it with:
+	
+	INNER JOIN sys.dm_db_index_physical_stats (NULL, NULL, NULL , NULL, N'Limited') ps	
+	
+	But be careful - that can run VERY long on large database systems, like hours.
+	For more about index fragmentation, check out this page with a video:
+	http://sqlserverpedia.com/wiki/Index_Maintenance
+*/
+SELECT db.NAME AS databaseName
+	, SCHEMA_NAME(obj.schema_id) AS schemaName
+	, OBJECT_NAME(ps.OBJECT_ID) AS tableName
+	, ps.OBJECT_ID AS objectID
+	, ps.index_id AS indexID
+	, ps.partition_number AS partitionNumber
+	, ps.avg_fragmentation_in_percent AS fragmentation
+	, ps.page_count
+FROM sys.databases db
+INNER JOIN sys.dm_db_index_physical_stats(DB_ID(), NULL, NULL, NULL, N'Limited') ps ON db.database_id = ps.database_id
+INNER JOIN sys.objects obj ON ps.object_id = obj.object_id
+WHERE ps.index_id > 0 AND ps.page_count > 100 AND ps.avg_fragmentation_in_percent > 30
+ORDER BY databaseName
+	, schemaName
+	, tableName
+OPTION (MAXDOP 1);/*
+	Finally, let's go back to the users and ask questions:
+	- Can the business operate if this server is down?
+	- How many employees have to stop working if this server goes down?
+	- Who should I call when the server goes down?
+	- Is this server covered by any security or compliance regulations?
+	We can use their answers to build a good backup & recovery solution.
+	
+	Is there anything you think should be added here?  You can edit this script!
+	Go to the script's home page:
+	http://sqlserverpedia.com/wiki/Audit_a_SQL_Server_Configuration
+	Log into SQLServerPedia (it's free to create an account).  After you've
+	logged in, you'll see an Edit button at the top of the page.  Click that,
+	and you can edit this script right now to add your own contributions!
+*/

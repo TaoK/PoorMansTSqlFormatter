@@ -126,6 +126,7 @@
     <Content Include="Data\StandardFormatSql\05_ComplexDDL.txt" />
     <Content Include="Data\StandardFormatSql\06_CTE_Sample_MS.txt" />
     <Content Include="Data\StandardFormatSql\07_ServerTakeoverSample_Brent_Ozar.txt" />
+    <Content Include="Data\StandardFormatSql\08_ComplexBackupDDL_Ola_Hallengren%28TrailingCommas=true,IndentString=      ,BreakJoinOnSections=true%29.txt" />
     <Content Include="Data\StandardFormatSql\08_ComplexBackupDDL_Ola_Hallengren.txt" />
     <Content Include="Data\StandardFormatSql\10_SetOperators_Union.txt" />
     <Content Include="Data\StandardFormatSql\11_MSAccess_Pasted.txt" />
@@ -141,6 +142,9 @@
     <Content Include="Data\StandardFormatSql\24_InsertsAndOutputs.txt" />
     <Content Include="Data\StandardFormatSql\25_Merges.txt" />
     <Content Include="Data\StandardFormatSql\26_DataTypesAndSynonyms.txt" />
+    <Content Include="Data\StandardFormatSql\04_MiscProceduralSample_Unstructured%28ExpandCommaLists=false,MaxLineWidth=60,SpacesPerTab=8%29.txt" />
+    <Content Include="Data\StandardFormatSql\07_ServerTakeoverSample_Brent_Ozar%28SpaceAfterExpandedComma=true,ExpandBooleanExpressions=false,ExpandBetweenConditions=false,ExpandCaseStatements=false%29.txt" />
+    <Content Include="Data\StandardFormatSql\06_CTE_Sample_MS%28UppercaseKeywords=false%29.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">

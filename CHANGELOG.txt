@@ -6,7 +6,10 @@ Version 1.1.2:
    - but default behaviour unchanged, still expect to act on files directly unless piped input provided
    - expected encoding is UTF-8... in powershell, for example, run "$OutputEncoding = [System.Text.Encoding]::UTF8" first.
  - Enhanced Cmdline Utility "no files found" message to include extensions detail
- - Github Issue 26: Changed testing framework to Nunit, simplified testing code, included dependencies for building and testing in any environment
+ - Github Issue 26: Testing enhancements:
+   - Changed testing framework to Nunit, included dependencies for building and testing in any environment
+   - Simplified testing code, with test sources
+   - Added tests for different formatting options / flags, greater coverage
 
 Version 1.1.1: 
 --------------

@@ -37,20 +37,34 @@ namespace PoorMansTSqlFormatterTests
     {
         ISqlTokenizer _tokenizer;
         ISqlTokenParser _parser;
-        TSqlStandardFormatter _treeFormatter;
+        //TSqlStandardFormatter _treeFormatter;
+        Dictionary<string, TSqlStandardFormatter> _formatters;
 
         public TSqlStandardFormatterTests()
         {
             _tokenizer = new TSqlStandardTokenizer();
             _parser = new TSqlStandardParser();
-            _treeFormatter = new TSqlStandardFormatter();
-            _treeFormatter.HTMLColoring = false;
+            _formatters = new Dictionary<string, TSqlStandardFormatter>(StringComparer.OrdinalIgnoreCase);
+        }
+
+        private TSqlStandardFormatter GetFormatter(string configString)
+        {
+            TSqlStandardFormatter outFormatter;
+            if (!_formatters.TryGetValue(configString, out outFormatter))
+            {
+                //defaults are as per the object, except disabling colorized/htmlified output
+                outFormatter = new TSqlStandardFormatter();
+                outFormatter.HTMLColoring = false;
+                Utils.SetObjectPropertiesFromConfigString(configString, outFormatter);
+            }
+            return outFormatter;
         }
 
         [Test, TestCaseSource(typeof(Utils), "GetInputSqlFileNames")]
         public void StandardFormatReparsingReformatting(string FileName)
         {
             string inputSQL = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
+            TSqlStandardFormatter _treeFormatter = GetFormatter("");
             ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
             XmlDocument parsed = _parser.ParseSQL(tokenized);
             string outputSQL = _treeFormatter.FormatSQLTree(parsed);
@@ -75,7 +89,8 @@ namespace PoorMansTSqlFormatterTests
         public void StandardFormatExpectedOutput(string FileName)
         {
             string expectedSql = Utils.GetTestFileContent(FileName, Utils.STANDARDFORMATSQLFOLDER);
-            string inputSql = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
+            string inputSql = Utils.GetTestFileContent(Utils.StripFileConfigString(FileName), Utils.INPUTSQLFOLDER);
+            TSqlStandardFormatter _treeFormatter = GetFormatter(Utils.GetFileConfigString(FileName));
 
             ITokenList tokenized = _tokenizer.TokenizeSQL(inputSql);
             XmlDocument parsed = _parser.ParseSQL(tokenized);
