@@ -9,18 +9,22 @@ namespace NppPluginNET
         #region " Set-up of standard supporting assembly location "
         static PluginBase()
         {
-            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(LoadFromPluginSubFolder);
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(LoadFromSameFolderOrPluginSubFolder);
         }
 
-        static Assembly LoadFromPluginSubFolder(object sender, ResolveEventArgs args)
+        static Assembly LoadFromSameFolderOrPluginSubFolder(object sender, ResolveEventArgs args)
         {
             string pluginPath = typeof(PluginBase).Assembly.Location;
             string pluginName = Path.GetFileNameWithoutExtension(pluginPath);
-            string pluginSubFolder = Path.Combine(Path.GetDirectoryName(pluginPath), pluginName);
-            string assemblyPath = Path.Combine(pluginSubFolder, new AssemblyName(args.Name).Name + ".dll");
+            string pluginFolder = Path.GetDirectoryName(pluginPath);
+            string assemblyLocalFolderPath = Path.Combine(pluginFolder, new AssemblyName(args.Name).Name + ".dll");
+            string pluginSubFolder = Path.Combine(pluginFolder, pluginName);
+            string assemblySubFolderPath = Path.Combine(pluginSubFolder, new AssemblyName(args.Name).Name + ".dll");
 
-            if (File.Exists(assemblyPath))
-                return Assembly.LoadFrom(assemblyPath);
+            if (File.Exists(assemblyLocalFolderPath))
+                return Assembly.LoadFrom(assemblyLocalFolderPath);
+            else if (File.Exists(assemblySubFolderPath))
+                return Assembly.LoadFrom(assemblySubFolderPath);
             else
                 return null;
         }

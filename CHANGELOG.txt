@@ -10,6 +10,7 @@ Version 1.1.2:
    - Changed testing framework to Nunit, included dependencies for building and testing in any environment
    - Simplified testing code, with test sources
    - Added tests for different formatting options / flags, greater coverage
+ - GitHub Issue 31: Completed Notepad++ Plugin, with formatting options.
 
 Version 1.1.1: 
 --------------

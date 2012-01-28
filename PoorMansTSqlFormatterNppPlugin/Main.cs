@@ -50,7 +50,7 @@ namespace PoorMansTSqlFormatterNppPlugin
          */
 
         #region " Fields "
-        internal const string PluginName = "PoorMansTSqlFormatter";
+        internal const string PluginName = "Poor Man's T-Sql Formatter";
         static string iniFilePath = null;
         static PoorMansTSqlFormatterLib.SqlFormattingManager _formattingManager = null;
         static ResourceManager _generalResourceManager = new ResourceManager("PoorMansTSqlFormatterNppPlugin.GeneralLanguageContent", Assembly.GetExecutingAssembly());
