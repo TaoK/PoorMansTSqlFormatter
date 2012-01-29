@@ -1,7 +1,7 @@
-Poor Man's T-SQL Formatter change log
+## Poor Man's T-SQL Formatter change log
 
-Version 1.2.1: 
---------------
+### Version 1.2.1
+
 * Github Issue 32: [Feature Request] Enhanced Cmdline Utility to support pipeline input (and output) [thanks William Lin for the request]
     * but default behaviour unchanged, still expect to act on files directly unless piped input provided
     * expected encoding is UTF-8... in powershell, for example, run "$OutputEncoding = [System.Text.Encoding]::UTF8" first.
@@ -12,8 +12,9 @@ Version 1.2.1:
     * Added tests for different formatting options / flags, greater coverage
 * GitHub Issue 31: Completed Notepad++ Plugin, with formatting options - available trough Notepad++ plugin manager.
 
-Version 1.1.1: 
---------------
+
+### Version 1.1.1
+
 * Translated programs, ssms plugin + website into French and Spanish 
     * thanks to Threeplicate for Amanuens, a free (for open-source projects) localization tool that makes managing translations much easier!
     * and thanks to my wife for proofreading... technical translations are always a mess, but at least I got a second pair of eyes on it!
@@ -30,8 +31,8 @@ Version 1.1.1:
 * Softcoded parsing error message in library (for translation + optional removal of warning)
 
 
-Version 1.0.1: 
---------------
+### Version 1.0.1: 
+
 * Added MERGE clause and statement support
 * Added OUTPUT and OUTPUT ... INTO ... clause support
 * Corrected INSERT ... EXEC parsing/formatting
@@ -43,8 +44,9 @@ Version 1.0.1:
 * Corrected minor indenting bug with single-word clauses at the end of multi-statement container content
 * Added Expected SQL Parse Tree and Standard Output Sql tests in test suite - parse Xml format and output SQL format effectively finalized.
 
-Version 0.9.13: 
---------------
+
+### Version 0.9.13
+
 * Added handling of scope resolution operator ("::")
 * Corrected handling of colon, as NOT being a valid in-word character
 * Added handling of remaining SQL 2008 compound operators (eg "+=")
@@ -56,8 +58,9 @@ Version 0.9.13:
 * Refactoring / reducing direct XmlDocument dependency
 * Added basic initial keyword standardization (or arbitrary mapping), eg "LEFT OUTER JOIN" -> "LEFT JOIN"
 
-Version 0.9.12: 
---------------
+
+### Version 0.9.12
+
 * Corrected expanded-comma-list default to not include spaces between commas and subsequent content, with new "SpaceAfterExpandedComma" option - thanks to Loren Halvorson again for the suggestion!
 * New option "ExpandBetweenConditions", meaning hopefully clear
 * Significant changes to Parse Tree Xml structure, to better handle compound keywords and various containers
@@ -74,15 +77,16 @@ Version 0.9.12:
 * Implemented coloring-only option in the identityformatter
 
 
-Version 0.9.11: Thanks to Loren Halvorson for the feature suggestions!
---------------
+### Version 0.9.11
+
+Thanks to Loren Halvorson for the feature suggestions!
+
 * Added WinMerge plugin (actual plugin implemented in VB6, because I couldn't figure out how to get the COM Interop to work with WinMerge's plugin-loading system directly)
 * Added output file option to CmdLine utility, eg for use with file comparison tools that accept commands to execute pre-comparison.
 * Added return code to CmdLine utility, for feedback to calling programs such as file comparison tools.
 
  
-Version 0.9.10:
---------------
+### Version 0.9.10
 
 * Corrected command-line utility to handle "." as path input pattern
 * Fixed buggy "UNION" parsing and display formatting
@@ -93,8 +97,7 @@ Version 0.9.10:
 * improved "GO" batch separator parsing to match SSMS behaviour, eg allowing single-line comments on the same line 
  
 
-Version 0.9.9:
---------------
+### Version 0.9.9
 
 * Tested library in Mono (but have now added linqbridge since, might have thrown a spanner in the works)
 * Added single-word "Commit" and "Rollback" keyword support.
@@ -107,8 +110,7 @@ Version 0.9.9:
 * Fixed semicolon new-statement detection to handle batch separators and ELSE clauses/statments.
 
  
-Version 0.9.8:
---------------
+### Version 0.9.8
 
 * Fixed parsing error with UPDATE statements in IF blocks
 * Fixed handling of AS keyword for defining data types
@@ -127,8 +129,7 @@ Version 0.9.8:
 * Added merge in winforms demo app's build process, for single-assembly demo
  
 
-Version 0.9.7:
---------------
+### Version 0.9.7
 
 * Added command-line formatter
     * single assembly/executable
@@ -137,8 +138,8 @@ Version 0.9.7:
     * defaults to ".sql" extensions only, but allows for adding others
 * Corrected parsing error with GOTO statements
 
-Version 0.9.6:
---------------
+
+### Version 0.9.6
 
 * Added SSMS Add-in
     * Handles Visual Studio standard Ctrl-K, Ctrl-F hotkey combination
@@ -147,22 +148,20 @@ Version 0.9.6:
     * Warns about parse failures with option to abort
     * Supports SSMS and Express 2005 and 2008
 
-Version 0.9.5:
---------------
+
+### Version 0.9.5
 
 * Added CTE parsing
 * Cleaned up delivery mechanism for full HTML pages
 * Added grouping of DECLARE and SET statements
  
 
-Version 0.9.4:
---------------
+### Version 0.9.4
 
 * Added HTML syntax colorizing (exposed in demo app and web service)
  
 
-Version 0.9.3:
---------------
+### Version 0.9.3
 
 * Added formatting of union clauses
 * Misc minor formatting enhancements (comments, cross apply, etc)
@@ -171,16 +170,14 @@ Version 0.9.3:
 * Introduced notion of Keywords, added Keyword Uppercasing (incl Operators)
 
 
-Version 0.9.2:
---------------
+### Version 0.9.2
 
 * Added structured output of Derived Tables (and subqueries)
 * Added structured output of Case Statements
 * Added more handled keywords
  
 
-Version 0.9.1:
---------------
+### Version 0.9.1
 
 * Added web service demo project
 * Added more handled keywords
@@ -188,9 +185,8 @@ Version 0.9.1:
 * Added Semicolon (statement separator) handling
 
 
-Version 0.9.0:
---------------
+### Version 0.9.0
 
-Initial release, see README.txt for known issues and plans.
+Initial release, see README.md for known issues and plans.
 
 

@@ -1,10 +1,11 @@
-== Poor Man's T-SQL Formatter ==
+## Poor Man's T-SQL Formatter ==
 
 This is a small free .Net 2.0 library (with demo winforms program, web service, SSMS 
 Addin, Command-line utility, Notepad++ plugin, and WinMerge plugin) for reformatting 
 T-SQL code.
 
-=== Features ===
+
+### Features
 
 * Simple Xml-based parse tree
 * Extensible, with possibility of supporting other SQL dialects (but none implemented)
@@ -23,7 +24,8 @@ T-SQL code.
     available in Mono, but the library itself is fully functional, as is the command-line
     bulk formatting tool.
 
-=== General Limitations ===
+
+### General Limitations
 
 * This is NOT a full SQL-parsing solution: only "coarse" parsing is performed, the 
     minimum necessary for re-formatting.
@@ -40,21 +42,22 @@ T-SQL code.
     compatibility level 80), no approach has been decided. For now, table hints 
     without WITH are considered to be arguments to a function.
  
-=== Known Issues / Todo ===
+### Known Issues / Todo
 
 * Handling of DDL Triggers (eg "FOR LOGON")
 * Formatting/indenting of ranking functions 
 * FxCop checking
 * And other stuff that is tracked in the GitHub issues list
 
-=== Longer-term enhancements / additions ===
+
+### Longer-term enhancements / additions
 
 * Compiled mono library + bulk formatting tool download (eg for use on SVN server)
 * Documentation of Xml structure and class usage
 * Pakaging, NuGet and/or OpenWrap
     * Keeping track of versioning and documentation more carefully: http://semver.org/
 
-=== License & Credits ===
+### License & Credits
 
 This application and library is released under the GNU Affero GPL v3: 
 http://www.gnu.org/licenses/agpl.txt
@@ -71,6 +74,13 @@ This project uses several external libraries:
     license, and its homepage is here: http://code.google.com/p/linqbridge/
 * NUnit, for automated testing. NUnit is licensed under a custom open-source license
     based on the zlib/libpng license, and is homepage is: http://www.nunit.org/
+* DLLExport and Notepad++ C# plugin template, based on work by Robert Giesecke and UFO, 
+    available from the [notepad++ plugin development forum](https://sourceforge.net/projects/notepad-plus/forums/forum/482781).
+
+Many of the features in this project result from feedback by multiple people, including
+but not limited to:
+
+* 
 
 Please contact me with any questions, concerns, or issues: my email address starts
 with tao, and is hosted at klerks dot biz.
