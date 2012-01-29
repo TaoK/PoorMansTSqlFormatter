@@ -1,4 +1,4 @@
-## Poor Man's T-SQL Formatter ==
+﻿## Poor Man's T-SQL Formatter
 
 This is a small free .Net 2.0 library (with demo winforms program, web service, SSMS 
 Addin, Command-line utility, Notepad++ plugin, and WinMerge plugin) for reformatting 
@@ -80,7 +80,15 @@ This project uses several external libraries:
 Many of the features in this project result from feedback by multiple people, including
 but not limited to:
 
-* 
+* Loren Halvorson
+* Recep Guzel
+* Lane Duncan
+* Gokhan Varol
+* Pushpendra Rishi
+* Jörg Burdorf
+* William Lin
+
+Translation work on this project is facilitated by [Amanuens](http://amanuens.com/), the online translation platform.
 
 Please contact me with any questions, concerns, or issues: my email address starts
 with tao, and is hosted at klerks dot biz.

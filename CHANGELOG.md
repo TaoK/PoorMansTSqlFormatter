@@ -1,4 +1,4 @@
-## Poor Man's T-SQL Formatter change log
+﻿## Poor Man's T-SQL Formatter change log
 
 ### Version 1.2.1
 
@@ -21,7 +21,7 @@
 * Initial Beta of Notepad++ plugin [thanks UFO and Robert Giesecke for the .Net managed plugin template!]
     * See http://sourceforge.net/projects/notepad-plus/forums/forum/482781/topic/4911359 to get the plugin beta
 * Github Issue 22: [Bugfix] Indenting of "AS" clause on 2nd or later CTE in a query
-* GitHub Issue 21: [Feature Request] Added optional ignore of errors in CmdLine Formatter [thanks J�rg Burdorf for the request]
+* GitHub Issue 21: [Feature Request] Added optional ignore of errors in CmdLine Formatter [thanks Jörg Burdorf for the request]
 * GitHub Issue 18: [Bugfix] Corrected positioning of comments (after linebreak) at end of statements [thanks gvarol for the bug report]
 * GitHub Issue 19: [Feature Request] Added optional indenting of join ON sections [thanks Pushpendra Rishi for the request]
 * GitHub Issue 24: [Bugfix] HTMLEncoding missing in Web Service (eg for poorsql.com) and Winforms demo app [thanks Gokhan Varol for the bug report]
