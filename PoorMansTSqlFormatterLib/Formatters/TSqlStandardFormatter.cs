@@ -52,15 +52,16 @@ namespace PoorMansTSqlFormatterLib.Formatters
         }
 
         private string _indentString;
-        public string IndentString { 
-            get 
+        public string IndentString
+        {
+            get
             {
                 return _indentString;
-            } 
+            }
             set
             {
                 _indentString = value.Replace("\\t", "\t");
-            } 
+            }
         }
 
         public IDictionary<string, string> KeywordMapping = new Dictionary<string, string>();
@@ -550,7 +551,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     SqlXmlConstants.ENAME_COMMENT_MULTILINE,
                     SqlXmlConstants.ENAME_COMMENT_SINGLELINE));
 
-                if (target != null 
+                if (target != null
                     && (target.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
                         || target.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
                         || target.Name.Equals(SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
@@ -609,7 +610,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
         class TSqlFormattingState : BaseFormatterState
         {
             //normal constructor
-            public TSqlFormattingState(bool htmlOutput, string indentString, int spacesPerTab, int maxLineWidth, int initialIndentLevel) : base(htmlOutput)
+            public TSqlFormattingState(bool htmlOutput, string indentString, int spacesPerTab, int maxLineWidth, int initialIndentLevel)
+                : base(htmlOutput)
             {
                 IndentLevel = initialIndentLevel;
                 HtmlOutput = htmlOutput;
@@ -622,7 +624,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
             }
 
             //special "we want isolated state, but inheriting existing conditions" constructor
-            public TSqlFormattingState(TSqlFormattingState sourceState) : base(sourceState.HtmlOutput)
+            public TSqlFormattingState(TSqlFormattingState sourceState)
+                : base(sourceState.HtmlOutput)
             {
                 IndentLevel = sourceState.IndentLevel;
                 HtmlOutput = sourceState.HtmlOutput;
