@@ -85,6 +85,8 @@ but not limited to:
 * Lane Duncan
 * Gokhan Varol
 * Pushpendra Rishi
+* Jonathan Fahey
+* Tim Costello
 * Jörg Burdorf
 * William Lin
 
