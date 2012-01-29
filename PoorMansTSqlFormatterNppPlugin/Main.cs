@@ -36,13 +36,13 @@ namespace PoorMansTSqlFormatterNppPlugin
     {
         /* 
          * First draft of Poor Man's T-SQL formatter plugin for Notepad++:
-         *  - One command on the menu, no other functionality
+         *  - One formatting command on the menu, no other functionality exception options/about
          *     - Reformats the selected code as T-SQL
          *     - If there is no selection, reformats the entire file (scintilla buffer/window, rather)
          *     - If a parsing error is encountered, requests confirmation before continuing
          *  - Keyboards shortcut can be assigned using notepad++ built-in feature: Settings -> Shortcut Mapper...
          *     - If anyone has a suggestion for a default mapping, I'm all ears (the default MS ones are taken I think)
-         *  - Formatting options can be set, and "About" dialog is available from options window.
+         *  - Formatting options can be set through menu, and "About" dialog is available from options window.
          *  
          * Wishlist:
          *  - Translation per user preference - apparently there is currently no way for plugins to access the UI language setting
