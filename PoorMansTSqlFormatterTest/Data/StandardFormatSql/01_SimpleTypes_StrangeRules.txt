@@ -18,13 +18,13 @@ SELECT 1.1 * .1 'LessThanOne'
 -- John Arnott's "T-SQL Parsing Crazy Eights" question
 --  from SQLServerCentral's Question Of The Day quiz:
 SELECT 1.8 E
-	,1.8E
-	,1.E ight
-	,3 + 8E8 Eight
+	,1.8e
+	,1.e ight
+	,3 + 8e8 Eight
 	,3 + 8 E8E
 	,'Six' + 'Seven' 'Eight'
 	,'Six' + 'Seven' + 'Eight'
-	,8.8E ight
+	,8.8e ight
 	,'Six''Seven' 'Eight'
 
 --Interestingly, the SSMS (2005) syntax highlighter gets 
@@ -58,7 +58,7 @@ SELECT 1.1 * .1e-1 'ExponentionallyComplex'
 -- structure of the SQL, and doesn't appear to know that the 
 -- value has changed! (or it would be too much of a pain to 
 -- keep the original value around just for the error message...?)
-SELECT '' AS 0XA
+SELECT '' AS 0xA
 
 --This is a simplistic case that once caused a strange bug:
 SELECT 0.0

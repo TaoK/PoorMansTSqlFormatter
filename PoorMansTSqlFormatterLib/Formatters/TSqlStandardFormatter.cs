@@ -477,9 +477,15 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlXmlConstants.ENAME_NUMBER_VALUE:
-                case SqlXmlConstants.ENAME_BINARY_VALUE:
                     WhiteSpace_SeparateWords(state);
                     state.AddOutputContent(contentElement.InnerText.ToLowerInvariant());
+                    state.WordSeparatorExpected = true;
+                    break;
+
+                case SqlXmlConstants.ENAME_BINARY_VALUE:
+                    WhiteSpace_SeparateWords(state);
+                    state.AddOutputContent("0x");
+                    state.AddOutputContent(contentElement.InnerText.Substring(2).ToUpperInvariant());
                     state.WordSeparatorExpected = true;
                     break;
 
