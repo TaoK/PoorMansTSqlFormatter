@@ -86,6 +86,7 @@ namespace PoorMansTSqlFormatterDemo
             this.chk_ExpandCommaLists = new System.Windows.Forms.CheckBox();
             this.grp_IdentityFormattingOptions = new System.Windows.Forms.GroupBox();
             this.chk_IdentityColoring = new System.Windows.Forms.CheckBox();
+            this.radio_Formatting_Obfuscate = new System.Windows.Forms.RadioButton();
             this.timer_TextChangeDelay = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -243,7 +244,7 @@ namespace PoorMansTSqlFormatterDemo
             // 
             this.groupBox5.Controls.Add(this.tableLayoutPanel2);
             resources.ApplyResources(this.groupBox5, "groupBox5");
-            this.groupBox5.MinimumSize = new System.Drawing.Size(258, 427);
+            this.groupBox5.MinimumSize = new System.Drawing.Size(258, 430);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.TabStop = false;
             // 
@@ -254,6 +255,7 @@ namespace PoorMansTSqlFormatterDemo
             this.tableLayoutPanel2.Controls.Add(this.radio_Formatting_Standard, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.grp_Options, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.grp_IdentityFormattingOptions, 1, 3);
+            this.tableLayoutPanel2.Controls.Add(this.radio_Formatting_Obfuscate, 0, 4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             // 
             // radio_Formatting_Identity
@@ -424,6 +426,15 @@ namespace PoorMansTSqlFormatterDemo
             this.chk_IdentityColoring.Name = "chk_IdentityColoring";
             this.chk_IdentityColoring.UseVisualStyleBackColor = true;
             this.chk_IdentityColoring.CheckedChanged += new System.EventHandler(this.FormatSettingsControlChanged);
+            // 
+            // radio_Formatting_Obfuscate
+            // 
+            resources.ApplyResources(this.radio_Formatting_Obfuscate, "radio_Formatting_Obfuscate");
+            this.tableLayoutPanel2.SetColumnSpan(this.radio_Formatting_Obfuscate, 2);
+            this.radio_Formatting_Obfuscate.Name = "radio_Formatting_Obfuscate";
+            this.radio_Formatting_Obfuscate.TabStop = true;
+            this.radio_Formatting_Obfuscate.UseVisualStyleBackColor = true;
+            this.radio_Formatting_Obfuscate.CheckedChanged += new System.EventHandler(this.FormatSettingsControlChanged);
             // 
             // timer_TextChangeDelay
             // 
@@ -602,6 +613,7 @@ namespace PoorMansTSqlFormatterDemo
         private FrameworkClassReplacements.RadioToolStripMenuItem englishToolStripMenuItem;
         private FrameworkClassReplacements.RadioToolStripMenuItem frenchToolStripMenuItem;
         private FrameworkClassReplacements.RadioToolStripMenuItem spanishToolStripMenuItem;
+        private System.Windows.Forms.RadioButton radio_Formatting_Obfuscate;
     }
 }
 

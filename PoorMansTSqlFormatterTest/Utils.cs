@@ -53,7 +53,18 @@ namespace PoorMansTSqlFormatterTests
 
         public static void StripWhiteSpaceFromSqlTree(XmlDocument sqlTree)
         {
-            XmlNodeList deletionCandidates = sqlTree.SelectNodes(string.Format("//*[local-name() = '{0}']", PoorMansTSqlFormatterLib.Interfaces.SqlXmlConstants.ENAME_WHITESPACE));
+            StripElementNameFromXml(sqlTree, PoorMansTSqlFormatterLib.Interfaces.SqlXmlConstants.ENAME_WHITESPACE);
+        }
+
+        public static void StripCommentsFromSqlTree(XmlDocument sqlTree)
+        {
+            StripElementNameFromXml(sqlTree, PoorMansTSqlFormatterLib.Interfaces.SqlXmlConstants.ENAME_COMMENT_MULTILINE);
+            StripElementNameFromXml(sqlTree, PoorMansTSqlFormatterLib.Interfaces.SqlXmlConstants.ENAME_COMMENT_SINGLELINE);
+        }
+
+        private static void StripElementNameFromXml(XmlDocument sqlTree, string elementName)
+        {
+            XmlNodeList deletionCandidates = sqlTree.SelectNodes(string.Format("//*[local-name() = '{0}']", elementName));
             foreach (XmlElement deletionCandidate in deletionCandidates)
                 deletionCandidate.ParentNode.RemoveChild(deletionCandidate);
         }

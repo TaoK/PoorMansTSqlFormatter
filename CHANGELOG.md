@@ -1,5 +1,10 @@
 ﻿## Poor Man's T-SQL Formatter change log
 
+### Version 1.2.2
+
+* Github Issue 34: [New Feature] Obfuscating formatter / minifier in Winforms app and Web Service
+
+
 ### Version 1.2.1
 
 * Github Issue 32: [Feature Request] Enhanced Cmdline Utility to support pipeline input (and output) [thanks William Lin for the request]

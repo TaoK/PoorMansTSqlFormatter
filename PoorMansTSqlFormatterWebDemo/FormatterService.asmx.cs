@@ -52,6 +52,7 @@ namespace PoorMansTSqlFormatterWebDemo
                 true, 
                 true, 
                 false,
+                false,
                 false
                 );
         }
@@ -73,7 +74,8 @@ namespace PoorMansTSqlFormatterWebDemo
             bool uppercaseKeywords, 
             bool coloring,
             bool keywordStandardization,
-            bool useParseErrorPlaceholder
+            bool useParseErrorPlaceholder,
+            bool obfuscate
             )
         {
             PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter formatter = null;
@@ -93,6 +95,8 @@ namespace PoorMansTSqlFormatterWebDemo
                     coloring, 
                     keywordStandardization
                     );
+            else if (obfuscate)
+                formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter();
             else
                 formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter(coloring);
 

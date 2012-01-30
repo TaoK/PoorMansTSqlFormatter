@@ -30,6 +30,7 @@ namespace PoorMansTSqlFormatterDemo
     {
         const string FORMATTER_STANDARD = "Standard";
         const string FORMATTER_IDENTITY = "Identity";
+        const string FORMATTER_OBFUSCATE = "Obfuscate";
 
         const string UILANGUAGE_EN = "EN";
         const string UILANGUAGE_FR = "FR";
@@ -101,6 +102,8 @@ namespace PoorMansTSqlFormatterDemo
             radio_Formatting_Identity.Checked = Properties.Settings.Default.Formatter.Equals(FORMATTER_IDENTITY, StringComparison.InvariantCultureIgnoreCase);
             chk_IdentityColoring.Checked = Properties.Settings.Default.IdentityColoring;
 
+            radio_Formatting_Obfuscate.Checked = Properties.Settings.Default.Formatter.Equals(FORMATTER_OBFUSCATE, StringComparison.InvariantCultureIgnoreCase);
+
             _settingsLoaded = true;
 
             SetFormatter();
@@ -137,6 +140,8 @@ namespace PoorMansTSqlFormatterDemo
             if (radio_Formatting_Identity.Checked) Properties.Settings.Default.Formatter = FORMATTER_IDENTITY; 
             chk_IdentityColoring.Checked = Properties.Settings.Default.IdentityColoring;
 
+            if (radio_Formatting_Obfuscate.Checked) Properties.Settings.Default.Formatter = FORMATTER_OBFUSCATE;
+
             Properties.Settings.Default.Save();
         }
 
@@ -146,23 +151,25 @@ namespace PoorMansTSqlFormatterDemo
             if (radio_Formatting_Standard.Checked)
             {
                 innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(
-                    txt_Indent.Text, 
-                    int.Parse(txt_IndentWidth.Text), 
-                    int.Parse(txt_MaxWidth.Text), 
-                    chk_ExpandCommaLists.Checked, 
-                    chk_TrailingCommas.Checked, 
-                    chk_SpaceAfterComma.Checked, 
-                    chk_ExpandBooleanExpressions.Checked, 
-                    chk_ExpandCaseStatements.Checked, 
+                    txt_Indent.Text,
+                    int.Parse(txt_IndentWidth.Text),
+                    int.Parse(txt_MaxWidth.Text),
+                    chk_ExpandCommaLists.Checked,
+                    chk_TrailingCommas.Checked,
+                    chk_SpaceAfterComma.Checked,
+                    chk_ExpandBooleanExpressions.Checked,
+                    chk_ExpandCaseStatements.Checked,
                     chk_ExpandBetweenConditions.Checked,
                     chk_BreakJoinOnSections.Checked,
-                    chk_UppercaseKeywords.Checked, 
-                    chk_Coloring.Checked, 
+                    chk_UppercaseKeywords.Checked,
+                    chk_Coloring.Checked,
                     chk_EnableKeywordStandardization.Checked
                     );
             }
-            else
+            else if (radio_Formatting_Identity.Checked)
                 innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter(chk_IdentityColoring.Checked);
+            else
+                innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter();
 
             innerFormatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix");
             _formatter = new PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper(innerFormatter);
