@@ -468,12 +468,17 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlXmlConstants.ENAME_OTHERNODE:
-                case SqlXmlConstants.ENAME_NUMBER_VALUE:
                 case SqlXmlConstants.ENAME_MONETARY_VALUE:
-                case SqlXmlConstants.ENAME_BINARY_VALUE:
                 case SqlXmlConstants.ENAME_LABEL:
                     WhiteSpace_SeparateWords(state);
                     state.AddOutputContent(contentElement.InnerText);
+                    state.WordSeparatorExpected = true;
+                    break;
+
+                case SqlXmlConstants.ENAME_NUMBER_VALUE:
+                case SqlXmlConstants.ENAME_BINARY_VALUE:
+                    WhiteSpace_SeparateWords(state);
+                    state.AddOutputContent(contentElement.InnerText.ToLowerInvariant());
                     state.WordSeparatorExpected = true;
                     break;
 
