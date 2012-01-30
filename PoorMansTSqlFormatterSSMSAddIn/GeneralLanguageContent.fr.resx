@@ -148,8 +148,4 @@
   <data name="ProjectAboutDescription" xml:space="preserve">
     <value>Plug-in gratuit (AGPL) de Formattage de T-SQL, pour SSMS et SSMS Express, 2005 y 2008.</value>
   </data>
-  <data name="SettingsSavingErrorMessage" xml:space="preserve">
-    <value>Erreur pendant la sauvegarde de la configuration. Détails:{0}{1}</value>
-    <comment>{0} is a newline, {1} is the detailed exception</comment>
-  </data>
 </root>

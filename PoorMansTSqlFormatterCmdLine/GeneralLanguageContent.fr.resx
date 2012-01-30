@@ -121,7 +121,7 @@
     <value>Paramètres inconnus trouvés!</value>
   </data>
   <data name="BackupFailureWarningMessage" xml:space="preserve">
-    <value>Sauvegarde échoué: {0}{1} On saute la mise en forme pour ce fichier.</value>
+    <value>Sauvegarde échouée: {0}{1} On saute la mise en forme pour ce fichier.</value>
     <comment>{0} is the filename, {1} is a linebreak.</comment>
   </data>
   <data name="ContentWriteFailureWarningMessage" xml:space="preserve">
@@ -137,7 +137,7 @@
     <value>La création du dossier a échoué: {0}</value>
   </data>
   <data name="NoFilesFoundWarningMessage" xml:space="preserve">
-    <value>Aucun fichier trouvé pour ce nom ou modèle de nom ({0}) et extension (({1})</value>
+    <value>Aucun fichier trouvé pour ce nom ou modèle de nom ({0}) et extension ({1})</value>
     <comment>{0} is the filename pattern, {1} is the requested extensions</comment>
   </data>
   <data name="OutputFileCreationErrorMessage" xml:space="preserve">
