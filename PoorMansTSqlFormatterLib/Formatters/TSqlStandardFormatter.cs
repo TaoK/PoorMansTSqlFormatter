@@ -84,7 +84,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
             //thread-safe - each call to FormatSQLTree() gets its own independent state object
-            TSqlFormattingState state = new TSqlFormattingState(HTMLColoring, IndentString, SpacesPerTab, MaxLineWidth, 0);
+            TSqlStandardFormattingState state = new TSqlStandardFormattingState(HTMLColoring, IndentString, SpacesPerTab, MaxLineWidth, 0);
 
             if (sqlTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", SqlXmlConstants.ENAME_SQL_ROOT, SqlXmlConstants.ANAME_ERRORFOUND)) != null)
                 state.AddOutputContent(ErrorOutputPrefix);
@@ -96,13 +96,13 @@ namespace PoorMansTSqlFormatterLib.Formatters
             return state.DumpOutput();
         }
 
-        private void ProcessSqlNodeList(XmlNodeList rootList, TSqlFormattingState state)
+        private void ProcessSqlNodeList(XmlNodeList rootList, TSqlStandardFormattingState state)
         {
             foreach (XmlElement contentElement in rootList)
                 ProcessSqlNode(contentElement, state);
         }
 
-        private void ProcessSqlNode(XmlElement contentElement, TSqlFormattingState state)
+        private void ProcessSqlNode(XmlElement contentElement, TSqlStandardFormattingState state)
         {
             int initialIndent = state.IndentLevel;
 
@@ -270,7 +270,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     if (contentElement.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS))
                         state.IncrementIndent();
                     state.AddOutputContent(FormatOperator("("), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
-                    TSqlFormattingState innerState = new TSqlFormattingState(state);
+                    TSqlStandardFormattingState innerState = new TSqlStandardFormattingState(state);
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), innerState);
                     //if there was a linebreak in the parens content, or if it wanted one to follow, then put linebreaks before and after.
                     if (innerState.BreakExpected || innerState.OutputContainsLineBreak)
@@ -497,20 +497,20 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 outputKeyword = keyword;
 
             if (UppercaseKeywords)
-                return outputKeyword.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
+                return outputKeyword.ToUpperInvariant();
             else
-                return outputKeyword.ToLower();
+                return outputKeyword.ToLowerInvariant();
         }
 
         private string FormatOperator(string operatorValue)
         {
             if (UppercaseKeywords)
-                return operatorValue.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
+                return operatorValue.ToUpperInvariant();
             else
-                return operatorValue.ToLower();
+                return operatorValue.ToLowerInvariant();
         }
 
-        private void WhiteSpace_SeparateStatements(XmlElement contentElement, TSqlFormattingState state)
+        private void WhiteSpace_SeparateStatements(XmlElement contentElement, TSqlStandardFormattingState state)
         {
             if (state.StatementBreakExpected)
             {
@@ -519,13 +519,13 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 if (!(thisClauseStarter != null
                     && thisClauseStarter.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
                     && state.GetRecentKeyword() != null
-                    && ((thisClauseStarter.InnerXml.ToUpper(System.Globalization.CultureInfo.InvariantCulture).Equals("SET")
+                    && ((thisClauseStarter.InnerXml.ToUpperInvariant().Equals("SET")
                             && state.GetRecentKeyword().Equals("SET")
                             )
-                        || (thisClauseStarter.InnerXml.ToUpper(System.Globalization.CultureInfo.InvariantCulture).Equals("DECLARE")
+                        || (thisClauseStarter.InnerXml.ToUpperInvariant().Equals("DECLARE")
                             && state.GetRecentKeyword().Equals("DECLARE")
                             )
-                        || (thisClauseStarter.InnerXml.ToUpper(System.Globalization.CultureInfo.InvariantCulture).Equals("PRINT")
+                        || (thisClauseStarter.InnerXml.ToUpperInvariant().Equals("PRINT")
                             && state.GetRecentKeyword().Equals("PRINT")
                             )
                         )
@@ -565,7 +565,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             return target;
         }
 
-        private void WhiteSpace_SeparateWords(TSqlFormattingState state)
+        private void WhiteSpace_SeparateWords(TSqlStandardFormattingState state)
         {
             if (state.BreakExpected || state.AdditionalBreakExpected)
             {
@@ -583,7 +583,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             state.WordSeparatorExpected = false;
         }
 
-        private void WhiteSpace_SeparateComment(XmlElement contentElement, TSqlFormattingState state)
+        private void WhiteSpace_SeparateComment(XmlElement contentElement, TSqlStandardFormattingState state)
         {
             if ((state.BreakExpected || state.WordSeparatorExpected) && state.SourceBreakPending)
             {
@@ -596,7 +596,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             state.WordSeparatorExpected = false;
         }
 
-        private void WhiteSpace_BreakAsExpected(TSqlFormattingState state)
+        private void WhiteSpace_BreakAsExpected(TSqlStandardFormattingState state)
         {
             if (state.BreakExpected)
                 state.WhiteSpace_BreakToNextLine();
@@ -607,10 +607,10 @@ namespace PoorMansTSqlFormatterLib.Formatters
             }
         }
 
-        class TSqlFormattingState : BaseFormatterState
+        class TSqlStandardFormattingState : BaseFormatterState
         {
             //normal constructor
-            public TSqlFormattingState(bool htmlOutput, string indentString, int spacesPerTab, int maxLineWidth, int initialIndentLevel)
+            public TSqlStandardFormattingState(bool htmlOutput, string indentString, int spacesPerTab, int maxLineWidth, int initialIndentLevel)
                 : base(htmlOutput)
             {
                 IndentLevel = initialIndentLevel;
@@ -624,7 +624,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             }
 
             //special "we want isolated state, but inheriting existing conditions" constructor
-            public TSqlFormattingState(TSqlFormattingState sourceState)
+            public TSqlStandardFormattingState(TSqlStandardFormattingState sourceState)
                 : base(sourceState.HtmlOutput)
             {
                 IndentLevel = sourceState.IndentLevel;
@@ -711,7 +711,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             private static Regex _lineBreakMatcher = new Regex(@"(\r|\n)+", RegexOptions.Compiled);
             public bool OutputContainsLineBreak { get { return _lineBreakMatcher.IsMatch(_outBuilder.ToString()); } }
 
-            public void Assimilate(TSqlFormattingState partialState)
+            public void Assimilate(TSqlStandardFormattingState partialState)
             {
                 //TODO: find a way out of the cross-dependent wrapping maze...
                 CurrentLineLength = CurrentLineLength + partialState.CurrentLineLength;
@@ -722,13 +722,13 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
             private Dictionary<int, string> _mostRecentKeywordsAtEachLevel = new Dictionary<int, string>();
 
-            public TSqlFormattingState IncrementIndent()
+            public TSqlStandardFormattingState IncrementIndent()
             {
                 IndentLevel++;
                 return this;
             }
 
-            public TSqlFormattingState DecrementIndent()
+            public TSqlStandardFormattingState DecrementIndent()
             {
                 IndentLevel--;
                 return this;
@@ -737,7 +737,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             public void SetRecentKeyword(string ElementName)
             {
                 if (!_mostRecentKeywordsAtEachLevel.ContainsKey(IndentLevel))
-                    _mostRecentKeywordsAtEachLevel.Add(IndentLevel, ElementName.ToUpper(System.Globalization.CultureInfo.InvariantCulture));
+                    _mostRecentKeywordsAtEachLevel.Add(IndentLevel, ElementName.ToUpperInvariant());
             }
 
             public string GetRecentKeyword()
