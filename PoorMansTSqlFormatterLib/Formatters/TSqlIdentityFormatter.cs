@@ -169,6 +169,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_SCOPERESOLUTIONOPERATOR:
                 case SqlXmlConstants.ENAME_AND_OPERATOR:
                 case SqlXmlConstants.ENAME_OR_OPERATOR:
+                case SqlXmlConstants.ENAME_ALPHAOPERATOR:
                 case SqlXmlConstants.ENAME_OTHEROPERATOR:
                     state.AddOutputContent(contentElement.InnerText, Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                     break;

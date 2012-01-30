@@ -1075,7 +1075,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 switch (matchedKeywordType)
                                 {
                                     case KeywordType.OperatorKeyword:
-                                        newNodeName = SqlXmlConstants.ENAME_OTHEROPERATOR;
+                                        newNodeName = SqlXmlConstants.ENAME_ALPHAOPERATOR;
                                         break;
                                     case KeywordType.FunctionKeyword:
                                         newNodeName = SqlXmlConstants.ENAME_FUNCTION_KEYWORD;

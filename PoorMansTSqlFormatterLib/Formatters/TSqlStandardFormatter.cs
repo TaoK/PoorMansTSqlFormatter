@@ -430,6 +430,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlXmlConstants.ENAME_ASTERISK:
+                case SqlXmlConstants.ENAME_ALPHAOPERATOR:
                 case SqlXmlConstants.ENAME_OTHEROPERATOR:
                     WhiteSpace_SeparateWords(state);
                     state.AddOutputContent(FormatOperator(contentElement.InnerText), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);

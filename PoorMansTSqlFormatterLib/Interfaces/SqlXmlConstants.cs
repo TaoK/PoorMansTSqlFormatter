@@ -105,6 +105,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_SEMICOLON = "Semicolon";
         public const string ENAME_SCOPERESOLUTIONOPERATOR = "ScopeResolutionOperator";
         public const string ENAME_ASTERISK = "Asterisk";
+        public const string ENAME_ALPHAOPERATOR = "AlphaOperator";
         public const string ENAME_OTHEROPERATOR = "OtherOperator";
 
         public const string ENAME_AND_OPERATOR = "And";
