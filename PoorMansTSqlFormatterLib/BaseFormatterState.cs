@@ -53,6 +53,11 @@ namespace PoorMansTSqlFormatterLib
                 _outBuilder.Append(content);
         }
 
+        public virtual void AddOutputContentRaw(string content)
+        {
+            _outBuilder.Append(content);
+        }
+
         public virtual void AddOutputLineBreak()
         {
             _outBuilder.Append(Environment.NewLine);

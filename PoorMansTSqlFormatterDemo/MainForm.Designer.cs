@@ -87,6 +87,8 @@ namespace PoorMansTSqlFormatterDemo
             this.grp_IdentityFormattingOptions = new System.Windows.Forms.GroupBox();
             this.chk_IdentityColoring = new System.Windows.Forms.CheckBox();
             this.radio_Formatting_Obfuscate = new System.Windows.Forms.RadioButton();
+            this.grp_ObfuscationOptions = new System.Windows.Forms.GroupBox();
+            this.chk_RandomizeColor = new System.Windows.Forms.CheckBox();
             this.timer_TextChangeDelay = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,6 +100,10 @@ namespace PoorMansTSqlFormatterDemo
             this.frenchToolStripMenuItem = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem();
             this.spanishToolStripMenuItem = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chk_RandomizeLineLength = new System.Windows.Forms.CheckBox();
+            this.chk_RandomizeKeywordCase = new System.Windows.Forms.CheckBox();
+            this.chk_PreserveComments = new System.Windows.Forms.CheckBox();
+            this.chk_KeywordSubstitution = new System.Windows.Forms.CheckBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -119,6 +125,7 @@ namespace PoorMansTSqlFormatterDemo
             this.tableLayoutPanel2.SuspendLayout();
             this.grp_Options.SuspendLayout();
             this.grp_IdentityFormattingOptions.SuspendLayout();
+            this.grp_ObfuscationOptions.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -133,7 +140,9 @@ namespace PoorMansTSqlFormatterDemo
             // 
             // splitContainer1.Panel2
             // 
+            resources.ApplyResources(this.splitContainer1.Panel2, "splitContainer1.Panel2");
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer3);
+            this.splitContainer1.Panel2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             // 
             // splitContainer4
             // 
@@ -217,6 +226,7 @@ namespace PoorMansTSqlFormatterDemo
             // 
             // splitContainer3.Panel2
             // 
+            resources.ApplyResources(this.splitContainer3.Panel2, "splitContainer3.Panel2");
             this.splitContainer3.Panel2.Controls.Add(this.groupBox5);
             // 
             // groupBox4
@@ -244,7 +254,7 @@ namespace PoorMansTSqlFormatterDemo
             // 
             this.groupBox5.Controls.Add(this.tableLayoutPanel2);
             resources.ApplyResources(this.groupBox5, "groupBox5");
-            this.groupBox5.MinimumSize = new System.Drawing.Size(258, 430);
+            this.groupBox5.MinimumSize = new System.Drawing.Size(238, 580);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.TabStop = false;
             // 
@@ -256,6 +266,7 @@ namespace PoorMansTSqlFormatterDemo
             this.tableLayoutPanel2.Controls.Add(this.grp_Options, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.grp_IdentityFormattingOptions, 1, 3);
             this.tableLayoutPanel2.Controls.Add(this.radio_Formatting_Obfuscate, 0, 4);
+            this.tableLayoutPanel2.Controls.Add(this.grp_ObfuscationOptions, 1, 5);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             // 
             // radio_Formatting_Identity
@@ -436,6 +447,24 @@ namespace PoorMansTSqlFormatterDemo
             this.radio_Formatting_Obfuscate.UseVisualStyleBackColor = true;
             this.radio_Formatting_Obfuscate.CheckedChanged += new System.EventHandler(this.FormatSettingsControlChanged);
             // 
+            // grp_ObfuscationOptions
+            // 
+            this.grp_ObfuscationOptions.Controls.Add(this.chk_KeywordSubstitution);
+            this.grp_ObfuscationOptions.Controls.Add(this.chk_PreserveComments);
+            this.grp_ObfuscationOptions.Controls.Add(this.chk_RandomizeKeywordCase);
+            this.grp_ObfuscationOptions.Controls.Add(this.chk_RandomizeLineLength);
+            this.grp_ObfuscationOptions.Controls.Add(this.chk_RandomizeColor);
+            resources.ApplyResources(this.grp_ObfuscationOptions, "grp_ObfuscationOptions");
+            this.grp_ObfuscationOptions.Name = "grp_ObfuscationOptions";
+            this.grp_ObfuscationOptions.TabStop = false;
+            // 
+            // chk_RandomizeColor
+            // 
+            resources.ApplyResources(this.chk_RandomizeColor, "chk_RandomizeColor");
+            this.chk_RandomizeColor.Name = "chk_RandomizeColor";
+            this.chk_RandomizeColor.UseVisualStyleBackColor = true;
+            this.chk_RandomizeColor.CheckedChanged += new System.EventHandler(this.FormatSettingsControlChanged);
+            // 
             // timer_TextChangeDelay
             // 
             this.timer_TextChangeDelay.Interval = 500;
@@ -522,6 +551,30 @@ namespace PoorMansTSqlFormatterDemo
             resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // chk_RandomizeLineLength
+            // 
+            resources.ApplyResources(this.chk_RandomizeLineLength, "chk_RandomizeLineLength");
+            this.chk_RandomizeLineLength.Name = "chk_RandomizeLineLength";
+            this.chk_RandomizeLineLength.UseVisualStyleBackColor = true;
+            // 
+            // chk_RandomizeKeywordCase
+            // 
+            resources.ApplyResources(this.chk_RandomizeKeywordCase, "chk_RandomizeKeywordCase");
+            this.chk_RandomizeKeywordCase.Name = "chk_RandomizeKeywordCase";
+            this.chk_RandomizeKeywordCase.UseVisualStyleBackColor = true;
+            // 
+            // chk_PreserveComments
+            // 
+            resources.ApplyResources(this.chk_PreserveComments, "chk_PreserveComments");
+            this.chk_PreserveComments.Name = "chk_PreserveComments";
+            this.chk_PreserveComments.UseVisualStyleBackColor = true;
+            // 
+            // chk_KeywordSubstitution
+            // 
+            resources.ApplyResources(this.chk_KeywordSubstitution, "chk_KeywordSubstitution");
+            this.chk_KeywordSubstitution.Name = "chk_KeywordSubstitution";
+            this.chk_KeywordSubstitution.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -557,6 +610,8 @@ namespace PoorMansTSqlFormatterDemo
             this.grp_Options.PerformLayout();
             this.grp_IdentityFormattingOptions.ResumeLayout(false);
             this.grp_IdentityFormattingOptions.PerformLayout();
+            this.grp_ObfuscationOptions.ResumeLayout(false);
+            this.grp_ObfuscationOptions.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -614,6 +669,12 @@ namespace PoorMansTSqlFormatterDemo
         private FrameworkClassReplacements.RadioToolStripMenuItem frenchToolStripMenuItem;
         private FrameworkClassReplacements.RadioToolStripMenuItem spanishToolStripMenuItem;
         private System.Windows.Forms.RadioButton radio_Formatting_Obfuscate;
+        private System.Windows.Forms.GroupBox grp_ObfuscationOptions;
+        private System.Windows.Forms.CheckBox chk_RandomizeColor;
+        private System.Windows.Forms.CheckBox chk_PreserveComments;
+        private System.Windows.Forms.CheckBox chk_RandomizeKeywordCase;
+        private System.Windows.Forms.CheckBox chk_RandomizeLineLength;
+        private System.Windows.Forms.CheckBox chk_KeywordSubstitution;
     }
 }
 

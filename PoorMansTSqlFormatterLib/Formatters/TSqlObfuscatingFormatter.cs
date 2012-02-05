@@ -30,24 +30,48 @@ namespace PoorMansTSqlFormatterLib.Formatters
     public class TSqlObfuscatingFormatter : Interfaces.ISqlTreeFormatter
     {
 
-        public TSqlObfuscatingFormatter()
+        public TSqlObfuscatingFormatter() : this(false, false, false, false, false) { }
+
+        public TSqlObfuscatingFormatter(bool randomizeCase, bool randomizeColor, bool randomizeLineLength, bool preserveComments, bool subtituteKeywords)
         {
+            RandomizeCase = randomizeCase;
+            RandomizeColor = randomizeColor;
+            RandomizeLineLength = randomizeLineLength;
+            PreserveComments = preserveComments;
+            if (subtituteKeywords)
+                KeywordMapping = ObfuscatingKeywordMapping.Instance;
+
             ErrorOutputPrefix = Interfaces.MessagingConstants.FormatErrorDefaultMessage + Environment.NewLine;
+
+            if (RandomizeCase)
+            {
+                _currentCaseLimit = _randomizer.Next(MIN_CASE_WORD_LENGTH, MAX_CASE_WORD_LENGTH);
+                _currentlyUppercase = _randomizer.Next(0, 2) == 0;
+            }
         }
 
-        public bool HTMLFormatted { get { return false; } }
+        public bool RandomizeCase { get; set; }
+        public bool RandomizeColor { get; set; }
+        public bool RandomizeLineLength { get; set; }
+        public bool PreserveComments { get; set; }
+
+        public bool HTMLFormatted { get { return RandomizeColor; } }
 
         public IDictionary<string, string> KeywordMapping = new Dictionary<string, string>();
 
-        public bool PreserveCase { get; set; }
         public string ErrorOutputPrefix { get; set; }
 
+        private const int MIN_CASE_WORD_LENGTH = 2;
+        private const int MAX_CASE_WORD_LENGTH = 8;
         private Random _randomizer = new Random();
+        private int _currentCaseLength = 0;
+        private int _currentCaseLimit = MAX_CASE_WORD_LENGTH;
+        private bool _currentlyUppercase = false;
 
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
             //thread-safe - each call to FormatSQLTree() gets its own independent state object
-            TSqlObfuscatingFormattingState state = new TSqlObfuscatingFormattingState();
+            TSqlObfuscatingFormattingState state = new TSqlObfuscatingFormattingState(RandomizeColor, RandomizeLineLength);
 
             if (sqlTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", SqlXmlConstants.ENAME_SQL_ROOT, SqlXmlConstants.ANAME_ERRORFOUND)) != null)
                 state.AddOutputContent(ErrorOutputPrefix);
@@ -141,9 +165,23 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlXmlConstants.ENAME_WHITESPACE:
-                case SqlXmlConstants.ENAME_COMMENT_MULTILINE:
-                case SqlXmlConstants.ENAME_COMMENT_SINGLELINE:
                     //do nothing
+                    break;
+
+                case SqlXmlConstants.ENAME_COMMENT_MULTILINE:
+                    if (PreserveComments)
+                    {
+                        state.SpaceExpected = false;
+                        state.AddOutputContent("/*" + contentElement.InnerText + "*/");
+                    }
+                    break;
+                case SqlXmlConstants.ENAME_COMMENT_SINGLELINE:
+                    if (PreserveComments)
+                    {
+                        state.SpaceExpected = false;
+                        state.AddOutputContent("--" + contentElement.InnerText.Replace("\r", "").Replace("\n", ""));
+                        state.BreakExpected = true;
+                    }
                     break;
 
                 case SqlXmlConstants.ENAME_BATCH_SEPARATOR:
@@ -242,29 +280,56 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (!KeywordMapping.TryGetValue(keyword, out outputKeyword))
                 outputKeyword = keyword;
 
-            if (PreserveCase)
-                return outputKeyword;
+            if (RandomizeCase)
+                return GetCaseRandomized(outputKeyword);
             else
-                return RandomizeCase(outputKeyword);
+                return outputKeyword;
         }
 
-        private string RandomizeCase(string outputKeyword)
+        private string GetCaseRandomized(string outputKeyword)
         {
             char[] keywordCharArray = outputKeyword.ToCharArray();
             for (int i = 0; i < keywordCharArray.Length; i++)
             {
-                keywordCharArray[i] = _randomizer.Next(0, 2) == 0 ? char.ToLowerInvariant(keywordCharArray[i]) : char.ToUpperInvariant(keywordCharArray[i]);
+                if (_currentCaseLength == _currentCaseLimit)
+                {
+                    _currentCaseLimit = _randomizer.Next(MIN_CASE_WORD_LENGTH, MAX_CASE_WORD_LENGTH);
+                    _currentlyUppercase = _randomizer.Next(0, 2) == 0;
+                    _currentCaseLength = 0;
+                }
+
+                keywordCharArray[i] = _currentlyUppercase ? char.ToUpperInvariant(keywordCharArray[i]) : char.ToLowerInvariant(keywordCharArray[i]);
+                _currentCaseLength++;
             }
             return new string(keywordCharArray);
         }
 
         class TSqlObfuscatingFormattingState : BaseFormatterState
         {
-            //normal constructor
-            public TSqlObfuscatingFormattingState()
-                : base(false)
+            public TSqlObfuscatingFormattingState(bool randomizeColor, bool randomizeLineLength)
+                : base(randomizeColor)
             {
+                RandomizeColor = randomizeColor;
+                RandomizeLineLength = randomizeLineLength;
+
+                if (RandomizeColor)
+                {
+                    _currentColorLimit = _randomizer.Next(MIN_COLOR_WORD_LENGTH, MAX_COLOR_WORD_LENGTH);
+                    _currentColor = string.Format("#{0:x2}{1:x2}{2:x2}", _randomizer.Next(0, 127), _randomizer.Next(0, 127), _randomizer.Next(0, 127));
+                }
+                if (RandomizeLineLength)
+                {
+                    _thisLineLimit = _randomizer.Next(MIN_LINE_LENGTH, MAX_LINE_LENGTH);
+                }
             }
+
+            private const int MIN_COLOR_WORD_LENGTH = 3;
+            private const int MAX_COLOR_WORD_LENGTH = 15;
+            private const int MIN_LINE_LENGTH = 10;
+            private const int MAX_LINE_LENGTH = 80;
+
+            private bool RandomizeColor { get; set; }
+            private bool RandomizeLineLength { get; set; }
 
             internal bool BreakExpected { get; set; }
             internal bool SpaceExpectedForAnsiString { get; set; }
@@ -273,7 +338,13 @@ namespace PoorMansTSqlFormatterLib.Formatters
             internal bool SpaceExpectedForPlusMinus { get; set; }
             internal bool SpaceExpected { get; set; }
 
+            private Random _randomizer = new Random();
             private int _currentLineLength = 0;
+            private int _thisLineLimit = MAX_LINE_LENGTH;
+
+            private int _currentColorLength = 0;
+            private int _currentColorLimit = MAX_COLOR_WORD_LENGTH;
+            private string _currentColor = null;
 
             public void BreakIfExpected()
             {
@@ -283,6 +354,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     base.AddOutputLineBreak();
                     SetSpaceNoLongerExpected();
                     _currentLineLength = 0;
+
+                    if (RandomizeLineLength)
+                        _thisLineLimit = _randomizer.Next(10, 80);
                 }
             }
 
@@ -306,9 +380,12 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
             public override void AddOutputContent(string content, string htmlClassName)
             {
+                if (htmlClassName != null)
+                    throw new NotSupportedException("Obfuscating formatter does not use html class names...");
+
                 BreakIfExpected();
                 SpaceIfExpected();
-                if (_currentLineLength > 0 && _currentLineLength + content.Length > 80)
+                if (_currentLineLength > 0 && _currentLineLength + content.Length > _thisLineLimit)
                 {
                     BreakExpected = true;
                     BreakIfExpected();
@@ -322,8 +399,39 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     SpaceExpected = true;
                     SpaceIfExpected();
                 }
+
                 _currentLineLength += content.Length;
-                base.AddOutputContent(content, htmlClassName);
+                if (RandomizeColor)
+                {
+                    int lengthWritten = 0;
+                    while (lengthWritten < content.Length)
+                    {
+                        if (_currentColorLength == _currentColorLimit)
+                        {
+                            _currentColorLimit = _randomizer.Next(MIN_COLOR_WORD_LENGTH, MAX_COLOR_WORD_LENGTH);
+                            _currentColor = string.Format("#{0:x2}{1:x2}{2:x2}", _randomizer.Next(0, 127), _randomizer.Next(0, 127), _randomizer.Next(0, 127));
+                            _currentColorLength = 0;
+                        }
+                        
+                        int writing;
+                        if (content.Length - lengthWritten < _currentColorLimit - _currentColorLength)
+                            writing = content.Length - lengthWritten;
+                        else
+                            writing = _currentColorLimit - _currentColorLength;
+
+                        base.AddOutputContentRaw("<span style=\"color: ");
+                        base.AddOutputContentRaw(_currentColor);
+                        base.AddOutputContentRaw(";\">");
+                        base.AddOutputContentRaw(System.Web.HttpUtility.HtmlEncode(content.Substring(lengthWritten, writing)));
+                        base.AddOutputContentRaw("</span>");
+                        lengthWritten += writing;
+                        _currentColorLength += writing;
+                    }
+                }
+                else
+                {
+                    base.AddOutputContent(content, null);
+                }
                 SetSpaceNoLongerExpected();
             }
 
@@ -338,7 +446,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
             public override void AddOutputLineBreak()
             {
-                throw new NotImplementedException();
+                //don't want the outer code to write line breaks at all
+                throw new NotSupportedException();
             }
         }
     }

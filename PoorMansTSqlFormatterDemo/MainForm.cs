@@ -103,6 +103,11 @@ namespace PoorMansTSqlFormatterDemo
             chk_IdentityColoring.Checked = Properties.Settings.Default.IdentityColoring;
 
             radio_Formatting_Obfuscate.Checked = Properties.Settings.Default.Formatter.Equals(FORMATTER_OBFUSCATE, StringComparison.InvariantCultureIgnoreCase);
+            chk_RandomizeKeywordCase.Checked = Properties.Settings.Default.RandomizeKeywordCase;
+            chk_RandomizeColor.Checked = Properties.Settings.Default.RandomizeColor;
+            chk_RandomizeLineLength.Checked = Properties.Settings.Default.RandomizeLineLength;
+            chk_PreserveComments.Checked = Properties.Settings.Default.PreserveComments;
+            chk_KeywordSubstitution.Checked = Properties.Settings.Default.KeywordSubstitution;
 
             _settingsLoaded = true;
 
@@ -138,9 +143,14 @@ namespace PoorMansTSqlFormatterDemo
             Properties.Settings.Default.EnableKeywordStandardization = chk_EnableKeywordStandardization.Checked;
 
             if (radio_Formatting_Identity.Checked) Properties.Settings.Default.Formatter = FORMATTER_IDENTITY; 
-            chk_IdentityColoring.Checked = Properties.Settings.Default.IdentityColoring;
+            Properties.Settings.Default.IdentityColoring = chk_IdentityColoring.Checked;
 
             if (radio_Formatting_Obfuscate.Checked) Properties.Settings.Default.Formatter = FORMATTER_OBFUSCATE;
+            Properties.Settings.Default.RandomizeKeywordCase = chk_RandomizeKeywordCase.Checked;
+            Properties.Settings.Default.RandomizeColor = chk_RandomizeColor.Checked;
+            Properties.Settings.Default.RandomizeLineLength = chk_RandomizeLineLength.Checked;
+            Properties.Settings.Default.PreserveComments = chk_PreserveComments.Checked;
+            Properties.Settings.Default.KeywordSubstitution = chk_KeywordSubstitution.Checked;
 
             Properties.Settings.Default.Save();
         }
@@ -169,7 +179,13 @@ namespace PoorMansTSqlFormatterDemo
             else if (radio_Formatting_Identity.Checked)
                 innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter(chk_IdentityColoring.Checked);
             else
-                innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter();
+                innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter(
+                    chk_RandomizeKeywordCase.Checked, 
+                    chk_RandomizeColor.Checked, 
+                    chk_RandomizeLineLength.Checked, 
+                    chk_PreserveComments.Checked,
+                    chk_KeywordSubstitution.Checked
+                    );
 
             innerFormatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix");
             _formatter = new PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper(innerFormatter);

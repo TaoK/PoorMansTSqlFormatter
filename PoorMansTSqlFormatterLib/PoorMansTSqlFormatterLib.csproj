@@ -57,6 +57,7 @@
     <Compile Include="Interfaces\IToken.cs" />
     <Compile Include="Interfaces\ITokenList.cs" />
     <Compile Include="Interfaces\SqlTokenType.cs" />
+    <Compile Include="ObfuscatingKeywordMapping.cs" />
     <Compile Include="Parsers\TSqlStandardParser.cs" />
     <Compile Include="ParseTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
