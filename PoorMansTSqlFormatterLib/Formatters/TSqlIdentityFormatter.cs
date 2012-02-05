@@ -48,8 +48,18 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 state.AddOutputContent(ErrorOutputPrefix);
 
             XmlNodeList rootList = sqlTreeDoc.SelectNodes(string.Format("/{0}/*", rootElement));
-            ProcessSqlNodeList(state, rootList);
+            return FormatSQLNodes(rootList, state);
+        }
 
+        public string FormatSQLTree(XmlNode sqlTreeFragment)
+        {
+            BaseFormatterState state = new BaseFormatterState(HTMLColoring);
+            return FormatSQLNodes(sqlTreeFragment.SelectNodes("."), state);
+        }
+
+        private static string FormatSQLNodes(XmlNodeList nodes, BaseFormatterState state)
+        {
+            ProcessSqlNodeList(state, nodes);
             return state.DumpOutput();
         }
 
@@ -73,6 +83,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     state.AddOutputContent(")");
                     break;
 
+                case SqlXmlConstants.ENAME_SQL_ROOT:
                 case SqlXmlConstants.ENAME_SQL_STATEMENT:
                 case SqlXmlConstants.ENAME_SQL_CLAUSE:
                 case SqlXmlConstants.ENAME_BOOLEAN_EXPRESSION:

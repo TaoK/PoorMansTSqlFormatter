@@ -93,6 +93,21 @@ namespace PoorMansTSqlFormatterLib.Formatters
             ProcessSqlNodeList(rootList, state);
             WhiteSpace_BreakAsExpected(state);
 
+            if (state.SpecialRegionActive == SpecialRegionType.NoFormat)
+            {
+                XmlNode skippedXml = ExtractXmlBetween(state.RegionStartNode, sqlTreeDoc.DocumentElement);
+                TSqlIdentityFormatter tempFormatter = new TSqlIdentityFormatter(HTMLColoring);
+                state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+            }
+            else if (state.SpecialRegionActive == SpecialRegionType.Minify)
+            {
+                XmlNode skippedXml = ExtractXmlBetween(state.RegionStartNode, sqlTreeDoc.DocumentElement);
+                TSqlObfuscatingFormatter tempFormatter = new TSqlObfuscatingFormatter();
+                if (HTMLFormatted)
+                    state.AddOutputContentRaw(System.Web.HttpUtility.HtmlEncode(tempFormatter.FormatSQLTree(skippedXml)));
+                else
+                    state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+            }
             return state.DumpOutput();
         }
 
@@ -341,6 +356,26 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlXmlConstants.ENAME_COMMENT_MULTILINE:
+                    if (state.SpecialRegionActive == SpecialRegionType.NoFormat && contentElement.InnerXml.ToUpperInvariant().Contains("[/NOFORMAT]"))
+                    {
+                        XmlNode skippedXml = ExtractXmlBetween(state.RegionStartNode, contentElement);
+                        TSqlIdentityFormatter tempFormatter = new TSqlIdentityFormatter(HTMLColoring);
+                        state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+                        state.SpecialRegionActive = null;
+                        state.RegionStartNode = null;
+                    }
+                    else if (state.SpecialRegionActive == SpecialRegionType.Minify && contentElement.InnerXml.ToUpperInvariant().Contains("[/MINIFY]"))
+                    {
+                        XmlNode skippedXml = ExtractXmlBetween(state.RegionStartNode, contentElement);
+                        TSqlObfuscatingFormatter tempFormatter = new TSqlObfuscatingFormatter();
+                        if (HTMLFormatted)
+                            state.AddOutputContentRaw(System.Web.HttpUtility.HtmlEncode(tempFormatter.FormatSQLTree(skippedXml)));
+                        else
+                            state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+                        state.SpecialRegionActive = null;
+                        state.RegionStartNode = null;
+                    }
+
                     WhiteSpace_SeparateComment(contentElement, state);
                     state.AddOutputContent("/*" + contentElement.InnerText + "*/", Interfaces.SqlHtmlConstants.CLASS_COMMENT);
                     if (contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT))
@@ -349,13 +384,59 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     {
                         state.WordSeparatorExpected = true;
                     }
+
+                    if (state.SpecialRegionActive == null && contentElement.InnerXml.ToUpperInvariant().Contains("[NOFORMAT]"))
+                    {
+                        state.AddOutputLineBreak();
+                        state.SpecialRegionActive = SpecialRegionType.NoFormat;
+                        state.RegionStartNode = contentElement;
+                    }
+                    else if (state.SpecialRegionActive == null && contentElement.InnerXml.ToUpperInvariant().Contains("[MINIFY]"))
+                    {
+                        state.AddOutputLineBreak();
+                        state.SpecialRegionActive = SpecialRegionType.Minify;
+                        state.RegionStartNode = contentElement;
+                    }
                     break;
 
                 case SqlXmlConstants.ENAME_COMMENT_SINGLELINE:
+                    if (state.SpecialRegionActive == SpecialRegionType.NoFormat && contentElement.InnerXml.ToUpperInvariant().Contains("[/NOFORMAT]"))
+                    {
+                        XmlNode skippedXml = ExtractXmlBetween(state.RegionStartNode, contentElement);
+                        TSqlIdentityFormatter tempFormatter = new TSqlIdentityFormatter(HTMLColoring);
+                        state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+                        state.SpecialRegionActive = null;
+                        state.RegionStartNode = null;
+                    }
+                    else if (state.SpecialRegionActive == SpecialRegionType.Minify && contentElement.InnerXml.ToUpperInvariant().Contains("[/MINIFY]"))
+                    {
+                        XmlNode skippedXml = ExtractXmlBetween(state.RegionStartNode, contentElement);
+                        TSqlObfuscatingFormatter tempFormatter = new TSqlObfuscatingFormatter();
+                        if (HTMLFormatted)
+                            state.AddOutputContentRaw(System.Web.HttpUtility.HtmlEncode(tempFormatter.FormatSQLTree(skippedXml)));
+                        else
+                            state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+                        state.SpecialRegionActive = null;
+                        state.RegionStartNode = null;
+                    }
+
                     WhiteSpace_SeparateComment(contentElement, state);
                     state.AddOutputContent("--" + contentElement.InnerText.Replace("\r", "").Replace("\n", ""), Interfaces.SqlHtmlConstants.CLASS_COMMENT);
                     state.BreakExpected = true;
                     state.SourceBreakPending = true;
+
+                    if (state.SpecialRegionActive == null && contentElement.InnerXml.ToUpperInvariant().Contains("[NOFORMAT]"))
+                    {
+                        state.AddOutputLineBreak();
+                        state.SpecialRegionActive = SpecialRegionType.NoFormat;
+                        state.RegionStartNode = contentElement;
+                    }
+                    else if (state.SpecialRegionActive == null && contentElement.InnerXml.ToUpperInvariant().Contains("[MINIFY]"))
+                    {
+                        state.AddOutputLineBreak();
+                        state.SpecialRegionActive = SpecialRegionType.Minify;
+                        state.RegionStartNode = contentElement;
+                    }
                     break;
 
                 case SqlXmlConstants.ENAME_STRING:
@@ -501,6 +582,89 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (initialIndent != state.IndentLevel)
                 throw new Exception("Messed up the indenting!! Check code/stack or panic!");
         }
+
+        private XmlNode ExtractXmlBetween(XmlNode startingElement, XmlNode endingElement)
+        {
+            XmlNode currentNode = startingElement;
+            XmlNode previousNode = null;
+            XmlNode remainder = null;
+            XmlNode remainderPosition = null;
+
+            while (currentNode != null)
+            {
+                if (currentNode.Equals(endingElement))
+                    break;
+
+                if (previousNode != null)
+                {
+                    XmlNode copyOfThisNode = currentNode.OwnerDocument.CreateNode(currentNode.NodeType, currentNode.Name, currentNode.NamespaceURI);
+                    if (currentNode.Value != null)
+                        copyOfThisNode.Value = currentNode.Value;
+                    if (currentNode.Attributes != null)
+                        foreach (XmlAttribute attribute in currentNode.Attributes)
+                        {
+                            XmlAttribute newAttribute = currentNode.OwnerDocument.CreateAttribute(attribute.Prefix, attribute.LocalName, attribute.NamespaceURI);
+                            newAttribute.Value = attribute.Value;
+                            copyOfThisNode.Attributes.Append(newAttribute);
+                        }
+
+                    if (remainderPosition == null)
+                    {
+                        remainderPosition = copyOfThisNode;
+                        remainder = copyOfThisNode;
+                    }
+                    else if (currentNode.Equals(previousNode.ParentNode) && remainderPosition.ParentNode != null)
+                    {
+                        remainderPosition = remainderPosition.ParentNode;
+                    }
+                    else if (currentNode.Equals(previousNode.ParentNode) && remainderPosition.ParentNode == null)
+                    {
+                        copyOfThisNode.AppendChild(remainderPosition);
+                        remainderPosition = copyOfThisNode;
+                        remainder = copyOfThisNode;
+                    }
+                    else if (currentNode.Equals(previousNode.NextSibling) && remainderPosition.ParentNode != null)
+                    {
+                        remainderPosition.ParentNode.AppendChild(copyOfThisNode);
+                        remainderPosition = copyOfThisNode;
+                    }
+                    else if (currentNode.Equals(previousNode.NextSibling) && remainderPosition.ParentNode == null)
+                    {
+                        XmlNode copyOfThisNodesParent = currentNode.OwnerDocument.CreateNode(currentNode.ParentNode.NodeType, currentNode.ParentNode.Name, currentNode.ParentNode.NamespaceURI);
+                        remainder = copyOfThisNodesParent;
+                        remainder.AppendChild(remainderPosition);
+                        remainder.AppendChild(copyOfThisNode);
+                        remainderPosition = copyOfThisNode;
+                    }
+                    else
+                    {
+                        //we must be a child
+                        remainderPosition.AppendChild(copyOfThisNode);
+                        remainderPosition = copyOfThisNode;
+                    }
+                }
+
+                XmlNode nextNode = null;
+                if (previousNode != null && currentNode.HasChildNodes && !(currentNode.Equals(previousNode.ParentNode)))
+                {
+                    nextNode = currentNode.FirstChild;
+                }
+                else if (currentNode.NextSibling != null)
+                {
+                    nextNode = currentNode.NextSibling;
+                }
+                else
+                {
+                    nextNode = currentNode.ParentNode;
+                }
+
+                previousNode = currentNode;
+                currentNode = nextNode;
+            }
+
+            return remainder;
+        }
+
 
         private string FormatKeyword(string keyword)
         {
@@ -665,9 +829,13 @@ namespace PoorMansTSqlFormatterLib.Formatters
             public int CurrentLineLength { get; private set; }
             public bool CurrentLineHasContent { get; private set; }
 
+            public SpecialRegionType? SpecialRegionActive { get; set; }
+            public XmlNode RegionStartNode { get; set; }
+
             public override void AddOutputContent(string content)
             {
-                AddOutputContent(content, null);
+                if (SpecialRegionActive == null)
+                    AddOutputContent(content, null);
             }
 
             public override void AddOutputContent(string content, string htmlClassName)
@@ -675,7 +843,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 if (CurrentLineHasContent && (content.Length + CurrentLineLength > MaxLineWidth))
                     WhiteSpace_BreakToNextLine();
 
-                base.AddOutputContent(content, htmlClassName);
+                if (SpecialRegionActive == null)
+                    base.AddOutputContent(content, htmlClassName);
 
                 CurrentLineHasContent = true;
                 CurrentLineLength += content.Length;
@@ -690,21 +859,24 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 //if linebreaks are added directly in the content (eg in comments or strings), they 
                 // won't be accounted for here - that's ok.
-                base.AddOutputLineBreak();
+                if (SpecialRegionActive == null)
+                    base.AddOutputLineBreak();
                 CurrentLineLength = 0;
                 CurrentLineHasContent = false;
             }
 
             internal void AddOutputSpace()
             {
-                _outBuilder.Append(" ");
+                if (SpecialRegionActive == null)
+                    _outBuilder.Append(" ");
             }
 
             public void Indent(int indentLevel)
             {
                 for (int i = 0; i < indentLevel; i++)
                 {
-                    _outBuilder.Append(IndentString);
+                    if (SpecialRegionActive == null)
+                        _outBuilder.Append(IndentString);
                     CurrentLineLength += IndentLength;
                 }
             }
@@ -728,7 +900,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 //TODO: find a way out of the cross-dependent wrapping maze...
                 CurrentLineLength = CurrentLineLength + partialState.CurrentLineLength;
                 CurrentLineHasContent = CurrentLineHasContent || partialState.CurrentLineHasContent;
-                _outBuilder.Append(partialState.DumpOutput());
+                if (SpecialRegionActive == null)
+                    _outBuilder.Append(partialState.DumpOutput());
             }
 
 
@@ -776,6 +949,12 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 foreach (int key in descendentLevelKeys)
                     _mostRecentKeywordsAtEachLevel.Remove(key);
             }
+        }
+
+        public enum SpecialRegionType
+        {
+            NoFormat = 1,
+            Minify = 2
         }
     }
 }

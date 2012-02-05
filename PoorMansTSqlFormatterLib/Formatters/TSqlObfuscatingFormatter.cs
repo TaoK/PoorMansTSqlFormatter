@@ -77,9 +77,19 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 state.AddOutputContent(ErrorOutputPrefix);
 
             XmlNodeList rootList = sqlTreeDoc.SelectNodes(string.Format("/{0}/*", SqlXmlConstants.ENAME_SQL_ROOT));
-            ProcessSqlNodeList(rootList, state);
-            state.BreakIfExpected();
+            return FormatSQLNodes(rootList, state);
+        }
 
+        public string FormatSQLTree(XmlNode fragmentNode)
+        {
+            TSqlObfuscatingFormattingState state = new TSqlObfuscatingFormattingState(false, false);
+            return FormatSQLNodes(fragmentNode.SelectNodes("."), state);
+        }
+
+        private string FormatSQLNodes(XmlNodeList nodes, TSqlObfuscatingFormattingState state)
+        {
+            ProcessSqlNodeList(nodes, state);
+            state.BreakIfExpected();
             return state.DumpOutput();
         }
 
@@ -93,6 +103,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
         {
             switch (contentElement.Name)
             {
+                case SqlXmlConstants.ENAME_SQL_ROOT:
                 case SqlXmlConstants.ENAME_SQL_STATEMENT:
                 case SqlXmlConstants.ENAME_SQL_CLAUSE:
                 case SqlXmlConstants.ENAME_SET_OPERATOR_CLAUSE:
