@@ -146,6 +146,7 @@
     <Content Include="Data\StandardFormatSql\04_MiscProceduralSample_Unstructured%28ExpandCommaLists=false,MaxLineWidth=60,SpacesPerTab=8%29.txt" />
     <Content Include="Data\StandardFormatSql\07_ServerTakeoverSample_Brent_Ozar%28SpaceAfterExpandedComma=true,ExpandBooleanExpressions=false,ExpandBetweenConditions=false,ExpandCaseStatements=false%29.txt" />
     <Content Include="Data\StandardFormatSql\06_CTE_Sample_MS%28UppercaseKeywords=false%29.txt" />
+    <Content Include="Data\StandardFormatSql\14_CommentPositioning%28TrailingCommas=True%29.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">

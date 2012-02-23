@@ -1,8 +1,11 @@
-﻿## Poor Man's T-SQL Formatter change log
+﻿
+## Poor Man's T-SQL Formatter change log
 
 ### Version 1.2.2
 
 * Github Issue 34: [New Feature] Obfuscating formatter / minifier in Winforms app and Web Service
+* Github Issue 36: [New Feature] Support for "[noformat][/noformat]" and "[minify][/minify]" block-formatting instructions in standard formatter [thanks dquille for the request]
+* Github Issue 38: [Bugfix] Comment-positioning bugs, one of which could result in invalid output SQL! [thanks andywuest for the bug report]
 
 
 ### Version 1.2.1

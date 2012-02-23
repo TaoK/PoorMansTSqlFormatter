@@ -80,4 +80,24 @@ This is where some explanation of the proc's purpose and usage might go.
 END
 GO
 
+SELECT 1
+	,2
+	,3
+	,
+	/*******************    
+Multi-line Block Comment - earlier and later content should be on new line, respecting the linebreaks in the source
+*******************/
+	4
 
+SELECT 1
+	,
+	---------------------    
+	-- multiple single-line comments
+	---------------------     
+	2
+	,3 -- single-line comment before a comma
+	,CASE 1
+		WHEN 1
+			THEN 4
+		ELSE 1
+		END

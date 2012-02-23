@@ -290,7 +290,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     //if there was a linebreak in the parens content, or if it wanted one to follow, then put linebreaks before and after.
                     if (innerState.BreakExpected || innerState.OutputContainsLineBreak)
                     {
-                        state.WhiteSpace_BreakToNextLine();
+                        if (!innerState.StartsWithBreak)
+                            state.WhiteSpace_BreakToNextLine();
                         state.Assimilate(innerState);
                         state.WhiteSpace_BreakToNextLine();
                     }
@@ -378,7 +379,14 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                     WhiteSpace_SeparateComment(contentElement, state);
                     state.AddOutputContent("/*" + contentElement.InnerText + "*/", Interfaces.SqlHtmlConstants.CLASS_COMMENT);
-                    if (contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT))
+                    if (contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
+                        || (contentElement.NextSibling != null
+                            && contentElement.NextSibling.Name.Equals(SqlXmlConstants.ENAME_WHITESPACE)
+                            && Regex.IsMatch(contentElement.NextSibling.InnerText, @"(\r|\n)+")
+                            )
+                        )
+                        //if this block comment is at the start or end of a statement, or if it was followed by a 
+                        // linebreak before any following content, then break here.
                         state.BreakExpected = true;
                     else
                     {
@@ -467,6 +475,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     //comma always ignores requested word spacing
                     if (TrailingCommas)
                     {
+                        WhiteSpace_BreakAsExpected(state);
                         state.AddOutputContent(FormatOperator(","), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
 
                         if (ExpandCommaLists
@@ -761,7 +770,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
         private void WhiteSpace_SeparateComment(XmlElement contentElement, TSqlStandardFormattingState state)
         {
-            if ((state.BreakExpected || state.WordSeparatorExpected) && state.SourceBreakPending)
+            if (state.CurrentLineHasContent && state.SourceBreakPending)
             {
                 state.BreakExpected = true;
                 WhiteSpace_BreakAsExpected(state);
@@ -831,6 +840,15 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
             public SpecialRegionType? SpecialRegionActive { get; set; }
             public XmlNode RegionStartNode { get; set; }
+
+            private static Regex _startsWithBreakChecker = new Regex(@"^\s*(\r|\n)", RegexOptions.None);
+            public bool StartsWithBreak
+            {
+                get
+                {
+                    return _startsWithBreakChecker.IsMatch(_outBuilder.ToString());
+                }
+            }
 
             public override void AddOutputContent(string content)
             {

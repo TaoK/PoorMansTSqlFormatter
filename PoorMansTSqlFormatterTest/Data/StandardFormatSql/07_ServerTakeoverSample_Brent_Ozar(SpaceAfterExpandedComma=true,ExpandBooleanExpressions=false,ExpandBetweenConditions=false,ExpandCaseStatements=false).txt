@@ -680,7 +680,8 @@ WHERE ps.index_id > 0 AND ps.page_count > 100 AND ps.avg_fragmentation_in_percen
 ORDER BY databaseName
 	, schemaName
 	, tableName
-OPTION (MAXDOP 1);/*
+OPTION (MAXDOP 1);
+	/*
 	Finally, let's go back to the users and ask questions:
 	- Can the business operate if this server is down?
 	- How many employees have to stop working if this server goes down?

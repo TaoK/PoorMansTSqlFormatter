@@ -1,4 +1,5 @@
-﻿## Poor Man's T-SQL Formatter
+﻿
+## Poor Man's T-SQL Formatter
 
 This is a small free .Net 2.0 library (with demo winforms program, web service, SSMS 
 Addin, Command-line utility, Notepad++ plugin, and WinMerge plugin) for reformatting 
@@ -73,7 +74,7 @@ This project uses several external libraries:
     despite this being a .Net 2.0 library. LinqBridge is licensed under the BSD 3-clause 
     license, and its homepage is here: http://code.google.com/p/linqbridge/
 * NUnit, for automated testing. NUnit is licensed under a custom open-source license
-    based on the zlib/libpng license, and is homepage is: http://www.nunit.org/
+    based on the zlib/libpng license, and its homepage is: http://www.nunit.org/
 * DLLExport and Notepad++ C# plugin template, based on work by Robert Giesecke and UFO, 
     available from the [notepad++ plugin development forum](https://sourceforge.net/projects/notepad-plus/forums/forum/482781).
 
