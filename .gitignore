@@ -4,6 +4,9 @@
 #  customized to also omit Deployment folder with binaries
 #  also VB6 additional files added
 
+#Notepad++ file autosave plugin
+*~
+
 #Custom deployment binaries folder
 Deployment
 
