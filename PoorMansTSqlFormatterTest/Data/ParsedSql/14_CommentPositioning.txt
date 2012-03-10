@@ -65,4 +65,20 @@ This is where some explanation of the proc's purpose and usage might go.
 	</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SET</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>NOCOUNT</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>OFF</OtherKeyword><WhiteSpace>
 	
 </WhiteSpace></Clause></SqlStatement></ContainerMultiStatementBody><ContainerClose><OtherKeyword>END</OtherKeyword></ContainerClose></BeginEndBlock><WhiteSpace>
-</WhiteSpace></Clause></SqlStatement></ContainerContentBody></DDLAsBlock></DDLProceduralBlock></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><Clause></Clause></SqlStatement></SqlRoot>
+</WhiteSpace></Clause></SqlStatement></ContainerContentBody></DDLAsBlock></DDLProceduralBlock></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>2</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>3</NumberValue><Comma>,</Comma><WhiteSpace> 
+</WhiteSpace><MultiLineComment>******************    
+Multi-line Block Comment - earlier and later content should be on new line, respecting the linebreaks in the source
+******************</MultiLineComment><WhiteSpace> 
+     </WhiteSpace><NumberValue>4</NumberValue><WhiteSpace> 
+
+
+
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace>
+			</WhiteSpace><SingleLineComment>-------------------    
+</SingleLineComment><WhiteSpace>			</WhiteSpace><SingleLineComment> multiple single-line comments
+</SingleLineComment><WhiteSpace>			</WhiteSpace><SingleLineComment>-------------------     
+</SingleLineComment><WhiteSpace>			</WhiteSpace><NumberValue>2</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>3</NumberValue><WhiteSpace> </WhiteSpace><SingleLineComment> single-line comment before a comma
+</SingleLineComment><WhiteSpace>			</WhiteSpace><Comma>,</Comma><WhiteSpace> </WhiteSpace><CaseStatement><ContainerOpen><OtherKeyword>CASE</OtherKeyword></ContainerOpen><Input><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> </WhiteSpace></Input><When><ContainerOpen><OtherKeyword>WHEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> </WhiteSpace></ContainerContentBody><Then><ContainerOpen><OtherKeyword>THEN</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><NumberValue>4</NumberValue><WhiteSpace> </WhiteSpace></ContainerContentBody></Then></When><CaseElse><ContainerOpen><OtherKeyword>ELSE</OtherKeyword></ContainerOpen><ContainerContentBody><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> </WhiteSpace></ContainerContentBody></CaseElse><ContainerClose><OtherKeyword>END</OtherKeyword></ContainerClose></CaseStatement><WhiteSpace> 
+</WhiteSpace></Clause></SqlStatement></SqlRoot>
