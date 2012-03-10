@@ -53,7 +53,9 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                 Properties.Settings.Default.Save();
             }
 
-            //set up formatter
+            //set up formatter (note - after changes to Settings through the UI this line will appear to error, 
+            // with settings not implementing the necessary interface, but a prebuild search & replace step will 
+            // automatically fix the settings file)
             _formattingManager = Utils.GetFormattingManager(Properties.Settings.Default);
 		}
 
@@ -77,6 +79,17 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                 oldCommandNames.Add("PoorMansTSqlFormatterSSMSAddIn.AddinConnector.FormatSelectionOrActiveWindow");
                 oldCommandNames.Add("PoorMansTSqlFormatterSSMSAddIn.AddinConnector.FormattingOptions");
                 RemoveCommands(commandsList, oldCommandNames);
+
+                if (!Properties.Settings.Default.FirstInstallCompleted)
+                {
+                    string scopeName = GetTextEditorKeyBindingScopeName();
+                    if (scopeName != null)
+                    {
+                        Properties.Settings.Default.Hotkey = Properties.Settings.Default.Hotkey.Replace("Text Editor", scopeName);
+                    }
+                    Properties.Settings.Default.FirstInstallCompleted = true;
+                    Properties.Settings.Default.Save();
+                }
 
                 //add new commands
                 Command formatCommand = commandsList.AddNamedCommand2(
@@ -113,6 +126,27 @@ namespace PoorMansTSqlFormatterSSMSAddIn
 
             }
 		}
+
+        private string GetTextEditorKeyBindingScopeName()
+        {
+            string strScope = null;
+            try
+            {
+                //"dirty hack" (as its author puts it) to get localized Text Editor scope name in 
+                // non-english instalations - but it works! (without having access to "IVsShell")
+                // Thank you Roland Weigelt! http://weblogs.asp.net/rweigelt/archive/2006/07/16/458634.aspx
+                Command cmd = _applicationObject.Commands.Item("Edit.DeleteBackwards", -1);
+                object[] arrBindings = (object[])cmd.Bindings;
+                string strBinding = (string)arrBindings[0];
+                strScope = strBinding.Substring(0, strBinding.IndexOf("::"));
+            }
+            catch (Exception ex)
+            {
+                //I know, general catch blocks are evil - but honestly, if that failed, what can we do?? I have no idea what types of issues to expect!
+                MessageBox.Show(string.Format(_generalResourceManager.GetString("TextEditorScopeNameRetrievalFailureMessage"), Environment.NewLine, ex.ToString()));
+            }
+            return strScope;
+        }
 
         private CommandBarPopup GetMainMenuPopup(string targetMenuEnglishName)
         {
@@ -267,7 +301,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                 }
                 if (commandName.Equals("PoorMansTSqlFormatterSSMSAddIn.AddinConnector.FormattingOptions"))
                 {
-                    SettingsForm settings = new SettingsForm(Properties.Settings.Default, Assembly.GetExecutingAssembly(), _generalResourceManager.GetString("ProjectAboutDescription"));
+                    SettingsForm settings = new SettingsForm(Properties.Settings.Default, Assembly.GetExecutingAssembly(), _generalResourceManager.GetString("ProjectAboutDescription"), new SettingsForm.GetTextEditorKeyBindingScopeName(GetTextEditorKeyBindingScopeName));
                     if (settings.ShowDialog() == DialogResult.OK)
                     {
                         SetFormatHotkey();

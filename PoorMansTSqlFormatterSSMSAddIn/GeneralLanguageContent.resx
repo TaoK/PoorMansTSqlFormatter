@@ -134,7 +134,7 @@
     <comment>{0} is a newline, {1} is the detailed exception</comment>
   </data>
   <data name="OptionsButtonText" xml:space="preserve">
-    <value>T-SQL Formating Options...</value>
+    <value>T-SQL Formatting Options...</value>
   </data>
   <data name="OptionsButtonToolTip" xml:space="preserve">
     <value>Allows you to edit the Poor Man's T-SQL Formatter options</value>
@@ -147,5 +147,9 @@
   </data>
   <data name="ProjectAboutDescription" xml:space="preserve">
     <value>A simple free (AGPL) T-SQL Formatting Addin for SSMS and SSMS Express, 2005 and 2008.</value>
+  </data>
+  <data name="TextEditorScopeNameRetrievalFailureMessage" xml:space="preserve">
+    <value>Failed to retrieve localized Text Editor key binding scope name.{0}Error Details:{0}{1}</value>
+    <comment>{0} is a newline, {1} is the detailed exception</comment>
   </data>
 </root>

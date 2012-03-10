@@ -106,7 +106,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T-SQL Formating Options....
+        ///   Looks up a localized string similar to T-SQL Formatting Options....
         /// </summary>
         internal static string OptionsButtonText {
             get {
@@ -147,6 +147,15 @@ namespace PoorMansTSqlFormatterSSMSAddIn {
         internal static string ProjectAboutDescription {
             get {
                 return ResourceManager.GetString("ProjectAboutDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to retrieve localized Text Editor key binding scope name.{0}Error Details:{0}{1}.
+        /// </summary>
+        internal static string TextEditorScopeNameRetrievalFailureMessage {
+            get {
+                return ResourceManager.GetString("TextEditorScopeNameRetrievalFailureMessage", resourceCulture);
             }
         }
     }

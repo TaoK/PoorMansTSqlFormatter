@@ -32,16 +32,27 @@ namespace PoorMansTSqlFormatterPluginShared
 {
     public partial class SettingsForm : Form
     {
+        //key binding "Text Editor" scope name is necessary for "Reset" action, but is implementation-specific.
+        public delegate string GetTextEditorKeyBindingScopeName();
+
         ISqlSettings _settings = null;
         Assembly _pluginAssembly = null;
         string _aboutDescription = null;
         bool _supportsHotkey = false;
+        GetTextEditorKeyBindingScopeName _keyBindingScopeNameMethod;
 
-        public SettingsForm(ISqlSettings settings, Assembly pluginAssembly, string aboutDescription)
+        public SettingsForm(ISqlSettings settings, Assembly pluginAssembly, string aboutDescription) : this(settings, pluginAssembly, aboutDescription, null)
+        {
+        }
+
+        public SettingsForm(ISqlSettings settings, Assembly pluginAssembly, string aboutDescription, GetTextEditorKeyBindingScopeName keyBindingScopeNameMethod)
         {
             _settings = settings;
             _pluginAssembly = pluginAssembly;
             _aboutDescription = aboutDescription;
+
+            _keyBindingScopeNameMethod = keyBindingScopeNameMethod;
+
             foreach (System.Configuration.SettingsProperty prop in _settings.Properties)
                 if (prop.Name.Equals("Hotkey"))
                     _supportsHotkey = true;
@@ -128,6 +139,18 @@ namespace PoorMansTSqlFormatterPluginShared
                 previousValues.Add(prop.Name, _settings[prop.Name]);
 
             _settings.Reset();
+
+            //unfortuntely, the Hotkey "True" default is not very useful in VS environments, need to 
+            // grab the localized value from the VS context.
+            if (_supportsHotkey && _keyBindingScopeNameMethod != null)
+            {
+                string scopeName = _keyBindingScopeNameMethod();
+                if (scopeName != null)
+                {
+                    _settings["Hotkey"] = _settings["Hotkey"].ToString().Replace("Text Editor", scopeName);
+                }
+            }
+
             LoadControlValuesFromSettings();
 
             foreach (string prop in previousValues.Keys)
