@@ -21,3 +21,12 @@ CREATE QUEUE TestQueue
         PROCEDURE_NAME = SomeProc,
         MAX_QUEUE_READERS = 5,
         EXECUTE AS 'PerplexedUser' ) ;
+
+GO
+
+CREATE INDEX [IX_Table1] ON [dbo].[Table1] 
+(
+                [Col1] ASC
+)
+WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON ) ON [PRIMARY]
+GO

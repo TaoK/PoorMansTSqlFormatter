@@ -442,6 +442,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             else if (!sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
                                 && !sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
                                 && !sqlTree.PathNameMatches(1, SqlXmlConstants.ENAME_DDL_WITH_CLAUSE)
+                                && !sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_EXPRESSION_PARENS)
                                 && !ContentStartsWithKeyword(sqlTree.CurrentContainer, "SET")
                                 )
                             {
