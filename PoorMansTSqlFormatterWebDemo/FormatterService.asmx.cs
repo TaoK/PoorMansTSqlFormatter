@@ -53,6 +53,11 @@ namespace PoorMansTSqlFormatterWebDemo
                 true, 
                 false,
                 false,
+                false,
+                false,
+                false,
+                false,
+                false,
                 false
                 );
         }
@@ -75,7 +80,12 @@ namespace PoorMansTSqlFormatterWebDemo
             bool coloring,
             bool keywordStandardization,
             bool useParseErrorPlaceholder,
-            bool obfuscate
+            bool obfuscate,
+            bool randomizeColor,
+            bool randomizeLineLengths,
+            bool randomizeKeywordCase,
+            bool preserveComments,
+            bool enableKeywordSubstitution
             )
         {
             PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter formatter = null;
@@ -96,7 +106,13 @@ namespace PoorMansTSqlFormatterWebDemo
                     keywordStandardization
                     );
             else if (obfuscate)
-                formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter();
+                formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter(
+                    randomizeKeywordCase, 
+                    randomizeColor,
+                    randomizeLineLengths,
+                    preserveComments,
+                    enableKeywordSubstitution
+                    );
             else
                 formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter(coloring);
 
