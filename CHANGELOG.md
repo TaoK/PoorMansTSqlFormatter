@@ -1,11 +1,15 @@
 ﻿
 ## Poor Man's T-SQL Formatter change log
 
-### Version 1.2.2
+### Version 1.3.1
 
+* Github Issue 23: [New Feature] Support for SSMS 2012 / Denali
 * Github Issue 34: [New Feature] Obfuscating formatter / minifier in Winforms app and Web Service
 * Github Issue 36: [New Feature] Support for "[noformat][/noformat]" and "[minify][/minify]" block-formatting instructions in standard formatter [thanks dquille for the request]
+* Github Issue 37: [Bugfix] SSMS Hotkey binding failed in non-english versions of SSMS [thanks Philipp Schornberg for the bug report]
 * Github Issue 38: [Bugfix] Comment-positioning bugs, one of which could result in invalid output SQL! [thanks andywuest for the bug report]
+* Github Issue 39: [Bugfix] Formatting Library not usable in .Net 3.5 and later projects, because of Linqbridge conflict on Linq namespace [thanks Sean Bornstein for the bug report]
+* Github Issue 40: [Bugfix] Error parsing WITH options containing "ON" in parentheses [thanks Jean-Luc Mellet for the bug report]
 
 
 ### Version 1.2.1
