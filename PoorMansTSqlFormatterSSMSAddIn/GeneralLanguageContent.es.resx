@@ -148,4 +148,8 @@
   <data name="ProjectAboutDescription" xml:space="preserve">
     <value>Plug-in gratuito (AGPL) de Formateado de T-SQL, para SSMS y SSMS Express, 2005 y 2008.</value>
   </data>
+  <data name="TextEditorScopeNameRetrievalFailureMessage" xml:space="preserve">
+    <value>La detección del nombre del "Key Binding Scope" "Text Editor" ha fallado.{0}Detalles del error:{0}{1}</value>
+    <comment>{0} is a newline, {1} is the detailed exception</comment>
+  </data>
 </root>

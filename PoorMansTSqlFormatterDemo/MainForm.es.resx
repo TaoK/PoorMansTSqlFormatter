@@ -838,13 +838,13 @@
     <value>englishToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;englishToolStripMenuItem.Type" xml:space="preserve">
-    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.2.1.34857, Culture=neutral, PublicKeyToken=null</value>
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.2.2.33063, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;frenchToolStripMenuItem.Name" xml:space="preserve">
     <value>frenchToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;frenchToolStripMenuItem.Type" xml:space="preserve">
-    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.2.1.34857, Culture=neutral, PublicKeyToken=null</value>
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.2.2.33063, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
     <value>groupBox1</value>
@@ -1030,7 +1030,7 @@
     <value>spanishToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;spanishToolStripMenuItem.Type" xml:space="preserve">
-    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.2.1.34857, Culture=neutral, PublicKeyToken=null</value>
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.2.2.33063, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;splitContainer1.Name" xml:space="preserve">
     <value>splitContainer1</value>
@@ -1225,7 +1225,7 @@
     <value>groupBox1</value>
   </data>
   <data name="&gt;&gt;txt_Input.Type" xml:space="preserve">
-    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.2.1.34857, Culture=neutral, PublicKeyToken=null</value>
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.2.2.33063, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;txt_Input.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1249,7 +1249,7 @@
     <value>groupBox3</value>
   </data>
   <data name="&gt;&gt;txt_ParsedXml.Type" xml:space="preserve">
-    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.2.1.34857, Culture=neutral, PublicKeyToken=null</value>
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.2.2.33063, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;txt_ParsedXml.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1261,7 +1261,7 @@
     <value>groupBox2</value>
   </data>
   <data name="&gt;&gt;txt_TokenizedSql.Type" xml:space="preserve">
-    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.2.1.34857, Culture=neutral, PublicKeyToken=null</value>
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.2.2.33063, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;txt_TokenizedSql.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1273,7 +1273,7 @@
     <value>panel1</value>
   </data>
   <data name="&gt;&gt;webBrowser_OutputSql.Type" xml:space="preserve">
-    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.CustomContentWebBrowser, PoorMansTSqlFormatterDemo, Version=1.2.1.34857, Culture=neutral, PublicKeyToken=null</value>
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.CustomContentWebBrowser, PoorMansTSqlFormatterDemo, Version=1.2.2.33063, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;webBrowser_OutputSql.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1391,5 +1391,95 @@
   </data>
   <data name="&gt;&gt;radio_Formatting_Obfuscate.ZOrder" xml:space="preserve">
     <value>4</value>
+  </data>
+  <data name="chk_KeywordSubstitution.Text" xml:space="preserve">
+    <value>Keyword Substitution</value>
+  </data>
+  <data name="&gt;&gt;chk_KeywordSubstitution.Name" xml:space="preserve">
+    <value>chk_KeywordSubstitution</value>
+  </data>
+  <data name="&gt;&gt;chk_KeywordSubstitution.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_KeywordSubstitution.Parent" xml:space="preserve">
+    <value>grp_ObfuscationOptions</value>
+  </data>
+  <data name="&gt;&gt;chk_KeywordSubstitution.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="chk_PreserveComments.Text" xml:space="preserve">
+    <value>Preserve Comments</value>
+  </data>
+  <data name="&gt;&gt;chk_PreserveComments.Name" xml:space="preserve">
+    <value>chk_PreserveComments</value>
+  </data>
+  <data name="&gt;&gt;chk_PreserveComments.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_PreserveComments.Parent" xml:space="preserve">
+    <value>grp_ObfuscationOptions</value>
+  </data>
+  <data name="&gt;&gt;chk_PreserveComments.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="chk_RandomizeKeywordCase.Text" xml:space="preserve">
+    <value>Randomize Keyword Case</value>
+  </data>
+  <data name="&gt;&gt;chk_RandomizeKeywordCase.Name" xml:space="preserve">
+    <value>chk_RandomizeKeywordCase</value>
+  </data>
+  <data name="&gt;&gt;chk_RandomizeKeywordCase.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_RandomizeKeywordCase.Parent" xml:space="preserve">
+    <value>grp_ObfuscationOptions</value>
+  </data>
+  <data name="&gt;&gt;chk_RandomizeKeywordCase.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="chk_RandomizeLineLength.Text" xml:space="preserve">
+    <value>Randomize Line Lengths</value>
+  </data>
+  <data name="&gt;&gt;chk_RandomizeLineLength.Name" xml:space="preserve">
+    <value>chk_RandomizeLineLength</value>
+  </data>
+  <data name="&gt;&gt;chk_RandomizeLineLength.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_RandomizeLineLength.Parent" xml:space="preserve">
+    <value>grp_ObfuscationOptions</value>
+  </data>
+  <data name="&gt;&gt;chk_RandomizeLineLength.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="chk_RandomizeColor.Text" xml:space="preserve">
+    <value>Randomize Color</value>
+  </data>
+  <data name="&gt;&gt;chk_RandomizeColor.Name" xml:space="preserve">
+    <value>chk_RandomizeColor</value>
+  </data>
+  <data name="&gt;&gt;chk_RandomizeColor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chk_RandomizeColor.Parent" xml:space="preserve">
+    <value>grp_ObfuscationOptions</value>
+  </data>
+  <data name="&gt;&gt;chk_RandomizeColor.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="grp_ObfuscationOptions.Text" xml:space="preserve">
+    <value>Opciones de Ofuscación</value>
+  </data>
+  <data name="&gt;&gt;grp_ObfuscationOptions.Name" xml:space="preserve">
+    <value>grp_ObfuscationOptions</value>
+  </data>
+  <data name="&gt;&gt;grp_ObfuscationOptions.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;grp_ObfuscationOptions.Parent" xml:space="preserve">
+    <value>tableLayoutPanel2</value>
+  </data>
+  <data name="&gt;&gt;grp_ObfuscationOptions.ZOrder" xml:space="preserve">
+    <value>5</value>
   </data>
 </root>
