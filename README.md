@@ -31,8 +31,8 @@ T-SQL code.
 * This is NOT a full SQL-parsing solution: only "coarse" parsing is performed, the 
     minimum necessary for re-formatting.
 * The standard formatter does not always maintain the order of comments in the code;
-    a comment inside an "INNER JOIN" compound keyword, like "inner/*test*/join", would
-    get moved out, to "INNER JOIN /*test*/". The original data is maintaned in the 
+    a comment inside an "INNER JOIN" compound keyword, like "inner/\*test\*/join", would
+    get moved out, to "INNER JOIN /\*test\*/". The original data is maintaned in the 
     parse tree, but the standard formatter shuffles comments in cases like this for 
     clarity.
 * DDL parsing, in particular, is VERY coarse - the bare minimum to display ordered table 
