@@ -1,0 +1,7 @@
+﻿<SqlRoot><SqlStatement><SingleLineComment>DB2 and SQLite both support a double-pipe string concatenation operator that 
+</SingleLineComment><SingleLineComment> could never exist in T-SQL, so parsing as an operator makes the formatter
+</SingleLineComment><SingleLineComment> more versatile without affecting core T-SQL support:
+</SingleLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><String>One String</String><OtherOperator>||</OtherOperator><String>another string</String><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement></SqlRoot>

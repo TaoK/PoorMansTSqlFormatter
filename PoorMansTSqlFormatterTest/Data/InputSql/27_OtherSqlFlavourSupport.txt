@@ -1,0 +1,6 @@
+﻿--DB2 and SQLite both support a double-pipe string concatenation operator that 
+-- could never exist in T-SQL, so parsing as an operator makes the formatter
+-- more versatile without affecting core T-SQL support:
+
+SELECT 'One String'||'another string'
+

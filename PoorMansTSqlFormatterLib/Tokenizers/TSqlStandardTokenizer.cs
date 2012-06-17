@@ -431,6 +431,21 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                             }
                             break;
 
+                        case SqlTokenizationType.SinglePipe:
+                            currentTokenizationType = SqlTokenizationType.OtherOperator;
+                            currentTokenValue.Append('|');
+                            if (currentCharacter == '=' || currentCharacter == '|')
+                            {
+                                currentTokenValue.Append(currentCharacter);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                            }
+                            else
+                            {
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
+                            }
+                            break;
+
                         case SqlTokenizationType.SingleExclamation:
                             currentTokenValue.Append('!');
                             if (currentCharacter == '=' || currentCharacter == '<' || currentCharacter == '>')
@@ -502,7 +517,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
 
         private static bool IsCompoundableOperatorCharacter(char currentCharacter)
         {
-            //operator characters that can be compounded by a subsequent space
+            //operator characters that can be compounded by a subsequent "equals" sign
             return (currentCharacter == '/'
                 || currentCharacter == '-'
                 || currentCharacter == '+'
@@ -510,7 +525,6 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                 || currentCharacter == '%'
                 || currentCharacter == '&'
                 || currentCharacter == '^'
-                || currentCharacter == '|'
                 || currentCharacter == '<'
                 || currentCharacter == '>'
                 );
@@ -668,6 +682,10 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             {
                 currentTokenizationType = SqlTokenizationType.SingleExclamation;
             }
+            else if (currentCharacter == '|')
+            {
+                currentTokenizationType = SqlTokenizationType.SinglePipe;
+            }
             else if (IsCompoundableOperatorCharacter(currentCharacter))
             {
                 currentTokenizationType = SqlTokenizationType.SingleOtherCompoundableOperator;
@@ -729,6 +747,10 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
 
                 case SqlTokenizationType.SingleExclamation:
                     tokenContainer.Add(new Token(SqlTokenType.OtherNode, "!"));
+                    break;
+
+                case SqlTokenizationType.SinglePipe:
+                    tokenContainer.Add(new Token(SqlTokenType.OtherNode, "|"));
                     break;
 
                 case SqlTokenizationType.NString:
@@ -815,6 +837,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             SingleExclamation,
             SinglePeriod,
             SingleZero,
+            SinglePipe,
             SingleOtherCompoundableOperator
         }
 
