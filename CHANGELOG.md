@@ -1,6 +1,12 @@
 ﻿
 ## Poor Man's T-SQL Formatter change log
 
+### Version 1.4.1
+
+* Github Issue 54: [New Feature] Support for DB2/SQLLite string concatenation operator
+* Github Issue 48: [Bugfix] Correction to SQL 2012 add-in install folder *UNTESTED*
+	
+
 ### Version 1.3.1
 
 * Github Issue 23: [New Feature] Support for SSMS 2012 / Denali

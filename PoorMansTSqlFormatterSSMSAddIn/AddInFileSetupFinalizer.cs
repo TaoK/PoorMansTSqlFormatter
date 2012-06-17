@@ -40,12 +40,12 @@ namespace PoorMansTSqlFormatterSSMSAddIn
         public override void Install(System.Collections.IDictionary stateSaver)
         {
             base.Install(stateSaver);
-            string commonDocsFolder = Context.Parameters["codecomdocfolder"];
+            string commonAppDataFolder = Context.Parameters["codecomappdatafolder"];
             string targetAssemblyFolder = Context.Parameters["codetargetdir"];
-            if (commonDocsFolder != null && targetAssemblyFolder != null)
+            if (commonAppDataFolder != null && targetAssemblyFolder != null)
             {
                 //find the AddIn file just created, and customize it to point to the correct folder for the assembly
-                string addInFilePath = commonDocsFolder + @"\Microsoft\MSEnvShared\AddIns\PoorMansTSqlFormatterSSMSAddIn.AddIn";
+                string addInFilePath = commonAppDataFolder + @"\Microsoft\SQL Server Management Studio\11.0\Addins\PoorMansTSqlFormatterSSMSAddIn.AddIn";
 
                 XmlNameTable nt = new NameTable();
                 XmlNamespaceManager ns = new XmlNamespaceManager(nt);
