@@ -162,7 +162,7 @@ namespace PoorMansTSqlFormatterCmdLine
                 false,
                 standardizeKeywords
                 );
-            formatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix");
+            formatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix") + Environment.NewLine;
             var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);
 
             bool warningEncountered = false;

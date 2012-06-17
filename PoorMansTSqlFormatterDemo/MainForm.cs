@@ -187,7 +187,7 @@ namespace PoorMansTSqlFormatterDemo
                     chk_KeywordSubstitution.Checked
                     );
 
-            innerFormatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix");
+            innerFormatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix") + Environment.NewLine;
             _formatter = new PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper(innerFormatter);
         }
 
