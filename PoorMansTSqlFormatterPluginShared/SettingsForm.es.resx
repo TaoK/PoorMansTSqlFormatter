@@ -469,7 +469,7 @@
     <value>Hotkey SSMS:</value>
   </data>
   <data name="lbl_IndentHint.Text" xml:space="preserve">
-    <value>(utiliza \t para Tab)</value>
+    <value>(utiliza \t para Tab y \s para espacio)</value>
   </data>
   <data name="lbl_IndentString.Text" xml:space="preserve">
     <value>Texto de Indentación:</value>

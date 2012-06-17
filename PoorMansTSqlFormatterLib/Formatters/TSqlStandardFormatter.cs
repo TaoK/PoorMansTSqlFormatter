@@ -60,7 +60,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             }
             set
             {
-                _indentString = value.Replace("\\t", "\t");
+                _indentString = value.Replace("\\t", "\t").Replace("\\s", " ");
             }
         }
 

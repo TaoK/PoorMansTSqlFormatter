@@ -29,7 +29,7 @@ namespace PoorMansTSqlFormatterPluginShared
         public static PoorMansTSqlFormatterLib.SqlFormattingManager GetFormattingManager(ISqlSettings settings)
         {
             var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(
-                settings.IndentString.Replace("\\t", "\t"),
+                settings.IndentString.Replace("\\t", "\t").Replace("\\s", " "),
                 settings.SpacesPerTab,
                 settings.MaxLineWidth,
                 settings.ExpandCommaLists,

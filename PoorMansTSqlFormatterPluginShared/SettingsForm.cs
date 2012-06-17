@@ -105,7 +105,7 @@ namespace PoorMansTSqlFormatterPluginShared
 
         private void SetSettingsFromControlValues()
         {
-            _settings.IndentString = txt_IndentString.Text.Replace("\t", "\\t");
+            _settings.IndentString = txt_IndentString.Text.Replace("\t", "\\t").Replace(" ", "\\s");
             if (_supportsHotkey) _settings["Hotkey"] = txt_Hotkey.Text;
             _settings.MaxLineWidth = int.Parse(txt_MaxLineWidth.Text);
             _settings.SpacesPerTab = int.Parse(txt_SpacesPerTab.Text);

@@ -128,7 +128,7 @@ namespace PoorMansTSqlFormatterDemo
         private void SaveFormatSettings()
         {
             if (radio_Formatting_Standard.Checked) Properties.Settings.Default.Formatter = FORMATTER_STANDARD;
-            Properties.Settings.Default.Indent = txt_Indent.Text;
+            Properties.Settings.Default.Indent = txt_Indent.Text.Replace("\t", "\\t").Replace(" ", "\\s");
             Properties.Settings.Default.IndentWidth = int.Parse(txt_IndentWidth.Text);
             Properties.Settings.Default.MaxWidth = int.Parse(txt_MaxWidth.Text);
             Properties.Settings.Default.ExpandCommaLists = chk_ExpandCommaLists.Checked;

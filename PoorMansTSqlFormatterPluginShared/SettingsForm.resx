@@ -502,7 +502,7 @@
     <value>3</value>
   </data>
   <data name="lbl_IndentHint.Text" xml:space="preserve">
-    <value>(use \t for tab)</value>
+    <value>(use \t for tab and \s for space)</value>
   </data>
   <data name="&gt;&gt;lbl_IndentHint.Name" xml:space="preserve">
     <value>lbl_IndentHint</value>

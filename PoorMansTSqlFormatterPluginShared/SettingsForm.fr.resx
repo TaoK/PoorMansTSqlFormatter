@@ -469,7 +469,7 @@
     <value>Raccourci Clavier SSMS:</value>
   </data>
   <data name="lbl_IndentHint.Text" xml:space="preserve">
-    <value>(utiliser \t pour tab)</value>
+    <value>(utiliser \t pour tab et \s pour espace)</value>
   </data>
   <data name="lbl_IndentString.Text" xml:space="preserve">
     <value>Chaîne d'Indentation:</value>
