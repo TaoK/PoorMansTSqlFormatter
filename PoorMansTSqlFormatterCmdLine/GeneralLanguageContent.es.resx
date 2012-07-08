@@ -191,7 +191,7 @@ Se puede proporcionar el codigo SQL por tubería (pipe) en vez de proporcionar u
 
 Exemplos:
 
-SqlFormatter TestFiles\* /is:"  " /tc /uc- 
+SqlFormatter TestFiles\* /is:"  " /tc /uk- 
 
 SqlFormatter test*.sql /o:resultfile.sql
 

@@ -190,7 +190,7 @@ You can also pipe the SQL to be formatted in (UTF-8 encoding), and then no input
 
 Examples:
 
-SqlFormatter TestFiles\* /is:"  " /tc /uc- 
+SqlFormatter TestFiles\* /is:"  " /tc /uk- 
 
 SqlFormatter test*.sql /o:resultfile.sql
 

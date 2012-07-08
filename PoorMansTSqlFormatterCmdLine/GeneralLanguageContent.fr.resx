@@ -191,7 +191,7 @@ Vous pouvez aussi utilizer un Tube (/tuyeau/pipe) pour proportionner le SQL d'en
 
 Par exemple:
 
-SqlFormatter TestFiles\* /is:"  " /tc /uc- 
+SqlFormatter TestFiles\* /is:"  " /tc /uk- 
 
 SqlFormatter test*.sql /o:resultfile.sql
 

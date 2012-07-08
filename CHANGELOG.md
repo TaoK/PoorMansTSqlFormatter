@@ -3,9 +3,10 @@
 
 ### Version 1.4.1
 
-* Github Issue 54: [New Feature] Support for DB2/SQLLite string concatenation operator
-* Github Issue 48: [Bugfix] Correction to SQL 2012 add-in install folder *UNTESTED*
-* Github Issue 52: [Bugfix] Fix to space-indent saving in formatting plugin options (SSMS, Notepad++)
+* Github Issue #54: [New Feature] Support for DB2/SQLLite string concatenation operator
+* Github Issue #48: [Bugfix] Correction to SQL 2012 add-in install folder *UNTESTED*
+* Github Issue #52: [Bugfix] Fix to space-indent saving in formatting plugin options (SSMS, Notepad++)
+* [Bugfix] Fix examples in commandline help to correspond to existing options [thanks John Landmesser for the bug report]
 	
 
 ### Version 1.3.1
