@@ -199,4 +199,16 @@ DROP TABLE #UpdatedInventory
 DROP TABLE #ReferenceInventory
 GO
 
+--Variable initializer using Subquery; not directly related to MERGE, but also 2008-specific
+DECLARE @SomeValue INT = (
+		SELECT the thing
+		FROM the place
+		WHERE tis found
+		)
+DECLARE @SomeOtherValue INT = Convert(INT, '1')
 
+SELECT 1 AS two
+
+SELECT (
+		SELECT 1
+		) AS t

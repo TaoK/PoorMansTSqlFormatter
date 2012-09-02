@@ -89,6 +89,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_BOOLEAN_EXPRESSION:
                 case SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK:
                 case SqlXmlConstants.ENAME_DDL_OTHER_BLOCK:
+                case SqlXmlConstants.ENAME_DDL_DECLARE_BLOCK:
                 case SqlXmlConstants.ENAME_CURSOR_DECLARATION:
                 case SqlXmlConstants.ENAME_BEGIN_END_BLOCK:
                 case SqlXmlConstants.ENAME_TRY_BLOCK:
@@ -177,6 +178,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_PERIOD:
                 case SqlXmlConstants.ENAME_SEMICOLON:
                 case SqlXmlConstants.ENAME_ASTERISK:
+                case SqlXmlConstants.ENAME_EQUALSSIGN:
                 case SqlXmlConstants.ENAME_SCOPERESOLUTIONOPERATOR:
                 case SqlXmlConstants.ENAME_AND_OPERATOR:
                 case SqlXmlConstants.ENAME_OR_OPERATOR:
@@ -258,6 +260,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     case SqlTokenType.Semicolon:
                     case SqlTokenType.Colon:
                     case SqlTokenType.Asterisk:
+                    case SqlTokenType.EqualsSign:
                     case SqlTokenType.OtherNode:
                     case SqlTokenType.WhiteSpace:
                     case SqlTokenType.OtherOperator:

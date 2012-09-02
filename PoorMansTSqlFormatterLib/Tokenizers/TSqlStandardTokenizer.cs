@@ -674,6 +674,10 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             {
                 tokenContainer.Add(new Token(SqlTokenType.Asterisk, currentCharacter.ToString()));
             }
+            else if (currentCharacter == '=')
+            {
+                tokenContainer.Add(new Token(SqlTokenType.EqualsSign, currentCharacter.ToString()));
+            }
             else if (currentCharacter == '<')
             {
                 currentTokenizationType = SqlTokenizationType.SingleLT;

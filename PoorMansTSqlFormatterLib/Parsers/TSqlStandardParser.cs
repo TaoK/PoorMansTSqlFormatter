@@ -114,6 +114,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_DDLDETAIL_PARENS, "");
                         else if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
                             || sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
+                            || sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_DECLARE_BLOCK)
                             || isInsertOrValuesClause
                             )
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_DDL_PARENS, "");
@@ -261,9 +262,14 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
                             }
                         }
+                        else if (significantTokensString.StartsWith("DECLARE "))
+                        {
+                            sqlTree.ConsiderStartingNewStatement();
+                            sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_DDL_DECLARE_BLOCK, "");
+                            sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERKEYWORD, token.Value);
+                        }
                         else if (significantTokensString.StartsWith("CREATE ")
                             || significantTokensString.StartsWith("ALTER ")
-                            || significantTokensString.StartsWith("DECLARE ")
                             )
                         {
                             sqlTree.ConsiderStartingNewStatement();
@@ -889,8 +895,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                             || ContentStartsWithKeyword(clause, "EXECUTE"))
                                             existingExecClauseFound = true;
 
-                                    if (!existingSelectClauseFound 
-                                        && !existingValuesClauseFound 
+                                    if (!existingSelectClauseFound
+                                        && !existingValuesClauseFound
                                         && !existingExecClauseFound
                                         )
                                         selectShouldntTryToStartNewStatement = true;
@@ -1130,6 +1136,12 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         break;
 
+                    case SqlTokenType.EqualsSign:
+                        sqlTree.SaveNewElement(SqlXmlConstants.ENAME_EQUALSSIGN, token.Value);
+                        if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_DDL_DECLARE_BLOCK))
+                            sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT, "");
+                        break;
+
                     case SqlTokenType.MultiLineComment:
                     case SqlTokenType.SingleLineComment:
                     case SqlTokenType.WhiteSpace:
@@ -1146,10 +1158,10 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     case SqlTokenType.BracketQuotedName:
                     case SqlTokenType.Asterisk:
                     case SqlTokenType.Period:
+                    case SqlTokenType.OtherOperator:
                     case SqlTokenType.NationalString:
                     case SqlTokenType.String:
                     case SqlTokenType.QuotedString:
-                    case SqlTokenType.OtherOperator:
                     case SqlTokenType.Number:
                     case SqlTokenType.BinaryValue:
                     case SqlTokenType.MonetaryValue:
@@ -1259,6 +1271,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     return SqlXmlConstants.ENAME_BRACKET_QUOTED_NAME;
                 case SqlTokenType.Asterisk:
                     return SqlXmlConstants.ENAME_ASTERISK;
+                case SqlTokenType.EqualsSign:
+                    return SqlXmlConstants.ENAME_EQUALSSIGN;
                 case SqlTokenType.Comma:
                     return SqlXmlConstants.ENAME_COMMA;
                 case SqlTokenType.Period:

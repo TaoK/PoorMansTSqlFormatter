@@ -109,6 +109,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_SET_OPERATOR_CLAUSE:
                 case SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK:
                 case SqlXmlConstants.ENAME_DDL_OTHER_BLOCK:
+                case SqlXmlConstants.ENAME_DDL_DECLARE_BLOCK:
                 case SqlXmlConstants.ENAME_CURSOR_DECLARATION:
                 case SqlXmlConstants.ENAME_BEGIN_TRANSACTION:
                 case SqlXmlConstants.ENAME_SAVE_TRANSACTION:
@@ -229,6 +230,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_SEMICOLON:
                 case SqlXmlConstants.ENAME_SCOPERESOLUTIONOPERATOR:
                 case SqlXmlConstants.ENAME_ASTERISK:
+                case SqlXmlConstants.ENAME_EQUALSSIGN:
                 case SqlXmlConstants.ENAME_OTHEROPERATOR:
                     state.SpaceExpected = false;
                     state.AddOutputContent(contentElement.InnerText);

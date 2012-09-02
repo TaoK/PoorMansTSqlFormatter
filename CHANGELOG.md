@@ -1,6 +1,10 @@
 ﻿
 ## Poor Man's T-SQL Formatter change log
 
+### Version 1.5.0
+
+* Github Issue #74: [Bugfix] Correct parsing & formatting of subqueries & function calls in variable initializers
+
 ### Version 1.4.1
 
 * Github Issue #54: [New Feature] Support for DB2/SQLLite string concatenation operator

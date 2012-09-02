@@ -166,6 +166,7 @@ namespace PoorMansTSqlFormatterLib
         {
             if (PathNameMatches(0, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
                 || PathNameMatches(0, SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
+                || PathNameMatches(0, SqlXmlConstants.ENAME_DDL_DECLARE_BLOCK)
                 )
                 MoveToAncestorContainer(1);
             else if (PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
@@ -181,13 +182,16 @@ namespace PoorMansTSqlFormatterLib
                     && (PathNameMatches(2, SqlXmlConstants.ENAME_PERMISSIONS_BLOCK)
                         || PathNameMatches(2, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
                         || PathNameMatches(2, SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
+                        || PathNameMatches(2, SqlXmlConstants.ENAME_DDL_DECLARE_BLOCK)
                         )
                 )
                 MoveToAncestorContainer(3);
             else if (PathNameMatches(0, SqlXmlConstants.ENAME_MERGE_WHEN))
                 MoveToAncestorContainer(2);
             else if (PathNameMatches(0, SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT)
-                && PathNameMatches(1, SqlXmlConstants.ENAME_CTE_WITH_CLAUSE)
+                && (PathNameMatches(1, SqlXmlConstants.ENAME_CTE_WITH_CLAUSE)
+                    || PathNameMatches(1, SqlXmlConstants.ENAME_DDL_DECLARE_BLOCK)
+                    )
                 )
                 MoveToAncestorContainer(2);
         }

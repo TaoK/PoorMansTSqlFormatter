@@ -77,6 +77,7 @@ This project uses several external libraries:
     based on the zlib/libpng license, and its homepage is: http://www.nunit.org/
 * DLLExport and Notepad++ C# plugin template, based on work by Robert Giesecke and UFO, 
     available from the [notepad++ plugin development forum](https://sourceforge.net/projects/notepad-plus/forums/forum/482781).
+* ILRepack, by François Valdy, for assembly-merging, available from the [github project page](https://github.com/gluck/il-repack).
 
 Many of the features in this project result from feedback by multiple people, including
 but not limited to:
@@ -91,7 +92,7 @@ but not limited to:
 * Jörg Burdorf
 * William Lin
 
-Translation work on this project is facilitated by [Amanuens](http://amanuens.com/), the online translation platform.
+Translation work on this project was originally facilitated by [Amanuens](http://amanuens.com/), the online translation platform that is now sadly defunct.
 
 Please contact me with any questions, concerns, or issues: my email address starts
 with tao, and is hosted at klerks dot biz.

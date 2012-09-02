@@ -55,6 +55,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_COMMIT_TRANSACTION = "CommitTransaction";
         public const string ENAME_ROLLBACK_TRANSACTION = "RollbackTransaction";
         public const string ENAME_SAVE_TRANSACTION = "SaveTransaction";
+        public const string ENAME_DDL_DECLARE_BLOCK = "DDLDeclareBlock";
         public const string ENAME_DDL_PROCEDURAL_BLOCK = "DDLProceduralBlock";
         public const string ENAME_DDL_OTHER_BLOCK = "DDLOtherBlock";
         public const string ENAME_DDL_AS_BLOCK = "DDLAsBlock";
@@ -105,6 +106,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_SEMICOLON = "Semicolon";
         public const string ENAME_SCOPERESOLUTIONOPERATOR = "ScopeResolutionOperator";
         public const string ENAME_ASTERISK = "Asterisk";
+        public const string ENAME_EQUALSSIGN = "EqualsSign";
         public const string ENAME_ALPHAOPERATOR = "AlphaOperator";
         public const string ENAME_OTHEROPERATOR = "OtherOperator";
 

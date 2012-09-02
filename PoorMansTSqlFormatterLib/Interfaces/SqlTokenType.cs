@@ -39,6 +39,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         Semicolon,
         Colon,
         Asterisk,
+        EqualsSign,
         MonetaryValue,
         Number,
         BinaryValue,

@@ -86,3 +86,8 @@ SELECT * FROM #ReferenceInventory
 DROP TABLE #UpdatedInventory
 DROP TABLE #ReferenceInventory
 GO
+--Variable initializer using Subquery; not directly related to MERGE, but also 2008-specific
+DECLARE @SomeValue int=(select the thing from the place where tis found)
+DECLARE @SomeOtherValue int= Convert(int, '1')
+SELECT 1 as two
+SELECT (SELECT 1) AS t

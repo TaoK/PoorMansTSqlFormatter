@@ -155,6 +155,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK:
                 case SqlXmlConstants.ENAME_DDL_OTHER_BLOCK:
+                case SqlXmlConstants.ENAME_DDL_DECLARE_BLOCK:
                 case SqlXmlConstants.ENAME_CURSOR_DECLARATION:
                 case SqlXmlConstants.ENAME_BEGIN_TRANSACTION:
                 case SqlXmlConstants.ENAME_SAVE_TRANSACTION:
@@ -520,6 +521,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlXmlConstants.ENAME_ASTERISK:
+                case SqlXmlConstants.ENAME_EQUALSSIGN:
                 case SqlXmlConstants.ENAME_ALPHAOPERATOR:
                 case SqlXmlConstants.ENAME_OTHEROPERATOR:
                     WhiteSpace_SeparateWords(state);
@@ -740,6 +742,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     && (target.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
                         || target.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
                         || target.Name.Equals(SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
+                        || target.Name.Equals(SqlXmlConstants.ENAME_DDL_DECLARE_BLOCK)
                         )
                     )
                     contentElement = target;
