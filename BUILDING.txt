@@ -12,7 +12,7 @@ Some dependencies are internal/bundled:
 Some are additional external dependencies for different components of the solution:
  - Robert Giesecke's Unmanaged Exports technique, used in the Notepad++ plugin project, does not work in Express versions of Visual Studio
  - The SSMS plugin installer and Winmerge plugin installer projects are not supported in Express versions of Visual Studio
- - The Winmerge Plugin requires VB6 (eg Visual Studio 6), to expose a COM object properly to WinMerge's plugin-loading framework
+ - The Winmerge Plugin requires VB6 (eg Visual Studio 6), to expose a COM object properly to WinMerge's plugin-loading framework - instructions below
  - The SSMS Plugin project by default points to SSMS 2008 in the x86 program files folder, for debugging. This can be changed to an available copy of SSMS as required by editing the project properties.
 
 The formatting library and commandline utility have been compiled under Mono (a long time ago - not recently attempted), and 
@@ -34,9 +34,20 @@ depend on which version of SSMS you are deploying to:
      - EG on windows 7, the target folder is normally: "C:\Users\Public\Documents\Microsoft\MSEnvShared\AddIns"
    - edit the "PoorMansTSqlFormatterSSMSAddIn.AddIn" file so that the "Assembly" element points to the "PoorMansTSqlFormatterSSMSAddIn.dll" assembly.
 
+The WinMerge Plugin preparation is reasonably complex/painful, especially on a recent (Vista/Win7 x64) dev machine:
+ - Open a command prompt as administrator
+ - Navigate to the "PoorMansTSqlFormatterWinMergePlugin" folder in the command prompt
+ - Run the "Initialize_GetLibAsCOM.bat" file; this should give you a warning but succeed
+ - Open the VB6 project
+ - Check that the "PoorMansTSqlFormatterLib.tlb" reference does not show up as "MISSING" (if it does, review previous steps and/or remove and add the reference again)
+ - In VB6, "Make" the "TSqlFormatWMPlugin.dll" file.
+   - This will probably spit out an error like "Error accessing the system registry", which can be ignored, as the DLL was created (the error concerns the COM registrtion, which we will do later in the .Net setup project anyway)
+ - In VS2008, "Rebuild" the WinMerge Plugin Setup project.
+
+
 The packaging and release process is currently completely manual:
- - Ensure AssemblyInfo versions are updated
- - Rebuild solution in Release mode
+ - Ensure AssemblyInfo versions are updated, including versions of setup packages
+ - Rebuild solution in Release mode, and additionally manually rebuild the two setup projects
  - Copy Binaries for simple executables and setup files into dedicated folders, zip them up and version-number the zip files.
  - Upload the archives to website
  - Change website to reference the new archives
