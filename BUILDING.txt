@@ -51,6 +51,7 @@ The packaging and release process is currently completely manual:
  - Copy Binaries for simple executables and setup files into dedicated folders, zip them up and version-number the zip files.
  - Upload the archives to website
  - Change website to reference the new archives
+ - Update Notepad++ plugin manager admin site to reflect the new version (in staging - actual live publishing is done by site administrator)
 
 If you encounter any issues building this project, please don't hesitate to contact me: my email address starts with tao, and is 
 hosted at klerks dot biz.
