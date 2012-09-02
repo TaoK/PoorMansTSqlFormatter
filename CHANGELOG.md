@@ -1,17 +1,15 @@
 ﻿
 ## Poor Man's T-SQL Formatter change log
 
-### Version 1.5.0
-
-* Github Issue #74: [Bugfix] Correct parsing & formatting of subqueries & function calls in variable initializers
-* Github Issue #73: [Bugfix] Correct parsing & formatting of OPTION clauses
-
 ### Version 1.4.1
 
 * Github Issue #54: [New Feature] Support for DB2/SQLLite string concatenation operator
-* Github Issue #48: [Bugfix] Correction to SQL 2012 add-in install folder *UNTESTED*
+* Github Issue #48: [Bugfix] Correction to SQL 2012 add-in install folder 
 * Github Issue #52: [Bugfix] Fix to space-indent saving in formatting plugin options (SSMS, Notepad++)
 * [Bugfix] Fix examples in commandline help to correspond to existing options [thanks John Landmesser for the bug report]
+* Github Issue #74: [Bugfix] Correct parsing & formatting of subqueries & function calls in variable initializers
+* Github Issue #73: [Bugfix] Correct parsing & formatting of OPTION clauses
+* Github Issue #55: [Bugfix] Correct parsing & formatting of OUTPUT specifiers on proc arguments defined without parens
 	
 
 ### Version 1.3.1
