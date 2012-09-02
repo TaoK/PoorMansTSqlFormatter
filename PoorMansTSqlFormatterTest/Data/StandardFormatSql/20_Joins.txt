@@ -34,6 +34,10 @@ GO
 SELECT *
 FROM Someplace S
 CROSS JOIN Elsewhere AS E ON 1 = 1
+OPTION (
+	LOOP JOIN
+	,FORCE ORDER
+	)
 GO
 
 

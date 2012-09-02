@@ -4,6 +4,7 @@
 ### Version 1.5.0
 
 * Github Issue #74: [Bugfix] Correct parsing & formatting of subqueries & function calls in variable initializers
+* Github Issue #73: [Bugfix] Correct parsing & formatting of OPTION clauses
 
 ### Version 1.4.1
 

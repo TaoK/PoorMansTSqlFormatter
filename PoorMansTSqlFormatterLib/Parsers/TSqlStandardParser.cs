@@ -115,6 +115,12 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         else if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK)
                             || sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_OTHER_BLOCK)
                             || sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_DECLARE_BLOCK)
+                            || (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE) 
+                                && (firstNonCommentParensSibling != null
+                                    && firstNonCommentParensSibling.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
+                                    && firstNonCommentParensSibling.InnerText.ToUpperInvariant().StartsWith("OPTION")
+                                    )
+                                )
                             || isInsertOrValuesClause
                             )
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_DDL_PARENS, "");

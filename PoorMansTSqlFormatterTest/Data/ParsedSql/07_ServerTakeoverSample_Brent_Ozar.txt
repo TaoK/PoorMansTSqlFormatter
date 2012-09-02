@@ -844,7 +844,7 @@ http://www.sqlskills.com/BLOGS/PAUL/post/A-little-known-sign-of-impending-doom-e
    </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>ps</Other><Period>.</Period><Other>page_count</Other><WhiteSpace> </WhiteSpace><OtherOperator>&gt;</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>100</NumberValue><WhiteSpace> 
    </WhiteSpace><And><OtherKeyword>AND</OtherKeyword></And><WhiteSpace> </WhiteSpace><Other>ps</Other><Period>.</Period><Other>avg_fragmentation_in_percent</Other><WhiteSpace> </WhiteSpace><OtherOperator>&gt;</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>30</NumberValue><WhiteSpace>
 </WhiteSpace></Clause><Clause><OtherKeyword>ORDER</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>BY</OtherKeyword><WhiteSpace> </WhiteSpace><Other>databaseName</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>schemaName</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>tableName</Other><WhiteSpace>
-</WhiteSpace></Clause><Clause><OtherKeyword>OPTION</OtherKeyword><WhiteSpace> </WhiteSpace><ExpressionParens><OtherKeyword>MaxDop</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue></ExpressionParens><Semicolon>;</Semicolon><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>OPTION</OtherKeyword><WhiteSpace> </WhiteSpace><DDLParens><OtherKeyword>MaxDop</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue></DDLParens><Semicolon>;</Semicolon><WhiteSpace>
 
 
 

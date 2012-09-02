@@ -77,7 +77,7 @@
         </WhiteSpace></ContainerContentBody><MergeThen><ContainerOpen><OtherKeyword>THEN</OtherKeyword></ContainerOpen><MergeAction><SqlStatement><WhiteSpace> </WhiteSpace><Clause><OtherKeyword>DELETE</OtherKeyword><WhiteSpace>
     </WhiteSpace></Clause></SqlStatement></MergeAction></MergeThen></MergeWhen></MergeClause></Clause><Clause><OtherKeyword>OUTPUT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>Deleted</Other><Period>.</Period><Other>ProductID</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>Deleted</Other><Period>.</Period><Other>LocationID</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>Inserted</Other><Period>.</Period><Other>Quantity</Other><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>NewQty</Other><Comma>,</Comma><WhiteSpace> </WhiteSpace><Other>Deleted</Other><Period>.</Period><Other>Quantity</Other><WhiteSpace> </WhiteSpace><OtherKeyword>AS</OtherKeyword><WhiteSpace> </WhiteSpace><Other>PreviousQty</Other><WhiteSpace>
 		</WhiteSpace></Clause><Clause><OtherKeyword>INTO</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#UpdatedInventory</Other><WhiteSpace>
-	</WhiteSpace></Clause><Clause><OtherKeyword>OPTION</OtherKeyword><WhiteSpace> </WhiteSpace><ExpressionParens><OtherKeyword>FAST</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>10</NumberValue></ExpressionParens><WhiteSpace>
+	</WhiteSpace></Clause><Clause><OtherKeyword>OPTION</OtherKeyword><WhiteSpace> </WhiteSpace><DDLParens><OtherKeyword>FAST</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>10</NumberValue></DDLParens><WhiteSpace>
 	</WhiteSpace><Semicolon>;</Semicolon><WhiteSpace>
 		
 </WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
