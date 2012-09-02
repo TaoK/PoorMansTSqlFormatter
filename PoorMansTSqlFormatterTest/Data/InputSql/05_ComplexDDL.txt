@@ -334,5 +334,11 @@ GO
 
 
 EXECUTE sp_MS_marksystemobject 'sp_ScriptTable' 
+go
 
- 
+CREATE PROCEDURE AnotherTest
+	@FirstValue Int,
+     @TestValue BIT = 0 OUTPUT 
+AS
+SELECT 0
+

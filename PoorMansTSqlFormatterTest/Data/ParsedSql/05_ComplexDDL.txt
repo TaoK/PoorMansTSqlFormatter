@@ -334,5 +334,12 @@ Modifications:
 
 
 </WhiteSpace><Clause><OtherKeyword>EXECUTE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>sp_MS_marksystemobject</Other><WhiteSpace> </WhiteSpace><String>sp_ScriptTable</String><WhiteSpace> 
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>go</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
 
- </WhiteSpace></Clause></SqlStatement></SqlRoot>
+</WhiteSpace><Clause><DDLProceduralBlock><OtherKeyword>CREATE</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>PROCEDURE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>AnotherTest</Other><WhiteSpace>
+	</WhiteSpace><Other>@FirstValue</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>Int</DataTypeKeyword><Comma>,</Comma><WhiteSpace>
+     </WhiteSpace><Other>@TestValue</Other><WhiteSpace> </WhiteSpace><DataTypeKeyword>BIT</DataTypeKeyword><WhiteSpace> </WhiteSpace><EqualsSign>=</EqualsSign><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace> </WhiteSpace><OtherKeyword>OUTPUT</OtherKeyword><WhiteSpace> 
+</WhiteSpace><DDLAsBlock><ContainerOpen><OtherKeyword>AS</OtherKeyword></ContainerOpen><ContainerContentBody><SqlStatement><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>0</NumberValue><WhiteSpace>
+
+</WhiteSpace></Clause></SqlStatement></ContainerContentBody></DDLAsBlock></DDLProceduralBlock></Clause></SqlStatement></SqlRoot>

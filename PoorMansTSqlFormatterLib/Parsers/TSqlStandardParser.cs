@@ -540,6 +540,10 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 isSprocArgument = true;
                             }
 
+                            //Also proc definitions - argument lists without parens
+                            if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_DDL_PROCEDURAL_BLOCK))
+                                isSprocArgument = true;
+
                             if (!isSprocArgument)
                             {
                                 sqlTree.EscapeMergeAction();
