@@ -1,7 +1,7 @@
 Type=OleDll
-Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\WINDOWS\system32\stdole2.tlb#OLE Automation
-Reference=*\G{2A75196C-D9EB-4129-B803-931327F72D5C}#2.8#0#C:\Program Files\Common Files\system\ado\msado15.dll#Microsoft ActiveX Data Objects 2.8 Library
-Reference=*\G{907466AA-C3B5-30C3-8F43-2C1692FA7D25}#0.9#0#bin\PoorMansTSqlFormatterLib.tlb#A simple free (AGPL) T-SQL formatting library for .Net 2.0.
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\Windows\SysWOW64\stdole2.tlb#OLE Automation
+Reference=*\G{2A75196C-D9EB-4129-B803-931327F72D5C}#2.8#0#C:\Program Files (x86)\Common Files\System\ado\msado28.tlb#Microsoft ActiveX Data Objects 2.8 Library
+Reference=*\G{0947143B-BAAA-33F7-BBCA-466CD8AABBAF}#1.4#0#bin\PoorMansTSqlFormatterLib.tlb#A simple free (AGPL) T-SQL formatting library for .Net 2.0.
 Class=WinMergeScript; WinMergeScript.cls
 Startup="(None)"
 HelpFile=""
