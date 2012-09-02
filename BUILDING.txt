@@ -4,13 +4,12 @@ and has a few build-time dependencies.
 
 Some dependencies are internal/bundled:
  - fart.exe, a GPLv2 file search-replace tool used for pre-build "ComponentResourceManager" replacement
+ - ILRepack.exe, an Apache 2.0 assembly-merging tool for post-build merging into a single assembly for command-line and demo projects
  - LinqBridge, a collection-handling convenience library for .Net 2.0 under Visual Studio 2008, released under a BSD-style license
  - NDesk.Options, a command-line-option-parsing library released under a MIT/X11-style license
  - NUnit (including UI runner assemblies for plugin-free debugging) for the tests project
 
 Some are additional external dependencies for different components of the solution:
- - The CommandLine formatter and Winforms App use Microsoft's ILMerge to create a single executable for easy deployment/versioning
-   - ILMerge can be downloaded online: http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=17630
  - Robert Giesecke's Unmanaged Exports technique, used in the Notepad++ plugin project, does not work in Express versions of Visual Studio
  - The SSMS plugin installer and Winmerge plugin installer projects are not supported in Express versions of Visual Studio
  - The Winmerge Plugin requires VB6 (eg Visual Studio 6), to expose a COM object properly to WinMerge's plugin-loading framework
