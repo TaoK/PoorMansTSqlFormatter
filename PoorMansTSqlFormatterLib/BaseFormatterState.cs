@@ -45,7 +45,7 @@ namespace PoorMansTSqlFormatterLib
             {
                 if (!string.IsNullOrEmpty(htmlClassName))
                     _outBuilder.Append(@"<span class=""" + htmlClassName + @""">");
-                _outBuilder.Append(System.Web.HttpUtility.HtmlEncode(content));
+                _outBuilder.Append(Utils.HtmlEncode(content));
                 if (!string.IsNullOrEmpty(htmlClassName))
                     _outBuilder.Append("</span>");
             }

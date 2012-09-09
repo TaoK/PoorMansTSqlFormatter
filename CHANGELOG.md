@@ -1,6 +1,10 @@
 ﻿
 ## Poor Man's T-SQL Formatter change log
 
+### Version 1.4.2 (library only)
+
+* Github Issue #70: [Enhancement] Eliminate "Client Framework"-incompatible dependency on System.Web [thanks to Brad Wood and Richard King for feedback on this]
+
 ### Version 1.4.1
 
 * Github Issue #54: [New Feature] Support for DB2/SQLLite string concatenation operator

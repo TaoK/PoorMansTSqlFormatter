@@ -104,7 +104,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 XmlNode skippedXml = ExtractXmlBetween(state.RegionStartNode, sqlTreeDoc.DocumentElement);
                 TSqlObfuscatingFormatter tempFormatter = new TSqlObfuscatingFormatter();
                 if (HTMLFormatted)
-                    state.AddOutputContentRaw(System.Web.HttpUtility.HtmlEncode(tempFormatter.FormatSQLTree(skippedXml)));
+                    state.AddOutputContentRaw(Utils.HtmlEncode(tempFormatter.FormatSQLTree(skippedXml)));
                 else
                     state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
             }
@@ -371,7 +371,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         XmlNode skippedXml = ExtractXmlBetween(state.RegionStartNode, contentElement);
                         TSqlObfuscatingFormatter tempFormatter = new TSqlObfuscatingFormatter();
                         if (HTMLFormatted)
-                            state.AddOutputContentRaw(System.Web.HttpUtility.HtmlEncode(tempFormatter.FormatSQLTree(skippedXml)));
+                            state.AddOutputContentRaw(Utils.HtmlEncode(tempFormatter.FormatSQLTree(skippedXml)));
                         else
                             state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
                         state.SpecialRegionActive = null;
@@ -422,7 +422,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         XmlNode skippedXml = ExtractXmlBetween(state.RegionStartNode, contentElement);
                         TSqlObfuscatingFormatter tempFormatter = new TSqlObfuscatingFormatter();
                         if (HTMLFormatted)
-                            state.AddOutputContentRaw(System.Web.HttpUtility.HtmlEncode(tempFormatter.FormatSQLTree(skippedXml)));
+                            state.AddOutputContentRaw(Utils.HtmlEncode(tempFormatter.FormatSQLTree(skippedXml)));
                         else
                             state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
                         state.SpecialRegionActive = null;

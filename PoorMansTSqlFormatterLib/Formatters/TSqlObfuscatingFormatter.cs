@@ -435,7 +435,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         base.AddOutputContentRaw("<span style=\"color: ");
                         base.AddOutputContentRaw(_currentColor);
                         base.AddOutputContentRaw(";\">");
-                        base.AddOutputContentRaw(System.Web.HttpUtility.HtmlEncode(content.Substring(lengthWritten, writing)));
+                        base.AddOutputContentRaw(Utils.HtmlEncode(content.Substring(lengthWritten, writing)));
                         base.AddOutputContentRaw("</span>");
                         lengthWritten += writing;
                         _currentColorLength += writing;

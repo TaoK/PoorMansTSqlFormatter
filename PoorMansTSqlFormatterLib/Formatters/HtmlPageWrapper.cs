@@ -93,7 +93,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (_underlyingFormatter.HTMLFormatted)
                 return string.Format(HTML_OUTER_PAGE, formattedResult);
             else
-                return string.Format(HTML_OUTER_PAGE, System.Web.HttpUtility.HtmlEncode(formattedResult));
+                return string.Format(HTML_OUTER_PAGE, Utils.HtmlEncode(formattedResult));
         }
     }
 }
