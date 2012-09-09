@@ -53,6 +53,21 @@ namespace PoorMansTSqlFormatterLib
                 _outBuilder.Append(content);
         }
 
+        public virtual void OpenClass(string htmlClassName)
+        {
+            if (htmlClassName == null)
+                throw new ArgumentNullException("htmlClassName");
+
+            if (HtmlOutput)
+                _outBuilder.Append(@"<span class=""" + htmlClassName + @""">");
+        }
+
+        public virtual void CloseClass()
+        {
+            if (HtmlOutput)
+                _outBuilder.Append(@"</span>");
+        }
+
         public virtual void AddOutputContentRaw(string content)
         {
             _outBuilder.Append(content);

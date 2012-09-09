@@ -25,7 +25,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
 {
     public interface ITokenList : IList<IToken>
     {
-        bool HasErrors { get; set; }
+        bool HasUnfinishedToken { get; set; }
         string PrettyPrint();
         IList<IToken> GetRange(int index, int count);
         IList<IToken> GetRangeByIndex(int fromIndex, int toIndex);

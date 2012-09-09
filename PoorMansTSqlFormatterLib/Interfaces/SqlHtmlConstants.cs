@@ -29,5 +29,6 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string CLASS_STRING = "SQLString";
         public const string CLASS_FUNCTION = "SQLFunction";
         public const string CLASS_KEYWORD = "SQLKeyword";
+        public const string CLASS_ERRORHIGHLIGHT = "SQLErrorHighlight";
     }
 }

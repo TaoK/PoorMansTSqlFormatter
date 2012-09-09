@@ -67,6 +67,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
 .SQLOperator {{
 	color: #777777;
 }}
+.SQLErrorHighlight {{
+	background-color: #FFFF00;
+}}
 
 
 </style>

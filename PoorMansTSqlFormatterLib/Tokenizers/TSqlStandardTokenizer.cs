@@ -479,7 +479,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                     || currentTokenizationType.Value == SqlTokenizationType.QuotedString
                     || currentTokenizationType.Value == SqlTokenizationType.BracketQuotedName
                     )
-                    tokenContainer.HasErrors = true;
+                    tokenContainer.HasUnfinishedToken = true;
 
                 CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
             }

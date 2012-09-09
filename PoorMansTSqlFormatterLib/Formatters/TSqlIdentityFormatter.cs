@@ -71,6 +71,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
         private static void ProcessSqlNode(BaseFormatterState state, XmlElement contentElement)
         {
+            if (contentElement.GetAttribute(SqlXmlConstants.ANAME_HASERROR) == "1")
+                state.OpenClass(SqlHtmlConstants.CLASS_ERRORHIGHLIGHT);
+
             switch (contentElement.Name)
             {
                 case SqlXmlConstants.ENAME_DDLDETAIL_PARENS:
@@ -209,6 +212,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 default:
                     throw new Exception("Unrecognized element in SQL Xml!");
             }
+
+            if (contentElement.GetAttribute(SqlXmlConstants.ANAME_HASERROR) == "1")
+                state.CloseClass();
         }
 
 
@@ -216,7 +222,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
         {
             StringBuilder outString = new StringBuilder();
 
-            if (sqlTokenList.HasErrors)
+            if (sqlTokenList.HasUnfinishedToken)
                 outString.Append(ErrorOutputPrefix);
 
             foreach (var entry in sqlTokenList)

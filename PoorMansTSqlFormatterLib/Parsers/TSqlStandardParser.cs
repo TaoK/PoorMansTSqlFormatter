@@ -61,7 +61,6 @@ namespace PoorMansTSqlFormatterLib.Parsers
         public XmlDocument ParseSQL(ITokenList tokenList)
         {
             ParseTree sqlTree = new ParseTree(SqlXmlConstants.ENAME_SQL_ROOT);
-            sqlTree.ErrorFound = tokenList.HasErrors;
             sqlTree.StartNewStatement();
 
             int tokenCount = tokenList.Count;
@@ -1185,8 +1184,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
                 tokenID++;
             }
 
+            if (tokenList.HasUnfinishedToken)
+                sqlTree.SetError();
+
             if (!sqlTree.FindValidBatchEnd())
-                sqlTree.ErrorFound = true;
+                sqlTree.SetError();
 
             return sqlTree;
         }
@@ -1226,7 +1228,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
         private void ProcessCompoundKeywordWithError(ITokenList tokenList, ParseTree sqlTree, XmlElement currentContainerElement, ref int tokenID, List<int> significantTokenPositions, int keywordCount)
         {
             ProcessCompoundKeyword(tokenList, sqlTree, currentContainerElement, ref tokenID, significantTokenPositions, keywordCount);
-            sqlTree.ErrorFound = true;
+            sqlTree.SetError();
         }
 
         private void ProcessCompoundKeyword(ITokenList tokenList, ParseTree sqlTree, XmlElement targetContainer, ref int tokenID, List<int> significantTokenPositions, int keywordCount)

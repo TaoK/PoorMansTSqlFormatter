@@ -1,6 +1,10 @@
 ﻿
 ## Poor Man's T-SQL Formatter change log
 
+### Version 1.4.3 (library + poorsql.com + windows Forms only)
+
+* Github Issue #75: [Enhancement] Add parse error highlighting in HTML output [thanks Jeff Clark for the suggestion]
+
 ### Version 1.4.2 (library only)
 
 * Github Issue #70: [Enhancement] Eliminate "Client Framework"-incompatible dependency on System.Web [thanks to Brad Wood and Richard King for feedback on this]

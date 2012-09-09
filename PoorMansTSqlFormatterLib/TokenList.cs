@@ -27,7 +27,7 @@ namespace PoorMansTSqlFormatterLib
 {
     public class TokenList : List<IToken>, ITokenList
     {
-        public bool HasErrors { get; set; }
+        public bool HasUnfinishedToken { get; set; }
         
         public string PrettyPrint()
         {

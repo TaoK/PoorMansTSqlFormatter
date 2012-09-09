@@ -75,7 +75,7 @@ namespace PoorMansTSqlFormatterLib
             {
                 return _newStatementDue;
             }
-            set
+            private set
             {
                 if (value)
                 {
@@ -95,6 +95,12 @@ namespace PoorMansTSqlFormatterLib
             return this;
         }
 
+        internal void SetError()
+        {
+            CurrentContainer.SetAttribute(SqlXmlConstants.ANAME_HASERROR, "1");
+            ErrorFound = true;
+        }
+
         internal XmlElement SaveNewElement(string newElementName, string newElementValue)
         {
             return SaveNewElement(newElementName, newElementValue, CurrentContainer);
@@ -110,7 +116,7 @@ namespace PoorMansTSqlFormatterLib
         internal XmlElement SaveNewElementWithError(string newElementName, string newElementValue)
         {
             XmlElement newElement = SaveNewElement(newElementName, newElementValue);
-            ErrorFound = true;
+            SetError();
             return newElement;
         }
 

@@ -121,6 +121,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
         {
             int initialIndent = state.IndentLevel;
 
+            if (contentElement.GetAttribute(SqlXmlConstants.ANAME_HASERROR) == "1")
+                state.OpenClass(SqlHtmlConstants.CLASS_ERRORHIGHLIGHT);
+
             switch (contentElement.Name)
             {
                 case SqlXmlConstants.ENAME_SQL_STATEMENT:
@@ -589,6 +592,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 default:
                     throw new Exception("Unrecognized element in SQL Xml!");
             }
+
+            if (contentElement.GetAttribute(SqlXmlConstants.ANAME_HASERROR) == "1")
+                state.CloseClass();
 
             if (initialIndent != state.IndentLevel)
                 throw new Exception("Messed up the indenting!! Check code/stack or panic!");
