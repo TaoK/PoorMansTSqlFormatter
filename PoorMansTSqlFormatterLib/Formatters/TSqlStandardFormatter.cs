@@ -27,29 +27,31 @@ using PoorMansTSqlFormatterLib.Interfaces;
 
 namespace PoorMansTSqlFormatterLib.Formatters
 {
-    public class TSqlStandardFormatter : Interfaces.ISqlTreeFormatter
+    public class fooClass { }
+}
+
+namespace PoorMansTSqlFormatterLib.Formatters
+{
+    public class TSqlStandardFormatterOptions
     {
-
-        public TSqlStandardFormatter() : this("\t", 4, 999, true, false, false, true, true, true, false, true, false, false) { }
-
-        public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool breakJoinOnSections, bool uppercaseKeywords, bool htmlColoring, bool keywordStandardization)
+        public TSqlStandardFormatterOptions()
         {
-            IndentString = indentString;
-            SpacesPerTab = spacesPerTab;
-            MaxLineWidth = maxLineWidth;
-            ExpandCommaLists = expandCommaLists;
-            TrailingCommas = trailingCommas;
-            SpaceAfterExpandedComma = spaceAfterExpandedComma;
-            ExpandBooleanExpressions = expandBooleanExpressions;
-            ExpandBetweenConditions = expandBetweenConditions;
-            ExpandCaseStatements = expandCaseStatements;
-            UppercaseKeywords = uppercaseKeywords;
-            BreakJoinOnSections = breakJoinOnSections;
-            HTMLColoring = htmlColoring;
-            if (keywordStandardization)
-                KeywordMapping = StandardKeywordRemapping.Instance;
-            ErrorOutputPrefix = Interfaces.MessagingConstants.FormatErrorDefaultMessage + Environment.NewLine;
+            IndentString = "\t";
+            SpacesPerTab = 4;
+            MaxLineWidth = 999;
+            ExpandCommaLists = true;
+            TrailingCommas = false;
+            SpaceAfterExpandedComma = false;
+            ExpandBooleanExpressions = true;
+            ExpandBetweenConditions = true;
+            ExpandCaseStatements = true;
+            UppercaseKeywords = true;
+            BreakJoinOnSections = false;
+            HTMLColoring = false;
+            KeywordStandardization = false;
         }
+
+
 
         private string _indentString;
         public string IndentString
@@ -64,8 +66,6 @@ namespace PoorMansTSqlFormatterLib.Formatters
             }
         }
 
-        public IDictionary<string, string> KeywordMapping = new Dictionary<string, string>();
-
         public int SpacesPerTab { get; set; }
         public int MaxLineWidth { get; set; }
         public bool ExpandCommaLists { get; set; }
@@ -77,6 +77,68 @@ namespace PoorMansTSqlFormatterLib.Formatters
         public bool UppercaseKeywords { get; set; }
         public bool BreakJoinOnSections { get; set; }
         public bool HTMLColoring { get; set; }
+        public bool KeywordStandardization { get; set; }
+
+    }
+
+    public class TSqlStandardFormatter : Interfaces.ISqlTreeFormatter
+    {
+
+        //public TSqlStandardFormatter() : this("\t", 4, 999, true, false, false, true, true, true, false, true, false, false) { }
+
+        public TSqlStandardFormatter() : this(new TSqlStandardFormatterOptions()) { }
+
+
+        public TSqlStandardFormatter(TSqlStandardFormatterOptions options)
+        {
+            Options = options;
+            if (options.KeywordStandardization)
+                KeywordMapping = StandardKeywordRemapping.Instance;
+            ErrorOutputPrefix = Interfaces.MessagingConstants.FormatErrorDefaultMessage + Environment.NewLine;
+        }
+
+        public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool breakJoinOnSections, bool uppercaseKeywords, bool htmlColoring, bool keywordStandardization)
+        {
+            var options = new TSqlStandardFormatterOptions();
+
+            options.IndentString = indentString;
+            options.SpacesPerTab = spacesPerTab;
+            options.MaxLineWidth = maxLineWidth;
+            options.ExpandCommaLists = expandCommaLists;
+            options.TrailingCommas = trailingCommas;
+            options.SpaceAfterExpandedComma = spaceAfterExpandedComma;
+            options.ExpandBooleanExpressions = expandBooleanExpressions;
+            options.ExpandBetweenConditions = expandBetweenConditions;
+            options.ExpandCaseStatements = expandCaseStatements;
+            options.UppercaseKeywords = uppercaseKeywords;
+            options.BreakJoinOnSections = breakJoinOnSections;
+            options.HTMLColoring = htmlColoring;
+            options.KeywordStandardization = keywordStandardization;
+
+            Options = options;
+
+            if (keywordStandardization)
+                KeywordMapping = StandardKeywordRemapping.Instance;
+            ErrorOutputPrefix = Interfaces.MessagingConstants.FormatErrorDefaultMessage + Environment.NewLine;
+        }
+        
+        public TSqlStandardFormatterOptions Options { get; set; }
+
+
+        public IDictionary<string, string> KeywordMapping = new Dictionary<string, string>();
+
+        public string IndentString { get { return Options.IndentString; } set { Options.IndentString = value; } }
+        public int SpacesPerTab { get { return Options.SpacesPerTab; } set { Options.SpacesPerTab = value; } }
+        public int MaxLineWidth { get { return Options.MaxLineWidth; } set { Options.MaxLineWidth = value; } }
+        public bool ExpandCommaLists { get { return Options.ExpandCommaLists; } set { Options.ExpandCommaLists = value; } }
+        public bool TrailingCommas { get { return Options.TrailingCommas; } set { Options.TrailingCommas = value; } }
+        public bool SpaceAfterExpandedComma { get { return Options.SpaceAfterExpandedComma; } set { Options.SpaceAfterExpandedComma = value; } }
+        public bool ExpandBooleanExpressions { get { return Options.ExpandBooleanExpressions; } set { Options.ExpandBooleanExpressions = value; } }
+        public bool ExpandCaseStatements { get { return Options.ExpandCaseStatements; } set { Options.ExpandCaseStatements = value; } }
+        public bool ExpandBetweenConditions { get { return Options.ExpandBetweenConditions; } set { Options.ExpandBetweenConditions = value; } }
+        public bool UppercaseKeywords { get { return Options.UppercaseKeywords; } set { Options.UppercaseKeywords = value; } }
+        public bool BreakJoinOnSections { get { return Options.BreakJoinOnSections; } set { Options.BreakJoinOnSections = value; } }
+        public bool HTMLColoring { get { return Options.HTMLColoring; } set { Options.HTMLColoring = value; } }
 
         public bool HTMLFormatted { get { return HTMLColoring; } }
         public string ErrorOutputPrefix { get; set; }
