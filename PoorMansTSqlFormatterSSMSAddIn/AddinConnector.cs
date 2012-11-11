@@ -151,38 +151,63 @@ namespace PoorMansTSqlFormatterSSMSAddIn
         private CommandBarPopup GetMainMenuPopup(string targetMenuEnglishName)
         {
             //template-generated code to find the localized name of the target menu
-            string toolsMenuName;
+            //MODIFIED: the template code did not account for cases where the target language is not specified in the "CommandBar" resource
+            // file, (eg Portuguese or Russian) so (as a cheap hack-ish solution) we create the menu if it doesn't exist.
+
+            string localMenuName = null;
             try
             {
                 string resourceName;
                 ResourceManager resourceManager = new ResourceManager(typeof(AddinConnector).Namespace + ".CommandBar", Assembly.GetExecutingAssembly());
                 CultureInfo cultureInfo = new CultureInfo(_applicationObject.LocaleID);
 
+                //no idea why the two-letter ISO language name was not specific enough (or too specific??) for chinese... this comes from the VS2008 template
                 if (cultureInfo.TwoLetterISOLanguageName == "zh")
-                {
-                    System.Globalization.CultureInfo parentCultureInfo = cultureInfo.Parent;
-                    resourceName = String.Concat(parentCultureInfo.Name, targetMenuEnglishName);
-                }
+                    resourceName = String.Concat(cultureInfo.Parent.Name, targetMenuEnglishName);
                 else
-                {
                     resourceName = String.Concat(cultureInfo.TwoLetterISOLanguageName, targetMenuEnglishName);
-                }
-                toolsMenuName = resourceManager.GetString(resourceName);
+
+                localMenuName = resourceManager.GetString(resourceName);
             }
             catch
             {
-                //none found, use english as default.
-                toolsMenuName = targetMenuEnglishName;
+                //Something went wrong with resource handling. In the absence of logging / error-reporting framework, just 
+                // swallow the error and act same as if we didn't have that language in the resources file (leave null).
             }
 
-            //Place the command on the tools menu.
-            //Find the MenuBar command bar, which is the top-level command bar holding all the main menu items:
+            //Find the MenuBar command bar, which is the top-level command bar holding all the main menu items; its name is always consistent (apparently)
             Microsoft.VisualStudio.CommandBars.CommandBar menuBarCommandBar = ((Microsoft.VisualStudio.CommandBars.CommandBars)_applicationObject.CommandBars)["MenuBar"];
 
-            //Find the Tools command bar on the MenuBar command bar:
-            CommandBarControl toolsControl = menuBarCommandBar.Controls[toolsMenuName];
-            CommandBarPopup toolsPopup = (CommandBarPopup)toolsControl;
-            return toolsPopup;
+            CommandBarPopup targetPopupMenu = null;
+
+            //try to find the target menu entry on the menu bar, using the localized name
+            if (!string.IsNullOrEmpty(localMenuName))
+                targetPopupMenu = GetCommandBarControlOrNull(menuBarCommandBar.Controls, localMenuName);
+
+            //if there was no local name, or the menu entry was not found using the local name, try English
+            if (targetPopupMenu == null)
+                targetPopupMenu = GetCommandBarControlOrNull(menuBarCommandBar.Controls, targetMenuEnglishName);
+
+            //if the menu entry still wasn't found, then create it (temporarily) using English. A more elegant long-term solution 
+            // might be to ask the user, but that would also be much more complicated. Let's see whether anyone cares.
+            if (targetPopupMenu == null)
+            {
+                int newEntryPosition = menuBarCommandBar.Controls.Count - 2; //leave space for "Window" and "Help".
+                targetPopupMenu = (CommandBarPopup)menuBarCommandBar.Controls.Add(MsoControlType.msoControlPopup, System.Type.Missing, System.Type.Missing, newEntryPosition, true);
+                targetPopupMenu.CommandBar.Name = targetMenuEnglishName;
+                targetPopupMenu.Caption = targetMenuEnglishName;
+            }
+
+            return targetPopupMenu;
+        }
+
+        private CommandBarPopup GetCommandBarControlOrNull(CommandBarControls controlsCollection, string controlKey)
+        {
+            CommandBarPopup found = null;
+            foreach (CommandBarControl thisControl in controlsCollection)
+                if (thisControl is CommandBarPopup && ((CommandBarPopup)thisControl).CommandBar.Name == controlKey)
+                    found = (CommandBarPopup)thisControl;
+            return found;
         }
 
         private static void RemoveCommands(Commands2 commandsList, List<string> oldCommandNames)
