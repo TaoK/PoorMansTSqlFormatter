@@ -129,6 +129,10 @@
   <data name="FormatButtonToolTip" xml:space="preserve">
     <value>Formate le code T-SQL sélectionné (ou tout le code dans la fenêtre active, si aucun n'est sélectionné)</value>
   </data>
+  <data name="HotkeyRetrievalFailureMessage" xml:space="preserve">
+    <value>La récuperation du raccourci clavier du formatteur T-SQL a échoué - s'il vous plaït, vérifiez ou changez le raccourci.{0}Détails de l'erreur:{0}{1}</value>
+    <comment>{0} is a newline, {1} is the detailed exception</comment>
+  </data>
   <data name="HotkeyBindingFailureMessage" xml:space="preserve">
     <value>L'installation du raccourci clavier du formatteur T-SQL a échoué - s'il vous plaït, vérifiez ou changez le raccourci.{0}Détails de l'erreur:{0}{1}</value>
     <comment>{0} is a newline, {1} is the detailed exception</comment>
@@ -146,7 +150,7 @@
     <value>Erreurs trouvées. Continuer?</value>
   </data>
   <data name="ProjectAboutDescription" xml:space="preserve">
-    <value>Plug-in gratuit (AGPL) de Formattage de T-SQL, pour SSMS et SSMS Express, 2005 y 2008.</value>
+    <value>Plug-in gratuit (AGPL) de Formattage de T-SQL, pour SSMS et SSMS Express 2005-2012 et Visual Studio 2005-2010.</value>
   </data>
   <data name="TextEditorScopeNameRetrievalFailureMessage" xml:space="preserve">
     <value>La détection du "Key Binding Scope" "Text Editor" a échouée.{0}Détails de l'erreur:{0}{1}</value>

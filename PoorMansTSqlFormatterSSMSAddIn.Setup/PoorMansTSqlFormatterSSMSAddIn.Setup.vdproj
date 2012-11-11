@@ -33,6 +33,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_278A5D5B86F042D491BFD508AF14F154"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -57,20 +63,14 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_600CF0F3372141BABDA2573919501104"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_650F21B0676848928571D43C29FEAC60"
         "OwnerKey" = "8:_4DAF8C15EF563D2321F9B768CC7183F7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_66135CB9D279AE36AD19EF76388637F5"
-        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_66135CB9D279AE36AD19EF76388637F5"
-        "OwnerKey" = "8:_A4127E7EB3A60822BFB9D5E93C1AF2F1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -105,6 +105,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A57DE8CB59C94E099BE1EE3C417527DB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_AB1DC323CF6DC77991D7809E149D2BF8"
         "OwnerKey" = "8:_4DAF8C15EF563D2321F9B768CC7183F7"
         "MsmSig" = "8:_UNDEFINED"
@@ -135,20 +141,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E3E19E6EB9210ECF9FDFF79005DDC8A1"
+        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E3E19E6EB9210ECF9FDFF79005DDC8A1"
+        "OwnerKey" = "8:_A4127E7EB3A60822BFB9D5E93C1AF2F1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_AB1DC323CF6DC77991D7809E149D2BF8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9F7BD31349EC034B927057542633A78E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A4127E7EB3A60822BFB9D5E93C1AF2F1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -178,7 +184,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_66135CB9D279AE36AD19EF76388637F5"
+        "OwnerKey" = "8:_9F7BD31349EC034B927057542633A78E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A4127E7EB3A60822BFB9D5E93C1AF2F1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E3E19E6EB9210ECF9FDFF79005DDC8A1"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -371,6 +389,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_278A5D5B86F042D491BFD508AF14F154"
+            {
+            "SourcePath" = "8:..\\PoorMansTSqlFormatterSSMSAddIn\\PoorMansTSqlFormatterSSMSAddIn.AddIn"
+            "TargetName" = "8:PoorMansTSqlFormatterSSMSAddIn.AddIn"
+            "Tag" = "8:"
+            "Folder" = "8:_FFD168B0F69A49F4BEB193E4C6A5D8EC"
+            "Condition" = "8:INSTALLFORVS=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_342E89C07AD449CDACF9EDFFBB2B6DF1"
             {
             "SourcePath" = "8:..\\README.md"
@@ -422,6 +460,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_600CF0F3372141BABDA2573919501104"
+            {
+            "SourcePath" = "8:..\\PoorMansTSqlFormatterSSMSAddIn\\PoorMansTSqlFormatterSSMSAddIn.AddIn"
+            "TargetName" = "8:PoorMansTSqlFormatterSSMSAddIn.AddIn"
+            "Tag" = "8:"
+            "Folder" = "8:_EC396462876B4C008AED79E62E5CDECA"
+            "Condition" = "8:INSTALLFORVS=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_650F21B0676848928571D43C29FEAC60"
             {
             "SourcePath" = "8:dte80.olb"
@@ -439,37 +497,6 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_66135CB9D279AE36AD19EF76388637F5"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:LinqBridge, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c2b14eb747628076, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_66135CB9D279AE36AD19EF76388637F5"
-                    {
-                    "Name" = "8:LinqBridge.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:LinqBridge.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -528,7 +555,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterPluginShared, Version=1.4.1.23477, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterPluginShared, Version=1.4.1.19487, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_9F7BD31349EC034B927057542633A78E"
@@ -559,7 +586,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=1.4.1.23477, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=1.4.3.19487, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_A4127E7EB3A60822BFB9D5E93C1AF2F1"
@@ -584,6 +611,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A57DE8CB59C94E099BE1EE3C417527DB"
+            {
+            "SourcePath" = "8:..\\PoorMansTSqlFormatterSSMSAddIn\\PoorMansTSqlFormatterSSMSAddIn.AddIn"
+            "TargetName" = "8:PoorMansTSqlFormatterSSMSAddIn.AddIn"
+            "Tag" = "8:"
+            "Folder" = "8:_A8ED2E180D3343C6A8184BFEE345F036"
+            "Condition" = "8:INSTALLFORVS=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AB1DC323CF6DC77991D7809E149D2BF8"
@@ -657,6 +704,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E3E19E6EB9210ECF9FDFF79005DDC8A1"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:LinqBridge, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c2b14eb747628076, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E3E19E6EB9210ECF9FDFF79005DDC8A1"
+                    {
+                    "Name" = "8:LinqBridge.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:LinqBridge.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -675,14 +753,50 @@
                 {
                 }
             }
+            "{994432C3-9487-495D-8656-3E829A8DBDDE}:_A8ED2E180D3343C6A8184BFEE345F036"
+            {
+            "DefaultLocation" = "8:[COMAPPDATAFOLDER]\\Microsoft\\VisualStudio\\9.0\\Addins"
+            "Name" = "8:Common App Data Microsoft VisualStudio 9 AddIns"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:INSTALLFORVS=1"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:NEWPROPERTY2"
+                "Folders"
+                {
+                }
+            }
             "{994432C3-9487-495D-8656-3E829A8DBDDE}:_BDA8057DEBA345AEA553CB906D64943F"
             {
             "DefaultLocation" = "8:[COMAPPDATAFOLDER]\\Microsoft\\SQL Server Management Studio\\11.0\\Addins"
-            "Name" = "8:Commnon App Data Microsoft Sql Server 11 AddIns"
+            "Name" = "8:Common App Data Microsoft Sql Server 11 AddIns"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:COMMONAPPDATAMICROSOFTSQL11ADDINS"
+                "Folders"
+                {
+                }
+            }
+            "{994432C3-9487-495D-8656-3E829A8DBDDE}:_EC396462876B4C008AED79E62E5CDECA"
+            {
+            "DefaultLocation" = "8:[COMAPPDATAFOLDER]\\Microsoft\\VisualStudio\\10.0\\Addins"
+            "Name" = "8:Common App Data Microsoft VisualStudio 10 AddIns"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:INSTALLFORVS=1"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:NEWPROPERTY3"
+                "Folders"
+                {
+                }
+            }
+            "{994432C3-9487-495D-8656-3E829A8DBDDE}:_FFD168B0F69A49F4BEB193E4C6A5D8EC"
+            {
+            "DefaultLocation" = "8:[COMAPPDATAFOLDER]\\Microsoft\\VisualStudio\\8.0\\Addins"
+            "Name" = "8:Common App Data Microsoft VisualStudio 8 AddIns"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:INSTALLFORVS=1"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:NEWPROPERTY1"
                 "Folders"
                 {
                 }
@@ -720,21 +834,21 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PoorMansTSqlFormatterSSMSAddIn"
         "ProductCode" = "8:{70B6311E-1B36-4567-B666-30D93AD23228}"
-        "PackageCode" = "8:{EDEED06F-D33E-42CB-86A0-C979A4DE4CB4}"
+        "PackageCode" = "8:{76051812-2A0D-4F50-A073-0F0CB9C7EF94}"
         "UpgradeCode" = "8:{55982D41-85A8-4CF3-B1CA-DD99132FEE6E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.4.1"
+        "ProductVersion" = "8:1.4.4"
         "Manufacturer" = "8:Tao Klerks"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Poor Man's T-Sql Formatter SSMS AddIn"
-        "Subject" = "8:v1.4.1"
+        "Title" = "8:Poor Man's T-Sql Formatter SSMS & Visual Studio AddIn"
+        "Subject" = "8:v1.4.4"
         "ARPCONTACT" = "8:Tao Klerks"
         "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:A simple free (AGPL) add-in for formatting T-SQL from within the SSMS UI."
+        "ARPCOMMENTS" = "8:A simple free (AGPL) add-in for formatting T-SQL from within the SSMS and Visual Studio UI."
         "ARPURLINFOABOUT" = "8:www.architectshack.com"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
@@ -1119,6 +1233,262 @@
             "Attributes" = "3:1"
                 "Dialogs"
                 {
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_656C84A9E7B74BA9B5BF3B72844EA2B9"
+                    {
+                    "Sequence" = "3:210"
+                    "DisplayName" = "8:Checkboxes   (A)"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdCustomCheck1Dlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "BannerText"
+                            {
+                            "Name" = "8:BannerText"
+                            "DisplayName" = "8:#1014"
+                            "Description" = "8:#1114"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:Install for Visual Studio?"
+                            "DefaultValue" = "8:#1214"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "BodyText"
+                            {
+                            "Name" = "8:BodyText"
+                            "DisplayName" = "8:#1015"
+                            "Description" = "8:#1115"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:This formatter will always install for all versions of SSMS, but you have the option of whether or not to also install for Visual Studio. Don't worry if you don't have Visual Studio installed, there won't be a problem either way."
+                            "DefaultValue" = "8:#1215"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox1Label"
+                            {
+                            "Name" = "8:Checkbox1Label"
+                            "DisplayName" = "8:#1034"
+                            "Description" = "8:#1134"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:Also install for Visual Studio"
+                            "DefaultValue" = "8:#1234"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox1Property"
+                            {
+                            "Name" = "8:Checkbox1Property"
+                            "DisplayName" = "8:#1030"
+                            "Description" = "8:#1130"
+                            "Type" = "3:14"
+                            "ContextData" = "8:Public"
+                            "Attributes" = "3:2"
+                            "Setting" = "3:2"
+                            "Value" = "8:INSTALLFORVS"
+                            "DefaultValue" = "8:CHECKBOXA1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox1Value"
+                            {
+                            "Name" = "8:Checkbox1Value"
+                            "DisplayName" = "8:#1038"
+                            "Description" = "8:#1138"
+                            "Type" = "3:2"
+                            "ContextData" = "8:Unchecked=;Checked=1"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:1"
+                            "DefaultValue" = "8:"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox1Visible"
+                            {
+                            "Name" = "8:Checkbox1Visible"
+                            "DisplayName" = "8:#1026"
+                            "Description" = "8:#1126"
+                            "Type" = "3:5"
+                            "ContextData" = "8:1;True=1;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:1"
+                            "DefaultValue" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox2Label"
+                            {
+                            "Name" = "8:Checkbox2Label"
+                            "DisplayName" = "8:#1035"
+                            "Description" = "8:#1135"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:1"
+                            "Value" = "8:#1235"
+                            "DefaultValue" = "8:#1235"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox2Property"
+                            {
+                            "Name" = "8:Checkbox2Property"
+                            "DisplayName" = "8:#1031"
+                            "Description" = "8:#1131"
+                            "Type" = "3:14"
+                            "ContextData" = "8:Public"
+                            "Attributes" = "3:2"
+                            "Setting" = "3:2"
+                            "Value" = "8:CHECKBOXA2"
+                            "DefaultValue" = "8:CHECKBOXA2"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox2Value"
+                            {
+                            "Name" = "8:Checkbox2Value"
+                            "DisplayName" = "8:#1039"
+                            "Description" = "8:#1139"
+                            "Type" = "3:2"
+                            "ContextData" = "8:Unchecked=;Checked=1"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:"
+                            "DefaultValue" = "8:"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox2Visible"
+                            {
+                            "Name" = "8:Checkbox2Visible"
+                            "DisplayName" = "8:#1027"
+                            "Description" = "8:#1127"
+                            "Type" = "3:5"
+                            "ContextData" = "8:1;True=1;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:0"
+                            "DefaultValue" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox3Label"
+                            {
+                            "Name" = "8:Checkbox3Label"
+                            "DisplayName" = "8:#1036"
+                            "Description" = "8:#1136"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:1"
+                            "Value" = "8:#1236"
+                            "DefaultValue" = "8:#1236"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox3Property"
+                            {
+                            "Name" = "8:Checkbox3Property"
+                            "DisplayName" = "8:#1032"
+                            "Description" = "8:#1132"
+                            "Type" = "3:14"
+                            "ContextData" = "8:Public"
+                            "Attributes" = "3:2"
+                            "Setting" = "3:2"
+                            "Value" = "8:CHECKBOXA3"
+                            "DefaultValue" = "8:CHECKBOXA3"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox3Value"
+                            {
+                            "Name" = "8:Checkbox3Value"
+                            "DisplayName" = "8:#1040"
+                            "Description" = "8:#1140"
+                            "Type" = "3:2"
+                            "ContextData" = "8:Unchecked=;Checked=1"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:"
+                            "DefaultValue" = "8:"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox3Visible"
+                            {
+                            "Name" = "8:Checkbox3Visible"
+                            "DisplayName" = "8:#1028"
+                            "Description" = "8:#1128"
+                            "Type" = "3:5"
+                            "ContextData" = "8:1;True=1;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:0"
+                            "DefaultValue" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox4Label"
+                            {
+                            "Name" = "8:Checkbox4Label"
+                            "DisplayName" = "8:#1037"
+                            "Description" = "8:#1137"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:1"
+                            "Value" = "8:#1237"
+                            "DefaultValue" = "8:#1237"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox4Property"
+                            {
+                            "Name" = "8:Checkbox4Property"
+                            "DisplayName" = "8:#1033"
+                            "Description" = "8:#1133"
+                            "Type" = "3:14"
+                            "ContextData" = "8:Public"
+                            "Attributes" = "3:2"
+                            "Setting" = "3:2"
+                            "Value" = "8:CHECKBOXA4"
+                            "DefaultValue" = "8:CHECKBOXA4"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox4Value"
+                            {
+                            "Name" = "8:Checkbox4Value"
+                            "DisplayName" = "8:#1041"
+                            "Description" = "8:#1141"
+                            "Type" = "3:2"
+                            "ContextData" = "8:Unchecked=;Checked=1"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:"
+                            "DefaultValue" = "8:"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox4Visible"
+                            {
+                            "Name" = "8:Checkbox4Visible"
+                            "DisplayName" = "8:#1029"
+                            "Description" = "8:#1129"
+                            "Type" = "3:5"
+                            "ContextData" = "8:1;True=1;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:0"
+                            "DefaultValue" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_782F1C2D2A8342479E93FB4DF9358C42"
                     {
                     "Sequence" = "3:100"
@@ -1169,7 +1539,7 @@
                     }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_81573DD11D1B49149FDE8F75B4847D98"
                     {
-                    "Sequence" = "3:300"
+                    "Sequence" = "3:400"
                     "DisplayName" = "8:Confirm Installation"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -1191,7 +1561,7 @@
                     }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_AF257C35428E4D4EA78E3F65181F9CCC"
                     {
-                    "Sequence" = "3:200"
+                    "Sequence" = "3:300"
                     "DisplayName" = "8:Installation Folder"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -1226,7 +1596,7 @@
                     }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_E12C77D79FB442E99FC34D8EEB20022D"
                     {
-                    "Sequence" = "3:110"
+                    "Sequence" = "3:200"
                     "DisplayName" = "8:License Agreement"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"

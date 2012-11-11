@@ -39,6 +39,8 @@ namespace PoorMansTSqlFormatterSSMSAddIn
         private AddIn _addInInstance;
         private Command _formatCommand;
 
+        private bool _isVisualStudio = false;
+
         private ResourceManager _generalResourceManager = new ResourceManager("PoorMansTSqlFormatterSSMSAddIn.GeneralLanguageContent", Assembly.GetExecutingAssembly());
         private PoorMansTSqlFormatterLib.SqlFormattingManager _formattingManager = null; 
 
@@ -67,6 +69,8 @@ namespace PoorMansTSqlFormatterSSMSAddIn
 		{
             _addInInstance = (AddIn)addInInst;
             _applicationObject = (DTE2)_addInInstance.DTE;
+            _isVisualStudio = _applicationObject.RegistryRoot.StartsWith(@"Software\Microsoft\VisualStudio");
+
 			if(connectMode == ext_ConnectMode.ext_cm_UISetup || connectMode == ext_ConnectMode.ext_cm_Startup)
 			{
 				object []contextGUIDS = new object[] { };
@@ -82,10 +86,18 @@ namespace PoorMansTSqlFormatterSSMSAddIn
 
                 if (!Properties.Settings.Default.FirstInstallCompleted)
                 {
-                    string scopeName = GetTextEditorKeyBindingScopeName();
-                    if (scopeName != null)
+                    if (_isVisualStudio)
                     {
-                        Properties.Settings.Default.Hotkey = Properties.Settings.Default.Hotkey.Replace("Text Editor", scopeName);
+                        //no default shortcut - we'd just end up overwriting another one.
+                        Properties.Settings.Default.Hotkey = "";
+                    }
+                    else
+                    {
+                        string scopeName = GetTextEditorKeyBindingScopeName();
+                        if (scopeName != null)
+                        {
+                            Properties.Settings.Default.Hotkey = Properties.Settings.Default.Hotkey.Replace("Text Editor", scopeName);
+                        }
                     }
                     Properties.Settings.Default.FirstInstallCompleted = true;
                     Properties.Settings.Default.Save();
@@ -248,7 +260,8 @@ namespace PoorMansTSqlFormatterSSMSAddIn
 		/// <seealso class='IDTExtensibility2' />
 		public void OnBeginShutdown(ref Array custom)
 		{
-		}
+            GetFormatHotkey();
+        }
 		
 		/// <summary>Implements the QueryStatus method of the IDTCommandTarget interface. This is called when the command's availability is updated</summary>
 		/// <param term='commandName'>The name of the command to determine state for.</param>
@@ -326,6 +339,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                 }
                 if (commandName.Equals("PoorMansTSqlFormatterSSMSAddIn.AddinConnector.FormattingOptions"))
                 {
+                    GetFormatHotkey();
                     SettingsForm settings = new SettingsForm(Properties.Settings.Default, Assembly.GetExecutingAssembly(), _generalResourceManager.GetString("ProjectAboutDescription"), new SettingsForm.GetTextEditorKeyBindingScopeName(GetTextEditorKeyBindingScopeName));
                     if (settings.ShowDialog() == DialogResult.OK)
                     {
@@ -337,11 +351,37 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             }
 		}
 
+        private void GetFormatHotkey()
+        {
+            try
+            {
+                //TODO: Add support for multiple keybindings.
+                string flatBindingsValue = "";
+                var bindingArray = _formatCommand.Bindings as object[];
+                if (bindingArray != null && bindingArray.Length > 0)
+                    flatBindingsValue = bindingArray[0].ToString();
+
+                if (Properties.Settings.Default.Hotkey != flatBindingsValue)
+                {
+                    Properties.Settings.Default.Hotkey = flatBindingsValue;
+                    Properties.Settings.Default.Save();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(string.Format(_generalResourceManager.GetString("HotkeyRetrievalFailureMessage"), Environment.NewLine, e.ToString()));
+            }
+        }
+
         private void SetFormatHotkey()
         {
             try
             {
-                _formatCommand.Bindings = Properties.Settings.Default.Hotkey;
+                //TODO: Add support for multiple keybindings.
+                if (Properties.Settings.Default.Hotkey == null || Properties.Settings.Default.Hotkey.Trim() == "")
+                    _formatCommand.Bindings = new object[0];
+                else
+                    _formatCommand.Bindings = Properties.Settings.Default.Hotkey;
             }
             catch (Exception e)
             {

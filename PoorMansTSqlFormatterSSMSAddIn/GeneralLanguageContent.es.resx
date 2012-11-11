@@ -129,6 +129,10 @@
   <data name="FormatButtonToolTip" xml:space="preserve">
     <value>Formatea el código T-SQL seleccionado (o todo el código en la ventana activa, si no hay ninguno seleccionado)</value>
   </data>
+  <data name="HotkeyRetrievalFailureMessage" xml:space="preserve">
+    <value>Error al recuperar el atajo de teclado del Formateador de T-SQL - por favor, revise el atajo seleccionado.{0}Detalles del error:{0}{1}</value>
+    <comment>{0} is a newline, {1} is the detailed exception</comment>
+  </data>
   <data name="HotkeyBindingFailureMessage" xml:space="preserve">
     <value>Error al procesar el atajo de teclado del Formateador de T-SQL - por favor, revise el atajo seleccionado.{0}Detalles del error:{0}{1}</value>
     <comment>{0} is a newline, {1} is the detailed exception</comment>
@@ -146,7 +150,7 @@
     <value>Errores encontrados. ¿Continuar?</value>
   </data>
   <data name="ProjectAboutDescription" xml:space="preserve">
-    <value>Plug-in gratuito (AGPL) de Formateado de T-SQL, para SSMS y SSMS Express, 2005 y 2008.</value>
+    <value>Plug-in gratuito (AGPL) de Formateado de T-SQL, para SSMS y SSMS Express 2005-2012 y Visual Studio 2005-2010.</value>
   </data>
   <data name="TextEditorScopeNameRetrievalFailureMessage" xml:space="preserve">
     <value>La detección del nombre del "Key Binding Scope" "Text Editor" ha fallado.{0}Detalles del error:{0}{1}</value>

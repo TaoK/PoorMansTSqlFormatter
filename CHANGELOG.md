@@ -1,6 +1,11 @@
 ﻿
 ## Poor Man's T-SQL Formatter change log
 
+### Version 1.4.4 (SSMS / Visual Studio Add-In only)
+
+* Github Issue #79: [BugFix] Fix SSMS Add-In to work in unexpected languages [thanks Paulo Stradioti for the bug report]
+* Github Issue #16: [New Feature] Add Visual Studio support to the Add-In
+
 ### Version 1.4.3 (library + poorsql.com + windows Forms only)
 
 * Github Issue #75: [Enhancement] Add parse error highlighting in HTML output [thanks Jeff Clark for the suggestion]

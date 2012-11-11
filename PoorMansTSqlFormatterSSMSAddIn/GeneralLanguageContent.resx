@@ -129,6 +129,10 @@
   <data name="FormatButtonToolTip" xml:space="preserve">
     <value>Formats the selected T-SQL code (or all the code in the active window, if none selected)</value>
   </data>
+  <data name="HotkeyRetrievalFailureMessage" xml:space="preserve">
+    <value>T-SQL Formatter hotkey retrieval failed - please revise hotkey setting.{0}Error Details:{0}{1}</value>
+    <comment>{0} is a newline, {1} is the detailed exception</comment>
+  </data>
   <data name="HotkeyBindingFailureMessage" xml:space="preserve">
     <value>T-SQL Formatter hotkey binding failed - please revise hotkey setting.{0}Error Details:{0}{1}</value>
     <comment>{0} is a newline, {1} is the detailed exception</comment>
@@ -146,7 +150,7 @@
     <value>Errors found. Continue?</value>
   </data>
   <data name="ProjectAboutDescription" xml:space="preserve">
-    <value>A simple free (AGPL) T-SQL Formatting Addin for SSMS and SSMS Express, 2005 and 2008.</value>
+    <value>A simple free (AGPL) T-SQL Formatting Addin for SSMS and SSMS Express 2005-2012 and Visual Studio 2005-2010.</value>
   </data>
   <data name="TextEditorScopeNameRetrievalFailureMessage" xml:space="preserve">
     <value>Failed to retrieve localized Text Editor key binding scope name.{0}Error Details:{0}{1}</value>

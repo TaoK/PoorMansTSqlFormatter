@@ -23,14 +23,14 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("PoorMansTSQLFormatterSSMSAddin")]
 //Note, this is also in resources file for localization!
-[assembly: AssemblyDescription("A simple free (AGPL) T-SQL Formatting Addin for SSMS and SSMS Express, 2005 and 2008.")]
+[assembly: AssemblyDescription("A simple free (AGPL) T-SQL Formatting Addin for SSMS and SSMS Express 2005-2012 and Visual Studio 2005-2010.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PoorMansTSQLFormatterSSMSAddin")]
 [assembly: AssemblyCopyright("Copyright ©  2011-2012 Tao Klerks")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.4.1.*")]
+[assembly: AssemblyVersion("1.4.4.*")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]

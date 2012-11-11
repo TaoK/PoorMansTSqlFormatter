@@ -784,7 +784,7 @@
     <value>360, 206</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Poor Man's T-Sql Formatter SSMS Addin - Settings</value>
+    <value>Poor Man's T-Sql Formatter - Settings</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>SettingsForm</value>
