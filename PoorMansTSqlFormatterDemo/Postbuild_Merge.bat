@@ -1,3 +1,5 @@
+REM Merge third-party and satellite (translation) assemblies into a single new executable assembly for easier distribution
+
 IF EXIST %1SqlFormatterWinforms.exe DEL %1SqlFormatterWinforms.exe
 
 "..\..\..\ExternalBuildTools\ILRepack\ILRepack.exe" /t:winexe /out:%1SqlFormatterWinformsTemp.exe %1PoorMansTSqlFormatterDemo.exe %1PoorMansTSqlFormatterLib.dll %1LinqBridge.dll %1es\PoorMansTSqlFormatterDemo.resources.dll
