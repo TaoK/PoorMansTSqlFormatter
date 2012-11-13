@@ -28,21 +28,21 @@ namespace PoorMansTSqlFormatterPluginShared
     {
         public static PoorMansTSqlFormatterLib.SqlFormattingManager GetFormattingManager(ISqlSettings settings)
         {
-            var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(
-                settings.IndentString.Replace("\\t", "\t").Replace("\\s", " "),
-                settings.SpacesPerTab,
-                settings.MaxLineWidth,
-                settings.ExpandCommaLists,
-                settings.TrailingCommas,
-                settings.SpaceAfterExpandedComma,
-                settings.ExpandBooleanExpressions,
-                settings.ExpandCaseStatements,
-                settings.ExpandBetweenConditions,
-                settings.BreakJoinOnSections,
-                settings.UppercaseKeywords,
-                false,
-                settings.KeywordStandardization
-                );
+            var options = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions();
+            options.IndentString = settings.IndentString;
+            options.SpacesPerTab = settings.SpacesPerTab;
+            options.MaxLineWidth = settings.MaxLineWidth;
+            options.ExpandCommaLists = settings.ExpandCommaLists;
+            options.TrailingCommas = settings.TrailingCommas;
+            options.SpaceAfterExpandedComma = settings.SpaceAfterExpandedComma;
+            options.ExpandBooleanExpressions = settings.ExpandBooleanExpressions;
+            options.ExpandCaseStatements = settings.ExpandCaseStatements;
+            options.ExpandBetweenConditions = settings.ExpandBetweenConditions;
+            options.BreakJoinOnSections = settings.BreakJoinOnSections;
+            options.UppercaseKeywords = settings.UppercaseKeywords;
+            options.KeywordStandardization = settings.KeywordStandardization;
+            
+            var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(options);
 
             ResourceManager _generalResourceManager = new ResourceManager("PoorMansTSqlFormatterPluginShared.GeneralLanguageContent", Assembly.GetExecutingAssembly());
             formatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix") + System.Environment.NewLine;

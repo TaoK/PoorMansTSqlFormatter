@@ -31,8 +31,6 @@ namespace PoorMansTSqlFormatterLib.Formatters
     public class TSqlStandardFormatter : Interfaces.ISqlTreeFormatter
     {
 
-        //public TSqlStandardFormatter() : this("\t", 4, 999, true, false, false, true, true, true, false, true, false, false) { }
-
         public TSqlStandardFormatter() : this(new TSqlStandardFormatterOptions()) { }
         
         public TSqlStandardFormatter(TSqlStandardFormatterOptions options)
@@ -43,6 +41,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             ErrorOutputPrefix = Interfaces.MessagingConstants.FormatErrorDefaultMessage + Environment.NewLine;
         }
 
+        [Obsolete("Use the constructor with the TSqlStandardFormatterOptions parameter")]
         public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool breakJoinOnSections, bool uppercaseKeywords, bool htmlColoring, bool keywordStandardization)
         {
             var options = new TSqlStandardFormatterOptions();
