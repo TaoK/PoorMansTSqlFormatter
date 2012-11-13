@@ -27,59 +27,6 @@ using PoorMansTSqlFormatterLib.Interfaces;
 
 namespace PoorMansTSqlFormatterLib.Formatters
 {
-    public class fooClass { }
-}
-
-namespace PoorMansTSqlFormatterLib.Formatters
-{
-    public class TSqlStandardFormatterOptions
-    {
-        public TSqlStandardFormatterOptions()
-        {
-            IndentString = "\t";
-            SpacesPerTab = 4;
-            MaxLineWidth = 999;
-            ExpandCommaLists = true;
-            TrailingCommas = false;
-            SpaceAfterExpandedComma = false;
-            ExpandBooleanExpressions = true;
-            ExpandBetweenConditions = true;
-            ExpandCaseStatements = true;
-            UppercaseKeywords = true;
-            BreakJoinOnSections = false;
-            HTMLColoring = false;
-            KeywordStandardization = false;
-        }
-
-
-
-        private string _indentString;
-        public string IndentString
-        {
-            get
-            {
-                return _indentString;
-            }
-            set
-            {
-                _indentString = value.Replace("\\t", "\t").Replace("\\s", " ");
-            }
-        }
-
-        public int SpacesPerTab { get; set; }
-        public int MaxLineWidth { get; set; }
-        public bool ExpandCommaLists { get; set; }
-        public bool TrailingCommas { get; set; }
-        public bool SpaceAfterExpandedComma { get; set; }
-        public bool ExpandBooleanExpressions { get; set; }
-        public bool ExpandCaseStatements { get; set; }
-        public bool ExpandBetweenConditions { get; set; }
-        public bool UppercaseKeywords { get; set; }
-        public bool BreakJoinOnSections { get; set; }
-        public bool HTMLColoring { get; set; }
-        public bool KeywordStandardization { get; set; }
-
-    }
 
     public class TSqlStandardFormatter : Interfaces.ISqlTreeFormatter
     {
@@ -87,8 +34,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
         //public TSqlStandardFormatter() : this("\t", 4, 999, true, false, false, true, true, true, false, true, false, false) { }
 
         public TSqlStandardFormatter() : this(new TSqlStandardFormatterOptions()) { }
-
-
+        
         public TSqlStandardFormatter(TSqlStandardFormatterOptions options)
         {
             Options = options;
@@ -123,8 +69,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
         }
         
         public TSqlStandardFormatterOptions Options { get; set; }
-
-
+        
         public IDictionary<string, string> KeywordMapping = new Dictionary<string, string>();
 
         public string IndentString { get { return Options.IndentString; } set { Options.IndentString = value; } }
