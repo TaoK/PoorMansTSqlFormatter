@@ -53,8 +53,9 @@ namespace PoorMansTSqlFormatterTests
             if (!_formatters.TryGetValue(configString, out outFormatter))
             {
                 //defaults are as per the object, except disabling colorized/htmlified output
-                outFormatter = new TSqlStandardFormatter();
-                outFormatter.HTMLColoring = false;
+                var options = new TSqlStandardFormatterOptions();
+                options.HTMLColoring = false;
+                outFormatter = new TSqlStandardFormatter(options);
                 Utils.SetObjectPropertiesFromConfigString(configString, outFormatter);
             }
             return outFormatter;
