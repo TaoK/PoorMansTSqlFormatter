@@ -131,32 +131,5 @@ namespace PoorMansTSqlFormatterTests
             return configKeys;
         }
 
-        internal static void SetObjectPropertiesFromConfigString(string configString, object targetObject)
-        {
-            Dictionary<string, string> configKeys = Utils.GetConfigKeyCollection(configString);
-            foreach (string key in configKeys.Keys)
-            {
-                var property = targetObject.GetType().GetProperty(key);
-                if (property != null)
-                {
-                    //Should probably change this to use TypeConverter, now that I know about it...
-                    //http://stackoverflow.com/questions/476589/how-do-i-get-from-a-type-to-the-tryparse-method
-                    var propertyTypeParseMethod = property.PropertyType.GetMethod("Parse", new Type[] {typeof(string)});
-                    object propertyValue;
-
-                    if (propertyTypeParseMethod != null)
-                        propertyValue = propertyTypeParseMethod.Invoke(null, new object[] { configKeys[key] });
-                    else
-                        propertyValue = configKeys[key];
-
-                    property.SetValue(targetObject, propertyValue, null);
-                }
-                else
-                {
-                    throw new Exception(string.Format("Property {0} not found in type {1}.", key, targetObject.GetType().Name));
-                }
-            }
-        }
-
     }
 }

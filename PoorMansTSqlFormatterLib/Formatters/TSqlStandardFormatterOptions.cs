@@ -24,6 +24,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using PoorMansTSqlFormatterLib.Interfaces;
+using System.Linq;
 
 namespace PoorMansTSqlFormatterLib.Formatters
 {
@@ -44,6 +45,58 @@ namespace PoorMansTSqlFormatterLib.Formatters
             BreakJoinOnSections = false;
             HTMLColoring = false;
             KeywordStandardization = false;
+        }
+
+        public TSqlStandardFormatterOptions(string serializedString) : this() {
+
+            if (string.IsNullOrEmpty(serializedString)) return;
+                        
+            foreach (string kvp in serializedString.Split(','))
+            {
+                string[] splitPair = kvp.Split('=');
+                string key = splitPair[0];
+                string value = splitPair[1];
+
+                if (key == "IndentString") IndentString = value;
+                else if (key == "SpacesPerTab") SpacesPerTab = Convert.ToInt32(value);
+                else if (key == "MaxLineWidth") MaxLineWidth = Convert.ToInt32(value);
+                else if (key == "ExpandCommaLists") ExpandCommaLists = Convert.ToBoolean(value);
+                else if (key == "TrailingCommas") TrailingCommas = Convert.ToBoolean(value);
+                else if (key == "SpaceAfterExpandedComma") SpaceAfterExpandedComma = Convert.ToBoolean(value);
+                else if (key == "ExpandBooleanExpressions") ExpandBooleanExpressions = Convert.ToBoolean(value);
+                else if (key == "ExpandBetweenConditions") ExpandBetweenConditions = Convert.ToBoolean(value);
+                else if (key == "ExpandCaseStatements") ExpandCaseStatements = Convert.ToBoolean(value);
+                else if (key == "UppercaseKeywords") UppercaseKeywords = Convert.ToBoolean(value);
+                else if (key == "BreakJoinOnSections") BreakJoinOnSections = Convert.ToBoolean(value);
+                else if (key == "HTMLColoring") HTMLColoring = Convert.ToBoolean(value);
+                else if (key == "KeywordStandardization") KeywordStandardization = Convert.ToBoolean(value);
+                else throw new ArgumentException("Unknown option: " + key);
+            }
+
+        }
+
+        public string ToSerializedString() { 
+            var overrides = new Dictionary<string, string>();
+
+            var defaultOptions = new TSqlStandardFormatterOptions();
+
+            if (IndentString != defaultOptions.IndentString) overrides.Add("IndentString", IndentString);
+            if (SpacesPerTab != defaultOptions.SpacesPerTab) overrides.Add("SpacesPerTab", SpacesPerTab.ToString());
+            if (MaxLineWidth != defaultOptions.MaxLineWidth) overrides.Add("MaxLineWidth", MaxLineWidth.ToString());
+            if (ExpandCommaLists != defaultOptions.ExpandCommaLists) overrides.Add("ExpandCommaLists", ExpandCommaLists.ToString());
+            if (TrailingCommas != defaultOptions.TrailingCommas) overrides.Add("TrailingCommas", TrailingCommas.ToString());
+            if (SpaceAfterExpandedComma != defaultOptions.SpaceAfterExpandedComma) overrides.Add("SpaceAfterExpandedComma", SpaceAfterExpandedComma.ToString());
+            if (ExpandBooleanExpressions != defaultOptions.ExpandBooleanExpressions) overrides.Add("ExpandBooleanExpressions", ExpandBooleanExpressions.ToString());
+            if (ExpandBetweenConditions != defaultOptions.ExpandBetweenConditions) overrides.Add("ExpandBetweenConditions", ExpandBetweenConditions.ToString());
+            if (ExpandCaseStatements != defaultOptions.ExpandCaseStatements) overrides.Add("ExpandCaseStatements", ExpandCaseStatements.ToString());
+            if (UppercaseKeywords != defaultOptions.UppercaseKeywords) overrides.Add("UppercaseKeywords", UppercaseKeywords.ToString());
+            if (BreakJoinOnSections != defaultOptions.BreakJoinOnSections) overrides.Add("BreakJoinOnSections", BreakJoinOnSections.ToString());
+            if (HTMLColoring != defaultOptions.HTMLColoring) overrides.Add("HTMLColoring", HTMLColoring.ToString());
+            if (KeywordStandardization != defaultOptions.KeywordStandardization) overrides.Add("KeywordStandardization", KeywordStandardization.ToString());
+    
+            if (overrides.Count == 0) return string.Empty;
+            return string.Join(",", overrides.Select((kvp) => kvp.Key + "=" + kvp.Value).ToArray());
+           
         }
 
         private string _indentString;
