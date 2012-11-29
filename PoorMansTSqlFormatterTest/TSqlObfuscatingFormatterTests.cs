@@ -44,7 +44,10 @@ namespace PoorMansTSqlFormatterTests
         {
             _tokenizer = new TSqlStandardTokenizer();
             _parser = new TSqlStandardParser();
-            _standardFormatter = new TSqlStandardFormatter("\t", 4, 999, true, true, false, true, true, true, false, true, false, true);
+            var options = new TSqlStandardFormatterOptions();
+            options.TrailingCommas = true;
+            options.KeywordStandardization = true;
+            _standardFormatter = new TSqlStandardFormatter(options);
             _obfuscatingFormatter = new TSqlObfuscatingFormatter();
         }
 

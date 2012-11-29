@@ -44,6 +44,7 @@
     <Compile Include="Formatters\HtmlPageWrapper.cs" />
     <Compile Include="Formatters\TSqlIdentityFormatter.cs" />
     <Compile Include="Formatters\TSqlStandardFormatter.cs" />
+    <Compile Include="Formatters\TSqlStandardFormatterOptions.cs" />
     <Compile Include="Interfaces\IParseTree.cs" />
     <Compile Include="Interfaces\MessagingConstants.cs" />
     <Compile Include="Interfaces\SqlHtmlConstants.cs" />

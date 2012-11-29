@@ -90,24 +90,27 @@ namespace PoorMansTSqlFormatterWebDemo
         {
             PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter formatter = null;
             if (reFormat)
-                formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(
-                    indent, 
-                    spacesPerTab, 
-                    maxLineWidth, 
-                    expandCommaLists, 
-                    trailingCommas, 
-                    spaceAfterExpandedComma, 
-                    expandBooleanExpressions, 
-                    expandCaseStatements, 
-                    expandBetweenConditions,
-                    breakJoinOnSections,
-                    uppercaseKeywords, 
-                    coloring, 
-                    keywordStandardization
-                    );
+            {
+                var options = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions();
+                options.IndentString = indent;
+                options.SpacesPerTab = spacesPerTab;
+                options.MaxLineWidth = maxLineWidth;
+                options.ExpandCommaLists = expandCommaLists;
+                options.TrailingCommas = trailingCommas;
+                options.SpaceAfterExpandedComma = spaceAfterExpandedComma;
+                options.ExpandBooleanExpressions = expandBooleanExpressions;
+                options.ExpandCaseStatements = expandCaseStatements;
+                options.ExpandBetweenConditions = expandBetweenConditions;
+                options.BreakJoinOnSections = breakJoinOnSections;
+                options.UppercaseKeywords = uppercaseKeywords;
+                options.HTMLColoring = coloring;
+                options.KeywordStandardization = keywordStandardization;
+
+                formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(options);
+            }
             else if (obfuscate)
                 formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter(
-                    randomizeKeywordCase, 
+                    randomizeKeywordCase,
                     randomizeColor,
                     randomizeLineLengths,
                     preserveComments,

@@ -37,18 +37,8 @@ namespace PoorMansTSqlFormatterCmdLine
 
         static int Main(string[] args)
         {
-            string indentString = "\t";
-            int spacesPerTab = 4;
-            int maxLineWidth = 999;
-            bool trailingCommas = false;
-            bool spaceAfterExpandedComma = false;
-            bool expandBetweenConditions = true;
-            bool expandBooleanExpressions = true;
-            bool expandCaseStatements = true;
-            bool expandCommaLists = true;
-            bool breakJoinOnSections = false;
-            bool uppercaseKeywords = true;
-            bool standardizeKeywords = true;
+            var options = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions();
+            options.KeywordStandardization = true;
 
             bool allowParsingErrors = false;
             bool showUsageFriendly = false;
@@ -60,18 +50,19 @@ namespace PoorMansTSqlFormatterCmdLine
             string uiLangCode = null;
 
             OptionSet p = new OptionSet()
-              .Add("is|indentString=", delegate(string v) { indentString = v; })
-              .Add("st|spacesPerTab=", delegate(string v) { spacesPerTab = int.Parse(v); })
-              .Add("mw|maxLineWidth=", delegate(string v) { maxLineWidth = int.Parse(v); })
-              .Add("tc|trailingCommas", delegate(string v) { trailingCommas = v != null; })
-              .Add("sac|spaceAfterExpandedComma", delegate(string v) { spaceAfterExpandedComma = v != null; })
-              .Add("ebc|expandBetweenConditions", delegate(string v) { expandBetweenConditions = v != null; })
-              .Add("ebe|expandBooleanExpressions", delegate(string v) { expandBooleanExpressions = v != null; })
-              .Add("ecs|expandCaseStatements", delegate(string v) { expandCaseStatements = v != null; })
-              .Add("ecl|expandCommaLists", delegate(string v) { expandCommaLists = v != null; })
-              .Add("bjo|breakJoinOnSections", delegate(string v) { breakJoinOnSections = v != null; })
-              .Add("uk|uppercaseKeywords", delegate(string v) { uppercaseKeywords = v != null; })
-              .Add("sk|standardizeKeywords", delegate(string v) { standardizeKeywords = v != null; })
+              .Add("is|indentString=", delegate(string v) { options.IndentString = v; })
+              .Add("st|spacesPerTab=", delegate(string v) { options.SpacesPerTab = int.Parse(v); })
+              .Add("mw|maxLineWidth=", delegate(string v) { options.MaxLineWidth = int.Parse(v); })
+              .Add("tc|trailingCommas", delegate(string v) { options.TrailingCommas = v != null; })
+              .Add("sac|spaceAfterExpandedComma", delegate(string v) { options.SpaceAfterExpandedComma = v != null; })
+              .Add("ebc|expandBetweenConditions", delegate(string v) { options.ExpandBetweenConditions = v != null; })
+              .Add("ebe|expandBooleanExpressions", delegate(string v) { options.ExpandBooleanExpressions = v != null; })
+              .Add("ecs|expandCaseStatements", delegate(string v) { options.ExpandCaseStatements = v != null; })
+              .Add("ecl|expandCommaLists", delegate(string v) { options.ExpandCommaLists = v != null; })
+              .Add("bjo|breakJoinOnSections", delegate(string v) { options.BreakJoinOnSections = v != null; })
+              .Add("uk|uppercaseKeywords", delegate(string v) { options.UppercaseKeywords = v != null; })
+              .Add("sk|standardizeKeywords", delegate(string v) { options.KeywordStandardization = v != null; })
+
               .Add("ae|allowParsingErrors", delegate(string v) { allowParsingErrors = v != null; })
               .Add("e|extensions=", delegate(string v) { extensions.Add((v.StartsWith(".") ? "" : ".") + v); })
               .Add("r|recursive", delegate(string v) { recursiveSearch = v != null; })
@@ -147,21 +138,7 @@ namespace PoorMansTSqlFormatterCmdLine
                 return 1;
             }
 
-            var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(
-                indentString,
-                spacesPerTab,
-                maxLineWidth,
-                expandCommaLists,
-                trailingCommas,
-                spaceAfterExpandedComma,
-                expandBooleanExpressions,
-                expandCaseStatements,
-                expandBetweenConditions,
-                breakJoinOnSections,
-                uppercaseKeywords,
-                false,
-                standardizeKeywords
-                );
+            var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(options);
             formatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix") + Environment.NewLine;
             var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);
 
