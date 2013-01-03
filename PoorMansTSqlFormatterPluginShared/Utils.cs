@@ -1,7 +1,10 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2013 Tao Klerks
+
+Additional Contributors:
+ * Timothy Klenke, 2012
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -28,22 +31,22 @@ namespace PoorMansTSqlFormatterPluginShared
     {
         public static PoorMansTSqlFormatterLib.SqlFormattingManager GetFormattingManager(ISqlSettings settings)
         {
-            var options = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions();
-            options.IndentString = settings.IndentString;
-            options.SpacesPerTab = settings.SpacesPerTab;
-            options.MaxLineWidth = settings.MaxLineWidth;
-            options.ExpandCommaLists = settings.ExpandCommaLists;
-            options.TrailingCommas = settings.TrailingCommas;
-            options.SpaceAfterExpandedComma = settings.SpaceAfterExpandedComma;
-            options.ExpandBooleanExpressions = settings.ExpandBooleanExpressions;
-            options.ExpandCaseStatements = settings.ExpandCaseStatements;
-            options.ExpandBetweenConditions = settings.ExpandBetweenConditions;
-            options.BreakJoinOnSections = settings.BreakJoinOnSections;
-            options.UppercaseKeywords = settings.UppercaseKeywords;
-            options.KeywordStandardization = settings.KeywordStandardization;
+            var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions
+                {
+                    IndentString = settings.IndentString,
+                    SpacesPerTab = settings.SpacesPerTab,
+                    MaxLineWidth = settings.MaxLineWidth,
+                    ExpandCommaLists = settings.ExpandCommaLists,
+                    TrailingCommas = settings.TrailingCommas,
+                    SpaceAfterExpandedComma = settings.SpaceAfterExpandedComma,
+                    ExpandBooleanExpressions = settings.ExpandBooleanExpressions,
+                    ExpandCaseStatements = settings.ExpandCaseStatements,
+                    ExpandBetweenConditions = settings.ExpandBetweenConditions,
+                    BreakJoinOnSections = settings.BreakJoinOnSections,
+                    UppercaseKeywords = settings.UppercaseKeywords,
+                    KeywordStandardization = settings.KeywordStandardization
+                });
             
-            var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(options);
-
             ResourceManager _generalResourceManager = new ResourceManager("PoorMansTSqlFormatterPluginShared.GeneralLanguageContent", Assembly.GetExecutingAssembly());
             formatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix") + System.Environment.NewLine;
             var formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager(formatter);

@@ -79,6 +79,10 @@ This project uses several external libraries:
     available from the [notepad++ plugin development forum](https://sourceforge.net/projects/notepad-plus/forums/forum/482781).
 * ILRepack, by François Valdy, for assembly-merging, available from the [github project page](https://github.com/gluck/il-repack).
 
+Special thanks to contributors that have given their time to make this library better:
+
+* Timothy Klenke
+
 Many of the features in this project result from feedback by multiple people, including
 but not limited to:
 

@@ -1,7 +1,10 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2013 Tao Klerks
+
+Additional Contributors:
+ * Timothy Klenke, 2012
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -44,10 +47,11 @@ namespace PoorMansTSqlFormatterTests
         {
             _tokenizer = new TSqlStandardTokenizer();
             _parser = new TSqlStandardParser();
-            var options = new TSqlStandardFormatterOptions();
-            options.TrailingCommas = true;
-            options.KeywordStandardization = true;
-            _standardFormatter = new TSqlStandardFormatter(options);
+            _standardFormatter = new TSqlStandardFormatter(new TSqlStandardFormatterOptions
+                {
+                    TrailingCommas = true,
+                    KeywordStandardization = true
+                });
             _obfuscatingFormatter = new TSqlObfuscatingFormatter();
         }
 

@@ -3,6 +3,9 @@ Poor Man's T-SQL Formatter - a small free Transact-SQL formatting
 library for .Net 2.0, written in C#. 
 Copyright (C) 2011 Tao Klerks
 
+Additional Contributors:
+ * Timothy Klenke, 2012
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -20,10 +23,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Xml;
-using PoorMansTSqlFormatterLib.Interfaces;
 using System.Linq;
 
 namespace PoorMansTSqlFormatterLib.Formatters
@@ -47,10 +46,16 @@ namespace PoorMansTSqlFormatterLib.Formatters
             KeywordStandardization = false;
         }
 
+        //Doesn't particularly need to be lazy-loaded, and doesn't need to be threadsafe.
+        private static readonly TSqlStandardFormatterOptions _defaultOptions = new TSqlStandardFormatterOptions();
+
         public TSqlStandardFormatterOptions(string serializedString) : this() {
 
-            if (string.IsNullOrEmpty(serializedString)) return;
-                        
+            if (string.IsNullOrEmpty(serializedString)) 
+                return;
+                       
+            //PLEASE NOTE: This is not reusable/general-purpose key-value serialization: it does not handle commas in data.
+            // For now, this is used in the Test library only.
             foreach (string kvp in serializedString.Split(','))
             {
                 string[] splitPair = kvp.Split('=');
@@ -75,24 +80,25 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
         }
 
-        public string ToSerializedString() { 
+        //PLEASE NOTE: This is not reusable/general-purpose key-value serialization: it does not handle commas in data.
+        // For now, this is used in the Test library only.
+        public string ToSerializedString()
+        { 
             var overrides = new Dictionary<string, string>();
 
-            var defaultOptions = new TSqlStandardFormatterOptions();
-
-            if (IndentString != defaultOptions.IndentString) overrides.Add("IndentString", IndentString);
-            if (SpacesPerTab != defaultOptions.SpacesPerTab) overrides.Add("SpacesPerTab", SpacesPerTab.ToString());
-            if (MaxLineWidth != defaultOptions.MaxLineWidth) overrides.Add("MaxLineWidth", MaxLineWidth.ToString());
-            if (ExpandCommaLists != defaultOptions.ExpandCommaLists) overrides.Add("ExpandCommaLists", ExpandCommaLists.ToString());
-            if (TrailingCommas != defaultOptions.TrailingCommas) overrides.Add("TrailingCommas", TrailingCommas.ToString());
-            if (SpaceAfterExpandedComma != defaultOptions.SpaceAfterExpandedComma) overrides.Add("SpaceAfterExpandedComma", SpaceAfterExpandedComma.ToString());
-            if (ExpandBooleanExpressions != defaultOptions.ExpandBooleanExpressions) overrides.Add("ExpandBooleanExpressions", ExpandBooleanExpressions.ToString());
-            if (ExpandBetweenConditions != defaultOptions.ExpandBetweenConditions) overrides.Add("ExpandBetweenConditions", ExpandBetweenConditions.ToString());
-            if (ExpandCaseStatements != defaultOptions.ExpandCaseStatements) overrides.Add("ExpandCaseStatements", ExpandCaseStatements.ToString());
-            if (UppercaseKeywords != defaultOptions.UppercaseKeywords) overrides.Add("UppercaseKeywords", UppercaseKeywords.ToString());
-            if (BreakJoinOnSections != defaultOptions.BreakJoinOnSections) overrides.Add("BreakJoinOnSections", BreakJoinOnSections.ToString());
-            if (HTMLColoring != defaultOptions.HTMLColoring) overrides.Add("HTMLColoring", HTMLColoring.ToString());
-            if (KeywordStandardization != defaultOptions.KeywordStandardization) overrides.Add("KeywordStandardization", KeywordStandardization.ToString());
+            if (IndentString != _defaultOptions.IndentString) overrides.Add("IndentString", IndentString);
+            if (SpacesPerTab != _defaultOptions.SpacesPerTab) overrides.Add("SpacesPerTab", SpacesPerTab.ToString());
+            if (MaxLineWidth != _defaultOptions.MaxLineWidth) overrides.Add("MaxLineWidth", MaxLineWidth.ToString());
+            if (ExpandCommaLists != _defaultOptions.ExpandCommaLists) overrides.Add("ExpandCommaLists", ExpandCommaLists.ToString());
+            if (TrailingCommas != _defaultOptions.TrailingCommas) overrides.Add("TrailingCommas", TrailingCommas.ToString());
+            if (SpaceAfterExpandedComma != _defaultOptions.SpaceAfterExpandedComma) overrides.Add("SpaceAfterExpandedComma", SpaceAfterExpandedComma.ToString());
+            if (ExpandBooleanExpressions != _defaultOptions.ExpandBooleanExpressions) overrides.Add("ExpandBooleanExpressions", ExpandBooleanExpressions.ToString());
+            if (ExpandBetweenConditions != _defaultOptions.ExpandBetweenConditions) overrides.Add("ExpandBetweenConditions", ExpandBetweenConditions.ToString());
+            if (ExpandCaseStatements != _defaultOptions.ExpandCaseStatements) overrides.Add("ExpandCaseStatements", ExpandCaseStatements.ToString());
+            if (UppercaseKeywords != _defaultOptions.UppercaseKeywords) overrides.Add("UppercaseKeywords", UppercaseKeywords.ToString());
+            if (BreakJoinOnSections != _defaultOptions.BreakJoinOnSections) overrides.Add("BreakJoinOnSections", BreakJoinOnSections.ToString());
+            if (HTMLColoring != _defaultOptions.HTMLColoring) overrides.Add("HTMLColoring", HTMLColoring.ToString());
+            if (KeywordStandardization != _defaultOptions.KeywordStandardization) overrides.Add("KeywordStandardization", KeywordStandardization.ToString());
     
             if (overrides.Count == 0) return string.Empty;
             return string.Join(",", overrides.Select((kvp) => kvp.Key + "=" + kvp.Value).ToArray());

@@ -1,7 +1,10 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2013 Tao Klerks
+
+Additional Contributors:
+ * Timothy Klenke, 2012
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -35,7 +38,11 @@ namespace PoorMansTSqlFormatterLib.Formatters
         
         public TSqlStandardFormatter(TSqlStandardFormatterOptions options)
         {
+            if (options == null)
+                throw new ArgumentNullException("options");
+
             Options = options;
+
             if (options.KeywordStandardization)
                 KeywordMapping = StandardKeywordRemapping.Instance;
             ErrorOutputPrefix = Interfaces.MessagingConstants.FormatErrorDefaultMessage + Environment.NewLine;
@@ -44,30 +51,29 @@ namespace PoorMansTSqlFormatterLib.Formatters
         [Obsolete("Use the constructor with the TSqlStandardFormatterOptions parameter")]
         public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool breakJoinOnSections, bool uppercaseKeywords, bool htmlColoring, bool keywordStandardization)
         {
-            var options = new TSqlStandardFormatterOptions();
-
-            options.IndentString = indentString;
-            options.SpacesPerTab = spacesPerTab;
-            options.MaxLineWidth = maxLineWidth;
-            options.ExpandCommaLists = expandCommaLists;
-            options.TrailingCommas = trailingCommas;
-            options.SpaceAfterExpandedComma = spaceAfterExpandedComma;
-            options.ExpandBooleanExpressions = expandBooleanExpressions;
-            options.ExpandBetweenConditions = expandBetweenConditions;
-            options.ExpandCaseStatements = expandCaseStatements;
-            options.UppercaseKeywords = uppercaseKeywords;
-            options.BreakJoinOnSections = breakJoinOnSections;
-            options.HTMLColoring = htmlColoring;
-            options.KeywordStandardization = keywordStandardization;
-
-            Options = options;
+            Options = new TSqlStandardFormatterOptions
+                {
+                    IndentString = indentString,
+                    SpacesPerTab = spacesPerTab,
+                    MaxLineWidth = maxLineWidth,
+                    ExpandCommaLists = expandCommaLists,
+                    TrailingCommas = trailingCommas,
+                    SpaceAfterExpandedComma = spaceAfterExpandedComma,
+                    ExpandBooleanExpressions = expandBooleanExpressions,
+                    ExpandBetweenConditions = expandBetweenConditions,
+                    ExpandCaseStatements = expandCaseStatements,
+                    UppercaseKeywords = uppercaseKeywords,
+                    BreakJoinOnSections = breakJoinOnSections,
+                    HTMLColoring = htmlColoring,
+                    KeywordStandardization = keywordStandardization
+                };
 
             if (keywordStandardization)
                 KeywordMapping = StandardKeywordRemapping.Instance;
             ErrorOutputPrefix = Interfaces.MessagingConstants.FormatErrorDefaultMessage + Environment.NewLine;
         }
         
-        public TSqlStandardFormatterOptions Options { get; set; }
+        public TSqlStandardFormatterOptions Options { get; private set; }
         
         public IDictionary<string, string> KeywordMapping = new Dictionary<string, string>();
 

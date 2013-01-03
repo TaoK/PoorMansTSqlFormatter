@@ -1,6 +1,10 @@
 ﻿
 ## Poor Man's T-SQL Formatter change log
 
+### Version 1.5.1
+
+* Github Issue #85: [Enhancement] Merged code cleanup changes by Timothy Klenke
+
 ### Version 1.4.4 (SSMS / Visual Studio Add-In only)
 
 * Github Issue #79: [BugFix] Fix SSMS Add-In to work in unexpected languages [thanks Paulo Stradioti for the bug report]

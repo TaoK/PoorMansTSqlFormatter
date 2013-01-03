@@ -1,7 +1,10 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2013 Tao Klerks
+
+Additional Contributors:
+ * Timothy Klenke, 2012
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -91,22 +94,23 @@ namespace PoorMansTSqlFormatterWebDemo
             PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter formatter = null;
             if (reFormat)
             {
-                var options = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions();
-                options.IndentString = indent;
-                options.SpacesPerTab = spacesPerTab;
-                options.MaxLineWidth = maxLineWidth;
-                options.ExpandCommaLists = expandCommaLists;
-                options.TrailingCommas = trailingCommas;
-                options.SpaceAfterExpandedComma = spaceAfterExpandedComma;
-                options.ExpandBooleanExpressions = expandBooleanExpressions;
-                options.ExpandCaseStatements = expandCaseStatements;
-                options.ExpandBetweenConditions = expandBetweenConditions;
-                options.BreakJoinOnSections = breakJoinOnSections;
-                options.UppercaseKeywords = uppercaseKeywords;
-                options.HTMLColoring = coloring;
-                options.KeywordStandardization = keywordStandardization;
+                formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions
+                    {
+                        IndentString = indent,
+                        SpacesPerTab = spacesPerTab,
+                        MaxLineWidth = maxLineWidth,
+                        ExpandCommaLists = expandCommaLists,
+                        TrailingCommas = trailingCommas,
+                        SpaceAfterExpandedComma = spaceAfterExpandedComma,
+                        ExpandBooleanExpressions = expandBooleanExpressions,
+                        ExpandCaseStatements = expandCaseStatements,
+                        ExpandBetweenConditions = expandBetweenConditions,
+                        BreakJoinOnSections = breakJoinOnSections,
+                        UppercaseKeywords = uppercaseKeywords,
+                        HTMLColoring = coloring,
+                        KeywordStandardization = keywordStandardization
+                    });
 
-                formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(options);
             }
             else if (obfuscate)
                 formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter(

@@ -1,7 +1,10 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2013 Tao Klerks
+
+Additional Contributors:
+ * Timothy Klenke, 2012
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -37,17 +40,34 @@ namespace PoorMansTSqlFormatterCmdLine
 
         static int Main(string[] args)
         {
-            var options = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions();
-            options.KeywordStandardization = true;
-
+            //formatter engine option defaults
+            var options = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions
+                {
+                    KeywordStandardization = true,
+                    IndentString = "\t",
+                    SpacesPerTab = 4,
+                    MaxLineWidth = 999,
+                    TrailingCommas = false,
+                    SpaceAfterExpandedComma = false,
+                    ExpandBetweenConditions = true,
+                    ExpandBooleanExpressions = true,
+                    ExpandCaseStatements = true,
+                    ExpandCommaLists = true,
+                    BreakJoinOnSections = false,
+                    UppercaseKeywords = true
+                };
+            
+            //bulk formatter options
             bool allowParsingErrors = false;
-            bool showUsageFriendly = false;
-            bool showUsageError = false;
             List<string> extensions = new List<string>();
             bool backups = true;
             bool recursiveSearch = false;
             string outputFileOrFolder = null;
             string uiLangCode = null;
+
+            //flow/tracking switches
+            bool showUsageFriendly = false;
+            bool showUsageError = false;
 
             OptionSet p = new OptionSet()
               .Add("is|indentString=", delegate(string v) { options.IndentString = v; })

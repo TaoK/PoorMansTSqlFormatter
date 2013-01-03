@@ -1,7 +1,10 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2013 Tao Klerks
+
+Additional Contributors:
+ * Timothy Klenke, 2012
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -160,30 +163,30 @@ namespace PoorMansTSqlFormatterDemo
             PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter innerFormatter;
             if (radio_Formatting_Standard.Checked)
             {
-                var options = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions();
-                options.IndentString = txt_Indent.Text;
-                options.SpacesPerTab = int.Parse(txt_IndentWidth.Text);
-                options.MaxLineWidth = int.Parse(txt_MaxWidth.Text);
-                options.ExpandCommaLists = chk_ExpandCommaLists.Checked;
-                options.TrailingCommas = chk_TrailingCommas.Checked;
-                options.SpaceAfterExpandedComma = chk_SpaceAfterComma.Checked;
-                options.ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked;
-                options.ExpandCaseStatements = chk_ExpandCaseStatements.Checked;
-                options.ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked;
-                options.BreakJoinOnSections = chk_BreakJoinOnSections.Checked;
-                options.UppercaseKeywords = chk_UppercaseKeywords.Checked;
-                options.HTMLColoring = chk_Coloring.Checked;
-                options.KeywordStandardization = chk_EnableKeywordStandardization.Checked;
-
-                innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(options);
+                innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions
+                    {
+                        IndentString = txt_Indent.Text,
+                        SpacesPerTab = int.Parse(txt_IndentWidth.Text),
+                        MaxLineWidth = int.Parse(txt_MaxWidth.Text),
+                        ExpandCommaLists = chk_ExpandCommaLists.Checked,
+                        TrailingCommas = chk_TrailingCommas.Checked,
+                        SpaceAfterExpandedComma = chk_SpaceAfterComma.Checked,
+                        ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked,
+                        ExpandCaseStatements = chk_ExpandCaseStatements.Checked,
+                        ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked,
+                        BreakJoinOnSections = chk_BreakJoinOnSections.Checked,
+                        UppercaseKeywords = chk_UppercaseKeywords.Checked,
+                        HTMLColoring = chk_Coloring.Checked,
+                        KeywordStandardization = chk_EnableKeywordStandardization.Checked
+                    });
             }
             else if (radio_Formatting_Identity.Checked)
                 innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter(chk_IdentityColoring.Checked);
             else
                 innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter(
-                    chk_RandomizeKeywordCase.Checked, 
-                    chk_RandomizeColor.Checked, 
-                    chk_RandomizeLineLength.Checked, 
+                    chk_RandomizeKeywordCase.Checked,
+                    chk_RandomizeColor.Checked,
+                    chk_RandomizeLineLength.Checked,
                     chk_PreserveComments.Checked,
                     chk_KeywordSubstitution.Checked
                     );
