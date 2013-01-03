@@ -27,64 +27,82 @@ using PoorMansTSqlFormatterLib.Interfaces;
 
 namespace PoorMansTSqlFormatterLib.Formatters
 {
+
     public class TSqlStandardFormatter : Interfaces.ISqlTreeFormatter
     {
 
-        public TSqlStandardFormatter() : this("\t", 4, 999, true, false, false, true, true, true, false, true, false, false) { }
-
-        public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool breakJoinOnSections, bool uppercaseKeywords, bool htmlColoring, bool keywordStandardization)
+        public TSqlStandardFormatter() : this(new TSqlStandardFormatterOptions()) { }
+        
+        public TSqlStandardFormatter(TSqlStandardFormatterOptions options)
         {
-            IndentString = indentString;
-            SpacesPerTab = spacesPerTab;
-            MaxLineWidth = maxLineWidth;
-            ExpandCommaLists = expandCommaLists;
-            TrailingCommas = trailingCommas;
-            SpaceAfterExpandedComma = spaceAfterExpandedComma;
-            ExpandBooleanExpressions = expandBooleanExpressions;
-            ExpandBetweenConditions = expandBetweenConditions;
-            ExpandCaseStatements = expandCaseStatements;
-            UppercaseKeywords = uppercaseKeywords;
-            BreakJoinOnSections = breakJoinOnSections;
-            HTMLColoring = htmlColoring;
-            if (keywordStandardization)
+            Options = options;
+            if (options.KeywordStandardization)
                 KeywordMapping = StandardKeywordRemapping.Instance;
             ErrorOutputPrefix = Interfaces.MessagingConstants.FormatErrorDefaultMessage + Environment.NewLine;
         }
 
-        private string _indentString;
-        public string IndentString
+        [Obsolete("Use the constructor with the TSqlStandardFormatterOptions parameter")]
+        public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool breakJoinOnSections, bool uppercaseKeywords, bool htmlColoring, bool keywordStandardization)
         {
-            get
-            {
-                return _indentString;
-            }
-            set
-            {
-                _indentString = value.Replace("\\t", "\t").Replace("\\s", " ");
-            }
-        }
+            var options = new TSqlStandardFormatterOptions();
 
+            options.IndentString = indentString;
+            options.SpacesPerTab = spacesPerTab;
+            options.MaxLineWidth = maxLineWidth;
+            options.ExpandCommaLists = expandCommaLists;
+            options.TrailingCommas = trailingCommas;
+            options.SpaceAfterExpandedComma = spaceAfterExpandedComma;
+            options.ExpandBooleanExpressions = expandBooleanExpressions;
+            options.ExpandBetweenConditions = expandBetweenConditions;
+            options.ExpandCaseStatements = expandCaseStatements;
+            options.UppercaseKeywords = uppercaseKeywords;
+            options.BreakJoinOnSections = breakJoinOnSections;
+            options.HTMLColoring = htmlColoring;
+            options.KeywordStandardization = keywordStandardization;
+
+            Options = options;
+
+            if (keywordStandardization)
+                KeywordMapping = StandardKeywordRemapping.Instance;
+            ErrorOutputPrefix = Interfaces.MessagingConstants.FormatErrorDefaultMessage + Environment.NewLine;
+        }
+        
+        public TSqlStandardFormatterOptions Options { get; set; }
+        
         public IDictionary<string, string> KeywordMapping = new Dictionary<string, string>();
 
-        public int SpacesPerTab { get; set; }
-        public int MaxLineWidth { get; set; }
-        public bool ExpandCommaLists { get; set; }
-        public bool TrailingCommas { get; set; }
-        public bool SpaceAfterExpandedComma { get; set; }
-        public bool ExpandBooleanExpressions { get; set; }
-        public bool ExpandCaseStatements { get; set; }
-        public bool ExpandBetweenConditions { get; set; }
-        public bool UppercaseKeywords { get; set; }
-        public bool BreakJoinOnSections { get; set; }
-        public bool HTMLColoring { get; set; }
+        [Obsolete("Use Options.IndentString instead")]
+        public string IndentString { get { return Options.IndentString; } set { Options.IndentString = value; } }
+        [Obsolete("Use Options.SpacesPerTab instead")]
+        public int SpacesPerTab { get { return Options.SpacesPerTab; } set { Options.SpacesPerTab = value; } }
+        [Obsolete("Use Options.MaxLineWidth instead")]
+        public int MaxLineWidth { get { return Options.MaxLineWidth; } set { Options.MaxLineWidth = value; } }
+        [Obsolete("Use Options.ExpandCommaLists instead")]
+        public bool ExpandCommaLists { get { return Options.ExpandCommaLists; } set { Options.ExpandCommaLists = value; } }
+        [Obsolete("Use Options.TrailingCommas instead")]
+        public bool TrailingCommas { get { return Options.TrailingCommas; } set { Options.TrailingCommas = value; } }
+        [Obsolete("Use Options.SpaceAfterExpandedComma instead")]
+        public bool SpaceAfterExpandedComma { get { return Options.SpaceAfterExpandedComma; } set { Options.SpaceAfterExpandedComma = value; } }
+        [Obsolete("Use Options.ExpandBooleanExpressions instead")]
+        public bool ExpandBooleanExpressions { get { return Options.ExpandBooleanExpressions; } set { Options.ExpandBooleanExpressions = value; } }
+        [Obsolete("Use Options.ExpandBetweenConditions instead")]
+        public bool ExpandCaseStatements { get { return Options.ExpandCaseStatements; } set { Options.ExpandCaseStatements = value; } }
+        [Obsolete("Use Options.ExpandCaseStatements instead")]
+        public bool ExpandBetweenConditions { get { return Options.ExpandBetweenConditions; } set { Options.ExpandBetweenConditions = value; } }
+        [Obsolete("Use Options.UppercaseKeywords instead")]
+        public bool UppercaseKeywords { get { return Options.UppercaseKeywords; } set { Options.UppercaseKeywords = value; } }
+        [Obsolete("Use Options.BreakJoinOnSections instead")]
+        public bool BreakJoinOnSections { get { return Options.BreakJoinOnSections; } set { Options.BreakJoinOnSections = value; } }
+        [Obsolete("Use Options.HTMLColoring instead")]
+        public bool HTMLColoring { get { return Options.HTMLColoring; } set { Options.HTMLColoring = value; } }
 
-        public bool HTMLFormatted { get { return HTMLColoring; } }
+        public bool HTMLFormatted { get { return Options.HTMLColoring; } }
         public string ErrorOutputPrefix { get; set; }
 
         public string FormatSQLTree(XmlDocument sqlTreeDoc)
         {
             //thread-safe - each call to FormatSQLTree() gets its own independent state object
-            TSqlStandardFormattingState state = new TSqlStandardFormattingState(HTMLColoring, IndentString, SpacesPerTab, MaxLineWidth, 0);
+            TSqlStandardFormattingState state = new TSqlStandardFormattingState(Options.HTMLColoring, Options.IndentString, Options.SpacesPerTab, Options.MaxLineWidth, 0);
 
             if (sqlTreeDoc.SelectSingleNode(string.Format("/{0}/@{1}[.=1]", SqlXmlConstants.ENAME_SQL_ROOT, SqlXmlConstants.ANAME_ERRORFOUND)) != null)
                 state.AddOutputContent(ErrorOutputPrefix);
@@ -96,7 +114,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (state.SpecialRegionActive == SpecialRegionType.NoFormat)
             {
                 XmlNode skippedXml = ExtractXmlBetween(state.RegionStartNode, sqlTreeDoc.DocumentElement);
-                TSqlIdentityFormatter tempFormatter = new TSqlIdentityFormatter(HTMLColoring);
+                TSqlIdentityFormatter tempFormatter = new TSqlIdentityFormatter(Options.HTMLColoring);
                 state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
             }
             else if (state.SpecialRegionActive == SpecialRegionType.Minify)
@@ -207,13 +225,13 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlXmlConstants.ENAME_JOIN_ON_SECTION:
-                    if (BreakJoinOnSections)
+                    if (Options.BreakJoinOnSections)
                         state.BreakExpected = true;
                     ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_CONTAINER_OPEN), state);
-                    if (BreakJoinOnSections)
+                    if (Options.BreakJoinOnSections)
                         state.IncrementIndent();
                     ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT), state);
-                    if (BreakJoinOnSections)
+                    if (Options.BreakJoinOnSections)
                         state.DecrementIndent();
                     break;
 
@@ -261,7 +279,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_CONTAINER_OPEN), state);
                     state.IncrementIndent();
                     ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_BETWEEN_LOWERBOUND), state.IncrementIndent());
-                    if (ExpandBetweenConditions)
+                    if (Options.ExpandBetweenConditions)
                         state.BreakExpected = true;
                     ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_CONTAINER_CLOSE), state.DecrementIndent());
                     ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_BETWEEN_UPPERBOUND), state.IncrementIndent());
@@ -336,7 +354,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_CASE_INPUT), state);
                     ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_CASE_WHEN), state);
                     ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_CASE_ELSE), state);
-                    if (ExpandCaseStatements)
+                    if (Options.ExpandCaseStatements)
                         state.BreakExpected = true;
                     ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_CONTAINER_CLOSE), state);
                     state.DecrementIndent();
@@ -345,7 +363,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_CASE_WHEN:
                 case SqlXmlConstants.ENAME_CASE_THEN:
                 case SqlXmlConstants.ENAME_CASE_ELSE:
-                    if (ExpandCaseStatements)
+                    if (Options.ExpandCaseStatements)
                         state.BreakExpected = true;
                     ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_CONTAINER_OPEN), state);
                     ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_CONTAINER_GENERALCONTENT), state.IncrementIndent());
@@ -355,7 +373,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case SqlXmlConstants.ENAME_AND_OPERATOR:
                 case SqlXmlConstants.ENAME_OR_OPERATOR:
-                    if (ExpandBooleanExpressions)
+                    if (Options.ExpandBooleanExpressions)
                         state.BreakExpected = true;
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), state);
                     break;
@@ -364,7 +382,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     if (state.SpecialRegionActive == SpecialRegionType.NoFormat && contentElement.InnerXml.ToUpperInvariant().Contains("[/NOFORMAT]"))
                     {
                         XmlNode skippedXml = ExtractXmlBetween(state.RegionStartNode, contentElement);
-                        TSqlIdentityFormatter tempFormatter = new TSqlIdentityFormatter(HTMLColoring);
+                        TSqlIdentityFormatter tempFormatter = new TSqlIdentityFormatter(Options.HTMLColoring);
                         state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
                         state.SpecialRegionActive = null;
                         state.RegionStartNode = null;
@@ -415,7 +433,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     if (state.SpecialRegionActive == SpecialRegionType.NoFormat && contentElement.InnerXml.ToUpperInvariant().Contains("[/NOFORMAT]"))
                     {
                         XmlNode skippedXml = ExtractXmlBetween(state.RegionStartNode, contentElement);
-                        TSqlIdentityFormatter tempFormatter = new TSqlIdentityFormatter(HTMLColoring);
+                        TSqlIdentityFormatter tempFormatter = new TSqlIdentityFormatter(Options.HTMLColoring);
                         state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
                         state.SpecialRegionActive = null;
                         state.RegionStartNode = null;
@@ -477,12 +495,12 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case SqlXmlConstants.ENAME_COMMA:
                     //comma always ignores requested word spacing
-                    if (TrailingCommas)
+                    if (Options.TrailingCommas)
                     {
                         WhiteSpace_BreakAsExpected(state);
                         state.AddOutputContent(FormatOperator(","), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
 
-                        if (ExpandCommaLists
+                        if (Options.ExpandCommaLists
                             && !(contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_DDLDETAIL_PARENS)
                                 || contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_FUNCTION_PARENS)
                                 )
@@ -493,7 +511,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     }
                     else
                     {
-                        if (ExpandCommaLists
+                        if (Options.ExpandCommaLists
                             && !(contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_DDLDETAIL_PARENS)
                                 || contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_FUNCTION_PARENS)
                                 )
@@ -501,7 +519,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         {
                             state.WhiteSpace_BreakToNextLine();
                             state.AddOutputContent(FormatOperator(","), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
-                            if (SpaceAfterExpandedComma)
+                            if (Options.SpaceAfterExpandedComma)
                                 state.WordSeparatorExpected = true;
                         }
                         else
@@ -689,7 +707,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (!KeywordMapping.TryGetValue(keyword, out outputKeyword))
                 outputKeyword = keyword;
 
-            if (UppercaseKeywords)
+            if (Options.UppercaseKeywords)
                 return outputKeyword.ToUpperInvariant();
             else
                 return outputKeyword.ToLowerInvariant();
@@ -697,7 +715,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
         private string FormatOperator(string operatorValue)
         {
-            if (UppercaseKeywords)
+            if (Options.UppercaseKeywords)
                 return operatorValue.ToUpperInvariant();
             else
                 return operatorValue.ToLowerInvariant();

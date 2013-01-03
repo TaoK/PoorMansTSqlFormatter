@@ -70,6 +70,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TSqlIdentityFormatterTests.cs" />
     <Compile Include="TSqlObfuscatingFormatterTests.cs" />
+    <Compile Include="TSqlStandardFormatterOptionsTests.cs" />
     <Compile Include="TSqlStandardFormatterTests.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>

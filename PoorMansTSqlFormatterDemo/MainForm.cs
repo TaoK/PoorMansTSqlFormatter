@@ -160,21 +160,22 @@ namespace PoorMansTSqlFormatterDemo
             PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter innerFormatter;
             if (radio_Formatting_Standard.Checked)
             {
-                innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(
-                    txt_Indent.Text,
-                    int.Parse(txt_IndentWidth.Text),
-                    int.Parse(txt_MaxWidth.Text),
-                    chk_ExpandCommaLists.Checked,
-                    chk_TrailingCommas.Checked,
-                    chk_SpaceAfterComma.Checked,
-                    chk_ExpandBooleanExpressions.Checked,
-                    chk_ExpandCaseStatements.Checked,
-                    chk_ExpandBetweenConditions.Checked,
-                    chk_BreakJoinOnSections.Checked,
-                    chk_UppercaseKeywords.Checked,
-                    chk_Coloring.Checked,
-                    chk_EnableKeywordStandardization.Checked
-                    );
+                var options = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions();
+                options.IndentString = txt_Indent.Text;
+                options.SpacesPerTab = int.Parse(txt_IndentWidth.Text);
+                options.MaxLineWidth = int.Parse(txt_MaxWidth.Text);
+                options.ExpandCommaLists = chk_ExpandCommaLists.Checked;
+                options.TrailingCommas = chk_TrailingCommas.Checked;
+                options.SpaceAfterExpandedComma = chk_SpaceAfterComma.Checked;
+                options.ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked;
+                options.ExpandCaseStatements = chk_ExpandCaseStatements.Checked;
+                options.ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked;
+                options.BreakJoinOnSections = chk_BreakJoinOnSections.Checked;
+                options.UppercaseKeywords = chk_UppercaseKeywords.Checked;
+                options.HTMLColoring = chk_Coloring.Checked;
+                options.KeywordStandardization = chk_EnableKeywordStandardization.Checked;
+
+                innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(options);
             }
             else if (radio_Formatting_Identity.Checked)
                 innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter(chk_IdentityColoring.Checked);

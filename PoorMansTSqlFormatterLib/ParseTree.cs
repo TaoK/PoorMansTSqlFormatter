@@ -80,9 +80,6 @@ namespace PoorMansTSqlFormatterLib
                 if (value)
                 {
                     DocumentElement.SetAttribute(SqlXmlConstants.ANAME_ERRORFOUND, "1");
-#if DEBUG
-                    System.Diagnostics.Debugger.Break();
-#endif
                 }
                 else 
                 {
