@@ -5,6 +5,7 @@
 
 * Github Issue #85: [Enhancement] Merged code cleanup changes by Timothy Klenke
 * Github Issue #NN: [Enhancement] Added support for SQLite bit-shift and c-style equality operators
+* Github Issue #NN: [Enhancement] Added support for Visual Studio 2012
 
 ### Version 1.4.4 (SSMS / Visual Studio Add-In only)
 

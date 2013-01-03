@@ -27,6 +27,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_23F3697869B4400E8FD6656AF31CC607"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_24D70CC94FCF4745ACD8C2C13860E1D0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -369,6 +375,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_23F3697869B4400E8FD6656AF31CC607"
+            {
+            "SourcePath" = "8:..\\PoorMansTSqlFormatterSSMSAddIn\\PoorMansTSqlFormatterSSMSAddIn.AddIn"
+            "TargetName" = "8:PoorMansTSqlFormatterSSMSAddIn.AddIn"
+            "Tag" = "8:"
+            "Folder" = "8:_E01BE0296773451CA895F47FF998D260"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_24D70CC94FCF4745ACD8C2C13860E1D0"
             {
             "SourcePath" = "8:..\\PoorMansTSqlFormatterSSMSAddIn\\PoorMansTSqlFormatterSSMSAddIn.AddIn"
@@ -555,7 +581,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterPluginShared, Version=1.4.1.19487, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterPluginShared, Version=1.4.1.23089, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_9F7BD31349EC034B927057542633A78E"
@@ -586,7 +612,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=1.4.3.19487, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=1.4.3.23432, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_A4127E7EB3A60822BFB9D5E93C1AF2F1"
@@ -773,6 +799,18 @@
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:COMMONAPPDATAMICROSOFTSQL11ADDINS"
+                "Folders"
+                {
+                }
+            }
+            "{994432C3-9487-495D-8656-3E829A8DBDDE}:_E01BE0296773451CA895F47FF998D260"
+            {
+            "DefaultLocation" = "8:[COMAPPDATAFOLDER]\\Microsoft\\VisualStudio\\11.0\\Addins"
+            "Name" = "8:Common App Data Microsoft VisualStudio 11 AddIns"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:INSTALLFORVS=1"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:NEWPROPERTY4"
                 "Folders"
                 {
                 }
