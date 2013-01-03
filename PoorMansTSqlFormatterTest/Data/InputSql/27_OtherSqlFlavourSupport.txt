@@ -4,3 +4,7 @@
 
 SELECT 'One String'||'another string'
 
+--Similar SQLite operators: bit shifts and c-style equality operator
+
+SELECT 101 << 1, 101 >> 1
+WHERE 1 == 1

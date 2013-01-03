@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2013 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -390,6 +390,21 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                         case SqlTokenizationType.SingleLT:
                             currentTokenValue.Append('<');
                             currentTokenizationType = SqlTokenizationType.OtherOperator;
+                            if (currentCharacter == '=' || currentCharacter == '>' || currentCharacter == '<')
+                            {
+                                currentTokenValue.Append(currentCharacter);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                            }
+                            else
+                            {
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
+                            }
+                            break;
+
+                        case SqlTokenizationType.SingleGT:
+                            currentTokenValue.Append('>');
+                            currentTokenizationType = SqlTokenizationType.OtherOperator;
                             if (currentCharacter == '=' || currentCharacter == '>')
                             {
                                 currentTokenValue.Append(currentCharacter);
@@ -435,6 +450,20 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                             currentTokenizationType = SqlTokenizationType.OtherOperator;
                             currentTokenValue.Append('|');
                             if (currentCharacter == '=' || currentCharacter == '|')
+                            {
+                                currentTokenValue.Append(currentCharacter);
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                            }
+                            else
+                            {
+                                CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+                                ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
+                            }
+                            break;
+
+                        case SqlTokenizationType.SingleEquals:
+                            currentTokenValue.Append('=');
+                            if (currentCharacter == '=')
                             {
                                 currentTokenValue.Append(currentCharacter);
                                 CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
@@ -676,11 +705,15 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             }
             else if (currentCharacter == '=')
             {
-                tokenContainer.Add(new Token(SqlTokenType.EqualsSign, currentCharacter.ToString()));
+                currentTokenizationType = SqlTokenizationType.SingleEquals;
             }
             else if (currentCharacter == '<')
             {
                 currentTokenizationType = SqlTokenizationType.SingleLT;
+            }
+            else if (currentCharacter == '>')
+            {
+                currentTokenizationType = SqlTokenizationType.SingleGT;
             }
             else if (currentCharacter == '!')
             {
@@ -790,6 +823,10 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                     tokenContainer.Add(new Token(SqlTokenType.Asterisk, currentValue.ToString()));
                     break;
 
+                case SqlTokenizationType.SingleEquals:
+                    tokenContainer.Add(new Token(SqlTokenType.EqualsSign, currentValue.ToString()));
+                    break;
+
                 case SqlTokenizationType.Number:
                 case SqlTokenizationType.DecimalValue:
                 case SqlTokenizationType.FloatValue:
@@ -838,10 +875,12 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             SingleSlash,
             SingleN,
             SingleLT,
+            SingleGT,
             SingleExclamation,
             SinglePeriod,
             SingleZero,
             SinglePipe,
+            SingleEquals,
             SingleOtherCompoundableOperator
         }
 

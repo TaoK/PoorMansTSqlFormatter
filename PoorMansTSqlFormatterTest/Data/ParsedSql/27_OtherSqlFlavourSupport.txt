@@ -4,4 +4,8 @@
 </SingleLineComment><WhiteSpace>
 </WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><String>One String</String><OtherOperator>||</OtherOperator><String>another string</String><WhiteSpace>
 
+</WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment>Similar SQLite operators: bit shifts and c-style equality operator
+</SingleLineComment><WhiteSpace>
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>101</NumberValue><WhiteSpace> </WhiteSpace><OtherOperator>&lt;&lt;</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><Comma>,</Comma><WhiteSpace> </WhiteSpace><NumberValue>101</NumberValue><WhiteSpace> </WhiteSpace><OtherOperator>&gt;&gt;</OtherOperator><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace>
+</WhiteSpace></Clause><Clause><OtherKeyword>WHERE</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace> </WhiteSpace><EqualsSign>==</EqualsSign><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><WhiteSpace>
 </WhiteSpace></Clause></SqlStatement></SqlRoot>

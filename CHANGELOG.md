@@ -4,6 +4,7 @@
 ### Version 1.5.1
 
 * Github Issue #85: [Enhancement] Merged code cleanup changes by Timothy Klenke
+* Github Issue #NN: [Enhancement] Added support for SQLite bit-shift and c-style equality operators
 
 ### Version 1.4.4 (SSMS / Visual Studio Add-In only)
 
