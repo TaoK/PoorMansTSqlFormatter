@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2013 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -164,6 +164,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_COMMENT_SINGLELINE:
                     state.AddOutputContent("--" + contentElement.InnerText, Interfaces.SqlHtmlConstants.CLASS_COMMENT);
                     break;
+                case SqlXmlConstants.ENAME_COMMENT_SINGLELINE_CSTYLE:
+                    state.AddOutputContent("//" + contentElement.InnerText, Interfaces.SqlHtmlConstants.CLASS_COMMENT);
+                    break;
                 case SqlXmlConstants.ENAME_STRING:
                     state.AddOutputContent("'" + contentElement.InnerText.Replace("'", "''") + "'", Interfaces.SqlHtmlConstants.CLASS_STRING);
                     break;
@@ -236,6 +239,10 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         break;
                     case SqlTokenType.SingleLineComment:
                         outString.Append("--");
+                        outString.Append(entry.Value);
+                        break;
+                    case SqlTokenType.SingleLineCommentCStyle:
+                        outString.Append("//");
                         outString.Append(entry.Value);
                         break;
                     case SqlTokenType.String:

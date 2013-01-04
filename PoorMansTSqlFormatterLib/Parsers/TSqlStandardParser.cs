@@ -1125,6 +1125,15 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             sqlTree.SaveNewElement(SqlXmlConstants.ENAME_SCOPERESOLUTIONOPERATOR, token.Value + tokenList[tokenID + 1].Value);
                             tokenID++;
                         }
+                        else if (tokenList.Count > tokenID + 1
+                            && tokenList[tokenID + 1].Type == SqlTokenType.OtherNode
+                            )
+                        {
+                            //This SHOULD never happen in valid T-SQL, but can happen in DB2 or NexusDB or PostgreSQL 
+                            // code (host variables) - so be nice and handle it anyway.
+                            sqlTree.SaveNewElement(SqlXmlConstants.ENAME_OTHERNODE, token.Value + tokenList[tokenID + 1].Value);
+                            tokenID++;
+                        }
                         else
                         {
                             sqlTree.SaveNewElementWithError(SqlXmlConstants.ENAME_OTHEROPERATOR, token.Value);
@@ -1153,6 +1162,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
                     case SqlTokenType.MultiLineComment:
                     case SqlTokenType.SingleLineComment:
+                    case SqlTokenType.SingleLineCommentCStyle:
                     case SqlTokenType.WhiteSpace:
                         //create in statement rather than clause if there are no siblings yet
                         if (sqlTree.PathNameMatches(0, SqlXmlConstants.ENAME_SQL_CLAUSE)
@@ -1277,6 +1287,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     return SqlXmlConstants.ENAME_WHITESPACE;
                 case SqlTokenType.SingleLineComment:
                     return SqlXmlConstants.ENAME_COMMENT_SINGLELINE;
+                case SqlTokenType.SingleLineCommentCStyle:
+                    return SqlXmlConstants.ENAME_COMMENT_SINGLELINE_CSTYLE;
                 case SqlTokenType.MultiLineComment:
                     return SqlXmlConstants.ENAME_COMMENT_MULTILINE;
                 case SqlTokenType.BracketQuotedName:

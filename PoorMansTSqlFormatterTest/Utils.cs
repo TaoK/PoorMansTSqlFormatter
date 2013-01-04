@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2013 Tao Klerks
 
 Additional Contributors:
  * Timothy Klenke, 2012
@@ -63,6 +63,7 @@ namespace PoorMansTSqlFormatterTests
         {
             StripElementNameFromXml(sqlTree, PoorMansTSqlFormatterLib.Interfaces.SqlXmlConstants.ENAME_COMMENT_MULTILINE);
             StripElementNameFromXml(sqlTree, PoorMansTSqlFormatterLib.Interfaces.SqlXmlConstants.ENAME_COMMENT_SINGLELINE);
+            StripElementNameFromXml(sqlTree, PoorMansTSqlFormatterLib.Interfaces.SqlXmlConstants.ENAME_COMMENT_SINGLELINE_CSTYLE);
         }
 
         private static void StripElementNameFromXml(XmlDocument sqlTree, string elementName)

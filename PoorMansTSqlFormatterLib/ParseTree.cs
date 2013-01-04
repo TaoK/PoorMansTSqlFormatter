@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2013 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -292,11 +292,13 @@ namespace PoorMansTSqlFormatterLib
                 }
                 else if (migrationCandidate.PreviousSibling != null
                     && (migrationCandidate.Name.Equals(SqlXmlConstants.ENAME_COMMENT_SINGLELINE)
+                        || migrationCandidate.Name.Equals(SqlXmlConstants.ENAME_COMMENT_SINGLELINE_CSTYLE)
                         || migrationCandidate.Name.Equals(SqlXmlConstants.ENAME_COMMENT_MULTILINE)
                         )
                     && (migrationCandidate.PreviousSibling.NodeType == XmlNodeType.Whitespace
                         || migrationCandidate.PreviousSibling.Name.Equals(SqlXmlConstants.ENAME_WHITESPACE)
                         || migrationCandidate.PreviousSibling.Name.Equals(SqlXmlConstants.ENAME_COMMENT_SINGLELINE)
+                        || migrationCandidate.PreviousSibling.Name.Equals(SqlXmlConstants.ENAME_COMMENT_SINGLELINE_CSTYLE)
                         || migrationCandidate.PreviousSibling.Name.Equals(SqlXmlConstants.ENAME_COMMENT_MULTILINE)
                         )
                     )
@@ -434,6 +436,7 @@ namespace PoorMansTSqlFormatterLib
             foreach (XmlElement testElement in containerNode.SelectNodes("*"))
                 if (!testElement.Name.Equals(SqlXmlConstants.ENAME_WHITESPACE)
                     && !testElement.Name.Equals(SqlXmlConstants.ENAME_COMMENT_SINGLELINE)
+                    && !testElement.Name.Equals(SqlXmlConstants.ENAME_COMMENT_SINGLELINE_CSTYLE)
                     && (!testElement.Name.Equals(SqlXmlConstants.ENAME_COMMENT_MULTILINE)
                         || Regex.IsMatch(testElement.InnerText, @"(\r|\n)+")
                         )
@@ -456,6 +459,7 @@ namespace PoorMansTSqlFormatterLib
         {
             return (targetNodeName.Equals(SqlXmlConstants.ENAME_WHITESPACE)
                 || targetNodeName.Equals(SqlXmlConstants.ENAME_COMMENT_SINGLELINE)
+                || targetNodeName.Equals(SqlXmlConstants.ENAME_COMMENT_SINGLELINE_CSTYLE)
                 || targetNodeName.Equals(SqlXmlConstants.ENAME_COMMENT_MULTILINE)
                 );
         }

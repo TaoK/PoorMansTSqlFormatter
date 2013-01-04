@@ -236,6 +236,10 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                                 currentTokenizationType = SqlTokenizationType.BlockComment;
                                 commentNesting++;
                             }
+                            else if (currentCharacter == '/')
+                            {
+                                currentTokenizationType = SqlTokenizationType.SingleLineCommentCStyle;
+                            }
                             else if (currentCharacter == '=')
                             {
                                 currentTokenizationType = SqlTokenizationType.OtherOperator;
@@ -253,6 +257,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                             break;
 
                         case SqlTokenizationType.SingleLineComment:
+                        case SqlTokenizationType.SingleLineCommentCStyle:
                             if (currentCharacter == (char)13 || currentCharacter == (char)10)
                             {
                                 currentTokenValue.Append(currentCharacter);
@@ -762,6 +767,10 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                     tokenContainer.Add(new Token(SqlTokenType.SingleLineComment, currentValue.ToString()));
                     break;
 
+                case SqlTokenizationType.SingleLineCommentCStyle:
+                    tokenContainer.Add(new Token(SqlTokenType.SingleLineCommentCStyle, currentValue.ToString()));
+                    break;
+
                 case SqlTokenizationType.SingleHyphen:
                     tokenContainer.Add(new Token(SqlTokenType.OtherOperator, "-"));
                     break;
@@ -855,6 +864,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             WhiteSpace,
             OtherNode,
             SingleLineComment,
+            SingleLineCommentCStyle,
             BlockComment,
             String,
             NString,

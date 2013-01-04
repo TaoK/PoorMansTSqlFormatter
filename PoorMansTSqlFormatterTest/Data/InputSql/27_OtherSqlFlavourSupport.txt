@@ -8,3 +8,11 @@ SELECT 'One String'||'another string'
 
 SELECT 101 << 1, 101 >> 1
 WHERE 1 == 1
+
+--NexusDB C-Style single-line comment
+
+// Another (not valid T-SQL) comment
+
+--NexusDB Parameters / DB2 or PostgreSQL Host Variables
+
+SELECT :MagicValue

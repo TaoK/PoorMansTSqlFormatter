@@ -436,6 +436,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlXmlConstants.ENAME_COMMENT_SINGLELINE:
+                case SqlXmlConstants.ENAME_COMMENT_SINGLELINE_CSTYLE:
                     if (state.SpecialRegionActive == SpecialRegionType.NoFormat && contentElement.InnerXml.ToUpperInvariant().Contains("[/NOFORMAT]"))
                     {
                         XmlNode skippedXml = ExtractXmlBetween(state.RegionStartNode, contentElement);
@@ -457,7 +458,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     }
 
                     WhiteSpace_SeparateComment(contentElement, state);
-                    state.AddOutputContent("--" + contentElement.InnerText.Replace("\r", "").Replace("\n", ""), Interfaces.SqlHtmlConstants.CLASS_COMMENT);
+                    state.AddOutputContent((contentElement.Name == SqlXmlConstants.ENAME_COMMENT_SINGLELINE ? "--" : "//") + contentElement.InnerText.Replace("\r", "").Replace("\n", ""), Interfaces.SqlHtmlConstants.CLASS_COMMENT);
                     state.BreakExpected = true;
                     state.SourceBreakPending = true;
 
@@ -561,7 +562,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     state.SetRecentKeyword(contentElement.Attributes[SqlXmlConstants.ANAME_SIMPLETEXT].Value);
                     state.AddOutputContent(FormatKeyword(contentElement.Attributes[SqlXmlConstants.ANAME_SIMPLETEXT].Value), Interfaces.SqlHtmlConstants.CLASS_KEYWORD);
                     state.WordSeparatorExpected = true;
-                    ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_COMMENT_MULTILINE + " | " + SqlXmlConstants.ENAME_COMMENT_SINGLELINE), state.IncrementIndent());
+                    ProcessSqlNodeList(contentElement.SelectNodes(SqlXmlConstants.ENAME_COMMENT_MULTILINE + " | " + SqlXmlConstants.ENAME_COMMENT_SINGLELINE + " | " + SqlXmlConstants.ENAME_COMMENT_SINGLELINE_CSTYLE), state.IncrementIndent());
                     state.DecrementIndent();
                     state.WordSeparatorExpected = true;
                     break;
@@ -763,10 +764,11 @@ namespace PoorMansTSqlFormatterLib.Formatters
             XmlElement target = null;
             while (contentElement != null)
             {
-                target = (XmlElement)contentElement.SelectSingleNode(string.Format("*[local-name() != '{0}' and local-name() != '{1}' and local-name() != '{2}']",
+                target = (XmlElement)contentElement.SelectSingleNode(string.Format("*[local-name() != '{0}' and local-name() != '{1}' and local-name() != '{2}' and local-name() != '{3}']",
                     SqlXmlConstants.ENAME_WHITESPACE,
                     SqlXmlConstants.ENAME_COMMENT_MULTILINE,
-                    SqlXmlConstants.ENAME_COMMENT_SINGLELINE));
+                    SqlXmlConstants.ENAME_COMMENT_SINGLELINE,
+                    SqlXmlConstants.ENAME_COMMENT_SINGLELINE_CSTYLE));
 
                 if (target != null
                     && (target.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
