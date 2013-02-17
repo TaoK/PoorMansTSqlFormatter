@@ -90,5 +90,7 @@
   -->
   <PropertyGroup>
     <PreBuildEvent>Call $(ProjectDir)\PreBuild_Replace.bat $(SolutionDir) $(ProjectDir)</PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

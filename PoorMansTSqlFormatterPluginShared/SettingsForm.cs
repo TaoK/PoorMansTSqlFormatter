@@ -88,36 +88,42 @@ namespace PoorMansTSqlFormatterPluginShared
 
         private void LoadControlValuesFromSettings()
         {
-            txt_IndentString.Text = _settings.IndentString;
+            PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions options = _settings.Options;
+
+            txt_IndentString.Text = options.IndentString.Replace("\t","\\t").Replace(" ","\\s");
+            txt_MaxLineWidth.Text = options.MaxLineWidth.ToString();
+            txt_SpacesPerTab.Text = options.SpacesPerTab.ToString();
+            chk_ExpandBetweenConditions.Checked = options.ExpandBetweenConditions;
+            chk_ExpandBooleanExpressions.Checked = options.ExpandBooleanExpressions;
+            chk_ExpandCaseStatements.Checked = options.ExpandCaseStatements;
+            chk_ExpandCommaLists.Checked = options.ExpandCommaLists;
+            chk_TrailingCommas.Checked = options.TrailingCommas;
+            chk_BreakJoinOnSections.Checked = options.BreakJoinOnSections;
+            chk_UppercaseKeywords.Checked = options.UppercaseKeywords;
+            chk_SpaceAfterExpandedComma.Checked = options.SpaceAfterExpandedComma;
+            chk_StandardizeKeywords.Checked = options.KeywordStandardization;
+
             if (_supportsHotkey) txt_Hotkey.Text = (string)_settings["Hotkey"];
-            txt_MaxLineWidth.Text = _settings.MaxLineWidth.ToString();
-            txt_SpacesPerTab.Text = _settings.SpacesPerTab.ToString();
-            chk_ExpandBetweenConditions.Checked = _settings.ExpandBetweenConditions;
-            chk_ExpandBooleanExpressions.Checked = _settings.ExpandBooleanExpressions;
-            chk_ExpandCaseStatements.Checked = _settings.ExpandCaseStatements;
-            chk_ExpandCommaLists.Checked = _settings.ExpandCommaLists;
-            chk_TrailingCommas.Checked = _settings.TrailingCommas;
-            chk_BreakJoinOnSections.Checked = _settings.BreakJoinOnSections;
-            chk_UppercaseKeywords.Checked = _settings.UppercaseKeywords;
-            chk_SpaceAfterExpandedComma.Checked = _settings.SpaceAfterExpandedComma;
-            chk_StandardizeKeywords.Checked = _settings.KeywordStandardization;
         }
 
         private void SetSettingsFromControlValues()
         {
-            _settings.IndentString = txt_IndentString.Text.Replace("\t", "\\t").Replace(" ", "\\s");
+            _settings.Options = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions() {
+                IndentString = txt_IndentString.Text,
+                MaxLineWidth = int.Parse(txt_MaxLineWidth.Text),
+                SpacesPerTab = int.Parse(txt_SpacesPerTab.Text),
+                SpaceAfterExpandedComma = chk_SpaceAfterExpandedComma.Checked,
+                ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked,
+                ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked,
+                ExpandCaseStatements = chk_ExpandCaseStatements.Checked,
+                ExpandCommaLists = chk_ExpandCommaLists.Checked,
+                TrailingCommas = chk_TrailingCommas.Checked,
+                BreakJoinOnSections = chk_BreakJoinOnSections.Checked,
+                UppercaseKeywords = chk_UppercaseKeywords.Checked,
+                KeywordStandardization = chk_StandardizeKeywords.Checked
+            };
+            
             if (_supportsHotkey) _settings["Hotkey"] = txt_Hotkey.Text;
-            _settings.MaxLineWidth = int.Parse(txt_MaxLineWidth.Text);
-            _settings.SpacesPerTab = int.Parse(txt_SpacesPerTab.Text);
-            _settings.SpaceAfterExpandedComma = chk_SpaceAfterExpandedComma.Checked;
-            _settings.ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked;
-            _settings.ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked;
-            _settings.ExpandCaseStatements = chk_ExpandCaseStatements.Checked;
-            _settings.ExpandCommaLists = chk_ExpandCommaLists.Checked;
-            _settings.TrailingCommas = chk_TrailingCommas.Checked;
-            _settings.BreakJoinOnSections = chk_BreakJoinOnSections.Checked;
-            _settings.UppercaseKeywords = chk_UppercaseKeywords.Checked;
-            _settings.KeywordStandardization = chk_StandardizeKeywords.Checked;
         }
 
         private void llbl_HotkeyHint_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
