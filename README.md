@@ -55,7 +55,6 @@ for reformatting T-SQL code.
 
 * Compiled mono library + bulk formatting tool download (eg for use on SVN server)
 * Documentation of Xml structure and class usage
-* Pakaging, NuGet and/or OpenWrap
     * Keeping track of versioning and documentation more carefully: http://semver.org/
 
 ### License & Credits
@@ -82,6 +81,8 @@ This project uses several external libraries:
 Special thanks to contributors that have given their time to make this library better:
 
 * Timothy Klenke
+
+Also thanks to Adam Pawsey, who maintains the [NuGet package](http://nuget.org/packages/PoorMansTSQLFormatter/).
 
 Many of the features in this project result from feedback by multiple people, including
 but not limited to:
