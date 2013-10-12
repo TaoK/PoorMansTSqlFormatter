@@ -496,7 +496,7 @@
     <value>233, 15</value>
   </data>
   <data name="lbl_IndentHint.Size" type="System.Drawing.Size, System.Drawing">
-    <value>74, 13</value>
+    <value>155, 13</value>
   </data>
   <data name="lbl_IndentHint.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -564,34 +564,34 @@
   <data name="&gt;&gt;lbl_Hotkey.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
-  <data name="llbl_HotkeyHint.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lbl_HotkeyHint.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="llbl_HotkeyHint.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
+  <data name="lbl_HotkeyHint.LinkArea" type="System.Windows.Forms.LinkArea, System.Windows.Forms">
     <value>5, 16</value>
   </data>
-  <data name="llbl_HotkeyHint.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lbl_HotkeyHint.Location" type="System.Drawing.Point, System.Drawing">
     <value>233, 41</value>
   </data>
-  <data name="llbl_HotkeyHint.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lbl_HotkeyHint.Size" type="System.Drawing.Size, System.Drawing">
     <value>125, 17</value>
   </data>
-  <data name="llbl_HotkeyHint.TabIndex" type="System.Int32, mscorlib">
+  <data name="lbl_HotkeyHint.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
   </data>
-  <data name="llbl_HotkeyHint.Text" xml:space="preserve">
+  <data name="lbl_HotkeyHint.Text" xml:space="preserve">
     <value>(see VS documentation)</value>
   </data>
-  <data name="&gt;&gt;llbl_HotkeyHint.Name" xml:space="preserve">
-    <value>llbl_HotkeyHint</value>
+  <data name="&gt;&gt;lbl_HotkeyHint.Name" xml:space="preserve">
+    <value>lbl_HotkeyHint</value>
   </data>
-  <data name="&gt;&gt;llbl_HotkeyHint.Type" xml:space="preserve">
+  <data name="&gt;&gt;lbl_HotkeyHint.Type" xml:space="preserve">
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;llbl_HotkeyHint.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lbl_HotkeyHint.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;llbl_HotkeyHint.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lbl_HotkeyHint.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
   <data name="btn_About.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">

@@ -185,10 +185,10 @@ namespace PoorMansTSqlFormatterPluginShared
             resources.ApplyResources(this.lbl_Hotkey, "lbl_Hotkey");
             this.lbl_Hotkey.Name = "lbl_Hotkey";
             // 
-            // llbl_HotkeyHint
+            // lbl_HotkeyHint
             // 
-            resources.ApplyResources(this.lbl_HotkeyHint, "llbl_HotkeyHint");
-            this.lbl_HotkeyHint.Name = "llbl_HotkeyHint";
+            resources.ApplyResources(this.lbl_HotkeyHint, "lbl_HotkeyHint");
+            this.lbl_HotkeyHint.Name = "lbl_HotkeyHint";
             this.lbl_HotkeyHint.TabStop = true;
             this.lbl_HotkeyHint.UseCompatibleTextRendering = true;
             this.lbl_HotkeyHint.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llbl_HotkeyHint_LinkClicked);

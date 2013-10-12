@@ -31,21 +31,7 @@ namespace PoorMansTSqlFormatterPluginShared
     {
         public static PoorMansTSqlFormatterLib.SqlFormattingManager GetFormattingManager(ISqlSettings settings)
         {
-            var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions
-                {
-                    IndentString = settings.IndentString,
-                    SpacesPerTab = settings.SpacesPerTab,
-                    MaxLineWidth = settings.MaxLineWidth,
-                    ExpandCommaLists = settings.ExpandCommaLists,
-                    TrailingCommas = settings.TrailingCommas,
-                    SpaceAfterExpandedComma = settings.SpaceAfterExpandedComma,
-                    ExpandBooleanExpressions = settings.ExpandBooleanExpressions,
-                    ExpandCaseStatements = settings.ExpandCaseStatements,
-                    ExpandBetweenConditions = settings.ExpandBetweenConditions,
-                    BreakJoinOnSections = settings.BreakJoinOnSections,
-                    UppercaseKeywords = settings.UppercaseKeywords,
-                    KeywordStandardization = settings.KeywordStandardization
-                });
+            var formatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(settings.Options);
             
             ResourceManager _generalResourceManager = new ResourceManager("PoorMansTSqlFormatterPluginShared.GeneralLanguageContent", Assembly.GetExecutingAssembly());
             formatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix") + System.Environment.NewLine;
