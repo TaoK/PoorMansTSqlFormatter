@@ -61,7 +61,8 @@ namespace PoorMansTSqlFormatterWebDemo
                 false,
                 false,
                 false,
-                false
+                false,
+				true
                 );
         }
 
@@ -88,7 +89,8 @@ namespace PoorMansTSqlFormatterWebDemo
             bool randomizeLineLengths,
             bool randomizeKeywordCase,
             bool preserveComments,
-            bool enableKeywordSubstitution
+            bool enableKeywordSubstitution,
+			bool expandInLists
             )
         {
             PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter formatter = null;
@@ -108,7 +110,8 @@ namespace PoorMansTSqlFormatterWebDemo
                         BreakJoinOnSections = breakJoinOnSections,
                         UppercaseKeywords = uppercaseKeywords,
                         HTMLColoring = coloring,
-                        KeywordStandardization = keywordStandardization
+                        KeywordStandardization = keywordStandardization,
+						ExpandInLists = expandInLists
                     });
 
             }

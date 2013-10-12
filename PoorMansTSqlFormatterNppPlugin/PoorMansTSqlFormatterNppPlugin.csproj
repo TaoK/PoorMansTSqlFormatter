@@ -52,6 +52,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="SettingsProviderCustomPathUnversioned.cs" />
     <Compile Include="UnmanagedExports.cs" />
   </ItemGroup>

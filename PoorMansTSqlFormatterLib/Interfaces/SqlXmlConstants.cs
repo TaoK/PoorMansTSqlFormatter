@@ -72,7 +72,8 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_SELECTIONTARGET_PARENS = "SelectionTargetParens";
         public const string ENAME_EXPRESSION_PARENS = "ExpressionParens";
         public const string ENAME_FUNCTION_PARENS = "FunctionParens";
-        public const string ENAME_FUNCTION_KEYWORD = "FunctionKeyword";
+		public const string ENAME_IN_PARENS = "InParens";
+		public const string ENAME_FUNCTION_KEYWORD = "FunctionKeyword";
         public const string ENAME_DATATYPE_KEYWORD = "DataTypeKeyword";
         public const string ENAME_COMPOUNDKEYWORD = "CompoundKeyword";
         public const string ENAME_OTHERKEYWORD = "OtherKeyword";

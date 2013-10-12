@@ -72,8 +72,9 @@ namespace PoorMansTSqlFormatterLib.Parsers
                 switch (token.Type)
                 {
                     case SqlTokenType.OpenParens:
-                        XmlElement firstNonCommentParensSibling = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
-                        bool isInsertOrValuesClause = (
+						XmlElement firstNonCommentParensSibling = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
+						XmlElement lastNonCommentParensSibling = sqlTree.GetLastNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
+						bool isInsertOrValuesClause = (
                             firstNonCommentParensSibling != null
                             && (
                                 (firstNonCommentParensSibling.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
@@ -123,9 +124,15 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             || isInsertOrValuesClause
                             )
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_DDL_PARENS, "");
-                        else if (IsLatestTokenAMiscName(sqlTree.CurrentContainer))
-                            sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_FUNCTION_PARENS, "");
-                        else
+						else if ((lastNonCommentParensSibling != null
+									&& lastNonCommentParensSibling.Name.Equals(SqlXmlConstants.ENAME_ALPHAOPERATOR)
+									&& lastNonCommentParensSibling.InnerText.ToUpperInvariant().Equals("IN")
+									)
+							)
+							sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_IN_PARENS, "");
+						else if (IsLatestTokenAMiscName(sqlTree.CurrentContainer))
+							sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_FUNCTION_PARENS, "");
+						else
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlXmlConstants.ENAME_EXPRESSION_PARENS, "");
                         break;
 
@@ -137,8 +144,9 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         //check whether we expected to end the parens...
                         if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDLDETAIL_PARENS)
                             || sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_DDL_PARENS)
-                            || sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_FUNCTION_PARENS)
-                            || sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS)
+							|| sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_FUNCTION_PARENS)
+							|| sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_IN_PARENS)
+							|| sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS)
                             || sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS)
                             )
                         {
@@ -156,7 +164,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         else if (sqlTree.CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_CLAUSE)
                                 && (
                                     sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS)
-                                    || sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS)
+									|| sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_IN_PARENS)
+									|| sqlTree.CurrentContainer.ParentNode.Name.Equals(SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS)
                                 )
                             )
                         {

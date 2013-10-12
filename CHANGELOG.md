@@ -8,6 +8,7 @@
 * Github Issue #86: [Enhancement] Added support for Visual Studio 2012 [thanks Jarred Cleem for the request]
 * Github Issue #81: [Enhancement] Added support for C-Style comments ("//") and colon-prefixed parameter/host-variable names for other SQL dialects [thanks Paul Toms for the request]
 * Github Issue #90: [Enhancement] Merged more code cleanup / options simplification changes by Timothy Klenke
+* Github Issue #47: [Enhancement] Separated option for expansion of IN lists [thanks to a number of people for the request: smartkiwi, defrek, Marvin Eads and Bill Ruehle]
 
 ### Version 1.4.4 (SSMS / Visual Studio Add-In only)
 

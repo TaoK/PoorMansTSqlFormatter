@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2013 Tao Klerks
 
 Additional Contributors:
  * Timothy Klenke, 2012
@@ -43,8 +43,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
             UppercaseKeywords = true;
             BreakJoinOnSections = false;
             HTMLColoring = false;
-            KeywordStandardization = false;
-        }
+			KeywordStandardization = false;
+			ExpandInLists = true;
+		}
 
         //Doesn't particularly need to be lazy-loaded, and doesn't need to be threadsafe.
         private static readonly TSqlStandardFormatterOptions _defaultOptions = new TSqlStandardFormatterOptions();
@@ -63,27 +64,29 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 string key = splitPair[0];
                 string value = splitPair[1];
 
-                if (key == "IndentString") IndentString = value;
-                else if (key == "SpacesPerTab") SpacesPerTab = Convert.ToInt32(value);
-                else if (key == "MaxLineWidth") MaxLineWidth = Convert.ToInt32(value);
-                else if (key == "ExpandCommaLists") ExpandCommaLists = Convert.ToBoolean(value);
-                else if (key == "TrailingCommas") TrailingCommas = Convert.ToBoolean(value);
-                else if (key == "SpaceAfterExpandedComma") SpaceAfterExpandedComma = Convert.ToBoolean(value);
-                else if (key == "ExpandBooleanExpressions") ExpandBooleanExpressions = Convert.ToBoolean(value);
-                else if (key == "ExpandBetweenConditions") ExpandBetweenConditions = Convert.ToBoolean(value);
-                else if (key == "ExpandCaseStatements") ExpandCaseStatements = Convert.ToBoolean(value);
-                else if (key == "UppercaseKeywords") UppercaseKeywords = Convert.ToBoolean(value);
-                else if (key == "BreakJoinOnSections") BreakJoinOnSections = Convert.ToBoolean(value);
-                else if (key == "HTMLColoring") HTMLColoring = Convert.ToBoolean(value);
-                else if (key == "KeywordStandardization") KeywordStandardization = Convert.ToBoolean(value);
-                else throw new ArgumentException("Unknown option: " + key);
+				if (key == "IndentString") IndentString = value;
+				else if (key == "SpacesPerTab") SpacesPerTab = Convert.ToInt32(value);
+				else if (key == "MaxLineWidth") MaxLineWidth = Convert.ToInt32(value);
+				else if (key == "ExpandCommaLists") ExpandCommaLists = Convert.ToBoolean(value);
+				else if (key == "TrailingCommas") TrailingCommas = Convert.ToBoolean(value);
+				else if (key == "SpaceAfterExpandedComma") SpaceAfterExpandedComma = Convert.ToBoolean(value);
+				else if (key == "ExpandBooleanExpressions") ExpandBooleanExpressions = Convert.ToBoolean(value);
+				else if (key == "ExpandBetweenConditions") ExpandBetweenConditions = Convert.ToBoolean(value);
+				else if (key == "ExpandCaseStatements") ExpandCaseStatements = Convert.ToBoolean(value);
+				else if (key == "UppercaseKeywords") UppercaseKeywords = Convert.ToBoolean(value);
+				else if (key == "BreakJoinOnSections") BreakJoinOnSections = Convert.ToBoolean(value);
+				else if (key == "HTMLColoring") HTMLColoring = Convert.ToBoolean(value);
+				else if (key == "KeywordStandardization") KeywordStandardization = Convert.ToBoolean(value);
+				else if (key == "ExpandInExpressions") ExpandInLists = Convert.ToBoolean(value);
+				else throw new ArgumentException("Unknown option: " + key);
             }
 
         }
 
-        //PLEASE NOTE: This is not reusable/general-purpose key-value serialization: it does not handle commas in data.
-        // For now, this is used in the Test library only.
-        public string ToSerializedString()
+		//PLEASE NOTE: This is not reusable/general-purpose key-value serialization: it does not handle commas in data.
+		// This will need to be enhanced if we ever need to store formatter options that might contain equals signs or 
+		// commas.
+		public string ToSerializedString()
         { 
             var overrides = new Dictionary<string, string>();
 
@@ -99,7 +102,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (UppercaseKeywords != _defaultOptions.UppercaseKeywords) overrides.Add("UppercaseKeywords", UppercaseKeywords.ToString());
             if (BreakJoinOnSections != _defaultOptions.BreakJoinOnSections) overrides.Add("BreakJoinOnSections", BreakJoinOnSections.ToString());
             if (HTMLColoring != _defaultOptions.HTMLColoring) overrides.Add("HTMLColoring", HTMLColoring.ToString());
-            if (KeywordStandardization != _defaultOptions.KeywordStandardization) overrides.Add("KeywordStandardization", KeywordStandardization.ToString());
+			if (KeywordStandardization != _defaultOptions.KeywordStandardization) overrides.Add("KeywordStandardization", KeywordStandardization.ToString());
+			if (ExpandInLists != _defaultOptions.ExpandInLists) overrides.Add("ExpandInExpressions", ExpandInLists.ToString());
     
             if (overrides.Count == 0) return string.Empty;
             return string.Join(",", overrides.Select((kvp) => kvp.Key + "=" + kvp.Value).ToArray());
@@ -130,7 +134,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
         public bool UppercaseKeywords { get; set; }
         public bool BreakJoinOnSections { get; set; }
         public bool HTMLColoring { get; set; }
-        public bool KeywordStandardization { get; set; }
+		public bool KeywordStandardization { get; set; }
+		public bool ExpandInLists { get; set; }
 
     }
 }

@@ -382,8 +382,10 @@ namespace PoorMansTSqlFormatterLib
                 MigrateApplicableCommentsFromContainer(previousContainerElement);
             }
             else if (CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS)
-                || CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS)
-                || CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT))
+				|| CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_IN_PARENS)
+				|| CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS)
+				|| CurrentContainer.Name.Equals(SqlXmlConstants.ENAME_SQL_STATEMENT)
+				)
             {
                 //create new clause and set context to it.
                 CurrentContainer = SaveNewElement(SqlXmlConstants.ENAME_SQL_CLAUSE, "");
@@ -464,18 +466,31 @@ namespace PoorMansTSqlFormatterLib
                 );
         }
 
-        internal XmlElement GetFirstNonWhitespaceNonCommentChildElement(XmlNode targetElement)
-        {
-            XmlNode currentNode = targetElement.FirstChild;
-            while (currentNode != null)
-            {
-                if (currentNode.NodeType != XmlNodeType.Element || IsCommentOrWhiteSpace(currentNode.Name))
-                    currentNode = currentNode.NextSibling;
-                else
-                    return (XmlElement)currentNode;
-            }
-            return null;
-        }
+		internal XmlElement GetFirstNonWhitespaceNonCommentChildElement(XmlNode targetElement)
+		{
+			XmlNode currentNode = targetElement.FirstChild;
+			while (currentNode != null)
+			{
+				if (currentNode.NodeType != XmlNodeType.Element || IsCommentOrWhiteSpace(currentNode.Name))
+					currentNode = currentNode.NextSibling;
+				else
+					return (XmlElement)currentNode;
+			}
+			return null;
+		}
+
+		internal XmlElement GetLastNonWhitespaceNonCommentChildElement(XmlNode targetElement)
+		{
+			XmlNode currentNode = targetElement.LastChild;
+			while (currentNode != null)
+			{
+				if (currentNode.NodeType != XmlNodeType.Element || IsCommentOrWhiteSpace(currentNode.Name))
+					currentNode = currentNode.PreviousSibling;
+				else
+					return (XmlElement)currentNode;
+			}
+			return null;
+		}
 
         internal void MoveToAncestorContainer(int levelsUp)
         {

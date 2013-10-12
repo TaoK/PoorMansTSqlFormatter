@@ -96,8 +96,9 @@ namespace PoorMansTSqlFormatterDemo
             chk_SpaceAfterComma.Checked = Properties.Settings.Default.SpaceAfterComma;
             chk_ExpandBooleanExpressions.Checked = Properties.Settings.Default.ExpandBooleanExpressions;
             chk_ExpandCaseStatements.Checked = Properties.Settings.Default.ExpandCaseStatements;
-            chk_ExpandBetweenConditions.Checked = Properties.Settings.Default.ExpandBetweenConditions;
-            chk_BreakJoinOnSections.Checked = Properties.Settings.Default.BreakJoinOnSections;
+			chk_ExpandBetweenConditions.Checked = Properties.Settings.Default.ExpandBetweenConditions;
+			chk_ExpandInLists.Checked = Properties.Settings.Default.ExpandInLists;
+			chk_BreakJoinOnSections.Checked = Properties.Settings.Default.BreakJoinOnSections;
             chk_UppercaseKeywords.Checked = Properties.Settings.Default.UppercaseKeywords;
             chk_Coloring.Checked = Properties.Settings.Default.StandardColoring;
             chk_EnableKeywordStandardization.Checked = Properties.Settings.Default.EnableKeywordStandardization;
@@ -139,8 +140,9 @@ namespace PoorMansTSqlFormatterDemo
             Properties.Settings.Default.SpaceAfterComma = chk_SpaceAfterComma.Checked;
             Properties.Settings.Default.ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked;
             Properties.Settings.Default.ExpandCaseStatements = chk_ExpandCaseStatements.Checked;
-            Properties.Settings.Default.ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked;
-            Properties.Settings.Default.BreakJoinOnSections = chk_BreakJoinOnSections.Checked;
+			Properties.Settings.Default.ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked;
+			Properties.Settings.Default.ExpandInLists = chk_ExpandInLists.Checked;
+			Properties.Settings.Default.BreakJoinOnSections = chk_BreakJoinOnSections.Checked;
             Properties.Settings.Default.UppercaseKeywords = chk_UppercaseKeywords.Checked;
             Properties.Settings.Default.StandardColoring = chk_Coloring.Checked;
             Properties.Settings.Default.EnableKeywordStandardization = chk_EnableKeywordStandardization.Checked;
@@ -173,8 +175,9 @@ namespace PoorMansTSqlFormatterDemo
                         SpaceAfterExpandedComma = chk_SpaceAfterComma.Checked,
                         ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked,
                         ExpandCaseStatements = chk_ExpandCaseStatements.Checked,
-                        ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked,
-                        BreakJoinOnSections = chk_BreakJoinOnSections.Checked,
+						ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked,
+						ExpandInLists = chk_ExpandInLists.Checked,
+						BreakJoinOnSections = chk_BreakJoinOnSections.Checked,
                         UppercaseKeywords = chk_UppercaseKeywords.Checked,
                         HTMLColoring = chk_Coloring.Checked,
                         KeywordStandardization = chk_EnableKeywordStandardization.Checked

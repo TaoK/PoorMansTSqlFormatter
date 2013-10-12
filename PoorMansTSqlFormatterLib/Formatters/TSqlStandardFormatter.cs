@@ -295,7 +295,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case SqlXmlConstants.ENAME_DDLDETAIL_PARENS:
                 case SqlXmlConstants.ENAME_FUNCTION_PARENS:
-                    //simply process sub-nodes - don't add space or expect any linebreaks (but respect linebreaks if necessary)
+					//simply process sub-nodes - don't add space or expect any linebreaks (but respect linebreaks if necessary)
                     state.WordSeparatorExpected = false;
                     WhiteSpace_BreakAsExpected(state);
                     state.AddOutputContent(FormatOperator("("), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
@@ -309,8 +309,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_DDL_PARENS:
                 case SqlXmlConstants.ENAME_EXPRESSION_PARENS:
                 case SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS:
-                    WhiteSpace_SeparateWords(state);
-                    if (contentElement.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS))
+				case SqlXmlConstants.ENAME_IN_PARENS:
+					WhiteSpace_SeparateWords(state);
+					if (contentElement.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS) || contentElement.Name.Equals(SqlXmlConstants.ENAME_IN_PARENS))
                         state.IncrementIndent();
                     state.AddOutputContent(FormatOperator("("), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
                     TSqlStandardFormattingState innerState = new TSqlStandardFormattingState(state);
@@ -328,7 +329,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         state.Assimilate(innerState);
                     }
                     state.AddOutputContent(FormatOperator(")"), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
-                    if (contentElement.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS))
+                    if (contentElement.Name.Equals(SqlXmlConstants.ENAME_EXPRESSION_PARENS) || contentElement.Name.Equals(SqlXmlConstants.ENAME_IN_PARENS))
                         state.DecrementIndent();
                     state.WordSeparatorExpected = true;
                     break;
@@ -507,22 +508,32 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         WhiteSpace_BreakAsExpected(state);
                         state.AddOutputContent(FormatOperator(","), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
 
-                        if (Options.ExpandCommaLists
-                            && !(contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_DDLDETAIL_PARENS)
-                                || contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_FUNCTION_PARENS)
-                                )
-                            )
+                        if ((Options.ExpandCommaLists
+								&& !(contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_DDLDETAIL_PARENS)
+									|| contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_FUNCTION_PARENS)
+									|| contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_IN_PARENS)
+									)
+								)
+							|| (Options.ExpandInLists
+								&& contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_IN_PARENS)
+								)
+							)
                             state.BreakExpected = true;
                         else
                             state.WordSeparatorExpected = true;
                     }
                     else
                     {
-                        if (Options.ExpandCommaLists
-                            && !(contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_DDLDETAIL_PARENS)
-                                || contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_FUNCTION_PARENS)
-                                )
-                            )
+                        if ((Options.ExpandCommaLists
+								&& !(contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_DDLDETAIL_PARENS)
+									|| contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_FUNCTION_PARENS)
+									|| contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_IN_PARENS)
+									)
+								)
+							|| (Options.ExpandInLists
+								&& contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_IN_PARENS)
+								)
+							)
                         {
                             state.WhiteSpace_BreakToNextLine();
                             state.AddOutputContent(FormatOperator(","), Interfaces.SqlHtmlConstants.CLASS_OPERATOR);

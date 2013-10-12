@@ -99,8 +99,9 @@ namespace PoorMansTSqlFormatterPluginShared
             chk_ExpandBetweenConditions.Checked = options.ExpandBetweenConditions;
             chk_ExpandBooleanExpressions.Checked = options.ExpandBooleanExpressions;
             chk_ExpandCaseStatements.Checked = options.ExpandCaseStatements;
-            chk_ExpandCommaLists.Checked = options.ExpandCommaLists;
-            chk_TrailingCommas.Checked = options.TrailingCommas;
+			chk_ExpandCommaLists.Checked = options.ExpandCommaLists;
+			chk_ExpandInLists.Checked = options.ExpandInLists;
+			chk_TrailingCommas.Checked = options.TrailingCommas;
             chk_BreakJoinOnSections.Checked = options.BreakJoinOnSections;
             chk_UppercaseKeywords.Checked = options.UppercaseKeywords;
             chk_SpaceAfterExpandedComma.Checked = options.SpaceAfterExpandedComma;
@@ -119,8 +120,9 @@ namespace PoorMansTSqlFormatterPluginShared
                 ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked,
                 ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked,
                 ExpandCaseStatements = chk_ExpandCaseStatements.Checked,
-                ExpandCommaLists = chk_ExpandCommaLists.Checked,
-                TrailingCommas = chk_TrailingCommas.Checked,
+				ExpandCommaLists = chk_ExpandCommaLists.Checked,
+				ExpandInLists = chk_ExpandInLists.Checked,
+				TrailingCommas = chk_TrailingCommas.Checked,
                 BreakJoinOnSections = chk_BreakJoinOnSections.Checked,
                 UppercaseKeywords = chk_UppercaseKeywords.Checked,
                 KeywordStandardization = chk_StandardizeKeywords.Checked

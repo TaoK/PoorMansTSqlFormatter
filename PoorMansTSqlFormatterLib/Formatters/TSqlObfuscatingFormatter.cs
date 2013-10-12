@@ -164,8 +164,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     break;
 
                 case SqlXmlConstants.ENAME_DDLDETAIL_PARENS:
-                case SqlXmlConstants.ENAME_FUNCTION_PARENS:
-                case SqlXmlConstants.ENAME_DDL_PARENS:
+				case SqlXmlConstants.ENAME_FUNCTION_PARENS:
+				case SqlXmlConstants.ENAME_IN_PARENS:
+				case SqlXmlConstants.ENAME_DDL_PARENS:
                 case SqlXmlConstants.ENAME_EXPRESSION_PARENS:
                 case SqlXmlConstants.ENAME_SELECTIONTARGET_PARENS:
                     state.SpaceExpected = false;
