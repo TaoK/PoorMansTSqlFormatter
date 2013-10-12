@@ -7,6 +7,7 @@
 * Github Issue #87: [Enhancement] Added support for SQLite bit-shift and c-style equality operators [thanks Tom Holden for the request]
 * Github Issue #86: [Enhancement] Added support for Visual Studio 2012 [thanks Jarred Cleem for the request]
 * Github Issue #81: [Enhancement] Added support for C-Style comments ("//") and colon-prefixed parameter/host-variable names for other SQL dialects [thanks Paul Toms for the request]
+* Github Issue #90: [Enhancement] Merged more code cleanup / options simplification changes by Timothy Klenke
 
 ### Version 1.4.4 (SSMS / Visual Studio Add-In only)
 
