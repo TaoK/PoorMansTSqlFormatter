@@ -55,7 +55,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 return;
                        
             //PLEASE NOTE: This is not reusable/general-purpose key-value serialization: it does not handle commas in data.
-            // For now, this is used in the Test library only.
+            // This will need to be enhanced if we ever need to store formatter options that might contain equals signs or 
+			// commas.
             foreach (string kvp in serializedString.Split(','))
             {
                 string[] splitPair = kvp.Split('=');
