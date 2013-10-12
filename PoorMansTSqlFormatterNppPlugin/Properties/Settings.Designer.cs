@@ -22,16 +22,70 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
                 return defaultInstance;
             }
         }
-        
+
+        public PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions Options
+        {
+            get {
+                return new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions(OptionsSerialized);
+            }
+            set {
+                OptionsSerialized = value.ToSerializedString();
+            }
+        }
+
+        private const string LOAD_LEGACY = "~load options from backward compatible settings";
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(LOAD_LEGACY)]
+        public string OptionsSerialized
+        {
+            get
+            {
+                string serializedOptions = (string)this["OptionsSerialized"];
+                if (serializedOptions == LOAD_LEGACY)
+                    serializedOptions = LoadFromLegacySettings();
+                return serializedOptions;
+            }
+            set
+            {
+                this["OptionsSerialized"] = value;
+            }
+        }
+
+        private string LoadFromLegacySettings() {
+
+            // In previous versions the Options were stored in individual setting properties.
+            // So that this and future versions are backward compatible, 
+            // If the settings file doesn't contain an Options element assume that the file has the old individual settings.
+
+            var options = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions()
+            {
+                ExpandCommaLists = this.ExpandCommaLists,
+                TrailingCommas = this.TrailingCommas,
+                ExpandBooleanExpressions = this.ExpandBooleanExpressions,
+                ExpandCaseStatements = this.ExpandCaseStatements,
+                ExpandBetweenConditions = this.ExpandBetweenConditions,
+                UppercaseKeywords = this.UppercaseKeywords,
+                IndentString = this.IndentString,
+                SpaceAfterExpandedComma = this.SpaceAfterExpandedComma,
+                SpacesPerTab = this.SpacesPerTab,
+                MaxLineWidth = this.MaxLineWidth,
+                KeywordStandardization = this.KeywordStandardization,
+                BreakJoinOnSections = this.BreakJoinOnSections
+            };
+
+            return options.ToSerializedString();
+
+        }
+
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ExpandCommaLists {
             get {
                 return ((bool)(this["ExpandCommaLists"]));
-            }
-            set {
-                this["ExpandCommaLists"] = value;
             }
         }
         
@@ -42,9 +96,6 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
             get {
                 return ((bool)(this["TrailingCommas"]));
             }
-            set {
-                this["TrailingCommas"] = value;
-            }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
@@ -53,9 +104,6 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
         public bool ExpandBooleanExpressions {
             get {
                 return ((bool)(this["ExpandBooleanExpressions"]));
-            }
-            set {
-                this["ExpandBooleanExpressions"] = value;
             }
         }
         
@@ -66,9 +114,6 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
             get {
                 return ((bool)(this["ExpandCaseStatements"]));
             }
-            set {
-                this["ExpandCaseStatements"] = value;
-            }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
@@ -77,9 +122,6 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
         public bool ExpandBetweenConditions {
             get {
                 return ((bool)(this["ExpandBetweenConditions"]));
-            }
-            set {
-                this["ExpandBetweenConditions"] = value;
             }
         }
         
@@ -90,9 +132,6 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
             get {
                 return ((bool)(this["UppercaseKeywords"]));
             }
-            set {
-                this["UppercaseKeywords"] = value;
-            }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
@@ -101,9 +140,6 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
         public string IndentString {
             get {
                 return ((string)(this["IndentString"]));
-            }
-            set {
-                this["IndentString"] = value;
             }
         }
         
@@ -126,9 +162,6 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
             get {
                 return ((bool)(this["SpaceAfterExpandedComma"]));
             }
-            set {
-                this["SpaceAfterExpandedComma"] = value;
-            }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
@@ -137,9 +170,6 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
         public int SpacesPerTab {
             get {
                 return ((int)(this["SpacesPerTab"]));
-            }
-            set {
-                this["SpacesPerTab"] = value;
             }
         }
         
@@ -150,9 +180,6 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
             get {
                 return ((int)(this["MaxLineWidth"]));
             }
-            set {
-                this["MaxLineWidth"] = value;
-            }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
@@ -161,9 +188,6 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
         public bool KeywordStandardization {
             get {
                 return ((bool)(this["KeywordStandardization"]));
-            }
-            set {
-                this["KeywordStandardization"] = value;
             }
         }
         
@@ -174,9 +198,7 @@ namespace PoorMansTSqlFormatterNppPlugin.Properties {
             get {
                 return ((bool)(this["BreakJoinOnSections"]));
             }
-            set {
-                this["BreakJoinOnSections"] = value;
-            }
         }
     }
+
 }

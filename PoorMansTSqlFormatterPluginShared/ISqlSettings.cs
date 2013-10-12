@@ -26,18 +26,7 @@ namespace PoorMansTSqlFormatterPluginShared
     {
         SettingsPropertyCollection Properties { get; }
 
-        bool ExpandCommaLists { get; set; }
-        bool TrailingCommas { get; set; }
-        bool ExpandBooleanExpressions { get; set; }
-        bool ExpandCaseStatements { get; set; }
-        bool ExpandBetweenConditions { get; set; }
-        bool UppercaseKeywords { get; set; }
-        string IndentString { get; set; }
-        bool SpaceAfterExpandedComma { get; set; }
-        int SpacesPerTab { get; set; }
-        int MaxLineWidth { get; set; }
-        bool KeywordStandardization { get; set; }
-        bool BreakJoinOnSections { get; set; }
+        PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions Options { get; set; }
 
         object this[string propertyName] { get; set; }
         void Save();
