@@ -48,3 +48,12 @@ SELECT''AS 0XA
 
 --This is a simplistic case that once caused a strange bug:
 SELECT 0.0
+GO
+
+--These are just for verification of all new operators
+DECLARE @Test int = 10
+SET @Test += 10; SET @Test -= 10; SET @Test /= 10 SET @Test *= 10 SET @Test %= 10
+
+IF A>=B AND B<=A SET @Test |= 10 
+IF A==B SET @Test ^=10
+IF A!= B SET @Test&=10

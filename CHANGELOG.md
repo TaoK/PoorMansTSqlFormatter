@@ -10,6 +10,9 @@
 * Github Issue #90: [Enhancement] Merged more code cleanup / options simplification changes by Timothy Klenke
 * Github Issue #47: [Enhancement] Separated option for expansion of IN lists [thanks to a number of people for the request: smartkiwi, defrek, Marvin Eads and Bill Ruehle]
 * Github Issue #95: [Enhancement] Corrected display of chained ELSE IF statements to be more cross-language-standard [thanks to steelwill for the request]
+* Github Issue #100: [Bugfix] Corrected crash when the string for format ends with Greater Than or Less Than signs
+* Github Issue #97: [Bugfix] Parsing error when single uppercase N is followed by a non-word character [thanks to derekfrye for the bug report]
+* Github Issue #91: [Bugfix] Incorrect formatting of "*=" operator [thanks to ralfkret for the bug report]
 
 ### Version 1.4.4 (SSMS / Visual Studio Add-In only)
 

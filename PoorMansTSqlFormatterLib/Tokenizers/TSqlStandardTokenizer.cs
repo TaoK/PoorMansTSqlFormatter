@@ -568,8 +568,9 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                 || currentCharacter == '&'
                 || currentCharacter == '^'
                 || currentCharacter == '<'
-                || currentCharacter == '>'
-                );
+				|| currentCharacter == '>'
+				|| currentCharacter == '|'
+				);
         }
 
         private static bool IsOperatorCharacter(char currentCharacter)
@@ -714,8 +715,8 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
             }
             else if (currentCharacter == '*')
             {
-                tokenContainer.Add(new Token(SqlTokenType.Asterisk, currentCharacter.ToString()));
-            }
+				currentTokenizationType = SqlTokenizationType.SingleAsterisk;
+			}
             else if (currentCharacter == '=')
             {
                 currentTokenizationType = SqlTokenizationType.SingleEquals;
