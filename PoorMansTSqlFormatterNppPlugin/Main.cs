@@ -87,45 +87,63 @@ namespace PoorMansTSqlFormatterNppPlugin
         internal static void formatSqlCommand()
         {
             StringBuilder textBuffer = null;
+			StringBuilder outBuffer = null;
 
             IntPtr currentScintilla = PluginBase.GetCurrentScintilla();
 
             //apparently calling with null pointer returns selection buffer length: http://www.scintilla.org/ScintillaDoc.html#SCI_GETSELTEXT
             int selectionBufferLength = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETSELTEXT, 0, 0);
-            bool isSelection = false;
 
             if (selectionBufferLength > 1)
             {
+				//prep the buffer/StringBuilder with the right length
                 textBuffer = new StringBuilder(selectionBufferLength);
+
+				//populate the buffer
                 Win32.SendMessage(currentScintilla, SciMsg.SCI_GETSELTEXT, 0, textBuffer);
-                isSelection = true;
+
+				//if formatting is successful or user chooses to continue despite error
+				if (FormatAndWarn(textBuffer, out outBuffer))
+				{
+					//replace the selection with the formatted content
+					Win32.SendMessage(currentScintilla, SciMsg.SCI_REPLACESEL, 0, outBuffer);
+
+					//position of the cursor will automatically be the end of the replaced selection
+				}
             }
             else
             {
-                //Do as they say here:
+				//Do as they say here:
                 //http://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXT
-                int docBufferLength = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETTEXT, 0, 0);
-                textBuffer = new StringBuilder(docBufferLength);
+				int docBufferLength = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETTEXT, 0, 0);
+				int docCursorPosition = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETCURRENTPOS, 0, 0);
+				textBuffer = new StringBuilder(docBufferLength);
                 Win32.SendMessage(currentScintilla, SciMsg.SCI_GETTEXT, docBufferLength, textBuffer);
-                isSelection = false;
-            }
 
-            bool errorsEncountered = false;
-            bool abortReplacement = false;
-            StringBuilder outBuffer = new StringBuilder(_formattingManager.Format(textBuffer.ToString(), ref errorsEncountered));
-
-            if (errorsEncountered)
-                if (MessageBox.Show(_generalResourceManager.GetString("ParseErrorWarningMessage"), _generalResourceManager.GetString("ParseErrorWarningMessageTitle"), MessageBoxButtons.OKCancel) != DialogResult.OK)
-                    abortReplacement = true;
-
-            if (!abortReplacement)
-            {
-                if (isSelection)
-                    Win32.SendMessage(currentScintilla, SciMsg.SCI_REPLACESEL, 0, outBuffer);
-                else
-                    Win32.SendMessage(currentScintilla, SciMsg.SCI_SETTEXT, 0, outBuffer);
-            }
+				if (FormatAndWarn(textBuffer, out outBuffer))
+				{
+					//note: the "docBufferLength" always seems to be 1 too high, even for an empty doc it is 1, so am subtracting explicitly to avoid "cursor creep".
+					int newPosition = (int)Math.Round(1.0 * docCursorPosition * outBuffer.Length / (docBufferLength - 1), 0, MidpointRounding.AwayFromZero);
+					//replace the doc content
+					Win32.SendMessage(currentScintilla, SciMsg.SCI_SETTEXT, 0, outBuffer);
+					//set the cursor position to somewhere reasonable
+					Win32.SendMessage(currentScintilla, SciMsg.SCI_SETSEL, newPosition, newPosition);
+				}
+			}
         }
+
+		private static bool FormatAndWarn(StringBuilder textBuffer, out StringBuilder outBuffer)
+		{
+			bool errorsEncountered = false;
+			outBuffer = new StringBuilder(_formattingManager.Format(textBuffer.ToString(), ref errorsEncountered));
+
+			if (errorsEncountered)
+				if (MessageBox.Show(_generalResourceManager.GetString("ParseErrorWarningMessage"), _generalResourceManager.GetString("ParseErrorWarningMessageTitle"), MessageBoxButtons.OKCancel) != DialogResult.OK)
+					return false;
+
+			//true means go ahead
+			return true;
+		}
 
         internal static void formattingOptionsCommand()
         {
