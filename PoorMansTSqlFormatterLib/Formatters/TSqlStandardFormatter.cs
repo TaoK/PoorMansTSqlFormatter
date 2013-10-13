@@ -213,9 +213,26 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlXmlConstants.ENAME_CONTAINER_SINGLESTATEMENT:
                 case SqlXmlConstants.ENAME_CONTAINER_MULTISTATEMENT:
                 case SqlXmlConstants.ENAME_MERGE_ACTION:
-                    state.BreakExpected = true;
+
+					bool singleStatementIsIf = contentElement.SelectSingleNode(SqlXmlConstants.ENAME_SQL_STATEMENT + "/" + SqlXmlConstants.ENAME_SQL_CLAUSE + "/" + SqlXmlConstants.ENAME_IF_STATEMENT) != null;
+
+					if (singleStatementIsIf && contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_ELSE_CLAUSE))
+					{
+						//artificially decrement indent and skip new statement break for "ELSE IF" constructs
+						state.DecrementIndent();
+					}
+					else
+					{
+						state.BreakExpected = true;
+					}
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), state);
-                    state.StatementBreakExpected = false; //the responsibility for breaking will be with the OUTER statement; there should be no consequence propagating out from statements in this container;
+					if (singleStatementIsIf && contentElement.ParentNode.Name.Equals(SqlXmlConstants.ENAME_ELSE_CLAUSE))
+					{
+						//bring indent bak to symmetrical level
+						state.IncrementIndent();
+					}
+
+					state.StatementBreakExpected = false; //the responsibility for breaking will be with the OUTER statement; there should be no consequence propagating out from statements in this container;
                     state.UnIndentInitialBreak = false; //if there was no word spacing after the last content statement's clause starter, doesn't mean the unIndent should propagate to the following content!
                     break;
 

@@ -9,6 +9,7 @@
 * Github Issue #81: [Enhancement] Added support for C-Style comments ("//") and colon-prefixed parameter/host-variable names for other SQL dialects [thanks Paul Toms for the request]
 * Github Issue #90: [Enhancement] Merged more code cleanup / options simplification changes by Timothy Klenke
 * Github Issue #47: [Enhancement] Separated option for expansion of IN lists [thanks to a number of people for the request: smartkiwi, defrek, Marvin Eads and Bill Ruehle]
+* Github Issue #95: [Enhancement] Corrected display of chained ELSE IF statements to be more cross-language-standard [thanks to steelwill for the request]
 
 ### Version 1.4.4 (SSMS / Visual Studio Add-In only)
 

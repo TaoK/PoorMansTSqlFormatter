@@ -1022,24 +1022,23 @@ BEGIN
                   BEGIN
                         SET @CurrentCleanupDate = NULL
                   END
+                  ELSE IF @CurrentBackupType = 'LOG'
+                  BEGIN
+                        SET @CurrentCleanupDate = (
+                                    SELECT MIN([Date])
+                                    FROM (
+                                          SELECT DATEADD(hh, - (@CleanupTime), @CurrentDate) AS [Date]
+                                          
+                                          UNION
+                                          
+                                          SELECT @CurrentLatestBackup AS [Date]
+                                          ) Dates
+                                    )
+                  END
                   ELSE
-                        IF @CurrentBackupType = 'LOG'
-                        BEGIN
-                              SET @CurrentCleanupDate = (
-                                          SELECT MIN([Date])
-                                          FROM (
-                                                SELECT DATEADD(hh, - (@CleanupTime), @CurrentDate) AS [Date]
-                                                
-                                                UNION
-                                                
-                                                SELECT @CurrentLatestBackup AS [Date]
-                                                ) Dates
-                                          )
-                        END
-                        ELSE
-                        BEGIN
-                              SET @CurrentCleanupDate = DATEADD(hh, - (@CleanupTime), @CurrentDate)
-                        END
+                  BEGIN
+                        SET @CurrentCleanupDate = DATEADD(hh, - (@CleanupTime), @CurrentDate)
+                  END
 
                   SET @CurrentDatabaseFS = REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(@CurrentDatabase, '\', ''), '/', ''), ':', ''), '*', ''), '?', ''), '"', ''), '<', ''), '>', ''), '|', ''), ' ', '')
 
