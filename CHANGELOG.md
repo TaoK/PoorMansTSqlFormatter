@@ -13,6 +13,7 @@
 * Github Issue #100: [Bugfix] Corrected crash when the string for format ends with Greater Than or Less Than signs
 * Github Issue #97: [Bugfix] Parsing error when single uppercase N is followed by a non-word character [thanks to derekfrye for the bug report]
 * Github Issue #91: [Bugfix] Incorrect formatting of "*=" operator [thanks to ralfkret for the bug report]
+* Github Issue #51: [Enhancement] Added support for the OUT synonym of OUTPUT (for arguments), and corresponding keyword standardization support
 
 ### Version 1.4.4 (SSMS / Visual Studio Add-In only)
 

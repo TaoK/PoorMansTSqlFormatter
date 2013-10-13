@@ -61,3 +61,21 @@ GO
 --Outputs on simple inserts
 DECLARE @Test1 TABLE (Test2 Int)
 INSERT INTO @Test1 OUTPUT INSERTED.* SELECT Value2 FROM (SELECT 2 AS Value2) AS SampleData
+GO
+
+--But remember that the OUTPUT keyword also has other uses!
+CREATE PROCEDURE ProcOne @OutParameter Int OUTPUT AS SET @OutParameter = 1
+GO
+CREATE PROCEDURE ProcTwo @OutParameter Int OUT, @InParameter Int AS SET @OutParameter = @InParameter
+GO
+CREATE PROCEDURE ProcThree (@OutParameter Int OUT, @InParameter Int) AS SET @OutParameter = @InParameter
+GO
+DECLARE @out Int;
+EXEC ProcTwo @out out, 2
+EXEC ProcTwo @OutParameter = @out OUTPUT, @InParameter = 3
+GO
+DROP PROCEDURE ProcOne
+DROP PROCEDURE ProcTwo
+DROP PROCEDURE ProcThree
+
+

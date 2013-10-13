@@ -74,27 +74,21 @@ AS
 SET @OutParameter = 1
 GO
 
-CREATE PROCEDURE ProcTwo @OutParameter INT OUT
-	,@InParameter INT
+CREATE PROCEDURE ProcTwo @OutParameter INT OUTPUT, @InParameter INT
 AS
 SET @OutParameter = @InParameter
 GO
 
-CREATE PROCEDURE ProcThree (
-	@OutParameter INT OUT
-	,@InParameter INT
-	)
+CREATE PROCEDURE ProcThree (@OutParameter INT OUTPUT, @InParameter INT)
 AS
 SET @OutParameter = @InParameter
 GO
 
 DECLARE @out INT;
 
-EXEC ProcTwo @out OUT
-	,2
+EXEC ProcTwo @out OUTPUT, 2
 
-EXEC ProcTwo @OutParameter = @out OUTPUT
-	,@InParameter = 3
+EXEC ProcTwo @OutParameter = @out OUTPUT, @InParameter = 3
 GO
 
 DROP PROCEDURE ProcOne

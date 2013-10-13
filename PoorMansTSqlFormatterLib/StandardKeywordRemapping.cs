@@ -52,8 +52,9 @@ namespace PoorMansTSqlFormatterLib
             Instance.Add("NATIONAL CHAR", "NCHAR");
             Instance.Add("NATIONAL CHARACTER VARYING", "NVARCHAR");
             Instance.Add("NATIONAL CHAR VARYING", "NVARCHAR");
-            Instance.Add("NATIONAL TEXT", "NTEXT");
-            //TODO: This is wrong when a TIMESTAMP column is unnamed; ROWVERSION does not auto-name. Due to context-sensitivity, this mapping is disabled for now.
+			Instance.Add("NATIONAL TEXT", "NTEXT");
+			Instance.Add("OUT", "OUTPUT");
+			//TODO: This is wrong when a TIMESTAMP column is unnamed; ROWVERSION does not auto-name. Due to context-sensitivity, this mapping is disabled for now.
             // REF: http://msdn.microsoft.com/en-us/library/ms182776.aspx
             //Instance.Add("TIMESTAMP", "ROWVERSION");
         }

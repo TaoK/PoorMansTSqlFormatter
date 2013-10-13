@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2013 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -2010,8 +2010,9 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("OR", KeywordType.OperatorKeyword);
             KeywordList.Add("ORDER", KeywordType.OtherKeyword);
             KeywordList.Add("OUTER", KeywordType.OtherKeyword);
-            KeywordList.Add("OUTPUT", KeywordType.OtherKeyword);
-            KeywordList.Add("OUTPUTBUFFER", KeywordType.OtherKeyword);
+			KeywordList.Add("OUT", KeywordType.OtherKeyword);
+			KeywordList.Add("OUTPUT", KeywordType.OtherKeyword);
+			KeywordList.Add("OUTPUTBUFFER", KeywordType.OtherKeyword);
             KeywordList.Add("OVER", KeywordType.OtherKeyword);
             KeywordList.Add("OWNER", KeywordType.OtherKeyword);
             KeywordList.Add("PAGLOCK", KeywordType.OtherKeyword);
