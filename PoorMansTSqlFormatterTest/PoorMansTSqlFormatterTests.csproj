@@ -153,6 +153,7 @@
     <Content Include="Data\StandardFormatSql\14_CommentPositioning%28TrailingCommas=True%29.txt" />
     <Content Include="Data\StandardFormatSql\27_OtherSqlFlavourSupport.txt" />
     <Content Include="Data\StandardFormatSql\24_InsertsAndOutputs%28KeywordStandardization=true,ExpandCommaLists=false%29.txt" />
+    <Content Include="Data\StandardFormatSql\05_ComplexDDL%28NewClauseLineBreaks=2,NewStatementLineBreaks=3%29.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">

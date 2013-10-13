@@ -69,6 +69,7 @@ namespace PoorMansTSqlFormatterDemo
 			this.radio_Formatting_Standard = new System.Windows.Forms.RadioButton();
 			this.grp_Options = new System.Windows.Forms.GroupBox();
 			this.chk_BreakJoinOnSections = new System.Windows.Forms.CheckBox();
+			this.chk_ExpandInLists = new System.Windows.Forms.CheckBox();
 			this.chk_EnableKeywordStandardization = new System.Windows.Forms.CheckBox();
 			this.txt_MaxWidth = new System.Windows.Forms.TextBox();
 			this.lbl_MaxWidth = new System.Windows.Forms.Label();
@@ -104,7 +105,10 @@ namespace PoorMansTSqlFormatterDemo
 			this.frenchToolStripMenuItem = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem();
 			this.spanishToolStripMenuItem = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.chk_ExpandInLists = new System.Windows.Forms.CheckBox();
+			this.lbl_StatementBreaks = new System.Windows.Forms.Label();
+			this.txt_StatementBreaks = new System.Windows.Forms.TextBox();
+			this.lbl_ClauseBreaks = new System.Windows.Forms.Label();
+			this.txt_ClauseBreaks = new System.Windows.Forms.TextBox();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
@@ -293,6 +297,10 @@ namespace PoorMansTSqlFormatterDemo
 			this.grp_Options.Controls.Add(this.chk_BreakJoinOnSections);
 			this.grp_Options.Controls.Add(this.chk_ExpandInLists);
 			this.grp_Options.Controls.Add(this.chk_EnableKeywordStandardization);
+			this.grp_Options.Controls.Add(this.txt_ClauseBreaks);
+			this.grp_Options.Controls.Add(this.lbl_ClauseBreaks);
+			this.grp_Options.Controls.Add(this.txt_StatementBreaks);
+			this.grp_Options.Controls.Add(this.lbl_StatementBreaks);
 			this.grp_Options.Controls.Add(this.txt_MaxWidth);
 			this.grp_Options.Controls.Add(this.lbl_MaxWidth);
 			this.grp_Options.Controls.Add(this.txt_IndentWidth);
@@ -317,6 +325,15 @@ namespace PoorMansTSqlFormatterDemo
 			this.chk_BreakJoinOnSections.Name = "chk_BreakJoinOnSections";
 			this.chk_BreakJoinOnSections.UseVisualStyleBackColor = true;
 			this.chk_BreakJoinOnSections.CheckedChanged += new System.EventHandler(this.FormatSettingsControlChanged);
+			// 
+			// chk_ExpandInLists
+			// 
+			resources.ApplyResources(this.chk_ExpandInLists, "chk_ExpandInLists");
+			this.chk_ExpandInLists.Checked = true;
+			this.chk_ExpandInLists.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chk_ExpandInLists.Name = "chk_ExpandInLists";
+			this.chk_ExpandInLists.UseVisualStyleBackColor = true;
+			this.chk_ExpandInLists.CheckedChanged += new System.EventHandler(this.FormatSettingsControlChanged);
 			// 
 			// chk_EnableKeywordStandardization
 			// 
@@ -577,14 +594,27 @@ namespace PoorMansTSqlFormatterDemo
 			resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
-			// chk_ExpandInLists
+			// lbl_StatementBreaks
 			// 
-			resources.ApplyResources(this.chk_ExpandInLists, "chk_ExpandInLists");
-			this.chk_ExpandInLists.Checked = true;
-			this.chk_ExpandInLists.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chk_ExpandInLists.Name = "chk_ExpandInLists";
-			this.chk_ExpandInLists.UseVisualStyleBackColor = true;
-			this.chk_ExpandInLists.CheckedChanged += new System.EventHandler(this.FormatSettingsControlChanged);
+			resources.ApplyResources(this.lbl_StatementBreaks, "lbl_StatementBreaks");
+			this.lbl_StatementBreaks.Name = "lbl_StatementBreaks";
+			// 
+			// txt_StatementBreaks
+			// 
+			resources.ApplyResources(this.txt_StatementBreaks, "txt_StatementBreaks");
+			this.txt_StatementBreaks.Name = "txt_StatementBreaks";
+			this.txt_StatementBreaks.TextChanged += new System.EventHandler(this.FormatSettingsControlChanged);
+			// 
+			// lbl_ClauseBreaks
+			// 
+			resources.ApplyResources(this.lbl_ClauseBreaks, "lbl_ClauseBreaks");
+			this.lbl_ClauseBreaks.Name = "lbl_ClauseBreaks";
+			// 
+			// txt_ClauseBreaks
+			// 
+			resources.ApplyResources(this.txt_ClauseBreaks, "txt_ClauseBreaks");
+			this.txt_ClauseBreaks.Name = "txt_ClauseBreaks";
+			this.txt_ClauseBreaks.TextChanged += new System.EventHandler(this.FormatSettingsControlChanged);
 			// 
 			// MainForm
 			// 
@@ -687,6 +717,10 @@ namespace PoorMansTSqlFormatterDemo
         private System.Windows.Forms.CheckBox chk_RandomizeLineLength;
         private System.Windows.Forms.CheckBox chk_KeywordSubstitution;
 		private System.Windows.Forms.CheckBox chk_ExpandInLists;
+		private System.Windows.Forms.TextBox txt_ClauseBreaks;
+		private System.Windows.Forms.Label lbl_ClauseBreaks;
+		private System.Windows.Forms.TextBox txt_StatementBreaks;
+		private System.Windows.Forms.Label lbl_StatementBreaks;
     }
 }
 

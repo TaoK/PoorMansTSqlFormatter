@@ -161,7 +161,10 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     state.UnIndentInitialBreak = true;
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), state.IncrementIndent());
                     state.DecrementIndent();
-                    state.BreakExpected = true;
+					if (Options.NewClauseLineBreaks > 0)
+	                    state.BreakExpected = true;
+					if (Options.NewClauseLineBreaks > 1)
+						state.AdditionalBreaksExpected = Options.NewClauseLineBreaks - 1;
                     break;
 
                 case SqlXmlConstants.ENAME_SET_OPERATOR_CLAUSE:
@@ -170,7 +173,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     state.WhiteSpace_BreakToNextLine(); //this is the one we additionally want to apply
                     ProcessSqlNodeList(contentElement.SelectNodes("*"), state.IncrementIndent());
                     state.BreakExpected = true;
-                    state.AdditionalBreakExpected = true;
+                    state.AdditionalBreaksExpected = 1;
                     break;
 
                 case SqlXmlConstants.ENAME_BATCH_SEPARATOR:
@@ -762,25 +765,33 @@ namespace PoorMansTSqlFormatterLib.Formatters
             {
                 //check whether this is a DECLARE/SET clause with similar precedent, and therefore exempt from double-linebreak.
                 XmlElement thisClauseStarter = FirstSemanticElementChild(contentElement);
-                if (!(thisClauseStarter != null
-                    && thisClauseStarter.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
-                    && state.GetRecentKeyword() != null
-                    && ((thisClauseStarter.InnerXml.ToUpperInvariant().Equals("SET")
-                            && state.GetRecentKeyword().Equals("SET")
-                            )
-                        || (thisClauseStarter.InnerXml.ToUpperInvariant().Equals("DECLARE")
-                            && state.GetRecentKeyword().Equals("DECLARE")
-                            )
-                        || (thisClauseStarter.InnerXml.ToUpperInvariant().Equals("PRINT")
-                            && state.GetRecentKeyword().Equals("PRINT")
-                            )
-                        )
-                    ))
-                    state.AddOutputLineBreak();
+				if (!(thisClauseStarter != null
+					&& thisClauseStarter.Name.Equals(SqlXmlConstants.ENAME_OTHERKEYWORD)
+					&& state.GetRecentKeyword() != null
+					&& ((thisClauseStarter.InnerXml.ToUpperInvariant().Equals("SET")
+							&& state.GetRecentKeyword().Equals("SET")
+							)
+						|| (thisClauseStarter.InnerXml.ToUpperInvariant().Equals("DECLARE")
+							&& state.GetRecentKeyword().Equals("DECLARE")
+							)
+						|| (thisClauseStarter.InnerXml.ToUpperInvariant().Equals("PRINT")
+							&& state.GetRecentKeyword().Equals("PRINT")
+							)
+						)
+					))
+				{
+					for (int i = Options.NewStatementLineBreaks; i > 0; i--)
+						state.AddOutputLineBreak();
+				}
+				else
+				{
+					for (int i = Options.NewClauseLineBreaks; i > 0; i--)
+						state.AddOutputLineBreak();
+				}
 
-                state.AddOutputLineBreak();
                 state.Indent(state.IndentLevel);
                 state.BreakExpected = false;
+				state.AdditionalBreaksExpected = 0;
                 state.SourceBreakPending = false;
                 state.StatementBreakExpected = false;
                 state.WordSeparatorExpected = false;
@@ -815,7 +826,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
         private void WhiteSpace_SeparateWords(TSqlStandardFormattingState state)
         {
-            if (state.BreakExpected || state.AdditionalBreakExpected)
+            if (state.BreakExpected || state.AdditionalBreaksExpected > 0)
             {
                 bool wasUnIndent = state.UnIndentInitialBreak;
                 if (wasUnIndent) state.DecrementIndent();
@@ -848,10 +859,10 @@ namespace PoorMansTSqlFormatterLib.Formatters
         {
             if (state.BreakExpected)
                 state.WhiteSpace_BreakToNextLine();
-            if (state.AdditionalBreakExpected)
+            while (state.AdditionalBreaksExpected > 0)
             {
                 state.WhiteSpace_BreakToNextLine();
-                state.AdditionalBreakExpected = false;
+                state.AdditionalBreaksExpected--;
             }
         }
 
@@ -864,7 +875,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 IndentLevel = initialIndentLevel;
                 HtmlOutput = htmlOutput;
                 IndentString = indentString;
-                MaxLineWidth = maxLineWidth;
+				MaxLineWidth = maxLineWidth;
 
                 int tabCount = indentString.Split('\t').Length - 1;
                 int tabExtraCharacters = tabCount * (spacesPerTab - 1);
@@ -880,7 +891,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 IndentString = sourceState.IndentString;
                 IndentLength = sourceState.IndentLength;
                 MaxLineWidth = sourceState.MaxLineWidth;
-                //TODO: find a way out of the cross-dependent wrapping maze...
+				//TODO: find a way out of the cross-dependent wrapping maze...
                 //CurrentLineLength = sourceState.CurrentLineLength;
                 CurrentLineLength = IndentLevel * IndentLength;
                 CurrentLineHasContent = sourceState.CurrentLineHasContent;
@@ -894,7 +905,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             public bool BreakExpected { get; set; }
             public bool WordSeparatorExpected { get; set; }
             public bool SourceBreakPending { get; set; }
-            public bool AdditionalBreakExpected { get; set; }
+            public int AdditionalBreaksExpected { get; set; }
 
             public bool UnIndentInitialBreak { get; set; }
             public int IndentLevel { get; private set; }

@@ -45,6 +45,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
             HTMLColoring = false;
 			KeywordStandardization = false;
 			ExpandInLists = true;
+			NewClauseLineBreaks = 1;
+			NewStatementLineBreaks = 2;
 		}
 
         //Doesn't particularly need to be lazy-loaded, and doesn't need to be threadsafe.
@@ -77,7 +79,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
 				else if (key == "BreakJoinOnSections") BreakJoinOnSections = Convert.ToBoolean(value);
 				else if (key == "HTMLColoring") HTMLColoring = Convert.ToBoolean(value);
 				else if (key == "KeywordStandardization") KeywordStandardization = Convert.ToBoolean(value);
-				else if (key == "ExpandInExpressions") ExpandInLists = Convert.ToBoolean(value);
+				else if (key == "ExpandInLists") ExpandInLists = Convert.ToBoolean(value);
+				else if (key == "NewClauseLineBreaks") NewClauseLineBreaks = Convert.ToInt32(value);
+				else if (key == "NewStatementLineBreaks") NewStatementLineBreaks = Convert.ToInt32(value);
 				else throw new ArgumentException("Unknown option: " + key);
             }
 
@@ -103,7 +107,10 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (BreakJoinOnSections != _defaultOptions.BreakJoinOnSections) overrides.Add("BreakJoinOnSections", BreakJoinOnSections.ToString());
             if (HTMLColoring != _defaultOptions.HTMLColoring) overrides.Add("HTMLColoring", HTMLColoring.ToString());
 			if (KeywordStandardization != _defaultOptions.KeywordStandardization) overrides.Add("KeywordStandardization", KeywordStandardization.ToString());
-			if (ExpandInLists != _defaultOptions.ExpandInLists) overrides.Add("ExpandInExpressions", ExpandInLists.ToString());
+			if (ExpandInLists != _defaultOptions.ExpandInLists) overrides.Add("ExpandInLists", ExpandInLists.ToString());
+			if (NewClauseLineBreaks != _defaultOptions.NewClauseLineBreaks) overrides.Add("NewClauseLineBreaks", NewClauseLineBreaks.ToString());
+			if (NewStatementLineBreaks != _defaultOptions.NewStatementLineBreaks) overrides.Add("NewStatementLineBreaks", NewStatementLineBreaks.ToString());
+			NewStatementLineBreaks = 2;
     
             if (overrides.Count == 0) return string.Empty;
             return string.Join(",", overrides.Select((kvp) => kvp.Key + "=" + kvp.Value).ToArray());
@@ -136,6 +143,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
         public bool HTMLColoring { get; set; }
 		public bool KeywordStandardization { get; set; }
 		public bool ExpandInLists { get; set; }
+		public int NewClauseLineBreaks { get; set; }
+		public int NewStatementLineBreaks { get; set; }
 
     }
 }

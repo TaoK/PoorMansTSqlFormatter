@@ -14,6 +14,7 @@
 * Github Issue #97: [Bugfix] Parsing error when single uppercase N is followed by a non-word character [thanks to derekfrye for the bug report]
 * Github Issue #91: [Bugfix] Incorrect formatting of "*=" operator [thanks to ralfkret for the bug report]
 * Github Issue #51: [Enhancement] Added support for the OUT synonym of OUTPUT (for arguments), and corresponding keyword standardization support
+* Github Issue #49: [Enhancement] Added options to control line spacing between clauses and statements [thanks to Farzad Jalali, Sheldon Hull and Benjamin Solomon for the request]
 
 ### Version 1.4.4 (SSMS / Visual Studio Add-In only)
 

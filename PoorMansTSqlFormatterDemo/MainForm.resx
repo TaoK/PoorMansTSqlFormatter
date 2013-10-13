@@ -175,7 +175,7 @@
     <value>txt_Input</value>
   </data>
   <data name="&gt;&gt;txt_Input.Type" xml:space="preserve">
-    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.4.3.26690, Culture=neutral, PublicKeyToken=null</value>
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.4.3.27437, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;txt_Input.Parent" xml:space="preserve">
     <value>groupBox1</value>
@@ -271,7 +271,7 @@
     <value>txt_TokenizedSql</value>
   </data>
   <data name="&gt;&gt;txt_TokenizedSql.Type" xml:space="preserve">
-    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.4.3.26690, Culture=neutral, PublicKeyToken=null</value>
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.4.3.27437, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;txt_TokenizedSql.Parent" xml:space="preserve">
     <value>groupBox2</value>
@@ -355,7 +355,7 @@
     <value>txt_ParsedXml</value>
   </data>
   <data name="&gt;&gt;txt_ParsedXml.Type" xml:space="preserve">
-    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.4.3.26690, Culture=neutral, PublicKeyToken=null</value>
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox, PoorMansTSqlFormatterDemo, Version=1.4.3.27437, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;txt_ParsedXml.Parent" xml:space="preserve">
     <value>groupBox3</value>
@@ -511,7 +511,7 @@
     <value>webBrowser_OutputSql</value>
   </data>
   <data name="&gt;&gt;webBrowser_OutputSql.Type" xml:space="preserve">
-    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.CustomContentWebBrowser, PoorMansTSqlFormatterDemo, Version=1.4.3.26690, Culture=neutral, PublicKeyToken=null</value>
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.CustomContentWebBrowser, PoorMansTSqlFormatterDemo, Version=1.4.3.27437, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;webBrowser_OutputSql.Parent" xml:space="preserve">
     <value>panel1</value>
@@ -604,7 +604,7 @@
     <value>True</value>
   </data>
   <data name="radio_Formatting_Identity.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 447</value>
+    <value>4, 507</value>
   </data>
   <data name="radio_Formatting_Identity.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -664,7 +664,7 @@
     <value>True</value>
   </data>
   <data name="chk_BreakJoinOnSections.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 288</value>
+    <value>11, 346</value>
   </data>
   <data name="chk_BreakJoinOnSections.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -697,7 +697,7 @@
     <value>NoControl</value>
   </data>
   <data name="chk_ExpandInLists.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 259</value>
+    <value>11, 317</value>
   </data>
   <data name="chk_ExpandInLists.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -727,7 +727,7 @@
     <value>True</value>
   </data>
   <data name="chk_EnableKeywordStandardization.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 373</value>
+    <value>11, 431</value>
   </data>
   <data name="chk_EnableKeywordStandardization.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -752,6 +752,126 @@
   </data>
   <data name="&gt;&gt;chk_EnableKeywordStandardization.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="txt_ClauseBreaks.Location" type="System.Drawing.Point, System.Drawing">
+    <value>154, 117</value>
+  </data>
+  <data name="txt_ClauseBreaks.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="txt_ClauseBreaks.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 22</value>
+  </data>
+  <data name="txt_ClauseBreaks.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="txt_ClauseBreaks.Text" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;txt_ClauseBreaks.Name" xml:space="preserve">
+    <value>txt_ClauseBreaks</value>
+  </data>
+  <data name="&gt;&gt;txt_ClauseBreaks.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_ClauseBreaks.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;txt_ClauseBreaks.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="lbl_ClauseBreaks.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbl_ClauseBreaks.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lbl_ClauseBreaks.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 120</value>
+  </data>
+  <data name="lbl_ClauseBreaks.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="lbl_ClauseBreaks.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 17</value>
+  </data>
+  <data name="lbl_ClauseBreaks.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="lbl_ClauseBreaks.Text" xml:space="preserve">
+    <value>Clause Breaks:</value>
+  </data>
+  <data name="&gt;&gt;lbl_ClauseBreaks.Name" xml:space="preserve">
+    <value>lbl_ClauseBreaks</value>
+  </data>
+  <data name="&gt;&gt;lbl_ClauseBreaks.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_ClauseBreaks.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;lbl_ClauseBreaks.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="txt_StatementBreaks.Location" type="System.Drawing.Point, System.Drawing">
+    <value>154, 87</value>
+  </data>
+  <data name="txt_StatementBreaks.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="txt_StatementBreaks.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 22</value>
+  </data>
+  <data name="txt_StatementBreaks.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="txt_StatementBreaks.Text" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;txt_StatementBreaks.Name" xml:space="preserve">
+    <value>txt_StatementBreaks</value>
+  </data>
+  <data name="&gt;&gt;txt_StatementBreaks.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txt_StatementBreaks.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;txt_StatementBreaks.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="lbl_StatementBreaks.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbl_StatementBreaks.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lbl_StatementBreaks.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 90</value>
+  </data>
+  <data name="lbl_StatementBreaks.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="lbl_StatementBreaks.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 17</value>
+  </data>
+  <data name="lbl_StatementBreaks.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="lbl_StatementBreaks.Text" xml:space="preserve">
+    <value>Statement Breaks:</value>
+  </data>
+  <data name="&gt;&gt;lbl_StatementBreaks.Name" xml:space="preserve">
+    <value>lbl_StatementBreaks</value>
+  </data>
+  <data name="&gt;&gt;lbl_StatementBreaks.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbl_StatementBreaks.Parent" xml:space="preserve">
+    <value>grp_Options</value>
+  </data>
+  <data name="&gt;&gt;lbl_StatementBreaks.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="txt_MaxWidth.Location" type="System.Drawing.Point, System.Drawing">
     <value>103, 57</value>
@@ -778,7 +898,7 @@
     <value>grp_Options</value>
   </data>
   <data name="&gt;&gt;txt_MaxWidth.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>7</value>
   </data>
   <data name="lbl_MaxWidth.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -808,7 +928,7 @@
     <value>grp_Options</value>
   </data>
   <data name="&gt;&gt;lbl_MaxWidth.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>8</value>
   </data>
   <data name="txt_IndentWidth.Location" type="System.Drawing.Point, System.Drawing">
     <value>213, 25</value>
@@ -835,7 +955,7 @@
     <value>grp_Options</value>
   </data>
   <data name="&gt;&gt;txt_IndentWidth.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>9</value>
   </data>
   <data name="lbl_IndentWidth.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -865,7 +985,7 @@
     <value>grp_Options</value>
   </data>
   <data name="&gt;&gt;lbl_IndentWidth.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>10</value>
   </data>
   <data name="txt_Indent.Location" type="System.Drawing.Point, System.Drawing">
     <value>63, 25</value>
@@ -892,7 +1012,7 @@
     <value>grp_Options</value>
   </data>
   <data name="&gt;&gt;txt_Indent.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>11</value>
   </data>
   <data name="lbl_Indent.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -922,13 +1042,13 @@
     <value>grp_Options</value>
   </data>
   <data name="&gt;&gt;lbl_Indent.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>12</value>
   </data>
   <data name="chk_ExpandBetweenConditions.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="chk_ExpandBetweenConditions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 230</value>
+    <value>12, 288</value>
   </data>
   <data name="chk_ExpandBetweenConditions.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -952,13 +1072,13 @@
     <value>grp_Options</value>
   </data>
   <data name="&gt;&gt;chk_ExpandBetweenConditions.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>13</value>
   </data>
   <data name="chk_SpaceAfterComma.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="chk_SpaceAfterComma.Location" type="System.Drawing.Point, System.Drawing">
-    <value>52, 145</value>
+    <value>56, 203</value>
   </data>
   <data name="chk_SpaceAfterComma.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -982,13 +1102,13 @@
     <value>grp_Options</value>
   </data>
   <data name="&gt;&gt;chk_SpaceAfterComma.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>14</value>
   </data>
   <data name="chk_Coloring.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="chk_Coloring.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 344</value>
+    <value>11, 402</value>
   </data>
   <data name="chk_Coloring.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -1012,13 +1132,13 @@
     <value>grp_Options</value>
   </data>
   <data name="&gt;&gt;chk_Coloring.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>15</value>
   </data>
   <data name="chk_UppercaseKeywords.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="chk_UppercaseKeywords.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 316</value>
+    <value>11, 374</value>
   </data>
   <data name="chk_UppercaseKeywords.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -1042,13 +1162,13 @@
     <value>grp_Options</value>
   </data>
   <data name="&gt;&gt;chk_UppercaseKeywords.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>16</value>
   </data>
   <data name="chk_ExpandCaseStatements.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="chk_ExpandCaseStatements.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 202</value>
+    <value>12, 260</value>
   </data>
   <data name="chk_ExpandCaseStatements.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -1072,13 +1192,13 @@
     <value>grp_Options</value>
   </data>
   <data name="&gt;&gt;chk_ExpandCaseStatements.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>17</value>
   </data>
   <data name="chk_ExpandBooleanExpressions.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="chk_ExpandBooleanExpressions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 174</value>
+    <value>12, 232</value>
   </data>
   <data name="chk_ExpandBooleanExpressions.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -1102,13 +1222,13 @@
     <value>grp_Options</value>
   </data>
   <data name="&gt;&gt;chk_ExpandBooleanExpressions.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>18</value>
   </data>
   <data name="chk_TrailingCommas.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="chk_TrailingCommas.Location" type="System.Drawing.Point, System.Drawing">
-    <value>52, 117</value>
+    <value>56, 175</value>
   </data>
   <data name="chk_TrailingCommas.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -1132,13 +1252,13 @@
     <value>grp_Options</value>
   </data>
   <data name="&gt;&gt;chk_TrailingCommas.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>19</value>
   </data>
   <data name="chk_ExpandCommaLists.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="chk_ExpandCommaLists.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 89</value>
+    <value>12, 147</value>
   </data>
   <data name="chk_ExpandCommaLists.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -1162,7 +1282,7 @@
     <value>grp_Options</value>
   </data>
   <data name="&gt;&gt;chk_ExpandCommaLists.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>20</value>
   </data>
   <data name="grp_Options.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1177,7 +1297,7 @@
     <value>4, 4, 4, 4</value>
   </data>
   <data name="grp_Options.Size" type="System.Drawing.Size, System.Drawing">
-    <value>282, 404</value>
+    <value>282, 464</value>
   </data>
   <data name="grp_Options.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -1228,7 +1348,7 @@
     <value>0</value>
   </data>
   <data name="grp_IdentityFormattingOptions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>57, 478</value>
+    <value>57, 538</value>
   </data>
   <data name="grp_IdentityFormattingOptions.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -1261,7 +1381,7 @@
     <value>True</value>
   </data>
   <data name="radio_Formatting_Obfuscate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 538</value>
+    <value>4, 598</value>
   </data>
   <data name="radio_Formatting_Obfuscate.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -1438,7 +1558,7 @@
     <value>4</value>
   </data>
   <data name="grp_ObfuscationOptions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>57, 566</value>
+    <value>57, 626</value>
   </data>
   <data name="grp_ObfuscationOptions.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -1447,7 +1567,7 @@
     <value>4, 4, 4, 4</value>
   </data>
   <data name="grp_ObfuscationOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>267, 144</value>
+    <value>267, 84</value>
   </data>
   <data name="grp_ObfuscationOptions.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1498,7 +1618,7 @@
     <value>0</value>
   </data>
   <data name="tableLayoutPanel2.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="radio_Formatting_Identity" Row="2" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="radio_Formatting_Standard" Row="0" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="grp_Options" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="grp_IdentityFormattingOptions" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="radio_Formatting_Obfuscate" Row="4" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="grp_ObfuscationOptions" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,53,Percent,100" /&gt;&lt;Rows Styles="Absolute,31,Absolute,412,Absolute,31,Absolute,60,Absolute,28,Absolute,12" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="radio_Formatting_Identity" Row="2" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="radio_Formatting_Standard" Row="0" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="grp_Options" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="grp_IdentityFormattingOptions" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="radio_Formatting_Obfuscate" Row="4" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="grp_ObfuscationOptions" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,53,Percent,100" /&gt;&lt;Rows Styles="Absolute,31,Absolute,472,Absolute,31,Absolute,60,Absolute,28,Absolute,12" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="groupBox5.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -1750,19 +1870,19 @@
     <value>englishToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;englishToolStripMenuItem.Type" xml:space="preserve">
-    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.4.3.26690, Culture=neutral, PublicKeyToken=null</value>
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.4.3.27437, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;frenchToolStripMenuItem.Name" xml:space="preserve">
     <value>frenchToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;frenchToolStripMenuItem.Type" xml:space="preserve">
-    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.4.3.26690, Culture=neutral, PublicKeyToken=null</value>
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.4.3.27437, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;spanishToolStripMenuItem.Name" xml:space="preserve">
     <value>spanishToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;spanishToolStripMenuItem.Type" xml:space="preserve">
-    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.4.3.26690, Culture=neutral, PublicKeyToken=null</value>
+    <value>PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem, PoorMansTSqlFormatterDemo, Version=1.4.3.27437, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;aboutToolStripMenuItem.Name" xml:space="preserve">
     <value>aboutToolStripMenuItem</value>

@@ -46,8 +46,10 @@ namespace PoorMansTSqlFormatterCmdLine
                     KeywordStandardization = true,
                     IndentString = "\t",
                     SpacesPerTab = 4,
-                    MaxLineWidth = 999,
-                    TrailingCommas = false,
+					MaxLineWidth = 999,
+					NewStatementLineBreaks = 2,
+					NewClauseLineBreaks = 1,
+					TrailingCommas = false,
                     SpaceAfterExpandedComma = false,
                     ExpandBetweenConditions = true,
                     ExpandBooleanExpressions = true,
@@ -74,7 +76,9 @@ namespace PoorMansTSqlFormatterCmdLine
               .Add("is|indentString=", delegate(string v) { options.IndentString = v; })
               .Add("st|spacesPerTab=", delegate(string v) { options.SpacesPerTab = int.Parse(v); })
               .Add("mw|maxLineWidth=", delegate(string v) { options.MaxLineWidth = int.Parse(v); })
-              .Add("tc|trailingCommas", delegate(string v) { options.TrailingCommas = v != null; })
+			  .Add("sb|statementBreaks=", delegate(string v) { options.NewStatementLineBreaks = int.Parse(v); })
+			  .Add("cb|clauseBreaks=", delegate(string v) { options.NewClauseLineBreaks = int.Parse(v); })
+			  .Add("tc|trailingCommas", delegate(string v) { options.TrailingCommas = v != null; })
               .Add("sac|spaceAfterExpandedComma", delegate(string v) { options.SpaceAfterExpandedComma = v != null; })
               .Add("ebc|expandBetweenConditions", delegate(string v) { options.ExpandBetweenConditions = v != null; })
               .Add("ebe|expandBooleanExpressions", delegate(string v) { options.ExpandBooleanExpressions = v != null; })

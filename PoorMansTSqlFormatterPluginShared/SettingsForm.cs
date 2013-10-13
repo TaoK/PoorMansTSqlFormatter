@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2013 Tao Klerks
 
 Additional Contributors:
  * Timothy Klenke, 2012
@@ -95,8 +95,10 @@ namespace PoorMansTSqlFormatterPluginShared
 
             txt_IndentString.Text = options.IndentString.Replace("\t","\\t").Replace(" ","\\s");
             txt_MaxLineWidth.Text = options.MaxLineWidth.ToString();
-            txt_SpacesPerTab.Text = options.SpacesPerTab.ToString();
-            chk_ExpandBetweenConditions.Checked = options.ExpandBetweenConditions;
+			txt_SpacesPerTab.Text = options.SpacesPerTab.ToString();
+			txt_StatementBreaks.Text = options.NewStatementLineBreaks.ToString();
+			txt_ClauseBreaks.Text = options.NewClauseLineBreaks.ToString();
+			chk_ExpandBetweenConditions.Checked = options.ExpandBetweenConditions;
             chk_ExpandBooleanExpressions.Checked = options.ExpandBooleanExpressions;
             chk_ExpandCaseStatements.Checked = options.ExpandCaseStatements;
 			chk_ExpandCommaLists.Checked = options.ExpandCommaLists;
@@ -115,8 +117,10 @@ namespace PoorMansTSqlFormatterPluginShared
             _settings.Options = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions() {
                 IndentString = txt_IndentString.Text,
                 MaxLineWidth = int.Parse(txt_MaxLineWidth.Text),
-                SpacesPerTab = int.Parse(txt_SpacesPerTab.Text),
-                SpaceAfterExpandedComma = chk_SpaceAfterExpandedComma.Checked,
+				SpacesPerTab = int.Parse(txt_SpacesPerTab.Text),
+				NewStatementLineBreaks = int.Parse(txt_StatementBreaks.Text),
+				NewClauseLineBreaks = int.Parse(txt_ClauseBreaks.Text),
+				SpaceAfterExpandedComma = chk_SpaceAfterExpandedComma.Checked,
                 ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked,
                 ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked,
                 ExpandCaseStatements = chk_ExpandCaseStatements.Checked,

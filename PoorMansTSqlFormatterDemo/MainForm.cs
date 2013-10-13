@@ -90,8 +90,10 @@ namespace PoorMansTSqlFormatterDemo
             radio_Formatting_Standard.Checked = Properties.Settings.Default.Formatter.Equals(FORMATTER_STANDARD, StringComparison.InvariantCultureIgnoreCase);
             txt_Indent.Text = Properties.Settings.Default.Indent;
             txt_IndentWidth.Text = Properties.Settings.Default.IndentWidth.ToString();
-            txt_MaxWidth.Text =  Properties.Settings.Default.MaxWidth.ToString();
-            chk_ExpandCommaLists.Checked = Properties.Settings.Default.ExpandCommaLists;
+			txt_MaxWidth.Text = Properties.Settings.Default.MaxWidth.ToString();
+			txt_StatementBreaks.Text = Properties.Settings.Default.NewStatementLineBreaks.ToString();
+			txt_ClauseBreaks.Text = Properties.Settings.Default.NewClauseLineBreaks.ToString();
+			chk_ExpandCommaLists.Checked = Properties.Settings.Default.ExpandCommaLists;
             chk_TrailingCommas.Checked = Properties.Settings.Default.TrailingCommas;
             chk_SpaceAfterComma.Checked = Properties.Settings.Default.SpaceAfterComma;
             chk_ExpandBooleanExpressions.Checked = Properties.Settings.Default.ExpandBooleanExpressions;
@@ -135,7 +137,9 @@ namespace PoorMansTSqlFormatterDemo
             Properties.Settings.Default.Indent = txt_Indent.Text.Replace("\t", "\\t").Replace(" ", "\\s");
             Properties.Settings.Default.IndentWidth = int.Parse(txt_IndentWidth.Text);
             Properties.Settings.Default.MaxWidth = int.Parse(txt_MaxWidth.Text);
-            Properties.Settings.Default.ExpandCommaLists = chk_ExpandCommaLists.Checked;
+			Properties.Settings.Default.NewStatementLineBreaks = int.Parse(txt_StatementBreaks.Text);
+			Properties.Settings.Default.NewClauseLineBreaks = int.Parse(txt_ClauseBreaks.Text);
+			Properties.Settings.Default.ExpandCommaLists = chk_ExpandCommaLists.Checked;
             Properties.Settings.Default.TrailingCommas = chk_TrailingCommas.Checked;
             Properties.Settings.Default.SpaceAfterComma = chk_SpaceAfterComma.Checked;
             Properties.Settings.Default.ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked;
@@ -180,8 +184,10 @@ namespace PoorMansTSqlFormatterDemo
 						BreakJoinOnSections = chk_BreakJoinOnSections.Checked,
                         UppercaseKeywords = chk_UppercaseKeywords.Checked,
                         HTMLColoring = chk_Coloring.Checked,
-                        KeywordStandardization = chk_EnableKeywordStandardization.Checked
-                    });
+						KeywordStandardization = chk_EnableKeywordStandardization.Checked,
+						NewStatementLineBreaks = int.Parse(txt_StatementBreaks.Text),
+						NewClauseLineBreaks = int.Parse(txt_ClauseBreaks.Text)
+					});
             }
             else if (radio_Formatting_Identity.Checked)
                 innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter(chk_IdentityColoring.Checked);

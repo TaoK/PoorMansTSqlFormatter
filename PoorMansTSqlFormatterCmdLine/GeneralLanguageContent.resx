@@ -169,6 +169,8 @@ SqlFormatter &lt;filename or pattern&gt; &lt;options&gt;
 is  indentString (default: \t)
 st  spacesPerTab (default: 4)
 mw  maxLineWidth (default: 999)
+sb  statementBreaks (default: 2)
+cb  clauseBreaks (default: 1)
 tc  trailingCommas (default: false)
 sac spaceAfterExpandedComma (default: false)
 ebc expandBetweenConditions (default: true)

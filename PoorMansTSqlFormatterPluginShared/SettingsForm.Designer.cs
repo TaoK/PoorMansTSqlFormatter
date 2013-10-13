@@ -57,6 +57,7 @@ namespace PoorMansTSqlFormatterPluginShared
 			this.chk_ExpandBooleanExpressions = new System.Windows.Forms.CheckBox();
 			this.chk_ExpandCaseStatements = new System.Windows.Forms.CheckBox();
 			this.chk_ExpandBetweenConditions = new System.Windows.Forms.CheckBox();
+			this.chk_ExpandInLists = new System.Windows.Forms.CheckBox();
 			this.chk_UppercaseKeywords = new System.Windows.Forms.CheckBox();
 			this.chk_SpaceAfterExpandedComma = new System.Windows.Forms.CheckBox();
 			this.chk_BreakJoinOnSections = new System.Windows.Forms.CheckBox();
@@ -74,7 +75,10 @@ namespace PoorMansTSqlFormatterPluginShared
 			this.lbl_SpacesPerTab = new System.Windows.Forms.Label();
 			this.lbl_SpacesPerTab_Extra = new System.Windows.Forms.Label();
 			this.lbl_MaxLineWidth = new System.Windows.Forms.Label();
-			this.chk_ExpandInLists = new System.Windows.Forms.CheckBox();
+			this.txt_StatementBreaks = new System.Windows.Forms.TextBox();
+			this.lbl_StatementBreaks = new System.Windows.Forms.Label();
+			this.txt_ClauseBreaks = new System.Windows.Forms.TextBox();
+			this.lbl_ClauseBreaks = new System.Windows.Forms.Label();
 			this.flowLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -137,6 +141,12 @@ namespace PoorMansTSqlFormatterPluginShared
 			resources.ApplyResources(this.chk_ExpandBetweenConditions, "chk_ExpandBetweenConditions");
 			this.chk_ExpandBetweenConditions.Name = "chk_ExpandBetweenConditions";
 			this.chk_ExpandBetweenConditions.UseVisualStyleBackColor = true;
+			// 
+			// chk_ExpandInLists
+			// 
+			resources.ApplyResources(this.chk_ExpandInLists, "chk_ExpandInLists");
+			this.chk_ExpandInLists.Name = "chk_ExpandInLists";
+			this.chk_ExpandInLists.UseVisualStyleBackColor = true;
 			// 
 			// chk_UppercaseKeywords
 			// 
@@ -234,11 +244,25 @@ namespace PoorMansTSqlFormatterPluginShared
 			resources.ApplyResources(this.lbl_MaxLineWidth, "lbl_MaxLineWidth");
 			this.lbl_MaxLineWidth.Name = "lbl_MaxLineWidth";
 			// 
-			// chk_ExpandInLists
+			// txt_StatementBreaks
 			// 
-			resources.ApplyResources(this.chk_ExpandInLists, "chk_ExpandInLists");
-			this.chk_ExpandInLists.Name = "chk_ExpandInLists";
-			this.chk_ExpandInLists.UseVisualStyleBackColor = true;
+			resources.ApplyResources(this.txt_StatementBreaks, "txt_StatementBreaks");
+			this.txt_StatementBreaks.Name = "txt_StatementBreaks";
+			// 
+			// lbl_StatementBreaks
+			// 
+			resources.ApplyResources(this.lbl_StatementBreaks, "lbl_StatementBreaks");
+			this.lbl_StatementBreaks.Name = "lbl_StatementBreaks";
+			// 
+			// txt_ClauseBreaks
+			// 
+			resources.ApplyResources(this.txt_ClauseBreaks, "txt_ClauseBreaks");
+			this.txt_ClauseBreaks.Name = "txt_ClauseBreaks";
+			// 
+			// lbl_ClauseBreaks
+			// 
+			resources.ApplyResources(this.lbl_ClauseBreaks, "lbl_ClauseBreaks");
+			this.lbl_ClauseBreaks.Name = "lbl_ClauseBreaks";
 			// 
 			// SettingsForm
 			// 
@@ -248,8 +272,12 @@ namespace PoorMansTSqlFormatterPluginShared
 			this.CancelButton = this.btn_Cancel;
 			this.Controls.Add(this.lbl_MaxLineWidth);
 			this.Controls.Add(this.lbl_SpacesPerTab_Extra);
+			this.Controls.Add(this.lbl_ClauseBreaks);
+			this.Controls.Add(this.lbl_StatementBreaks);
 			this.Controls.Add(this.lbl_SpacesPerTab);
 			this.Controls.Add(this.txt_MaxLineWidth);
+			this.Controls.Add(this.txt_ClauseBreaks);
+			this.Controls.Add(this.txt_StatementBreaks);
 			this.Controls.Add(this.txt_SpacesPerTab);
 			this.Controls.Add(this.btn_Reset);
 			this.Controls.Add(this.btn_About);
@@ -299,5 +327,9 @@ namespace PoorMansTSqlFormatterPluginShared
         private System.Windows.Forms.CheckBox chk_StandardizeKeywords;
         private System.Windows.Forms.CheckBox chk_BreakJoinOnSections;
 		private System.Windows.Forms.CheckBox chk_ExpandInLists;
+		private System.Windows.Forms.TextBox txt_StatementBreaks;
+		private System.Windows.Forms.Label lbl_StatementBreaks;
+		private System.Windows.Forms.TextBox txt_ClauseBreaks;
+		private System.Windows.Forms.Label lbl_ClauseBreaks;
     }
 }

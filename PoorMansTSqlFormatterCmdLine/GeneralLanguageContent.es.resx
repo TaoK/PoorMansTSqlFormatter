@@ -170,6 +170,8 @@ SqlFormatter &lt;archivo or patrón&gt; &lt;opciones&gt;
 is  indentString (predeterminado: \t)
 st  spacesPerTab (predeterminado: 4)
 mw  maxLineWidth (predeterminado: 999)
+sb  statementBreaks (predeterminado: 2)
+cb  clauseBreaks (predeterminado: 1)
 tc  trailingCommas (predeterminado: falso)
 sac spaceAfterExpandedComma (predeterminado: falso)
 ebc expandBetweenConditions (predeterminado: verdadero)
