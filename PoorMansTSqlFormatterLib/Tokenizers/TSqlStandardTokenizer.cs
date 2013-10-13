@@ -751,7 +751,9 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
 
             switch (currentTokenizationType)
             {
-                case SqlTokenizationType.BlockComment:
+
+
+				case SqlTokenizationType.BlockComment:
                     tokenContainer.Add(new Token(SqlTokenType.MultiLineComment, currentValue.ToString()));
                     break;
 
@@ -795,11 +797,19 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                     tokenContainer.Add(new Token(SqlTokenType.OtherNode, "!"));
                     break;
 
-                case SqlTokenizationType.SinglePipe:
-                    tokenContainer.Add(new Token(SqlTokenType.OtherNode, "|"));
-                    break;
+				case SqlTokenizationType.SinglePipe:
+					tokenContainer.Add(new Token(SqlTokenType.OtherNode, "|"));
+					break;
 
-                case SqlTokenizationType.NString:
+				case SqlTokenizationType.SingleGT:
+					tokenContainer.Add(new Token(SqlTokenType.OtherOperator, ">"));
+					break;
+
+				case SqlTokenizationType.SingleLT:
+					tokenContainer.Add(new Token(SqlTokenType.OtherOperator, "<"));
+					break;
+
+				case SqlTokenizationType.NString:
                     tokenContainer.Add(new Token(SqlTokenType.NationalString, currentValue.ToString()));
                     break;
 
