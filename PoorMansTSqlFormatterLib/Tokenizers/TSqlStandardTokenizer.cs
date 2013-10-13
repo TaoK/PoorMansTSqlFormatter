@@ -328,9 +328,17 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                             }
                             else
                             {
-                                currentTokenizationType = SqlTokenizationType.OtherNode;
-                                currentTokenValue.Append('N');
-                                currentTokenValue.Append(currentCharacter);
+								if (IsNonWordCharacter(currentCharacter))
+								{
+									CompleteToken(ref currentTokenizationType, tokenContainer, currentTokenValue);
+									ProcessOrOpenToken(ref currentTokenizationType, currentTokenValue, currentCharacter, tokenContainer);
+								}
+								else
+								{
+									currentTokenizationType = SqlTokenizationType.OtherNode;
+									currentTokenValue.Append('N');
+									currentTokenValue.Append(currentCharacter);
+								}
                             }
                             break;
 

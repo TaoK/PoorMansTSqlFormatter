@@ -217,3 +217,7 @@ SELECT @result = @geog1.STIntersection(@geog2);
 SELECT @result.STAsText();
 
 DROP TABLE #SpatialTable
+GO
+
+SELECT Count(N)
+FROM CounterTable

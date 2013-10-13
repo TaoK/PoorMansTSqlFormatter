@@ -142,4 +142,6 @@
 </WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><Other>@result</Other><Period>.</Period><Other>STAsText</Other><FunctionParens></FunctionParens><Semicolon>;</Semicolon><WhiteSpace>
 
 </WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>DROP</OtherKeyword><WhiteSpace> </WhiteSpace><OtherKeyword>TABLE</OtherKeyword><WhiteSpace> </WhiteSpace><Other>#SpatialTable</Other><WhiteSpace> 
-</WhiteSpace></Clause></SqlStatement></SqlRoot>
+</WhiteSpace></Clause></SqlStatement><BatchSeparator><OtherKeyword>GO</OtherKeyword></BatchSeparator><SqlStatement><WhiteSpace>
+
+</WhiteSpace><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><FunctionKeyword>Count</FunctionKeyword><FunctionParens><Other>N</Other></FunctionParens><WhiteSpace> </WhiteSpace></Clause><Clause><OtherKeyword>FROM</OtherKeyword><SelectionTarget><WhiteSpace> </WhiteSpace><Other>CounterTable</Other></SelectionTarget></Clause></SqlStatement></SqlRoot>
