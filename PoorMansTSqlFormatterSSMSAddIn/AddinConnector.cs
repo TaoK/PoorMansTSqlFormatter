@@ -312,7 +312,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                             selection.CharLeft(true, 1); //newline counts as a distance of one.
                         string selectionText = selection.Text;
                         bool formatSelectionOnly = selectionText.Length > 0 && selectionText.Length != fullText.Length;
-
+						int cursorPoint = selection.ActivePoint.AbsoluteCharOffset;
 
                         string textToFormat = formatSelectionOnly ? selectionText : fullText;
                         bool errorsFound = false;
@@ -324,13 +324,19 @@ namespace PoorMansTSqlFormatterSSMSAddIn
 
                         if (!abortFormatting)
                         {
-                            if (formatSelectionOnly)
-                            {
-                                selection.Delete(1);
-                                selection.Insert(formattedText, (int)EnvDTE.vsInsertFlags.vsInsertFlagsContainNewText);
-                            }
-                            else
-                                ReplaceAllCodeInDocument(_applicationObject.ActiveDocument, formattedText);
+							if (formatSelectionOnly)
+							{
+								//if selection just delete/insert, so the active point is at the end of the selection
+								selection.Delete(1);
+								selection.Insert(formattedText, (int)EnvDTE.vsInsertFlags.vsInsertFlagsContainNewText);
+							}
+							else
+							{
+								//if whole doc then replace all text, and put the cursor approximately where it was (using proportion of text total length before and after)
+								int newPosition = (int)Math.Round(1.0 * cursorPoint * formattedText.Length / textToFormat.Length, 0, MidpointRounding.AwayFromZero);
+								ReplaceAllCodeInDocument(_applicationObject.ActiveDocument, formattedText);
+								((TextSelection)(_applicationObject.ActiveDocument.Selection)).MoveToAbsoluteOffset(newPosition, false);
+							}
                         }
                     }
 
