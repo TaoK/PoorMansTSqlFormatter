@@ -96,6 +96,18 @@ but not limited to:
 * Tim Costello
 * Jörg Burdorf
 * William Lin
+* Brad Wood
+* Richard King
+* Jeff Clark
+* Jarred Cleem
+* Paul Toms
+* Tom Holden
+* Marvin Eads
+* Bill Ruehle
+* Farzad Jalali
+* Sheldon Hull
+* Benjamin Solomon
+
 
 Translation work on this project was originally facilitated by [Amanuens](http://amanuens.com/), the online translation platform that is now sadly defunct.
 
