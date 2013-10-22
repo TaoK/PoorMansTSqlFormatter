@@ -81,18 +81,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_66135CB9D279AE36AD19EF76388637F5"
-        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_66135CB9D279AE36AD19EF76388637F5"
-        "OwnerKey" = "8:_F81D2A83C15AEBC0C10F9783327BEC90"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_75C4CA4C350159EA521B41F35FABE90F"
         "OwnerKey" = "8:_88FCDE46ACDBE50951311E4E007F5427"
         "MsmSig" = "8:_UNDEFINED"
@@ -101,6 +89,24 @@
         {
         "MsmKey" = "8:_88FCDE46ACDBE50951311E4E007F5427"
         "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9F7BD31349EC034B927057542633A78E"
+        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A4127E7EB3A60822BFB9D5E93C1AF2F1"
+        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A4127E7EB3A60822BFB9D5E93C1AF2F1"
+        "OwnerKey" = "8:_9F7BD31349EC034B927057542633A78E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -129,12 +135,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_BD51B1CC57A3351DCEE715E37E112938"
-        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_C8A3B2D90B4C48A3A665D66962410BF7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -147,14 +147,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_F81D2A83C15AEBC0C10F9783327BEC90"
-        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
+        "MsmKey" = "8:_F0E36C53630322721CE0ECCD649839D2"
+        "OwnerKey" = "8:_A4127E7EB3A60822BFB9D5E93C1AF2F1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F81D2A83C15AEBC0C10F9783327BEC90"
-        "OwnerKey" = "8:_BD51B1CC57A3351DCEE715E37E112938"
+        "MsmKey" = "8:_F0E36C53630322721CE0ECCD649839D2"
+        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -190,19 +190,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BD51B1CC57A3351DCEE715E37E112938"
+        "OwnerKey" = "8:_9F7BD31349EC034B927057542633A78E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F81D2A83C15AEBC0C10F9783327BEC90"
+        "OwnerKey" = "8:_A4127E7EB3A60822BFB9D5E93C1AF2F1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_66135CB9D279AE36AD19EF76388637F5"
+        "OwnerKey" = "8:_F0E36C53630322721CE0ECCD649839D2"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -299,7 +299,7 @@
             "Sequence" = "3:1"
             "Identifier" = "8:_11FAB5F7_1CC2_45F0_B248_F54DAD8A13DA"
             "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:/codecomappdatafolder=\"[COMAPPDATAFOLDER]\" /codetargetdir=\"[TARGETDIR]\\\""
+            "CustomActionData" = "8:/codecomappdatafolder=\"[COMAPPDATAFOLDER]\\\" /codetargetdir=\"[TARGETDIR]\\\""
             }
         }
         "DefaultFeature"
@@ -526,37 +526,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_66135CB9D279AE36AD19EF76388637F5"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:LinqBridge, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c2b14eb747628076, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_66135CB9D279AE36AD19EF76388637F5"
-                    {
-                    "Name" = "8:LinqBridge.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:LinqBridge.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_75C4CA4C350159EA521B41F35FABE90F"
             {
             "SourcePath" = "8:vsmso.olb"
@@ -605,6 +574,68 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9F7BD31349EC034B927057542633A78E"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterPluginShared, Version=1.5.1.8761, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_9F7BD31349EC034B927057542633A78E"
+                    {
+                    "Name" = "8:PoorMansTSqlFormatterPluginShared.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:PoorMansTSqlFormatterPluginShared.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A4127E7EB3A60822BFB9D5E93C1AF2F1"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=1.5.1.8760, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_A4127E7EB3A60822BFB9D5E93C1AF2F1"
+                    {
+                    "Name" = "8:PoorMansTSqlFormatterLib.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:PoorMansTSqlFormatterLib.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -659,37 +690,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BD51B1CC57A3351DCEE715E37E112938"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterPluginShared, Version=1.4.1.5584, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_BD51B1CC57A3351DCEE715E37E112938"
-                    {
-                    "Name" = "8:PoorMansTSqlFormatterPluginShared.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:PoorMansTSqlFormatterPluginShared.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C8A3B2D90B4C48A3A665D66962410BF7"
             {
             "SourcePath" = "8:..\\LICENSE.rtf"
@@ -730,20 +730,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F81D2A83C15AEBC0C10F9783327BEC90"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F0E36C53630322721CE0ECCD649839D2"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=1.4.3.5584, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:LinqBridge, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c2b14eb747628076, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_F81D2A83C15AEBC0C10F9783327BEC90"
+                    "_F0E36C53630322721CE0ECCD649839D2"
                     {
-                    "Name" = "8:PoorMansTSqlFormatterLib.dll"
+                    "Name" = "8:LinqBridge.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:PoorMansTSqlFormatterLib.dll"
+            "SourcePath" = "8:LinqBridge.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
@@ -872,7 +872,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PoorMansTSqlFormatterSSMSAddIn"
         "ProductCode" = "8:{70B6311E-1B36-4567-B666-30D93AD23228}"
-        "PackageCode" = "8:{76051812-2A0D-4F50-A073-0F0CB9C7EF94}"
+        "PackageCode" = "8:{1BEDB03F-B13C-47D8-8BD9-F641AD690D68}"
         "UpgradeCode" = "8:{55982D41-85A8-4CF3-B1CA-DD99132FEE6E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"

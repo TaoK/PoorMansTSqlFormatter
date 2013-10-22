@@ -42,7 +42,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             base.Install(stateSaver);
             string commonAppDataFolder = Context.Parameters["codecomappdatafolder"];
             string targetAssemblyFolder = Context.Parameters["codetargetdir"];
-            if (commonAppDataFolder != null && targetAssemblyFolder != null)
+			if (commonAppDataFolder != null && targetAssemblyFolder != null)
             {
                 //find the AddIn file(s) just created, and customize them to point to the correct folder for the assembly
                 FixAddInFileIfExists(targetAssemblyFolder, commonAppDataFolder + @"\Microsoft\SQL Server Management Studio\11.0\Addins\PoorMansTSqlFormatterSSMSAddIn.AddIn", "Microsoft SQL Server Management Studio");
