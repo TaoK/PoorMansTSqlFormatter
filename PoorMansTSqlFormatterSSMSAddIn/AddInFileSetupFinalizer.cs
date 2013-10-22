@@ -44,7 +44,10 @@ namespace PoorMansTSqlFormatterSSMSAddIn
             string targetAssemblyFolder = Context.Parameters["codetargetdir"];
 			if (commonAppDataFolder != null && targetAssemblyFolder != null)
             {
-                //find the AddIn file(s) just created, and customize them to point to the correct folder for the assembly
+				commonAppDataFolder = commonAppDataFolder.Trim();
+				targetAssemblyFolder = targetAssemblyFolder.Trim();
+				targetAssemblyFolder = targetAssemblyFolder.Replace(@"\\", @"\");
+				//find the AddIn file(s) just created, and customize them to point to the correct folder for the assembly
                 FixAddInFileIfExists(targetAssemblyFolder, commonAppDataFolder + @"\Microsoft\SQL Server Management Studio\11.0\Addins\PoorMansTSqlFormatterSSMSAddIn.AddIn", "Microsoft SQL Server Management Studio");
                 FixAddInFileIfExists(targetAssemblyFolder, commonAppDataFolder + @"\Microsoft\VisualStudio\8.0\Addins\PoorMansTSqlFormatterSSMSAddIn.AddIn", "Microsoft Visual Studio");
                 FixAddInFileIfExists(targetAssemblyFolder, commonAppDataFolder + @"\Microsoft\VisualStudio\9.0\Addins\PoorMansTSqlFormatterSSMSAddIn.AddIn", "Microsoft Visual Studio");
@@ -54,6 +57,7 @@ namespace PoorMansTSqlFormatterSSMSAddIn
 
         private static void FixAddInFileIfExists(string TargetAssemblyFolder, string AddInFilePath, string HostAppName)
         {
+
             if (System.IO.File.Exists(AddInFilePath))
             {
                 XmlNameTable nt = new NameTable();

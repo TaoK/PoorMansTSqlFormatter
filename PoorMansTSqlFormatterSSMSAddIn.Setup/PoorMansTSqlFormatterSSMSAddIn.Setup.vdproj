@@ -147,14 +147,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_F0E36C53630322721CE0ECCD649839D2"
-        "OwnerKey" = "8:_A4127E7EB3A60822BFB9D5E93C1AF2F1"
+        "MsmKey" = "8:_E3E19E6EB9210ECF9FDFF79005DDC8A1"
+        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F0E36C53630322721CE0ECCD649839D2"
-        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
+        "MsmKey" = "8:_E3E19E6EB9210ECF9FDFF79005DDC8A1"
+        "OwnerKey" = "8:_A4127E7EB3A60822BFB9D5E93C1AF2F1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -202,7 +202,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F0E36C53630322721CE0ECCD649839D2"
+        "OwnerKey" = "8:_E3E19E6EB9210ECF9FDFF79005DDC8A1"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -299,7 +299,7 @@
             "Sequence" = "3:1"
             "Identifier" = "8:_11FAB5F7_1CC2_45F0_B248_F54DAD8A13DA"
             "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:/codecomappdatafolder=\"[COMAPPDATAFOLDER]\\\" /codetargetdir=\"[TARGETDIR]\\\""
+            "CustomActionData" = "8:/codecomappdatafolder=\"[COMAPPDATAFOLDER]\\ \" /codetargetdir=\"[TARGETDIR]\\ \""
             }
         }
         "DefaultFeature"
@@ -581,7 +581,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterPluginShared, Version=1.5.1.8761, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterPluginShared, Version=1.5.1.10723, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_9F7BD31349EC034B927057542633A78E"
@@ -612,7 +612,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=1.5.1.8760, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=1.5.1.10723, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_A4127E7EB3A60822BFB9D5E93C1AF2F1"
@@ -730,14 +730,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F0E36C53630322721CE0ECCD649839D2"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E3E19E6EB9210ECF9FDFF79005DDC8A1"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:LinqBridge, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c2b14eb747628076, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_F0E36C53630322721CE0ECCD649839D2"
+                    "_E3E19E6EB9210ECF9FDFF79005DDC8A1"
                     {
                     "Name" = "8:LinqBridge.dll"
                     "Attributes" = "3:512"
@@ -871,19 +871,19 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PoorMansTSqlFormatterSSMSAddIn"
-        "ProductCode" = "8:{70B6311E-1B36-4567-B666-30D93AD23228}"
-        "PackageCode" = "8:{1BEDB03F-B13C-47D8-8BD9-F641AD690D68}"
+        "ProductCode" = "8:{A1223C4C-AEF0-4652-AD01-BD756B5935CF}"
+        "PackageCode" = "8:{A8CEB0C3-CA95-4882-8458-B9FFCAA32FAE}"
         "UpgradeCode" = "8:{55982D41-85A8-4CF3-B1CA-DD99132FEE6E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.5.1"
+        "ProductVersion" = "8:1.5.2"
         "Manufacturer" = "8:Tao Klerks"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:Poor Man's T-Sql Formatter SSMS & Visual Studio AddIn"
-        "Subject" = "8:v1.5.1"
+        "Subject" = "8:v1.5.2"
         "ARPCONTACT" = "8:Tao Klerks"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:A simple free (AGPL) add-in for formatting T-SQL from within the SSMS and Visual Studio UI."
