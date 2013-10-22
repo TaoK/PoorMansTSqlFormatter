@@ -30,7 +30,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCopyright("Copyright ©  2011-2013 Tao Klerks")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.5.2.*")]
+[assembly: AssemblyVersion("1.5.3.*")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]

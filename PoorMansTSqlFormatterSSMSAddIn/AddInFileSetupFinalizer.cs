@@ -51,8 +51,9 @@ namespace PoorMansTSqlFormatterSSMSAddIn
                 FixAddInFileIfExists(targetAssemblyFolder, commonAppDataFolder + @"\Microsoft\SQL Server Management Studio\11.0\Addins\PoorMansTSqlFormatterSSMSAddIn.AddIn", "Microsoft SQL Server Management Studio");
                 FixAddInFileIfExists(targetAssemblyFolder, commonAppDataFolder + @"\Microsoft\VisualStudio\8.0\Addins\PoorMansTSqlFormatterSSMSAddIn.AddIn", "Microsoft Visual Studio");
                 FixAddInFileIfExists(targetAssemblyFolder, commonAppDataFolder + @"\Microsoft\VisualStudio\9.0\Addins\PoorMansTSqlFormatterSSMSAddIn.AddIn", "Microsoft Visual Studio");
-                FixAddInFileIfExists(targetAssemblyFolder, commonAppDataFolder + @"\Microsoft\VisualStudio\10.0\Addins\PoorMansTSqlFormatterSSMSAddIn.AddIn", "Microsoft Visual Studio");
-            }
+				FixAddInFileIfExists(targetAssemblyFolder, commonAppDataFolder + @"\Microsoft\VisualStudio\10.0\Addins\PoorMansTSqlFormatterSSMSAddIn.AddIn", "Microsoft Visual Studio");
+				FixAddInFileIfExists(targetAssemblyFolder, commonAppDataFolder + @"\Microsoft\VisualStudio\11.0\Addins\PoorMansTSqlFormatterSSMSAddIn.AddIn", "Microsoft Visual Studio");
+			}
         }
 
         private static void FixAddInFileIfExists(string TargetAssemblyFolder, string AddInFilePath, string HostAppName)

@@ -1,6 +1,10 @@
 ﻿
 ## Poor Man's T-SQL Formatter change log
 
+### Version 1.5.3 (SSMS / Visual Studio Add-In Only)
+
+* Github Issue #109 (Fix to Github Issue #86): Visual Studio 2012 support was never tested before release, and turned out to be broken.
+
 ### Version 1.5.2 (SSMS / Visual Studio Add-In Only)
 
 * Github Issue #107: [Bugfix] Unexplained install failures on SOME machines [thanks Jerrad Elmore for the bug report]

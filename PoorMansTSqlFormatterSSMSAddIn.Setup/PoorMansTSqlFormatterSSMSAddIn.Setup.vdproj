@@ -581,7 +581,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterPluginShared, Version=1.5.1.10723, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterPluginShared, Version=1.5.1.10919, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_9F7BD31349EC034B927057542633A78E"
@@ -612,7 +612,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=1.5.1.10723, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=1.5.1.10918, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_A4127E7EB3A60822BFB9D5E93C1AF2F1"
@@ -871,19 +871,19 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PoorMansTSqlFormatterSSMSAddIn"
-        "ProductCode" = "8:{A1223C4C-AEF0-4652-AD01-BD756B5935CF}"
+        "ProductCode" = "8:{70B6311E-1B36-4567-B666-30D93AD23228}"
         "PackageCode" = "8:{A8CEB0C3-CA95-4882-8458-B9FFCAA32FAE}"
         "UpgradeCode" = "8:{55982D41-85A8-4CF3-B1CA-DD99132FEE6E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.5.2"
+        "ProductVersion" = "8:1.5.3"
         "Manufacturer" = "8:Tao Klerks"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:Poor Man's T-Sql Formatter SSMS & Visual Studio AddIn"
-        "Subject" = "8:v1.5.2"
+        "Subject" = "8:v1.5.3"
         "ARPCONTACT" = "8:Tao Klerks"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:A simple free (AGPL) add-in for formatting T-SQL from within the SSMS and Visual Studio UI."
