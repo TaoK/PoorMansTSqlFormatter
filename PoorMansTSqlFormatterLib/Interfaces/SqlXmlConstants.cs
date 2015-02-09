@@ -26,7 +26,6 @@ namespace PoorMansTSqlFormatterLib.Interfaces
 {
     public static class SqlXmlConstants
     {
-
         public const string ENAME_SQL_ROOT = "SqlRoot";
         public const string ENAME_SQL_STATEMENT = "SqlStatement";
         public const string ENAME_SQL_CLAUSE = "Clause";
@@ -122,6 +121,8 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         public const string ENAME_MONETARY_VALUE = "MonetaryValue";
         public const string ENAME_BINARY_VALUE = "BinaryValue";
 
+        public const string ENAME_PARAMETER = "Parameter";
+        
         //attribute names
         public const string ANAME_ERRORFOUND = "errorFound";
         public const string ANAME_HASERROR = "hasError";

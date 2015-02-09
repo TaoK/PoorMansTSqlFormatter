@@ -45,6 +45,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         Number,
         BinaryValue,
         OtherOperator,
-        PseudoName
+        PseudoName,
+        Parameter
     }
 }
