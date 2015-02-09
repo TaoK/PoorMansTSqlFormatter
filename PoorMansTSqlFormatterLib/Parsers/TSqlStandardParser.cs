@@ -1194,6 +1194,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     case SqlTokenType.BinaryValue:
                     case SqlTokenType.MonetaryValue:
                     case SqlTokenType.PseudoName:
+                    case SqlTokenType.Parameter:
                         sqlTree.SaveNewElement(GetEquivalentSqlNodeName(token.Type), token.Value);
                         break;
                     default:
@@ -1326,6 +1327,8 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     return SqlXmlConstants.ENAME_BINARY_VALUE;
                 case SqlTokenType.PseudoName:
                     return SqlXmlConstants.ENAME_PSEUDONAME;
+                case SqlTokenType.Parameter:
+                    return SqlXmlConstants.ENAME_PARAMETER;
                 default:
                     throw new Exception("Mapping not found for provided Token Type");
             }
