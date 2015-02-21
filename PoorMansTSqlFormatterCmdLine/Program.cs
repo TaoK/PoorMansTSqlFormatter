@@ -329,12 +329,33 @@ namespace PoorMansTSqlFormatterCmdLine
             bool failedFolder = false;
             Exception parseException = null;
 
-            //TODO: play with / test encoding complexities
-            //TODO: consider using auto-detection - read binary, autodetect, convert.
-            //TODO: consider whether to keep same output encoding as source file, or always use same, and if so whether to make parameter-based.
+            //TODO: encoding: make parameter-based (input\output\auto detect).
             try
             {
-                oldFileContents = System.IO.File.ReadAllText(fileInfo.FullName);
+                var fileContent = System.IO.File.ReadAllBytes(fileInfo.FullName);
+                Ude.CharsetDetector cdet = new Ude.CharsetDetector();
+                cdet.Feed(fileContent, 0, fileContent.Length);
+                cdet.DataEnd();
+                Encoding fileEncoding;
+                if (cdet.Charset != null)
+                {
+                    switch (cdet.Charset)
+                    {
+                        case Ude.Charsets.MAC_CYRILLIC:
+                        case Ude.Charsets.KOI8R:
+                        case Ude.Charsets.IBM866:
+                            fileEncoding = Encoding.GetEncoding(Ude.Charsets.WIN1251);  //HACK: Russians use this encoding (almost always).
+                            break;
+                        default:
+                            fileEncoding = Encoding.GetEncoding(cdet.Charset);
+                            break;
+                    }
+                }
+                else
+                {
+                    fileEncoding = Encoding.Default;    //default OS ANSI code page
+                }
+                oldFileContents = fileEncoding.GetString(fileContent, 0, fileContent.Length);
             }
             catch (Exception ex)
             {
@@ -429,11 +450,13 @@ namespace PoorMansTSqlFormatterCmdLine
             }
         }
 
+        private static Encoding UTF8_NoBOM_Encoding = new UTF8Encoding(false);
+
         private static void WriteResultFile(string targetFilePath, string replaceFromFolderPath, string replaceToFolderPath, ref bool warningEncountered, string newFileContents)
         {
             try
             {
-                File.WriteAllText(targetFilePath, newFileContents);
+                File.WriteAllText(targetFilePath, newFileContents, UTF8_NoBOM_Encoding);    //write in UTF-8 (without BOM) always
             }
             catch (Exception ex)
             {
