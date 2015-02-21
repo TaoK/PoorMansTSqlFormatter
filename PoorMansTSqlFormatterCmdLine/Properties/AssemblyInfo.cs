@@ -32,4 +32,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("4dacf3ba-d535-4244-b756-7d9ecfe577ae")]
-[assembly: AssemblyVersion("1.5.1.*")]
+[assembly: AssemblyVersion("1.5.2.*")]

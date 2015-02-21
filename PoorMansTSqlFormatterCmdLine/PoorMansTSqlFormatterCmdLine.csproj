@@ -42,7 +42,9 @@
     <Reference Include="NDesk.Options">
       <HintPath>References\NDesk.Options\NDesk.Options.dll</HintPath>
     </Reference>
-  </ItemGroup>
+    <Reference Include="Ude">
+      <HintPath>..\packages\UDE.CSharp.1.1.0\lib\Ude.dll</HintPath>
+    </Reference>  </ItemGroup>
   <ItemGroup>
     <Compile Include="FrameworkClassReplacements\SingleAssemblyResourceManager.cs" />
     <Compile Include="GeneralLanguageContent.Designer.cs">
@@ -52,6 +54,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="packages.config" />
     <None Include="References\NDesk.Options\Options.cs" />
   </ItemGroup>
   <ItemGroup>
