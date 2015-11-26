@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterVSIX", "PoorMansTSqlFormatterVSIX.csproj", "{26AA08F4-559F-4C3F-872B-552EEAD5F392}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterPluginSharedKey", "..\PoorMansTSqlFormatterPluginShared\PoorMansTSqlFormatterPluginSharedKey.csproj", "{4C350944-937B-4416-8442-3197FC7098F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterLibKey", "..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLibKey.csproj", "{ADBDFDCA-CAB6-4569-9151-0BD42E65B400}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{26AA08F4-559F-4C3F-872B-552EEAD5F392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26AA08F4-559F-4C3F-872B-552EEAD5F392}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26AA08F4-559F-4C3F-872B-552EEAD5F392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26AA08F4-559F-4C3F-872B-552EEAD5F392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C350944-937B-4416-8442-3197FC7098F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C350944-937B-4416-8442-3197FC7098F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C350944-937B-4416-8442-3197FC7098F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C350944-937B-4416-8442-3197FC7098F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADBDFDCA-CAB6-4569-9151-0BD42E65B400}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADBDFDCA-CAB6-4569-9151-0BD42E65B400}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADBDFDCA-CAB6-4569-9151-0BD42E65B400}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADBDFDCA-CAB6-4569-9151-0BD42E65B400}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
