@@ -170,9 +170,9 @@ namespace PoorMansTSqlFormatterVSIX
                     else
                     {
                         //if whole doc then replace all text, and put the cursor approximately where it was (using proportion of text total length before and after)
-                        int newPosition = (int)Math.Round(1.0 * cursorPoint * formattedText.Length / textToFormat.Length, 0, MidpointRounding.AwayFromZero);
+                        //int newPosition = (int)Math.Round(1.0 * cursorPoint * formattedText.Length / textToFormat.Length, 0, MidpointRounding.AwayFromZero);
                         ReplaceAllCodeInDocument(_applicationObject.ActiveDocument, formattedText);
-                        ((TextSelection)(_applicationObject.ActiveDocument.Selection)).MoveToAbsoluteOffset(newPosition, false);
+                        //((TextSelection)(_applicationObject.ActiveDocument.Selection)).MoveToAbsoluteOffset(newPosition, false);
                     }
                 }
             }
@@ -223,7 +223,7 @@ namespace PoorMansTSqlFormatterVSIX
             TextDocument textDoc = targetDoc.Object("TextDocument") as TextDocument;
             if (textDoc != null)
             {
-                textDoc.StartPoint.CreateEditPoint().ReplaceText(textDoc.EndPoint, newText, (int)vsEPReplaceTextOptions.vsEPReplaceTextAutoformat);
+                textDoc.StartPoint.CreateEditPoint().ReplaceText(textDoc.EndPoint, newText, (int)vsEPReplaceTextOptions.vsEPReplaceTextKeepMarkers);
             }
         }
 
