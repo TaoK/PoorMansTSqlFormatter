@@ -1967,7 +1967,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
             KeywordList.Add("MONEY", KeywordType.DataTypeKeyword);
             KeywordList.Add("MONTH", KeywordType.FunctionKeyword);
             KeywordList.Add("MOVE", KeywordType.OtherKeyword);
-            KeywordList.Add("NAME", KeywordType.OtherKeyword);
+            KeywordList.Add("NAMES", KeywordType.OtherKeyword);
             KeywordList.Add("NATIONAL", KeywordType.DataTypeKeyword);
             KeywordList.Add("NCHAR", KeywordType.DataTypeKeyword);
             KeywordList.Add("NEWID", KeywordType.FunctionKeyword);
