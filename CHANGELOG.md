@@ -1,6 +1,13 @@
 ﻿
 ## Poor Man's T-SQL Formatter change log
 
+### Version 1.6.1
+
+* Change base IDE to VS2013 Community Edition
+* Change DllExport library from unversioned inclusion to NuGet package for NPP Plugin
+* Patch NPP Plugin helper to support x64 (https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net/pull/19)
+
+
 ### Version 1.5.3 (SSMS / Visual Studio Add-In Only)
 
 * Github Issue #109 (Fix to Github Issue #86): Visual Studio 2012 support was never tested before release, and turned out to be broken.

@@ -1,6 +1,14 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3049502E-2389-4C0B-88EB-485A0C4C79C1}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
+		README.md = README.md
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterLib", "PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj", "{ADBDFDCA-CAB6-4569-9151-0BD42E65B400}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterDemo", "PoorMansTSqlFormatterDemo\PoorMansTSqlFormatterDemo.csproj", "{9C7499A9-0A53-499B-8320-5CF4ECB72683}"
@@ -11,11 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterWebDem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterSSMSAddIn", "PoorMansTSqlFormatterSSMSAddIn\PoorMansTSqlFormatterSSMSAddIn.csproj", "{BBE30E5A-E867-47BA-92E7-E718AB78CAE1}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PoorMansTSqlFormatterSSMSAddIn.Setup", "PoorMansTSqlFormatterSSMSAddIn.Setup\PoorMansTSqlFormatterSSMSAddIn.Setup.vdproj", "{5A4006AF-D565-4BB9-9CA4-C246862F51DE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterCmdLine", "PoorMansTSqlFormatterCmdLine\PoorMansTSqlFormatterCmdLine.csproj", "{5FA98EDC-12DA-4580-9845-788590C59922}"
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PoorMansTSqlFormatterWinMergePlugin.Setup", "PoorMansTSqlFormatterWinMergePlugin.Setup\PoorMansTSqlFormatterWinMergePlugin.Setup.vdproj", "{5E92EEDA-5205-4E22-B2F8-4ADB5199D70B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterNppPlugin", "PoorMansTSqlFormatterNppPlugin\PoorMansTSqlFormatterNppPlugin.csproj", "{E56F6E12-089C-40ED-BCFD-923E5FA121A1}"
 EndProject
@@ -23,11 +27,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterPlugin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterLib_35", "PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib_35.csproj", "{DBBDE1C0-D108-4B68-A7D2-C1CE55BBC704}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3049502E-2389-4C0B-88EB-485A0C4C79C1}"
-	ProjectSection(SolutionItems) = preProject
-		CHANGELOG.md = CHANGELOG.md
-		README.md = README.md
-	EndProjectSection
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PoorMansTSqlFormatterSSMSAddIn.Setup", "PoorMansTSqlFormatterSSMSAddIn.Setup\PoorMansTSqlFormatterSSMSAddIn.Setup.vdproj", "{0CA2DC52-392A-422B-AECD-A0880E71F608}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PoorMansTSqlFormatterWinMergePlugin.Setup", "PoorMansTSqlFormatterWinMergePlugin.Setup\PoorMansTSqlFormatterWinMergePlugin.Setup.vdproj", "{1DBCA552-F3F0-494C-A678-796A1EEDA724}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,14 +57,10 @@ Global
 		{BBE30E5A-E867-47BA-92E7-E718AB78CAE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBE30E5A-E867-47BA-92E7-E718AB78CAE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBE30E5A-E867-47BA-92E7-E718AB78CAE1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A4006AF-D565-4BB9-9CA4-C246862F51DE}.Debug|Any CPU.ActiveCfg = Debug
-		{5A4006AF-D565-4BB9-9CA4-C246862F51DE}.Release|Any CPU.ActiveCfg = Release
 		{5FA98EDC-12DA-4580-9845-788590C59922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5FA98EDC-12DA-4580-9845-788590C59922}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FA98EDC-12DA-4580-9845-788590C59922}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FA98EDC-12DA-4580-9845-788590C59922}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E92EEDA-5205-4E22-B2F8-4ADB5199D70B}.Debug|Any CPU.ActiveCfg = Debug
-		{5E92EEDA-5205-4E22-B2F8-4ADB5199D70B}.Release|Any CPU.ActiveCfg = Release
 		{E56F6E12-089C-40ED-BCFD-923E5FA121A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E56F6E12-089C-40ED-BCFD-923E5FA121A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E56F6E12-089C-40ED-BCFD-923E5FA121A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -75,6 +73,14 @@ Global
 		{DBBDE1C0-D108-4B68-A7D2-C1CE55BBC704}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBBDE1C0-D108-4B68-A7D2-C1CE55BBC704}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBBDE1C0-D108-4B68-A7D2-C1CE55BBC704}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CA2DC52-392A-422B-AECD-A0880E71F608}.Debug|Any CPU.ActiveCfg = Debug
+		{0CA2DC52-392A-422B-AECD-A0880E71F608}.Debug|Any CPU.Build.0 = Debug
+		{0CA2DC52-392A-422B-AECD-A0880E71F608}.Release|Any CPU.ActiveCfg = Release
+		{0CA2DC52-392A-422B-AECD-A0880E71F608}.Release|Any CPU.Build.0 = Release
+		{1DBCA552-F3F0-494C-A678-796A1EEDA724}.Debug|Any CPU.ActiveCfg = Debug
+		{1DBCA552-F3F0-494C-A678-796A1EEDA724}.Debug|Any CPU.Build.0 = Debug
+		{1DBCA552-F3F0-494C-A678-796A1EEDA724}.Release|Any CPU.ActiveCfg = Release
+		{1DBCA552-F3F0-494C-A678-796A1EEDA724}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
