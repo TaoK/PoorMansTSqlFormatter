@@ -42,6 +42,7 @@ for reformatting T-SQL code.
     parens in compatibility level 90 vs table hints without "WITH" keyword in 
     compatibility level 80), no approach has been decided. For now, table hints 
     without WITH are considered to be arguments to a function.
+* Settings may not be correctly maintained across major upgrades of SSMS and Visual Studio
  
 ### Known Issues / Todo
 
