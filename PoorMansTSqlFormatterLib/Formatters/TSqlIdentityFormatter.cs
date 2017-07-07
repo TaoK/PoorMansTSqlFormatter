@@ -25,6 +25,10 @@ using PoorMansTSqlFormatterLib.Interfaces;
 
 namespace PoorMansTSqlFormatterLib.Formatters
 {
+    /// <summary>
+    /// This formatter is intended to output *exactly the same content as initially parsed*, unless the 
+    /// "HtmlColoring" option is enabled (then it should look the same in HTML, except for the coloring).
+    /// </summary>
     public class TSqlIdentityFormatter : Interfaces.ISqlTokenFormatter, Interfaces.ISqlTreeFormatter
     {
 

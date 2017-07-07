@@ -1,5 +1,5 @@
 ﻿
-This project/solution is designed to be built in Microsoft Visual Studio 2008 (or 2008 express) or later, 
+This project/solution is designed to be built in Microsoft Visual Studio 2013 Community Edition (or better), 
 and has a few build-time dependencies.
 
 Some dependencies are internal/bundled:

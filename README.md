@@ -42,6 +42,7 @@ for reformatting T-SQL code.
     parens in compatibility level 90 vs table hints without "WITH" keyword in 
     compatibility level 80), no approach has been decided. For now, table hints 
     without WITH are considered to be arguments to a function.
+* Settings may not be correctly maintained across major upgrades of SSMS and Visual Studio
  
 ### Known Issues / Todo
 
@@ -74,7 +75,8 @@ This project uses several external libraries:
     license, and its homepage is here: http://code.google.com/p/linqbridge/
 * NUnit, for automated testing. NUnit is licensed under a custom open-source license
     based on the zlib/libpng license, and its homepage is: http://www.nunit.org/
-* DLLExport and Notepad++ C# plugin template, based on work by Robert Giesecke and UFO, 
+* UnmanagedExports (DLLExport), for exporting .Net code to Notepad++ plugin environment
+* Notepad++ C# plugin template, based on work by Robert Giesecke and UFO, 
     available from the [notepad++ plugin development forum](https://sourceforge.net/projects/notepad-plus/forums/forum/482781).
 * ILRepack, by François Valdy, for assembly-merging, available from the [github project page](https://github.com/gluck/il-repack).
 
