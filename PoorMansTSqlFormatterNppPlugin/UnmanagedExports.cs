@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using NppPluginNET;
-using NppPlugin.DllExport;
+using RGiesecke.DllExport;
 
 namespace PoorMansTSqlFormatterNppPlugin
 {
