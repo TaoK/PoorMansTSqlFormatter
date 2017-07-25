@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011-2013 Tao Klerks
+Copyright (C) 2011-2017 Tao Klerks
 
 Additional Contributors:
  * Timothy Klenke, 2012
@@ -31,6 +31,7 @@ using PoorMansTSqlFormatterLib.Formatters;
 using PoorMansTSqlFormatterLib.Interfaces;
 using PoorMansTSqlFormatterLib.Parsers;
 using PoorMansTSqlFormatterLib.Tokenizers;
+using PoorMansTSqlFormatterLib.ParseStructure;
 
 namespace PoorMansTSqlFormatterTests
 {
@@ -60,11 +61,15 @@ namespace PoorMansTSqlFormatterTests
         {
             string inputSQL = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
             ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
-            XmlDocument parsedOriginal = _parser.ParseSQL(tokenized);
-
+            Node parsedOriginal = _parser.ParseSQL(tokenized);
             string obfuscatedSql = _obfuscatingFormatter.FormatSQLTree(parsedOriginal);
-            ITokenList tokenizedAgain = _tokenizer.TokenizeSQL(obfuscatedSql);
-            XmlDocument parsedAgain = _parser.ParseSQL(tokenizedAgain);
+
+            var inputToSecondPass = obfuscatedSql;
+            if (inputToSecondPass.StartsWith(Utils.ERROR_FOUND_WARNING))
+                inputToSecondPass = inputToSecondPass.Replace(Utils.ERROR_FOUND_WARNING, "");
+
+            ITokenList tokenizedAgain = _tokenizer.TokenizeSQL(inputToSecondPass);
+            Node parsedAgain = _parser.ParseSQL(tokenizedAgain);
             string unObfuscatedSql = _standardFormatter.FormatSQLTree(parsedAgain);
 
             Utils.StripCommentsFromSqlTree(parsedOriginal);

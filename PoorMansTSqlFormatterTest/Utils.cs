@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011-2013 Tao Klerks
+Copyright (C) 2011-2017 Tao Klerks
 
 Additional Contributors:
  * Timothy Klenke, 2012
@@ -21,11 +21,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml;
-using NUnit.Framework;
+using System.Linq;
+using PoorMansTSqlFormatterLib.Interfaces;
+using PoorMansTSqlFormatterLib.ParseStructure;
 
 namespace PoorMansTSqlFormatterTests
 {
@@ -38,6 +38,7 @@ namespace PoorMansTSqlFormatterTests
 
         public const string INVALID_SQL_WARNING = "THIS TEST FILE IS NOT VALID SQL";
         public const string REFORMATTING_INCONSISTENCY_WARNING = "KNOWN SQL REFORMATTING INCONSISTENCY";
+        public const string ERROR_FOUND_WARNING = "--WARNING! ERRORS ENCOUNTERED DURING SQL PARSING!\r\n";
 
         public static string GetTestContentFolder(string folderName)
         {
@@ -54,23 +55,24 @@ namespace PoorMansTSqlFormatterTests
             }
         }
 
-        public static void StripWhiteSpaceFromSqlTree(XmlDocument sqlTree)
+        public static void StripWhiteSpaceFromSqlTree(Node sqlTree)
         {
-            StripElementNameFromXml(sqlTree, PoorMansTSqlFormatterLib.Interfaces.SqlXmlConstants.ENAME_WHITESPACE);
+            StripElementNamesFromXml(sqlTree, new[] { SqlStructureConstants.ENAME_WHITESPACE });
         }
 
-        public static void StripCommentsFromSqlTree(XmlDocument sqlTree)
+        public static void StripCommentsFromSqlTree(Node sqlTree)
         {
-            StripElementNameFromXml(sqlTree, PoorMansTSqlFormatterLib.Interfaces.SqlXmlConstants.ENAME_COMMENT_MULTILINE);
-            StripElementNameFromXml(sqlTree, PoorMansTSqlFormatterLib.Interfaces.SqlXmlConstants.ENAME_COMMENT_SINGLELINE);
-            StripElementNameFromXml(sqlTree, PoorMansTSqlFormatterLib.Interfaces.SqlXmlConstants.ENAME_COMMENT_SINGLELINE_CSTYLE);
+            StripElementNamesFromXml(sqlTree, SqlStructureConstants.ENAMELIST_COMMENT);
         }
 
-        private static void StripElementNameFromXml(XmlDocument sqlTree, string elementName)
+        private static void StripElementNamesFromXml(Node sqlTree, IEnumerable<string> elementNames)
         {
-            XmlNodeList deletionCandidates = sqlTree.SelectNodes(string.Format("//*[local-name() = '{0}']", elementName));
-            foreach (XmlElement deletionCandidate in deletionCandidates)
-                deletionCandidate.ParentNode.RemoveChild(deletionCandidate);
+            var toRemove = sqlTree.ChildrenByNames(elementNames).ToList();
+            foreach (Node childThing in toRemove)
+                sqlTree.RemoveChild(childThing);
+
+            foreach (Node childThing in sqlTree.Children)
+                StripElementNamesFromXml(childThing, elementNames);
         }
 
         public static IEnumerable<string> GetInputSqlFileNames()
@@ -112,28 +114,5 @@ namespace PoorMansTSqlFormatterTests
             }
             return "";
         }
-
-        internal static Dictionary<string, string> GetConfigKeyCollection(string configString)
-        {
-            Dictionary<string, string> configKeys = new Dictionary<string,string>();
-            if (configString != "")
-            {
-                var pairs = configString.Split(',');
-                foreach (var pair in pairs)
-                {
-                    var vals = pair.Split('=');
-                    if (vals.Length == 2)
-                    {
-                        configKeys.Add(vals[0], vals[1]);
-                    }
-                    else
-                    {
-                        throw new Exception(string.Format("Test file config parens '{0}' contained invalid pair!", configString));
-                    }
-                }
-            }
-            return configKeys;
-        }
-
     }
 }

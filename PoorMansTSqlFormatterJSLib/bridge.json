@@ -1,0 +1,16 @@
+{
+  "output": "$(OutDir)/bridge/",
+
+  "sourceMap": {
+    "enabled": true
+  },
+
+  "html": {
+    "disabled": true
+  },
+
+  "cleanOutputFolderBeforeBuild": false
+
+  // More config options available at
+  // https://github.com/bridgedotnet/Bridge/wiki/global-configuration
+}

@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2017 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -29,6 +29,8 @@ using PoorMansTSqlFormatterLib.Formatters;
 using PoorMansTSqlFormatterLib.Interfaces;
 using PoorMansTSqlFormatterLib.Parsers;
 using PoorMansTSqlFormatterLib.Tokenizers;
+using PoorMansTSqlFormatterLib.ParseStructure;
+using PoorMansTSqlFormatterLib;
 
 namespace PoorMansTSqlFormatterTests
 {
@@ -58,9 +60,9 @@ namespace PoorMansTSqlFormatterTests
             string inputSql = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
 
             ITokenList tokenized = _tokenizer.TokenizeSQL(inputSql);
-            XmlDocument parsed = _parser.ParseSQL(tokenized);
+            Node parsed = _parser.ParseSQL(tokenized);
 
-            Assert.AreEqual(expectedXmlDoc.OuterXml, parsed.OuterXml);
+            Assert.AreEqual(expectedXmlDoc.OuterXml, parsed.ToXmlDoc().OuterXml);
         }
 
     }

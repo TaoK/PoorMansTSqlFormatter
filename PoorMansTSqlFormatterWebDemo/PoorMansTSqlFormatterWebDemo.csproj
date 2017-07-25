@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -49,6 +49,12 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DemoPage.html" />
+    <Content Include="DemoSupportFiles\formattingengine.js" />
+    <Content Include="DemoSupportFiles\formattingmapper.js" />
+    <Content Include="DemoSupportFiles\formattingworker.js" />
+    <Content Include="DemoSupportFiles\jquery-1.5.2.min.js" />
+    <Content Include="DemoSupportFiles\minimal.css" />
     <Content Include="FormatterService.asmx" />
     <Content Include="Sorry.htm" />
     <Content Include="Web.config" />
@@ -68,6 +74,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="JSLibReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Postbuild_CopyJSLib.bat" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -79,6 +89,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>Call $(ProjectDir)Postbuild_CopyJSLib.bat $(SolutionDir) $(ProjectDir)</PostBuildEvent>
+  </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">

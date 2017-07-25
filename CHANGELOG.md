@@ -1,6 +1,15 @@
 
 ## Poor Man's T-SQL Formatter change log
 
+### Version 2.0.0
+
+* Introduce Bridge.Net for JS transpiling
+* Introduce JS-based demo page
+* Introduce OpenCover and ReportGenerator for coverage analysis
+
+Breaking Changes:
+ - SqlTree change: is no longer an XML document! New lighter-weight structure supports JS transpiling
+
 ### Version 1.6.1
 
 * Change base IDE to VS2015 Community Edition
