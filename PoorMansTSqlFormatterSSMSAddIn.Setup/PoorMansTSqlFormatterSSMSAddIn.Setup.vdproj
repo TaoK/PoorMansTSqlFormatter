@@ -64,13 +64,13 @@
         "Entry"
         {
         "MsmKey" = "8:_30875DF2C05C070409CFF26B79B08CF7"
-        "OwnerKey" = "8:_08403CA0CE2045A05AC9BEB5642960AE"
+        "OwnerKey" = "8:_2F21661F92D7C7841F65D94097A918DE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_30875DF2C05C070409CFF26B79B08CF7"
-        "OwnerKey" = "8:_2F21661F92D7C7841F65D94097A918DE"
+        "OwnerKey" = "8:_08403CA0CE2045A05AC9BEB5642960AE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -148,13 +148,13 @@
         "Entry"
         {
         "MsmKey" = "8:_AB1DC323CF6DC77991D7809E149D2BF8"
-        "OwnerKey" = "8:_08403CA0CE2045A05AC9BEB5642960AE"
+        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_AB1DC323CF6DC77991D7809E149D2BF8"
-        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
+        "OwnerKey" = "8:_08403CA0CE2045A05AC9BEB5642960AE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -178,7 +178,7 @@
         "Entry"
         {
         "MsmKey" = "8:_F979E8FC480A627D0D0A4BA63580D293"
-        "OwnerKey" = "8:_AB1DC323CF6DC77991D7809E149D2BF8"
+        "OwnerKey" = "8:_4DAF8C15EF563D2321F9B768CC7183F7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -190,7 +190,7 @@
         "Entry"
         {
         "MsmKey" = "8:_F979E8FC480A627D0D0A4BA63580D293"
-        "OwnerKey" = "8:_4DAF8C15EF563D2321F9B768CC7183F7"
+        "OwnerKey" = "8:_AB1DC323CF6DC77991D7809E149D2BF8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -202,43 +202,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_88FCDE46ACDBE50951311E4E007F5427"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4DAF8C15EF563D2321F9B768CC7183F7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F979E8FC480A627D0D0A4BA63580D293"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_08403CA0CE2045A05AC9BEB5642960AE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2F21661F92D7C7841F65D94097A918DE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_30875DF2C05C070409CFF26B79B08CF7"
+        "OwnerKey" = "8:_69F171AE81CF354BADF3579093014147"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -250,7 +214,43 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_69F171AE81CF354BADF3579093014147"
+        "OwnerKey" = "8:_30875DF2C05C070409CFF26B79B08CF7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2F21661F92D7C7841F65D94097A918DE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_08403CA0CE2045A05AC9BEB5642960AE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_F979E8FC480A627D0D0A4BA63580D293"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2BF7F7F6C8CB4035B429BD26AABE1B79"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4DAF8C15EF563D2321F9B768CC7183F7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_88FCDE46ACDBE50951311E4E007F5427"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -384,7 +384,7 @@
             "Sequence" = "3:1"
             "Identifier" = "8:_11FAB5F7_1CC2_45F0_B248_F54DAD8A13DA"
             "InstallerClass" = "11:TRUE"
-            "CustomActionData" = "8:/codecomappdatafolder=\"[COMAPPDATAFOLDER]\\ \" /codetargetdir=\"[TARGETDIR]\\ \""
+            "CustomActionData" = "8:/codecomappdatafolder=\"[COMAPPDATAFOLDER]\\ \" /codetargetdir=\"[TARGETDIR]\\ \" /ssms2014extensions=\"[SSMS2014EXTENSIONS]\\ \" /ssms2016extensions=[SSMS2016EXTENSIONS]\\ \""
             }
         }
         "DefaultFeature"
@@ -401,7 +401,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:2.0.50727"
+                "FrameworkVersion" = "8:2.0.50727 "
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=76617"
                 }
@@ -416,11 +416,6 @@
             "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterSSMSLib, Version=1.6.1.23289, Culture=neutral, PublicKeyToken=fb9a6042fd921db9, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_08403CA0CE2045A05AC9BEB5642960AE"
-                    {
-                    "Name" = "8:PoorMansTSqlFormatterSSMSLib.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:PoorMansTSqlFormatterSSMSLib.dll"
             "TargetName" = "8:"
@@ -507,11 +502,6 @@
             "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterPluginShared, Version=1.5.1.23306, Culture=neutral, PublicKeyToken=fb9a6042fd921db9, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_2F21661F92D7C7841F65D94097A918DE"
-                    {
-                    "Name" = "8:PoorMansTSqlFormatterPluginShared.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:PoorMansTSqlFormatterPluginShared.dll"
             "TargetName" = "8:"
@@ -538,11 +528,6 @@
             "AssemblyAsmDisplayName" = "8:PoorMansTSqlFormatterLib, Version=1.5.1.23305, Culture=neutral, PublicKeyToken=fb9a6042fd921db9, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_30875DF2C05C070409CFF26B79B08CF7"
-                    {
-                    "Name" = "8:PoorMansTSqlFormatterLib.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:PoorMansTSqlFormatterLib.dll"
             "TargetName" = "8:"
@@ -680,11 +665,6 @@
             "AssemblyAsmDisplayName" = "8:Extensibility, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_69F171AE81CF354BADF3579093014147"
-                    {
-                    "Name" = "8:Extensibility.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:Extensibility.dll"
             "TargetName" = "8:"
@@ -742,11 +722,6 @@
             "AssemblyAsmDisplayName" = "8:LinqBridge, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c2b14eb747628076, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_8C824B21BF1154FC77E7DA758DE89028"
-                    {
-                    "Name" = "8:LinqBridge.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:LinqBridge.dll"
             "TargetName" = "8:"
@@ -864,11 +839,6 @@
             "AssemblyAsmDisplayName" = "8:stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_F979E8FC480A627D0D0A4BA63580D293"
-                    {
-                    "Name" = "8:stdole.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:stdole.dll"
             "TargetName" = "8:"
@@ -972,6 +942,14 @@
         }
         "Locator"
         {
+            "{CF66B7F7-B7DA-4B08-A67A-233430638C9C}:_43B64448C98841C4AC4A2DC9AB244F38"
+            {
+            "Name" = "8:Get SSMS2016 Extensions Location"
+            "Root" = "2:2"
+            "RegKey" = "8:Software\\Microsoft\\SQL Server Management Studio\\13.0_Config\\Initialization"
+            "Value" = "8:ApplicationExtensionsFolder"
+            "Property" = "8:SSMS2016EXTENSIONS"
+            }
             "{CF66B7F7-B7DA-4B08-A67A-233430638C9C}:_B7F59F2931DF45049ACE7BD468D7C229"
             {
             "Name" = "8:Get Common App Data Location"
@@ -979,6 +957,14 @@
             "RegKey" = "8:SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"
             "Value" = "8:Common AppData"
             "Property" = "8:COMAPPDATAFOLDER"
+            }
+            "{CF66B7F7-B7DA-4B08-A67A-233430638C9C}:_B9BD7E9FA7DF439AB7132981D63979C6"
+            {
+            "Name" = "8:Get SSMS2014 Extensions Location"
+            "Root" = "2:2"
+            "RegKey" = "8:Software\\Microsoft\\SQL Server Management Studio\\12.0_Config\\Initialization"
+            "Value" = "8:ApplicationExtensionsFolder"
+            "Property" = "8:SSMS2014EXTENSIONS"
             }
             "{CF66B7F7-B7DA-4B08-A67A-233430638C9C}:_CA495E1779CD4C0AA14F25CCD7DA5DED"
             {
@@ -1006,12 +992,12 @@
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.5.3"
+        "ProductVersion" = "8:1.6.1"
         "Manufacturer" = "8:Tao Klerks"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:Poor Man's T-Sql Formatter SSMS & Visual Studio AddIn"
-        "Subject" = "8:v1.5.3"
+        "Subject" = "8:v1.6.1"
         "ARPCONTACT" = "8:Tao Klerks"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:A simple free (AGPL) add-in for formatting T-SQL from within the SSMS and Visual Studio UI."
@@ -1346,13 +1332,127 @@
                         {
                             "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_7FC553F25E9149EC8EEE45B33E00DD2C"
                             {
-                            "Name" = "8:[Manufacturer]"
+                            "Name" = "8:Microsoft"
                             "Condition" = "8:"
                             "AlwaysCreate" = "11:FALSE"
                             "DeleteAtUninstall" = "11:FALSE"
                             "Transitive" = "11:FALSE"
                                 "Keys"
                                 {
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_611C3EE7F8334A6C963AF22133B5294C"
+                                    {
+                                    "Name" = "8:SQL Server Management Studio"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:FALSE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_BC9BE84117B5472BAB347F044BDAE458"
+                                            {
+                                            "Name" = "8:13.0"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_20D42AFA8C6C47EAAE0550931B2AA0A8"
+                                                    {
+                                                    "Name" = "8:Packages"
+                                                    "Condition" = "8:"
+                                                    "AlwaysCreate" = "11:FALSE"
+                                                    "DeleteAtUninstall" = "11:FALSE"
+                                                    "Transitive" = "11:FALSE"
+                                                        "Keys"
+                                                        {
+                                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_33BA683BC86A4463B6E4D885AA9D2126"
+                                                            {
+                                                            "Name" = "8:{5E84B709-1E60-4116-A702-4CDB1A282D6E}"
+                                                            "Condition" = "8:"
+                                                            "AlwaysCreate" = "11:FALSE"
+                                                            "DeleteAtUninstall" = "11:FALSE"
+                                                            "Transitive" = "11:FALSE"
+                                                                "Keys"
+                                                                {
+                                                                }
+                                                                "Values"
+                                                                {
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_1DA6DD9B626C4D59A76BCD491540C4B9"
+                                                                    {
+                                                                    "Name" = "8:SkipLoading"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:3"
+                                                                    "Value" = "3:1"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        "Values"
+                                                        {
+                                                        }
+                                                    }
+                                                }
+                                                "Values"
+                                                {
+                                                }
+                                            }
+                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_CC3BC13984E04831B56C64148224FF9B"
+                                            {
+                                            "Name" = "8:12.0"
+                                            "Condition" = "8:"
+                                            "AlwaysCreate" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "Transitive" = "11:FALSE"
+                                                "Keys"
+                                                {
+                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_F29971C06882405EA26E7FC83E4D34FF"
+                                                    {
+                                                    "Name" = "8:Packages"
+                                                    "Condition" = "8:"
+                                                    "AlwaysCreate" = "11:FALSE"
+                                                    "DeleteAtUninstall" = "11:FALSE"
+                                                    "Transitive" = "11:FALSE"
+                                                        "Keys"
+                                                        {
+                                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_60826F8B48F348A5874847A7A3505CC7"
+                                                            {
+                                                            "Name" = "8:{5E84B709-1E60-4116-A702-4CDB1A282D6E}"
+                                                            "Condition" = "8:"
+                                                            "AlwaysCreate" = "11:FALSE"
+                                                            "DeleteAtUninstall" = "11:FALSE"
+                                                            "Transitive" = "11:FALSE"
+                                                                "Keys"
+                                                                {
+                                                                }
+                                                                "Values"
+                                                                {
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_5340158D2A384E648E031D99305EB03F"
+                                                                    {
+                                                                    "Name" = "8:SkipLoading"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:3"
+                                                                    "Value" = "3:1"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        "Values"
+                                                        {
+                                                        }
+                                                    }
+                                                }
+                                                "Values"
+                                                {
+                                                }
+                                            }
+                                        }
+                                        "Values"
+                                        {
+                                        }
+                                    }
                                 }
                                 "Values"
                                 {
@@ -2140,7 +2240,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2BF7F7F6C8CB4035B429BD26AABE1B79"
             {
-            "SourcePath" = "8:..\\PoorMansTSqlFormatterSSMSAddIn\\obj\\Debug (NPP 64)\\PoorMansTSqlFormatterSSMSAddIn.dll"
+            "SourcePath" = "8:..\\PoorMansTSqlFormatterSSMSAddIn\\obj\\Release\\PoorMansTSqlFormatterSSMSAddIn.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_937F2CB320C94F278697B23671EFF955"
