@@ -14,13 +14,17 @@
     <script>
         var PageService = function () {
             var EnableUI = function () {
-                //$("#inputString").enableme(); //however that works...
+                $("#inputString").removeAttr("disabled");
                 $("#inputString").change(inputChanged);
                 $("#inputString").blur(inputChanged);
             }
 
             var inputChanged = function () {
                 SetOutputPanelContent("Getting formatted SQL, please wait...");
+                DoFormat();
+            }
+
+            var DoFormat = function () {
                 JsFormattingEngine.RequestFormatting("inputString=" + encodeURIComponent($("#inputString").val()) + "&expandCommaLists=true&trailingCommas=true&spaceAfterExpandedComma=false&expandBooleanExpressions=true&expandCaseStatements=true&expandBetweenConditions=true&expandInLists=true&breakJoinOnSections=false&uppercaseKeywords=true&coloring=true&keywordStandardization=false&randomizeColor=false&randomizeLineLengths=false&randomizeKeywordCase=false&preserveComments=false&enableKeywordSubstitution=false&formattingType=standard&indent=%5Ct&spacesPerTab=4&maxLineWidth=999&statementBreaks=2&clauseBreaks=1&language=&jsengine=true&reFormat=true&obfuscate=false");
             }
 
@@ -38,9 +42,9 @@
                 SetOutputPanelContent(formattingResult.outputSqlHtml);
             }
 
-            var initializeFromSettings = function () {
-                if (formatAsYouType)
-                    $('#inputString').keyup(inputKeyEventFireFormat)
+            var CheckSettings = function () {
+                if ($("#formatAsYouGo:checked").val())
+                    $('#inputString').keyup(DoFormat)
                 else
                     //untested...
                     $("#inputString").keyup(null);
@@ -64,9 +68,11 @@
             return {
                 EnableUI: EnableUI,
                 SetOutputPanelContent: SetOutputPanelContent,
-                NotifyFormattingResult: NotifyFormattingResult
-            };
+                NotifyFormattingResult: NotifyFormattingResult,
+                CheckSettings: CheckSettings
+        };
         }();
+
     </script>
     <script>
         $(function () {
@@ -80,8 +86,9 @@
                 'DemoSupportFiles/formattingmapper.js'
             ];
 
-            //not picked up dynamically yet - I can't figure out how to test checked fields...?
-            var formatAsYouType = true;
+            $("#formatAsYouGo").change(PageService.CheckSettings);
+            PageService.CheckSettings();
+
             //TODO: not implemented yet!!
             var formatInPlace = false;
 
@@ -110,7 +117,7 @@
     </header>
     <div class="row">
         <div class="col-6">
-            <textarea name="inputString" id="inputString" style="width: 100%; height: 80vh; padding: 2px; border: 1px solid; " ></textarea>
+            <textarea name="inputString" id="inputString" style="width: 100%; height: 80vh; padding: 2px; border: 1px solid; " disabled="disabled"></textarea>
         </div>
         <div class="col-6">
             <div id="outputDiv" style="height:80vh; padding: 2px; border: 1px solid; overflow: scroll;">

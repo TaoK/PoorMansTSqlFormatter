@@ -1,14 +1,15 @@
 ﻿
 ## Poor Man's T-SQL Formatter
 
-This is a small free .Net 2.0 library (with demo winforms program, web service, SSMS 
-and Visual Studio Addin, Command-line utility, Notepad++ plugin, and WinMerge plugin) 
-for reformatting T-SQL code.
+This is a small free .Net 2.0 and JS library (with demo winforms program, web service,
+SSMS and Visual Studio Addin, Command-line utility, Notepad++ plugin, and WinMerge 
+plugin) for reformatting T-SQL code.
+
 
 
 ### Features
 
-* Simple Xml-based parse tree
+* Simple Xml-style parse tree
 * Extensible, with possibility of supporting other SQL dialects (but none implemented)
 * Configurable according to SQL formatting preferences
 * Handles "procedural" T-SQL; this is not just a SQL statement formatter, but it also 
@@ -24,6 +25,8 @@ for reformatting T-SQL code.
 * Works in Microsoft .Net framework, as well as Mono. The Winforms Demo App is not (yet?)
     available in Mono, but the library itself is fully functional, as is the command-line
     bulk formatting tool.
+* JS library (transpiled from C#) is fully functional for browser or other (eg Node.js) 
+    contexts.
 
 
 ### General Limitations
@@ -79,6 +82,7 @@ This project uses several external libraries:
 * Notepad++ C# plugin template, based on work by Robert Giesecke and UFO, 
     available from the [notepad++ plugin development forum](https://sourceforge.net/projects/notepad-plus/forums/forum/482781).
 * ILRepack, by François Valdy, for assembly-merging, available from the [github project page](https://github.com/gluck/il-repack).
+* Bridge.Net, by Object.Net, for C#-to-JS transpiling, available from http://bridge.net
 
 Special thanks to contributors that have given their time to make this library better:
 

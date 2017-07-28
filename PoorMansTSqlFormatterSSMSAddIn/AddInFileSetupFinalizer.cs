@@ -1,6 +1,6 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
-library for .Net 2.0, written in C#. 
+library for .Net 2.0 and JS, written in C#. 
 Copyright (C) 2012 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify

@@ -1,6 +1,11 @@
 
 ## Poor Man's T-SQL Formatter change log
 
+### Version 2.0.1
+
+* Minor enhancements to JS demo page
+* Fix README content
+
 ### Version 2.0.0
 
 * Introduce Bridge.Net for JS transpiling
