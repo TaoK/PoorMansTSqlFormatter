@@ -36,9 +36,9 @@ namespace PoorMansTSqlFormatterTests
         public const string PARSEDSQLFOLDER = "ParsedSql";
         public const string STANDARDFORMATSQLFOLDER = "StandardFormatSql";
 
-        public const string INVALID_SQL_WARNING = "THIS TEST FILE IS NOT VALID SQL";
+        public const string INVALID_SQL_WARNING = "THIS TEST FILE IS NOT VALID SQL"; //currently unused, could be used for special exceptions
         public const string REFORMATTING_INCONSISTENCY_WARNING = "KNOWN SQL REFORMATTING INCONSISTENCY";
-        public const string ERROR_FOUND_WARNING = "--WARNING! ERRORS ENCOUNTERED DURING SQL PARSING!\r\n";
+        public const string ERROR_FOUND_WARNING = "--WARNING! ERRORS ENCOUNTERED DURING SQL PARSING!\r\n"; //repeated wrt constant in the library, intentionally.
 
         public static string GetTestContentFolder(string folderName)
         {

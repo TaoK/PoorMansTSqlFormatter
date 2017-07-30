@@ -21,12 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System;
-using System.Text;
 using NUnit.Framework;
-using System.IO;
-using System.Xml;
-using System.Collections.Generic;
 using PoorMansTSqlFormatterLib.Formatters;
 using PoorMansTSqlFormatterLib.Interfaces;
 using PoorMansTSqlFormatterLib.Parsers;
@@ -75,10 +70,7 @@ namespace PoorMansTSqlFormatterTests
             Utils.StripCommentsFromSqlTree(parsedOriginal);
             string standardFormattedSql = _standardFormatter.FormatSQLTree(parsedOriginal);
 
-            if (!inputSQL.Contains(Utils.INVALID_SQL_WARNING))
-            {
-                Assert.AreEqual(standardFormattedSql, unObfuscatedSql, "standard-formatted vs obfuscatd and reformatted");
-            }
+            Assert.AreEqual(standardFormattedSql, unObfuscatedSql, "standard-formatted vs obfuscatd and reformatted");
         }
     }
 }

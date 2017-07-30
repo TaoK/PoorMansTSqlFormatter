@@ -1,0 +1,761 @@
+﻿<span class="SQLComment">-- Sample script from Brent Ozar:</span>
+<span class="SQLComment">--  http://www.brentozar.com/sql/blitz-minute-sql-server-takeovers/</span>
+<span class="SQLComment">/*
+Script:       BLITZ! 60 Minute Server Takeovers by Brent Ozar
+Version:      1.1 - May 18, 2010
+Source:       http://www.brentozar.com/sql/blitz-minute-sql-server-takeovers/
+License:      Creative Commons.  For more information, see
+              http://www.brentozar.com/what-i-do/using-material-from-my-blog/
+Description:  Shows what I look for when I take over existing servers.
+              Don't just hit F5 - read through each step to learn what I'm
+              checking for, and how to fix things when they indicate problems.
+*/</span>
+<span class="SQLComment">/* 
+   Backups!  First and foremost, before we touch anything, check backups.
+   Check when each database has been backed up.  If databases aren't being
+   backed up, check the maintenance plans or scripts.  If you don't have
+   scripts, check http://ola.hallengren.com.
+*/</span>
+<span class="SQLKeyword">SELECT</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span>
+	<span class="SQLOperator">,</span><span class="SQLFunction">MAX</span><span class="SQLOperator">(</span>b<span class="SQLOperator">.</span>backup_finish_date<span class="SQLOperator">)</span> <span class="SQLKeyword">AS</span> last_backup_finish_date
+<span class="SQLKeyword">FROM</span> master<span class="SQLOperator">.</span>sys<span class="SQLOperator">.</span>databases d
+<span class="SQLKeyword">LEFT OUTER JOIN</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>backupset b <span class="SQLKeyword">ON</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLOperator">=</span> b<span class="SQLOperator">.</span>database_name
+	<span class="SQLKeyword">AND</span> b<span class="SQLOperator">.</span>type <span class="SQLOperator">=</span> <span class="SQLString">'D'</span>
+<span class="SQLKeyword">WHERE</span> d<span class="SQLOperator">.</span>database_id <span class="SQLOperator">NOT</span> <span class="SQLOperator">IN</span> <span class="SQLOperator">(</span>
+		2
+		<span class="SQLOperator">,</span>3
+		<span class="SQLOperator">)</span> <span class="SQLComment">-- Bonus points if you know what that means</span>
+<span class="SQLKeyword">GROUP</span> <span class="SQLKeyword">BY</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span>
+<span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> 2 <span class="SQLKeyword">DESC</span>
+
+<span class="SQLComment">/*
+	Where are the backups going?  Ideally, we want them on a different server.
+	If the backups are being taken to this same server, and the server's RAID
+	card or motherboard goes bad, we're in trouble.  We sort by media_set_id
+	descending because it's the primary key on the table, so it'll fly even
+	when MSDB is on really slow drives.
+	
+	For more information about where your backups should go, check out:
+	http://www.brentozar.com/sql/backup-best-practices/
+*/</span>
+<span class="SQLKeyword">SELECT</span> <span class="SQLKeyword">TOP</span> 100 physical_device_name
+	<span class="SQLOperator">,</span><span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>backupmediafamily
+<span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> media_set_id <span class="SQLKeyword">DESC</span>
+
+<span class="SQLComment">/*
+   Transaction log backups - do we have any databases in full recovery mode
+   that haven't had t-log backups?  If so, we should think about putting it in
+   simple recovery mode or doing t-log backups.
+*/</span>
+<span class="SQLKeyword">SELECT</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span>
+	<span class="SQLOperator">,</span>d<span class="SQLOperator">.</span>recovery_model
+	<span class="SQLOperator">,</span>d<span class="SQLOperator">.</span>recovery_model_desc
+<span class="SQLKeyword">FROM</span> master<span class="SQLOperator">.</span>sys<span class="SQLOperator">.</span>databases d
+<span class="SQLKeyword">LEFT OUTER JOIN</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>backupset b <span class="SQLKeyword">ON</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLOperator">=</span> b<span class="SQLOperator">.</span>database_name
+	<span class="SQLKeyword">AND</span> b<span class="SQLOperator">.</span>type <span class="SQLOperator">=</span> <span class="SQLString">'L'</span>
+<span class="SQLKeyword">WHERE</span> d<span class="SQLOperator">.</span>recovery_model <span class="SQLOperator">IN</span> <span class="SQLOperator">(</span>
+		1
+		<span class="SQLOperator">,</span>2
+		<span class="SQLOperator">)</span>
+	<span class="SQLKeyword">AND</span> b<span class="SQLOperator">.</span>type <span class="SQLKeyword">IS</span> <span class="SQLKeyword">NULL</span>
+	<span class="SQLKeyword">AND</span> d<span class="SQLOperator">.</span>database_id <span class="SQLOperator">NOT</span> <span class="SQLOperator">IN</span> <span class="SQLOperator">(</span>
+		2
+		<span class="SQLOperator">,</span>3
+		<span class="SQLOperator">)</span>
+
+<span class="SQLComment">/*
+   If there are any databases in full recovery mode with no t-log backups,
+   show the filesize of the according ldf.
+*/</span>
+<span class="SQLKeyword">SELECT</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLKeyword">AS</span> [db_name]
+	<span class="SQLOperator">,</span>f<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLKeyword">AS</span> [ldf_name]
+	<span class="SQLOperator">,</span>f<span class="SQLOperator">.</span>physical_name
+	<span class="SQLOperator">,</span>f<span class="SQLOperator">.</span>size <span class="SQLOperator">*</span> 8 <span class="SQLOperator">/</span> 1024.00 <span class="SQLKeyword">AS</span> [size_in_mb]
+	<span class="SQLOperator">,</span>d<span class="SQLOperator">.</span>recovery_model_desc
+<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>master_files f
+<span class="SQLKeyword">JOIN</span> sys<span class="SQLOperator">.</span>databases d <span class="SQLKeyword">ON</span> f<span class="SQLOperator">.</span>database_id <span class="SQLOperator">=</span> d<span class="SQLOperator">.</span>database_id
+<span class="SQLKeyword">LEFT OUTER JOIN</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>backupset b <span class="SQLKeyword">ON</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLOperator">=</span> b<span class="SQLOperator">.</span>database_name
+	<span class="SQLKeyword">AND</span> b<span class="SQLOperator">.</span>type <span class="SQLOperator">=</span> <span class="SQLString">'L'</span>
+<span class="SQLKeyword">WHERE</span> d<span class="SQLOperator">.</span>recovery_model <span class="SQLOperator">IN</span> <span class="SQLOperator">(</span>
+		1
+		<span class="SQLOperator">,</span>2
+		<span class="SQLOperator">)</span>
+	<span class="SQLKeyword">AND</span> b<span class="SQLOperator">.</span>type <span class="SQLKeyword">IS</span> <span class="SQLKeyword">NULL</span>
+	<span class="SQLKeyword">AND</span> d<span class="SQLOperator">.</span>database_id <span class="SQLOperator">NOT</span> <span class="SQLOperator">IN</span> <span class="SQLOperator">(</span>
+		2
+		<span class="SQLOperator">,</span>3
+		<span class="SQLOperator">)</span>
+	<span class="SQLKeyword">AND</span> f<span class="SQLOperator">.</span>type <span class="SQLOperator">=</span> 1 <span class="SQLComment">-- only show log files</span>
+<span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> f<span class="SQLOperator">.</span>size <span class="SQLKeyword">DESC</span>
+
+<span class="SQLComment">/* 
+   Is the MSDB backup history cleaned up? If you have data older than a couple
+   of months, this is a problem.  You need to set up backup cleanup jobs.  
+   
+   For more information on why this can be a problem?
+   http://www.brentozar.com/archive/2009/09/checking-your-msdb-cleanup-jobs/
+*/</span>
+<span class="SQLKeyword">SELECT</span> <span class="SQLKeyword">TOP</span> 1 backup_start_date
+	<span class="SQLOperator">,</span><span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>backupset
+<span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> backup_set_id <span class="SQLKeyword">ASC</span>
+
+<span class="SQLComment">/*
+   When was the last time DBCC finished successfully?
+   DBCC CHECKDB checks databases for corruption.  You won't know 
+   Script is from http://sqlserverpedia.com/wiki/Last_clean_DBCC_CHECKDB_date
+   To get sample corrupt databases - http://sqlskills.com/pastConferences.asp
+    
+*/</span>
+<span class="SQLKeyword">CREATE</span> <span class="SQLKeyword">TABLE</span> #temp <span class="SQLOperator">(</span>
+	ParentObject <span class="SQLKeyword">VARCHAR</span><span class="SQLOperator">(</span>255<span class="SQLOperator">)</span>
+	<span class="SQLOperator">,</span>[Object] <span class="SQLKeyword">VARCHAR</span><span class="SQLOperator">(</span>255<span class="SQLOperator">)</span>
+	<span class="SQLOperator">,</span>Field <span class="SQLKeyword">VARCHAR</span><span class="SQLOperator">(</span>255<span class="SQLOperator">)</span>
+	<span class="SQLOperator">,</span>[Value] <span class="SQLKeyword">VARCHAR</span><span class="SQLOperator">(</span>255<span class="SQLOperator">)</span>
+	<span class="SQLOperator">)</span>
+
+<span class="SQLKeyword">CREATE</span> <span class="SQLKeyword">TABLE</span> #DBCCResults <span class="SQLOperator">(</span>
+	ServerName <span class="SQLKeyword">VARCHAR</span><span class="SQLOperator">(</span>255<span class="SQLOperator">)</span>
+	<span class="SQLOperator">,</span>DBName <span class="SQLKeyword">VARCHAR</span><span class="SQLOperator">(</span>255<span class="SQLOperator">)</span>
+	<span class="SQLOperator">,</span>LastCleanDBCCDate <span class="SQLKeyword">DATETIME</span>
+	<span class="SQLOperator">)</span>
+
+<span class="SQLKeyword">EXEC</span> master<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_MSforeachdb @command1 <span class="SQLOperator">=</span> <span class="SQLString">'USE [?] INSERT INTO #temp EXECUTE (''DBCC DBINFO WITH TABLERESULTS'')'</span>
+	<span class="SQLOperator">,</span>@command2 <span class="SQLOperator">=</span> <span class="SQLString">'INSERT INTO #DBCCResults SELECT @@SERVERNAME, ''?'', Value FROM #temp WHERE Field = ''dbi_dbccLastKnownGood'''</span>
+	<span class="SQLOperator">,</span>@command3 <span class="SQLOperator">=</span> <span class="SQLString">'TRUNCATE TABLE #temp'</span>
+	<span class="SQLComment">--Delete duplicates due to a bug in SQL Server 2008</span>
+	<span class="SQLOperator">;</span>
+
+<span class="SQLKeyword">WITH</span> DBCC_CTE
+<span class="SQLKeyword">AS</span> <span class="SQLOperator">(</span>
+	<span class="SQLKeyword">SELECT</span> ROW_NUMBER<span class="SQLOperator">(</span><span class="SQLOperator">)</span> <span class="SQLKeyword">OVER</span> <span class="SQLOperator">(</span>
+			<span class="SQLKeyword">PARTITION</span> <span class="SQLKeyword">BY</span> ServerName
+			<span class="SQLOperator">,</span>DBName
+			<span class="SQLOperator">,</span>LastCleanDBCCDate <span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> LastCleanDBCCDate
+			<span class="SQLOperator">)</span> RowID
+	<span class="SQLKeyword">FROM</span> #DBCCResults
+	<span class="SQLOperator">)</span>
+<span class="SQLKeyword">DELETE</span>
+<span class="SQLKeyword">FROM</span> DBCC_CTE
+<span class="SQLKeyword">WHERE</span> RowID <span class="SQLOperator">&gt;</span> 1<span class="SQLOperator">;</span>
+
+<span class="SQLKeyword">SELECT</span> ServerName
+	<span class="SQLOperator">,</span>DBName
+	<span class="SQLOperator">,</span><span class="SQLKeyword">CASE</span> LastCleanDBCCDate
+		<span class="SQLKeyword">WHEN</span> <span class="SQLString">'1900-01-01 00:00:00.000'</span>
+			<span class="SQLKeyword">THEN</span> <span class="SQLString">'Never ran DBCC CHECKDB'</span>
+		<span class="SQLKeyword">ELSE</span> <span class="SQLFunction">CAST</span><span class="SQLOperator">(</span>LastCleanDBCCDate <span class="SQLKeyword">AS</span> <span class="SQLKeyword">VARCHAR</span><span class="SQLOperator">)</span>
+		<span class="SQLKeyword">END</span> <span class="SQLKeyword">AS</span> LastCleanDBCCDate
+<span class="SQLKeyword">FROM</span> #DBCCResults
+<span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> 3
+
+<span class="SQLKeyword">DROP</span> <span class="SQLKeyword">TABLE</span> #temp
+	<span class="SQLOperator">,</span>#DBCCResults<span class="SQLOperator">;</span>
+
+<span class="SQLComment">/*
+	If any databases have never experienced the magic of DBCC, consider doing that
+	as soon as practical.  DBCC CHECKDB is a CPU &amp; IO intensive operation, so
+	consider doing it after business hours.  For more information:
+	http://www.sqlskills.com/blogs/paul/post/CHECKDB-From-Every-Angle-Consistency-Checking-Options-for-a-VLDB.aspx
+	For the demo, we'll run it on a small database right away.  This won't work on
+	your machine unless you have a database named TimeTracking.
+*/</span>
+<span class="SQLComment">--DBCC CHECKDB(TimeTracking)</span>
+<span class="SQLComment">/*
+	Maybe there were DBCC jobs that aren't running.
+	Speaking of which, are jobs failing, and who owns them?
+*/</span>
+<span class="SQLKeyword">SET</span> <span class="SQLKeyword">NOCOUNT</span> <span class="SQLKeyword">ON</span>
+
+<span class="SQLKeyword">DECLARE</span> @MaxLength <span class="SQLKeyword">INT</span>
+
+<span class="SQLKeyword">SET</span> @MaxLength <span class="SQLOperator">=</span> 50
+
+<span class="SQLKeyword">DECLARE</span> @xp_results <span class="SQLKeyword">TABLE</span> <span class="SQLOperator">(</span>
+	job_id <span class="SQLKeyword">UNIQUEIDENTIFIER</span> <span class="SQLOperator">NOT</span> <span class="SQLKeyword">NULL</span>
+	<span class="SQLOperator">,</span>last_run_date <span class="SQLKeyword">NVARCHAR</span><span class="SQLOperator">(</span>20<span class="SQLOperator">)</span> <span class="SQLOperator">NOT</span> <span class="SQLKeyword">NULL</span>
+	<span class="SQLOperator">,</span>last_run_time <span class="SQLKeyword">NVARCHAR</span><span class="SQLOperator">(</span>20<span class="SQLOperator">)</span> <span class="SQLOperator">NOT</span> <span class="SQLKeyword">NULL</span>
+	<span class="SQLOperator">,</span>next_run_date <span class="SQLKeyword">NVARCHAR</span><span class="SQLOperator">(</span>20<span class="SQLOperator">)</span> <span class="SQLOperator">NOT</span> <span class="SQLKeyword">NULL</span>
+	<span class="SQLOperator">,</span>next_run_time <span class="SQLKeyword">NVARCHAR</span><span class="SQLOperator">(</span>20<span class="SQLOperator">)</span> <span class="SQLOperator">NOT</span> <span class="SQLKeyword">NULL</span>
+	<span class="SQLOperator">,</span>next_run_schedule_id <span class="SQLKeyword">INT</span> <span class="SQLOperator">NOT</span> <span class="SQLKeyword">NULL</span>
+	<span class="SQLOperator">,</span>requested_to_run <span class="SQLKeyword">INT</span> <span class="SQLOperator">NOT</span> <span class="SQLKeyword">NULL</span>
+	<span class="SQLOperator">,</span>request_source <span class="SQLKeyword">INT</span> <span class="SQLOperator">NOT</span> <span class="SQLKeyword">NULL</span>
+	<span class="SQLOperator">,</span>request_source_id <span class="SQLKeyword">SYSNAME</span> COLLATE database_default <span class="SQLKeyword">NULL</span>
+	<span class="SQLOperator">,</span>running <span class="SQLKeyword">INT</span> <span class="SQLOperator">NOT</span> <span class="SQLKeyword">NULL</span>
+	<span class="SQLOperator">,</span>current_step <span class="SQLKeyword">INT</span> <span class="SQLOperator">NOT</span> <span class="SQLKeyword">NULL</span>
+	<span class="SQLOperator">,</span>current_retry_attempt <span class="SQLKeyword">INT</span> <span class="SQLOperator">NOT</span> <span class="SQLKeyword">NULL</span>
+	<span class="SQLOperator">,</span>job_state <span class="SQLKeyword">INT</span> <span class="SQLOperator">NOT</span> <span class="SQLKeyword">NULL</span>
+	<span class="SQLOperator">)</span>
+<span class="SQLKeyword">DECLARE</span> @job_owner <span class="SQLKeyword">SYSNAME</span>
+<span class="SQLKeyword">DECLARE</span> @is_sysadmin <span class="SQLKeyword">INT</span>
+
+<span class="SQLKeyword">SET</span> @is_sysadmin <span class="SQLOperator">=</span> <span class="SQLFunction">isnull</span><span class="SQLOperator">(</span><span class="SQLFunction">is_srvrolemember</span><span class="SQLOperator">(</span><span class="SQLString">'sysadmin'</span><span class="SQLOperator">)</span><span class="SQLOperator">,</span> 0<span class="SQLOperator">)</span>
+<span class="SQLKeyword">SET</span> @job_owner <span class="SQLOperator">=</span> <span class="SQLFunction">suser_sname</span><span class="SQLOperator">(</span><span class="SQLOperator">)</span>
+
+<span class="SQLKeyword">INSERT INTO</span> @xp_results
+<span class="SQLKeyword">EXECUTE</span> sys<span class="SQLOperator">.</span>xp_sqlagent_enum_jobs @is_sysadmin
+	<span class="SQLOperator">,</span>@job_owner
+
+<span class="SQLKeyword">UPDATE</span> @xp_results
+<span class="SQLKeyword">SET</span> last_run_time <span class="SQLOperator">=</span> <span class="SQLFunction">right</span><span class="SQLOperator">(</span><span class="SQLString">'000000'</span> <span class="SQLOperator">+</span> last_run_time<span class="SQLOperator">,</span> 6<span class="SQLOperator">)</span>
+	<span class="SQLOperator">,</span>next_run_time <span class="SQLOperator">=</span> <span class="SQLFunction">right</span><span class="SQLOperator">(</span><span class="SQLString">'000000'</span> <span class="SQLOperator">+</span> next_run_time<span class="SQLOperator">,</span> 6<span class="SQLOperator">)</span>
+
+<span class="SQLKeyword">SELECT</span> j<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLKeyword">AS</span> JobName
+	<span class="SQLOperator">,</span>j<span class="SQLOperator">.</span>enabled <span class="SQLKeyword">AS</span> Enabled
+	<span class="SQLOperator">,</span>sl<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLKeyword">AS</span> OwnerName
+	<span class="SQLOperator">,</span><span class="SQLKeyword">CASE</span> x<span class="SQLOperator">.</span>running
+		<span class="SQLKeyword">WHEN</span> 1
+			<span class="SQLKeyword">THEN</span> <span class="SQLString">'Running'</span>
+		<span class="SQLKeyword">ELSE</span> <span class="SQLKeyword">CASE</span> h<span class="SQLOperator">.</span>run_status
+				<span class="SQLKeyword">WHEN</span> 2
+					<span class="SQLKeyword">THEN</span> <span class="SQLString">'Inactive'</span>
+				<span class="SQLKeyword">WHEN</span> 4
+					<span class="SQLKeyword">THEN</span> <span class="SQLString">'Inactive'</span>
+				<span class="SQLKeyword">ELSE</span> <span class="SQLString">'Completed'</span>
+				<span class="SQLKeyword">END</span>
+		<span class="SQLKeyword">END</span> <span class="SQLKeyword">AS</span> CurrentStatus
+	<span class="SQLOperator">,</span><span class="SQLFunction">coalesce</span><span class="SQLOperator">(</span>x<span class="SQLOperator">.</span>current_step<span class="SQLOperator">,</span> 0<span class="SQLOperator">)</span> <span class="SQLKeyword">AS</span> CurrentStepNbr
+	<span class="SQLOperator">,</span><span class="SQLKeyword">CASE</span> 
+		<span class="SQLKeyword">WHEN</span> x<span class="SQLOperator">.</span>last_run_date <span class="SQLOperator">&gt;</span> 0
+			<span class="SQLKeyword">THEN</span> <span class="SQLFunction">convert</span><span class="SQLOperator">(</span><span class="SQLKeyword">DATETIME</span><span class="SQLOperator">,</span> <span class="SQLFunction">substring</span><span class="SQLOperator">(</span>x<span class="SQLOperator">.</span>last_run_date<span class="SQLOperator">,</span> 1<span class="SQLOperator">,</span> 4<span class="SQLOperator">)</span> <span class="SQLOperator">+</span> <span class="SQLString">'-'</span> <span class="SQLOperator">+</span> <span class="SQLFunction">substring</span><span class="SQLOperator">(</span>x<span class="SQLOperator">.</span>last_run_date<span class="SQLOperator">,</span> 5<span class="SQLOperator">,</span> 2<span class="SQLOperator">)</span> <span class="SQLOperator">+</span> <span class="SQLString">'-'</span> <span class="SQLOperator">+</span> <span class="SQLFunction">substring</span><span class="SQLOperator">(</span>x<span class="SQLOperator">.</span>last_run_date<span class="SQLOperator">,</span> 7<span class="SQLOperator">,</span> 2<span class="SQLOperator">)</span> <span class="SQLOperator">+</span> <span class="SQLString">' '</span> <span class="SQLOperator">+</span> <span class="SQLFunction">substring</span><span class="SQLOperator">(</span>x<span class="SQLOperator">.</span>last_run_time<span class="SQLOperator">,</span> 1<span class="SQLOperator">,</span> 2<span class="SQLOperator">)</span> <span class="SQLOperator">+</span> <span class="SQLString">':'</span> <span class="SQLOperator">+</span> <span class="SQLFunction">substring</span><span class="SQLOperator">(</span>x<span class="SQLOperator">.</span>last_run_time<span class="SQLOperator">,</span> 3<span class="SQLOperator">,</span> 2<span class="SQLOperator">)</span> <span class="SQLOperator">+</span> <span class="SQLString">':'</span> <span class="SQLOperator">+</span> <span class="SQLFunction">substring</span><span class="SQLOperator">(</span>x<span class="SQLOperator">.</span>last_run_time<span class="SQLOperator">,</span> 5<span class="SQLOperator">,</span> 2<span class="SQLOperator">)</span> <span class="SQLOperator">+</span> <span class="SQLString">'.000'</span><span class="SQLOperator">,</span> 121<span class="SQLOperator">)</span>
+		<span class="SQLKeyword">ELSE</span> <span class="SQLKeyword">NULL</span>
+		<span class="SQLKeyword">END</span> <span class="SQLKeyword">AS</span> LastRunTime
+	<span class="SQLOperator">,</span><span class="SQLKeyword">CASE</span> h<span class="SQLOperator">.</span>run_status
+		<span class="SQLKeyword">WHEN</span> 0
+			<span class="SQLKeyword">THEN</span> <span class="SQLString">'Fail'</span>
+		<span class="SQLKeyword">WHEN</span> 1
+			<span class="SQLKeyword">THEN</span> <span class="SQLString">'Success'</span>
+		<span class="SQLKeyword">WHEN</span> 2
+			<span class="SQLKeyword">THEN</span> <span class="SQLString">'Retry'</span>
+		<span class="SQLKeyword">WHEN</span> 3
+			<span class="SQLKeyword">THEN</span> <span class="SQLString">'Cancel'</span>
+		<span class="SQLKeyword">WHEN</span> 4
+			<span class="SQLKeyword">THEN</span> <span class="SQLString">'In progress'</span>
+		<span class="SQLKeyword">END</span> <span class="SQLKeyword">AS</span> LastRunOutcome
+	<span class="SQLOperator">,</span><span class="SQLKeyword">CASE</span> 
+		<span class="SQLKeyword">WHEN</span> h<span class="SQLOperator">.</span>run_duration <span class="SQLOperator">&gt;</span> 0
+			<span class="SQLKeyword">THEN</span> <span class="SQLOperator">(</span>h<span class="SQLOperator">.</span>run_duration <span class="SQLOperator">/</span> 1000000<span class="SQLOperator">)</span> <span class="SQLOperator">*</span> <span class="SQLOperator">(</span>3600 <span class="SQLOperator">*</span> 24<span class="SQLOperator">)</span> <span class="SQLOperator">+</span> <span class="SQLOperator">(</span>h<span class="SQLOperator">.</span>run_duration <span class="SQLOperator">/</span> 10000 <span class="SQLOperator">%</span> 100<span class="SQLOperator">)</span> <span class="SQLOperator">*</span> 3600 <span class="SQLOperator">+</span> <span class="SQLOperator">(</span>h<span class="SQLOperator">.</span>run_duration <span class="SQLOperator">/</span> 100 <span class="SQLOperator">%</span> 100<span class="SQLOperator">)</span> <span class="SQLOperator">*</span> 60 <span class="SQLOperator">+</span> <span class="SQLOperator">(</span>h<span class="SQLOperator">.</span>run_duration <span class="SQLOperator">%</span> 100<span class="SQLOperator">)</span>
+		<span class="SQLKeyword">ELSE</span> <span class="SQLKeyword">NULL</span>
+		<span class="SQLKeyword">END</span> <span class="SQLKeyword">AS</span> LastRunDuration
+<span class="SQLKeyword">FROM</span> @xp_results x
+<span class="SQLKeyword">LEFT JOIN</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sysjobs j <span class="SQLKeyword">ON</span> x<span class="SQLOperator">.</span>job_id <span class="SQLOperator">=</span> j<span class="SQLOperator">.</span>job_id
+<span class="SQLKeyword">LEFT OUTER JOIN</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>syscategories c <span class="SQLKeyword">ON</span> j<span class="SQLOperator">.</span>category_id <span class="SQLOperator">=</span> c<span class="SQLOperator">.</span>category_id
+<span class="SQLKeyword">LEFT OUTER JOIN</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sysjobhistory h <span class="SQLKeyword">ON</span> x<span class="SQLOperator">.</span>job_id <span class="SQLOperator">=</span> h<span class="SQLOperator">.</span>job_id
+	<span class="SQLKeyword">AND</span> x<span class="SQLOperator">.</span>last_run_date <span class="SQLOperator">=</span> h<span class="SQLOperator">.</span>run_date
+	<span class="SQLKeyword">AND</span> x<span class="SQLOperator">.</span>last_run_time <span class="SQLOperator">=</span> h<span class="SQLOperator">.</span>run_time
+	<span class="SQLKeyword">AND</span> h<span class="SQLOperator">.</span>step_id <span class="SQLOperator">=</span> 0
+<span class="SQLKeyword">LEFT OUTER JOIN</span> sys<span class="SQLOperator">.</span>syslogins sl <span class="SQLKeyword">ON</span> j<span class="SQLOperator">.</span>owner_sid <span class="SQLOperator">=</span> sl<span class="SQLOperator">.</span>sid
+
+<span class="SQLComment">/*
+	Right up there with data integrity, security's really important.
+	Who else has sysadmin or securityadmin rights on this instance?
+	I care about securityadmin users because they can add themselves to the SA
+	role at any time to do their dirty work, then remove themselves back out.
+	
+	Don't think of them as other sysadmins.  
+	Think of them as users who can get you fired.
+*/</span>
+<span class="SQLKeyword">SELECT</span> l<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span>
+	<span class="SQLOperator">,</span>l<span class="SQLOperator">.</span>denylogin
+	<span class="SQLOperator">,</span>l<span class="SQLOperator">.</span>isntname
+	<span class="SQLOperator">,</span>l<span class="SQLOperator">.</span>isntgroup
+	<span class="SQLOperator">,</span>l<span class="SQLOperator">.</span>isntuser
+<span class="SQLKeyword">FROM</span> master<span class="SQLOperator">.</span>sys<span class="SQLOperator">.</span>syslogins l
+<span class="SQLKeyword">WHERE</span> l<span class="SQLOperator">.</span>sysadmin <span class="SQLOperator">=</span> 1
+	<span class="SQLKeyword">OR</span> l<span class="SQLOperator">.</span>securityadmin <span class="SQLOperator">=</span> 1
+<span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> l<span class="SQLOperator">.</span>isntgroup
+	<span class="SQLOperator">,</span>l<span class="SQLOperator">.</span>isntname
+	<span class="SQLOperator">,</span>l<span class="SQLOperator">.</span>isntuser
+
+<span class="SQLComment">/*
+	Now would be an excellent time to open up a Word doc and start documenting
+	your findings, which helps you prove your worth as a DBA.  And for every
+	SQL authentication user in that list, try logging in with a blank password.
+
+	In your Blitz document, if SA includes Builtin\Administrators, list the 
+	server's local administrators.
+*/</span>
+<span class="SQLComment">/*
+	Let's review some server-level security &amp; configuration settings.
+*/</span>
+<span class="SQLKeyword">EXEC</span> dbo<span class="SQLOperator">.</span>sp_configure <span class="SQLString">'show advanced options'</span>
+	<span class="SQLOperator">,</span>1
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">RECONFIGURE</span>
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> dbo<span class="SQLOperator">.</span>sp_configure
+
+<span class="SQLComment">/*
+	Look for anything that's been changed from the default value.
+	What?  You don't know the defaults by heart?  Well, me neither.
+	In SSMS, go into the Object Explorer, then right-click on the server name.
+	Click Reports, Standard Reports, Server Dashboard, and then expand the
+	section Non Default Configuration Options.  It'll show everything that
+	deviates from the defaults.
+
+
+	Below, I set advanced options off, but that's just for demo purposes.
+	You can leave that on if you like.
+
+EXEC dbo.sp_configure 'show advanced options', 0
+GO
+RECONFIGURE
+GO
+*/</span>
+<span class="SQLComment">/*
+	Check for startup stored procedures.  These live in the master database, and
+	they run automatically when SQL Server starts up.  They're sometimes left
+	behind by ambitious auditors or evil employees.
+	
+	For more information about startup stored procs, read:
+	http://www.mssqltips.com/tip.asp?tip=1574
+*/</span>
+<span class="SQLKeyword">USE</span> master
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> master<span class="SQLOperator">.</span>INFORMATION_SCHEMA<span class="SQLOperator">.</span>ROUTINES
+<span class="SQLKeyword">WHERE</span> <span class="SQLFunction">OBJECTPROPERTY</span><span class="SQLOperator">(</span><span class="SQLFunction">OBJECT_ID</span><span class="SQLOperator">(</span>ROUTINE_NAME<span class="SQLOperator">)</span><span class="SQLOperator">,</span> <span class="SQLString">'ExecIsStartup'</span><span class="SQLOperator">)</span> <span class="SQLOperator">=</span> 1
+
+<span class="SQLComment">/* 
+	SQL Server 2008 &amp; above only - is auditing enabled?  If so, it might be
+	writing to an audit path that will fill up, or the server might be set to
+	stop if the file path isn't available.  Let's see if there's any audits.
+	
+	For a video explaining the SQL Server auditing options, check out:
+	http://sqlserverpedia.com/blog/sql-server-2008/guest-podcast-auditing-your-database-server/
+*/</span>
+<span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>dm_server_audit_status
+
+<span class="SQLComment">/*
+	Server settings can be made outside of sp_configure too.  The easiest way
+	to check out the service settings are to go into Start, Programs,
+	Microsoft SQL Server, Configuration Tools, SQL Server Configuration Manager.
+	Go there now, and drill into SQL Server Services, then right-click on each
+	service and hit Properties.  The advanced properties for the SQL Server
+	service itself can hide some startup parameters.
+
+	
+	Next, check Instant File Initialization.  Take a note of the service account
+	SQL Server is using, and then run secpol.msc.  Go into Local Policy, User
+	Rights Assignment, Perform Volume Maintenance Tasks.  Double-click on that
+	and add the SQL Server service account.  This lets SQL Server grow data
+	files instantly.  For more info:
+	http://www.sqlskills.com/blogs/kimberly/post/Instant-Initialization-What-Why-and-How.aspx
+
+
+	There's a few more server-level things I like to check, but I use the SSMS
+	GUI.  Go into Server Objects, and check out what's under Endpoints, Linked
+	Servers, Resource Governor, and Triggers.  If any of these objects exist, you
+	want to research to find out what they're being used for.
+*/</span>
+<span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>endpoints
+<span class="SQLKeyword">WHERE</span> type <span class="SQLOperator">&lt;&gt;</span> 2
+
+<span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>resource_governor_configuration
+
+<span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>server_triggers
+
+<span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>servers
+
+<span class="SQLComment">/*
+	Then go into Management, Resource Governor - that's another landmine.
+
+
+	Now as long as we're in the SSMS GUI, let's set up Database Mail.  It's
+	possible to script that out, but I like the GUI for that since I often use
+	wildly different parameters for different clients or departments.
+
+	Once Database Mail is set up, the below script will test it.
+
+*/</span>
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_send_dbmail @recipients <span class="SQLOperator">=</span> <span class="SQLString">'email@domain.com'</span>
+	<span class="SQLOperator">,</span>@body <span class="SQLOperator">=</span> <span class="SQLFunction">@@SERVERNAME</span>
+	<span class="SQLOperator">,</span>@subject <span class="SQLOperator">=</span> <span class="SQLString">'Testing SQL Server Database Mail - see body for server name'</span><span class="SQLOperator">;</span>
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLComment">/*
+	After enabling Database Mail, the below script sets up a default set of
+	notifications for problems.  In this section, replace these strings:
+	- 'The Database Administrator' - your name goes here
+	- 'YourEmailAddress@Hotmail.com' - your email
+	- '8005551212@cingularme.com' - your phone/pager's email address
+*/</span>
+<span class="SQLKeyword">USE</span> [msdb]
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_operator @name <span class="SQLOperator">=</span> <span class="SQLString">N'The Database Administrator'</span>
+	<span class="SQLOperator">,</span>@enabled <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@weekday_pager_start_time <span class="SQLOperator">=</span> 0
+	<span class="SQLOperator">,</span>@weekday_pager_end_time <span class="SQLOperator">=</span> 235959
+	<span class="SQLOperator">,</span>@saturday_pager_start_time <span class="SQLOperator">=</span> 0
+	<span class="SQLOperator">,</span>@saturday_pager_end_time <span class="SQLOperator">=</span> 235959
+	<span class="SQLOperator">,</span>@sunday_pager_start_time <span class="SQLOperator">=</span> 0
+	<span class="SQLOperator">,</span>@sunday_pager_end_time <span class="SQLOperator">=</span> 235959
+	<span class="SQLOperator">,</span>@pager_days <span class="SQLOperator">=</span> 127
+	<span class="SQLOperator">,</span>@email_address <span class="SQLOperator">=</span> <span class="SQLString">N'YourEmailAddress@Hotmail.com'</span>
+	<span class="SQLOperator">,</span>@pager_address <span class="SQLOperator">=</span> <span class="SQLString">N'8005551212@cingularme.com'</span>
+	<span class="SQLOperator">,</span>@category_name <span class="SQLOperator">=</span> <span class="SQLString">N'[Uncategorized]'</span>
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_alert @name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 016'</span>
+	<span class="SQLOperator">,</span>@message_id <span class="SQLOperator">=</span> 0
+	<span class="SQLOperator">,</span>@severity <span class="SQLOperator">=</span> 16
+	<span class="SQLOperator">,</span>@enabled <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@delay_between_responses <span class="SQLOperator">=</span> 60
+	<span class="SQLOperator">,</span>@include_event_description_in <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@job_id <span class="SQLOperator">=</span> <span class="SQLString">N'00000000-0000-0000-0000-000000000000'</span>
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_notification @alert_name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 016'</span>
+	<span class="SQLOperator">,</span>@operator_name <span class="SQLOperator">=</span> <span class="SQLString">N'The Database Administrator'</span>
+	<span class="SQLOperator">,</span>@notification_method <span class="SQLOperator">=</span> 7
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_alert @name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 017'</span>
+	<span class="SQLOperator">,</span>@message_id <span class="SQLOperator">=</span> 0
+	<span class="SQLOperator">,</span>@severity <span class="SQLOperator">=</span> 17
+	<span class="SQLOperator">,</span>@enabled <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@delay_between_responses <span class="SQLOperator">=</span> 60
+	<span class="SQLOperator">,</span>@include_event_description_in <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@job_id <span class="SQLOperator">=</span> <span class="SQLString">N'00000000-0000-0000-0000-000000000000'</span>
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_notification @alert_name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 017'</span>
+	<span class="SQLOperator">,</span>@operator_name <span class="SQLOperator">=</span> <span class="SQLString">N'The Database Administrator'</span>
+	<span class="SQLOperator">,</span>@notification_method <span class="SQLOperator">=</span> 7
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_alert @name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 018'</span>
+	<span class="SQLOperator">,</span>@message_id <span class="SQLOperator">=</span> 0
+	<span class="SQLOperator">,</span>@severity <span class="SQLOperator">=</span> 18
+	<span class="SQLOperator">,</span>@enabled <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@delay_between_responses <span class="SQLOperator">=</span> 60
+	<span class="SQLOperator">,</span>@include_event_description_in <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@job_id <span class="SQLOperator">=</span> <span class="SQLString">N'00000000-0000-0000-0000-000000000000'</span>
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_notification @alert_name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 018'</span>
+	<span class="SQLOperator">,</span>@operator_name <span class="SQLOperator">=</span> <span class="SQLString">N'The Database Administrator'</span>
+	<span class="SQLOperator">,</span>@notification_method <span class="SQLOperator">=</span> 7
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_alert @name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 019'</span>
+	<span class="SQLOperator">,</span>@message_id <span class="SQLOperator">=</span> 0
+	<span class="SQLOperator">,</span>@severity <span class="SQLOperator">=</span> 19
+	<span class="SQLOperator">,</span>@enabled <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@delay_between_responses <span class="SQLOperator">=</span> 60
+	<span class="SQLOperator">,</span>@include_event_description_in <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@job_id <span class="SQLOperator">=</span> <span class="SQLString">N'00000000-0000-0000-0000-000000000000'</span>
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_notification @alert_name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 019'</span>
+	<span class="SQLOperator">,</span>@operator_name <span class="SQLOperator">=</span> <span class="SQLString">N'The Database Administrator'</span>
+	<span class="SQLOperator">,</span>@notification_method <span class="SQLOperator">=</span> 7
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_alert @name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 020'</span>
+	<span class="SQLOperator">,</span>@message_id <span class="SQLOperator">=</span> 0
+	<span class="SQLOperator">,</span>@severity <span class="SQLOperator">=</span> 20
+	<span class="SQLOperator">,</span>@enabled <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@delay_between_responses <span class="SQLOperator">=</span> 60
+	<span class="SQLOperator">,</span>@include_event_description_in <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@job_id <span class="SQLOperator">=</span> <span class="SQLString">N'00000000-0000-0000-0000-000000000000'</span>
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_notification @alert_name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 020'</span>
+	<span class="SQLOperator">,</span>@operator_name <span class="SQLOperator">=</span> <span class="SQLString">N'The Database Administrator'</span>
+	<span class="SQLOperator">,</span>@notification_method <span class="SQLOperator">=</span> 7
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_alert @name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 021'</span>
+	<span class="SQLOperator">,</span>@message_id <span class="SQLOperator">=</span> 0
+	<span class="SQLOperator">,</span>@severity <span class="SQLOperator">=</span> 21
+	<span class="SQLOperator">,</span>@enabled <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@delay_between_responses <span class="SQLOperator">=</span> 60
+	<span class="SQLOperator">,</span>@include_event_description_in <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@job_id <span class="SQLOperator">=</span> <span class="SQLString">N'00000000-0000-0000-0000-000000000000'</span>
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_notification @alert_name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 021'</span>
+	<span class="SQLOperator">,</span>@operator_name <span class="SQLOperator">=</span> <span class="SQLString">N'The Database Administrator'</span>
+	<span class="SQLOperator">,</span>@notification_method <span class="SQLOperator">=</span> 7
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_alert @name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 022'</span>
+	<span class="SQLOperator">,</span>@message_id <span class="SQLOperator">=</span> 0
+	<span class="SQLOperator">,</span>@severity <span class="SQLOperator">=</span> 22
+	<span class="SQLOperator">,</span>@enabled <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@delay_between_responses <span class="SQLOperator">=</span> 60
+	<span class="SQLOperator">,</span>@include_event_description_in <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@job_id <span class="SQLOperator">=</span> <span class="SQLString">N'00000000-0000-0000-0000-000000000000'</span>
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_notification @alert_name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 022'</span>
+	<span class="SQLOperator">,</span>@operator_name <span class="SQLOperator">=</span> <span class="SQLString">N'The Database Administrator'</span>
+	<span class="SQLOperator">,</span>@notification_method <span class="SQLOperator">=</span> 7
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_alert @name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 023'</span>
+	<span class="SQLOperator">,</span>@message_id <span class="SQLOperator">=</span> 0
+	<span class="SQLOperator">,</span>@severity <span class="SQLOperator">=</span> 23
+	<span class="SQLOperator">,</span>@enabled <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@delay_between_responses <span class="SQLOperator">=</span> 60
+	<span class="SQLOperator">,</span>@include_event_description_in <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@job_id <span class="SQLOperator">=</span> <span class="SQLString">N'00000000-0000-0000-0000-000000000000'</span>
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_notification @alert_name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 023'</span>
+	<span class="SQLOperator">,</span>@operator_name <span class="SQLOperator">=</span> <span class="SQLString">N'The Database Administrator'</span>
+	<span class="SQLOperator">,</span>@notification_method <span class="SQLOperator">=</span> 7
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_alert @name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 024'</span>
+	<span class="SQLOperator">,</span>@message_id <span class="SQLOperator">=</span> 0
+	<span class="SQLOperator">,</span>@severity <span class="SQLOperator">=</span> 24
+	<span class="SQLOperator">,</span>@enabled <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@delay_between_responses <span class="SQLOperator">=</span> 60
+	<span class="SQLOperator">,</span>@include_event_description_in <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@job_id <span class="SQLOperator">=</span> <span class="SQLString">N'00000000-0000-0000-0000-000000000000'</span>
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_notification @alert_name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 024'</span>
+	<span class="SQLOperator">,</span>@operator_name <span class="SQLOperator">=</span> <span class="SQLString">N'The Database Administrator'</span>
+	<span class="SQLOperator">,</span>@notification_method <span class="SQLOperator">=</span> 7
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_alert @name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 025'</span>
+	<span class="SQLOperator">,</span>@message_id <span class="SQLOperator">=</span> 0
+	<span class="SQLOperator">,</span>@severity <span class="SQLOperator">=</span> 25
+	<span class="SQLOperator">,</span>@enabled <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@delay_between_responses <span class="SQLOperator">=</span> 60
+	<span class="SQLOperator">,</span>@include_event_description_in <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@job_id <span class="SQLOperator">=</span> <span class="SQLString">N'00000000-0000-0000-0000-000000000000'</span>
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_notification @alert_name <span class="SQLOperator">=</span> <span class="SQLString">N'Severity 025'</span>
+	<span class="SQLOperator">,</span>@operator_name <span class="SQLOperator">=</span> <span class="SQLString">N'The Database Administrator'</span>
+	<span class="SQLOperator">,</span>@notification_method <span class="SQLOperator">=</span> 7
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLComment">/* Specific Alert for Error 825 
+http://www.sqlskills.com/BLOGS/PAUL/post/A-little-known-sign-of-impending-doom-error-825.aspx
+*/</span>
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_alert @name <span class="SQLOperator">=</span> <span class="SQLString">N'Error 825'</span>
+	<span class="SQLOperator">,</span>@message_id <span class="SQLOperator">=</span> 825
+	<span class="SQLOperator">,</span>@severity <span class="SQLOperator">=</span> 0
+	<span class="SQLOperator">,</span>@enabled <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@delay_between_responses <span class="SQLOperator">=</span> 60
+	<span class="SQLOperator">,</span>@include_event_description_in <span class="SQLOperator">=</span> 1
+	<span class="SQLOperator">,</span>@job_id <span class="SQLOperator">=</span> <span class="SQLString">N'00000000-0000-0000-0000-000000000000'</span>
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLKeyword">EXEC</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>sp_add_notification @alert_name <span class="SQLOperator">=</span> <span class="SQLString">N'Error 825'</span>
+	<span class="SQLOperator">,</span>@operator_name <span class="SQLOperator">=</span> <span class="SQLString">N'The Database Administrator'</span>
+	<span class="SQLOperator">,</span>@notification_method <span class="SQLOperator">=</span> 7
+<span class="SQLKeyword">GO</span>
+
+<span class="SQLComment">/*
+	A few more checks at the server level.  Go into the Windows Event Logs,
+	and review any errors in the System and Application events.  This is where
+	hardware-level errors can show up too, like failed hard drives.
+*/</span>
+<span class="SQLComment">/*
+	I don't like any surprises in the system databases.  Let's check the list of
+	objects in master and model.  I don't want to see any rows returned from
+	these four queries - if there are objects in the system databases, I want to
+	ask why, and get them removed if possible.
+*/</span>
+<span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> master<span class="SQLOperator">.</span>sys<span class="SQLOperator">.</span>tables
+<span class="SQLKeyword">WHERE</span> <span class="SQLKeyword">NAME</span> <span class="SQLOperator">NOT</span> <span class="SQLOperator">IN</span> <span class="SQLOperator">(</span>
+		<span class="SQLString">'spt_fallback_db'</span>
+		<span class="SQLOperator">,</span><span class="SQLString">'spt_fallback_dev'</span>
+		<span class="SQLOperator">,</span><span class="SQLString">'spt_fallback_usg'</span>
+		<span class="SQLOperator">,</span><span class="SQLString">'spt_monitor'</span>
+		<span class="SQLOperator">,</span><span class="SQLString">'spt_values'</span>
+		<span class="SQLOperator">,</span><span class="SQLString">'MSreplication_options'</span>
+		<span class="SQLOperator">)</span>
+
+<span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> master<span class="SQLOperator">.</span>sys<span class="SQLOperator">.</span>procedures
+<span class="SQLKeyword">WHERE</span> <span class="SQLKeyword">NAME</span> <span class="SQLOperator">NOT</span> <span class="SQLOperator">IN</span> <span class="SQLOperator">(</span>
+		<span class="SQLString">'sp_MSrepl_startup'</span>
+		<span class="SQLOperator">,</span><span class="SQLString">'sp_MScleanupmergepublisher'</span>
+		<span class="SQLOperator">)</span>
+
+<span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> model<span class="SQLOperator">.</span>sys<span class="SQLOperator">.</span>tables
+
+<span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> model<span class="SQLOperator">.</span>sys<span class="SQLOperator">.</span>procedures
+
+<span class="SQLComment">/*
+	Alright, we're done with the server level!  Let's check databases.  We could
+	right-click on each database and click Properties, but it can be easier to
+	scan across the results of sys.databases.  I look for any variations - are
+	there some databases that have different settings than others?
+*/</span>
+<span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>databases
+
+<span class="SQLComment">/*
+	SQL 2008 &amp; above only - are any databases encrypted?  Transparent Data
+	Encryption is all too transparent.  You won't notice that databases are
+	encrypted if you just glance at SSMS.
+	
+	If this query returns any results, you need to start asking if the certificate
+	has been backed up and where the password is.  If you don't have both the
+	cert and the password to unlock it, then the database can't be restored.
+*/</span>
+<span class="SQLKeyword">SELECT</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span>
+	<span class="SQLOperator">,</span>k<span class="SQLOperator">.</span><span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>dm_database_encryption_keys k
+<span class="SQLKeyword">INNER JOIN</span> sys<span class="SQLOperator">.</span>databases d <span class="SQLKeyword">ON</span> k<span class="SQLOperator">.</span>database_id <span class="SQLOperator">=</span> d<span class="SQLOperator">.</span>database_id
+<span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span>
+
+<span class="SQLComment">/*
+	Are any of the databases using features that are Enterprise Edition only?
+	If a database is using something like partitioning, compression, or
+	Transparent Data Encryption, then I won't be able to restore it onto a
+	Standard Edition server.
+*/</span>
+<span class="SQLKeyword">EXEC</span> dbo<span class="SQLOperator">.</span>sp_MSforeachdb <span class="SQLString">'SELECT ''[?]'' AS DatabaseName, * FROM [?].sys.dm_db_persisted_sku_features'</span>
+
+<span class="SQLComment">/*
+	Data files - where are they?  Are any on the C drive?  We want to avoid that
+	because if they grow, they can fill up the OS drive, and that can lead to a
+	very nasty crash.  Let's look at where the databases live.  For tips on how to move databases off the C drive:
+	http://support.microsoft.com/kb/224071
+	In the results, also check the number of data and log files for all databases.
+*/</span>
+<span class="SQLKeyword">SELECT</span> <span class="SQLFunction">db_name</span><span class="SQLOperator">(</span>database_id<span class="SQLOperator">)</span>
+	<span class="SQLOperator">,</span><span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>master_files
+
+<span class="SQLComment">/*
+	Check for triggers in any database.  I can't change these right away, but I
+	want to know if they're present, because it'll help me troubleshoot faster.
+	If I didn't know the database had triggers, I probably wouldn't think to look.
+*/</span>
+<span class="SQLKeyword">EXEC</span> dbo<span class="SQLOperator">.</span>sp_MSforeachdb <span class="SQLString">'SELECT ''[?]'' AS database_name, o.name AS table_name, t.* FROM [?].sys.triggers t INNER JOIN [?].sys.objects o ON t.parent_id = o.object_id'</span>
+
+<span class="SQLComment">/*
+	We've hit the major pain points on reliability and security.  Now let's do a
+	little poking around in performance.  Let's query the server's wait stats,
+	which tell us what things the server has been waiting on since the last
+	restart.  For more about wait stats, check out:
+	http://sqlserverpedia.com/wiki/Wait_Types
+*/</span>
+<span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
+	<span class="SQLOperator">,</span><span class="SQLOperator">(</span>wait_time_ms <span class="SQLOperator">-</span> signal_wait_time_ms<span class="SQLOperator">)</span> <span class="SQLKeyword">AS</span> real_wait_time_ms
+<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>dm_os_wait_stats
+<span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> <span class="SQLOperator">(</span>wait_time_ms <span class="SQLOperator">-</span> signal_wait_time_ms<span class="SQLOperator">)</span> <span class="SQLKeyword">DESC</span>
+
+<span class="SQLComment">/*
+	Do we have any duplicate indexes?  This query from Adam Machanic checks for
+	indexes on exactly the same fields.  You have to run it in each database
+	you want to check, and it's extremely fast.
+*/</span>
+<span class="SQLKeyword">SELECT</span> t<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLKeyword">AS</span> tableName
+	<span class="SQLOperator">,</span>p<span class="SQLOperator">.</span><span class="SQLOperator">*</span>
+<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>tables <span class="SQLKeyword">AS</span> t
+<span class="SQLKeyword">INNER JOIN</span> sys<span class="SQLOperator">.</span>indexes <span class="SQLKeyword">AS</span> i1 <span class="SQLKeyword">ON</span> i1<span class="SQLOperator">.</span><span class="SQLFunction">object_id</span> <span class="SQLOperator">=</span> t<span class="SQLOperator">.</span><span class="SQLFunction">object_id</span>
+<span class="SQLKeyword">CROSS APPLY</span> <span class="SQLOperator">(</span>
+	<span class="SQLKeyword">SELECT</span> <span class="SQLKeyword">TOP</span> 1 <span class="SQLOperator">*</span>
+	<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>indexes <span class="SQLKeyword">AS</span> i
+	<span class="SQLKeyword">WHERE</span> i<span class="SQLOperator">.</span><span class="SQLFunction">object_id</span> <span class="SQLOperator">=</span> i1<span class="SQLOperator">.</span><span class="SQLFunction">object_id</span>
+		<span class="SQLKeyword">AND</span> i<span class="SQLOperator">.</span>index_id <span class="SQLOperator">&gt;</span> i1<span class="SQLOperator">.</span>index_id
+		<span class="SQLKeyword">AND</span> i<span class="SQLOperator">.</span>type_desc <span class="SQLOperator">&lt;&gt;</span> <span class="SQLString">'xml'</span>
+	<span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> i<span class="SQLOperator">.</span>index_id
+	<span class="SQLOperator">)</span> <span class="SQLKeyword">AS</span> i2
+<span class="SQLKeyword">CROSS APPLY</span> <span class="SQLOperator">(</span>
+	<span class="SQLKeyword">SELECT</span> <span class="SQLFunction">min</span><span class="SQLOperator">(</span>a<span class="SQLOperator">.</span>index_id<span class="SQLOperator">)</span> <span class="SQLKeyword">AS</span> ind1
+		<span class="SQLOperator">,</span><span class="SQLFunction">min</span><span class="SQLOperator">(</span>b<span class="SQLOperator">.</span>index_id<span class="SQLOperator">)</span> <span class="SQLKeyword">AS</span> ind2
+	<span class="SQLKeyword">FROM</span> <span class="SQLOperator">(</span>
+		<span class="SQLKeyword">SELECT</span> ic<span class="SQLOperator">.</span><span class="SQLOperator">*</span>
+		<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>index_columns ic
+		<span class="SQLKeyword">WHERE</span> ic<span class="SQLOperator">.</span><span class="SQLFunction">object_id</span> <span class="SQLOperator">=</span> i1<span class="SQLOperator">.</span><span class="SQLFunction">object_id</span>
+			<span class="SQLKeyword">AND</span> ic<span class="SQLOperator">.</span>index_id <span class="SQLOperator">=</span> i1<span class="SQLOperator">.</span>index_id
+			<span class="SQLKeyword">AND</span> ic<span class="SQLOperator">.</span>is_included_column <span class="SQLOperator">=</span> 0
+		<span class="SQLOperator">)</span> <span class="SQLKeyword">AS</span> a
+	<span class="SQLKeyword">FULL OUTER JOIN</span> <span class="SQLOperator">(</span>
+		<span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
+		<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>index_columns <span class="SQLKeyword">AS</span> ic
+		<span class="SQLKeyword">WHERE</span> ic<span class="SQLOperator">.</span><span class="SQLFunction">object_id</span> <span class="SQLOperator">=</span> i2<span class="SQLOperator">.</span><span class="SQLFunction">object_id</span>
+			<span class="SQLKeyword">AND</span> ic<span class="SQLOperator">.</span>index_id <span class="SQLOperator">=</span> i2<span class="SQLOperator">.</span>index_id
+			<span class="SQLKeyword">AND</span> ic<span class="SQLOperator">.</span>is_included_column <span class="SQLOperator">=</span> 0
+		<span class="SQLOperator">)</span> <span class="SQLKeyword">AS</span> b <span class="SQLKeyword">ON</span> a<span class="SQLOperator">.</span>index_column_id <span class="SQLOperator">=</span> b<span class="SQLOperator">.</span>index_column_id
+		<span class="SQLKeyword">AND</span> a<span class="SQLOperator">.</span>column_id <span class="SQLOperator">=</span> b<span class="SQLOperator">.</span>column_id
+		<span class="SQLKeyword">AND</span> a<span class="SQLOperator">.</span>key_ordinal <span class="SQLOperator">=</span> b<span class="SQLOperator">.</span>key_ordinal
+	<span class="SQLKeyword">HAVING</span> <span class="SQLFunction">count</span><span class="SQLOperator">(</span><span class="SQLKeyword">CASE</span> 
+				<span class="SQLKeyword">WHEN</span> a<span class="SQLOperator">.</span>index_id <span class="SQLKeyword">IS</span> <span class="SQLKeyword">NULL</span>
+					<span class="SQLKeyword">THEN</span> 1
+				<span class="SQLKeyword">END</span><span class="SQLOperator">)</span> <span class="SQLOperator">=</span> 0
+		<span class="SQLKeyword">AND</span> <span class="SQLFunction">count</span><span class="SQLOperator">(</span><span class="SQLKeyword">CASE</span> 
+				<span class="SQLKeyword">WHEN</span> b<span class="SQLOperator">.</span>index_id <span class="SQLKeyword">IS</span> <span class="SQLKeyword">NULL</span>
+					<span class="SQLKeyword">THEN</span> 1
+				<span class="SQLKeyword">END</span><span class="SQLOperator">)</span> <span class="SQLOperator">=</span> 0
+		<span class="SQLKeyword">AND</span> <span class="SQLFunction">count</span><span class="SQLOperator">(</span>a<span class="SQLOperator">.</span>index_id<span class="SQLOperator">)</span> <span class="SQLOperator">=</span> <span class="SQLFunction">count</span><span class="SQLOperator">(</span>b<span class="SQLOperator">.</span>index_id<span class="SQLOperator">)</span>
+	<span class="SQLOperator">)</span> <span class="SQLKeyword">AS</span> p
+<span class="SQLKeyword">WHERE</span> i1<span class="SQLOperator">.</span>type_desc <span class="SQLOperator">&lt;&gt;</span> <span class="SQLString">'xml'</span>
+
+<span class="SQLComment">/*
+	Index fragmentation is the leading cause of DBA heartburn. It's a lot like
+	file fragmentation, but it happens inside of the database.  The below script
+	shows fragmented objects that might be a concern.
+	
+	This is an IO-intensive operation, so start by running it in a small database.
+	To run it for all databases, go to the line with this:
+	
+	INNER JOIN sys.dm_db_index_physical_stats (DB_ID(), NULL, NULL , NULL, N'Limited') ps
+	
+	and replace it with:
+	
+	INNER JOIN sys.dm_db_index_physical_stats (NULL, NULL, NULL , NULL, N'Limited') ps	
+	
+	But be careful - that can run VERY long on large database systems, like hours.
+	For more about index fragmentation, check out this page with a video:
+	http://sqlserverpedia.com/wiki/Index_Maintenance
+*/</span>
+<span class="SQLKeyword">SELECT</span> db<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLKeyword">AS</span> databaseName
+	<span class="SQLOperator">,</span><span class="SQLFunction">SCHEMA_NAME</span><span class="SQLOperator">(</span>obj<span class="SQLOperator">.</span><span class="SQLFunction">schema_id</span><span class="SQLOperator">)</span> <span class="SQLKeyword">AS</span> schemaName
+	<span class="SQLOperator">,</span><span class="SQLFunction">OBJECT_NAME</span><span class="SQLOperator">(</span>ps<span class="SQLOperator">.</span><span class="SQLFunction">OBJECT_ID</span><span class="SQLOperator">)</span> <span class="SQLKeyword">AS</span> tableName
+	<span class="SQLOperator">,</span>ps<span class="SQLOperator">.</span><span class="SQLFunction">OBJECT_ID</span> <span class="SQLKeyword">AS</span> objectID
+	<span class="SQLOperator">,</span>ps<span class="SQLOperator">.</span>index_id <span class="SQLKeyword">AS</span> indexID
+	<span class="SQLOperator">,</span>ps<span class="SQLOperator">.</span>partition_number <span class="SQLKeyword">AS</span> partitionNumber
+	<span class="SQLOperator">,</span>ps<span class="SQLOperator">.</span>avg_fragmentation_in_percent <span class="SQLKeyword">AS</span> fragmentation
+	<span class="SQLOperator">,</span>ps<span class="SQLOperator">.</span>page_count
+<span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>databases db
+<span class="SQLKeyword">INNER JOIN</span> sys<span class="SQLOperator">.</span>dm_db_index_physical_stats<span class="SQLOperator">(</span><span class="SQLFunction">DB_ID</span><span class="SQLOperator">(</span><span class="SQLOperator">)</span><span class="SQLOperator">,</span> <span class="SQLKeyword">NULL</span><span class="SQLOperator">,</span> <span class="SQLKeyword">NULL</span><span class="SQLOperator">,</span> <span class="SQLKeyword">NULL</span><span class="SQLOperator">,</span> <span class="SQLString">N'Limited'</span><span class="SQLOperator">)</span> ps <span class="SQLKeyword">ON</span> db<span class="SQLOperator">.</span>database_id <span class="SQLOperator">=</span> ps<span class="SQLOperator">.</span>database_id
+<span class="SQLKeyword">INNER JOIN</span> sys<span class="SQLOperator">.</span>objects obj <span class="SQLKeyword">ON</span> ps<span class="SQLOperator">.</span><span class="SQLFunction">object_id</span> <span class="SQLOperator">=</span> obj<span class="SQLOperator">.</span><span class="SQLFunction">object_id</span>
+<span class="SQLKeyword">WHERE</span> ps<span class="SQLOperator">.</span>index_id <span class="SQLOperator">&gt;</span> 0
+	<span class="SQLKeyword">AND</span> ps<span class="SQLOperator">.</span>page_count <span class="SQLOperator">&gt;</span> 100
+	<span class="SQLKeyword">AND</span> ps<span class="SQLOperator">.</span>avg_fragmentation_in_percent <span class="SQLOperator">&gt;</span> 30
+<span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> databaseName
+	<span class="SQLOperator">,</span>schemaName
+	<span class="SQLOperator">,</span>tableName
+<span class="SQLKeyword">OPTION</span> <span class="SQLOperator">(</span><span class="SQLKeyword">MAXDOP</span> 1<span class="SQLOperator">)</span><span class="SQLOperator">;</span>
+	<span class="SQLComment">/*
+	Finally, let's go back to the users and ask questions:
+	- Can the business operate if this server is down?
+	- How many employees have to stop working if this server goes down?
+	- Who should I call when the server goes down?
+	- Is this server covered by any security or compliance regulations?
+	We can use their answers to build a good backup &amp; recovery solution.
+	
+	Is there anything you think should be added here?  You can edit this script!
+	Go to the script's home page:
+	http://sqlserverpedia.com/wiki/Audit_a_SQL_Server_Configuration
+	Log into SQLServerPedia (it's free to create an account).  After you've
+	logged in, you'll see an Edit button at the top of the page.  Click that,
+	and you can edit this script right now to add your own contributions!
+*/</span>

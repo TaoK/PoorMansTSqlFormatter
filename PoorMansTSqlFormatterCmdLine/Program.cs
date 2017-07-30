@@ -132,12 +132,12 @@ namespace PoorMansTSqlFormatterCmdLine
             string stdInput = null;
             try
             {
-                throwAwayValue = System.Console.KeyAvailable;
+                throwAwayValue = Console.KeyAvailable;
             }
             catch (InvalidOperationException)
             {
                 Console.InputEncoding = Encoding.UTF8;
-                stdInput = System.Console.In.ReadToEnd();
+                stdInput = Console.In.ReadToEnd();
             }
 
             //then complain about missing input or unrecognized args

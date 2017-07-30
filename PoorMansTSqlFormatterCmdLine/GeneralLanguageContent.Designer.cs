@@ -171,7 +171,7 @@ namespace PoorMansTSqlFormatterCmdLine {
         /// <summary>
         ///   Looks up a localized string similar to Poor Man&apos;s T-SQL Formatter - a small free Transact-SQL formatting 
         ///library for .Net 2.0 and JS, written in C#. Distributed under AGPL v3.
-        ///Copyright (C) 2011 Tao Klerks.
+        ///Copyright (C) 2011-2017 Tao Klerks.
         /// </summary>
         internal static string ProgramSummary {
             get {

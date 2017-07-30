@@ -32,7 +32,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
     /// </summary>
     public class TSqlIdentityFormatter : ISqlTokenFormatter, ISqlTreeFormatter
     {
-        public TSqlIdentityFormatter() { }
+        public TSqlIdentityFormatter() : this(false) { }
         public TSqlIdentityFormatter(bool htmlColoring)
         {
             HTMLColoring = htmlColoring;

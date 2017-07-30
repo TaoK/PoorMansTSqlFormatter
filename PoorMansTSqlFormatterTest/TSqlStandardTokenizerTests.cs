@@ -19,47 +19,47 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using NUnit.Framework;
-using System.IO;
-using System.Xml;
-using System.Collections.Generic;
 using PoorMansTSqlFormatterLib.Interfaces;
-using PoorMansTSqlFormatterLib.Parsers;
 using PoorMansTSqlFormatterLib.Tokenizers;
-using PoorMansTSqlFormatterLib.ParseStructure;
-using PoorMansTSqlFormatterLib;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PoorMansTSqlFormatterTests
 {
     [TestFixture]
-    public class ParserTests
+    public class TSqlStandardTokenizerTests
     {
         ISqlTokenizer _tokenizer;
-        ISqlTokenParser _parser;
 
-        public ParserTests()
+        public TSqlStandardTokenizerTests()
         {
             _tokenizer = new TSqlStandardTokenizer();
-            _parser = new TSqlStandardParser();
         }
 
-        public IEnumerable<string> GetParsedSqlFileNames()
+        [Test]
+        public void MarkerPositionRecorded_plain()
         {
-            return Utils.FolderFileNameIterator(Utils.GetTestContentFolder(Utils.PARSEDSQLFOLDER));
+            TestMarkerPosition("select 1 from somewhere select 1 from somewhere else", 35);
         }
 
-        [Test, TestCaseSource("GetParsedSqlFileNames")]
-        public void ExpectedParseTree(string FileName)
+        [Test]
+        public void MarkerPositionRecorded_linebreaks()
         {
-            XmlDocument expectedXmlDoc = new XmlDocument();
-            expectedXmlDoc.PreserveWhitespace = true;
-            expectedXmlDoc.Load(Path.Combine(Utils.GetTestContentFolder(Utils.PARSEDSQLFOLDER), FileName));
-            string inputSql = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
-
-            ITokenList tokenized = _tokenizer.TokenizeSQL(inputSql);
-            Node parsed = _parser.ParseSQL(tokenized);
-
-            Assert.AreEqual(expectedXmlDoc.OuterXml, parsed.ToXmlDoc().OuterXml);
+            TestMarkerPosition("select 1\r\nfrom somewhere\r\n\r\nselect 1\r\nfrom somewhere else", 40);
         }
 
+        [Test]
+        public void MarkerPositionRecorded_linefeeds()
+        {
+            TestMarkerPosition("select 1\nfrom somewhere\n\nselect 1\nfrom somewhere else", 36);
+        }
+
+        private void TestMarkerPosition(string inputSQLNoLineBreaks, int inputPosition)
+        {
+            ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQLNoLineBreaks, inputPosition);
+            Assert.AreEqual(SqlTokenType.OtherNode, tokenized.MarkerToken.Type, "token type");
+            Assert.AreEqual("from", tokenized.MarkerToken.Value, "token value");
+            Assert.AreEqual(2, tokenized.MarkerPosition);
+        }
     }
 }

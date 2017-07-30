@@ -21,19 +21,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System;
-using System.Text;
 using NUnit.Framework;
-using System.IO;
-using System.Xml;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
+using PoorMansTSqlFormatterLib;
 using PoorMansTSqlFormatterLib.Formatters;
 using PoorMansTSqlFormatterLib.Interfaces;
 using PoorMansTSqlFormatterLib.Parsers;
-using PoorMansTSqlFormatterLib.Tokenizers;
 using PoorMansTSqlFormatterLib.ParseStructure;
-using PoorMansTSqlFormatterLib;
+using PoorMansTSqlFormatterLib.Tokenizers;
+using System;
+using System.Collections.Generic;
 
 namespace PoorMansTSqlFormatterTests
 {
@@ -42,7 +38,6 @@ namespace PoorMansTSqlFormatterTests
     {
         ISqlTokenizer _tokenizer;
         ISqlTokenParser _parser;
-        //TSqlStandardFormatter _treeFormatter;
         Dictionary<string, TSqlStandardFormatter> _formatters;
 
         public TSqlStandardFormatterTests()
@@ -57,9 +52,7 @@ namespace PoorMansTSqlFormatterTests
             TSqlStandardFormatter outFormatter;
             if (!_formatters.TryGetValue(configString, out outFormatter))
             {
-                //defaults are as per the object, except disabling colorized/htmlified output
                 var options = new TSqlStandardFormatterOptions(configString);
-                options.HTMLColoring = false;
                 outFormatter = new TSqlStandardFormatter(options);
                 _formatters.Add(configString, outFormatter);
             }
@@ -82,7 +75,8 @@ namespace PoorMansTSqlFormatterTests
             ITokenList tokenizedAgain = _tokenizer.TokenizeSQL(inputToSecondPass);
             Node parsedAgain = _parser.ParseSQL(tokenizedAgain);
             string formattedAgain = _treeFormatter.FormatSQLTree(parsedAgain);
-            if (!inputSQL.Contains(Utils.REFORMATTING_INCONSISTENCY_WARNING) && !inputSQL.Contains(Utils.INVALID_SQL_WARNING))
+
+            if (!inputSQL.Contains(Utils.REFORMATTING_INCONSISTENCY_WARNING))
             {
                 Assert.AreEqual(outputSQL, formattedAgain, "first-pass formatted vs reformatted");
                 Utils.StripWhiteSpaceFromSqlTree(parsed);
