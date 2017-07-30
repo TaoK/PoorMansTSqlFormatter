@@ -878,7 +878,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 for (int i = 0; i < indentLevel; i++)
                 {
                     if (SpecialRegionActive == null)
-                        _outBuilder.Append(IndentString);
+                        base.AddOutputContent(IndentString, ""); //that is, add the indent as HTMLEncoded content if necessary, but no weird linebreak-adding
                     CurrentLineLength += IndentLength;
                 }
             }

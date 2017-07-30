@@ -67,6 +67,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PoorMansTSqlFormatterJSLib\PoorMansTSqlFormatterJSLib.csproj">
+      <Project>{944e63b9-65a4-4139-bd42-096e1b15ef86}</Project>
+      <Name>PoorMansTSqlFormatterJSLib</Name>
+      <Private>False</Private>
+    </ProjectReference>
     <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">
       <Project>{ADBDFDCA-CAB6-4569-9151-0BD42E65B400}</Project>
       <Name>PoorMansTSqlFormatterLib</Name>
