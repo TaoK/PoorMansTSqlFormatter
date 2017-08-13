@@ -4,7 +4,7 @@ var Utils = function() {
     var ampArray = (input[0] === '?' ? input.substr(1) : input).split('&');
     for (var i = 0; i < ampArray.length; i++) {
       var keyValuePair = ampArray[i].split('=');
-      output[decodeURIComponent(keyValuePair[0]).replace(/\+/g, ' ')] = decodeURIComponent(keyValuePair[1] || '').replace(/\+/g, ' ');
+      output[decodeURIComponent(keyValuePair[0].replace(/\+/g, ' '))] = decodeURIComponent((keyValuePair[1] || '').replace(/\+/g, ' '));
     }
     return output;
   }
