@@ -47,10 +47,10 @@ The WinMerge Plugin preparation is reasonably complex/painful, especially on a r
    - This will probably spit out an error like "Error accessing the system registry", which can be ignored, as the DLL was created (the error concerns the COM registrtion, which we will do later in the .Net setup project anyway)
  - In VS2008, "Rebuild" the WinMerge Plugin Setup project.
 
-
 The packaging and release process is currently completely manual:
  - Ensure AssemblyInfo versions are updated, including versions of setup packages/installers and manual reverences in AddIn and Package definition files (multiple)
  - Rebuild solution in Release mode, and additionally manually rebuild the two setup projects
+   - Setup project issues can be investigated with msiexec's verbose logging: msiexec /i PoorMansTSqlFormatterSSMSPackage.Setup.msi /l*v MyLogFile.txt
  - Copy Binaries for simple executables and setup files into dedicated folders, zip them up and version-number the zip files.
  - Upload the archives to website
  - Change website to reference the new archives
