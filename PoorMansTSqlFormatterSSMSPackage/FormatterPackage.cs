@@ -128,7 +128,7 @@ namespace PoorMansTSqlFormatterSSMSPackage
             string fullName = dte.FullName.ToUpperInvariant();
             int majorVersion = int.Parse(dte.Version.Split('.')[0]);
 
-            if ((fullName.Contains("SSMS") || fullName.Contains("MANAGEMENT STUDIO")) && majorVersion <= 2015)
+            if ((fullName.Contains("SSMS") || fullName.Contains("MANAGEMENT STUDIO")) && majorVersion <= 2017)
                 UserRegistryRoot.CreateSubKey(@"Packages\{" + guidPoorMansTSqlFormatterSSMSPackagePkgString + "}").SetValue("SkipLoading", 1);
         }
     }

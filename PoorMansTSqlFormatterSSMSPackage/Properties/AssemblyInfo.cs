@@ -25,7 +25,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("PoorMansTSqlFormatterSSMSPackage")]
 [//Note, this is also in resources file for localization!
-assembly: AssemblyDescription("A simple free (AGPL) T-SQL Formatting Extension for SSMS 2014-2016 and Visual Studio 2012-2015.")]
+assembly: AssemblyDescription("A simple free (AGPL) T-SQL Formatting Extension for SSMS 2014-17 and Visual Studio 2013-2017.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PoorMansTSqlFormatterSSMSPackage")]
