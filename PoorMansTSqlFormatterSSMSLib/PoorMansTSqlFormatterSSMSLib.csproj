@@ -44,12 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddInFileSetupFinalizer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="AddInFileSetupFinalizer.Designer.cs">
-      <DependentUpon>AddInFileSetupFinalizer.cs</DependentUpon>
-    </Compile>
     <Compile Include="GeneralLanguageContent.Designer.cs">
       <DependentUpon>GeneralLanguageContent.resx</DependentUpon>
       <AutoGen>True</AutoGen>

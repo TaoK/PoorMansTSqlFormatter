@@ -8,21 +8,23 @@ Some dependencies are internal/bundled:
  - LinqBridge, a collection-handling convenience library for .Net 2.0 under Visual Studio 2008, released under a BSD-style license
  - NDesk.Options, a command-line-option-parsing library released under a MIT/X11-style license
  - NUnit (including UI runner assemblies for plugin-free debugging) for the tests project
+ - Bridge.Net, a C#-to-JS transpiler, released under the Apache license
+ - Microsoft.VisualStudio.Sdk.BuildTasks.14 for Visual Studio Extensibility Package compilation
 
 Some are additional external dependencies for different components of the solution:
- - Robert Giesecke's Unmanaged Exports technique, used in the Notepad++ plugin project, does not work in Express versions of Visual Studio
- - The SSMS plugin installer and Winmerge plugin installer projects are not supported in Express versions of Visual Studio
+ - Robert Giesecke's UnmanagedExports technique, used in the Notepad++ plugin project, may not work in some older versions of VS
+ - The Winmerge plugin installer project is not supported in Express versions of Visual Studio, and requires the "Visual Studio Installer Projects" extension
  - The Winmerge Plugin requires VB6 (eg Visual Studio 6), to expose a COM object properly to WinMerge's plugin-loading framework - instructions below
- - The SSMS Plugin project by default points to SSMS 2008 in the x86 program files folder, for debugging. This can be changed to an available copy of SSMS as required by editing the project properties.
+ - The SSMS Add-In Installer and SSMS Extension Installer projects require the Wix Toolkit to be installed on the computer, and the Wix Toolset Visual Studio Extension to be installed in Visual Studio.
 
 The formatting library and commandline utility have been compiled under Mono (a long time ago - not recently attempted), and 
 should theoretically work fine. The WinForms app, however, does not (or did not the last time I tried): the "WebBrowser" 
-implementation was simply not close enough to the microsoft one for it to work. I may come back to this over the coming months.
+implementation was simply not close enough to the microsoft one for it to work. I may come back to this over the coming months/years.
 
 To manually deploy the SSMS Add-In (eg when using an Express edition of Visual Studio), the process will 
 depend on which version of SSMS you are deploying to:
  - For SSMS 2005-2008R2, full or Express, you need:
-   - The Add-In assembly to be exposed as a COM object (this should happen automatically as part of the build)
+   - The Add-In assembly to be exposed as a COM object
    - To add a registry key pointing to the "PoorMansTSqlFormatterSSMSAddIn.AddinConnector" COM object:
      - for SSMS 2005 Express: HKLM\Software\Microsoft\Microsoft SQL Server\100\Tools\ShellSEM\Addins\PoorMansTSqlFormatterSSMSAddIn.AddinConnector
      - for SSMS 2005 Full: HKLM\Software\Microsoft\Microsoft SQL Server\100\Tools\Shell\Addins\PoorMansTSqlFormatterSSMSAddIn.AddinConnector
@@ -33,6 +35,8 @@ depend on which version of SSMS you are deploying to:
    - copy the "PoorMansTSqlFormatterSSMSAddIn.AddIn" file to a "Microsoft\MSEnvShared\AddIns" subfolder of All Users Documents
      - EG on windows 7, the target folder is normally: "C:\Users\Public\Documents\Microsoft\MSEnvShared\AddIns"
    - edit the "PoorMansTSqlFormatterSSMSAddIn.AddIn" file so that the "Assembly" element points to the "PoorMansTSqlFormatterSSMSAddIn.dll" assembly.
+ - For VS 2015-2012 you need to do the same as for SSMS 2012
+ - For VS 2013-2017 and SSMS 2016-17 you can just double-click on the generated VSIX package file
 
 The WinMerge Plugin preparation is reasonably complex/painful, especially on a recent (Vista/Win7 x64) dev machine:
  - Open a command prompt as administrator
@@ -46,7 +50,7 @@ The WinMerge Plugin preparation is reasonably complex/painful, especially on a r
 
 
 The packaging and release process is currently completely manual:
- - Ensure AssemblyInfo versions are updated, including versions of setup packages
+ - Ensure AssemblyInfo versions are updated, including versions of setup packages and manual reverences in AddIn and Package definition files
  - Rebuild solution in Release mode, and additionally manually rebuild the two setup projects
  - Copy Binaries for simple executables and setup files into dedicated folders, zip them up and version-number the zip files.
  - Upload the archives to website

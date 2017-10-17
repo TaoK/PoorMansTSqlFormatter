@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <Metadata>
     <Identity Id="5e84b709-1e60-4116-a702-4cdb1a282d6e" Version="1.6.1" Language="en-US" Publisher="Tao Klerks" />
     <DisplayName>Poor Man's T-Sql Formatter SSMS/VS Extension</DisplayName>
-    <Description xml:space="preserve">A simple free (AGPL) T-SQL Formatting Extension for SSMS and SSMS Express 2014-2016 and Visual Studio 2013-2015.</Description>
+    <Description xml:space="preserve">A simple free (AGPL) T-SQL Formatting Extension for SSMS and SSMS Express 2014-2016 and Visual Studio 2013-2017.</Description>
     <MoreInfo>http://architectshack.com/PoorMansTSqlFormatter.ashx</MoreInfo>
     <License>LICENSE.rtf</License>
   </Metadata>

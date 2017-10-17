@@ -1,7 +1,7 @@
-﻿/*
+/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0 and JS, written in C#. 
-Copyright (C) 2016 Tao Klerks
+Copyright (C) 2017 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -18,27 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System;
 using System.Reflection;
-using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("PoorMansTSqlFormatterSSMSPackage")]
-[//Note, this is also in resources file for localization!
-assembly: AssemblyDescription("A simple free (AGPL) T-SQL Formatting Extension for SSMS 2014-2016 and Visual Studio 2012-2015.")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyTitle("PoorMansTSqlFormatterSSMSAddIn.Setup.action")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PoorMansTSqlFormatterSSMSPackage")]
-[assembly: AssemblyCopyright("Copyright ©  2011-2017 Tao Klerks")]
+[assembly: AssemblyProduct("PoorMansTSqlFormatterSSMSAddIn.Setup.action")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.6.1.*")]
-[assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyKeyFile("")]
-[assembly: AssemblyKeyName("")]
-
-[assembly: ComVisible(false)]     
-[assembly: CLSCompliant(false)]
-[assembly: NeutralResourcesLanguage("en-US")]
-
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1017:MarkAssembliesWithComVisible")]
