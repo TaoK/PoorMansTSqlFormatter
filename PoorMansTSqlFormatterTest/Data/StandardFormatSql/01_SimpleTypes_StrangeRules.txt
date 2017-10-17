@@ -15,6 +15,10 @@ SELECT 1e * 1. OneAgain
 
 SELECT 1.1 * .1 'LessThanOne'
 
+SELECT 1 - 1 Subtracts
+
+SELECT 1e-1 IsAFraction
+
 -- John Arnott's "T-SQL Parsing Crazy Eights" question
 --  from SQLServerCentral's Question Of The Day quiz:
 SELECT 1.8 E

@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
-library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+library for .Net 2.0 and JS, written in C#. 
+Copyright (C) 2011-2017 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -18,17 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System;
-using System.Text;
 using NUnit.Framework;
-using System.IO;
-using System.Xml;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
 using PoorMansTSqlFormatterLib.Formatters;
 using PoorMansTSqlFormatterLib.Interfaces;
 using PoorMansTSqlFormatterLib.Parsers;
 using PoorMansTSqlFormatterLib.Tokenizers;
+using PoorMansTSqlFormatterLib.ParseStructure;
 
 namespace PoorMansTSqlFormatterTests
 {
@@ -46,6 +41,7 @@ namespace PoorMansTSqlFormatterTests
             _parser = new TSqlStandardParser();
             _tokenFormatter = new TSqlIdentityFormatter();
             _treeFormatter = (ISqlTreeFormatter)_tokenFormatter;
+            _tokenFormatter.ErrorOutputPrefix = "";
         }
 
         [Test, TestCaseSource(typeof(Utils), "GetInputSqlFileNames")]
@@ -54,8 +50,7 @@ namespace PoorMansTSqlFormatterTests
             string inputSQL = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
             ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
             string outputSQL = _tokenFormatter.FormatSQLTokens(tokenized);
-            if (!inputSQL.Contains(Utils.INVALID_SQL_WARNING))
-                Assert.AreEqual(outputSQL, inputSQL);
+            Assert.AreEqual(inputSQL, outputSQL);
         }
 
         [Test, TestCaseSource(typeof(Utils), "GetInputSqlFileNames")]
@@ -63,10 +58,9 @@ namespace PoorMansTSqlFormatterTests
         {
             string inputSQL = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
             ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
-            XmlDocument parsed = _parser.ParseSQL(tokenized);
+            Node parsed = _parser.ParseSQL(tokenized);
             string outputSQL = _treeFormatter.FormatSQLTree(parsed);
-            if (!inputSQL.Contains(Utils.INVALID_SQL_WARNING))
-                Assert.AreEqual(outputSQL, inputSQL);
+            Assert.AreEqual(inputSQL, outputSQL);
         }
     }
 }

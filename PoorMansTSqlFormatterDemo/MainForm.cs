@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
-library for .Net 2.0, written in C#. 
-Copyright (C) 2011-2013 Tao Klerks
+library for .Net 2.0 and JS, written in C#. 
+Copyright (C) 2011-2017 Tao Klerks
 
 Additional Contributors:
  * Timothy Klenke, 2012
@@ -22,10 +22,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System;
-using System.ComponentModel;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
+using PoorMansTSqlFormatterLib;
+using PoorMansTSqlFormatterLib.Interfaces;
 
 namespace PoorMansTSqlFormatterDemo
 {
@@ -39,9 +39,9 @@ namespace PoorMansTSqlFormatterDemo
         const string UILANGUAGE_FR = "FR";
         const string UILANGUAGE_ES = "ES";
 
-        PoorMansTSqlFormatterLib.Interfaces.ISqlTokenizer _tokenizer;
-        PoorMansTSqlFormatterLib.Interfaces.ISqlTokenParser _parser;
-        PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter _formatter;
+        ISqlTokenizer _tokenizer;
+        ISqlTokenParser _parser;
+        ISqlTreeFormatter _formatter;
 
         bool _queuedRefresh = false;
         object _refreshLock = new object();
@@ -166,7 +166,7 @@ namespace PoorMansTSqlFormatterDemo
 
         private void SetFormatter()
         {
-            PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter innerFormatter;
+            ISqlTreeFormatter innerFormatter;
             if (radio_Formatting_Standard.Checked)
             {
                 innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions
@@ -206,7 +206,8 @@ namespace PoorMansTSqlFormatterDemo
 
         private void DoFormatting()
         {
-            var tokenizedSql = _tokenizer.TokenizeSQL(txt_Input.Text);
+
+            var tokenizedSql = _tokenizer.TokenizeSQL(txt_Input.Text, txt_Input.SelectionStart);
 
             if (!splitContainer4.Panel2Collapsed && !splitContainer5.Panel1Collapsed)
                 txt_TokenizedSql.Text = tokenizedSql.PrettyPrint();
@@ -214,7 +215,7 @@ namespace PoorMansTSqlFormatterDemo
             var parsedSql = _parser.ParseSQL(tokenizedSql);
             
             if (!splitContainer4.Panel2Collapsed && !splitContainer5.Panel2Collapsed)
-                txt_ParsedXml.Text = parsedSql.OuterXml;
+                txt_ParsedXml.Text = parsedSql.ToXmlDoc().OuterXml;
 
             webBrowser_OutputSql.SetHTML(_formatter.FormatSQLTree(parsedSql));
         }

@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
-library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+library for .Net 2.0 and JS, written in C#. 
+Copyright (C) 2011-2017 Tao Klerks
 
 Additional Contributors:
  * Timothy Klenke, 2012
@@ -21,17 +21,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System;
-using System.Text;
 using NUnit.Framework;
-using System.IO;
-using System.Xml;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
+using PoorMansTSqlFormatterLib;
 using PoorMansTSqlFormatterLib.Formatters;
 using PoorMansTSqlFormatterLib.Interfaces;
 using PoorMansTSqlFormatterLib.Parsers;
+using PoorMansTSqlFormatterLib.ParseStructure;
 using PoorMansTSqlFormatterLib.Tokenizers;
+using System;
+using System.Collections.Generic;
 
 namespace PoorMansTSqlFormatterTests
 {
@@ -40,7 +38,6 @@ namespace PoorMansTSqlFormatterTests
     {
         ISqlTokenizer _tokenizer;
         ISqlTokenParser _parser;
-        //TSqlStandardFormatter _treeFormatter;
         Dictionary<string, TSqlStandardFormatter> _formatters;
 
         public TSqlStandardFormatterTests()
@@ -55,10 +52,9 @@ namespace PoorMansTSqlFormatterTests
             TSqlStandardFormatter outFormatter;
             if (!_formatters.TryGetValue(configString, out outFormatter))
             {
-                //defaults are as per the object, except disabling colorized/htmlified output
                 var options = new TSqlStandardFormatterOptions(configString);
-                options.HTMLColoring = false;
                 outFormatter = new TSqlStandardFormatter(options);
+                _formatters.Add(configString, outFormatter);
             }
             return outFormatter;
         }
@@ -69,17 +65,23 @@ namespace PoorMansTSqlFormatterTests
             string inputSQL = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
             TSqlStandardFormatter _treeFormatter = GetFormatter("");
             ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQL);
-            XmlDocument parsed = _parser.ParseSQL(tokenized);
+            Node parsed = _parser.ParseSQL(tokenized);
             string outputSQL = _treeFormatter.FormatSQLTree(parsed);
-            ITokenList tokenizedAgain = _tokenizer.TokenizeSQL(outputSQL);
-            XmlDocument parsedAgain = _parser.ParseSQL(tokenizedAgain);
+
+            var inputToSecondPass = outputSQL;
+            if (inputToSecondPass.StartsWith(Utils.ERROR_FOUND_WARNING))
+                inputToSecondPass = inputToSecondPass.Replace(Utils.ERROR_FOUND_WARNING, "");
+
+            ITokenList tokenizedAgain = _tokenizer.TokenizeSQL(inputToSecondPass);
+            Node parsedAgain = _parser.ParseSQL(tokenizedAgain);
             string formattedAgain = _treeFormatter.FormatSQLTree(parsedAgain);
-            if (!inputSQL.Contains(Utils.REFORMATTING_INCONSISTENCY_WARNING) && !inputSQL.Contains(Utils.INVALID_SQL_WARNING))
+
+            if (!inputSQL.Contains(Utils.REFORMATTING_INCONSISTENCY_WARNING))
             {
                 Assert.AreEqual(outputSQL, formattedAgain, "first-pass formatted vs reformatted");
                 Utils.StripWhiteSpaceFromSqlTree(parsed);
                 Utils.StripWhiteSpaceFromSqlTree(parsedAgain);
-                Assert.AreEqual(parsed.OuterXml.ToUpper(), parsedAgain.OuterXml.ToUpper(), "first parse xml vs reparse xml");
+                Assert.AreEqual(parsed.ToXmlDoc().OuterXml.ToUpper(), parsedAgain.ToXmlDoc().OuterXml.ToUpper(), "first parse xml vs reparse xml");
             }
         }
 
@@ -96,7 +98,7 @@ namespace PoorMansTSqlFormatterTests
             TSqlStandardFormatter _treeFormatter = GetFormatter(Utils.GetFileConfigString(FileName));
 
             ITokenList tokenized = _tokenizer.TokenizeSQL(inputSql);
-            XmlDocument parsed = _parser.ParseSQL(tokenized);
+            Node parsed = _parser.ParseSQL(tokenized);
             string formatted = _treeFormatter.FormatSQLTree(parsed);
 
             Assert.AreEqual(expectedSql, formatted);

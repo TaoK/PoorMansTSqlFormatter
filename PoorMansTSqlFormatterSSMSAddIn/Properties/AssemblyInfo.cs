@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
-library for .Net 2.0, written in C#. 
-Copyright (C) 2011 Tao Klerks
+library for .Net 2.0 and JS, written in C#. 
+Copyright (C) 2011-2017 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("PoorMansTSQLFormatterSSMSAddin")]
 //Note, this is also in resources file for localization!
@@ -27,10 +26,10 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PoorMansTSQLFormatterSSMSAddin")]
-[assembly: AssemblyCopyright("Copyright ©  2011-2013 Tao Klerks")]
+[assembly: AssemblyCopyright("Copyright ©  2011-2017 Tao Klerks")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.5.3.*")]
+[assembly: AssemblyVersion("2.0.1.*")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]

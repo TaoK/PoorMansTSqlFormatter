@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -12,7 +12,11 @@
     <AssemblyName>PoorMansTSqlFormatterLib35</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkSubset>Client</TargetFrameworkSubset>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,16 +24,12 @@
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -39,33 +39,14 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseFormatterState.cs" />
-    <Compile Include="Formatters\TSqlObfuscatingFormatter.cs" />
-    <Compile Include="Formatters\HtmlPageWrapper.cs" />
-    <Compile Include="Formatters\TSqlIdentityFormatter.cs" />
-    <Compile Include="Formatters\TSqlStandardFormatter.cs" />
-    <Compile Include="Formatters\TSqlStandardFormatterOptions.cs" />
-    <Compile Include="Interfaces\IParseTree.cs" />
-    <Compile Include="Interfaces\MessagingConstants.cs" />
-    <Compile Include="Interfaces\SqlHtmlConstants.cs" />
-    <Compile Include="Interfaces\SqlXmlConstants.cs" />
-    <Compile Include="Interfaces\ISqlTokenFormatter.cs" />
-    <Compile Include="Interfaces\ISqlTokenizer.cs" />
-    <Compile Include="Interfaces\ISqlTokenParser.cs" />
-    <Compile Include="Interfaces\ISqlTreeFormatter.cs" />
-    <Compile Include="Interfaces\IToken.cs" />
-    <Compile Include="Interfaces\ITokenList.cs" />
-    <Compile Include="Interfaces\SqlTokenType.cs" />
-    <Compile Include="ObfuscatingKeywordMapping.cs" />
-    <Compile Include="Parsers\TSqlStandardParser.cs" />
-    <Compile Include="ParseTree.cs" />
+    <Compile Include="NetUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlFormattingManager.cs" />
-    <Compile Include="StandardKeywordRemapping.cs" />
-    <Compile Include="Token.cs" />
-    <Compile Include="Tokenizers\TSqlStandardTokenizer.cs" />
-    <Compile Include="TokenList.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="..\PoorMansTSqlFormatterLibShared\**\*.cs">
+      <Link>_Inlined\PoorMansTSqlFormatterLibShared\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Compile>
+	</ItemGroup>
+  <ItemGroup>
+    <None Include="Key.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

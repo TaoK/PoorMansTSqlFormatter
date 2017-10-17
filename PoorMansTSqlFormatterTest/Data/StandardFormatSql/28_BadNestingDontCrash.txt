@@ -1,0 +1,10 @@
+﻿--WARNING! ERRORS ENCOUNTERED DURING SQL PARSING!
+IF 1 = 1
+	SET @InnerIfStatement = 3
+ELSE IF 2 = 4
+	SET @InnerSecondIfStatement = 5
+ELSE
+	SET @InnerSecondIfStatement = 5 ELSE
+
+SET @InnerSecondIfStatement = 6 ELSE
+SET @InnerSecondIfStatement = 7

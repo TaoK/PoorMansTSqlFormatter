@@ -1,6 +1,6 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
-library for .Net 2.0, written in C#. 
+library for .Net 2.0 and JS, written in C#. 
 Copyright (C) 2011-2013 Tao Klerks
 
 Additional Contributors:
@@ -132,12 +132,12 @@ namespace PoorMansTSqlFormatterCmdLine
             string stdInput = null;
             try
             {
-                throwAwayValue = System.Console.KeyAvailable;
+                throwAwayValue = Console.KeyAvailable;
             }
             catch (InvalidOperationException)
             {
                 Console.InputEncoding = Encoding.UTF8;
-                stdInput = System.Console.In.ReadToEnd();
+                stdInput = Console.In.ReadToEnd();
             }
 
             //then complain about missing input or unrecognized args

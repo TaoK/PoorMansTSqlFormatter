@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
-library for .Net 2.0, written in C#. 
-Copyright (C) 2011-2013 Tao Klerks
+library for .Net 2.0 and JS, written in C#. 
+Copyright (C) 2011-2016 Tao Klerks
 
 Additional Contributors:
  * Timothy Klenke, 2012
@@ -36,31 +36,32 @@ namespace PoorMansTSqlFormatterPluginShared
     public partial class SettingsForm : Form
     {
         //key binding "Text Editor" scope name is necessary for "Reset" action, but is implementation-specific.
-        public delegate string GetTextEditorKeyBindingScopeName();
+        public delegate string FixHotkeyDefault(string rawDefault);
 
         ISqlSettings _settings = null;
         Assembly _pluginAssembly = null;
         string _aboutDescription = null;
         bool _supportsHotkey = false;
-        GetTextEditorKeyBindingScopeName _keyBindingScopeNameMethod;
+        FixHotkeyDefault _hotkeyDefaultFixMethod;
 
         public SettingsForm(ISqlSettings settings, Assembly pluginAssembly, string aboutDescription) : this(settings, pluginAssembly, aboutDescription, null)
         {
         }
 
-        public SettingsForm(ISqlSettings settings, Assembly pluginAssembly, string aboutDescription, GetTextEditorKeyBindingScopeName keyBindingScopeNameMethod)
+        public SettingsForm(ISqlSettings settings, Assembly pluginAssembly, string aboutDescription, FixHotkeyDefault hotkeyDefaultFixMethod)
         {
             _settings = settings;
             _pluginAssembly = pluginAssembly;
             _aboutDescription = aboutDescription;
 
-            _keyBindingScopeNameMethod = keyBindingScopeNameMethod;
-
-            foreach (System.Configuration.SettingsProperty prop in _settings.Properties)
-                if (prop.Name.Equals("Hotkey"))
-                    _supportsHotkey = true;
+            _hotkeyDefaultFixMethod = hotkeyDefaultFixMethod;
 
             InitializeComponent();
+
+            if (_hotkeyDefaultFixMethod != null)
+                foreach (System.Configuration.SettingsProperty prop in _settings.Properties)
+                    if (prop.Name.Equals("Hotkey"))
+                        _supportsHotkey = true;
 
             if (!_supportsHotkey)
             {
@@ -131,7 +132,7 @@ namespace PoorMansTSqlFormatterPluginShared
                 UppercaseKeywords = chk_UppercaseKeywords.Checked,
                 KeywordStandardization = chk_StandardizeKeywords.Checked
             };
-            
+
             if (_supportsHotkey) _settings["Hotkey"] = txt_Hotkey.Text;
         }
 
@@ -155,16 +156,10 @@ namespace PoorMansTSqlFormatterPluginShared
 
             _settings.Reset();
 
-            //unfortuntely, the Hotkey "True" default is not very useful in VS environments, need to 
+            //unfortunately, the Hotkey "True" default is not very useful in VS environments, need to 
             // grab the localized value from the VS context.
-            if (_supportsHotkey && _keyBindingScopeNameMethod != null)
-            {
-                string scopeName = _keyBindingScopeNameMethod();
-                if (scopeName != null)
-                {
-                    _settings["Hotkey"] = _settings["Hotkey"].ToString().Replace("Text Editor", scopeName);
-                }
-            }
+            if (_supportsHotkey)
+                _settings["Hotkey"] = _hotkeyDefaultFixMethod(_settings["Hotkey"].ToString());
 
             LoadControlValuesFromSettings();
 
