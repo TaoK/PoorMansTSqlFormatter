@@ -21,8 +21,7 @@ The formatting library and commandline utility have been compiled under Mono (a 
 should theoretically work fine. The WinForms app, however, does not (or did not the last time I tried): the "WebBrowser" 
 implementation was simply not close enough to the microsoft one for it to work. I may come back to this over the coming months/years.
 
-To manually deploy the SSMS Add-In (eg when using an Express edition of Visual Studio), the process will 
-depend on which version of SSMS you are deploying to:
+To manually deploy the SSMS Add-In, the process will depend on which version of SSMS you are deploying to:
  - For SSMS 2005-2008R2, full or Express, you need:
    - The Add-In assembly to be exposed as a COM object
    - To add a registry key pointing to the "PoorMansTSqlFormatterSSMSAddIn.AddinConnector" COM object:
@@ -50,7 +49,7 @@ The WinMerge Plugin preparation is reasonably complex/painful, especially on a r
 
 
 The packaging and release process is currently completely manual:
- - Ensure AssemblyInfo versions are updated, including versions of setup packages and manual reverences in AddIn and Package definition files
+ - Ensure AssemblyInfo versions are updated, including versions of setup packages/installers and manual reverences in AddIn and Package definition files (multiple)
  - Rebuild solution in Release mode, and additionally manually rebuild the two setup projects
  - Copy Binaries for simple executables and setup files into dedicated folders, zip them up and version-number the zip files.
  - Upload the archives to website
