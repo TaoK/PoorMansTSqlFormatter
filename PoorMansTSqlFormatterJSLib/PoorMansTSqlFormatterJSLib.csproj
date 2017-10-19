@@ -24,7 +24,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;BridgeLib</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;BridgeLib;SIMPLIFIEDFW</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -32,12 +32,11 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;BridgeLib</DefineConstants>
+    <DefineConstants>TRACE;BridgeLib;SIMPLIFIEDFW</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BridgeUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\PoorMansTSqlFormatterLibShared\**\*.cs">
       <Link>_Inlined\PoorMansTSqlFormatterLibShared\%(RecursiveDir)%(Filename)%(Extension)</Link>

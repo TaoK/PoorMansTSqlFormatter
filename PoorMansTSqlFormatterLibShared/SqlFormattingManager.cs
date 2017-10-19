@@ -19,8 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#if BridgeLib
-#else
+#if !SIMPLIFIEDFW
 using System;
 using System.Runtime.InteropServices;
 #endif
@@ -29,8 +28,7 @@ using PoorMansTSqlFormatterLib.ParseStructure;
 
 namespace PoorMansTSqlFormatterLib
 {
-#if BridgeLib
-#else
+#if !SIMPLIFIEDFW
     //These COM-related attributes exist JUST so that we can use this class from VB6 - there is no need to
     // expose these classes to COM in order for this library to be used in a .Net project.
     [Guid("A7FD140A-C3C3-4233-95DB-A64B50C8DF2B")]
@@ -83,8 +81,7 @@ namespace PoorMansTSqlFormatterLib
 
     //This COM interface exists JUST so that we can use this class from VB6 - there is no need to expose 
     // these classes to COM in order for this library to be used in a .Net project.
-#if BridgeLib
-#else
+#if !SIMPLIFIEDFW
     [Guid("A7FD140A-C3C3-4233-95DB-A64B50C8DF2A")]
     [CLSCompliant(false), ComVisible(true)]
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
