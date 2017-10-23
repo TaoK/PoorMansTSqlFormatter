@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:TaoK/PoorMansTSqlFormatter-TestData.git
+	branch = master
+	commit = e6f39475e9fd0e1e2fcc6009aae0b1c00a619ebb
+	parent = 192523c8f76531237f735cd46cb96945aff7265f
+	cmdver = 0.3.1
