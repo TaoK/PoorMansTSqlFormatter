@@ -121,6 +121,6 @@
     <value>PoorMansTSqlFormatterSSMSPackage</value>
   </data>
   <data name="ProductDescription" xml:space="preserve">
-    <value>A simple free (AGPL) T-SQL Formatting Extension for SSMS 2014-2016 and Visual Studio 2013-2015</value>
+    <value>A simple free (AGPL) T-SQL Formatting Extension for SSMS 2014-17 and Visual Studio 2013-2017</value>
   </data>
 </root>
