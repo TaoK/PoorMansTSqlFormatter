@@ -117,332 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Poor Man's T-Sql Formatter - Configuration</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>SettingsForm</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btn_About.Name" xml:space="preserve">
-    <value>btn_About</value>
-  </data>
-  <data name="&gt;&gt;btn_About.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btn_About.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btn_About.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;btn_Cancel.Name" xml:space="preserve">
-    <value>btn_Cancel</value>
-  </data>
-  <data name="&gt;&gt;btn_Cancel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btn_Cancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btn_Cancel.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="&gt;&gt;btn_Reset.Name" xml:space="preserve">
-    <value>btn_Reset</value>
-  </data>
-  <data name="&gt;&gt;btn_Reset.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btn_Reset.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btn_Reset.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;btn_Save.Name" xml:space="preserve">
-    <value>btn_Save</value>
-  </data>
-  <data name="&gt;&gt;btn_Save.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btn_Save.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btn_Save.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="&gt;&gt;chk_BreakJoinOnSections.Name" xml:space="preserve">
-    <value>chk_BreakJoinOnSections</value>
-  </data>
-  <data name="&gt;&gt;chk_BreakJoinOnSections.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;chk_BreakJoinOnSections.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chk_BreakJoinOnSections.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandBetweenConditions.Name" xml:space="preserve">
-    <value>chk_ExpandBetweenConditions</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandBetweenConditions.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandBetweenConditions.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandBetweenConditions.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandBooleanExpressions.Name" xml:space="preserve">
-    <value>chk_ExpandBooleanExpressions</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandBooleanExpressions.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandBooleanExpressions.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandBooleanExpressions.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandCaseStatements.Name" xml:space="preserve">
-    <value>chk_ExpandCaseStatements</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandCaseStatements.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandCaseStatements.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandCaseStatements.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandCommaLists.Name" xml:space="preserve">
-    <value>chk_ExpandCommaLists</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandCommaLists.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandCommaLists.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chk_ExpandCommaLists.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;chk_SpaceAfterExpandedComma.Name" xml:space="preserve">
-    <value>chk_SpaceAfterExpandedComma</value>
-  </data>
-  <data name="&gt;&gt;chk_SpaceAfterExpandedComma.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;chk_SpaceAfterExpandedComma.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chk_SpaceAfterExpandedComma.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;chk_StandardizeKeywords.Name" xml:space="preserve">
-    <value>chk_StandardizeKeywords</value>
-  </data>
-  <data name="&gt;&gt;chk_StandardizeKeywords.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;chk_StandardizeKeywords.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chk_StandardizeKeywords.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;chk_TrailingCommas.Name" xml:space="preserve">
-    <value>chk_TrailingCommas</value>
-  </data>
-  <data name="&gt;&gt;chk_TrailingCommas.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;chk_TrailingCommas.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chk_TrailingCommas.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;chk_UppercaseKeywords.Name" xml:space="preserve">
-    <value>chk_UppercaseKeywords</value>
-  </data>
-  <data name="&gt;&gt;chk_UppercaseKeywords.Parent" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;chk_UppercaseKeywords.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chk_UppercaseKeywords.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;flowLayoutPanel1.Name" xml:space="preserve">
-    <value>flowLayoutPanel1</value>
-  </data>
-  <data name="&gt;&gt;flowLayoutPanel1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;flowLayoutPanel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;flowLayoutPanel1.ZOrder" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;lbl_Hotkey.Name" xml:space="preserve">
-    <value>lbl_Hotkey</value>
-  </data>
-  <data name="&gt;&gt;lbl_Hotkey.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbl_Hotkey.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbl_Hotkey.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;lbl_IndentHint.Name" xml:space="preserve">
-    <value>lbl_IndentHint</value>
-  </data>
-  <data name="&gt;&gt;lbl_IndentHint.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbl_IndentHint.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbl_IndentHint.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;lbl_IndentString.Name" xml:space="preserve">
-    <value>lbl_IndentString</value>
-  </data>
-  <data name="&gt;&gt;lbl_IndentString.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbl_IndentString.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbl_IndentString.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="&gt;&gt;lbl_MaxLineWidth.Name" xml:space="preserve">
-    <value>lbl_MaxLineWidth</value>
-  </data>
-  <data name="&gt;&gt;lbl_MaxLineWidth.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbl_MaxLineWidth.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbl_MaxLineWidth.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;lbl_SpacesPerTab.Name" xml:space="preserve">
-    <value>lbl_SpacesPerTab</value>
-  </data>
-  <data name="&gt;&gt;lbl_SpacesPerTab.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbl_SpacesPerTab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbl_SpacesPerTab.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;lbl_SpacesPerTab_Extra.Name" xml:space="preserve">
-    <value>lbl_SpacesPerTab_Extra</value>
-  </data>
-  <data name="&gt;&gt;lbl_SpacesPerTab_Extra.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbl_SpacesPerTab_Extra.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbl_SpacesPerTab_Extra.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;llbl_HotkeyHint.Name" xml:space="preserve">
-    <value>llbl_HotkeyHint</value>
-  </data>
-  <data name="&gt;&gt;llbl_HotkeyHint.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;llbl_HotkeyHint.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;llbl_HotkeyHint.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;txt_Hotkey.Name" xml:space="preserve">
-    <value>txt_Hotkey</value>
-  </data>
-  <data name="&gt;&gt;txt_Hotkey.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;txt_Hotkey.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_Hotkey.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="&gt;&gt;txt_IndentString.Name" xml:space="preserve">
-    <value>txt_IndentString</value>
-  </data>
-  <data name="&gt;&gt;txt_IndentString.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;txt_IndentString.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_IndentString.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;txt_MaxLineWidth.Name" xml:space="preserve">
-    <value>txt_MaxLineWidth</value>
-  </data>
-  <data name="&gt;&gt;txt_MaxLineWidth.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;txt_MaxLineWidth.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_MaxLineWidth.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;txt_SpacesPerTab.Name" xml:space="preserve">
-    <value>txt_SpacesPerTab</value>
-  </data>
-  <data name="&gt;&gt;txt_SpacesPerTab.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;txt_SpacesPerTab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txt_SpacesPerTab.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="btn_About.Text" xml:space="preserve">
-    <value>À propos de...</value>
+  <data name="btn_Save.Text" xml:space="preserve">
+    <value>Sauvegarder</value>
   </data>
   <data name="btn_Cancel.Text" xml:space="preserve">
     <value>Annuler</value>
   </data>
-  <data name="btn_Reset.Text" xml:space="preserve">
-    <value>Réinitialiser</value>
+  <data name="chk_ExpandCommaLists.Text" xml:space="preserve">
+    <value>Étendre Listes de Virgule</value>
   </data>
-  <data name="btn_Save.Text" xml:space="preserve">
-    <value>Sauvegarder</value>
+  <data name="chk_ExpandInLists.Text" xml:space="preserve">
+    <value>Étendre Listes IN</value>
   </data>
-  <data name="chk_BreakJoinOnSections.Text" xml:space="preserve">
-    <value>Saut sur Sections ON</value>
-  </data>
-  <data name="chk_ExpandBetweenConditions.Text" xml:space="preserve">
-    <value>Étendre Conditions BETWEEN</value>
+  <data name="chk_TrailingCommas.Text" xml:space="preserve">
+    <value>Virgules Trainantes</value>
   </data>
   <data name="chk_ExpandBooleanExpressions.Text" xml:space="preserve">
     <value>Étendre Expressions Booléennes</value>
@@ -450,32 +138,41 @@
   <data name="chk_ExpandCaseStatements.Text" xml:space="preserve">
     <value>Étendre Déclarations CASE</value>
   </data>
-  <data name="chk_ExpandCommaLists.Text" xml:space="preserve">
-    <value>Étendre Listes de Virgule</value>
-  </data>
-  <data name="chk_SpaceAfterExpandedComma.Text" xml:space="preserve">
-    <value>Espace après Virgule Étendue</value>
-  </data>
-  <data name="chk_StandardizeKeywords.Text" xml:space="preserve">
-    <value>Normalisation de Mots-Clé</value>
-  </data>
-  <data name="chk_TrailingCommas.Text" xml:space="preserve">
-    <value>Virgules Trainantes</value>
+  <data name="chk_ExpandBetweenConditions.Text" xml:space="preserve">
+    <value>Étendre Conditions BETWEEN</value>
   </data>
   <data name="chk_UppercaseKeywords.Text" xml:space="preserve">
     <value>Mots-Clé en Majuscules</value>
   </data>
-  <data name="lbl_Hotkey.Text" xml:space="preserve">
-    <value>Raccourci Clavier SSMS:</value>
+  <data name="chk_SpaceAfterExpandedComma.Text" xml:space="preserve">
+    <value>Espace après Virgule Étendue</value>
   </data>
-  <data name="lbl_IndentHint.Text" xml:space="preserve">
-    <value>(utiliser \t pour tab et \s pour espace)</value>
+  <data name="chk_BreakJoinOnSections.Text" xml:space="preserve">
+    <value>Saut sur Sections ON</value>
+  </data>
+  <data name="chk_StandardizeKeywords.Text" xml:space="preserve">
+    <value>Normalisation de Mots-Clé</value>
+  </data>
+  <data name="lbl_ClauseBreaks.Text" xml:space="preserve">
+    <value>Fins de Ligne par Clause:</value>
   </data>
   <data name="lbl_IndentString.Text" xml:space="preserve">
     <value>Chaîne d'Indentation:</value>
   </data>
-  <data name="lbl_MaxLineWidth.Text" xml:space="preserve">
-    <value>Largeur de ligne Maximum:</value>
+  <data name="lbl_IndentHint.Text" xml:space="preserve">
+    <value>(utiliser \t pour tab et \s pour espace)</value>
+  </data>
+  <data name="lbl_StatementBreaks.Text" xml:space="preserve">
+    <value>Fins de Ligne par Déclaracion:</value>
+  </data>
+  <data name="lbl_Hotkey.Text" xml:space="preserve">
+    <value>Raccourci Clavier SSMS:</value>
+  </data>
+  <data name="btn_About.Text" xml:space="preserve">
+    <value>À propos de...</value>
+  </data>
+  <data name="btn_Reset.Text" xml:space="preserve">
+    <value>Réinitialiser</value>
   </data>
   <data name="lbl_SpacesPerTab.Text" xml:space="preserve">
     <value>Espaces par Tab:</value>
@@ -483,7 +180,10 @@
   <data name="lbl_SpacesPerTab_Extra.Text" xml:space="preserve">
     <value>(pour fonction de Largeur Maximum)</value>
   </data>
-  <data name="llbl_HotkeyHint.Text" xml:space="preserve">
-    <value>(voir documentation VS)</value>
+  <data name="lbl_MaxLineWidth.Text" xml:space="preserve">
+    <value>Largeur de ligne Maximum:</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Poor Man's T-Sql Formatter - Configuration</value>
   </data>
 </root>
