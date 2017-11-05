@@ -9,6 +9,7 @@
 </WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1.1</NumberValue><Asterisk>*</Asterisk><NumberValue>.1</NumberValue><String>LessThanOne</String><WhiteSpace>
 </WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1</NumberValue><OtherOperator>-</OtherOperator><NumberValue>1</NumberValue><Other>Subtracts</Other><WhiteSpace>
 </WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1E-1</NumberValue><Other>IsAFraction</Other><WhiteSpace>
+</WhiteSpace></Clause></SqlStatement><SqlStatement><Clause><OtherKeyword>SELECT</OtherKeyword><WhiteSpace> </WhiteSpace><NumberValue>1E+1</NumberValue><Other>IsTen</Other><WhiteSpace>
 
 </WhiteSpace></Clause></SqlStatement><SqlStatement><SingleLineComment> John Arnott's "T-SQL Parsing Crazy Eights" question
 </SingleLineComment><SingleLineComment>  from SQLServerCentral's Question Of The Day quiz:

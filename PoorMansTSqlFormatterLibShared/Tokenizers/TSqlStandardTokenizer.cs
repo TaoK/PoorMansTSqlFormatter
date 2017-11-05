@@ -211,7 +211,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
                         {
                             state.ConsumeCurrentCharacterIntoToken();
                         }
-                        else if (state.CurrentChar == '-' && state.CurrentTokenValue.ToString().ToUpper().EndsWith("E"))
+                        else if ((state.CurrentChar == '-' || state.CurrentChar == '+') && state.CurrentTokenValue.ToString().ToUpper().EndsWith("E"))
                         {
                             state.ConsumeCurrentCharacterIntoToken();
                         }
