@@ -27,7 +27,6 @@ using System;
 using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 
-
 namespace PoorMansTSqlFormatterSSMSPackage
 {
     [PackageRegistration(UseManagedResourcesOnly = true)]  //General VSPackage hookup
@@ -38,8 +37,8 @@ namespace PoorMansTSqlFormatterSSMSPackage
     public sealed class FormatterPackage : Package
     {
         //These constants are duplicated in the vsct file
-        public const string guidPoorMansTSqlFormatterSSMSPackagePkgString = "5e84b709-1e60-4116-a702-4cdb1a282d6e";
-        public const string guidPoorMansTSqlFormatterSSMSPackageCmdSetString = "201bf73c-de53-48a2-a912-c3b8308dacce";
+        public const string guidPoorMansTSqlFormatterSSMSPackagePkgString = "247609b1-2692-47d6-972a-976544685f0e";
+        public const string guidPoorMansTSqlFormatterSSMSPackageCmdSetString = "5ea2e413-8351-4ca9-b0a0-34a9b241648b";
         public const uint cmdidPoorMansFormatSQL = 0x100;
         public const uint cmdidPoorMansSqlOptions = 0x101;
 

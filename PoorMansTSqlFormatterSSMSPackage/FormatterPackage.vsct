@@ -65,8 +65,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
   <Symbols>
     <!-- Most of these symbols are duplicated in C# -->
-    <GuidSymbol name="guidPoorMansTSqlFormatterSSMSVSPackagePkg" value="{5e84b709-1e60-4116-a702-4cdb1a282d6e}" />
-    <GuidSymbol name="guidPoorMansTSqlFormatterSSMSVSPackageCmdSet" value="{201bf73c-de53-48a2-a912-c3b8308dacce}">
+    <GuidSymbol name="guidPoorMansTSqlFormatterSSMSVSPackagePkg" value="{247609b1-2692-47d6-972a-976544685f0e}" />
+    <GuidSymbol name="guidPoorMansTSqlFormatterSSMSVSPackageCmdSet" value="{5ea2e413-8351-4ca9-b0a0-34a9b241648b}">
       <IDSymbol name="MyMenuGroup" value="0x1020" />
       <IDSymbol name="cmdidPoorMansFormatSQL" value="0x0100" />
       <IDSymbol name="cmdidPoorMansSqlOptions" value="0x0101" />
