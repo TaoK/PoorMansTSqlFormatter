@@ -14,12 +14,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{679B3998-C5A5-4B64-8674-70BE959ACE6E}</ProjectGuid>
+    <ProjectGuid>{B1175A57-8B7B-4B8D-ACE0-3597B6B729F8}</ProjectGuid>
     <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PoorMansTSqlFormatterSSMSPackage</RootNamespace>
-    <AssemblyName>PoorMansTSqlFormatterSSMSPackage</AssemblyName>
+    <RootNamespace>PoorMansTSqlFormatterVSPackage</RootNamespace>
+    <AssemblyName>PoorMansTSqlFormatterVSPackage</AssemblyName>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>

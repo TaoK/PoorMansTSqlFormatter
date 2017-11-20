@@ -28,6 +28,8 @@ using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 
 
+//Please note, almost all of this metadata (including GUIDs) is duplicated in the SSMS Package. Only descriptions differ.
+// (it would make sense to improve this at some point)
 namespace PoorMansTSqlFormatterSSMSPackage
 {
     [PackageRegistration(UseManagedResourcesOnly = true)]  //General VSPackage hookup
