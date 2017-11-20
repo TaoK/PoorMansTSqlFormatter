@@ -1,6 +1,6 @@
 /**
  * A simple free (AGPL) T-SQL formatting library for JS
- * @version 1.6.9.271
+ * @version 1.6.10.1315
  * @copyright Copyright ©  2011-2017 Tao Klerks
  * @compiler Bridge.NET 16.0.0-beta4
  */
