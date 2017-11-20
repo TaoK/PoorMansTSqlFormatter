@@ -196,7 +196,9 @@ namespace PoorMansTSqlFormatterLib.ParseStructure
                 }
 
                 Node nextNode = null;
-                if (previousNode != null && !(currentNode.Equals(previousNode.Parent)))
+                if (previousNode != null
+                    && currentNode.Children.Any()
+                    && !(currentNode.Equals(previousNode.Parent)))
                 {
                     nextNode = currentNode.Children.FirstOrDefault();
                 }

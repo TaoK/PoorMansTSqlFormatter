@@ -115,6 +115,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
             WhiteSpace_BreakAsExpected(state);
 
+            //someone forgot to close a "[noformat]" or "[minify]" region... we'll assume that's ok
             if (state.SpecialRegionActive == SpecialRegionType.NoFormat)
             {
                 Node skippedXml = NodeExtensions.ExtractStructureBetween(state.RegionStartNode, sqlTreeDoc);
@@ -411,19 +412,29 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     if (state.SpecialRegionActive == SpecialRegionType.NoFormat && contentElement.TextValue.ToUpperInvariant().Contains("[/NOFORMAT]"))
                     {
                         Node skippedXml = NodeExtensions.ExtractStructureBetween(state.RegionStartNode, contentElement);
-                        TSqlIdentityFormatter tempFormatter = new TSqlIdentityFormatter(Options.HTMLColoring);
-                        state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+                        if (skippedXml != null)
+                        {
+                            TSqlIdentityFormatter tempFormatter = new TSqlIdentityFormatter(Options.HTMLColoring);
+                            state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+                            state.WordSeparatorExpected = false;
+                            state.BreakExpected = false;
+                        }
                         state.SpecialRegionActive = null;
                         state.RegionStartNode = null;
                     }
                     else if (state.SpecialRegionActive == SpecialRegionType.Minify && contentElement.TextValue.ToUpperInvariant().Contains("[/MINIFY]"))
                     {
                         Node skippedXml = NodeExtensions.ExtractStructureBetween(state.RegionStartNode, contentElement);
-                        TSqlObfuscatingFormatter tempFormatter = new TSqlObfuscatingFormatter();
-                        if (HTMLFormatted)
-                            state.AddOutputContentRaw(Utils.HtmlEncode(tempFormatter.FormatSQLTree(skippedXml)));
-                        else
-                            state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+                        if (skippedXml != null)
+                        {
+                            TSqlObfuscatingFormatter tempFormatter = new TSqlObfuscatingFormatter();
+                            if (HTMLFormatted)
+                                state.AddOutputContentRaw(Utils.HtmlEncode(tempFormatter.FormatSQLTree(skippedXml)));
+                            else
+                                state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+                            state.WordSeparatorExpected = false;
+                            state.BreakExpected = false;
+                        }
                         state.SpecialRegionActive = null;
                         state.RegionStartNode = null;
                     }
@@ -446,13 +457,13 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                     if (state.SpecialRegionActive == null && contentElement.TextValue.ToUpperInvariant().Contains("[NOFORMAT]"))
                     {
-                        state.AddOutputLineBreak();
+                        //state.AddOutputLineBreak();
                         state.SpecialRegionActive = SpecialRegionType.NoFormat;
                         state.RegionStartNode = contentElement;
                     }
                     else if (state.SpecialRegionActive == null && contentElement.TextValue.ToUpperInvariant().Contains("[MINIFY]"))
                     {
-                        state.AddOutputLineBreak();
+                        //state.AddOutputLineBreak();
                         state.SpecialRegionActive = SpecialRegionType.Minify;
                         state.RegionStartNode = contentElement;
                     }
@@ -463,19 +474,29 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     if (state.SpecialRegionActive == SpecialRegionType.NoFormat && contentElement.TextValue.ToUpperInvariant().Contains("[/NOFORMAT]"))
                     {
                         Node skippedXml = NodeExtensions.ExtractStructureBetween(state.RegionStartNode, contentElement);
-                        TSqlIdentityFormatter tempFormatter = new TSqlIdentityFormatter(Options.HTMLColoring);
-                        state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+                        if (skippedXml != null)
+                        {
+                            TSqlIdentityFormatter tempFormatter = new TSqlIdentityFormatter(Options.HTMLColoring);
+                            state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+                            state.WordSeparatorExpected = false;
+                            state.BreakExpected = false;
+                        }
                         state.SpecialRegionActive = null;
                         state.RegionStartNode = null;
                     }
                     else if (state.SpecialRegionActive == SpecialRegionType.Minify && contentElement.TextValue.ToUpperInvariant().Contains("[/MINIFY]"))
                     {
                         Node skippedXml = NodeExtensions.ExtractStructureBetween(state.RegionStartNode, contentElement);
-                        TSqlObfuscatingFormatter tempFormatter = new TSqlObfuscatingFormatter();
-                        if (HTMLFormatted)
-                            state.AddOutputContentRaw(Utils.HtmlEncode(tempFormatter.FormatSQLTree(skippedXml)));
-                        else
-                            state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+                        if (skippedXml != null)
+                        {
+                            TSqlObfuscatingFormatter tempFormatter = new TSqlObfuscatingFormatter();
+                            if (HTMLFormatted)
+                                state.AddOutputContentRaw(Utils.HtmlEncode(tempFormatter.FormatSQLTree(skippedXml)));
+                            else
+                                state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+                            state.WordSeparatorExpected = false;
+                            state.BreakExpected = false;
+                        }
                         state.SpecialRegionActive = null;
                         state.RegionStartNode = null;
                     }

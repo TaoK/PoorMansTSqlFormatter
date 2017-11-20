@@ -73,7 +73,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (sqlTreeDoc.Name == SqlStructureConstants.ENAME_SQL_ROOT && sqlTreeDoc.GetAttributeValue(SqlStructureConstants.ANAME_ERRORFOUND) == "1")
                 state.AddOutputContent(ErrorOutputPrefix);
 
-            ProcessSqlNodeList(sqlTreeDoc.Children, state);
+            //pass "doc" itself into process: useful/necessary when formatting MINIFY sub-regions from standard formatter
+            ProcessSqlNodeList(new[] { sqlTreeDoc }, state);
             state.BreakIfExpected();
             return state.DumpOutput();
         }

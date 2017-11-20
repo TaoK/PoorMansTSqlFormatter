@@ -108,6 +108,7 @@
     <Content Include="Data\InputSql\26_DataTypesAndSynonyms.txt" />
     <Content Include="Data\InputSql\27_OtherSqlFlavourSupport.txt" />
     <Content Include="Data\InputSql\28_BadNestingDontCrash.txt" />
+    <Content Include="Data\InputSql\29_Special_Regions.txt" />
     <Content Include="Data\ParsedSql\01_SimpleTypes_StrangeRules.txt" />
     <Content Include="Data\ParsedSql\03_SimpleSelect_MS.txt" />
     <Content Include="Data\ParsedSql\04_MiscProceduralSample_Unstructured.txt" />
@@ -130,6 +131,7 @@
     <Content Include="Data\ParsedSql\26_DataTypesAndSynonyms.txt" />
     <Content Include="Data\ParsedSql\11_MSAccess_Pasted.txt" />
     <Content Include="Data\ParsedSql\27_OtherSqlFlavourSupport.txt" />
+    <Content Include="Data\ParsedSql\29_Special_Regions.txt" />
     <Content Include="Data\StandardFormatSql\01_SimpleTypes_StrangeRules.txt" />
     <Content Include="Data\StandardFormatSql\03_SimpleSelect_MS.txt" />
     <Content Include="Data\StandardFormatSql\04_MiscProceduralSample_Unstructured.txt" />
@@ -161,6 +163,7 @@
     <Content Include="Data\StandardFormatSql\24_InsertsAndOutputs%28KeywordStandardization=true,ExpandCommaLists=false%29.txt" />
     <Content Include="Data\StandardFormatSql\05_ComplexDDL%28NewClauseLineBreaks=2,NewStatementLineBreaks=3%29.txt" />
     <Content Include="Data\StandardFormatSql\28_BadNestingDontCrash.txt" />
+    <Content Include="Data\StandardFormatSql\29_Special_Regions.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">

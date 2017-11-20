@@ -50,11 +50,12 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (sqlTreeDoc.Name == SqlStructureConstants.ENAME_SQL_ROOT && sqlTreeDoc.GetAttributeValue(SqlStructureConstants.ANAME_ERRORFOUND) == "1")
                 state.AddOutputContent(ErrorOutputPrefix);
 
-            ProcessSqlNodeList(state, sqlTreeDoc.Children);
+            //pass "doc" itself into process: useful/necessary when formatting NOFORMAT sub-regions from standard formatter
+            ProcessSqlNodeList(new[] { sqlTreeDoc }, state);
             return state.DumpOutput();
         }
 
-        private static void ProcessSqlNodeList(BaseFormatterState state, IEnumerable<Node> rootList)
+        private static void ProcessSqlNodeList(IEnumerable<Node> rootList, BaseFormatterState state)
         {
             foreach (Node contentElement in rootList)
                 ProcessSqlNode(state, contentElement);
@@ -74,7 +75,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 				case SqlStructureConstants.ENAME_EXPRESSION_PARENS:
                 case SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS:
                     state.AddOutputContent("(");
-                    ProcessSqlNodeList(state, contentElement.Children);
+                    ProcessSqlNodeList(contentElement.Children, state);
                     state.AddOutputContent(")");
                     break;
 
