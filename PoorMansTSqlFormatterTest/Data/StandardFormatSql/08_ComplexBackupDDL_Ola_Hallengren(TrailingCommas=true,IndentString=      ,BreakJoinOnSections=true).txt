@@ -96,7 +96,7 @@ BEGIN
       SET @StartMessage = @StartMessage + 'Version: ' + CAST(SERVERPROPERTY('ProductVersion') AS NVARCHAR) + CHAR(13) + CHAR(10)
       SET @StartMessage = @StartMessage + 'Edition: ' + CAST(SERVERPROPERTY('Edition') AS NVARCHAR) + CHAR(13) + CHAR(10)
       SET @StartMessage = @StartMessage + 'Procedure: ' + QUOTENAME(DB_NAME(DB_ID())) + '.' + (
-                  SELECT QUOTENAME(sys.schemas.NAME)
+                  SELECT QUOTENAME(sys.schemas.name)
                   FROM sys.schemas
                   INNER JOIN sys.objects
                         ON sys.schemas.[schema_id] = sys.objects.[schema_id]
@@ -201,8 +201,8 @@ BEGIN
 
       WITH tmpDatabasesCTE
       AS (
-            SELECT NAME AS DatabaseName,
-                  UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(NAME, '\', ''), '/', ''), ':', ''), '*', ''), '?', ''), '"', ''), '<', ''), '>', ''), '|', ''), ' ', '')) AS DatabaseNameFS
+            SELECT name AS DatabaseName,
+                  UPPER(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(name, '\', ''), '/', ''), ':', ''), '*', ''), '?', ''), '"', ''), '<', ''), '>', ''), '|', ''), ' ', '')) AS DatabaseNameFS
             FROM sys.databases
             )
       SELECT @ErrorMessage = @ErrorMessage + QUOTENAME(DatabaseName) + ', '
@@ -258,7 +258,7 @@ BEGIN
                               AND EXISTS (
                                     SELECT *
                                     FROM sys.configurations
-                                    WHERE NAME = 'backup compression default'
+                                    WHERE name = 'backup compression default'
                                           AND value_in_use = 1
                                     )
                               THEN 'Y'
@@ -266,7 +266,7 @@ BEGIN
                               AND NOT EXISTS (
                                     SELECT *
                                     FROM sys.configurations
-                                    WHERE NAME = 'backup compression default'
+                                    WHERE name = 'backup compression default'
                                           AND value_in_use = 1
                                     )
                               THEN 'N'

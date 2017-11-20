@@ -4,7 +4,7 @@ GO
 IF EXISTS (
 		SELECT 1
 		FROM sysobjects
-		WHERE NAME = 'sp_ScriptTable'
+		WHERE name = 'sp_ScriptTable'
 		)
 	DROP PROCEDURE sp_ScriptTable
 GO
@@ -52,7 +52,7 @@ Modifications:
 
 	SET @DBName = DB_NAME(DB_ID())
 
-	SELECT @TableName = NAME
+	SELECT @TableName = name
 	FROM sysobjects
 	WHERE id = OBJECT_ID(@TableName)
 
@@ -126,7 +126,7 @@ Modifications:
 		,COLUMN_NAME
 		,CAST(ORDINAL_POSITION AS INT)
 		,COLUMN_DEFAULT
-		,dobj.NAME AS ColumnDefaultName
+		,dobj.name AS ColumnDefaultName
 		,CASE 
 			WHEN c.IS_NULLABLE = 'YES'
 				THEN 1
@@ -163,10 +163,10 @@ Modifications:
 			END AS IsLobColumn
 	FROM INFORMATION_SCHEMA.COLUMNS c
 	JOIN sys.columns sc ON OBJECT_ID(c.TABLE_SCHEMA + '.' + c.TABLE_NAME) = sc.object_id
-		AND c.COLUMN_NAME = sc.NAME
+		AND c.COLUMN_NAME = sc.Name
 	LEFT JOIN sys.identity_columns ic ON OBJECT_ID(c.TABLE_SCHEMA + '.' + c.TABLE_NAME) = ic.object_id
-		AND c.COLUMN_NAME = ic.NAME
-	JOIN sys.types st ON COALESCE(c.DOMAIN_NAME, c.DATA_TYPE) = st.NAME
+		AND c.COLUMN_NAME = ic.Name
+	JOIN sys.types st ON COALESCE(c.DOMAIN_NAME, c.DATA_TYPE) = st.name
 	LEFT OUTER JOIN sys.objects dobj ON dobj.object_id = sc.default_object_id
 		AND dobj.type = 'D'
 	WHERE c.TABLE_NAME = @TableName
@@ -242,13 +242,13 @@ Modifications:
 		IF @IncludeConstraints = 1
 		BEGIN
 			INSERT INTO @Definition (FieldValue)
-			SELECT ',CONSTRAINT [' + NAME + '] FOREIGN KEY (' + ParentColumns + ') REFERENCES [' + ReferencedObject + '](' + ReferencedColumns + ')'
+			SELECT ',CONSTRAINT [' + name + '] FOREIGN KEY (' + ParentColumns + ') REFERENCES [' + ReferencedObject + '](' + ReferencedColumns + ')'
 			FROM (
 				SELECT ReferencedObject = OBJECT_NAME(fk.referenced_object_id)
 					,ParentObject = OBJECT_NAME(parent_object_id)
-					,fk.NAME
+					,fk.name
 					,REVERSE(SUBSTRING(REVERSE((
-									SELECT cp.NAME + ','
+									SELECT cp.name + ','
 									FROM sys.foreign_key_columns fkc
 									JOIN sys.columns cp ON fkc.parent_object_id = cp.object_id
 										AND fkc.parent_column_id = cp.column_id
@@ -256,7 +256,7 @@ Modifications:
 									FOR XML PATH('')
 									)), 2, 8000)) ParentColumns
 					,REVERSE(SUBSTRING(REVERSE((
-									SELECT cr.NAME + ','
+									SELECT cr.name + ','
 									FROM sys.foreign_key_columns fkc
 									JOIN sys.columns cr ON fkc.referenced_object_id = cr.object_id
 										AND fkc.referenced_column_id = cr.column_id
@@ -268,7 +268,7 @@ Modifications:
 			WHERE ParentObject = @TableName
 
 			INSERT INTO @Definition (FieldValue)
-			SELECT ',CONSTRAINT [' + NAME + '] CHECK ' + DEFINITION
+			SELECT ',CONSTRAINT [' + name + '] CHECK ' + DEFINITION
 			FROM sys.check_constraints
 			WHERE OBJECT_NAME(parent_object_id) = @TableName
 
@@ -302,7 +302,7 @@ Modifications:
 					END
 
 			INSERT INTO @Definition (FieldValue)
-			SELECT ',CONSTRAINT ' + NAME + CASE type
+			SELECT ',CONSTRAINT ' + name + CASE type
 					WHEN 'PK'
 						THEN ' PRIMARY KEY ' + CASE 
 								WHEN pk.ObjectID IS NULL
@@ -316,7 +316,7 @@ Modifications:
 						THEN ' NONCLUSTERED '
 					ELSE ''
 					END + '(' + REVERSE(SUBSTRING(REVERSE((
-								SELECT c.NAME + + CASE 
+								SELECT c.name + + CASE 
 										WHEN cc.is_descending_key = 1
 											THEN ' DESC'
 										ELSE ' ASC'
@@ -345,7 +345,7 @@ Modifications:
 		BEGIN
 			INSERT INTO @Definition (FieldValue)
 			SELECT 'CREATE ' + type_desc + ' INDEX [' + [name] COLLATE SQL_Latin1_General_CP1_CI_AS + '] ON [' + OBJECT_NAME(object_id) + '] (' + REVERSE(SUBSTRING(REVERSE((
-								SELECT NAME + CASE 
+								SELECT name + CASE 
 										WHEN sc.is_descending_key = 1
 											THEN ' DESC'
 										ELSE ' ASC'

@@ -2,7 +2,7 @@
 -- Note: some of these samples require compatibility level 100 (SQL 2008)
 --MERGE with OUTPUT INTO
 CREATE TABLE #MatchReasons (
-	NAME NVARCHAR(50)
+	Name NVARCHAR(50)
 	,ReasonType NVARCHAR(50)
 	);
 
@@ -23,7 +23,7 @@ USING (
 		,'Reason3'
 		)
 	) AS Source(NewName, NewReasonType)
-	ON Target.NAME = Source.NewName
+	ON Target.Name = Source.NewName
 		AND 1 = 1
 WHEN MATCHED
 	THEN
@@ -32,7 +32,7 @@ WHEN MATCHED
 WHEN NOT MATCHED BY TARGET
 	THEN
 		INSERT (
-			NAME
+			Name
 			,ReasonType
 			)
 		VALUES (

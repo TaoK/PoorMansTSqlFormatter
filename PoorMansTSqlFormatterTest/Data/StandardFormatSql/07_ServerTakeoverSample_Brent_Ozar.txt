@@ -16,16 +16,16 @@ Description:  Shows what I look for when I take over existing servers.
    backed up, check the maintenance plans or scripts.  If you don't have
    scripts, check http://ola.hallengren.com.
 */
-SELECT d.NAME
+SELECT d.name
 	,MAX(b.backup_finish_date) AS last_backup_finish_date
 FROM master.sys.databases d
-LEFT OUTER JOIN msdb.dbo.backupset b ON d.NAME = b.database_name
+LEFT OUTER JOIN msdb.dbo.backupset b ON d.name = b.database_name
 	AND b.type = 'D'
 WHERE d.database_id NOT IN (
 		2
 		,3
 		) -- Bonus points if you know what that means
-GROUP BY d.NAME
+GROUP BY d.name
 ORDER BY 2 DESC
 
 /*
@@ -48,11 +48,11 @@ ORDER BY media_set_id DESC
    that haven't had t-log backups?  If so, we should think about putting it in
    simple recovery mode or doing t-log backups.
 */
-SELECT d.NAME
+SELECT d.name
 	,d.recovery_model
 	,d.recovery_model_desc
 FROM master.sys.databases d
-LEFT OUTER JOIN msdb.dbo.backupset b ON d.NAME = b.database_name
+LEFT OUTER JOIN msdb.dbo.backupset b ON d.name = b.database_name
 	AND b.type = 'L'
 WHERE d.recovery_model IN (
 		1
@@ -68,14 +68,14 @@ WHERE d.recovery_model IN (
    If there are any databases in full recovery mode with no t-log backups,
    show the filesize of the according ldf.
 */
-SELECT d.NAME AS [db_name]
-	,f.NAME AS [ldf_name]
+SELECT d.name AS [db_name]
+	,f.name AS [ldf_name]
 	,f.physical_name
 	,f.size * 8 / 1024.00 AS [size_in_mb]
 	,d.recovery_model_desc
 FROM sys.master_files f
 JOIN sys.databases d ON f.database_id = d.database_id
-LEFT OUTER JOIN msdb.dbo.backupset b ON d.NAME = b.database_name
+LEFT OUTER JOIN msdb.dbo.backupset b ON d.name = b.database_name
 	AND b.type = 'L'
 WHERE d.recovery_model IN (
 		1
@@ -201,9 +201,9 @@ UPDATE @xp_results
 SET last_run_time = right('000000' + last_run_time, 6)
 	,next_run_time = right('000000' + next_run_time, 6)
 
-SELECT j.NAME AS JobName
+SELECT j.name AS JobName
 	,j.enabled AS Enabled
-	,sl.NAME AS OwnerName
+	,sl.name AS OwnerName
 	,CASE x.running
 		WHEN 1
 			THEN 'Running'
@@ -256,7 +256,7 @@ LEFT OUTER JOIN sys.syslogins sl ON j.owner_sid = sl.sid
 	Don't think of them as other sysadmins.  
 	Think of them as users who can get you fired.
 */
-SELECT l.NAME
+SELECT l.name
 	,l.denylogin
 	,l.isntname
 	,l.isntgroup
@@ -576,7 +576,7 @@ GO
 */
 SELECT *
 FROM master.sys.tables
-WHERE NAME NOT IN (
+WHERE name NOT IN (
 		'spt_fallback_db'
 		,'spt_fallback_dev'
 		,'spt_fallback_usg'
@@ -587,7 +587,7 @@ WHERE NAME NOT IN (
 
 SELECT *
 FROM master.sys.procedures
-WHERE NAME NOT IN (
+WHERE name NOT IN (
 		'sp_MSrepl_startup'
 		,'sp_MScleanupmergepublisher'
 		)
@@ -616,11 +616,11 @@ FROM sys.databases
 	has been backed up and where the password is.  If you don't have both the
 	cert and the password to unlock it, then the database can't be restored.
 */
-SELECT d.NAME
+SELECT d.name
 	,k.*
 FROM sys.dm_database_encryption_keys k
 INNER JOIN sys.databases d ON k.database_id = d.database_id
-ORDER BY d.NAME
+ORDER BY d.name
 
 /*
 	Are any of the databases using features that are Enterprise Edition only?
@@ -665,7 +665,7 @@ ORDER BY (wait_time_ms - signal_wait_time_ms) DESC
 	indexes on exactly the same fields.  You have to run it in each database
 	you want to check, and it's extremely fast.
 */
-SELECT t.NAME AS tableName
+SELECT t.name AS tableName
 	,p.*
 FROM sys.tables AS t
 INNER JOIN sys.indexes AS i1 ON i1.object_id = t.object_id
@@ -726,7 +726,7 @@ WHERE i1.type_desc <> 'xml'
 	For more about index fragmentation, check out this page with a video:
 	http://sqlserverpedia.com/wiki/Index_Maintenance
 */
-SELECT db.NAME AS databaseName
+SELECT db.name AS databaseName
 	,SCHEMA_NAME(obj.schema_id) AS schemaName
 	,OBJECT_NAME(ps.OBJECT_ID) AS tableName
 	,ps.OBJECT_ID AS objectID

@@ -16,16 +16,16 @@ Description:  Shows what I look for when I take over existing servers.
    backed up, check the maintenance plans or scripts.  If you don't have
    scripts, check http://ola.hallengren.com.
 */</span>
-<span class="SQLKeyword">SELECT</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span>
+<span class="SQLKeyword">SELECT</span> d<span class="SQLOperator">.</span>name
 	<span class="SQLOperator">,</span><span class="SQLFunction">MAX</span><span class="SQLOperator">(</span>b<span class="SQLOperator">.</span>backup_finish_date<span class="SQLOperator">)</span> <span class="SQLKeyword">AS</span> last_backup_finish_date
 <span class="SQLKeyword">FROM</span> master<span class="SQLOperator">.</span>sys<span class="SQLOperator">.</span>databases d
-<span class="SQLKeyword">LEFT OUTER JOIN</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>backupset b <span class="SQLKeyword">ON</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLOperator">=</span> b<span class="SQLOperator">.</span>database_name
+<span class="SQLKeyword">LEFT OUTER JOIN</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>backupset b <span class="SQLKeyword">ON</span> d<span class="SQLOperator">.</span>name <span class="SQLOperator">=</span> b<span class="SQLOperator">.</span>database_name
 	<span class="SQLKeyword">AND</span> b<span class="SQLOperator">.</span>type <span class="SQLOperator">=</span> <span class="SQLString">'D'</span>
 <span class="SQLKeyword">WHERE</span> d<span class="SQLOperator">.</span>database_id <span class="SQLOperator">NOT</span> <span class="SQLOperator">IN</span> <span class="SQLOperator">(</span>
 		2
 		<span class="SQLOperator">,</span>3
 		<span class="SQLOperator">)</span> <span class="SQLComment">-- Bonus points if you know what that means</span>
-<span class="SQLKeyword">GROUP</span> <span class="SQLKeyword">BY</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span>
+<span class="SQLKeyword">GROUP</span> <span class="SQLKeyword">BY</span> d<span class="SQLOperator">.</span>name
 <span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> 2 <span class="SQLKeyword">DESC</span>
 
 <span class="SQLComment">/*
@@ -48,11 +48,11 @@ Description:  Shows what I look for when I take over existing servers.
    that haven't had t-log backups?  If so, we should think about putting it in
    simple recovery mode or doing t-log backups.
 */</span>
-<span class="SQLKeyword">SELECT</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span>
+<span class="SQLKeyword">SELECT</span> d<span class="SQLOperator">.</span>name
 	<span class="SQLOperator">,</span>d<span class="SQLOperator">.</span>recovery_model
 	<span class="SQLOperator">,</span>d<span class="SQLOperator">.</span>recovery_model_desc
 <span class="SQLKeyword">FROM</span> master<span class="SQLOperator">.</span>sys<span class="SQLOperator">.</span>databases d
-<span class="SQLKeyword">LEFT OUTER JOIN</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>backupset b <span class="SQLKeyword">ON</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLOperator">=</span> b<span class="SQLOperator">.</span>database_name
+<span class="SQLKeyword">LEFT OUTER JOIN</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>backupset b <span class="SQLKeyword">ON</span> d<span class="SQLOperator">.</span>name <span class="SQLOperator">=</span> b<span class="SQLOperator">.</span>database_name
 	<span class="SQLKeyword">AND</span> b<span class="SQLOperator">.</span>type <span class="SQLOperator">=</span> <span class="SQLString">'L'</span>
 <span class="SQLKeyword">WHERE</span> d<span class="SQLOperator">.</span>recovery_model <span class="SQLOperator">IN</span> <span class="SQLOperator">(</span>
 		1
@@ -68,14 +68,14 @@ Description:  Shows what I look for when I take over existing servers.
    If there are any databases in full recovery mode with no t-log backups,
    show the filesize of the according ldf.
 */</span>
-<span class="SQLKeyword">SELECT</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLKeyword">AS</span> [db_name]
-	<span class="SQLOperator">,</span>f<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLKeyword">AS</span> [ldf_name]
+<span class="SQLKeyword">SELECT</span> d<span class="SQLOperator">.</span>name <span class="SQLKeyword">AS</span> [db_name]
+	<span class="SQLOperator">,</span>f<span class="SQLOperator">.</span>name <span class="SQLKeyword">AS</span> [ldf_name]
 	<span class="SQLOperator">,</span>f<span class="SQLOperator">.</span>physical_name
 	<span class="SQLOperator">,</span>f<span class="SQLOperator">.</span>size <span class="SQLOperator">*</span> 8 <span class="SQLOperator">/</span> 1024.00 <span class="SQLKeyword">AS</span> [size_in_mb]
 	<span class="SQLOperator">,</span>d<span class="SQLOperator">.</span>recovery_model_desc
 <span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>master_files f
 <span class="SQLKeyword">JOIN</span> sys<span class="SQLOperator">.</span>databases d <span class="SQLKeyword">ON</span> f<span class="SQLOperator">.</span>database_id <span class="SQLOperator">=</span> d<span class="SQLOperator">.</span>database_id
-<span class="SQLKeyword">LEFT OUTER JOIN</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>backupset b <span class="SQLKeyword">ON</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLOperator">=</span> b<span class="SQLOperator">.</span>database_name
+<span class="SQLKeyword">LEFT OUTER JOIN</span> msdb<span class="SQLOperator">.</span>dbo<span class="SQLOperator">.</span>backupset b <span class="SQLKeyword">ON</span> d<span class="SQLOperator">.</span>name <span class="SQLOperator">=</span> b<span class="SQLOperator">.</span>database_name
 	<span class="SQLKeyword">AND</span> b<span class="SQLOperator">.</span>type <span class="SQLOperator">=</span> <span class="SQLString">'L'</span>
 <span class="SQLKeyword">WHERE</span> d<span class="SQLOperator">.</span>recovery_model <span class="SQLOperator">IN</span> <span class="SQLOperator">(</span>
 		1
@@ -201,9 +201,9 @@ Description:  Shows what I look for when I take over existing servers.
 <span class="SQLKeyword">SET</span> last_run_time <span class="SQLOperator">=</span> <span class="SQLFunction">right</span><span class="SQLOperator">(</span><span class="SQLString">'000000'</span> <span class="SQLOperator">+</span> last_run_time<span class="SQLOperator">,</span> 6<span class="SQLOperator">)</span>
 	<span class="SQLOperator">,</span>next_run_time <span class="SQLOperator">=</span> <span class="SQLFunction">right</span><span class="SQLOperator">(</span><span class="SQLString">'000000'</span> <span class="SQLOperator">+</span> next_run_time<span class="SQLOperator">,</span> 6<span class="SQLOperator">)</span>
 
-<span class="SQLKeyword">SELECT</span> j<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLKeyword">AS</span> JobName
+<span class="SQLKeyword">SELECT</span> j<span class="SQLOperator">.</span>name <span class="SQLKeyword">AS</span> JobName
 	<span class="SQLOperator">,</span>j<span class="SQLOperator">.</span>enabled <span class="SQLKeyword">AS</span> Enabled
-	<span class="SQLOperator">,</span>sl<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLKeyword">AS</span> OwnerName
+	<span class="SQLOperator">,</span>sl<span class="SQLOperator">.</span>name <span class="SQLKeyword">AS</span> OwnerName
 	<span class="SQLOperator">,</span><span class="SQLKeyword">CASE</span> x<span class="SQLOperator">.</span>running
 		<span class="SQLKeyword">WHEN</span> 1
 			<span class="SQLKeyword">THEN</span> <span class="SQLString">'Running'</span>
@@ -256,7 +256,7 @@ Description:  Shows what I look for when I take over existing servers.
 	Don't think of them as other sysadmins.  
 	Think of them as users who can get you fired.
 */</span>
-<span class="SQLKeyword">SELECT</span> l<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span>
+<span class="SQLKeyword">SELECT</span> l<span class="SQLOperator">.</span>name
 	<span class="SQLOperator">,</span>l<span class="SQLOperator">.</span>denylogin
 	<span class="SQLOperator">,</span>l<span class="SQLOperator">.</span>isntname
 	<span class="SQLOperator">,</span>l<span class="SQLOperator">.</span>isntgroup
@@ -576,7 +576,7 @@ http://www.sqlskills.com/BLOGS/PAUL/post/A-little-known-sign-of-impending-doom-e
 */</span>
 <span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
 <span class="SQLKeyword">FROM</span> master<span class="SQLOperator">.</span>sys<span class="SQLOperator">.</span>tables
-<span class="SQLKeyword">WHERE</span> <span class="SQLKeyword">NAME</span> <span class="SQLOperator">NOT</span> <span class="SQLOperator">IN</span> <span class="SQLOperator">(</span>
+<span class="SQLKeyword">WHERE</span> name <span class="SQLOperator">NOT</span> <span class="SQLOperator">IN</span> <span class="SQLOperator">(</span>
 		<span class="SQLString">'spt_fallback_db'</span>
 		<span class="SQLOperator">,</span><span class="SQLString">'spt_fallback_dev'</span>
 		<span class="SQLOperator">,</span><span class="SQLString">'spt_fallback_usg'</span>
@@ -587,7 +587,7 @@ http://www.sqlskills.com/BLOGS/PAUL/post/A-little-known-sign-of-impending-doom-e
 
 <span class="SQLKeyword">SELECT</span> <span class="SQLOperator">*</span>
 <span class="SQLKeyword">FROM</span> master<span class="SQLOperator">.</span>sys<span class="SQLOperator">.</span>procedures
-<span class="SQLKeyword">WHERE</span> <span class="SQLKeyword">NAME</span> <span class="SQLOperator">NOT</span> <span class="SQLOperator">IN</span> <span class="SQLOperator">(</span>
+<span class="SQLKeyword">WHERE</span> name <span class="SQLOperator">NOT</span> <span class="SQLOperator">IN</span> <span class="SQLOperator">(</span>
 		<span class="SQLString">'sp_MSrepl_startup'</span>
 		<span class="SQLOperator">,</span><span class="SQLString">'sp_MScleanupmergepublisher'</span>
 		<span class="SQLOperator">)</span>
@@ -616,11 +616,11 @@ http://www.sqlskills.com/BLOGS/PAUL/post/A-little-known-sign-of-impending-doom-e
 	has been backed up and where the password is.  If you don't have both the
 	cert and the password to unlock it, then the database can't be restored.
 */</span>
-<span class="SQLKeyword">SELECT</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span>
+<span class="SQLKeyword">SELECT</span> d<span class="SQLOperator">.</span>name
 	<span class="SQLOperator">,</span>k<span class="SQLOperator">.</span><span class="SQLOperator">*</span>
 <span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>dm_database_encryption_keys k
 <span class="SQLKeyword">INNER JOIN</span> sys<span class="SQLOperator">.</span>databases d <span class="SQLKeyword">ON</span> k<span class="SQLOperator">.</span>database_id <span class="SQLOperator">=</span> d<span class="SQLOperator">.</span>database_id
-<span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> d<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span>
+<span class="SQLKeyword">ORDER</span> <span class="SQLKeyword">BY</span> d<span class="SQLOperator">.</span>name
 
 <span class="SQLComment">/*
 	Are any of the databases using features that are Enterprise Edition only?
@@ -665,7 +665,7 @@ http://www.sqlskills.com/BLOGS/PAUL/post/A-little-known-sign-of-impending-doom-e
 	indexes on exactly the same fields.  You have to run it in each database
 	you want to check, and it's extremely fast.
 */</span>
-<span class="SQLKeyword">SELECT</span> t<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLKeyword">AS</span> tableName
+<span class="SQLKeyword">SELECT</span> t<span class="SQLOperator">.</span>name <span class="SQLKeyword">AS</span> tableName
 	<span class="SQLOperator">,</span>p<span class="SQLOperator">.</span><span class="SQLOperator">*</span>
 <span class="SQLKeyword">FROM</span> sys<span class="SQLOperator">.</span>tables <span class="SQLKeyword">AS</span> t
 <span class="SQLKeyword">INNER JOIN</span> sys<span class="SQLOperator">.</span>indexes <span class="SQLKeyword">AS</span> i1 <span class="SQLKeyword">ON</span> i1<span class="SQLOperator">.</span><span class="SQLFunction">object_id</span> <span class="SQLOperator">=</span> t<span class="SQLOperator">.</span><span class="SQLFunction">object_id</span>
@@ -726,7 +726,7 @@ http://www.sqlskills.com/BLOGS/PAUL/post/A-little-known-sign-of-impending-doom-e
 	For more about index fragmentation, check out this page with a video:
 	http://sqlserverpedia.com/wiki/Index_Maintenance
 */</span>
-<span class="SQLKeyword">SELECT</span> db<span class="SQLOperator">.</span><span class="SQLKeyword">NAME</span> <span class="SQLKeyword">AS</span> databaseName
+<span class="SQLKeyword">SELECT</span> db<span class="SQLOperator">.</span>name <span class="SQLKeyword">AS</span> databaseName
 	<span class="SQLOperator">,</span><span class="SQLFunction">SCHEMA_NAME</span><span class="SQLOperator">(</span>obj<span class="SQLOperator">.</span><span class="SQLFunction">schema_id</span><span class="SQLOperator">)</span> <span class="SQLKeyword">AS</span> schemaName
 	<span class="SQLOperator">,</span><span class="SQLFunction">OBJECT_NAME</span><span class="SQLOperator">(</span>ps<span class="SQLOperator">.</span><span class="SQLFunction">OBJECT_ID</span><span class="SQLOperator">)</span> <span class="SQLKeyword">AS</span> tableName
 	<span class="SQLOperator">,</span>ps<span class="SQLOperator">.</span><span class="SQLFunction">OBJECT_ID</span> <span class="SQLKeyword">AS</span> objectID
