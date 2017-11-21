@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="FormatterService.asmx.cs">
       <DependentUpon>FormatterService.asmx</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
