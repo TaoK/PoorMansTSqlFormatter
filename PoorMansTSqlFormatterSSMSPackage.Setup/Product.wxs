@@ -233,7 +233,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </ComponentGroup>
 		<ComponentGroup Id="SSMS2014ComponentGroup">
       <Component Id='SSMS2014StartupFlag' Directory='APPLICATIONFOLDER' Guid='2c8e4308-db46-4bb6-8bbd-82322a3bf4bb'>
-        <RegistryKey Root='HKCU' Key='Software\Microsoft\SQL Server Management Studio\12.0\Packages\{5E84B709-1E60-4116-A702-4CDB1A282D6E}'>
+        <RegistryKey Root='HKCU' Key='Software\Microsoft\SQL Server Management Studio\12.0\Packages\{247609B1-2692-47D6-972A-976544685F0E}'>
           <RegistryValue Type='integer' Name='SkipLoading' Value='1'/>
         </RegistryKey>
       </Component>
@@ -243,7 +243,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </ComponentGroup>
     <ComponentGroup Id="SSMS2016ComponentGroup">
       <Component Id='SSMS2016StartupFlag' Directory='APPLICATIONFOLDER' Guid='8bd333e5-8804-4c65-9e49-f83eae90d9f5'>
-        <RegistryKey Root='HKCU' Key='Software\Microsoft\SQL Server Management Studio\13.0\Packages\{5E84B709-1E60-4116-A702-4CDB1A282D6E}'>
+        <RegistryKey Root='HKCU' Key='Software\Microsoft\SQL Server Management Studio\13.0\Packages\{247609B1-2692-47D6-972A-976544685F0E}'>
           <RegistryValue Type='integer' Name='SkipLoading' Value='1'/>
         </RegistryKey>
       </Component>
@@ -253,7 +253,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </ComponentGroup>
     <ComponentGroup Id="SSMS17ComponentGroup">
       <Component Id='SSMS17StartupFlag' Directory='APPLICATIONFOLDER' Guid='65e2aa45-d394-41cf-9511-004bc915e985'>
-        <RegistryKey Root='HKCU' Key='Software\Microsoft\SQL Server Management Studio\14.0\Packages\{5E84B709-1E60-4116-A702-4CDB1A282D6E}'>
+        <RegistryKey Root='HKCU' Key='Software\Microsoft\SQL Server Management Studio\14.0\Packages\{247609B1-2692-47D6-972A-976544685F0E}'>
           <RegistryValue Type='integer' Name='SkipLoading' Value='1'/>
         </RegistryKey>
       </Component>

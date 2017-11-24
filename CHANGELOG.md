@@ -4,12 +4,17 @@ This changelog aims to follow the structure laid out at [Keep a Changelog](http:
 
 ## [Unreleased]
 
+(nothing yet)
+
+## [1.6.11] - 2017-11-24
+
 ### Added 
 
 * Appveyor build configuration, as per proposal in Pull Request #178 from chcg
 
 ### Changed
 
+* Fixed newly split SSMS Extension Installer to set correct registry key at install time (GitHub Issue #187) 
 * Restructured changelog to follow [Keep a Changelog](http://keepachangelog.com/)
 
 ## [1.6.10] - 2017-11-21
