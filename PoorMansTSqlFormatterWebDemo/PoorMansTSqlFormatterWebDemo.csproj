@@ -94,7 +94,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>Call $(ProjectDir)Postbuild_CopyJSLib.bat $(SolutionDir) $(ProjectDir)</PostBuildEvent>
+    <PostBuildEvent>Call $(ProjectDir)Postbuild_CopyJSLib.bat $(SolutionDir) $(ProjectDir) $(Configuration)</PostBuildEvent>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

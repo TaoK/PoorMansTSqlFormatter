@@ -44,6 +44,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterSSMSAddIn.Setup.action", "PoorMansTSqlFormatterSSMSAddIn.Setup.action\PoorMansTSqlFormatterSSMSAddIn.Setup.action.csproj", "{604AEB5D-45FB-4959-B1B9-DC6D310A8F40}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterVSPackage", "PoorMansTSqlFormatterVSPackage\PoorMansTSqlFormatterVSPackage.csproj", "{B1175A57-8B7B-4B8D-ACE0-3597B6B729F8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{679B3998-C5A5-4B64-8674-70BE959ACE6E} = {679B3998-C5A5-4B64-8674-70BE959ACE6E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
