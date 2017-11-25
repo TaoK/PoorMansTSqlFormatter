@@ -9,6 +9,7 @@ environment:
 platform:
     - x64
     - x86
+    - PureDotNet
 
 configuration:
     - Release
@@ -37,7 +38,7 @@ after_build:
         }
 
         if ($env:PLATFORM -eq "x86" -and $env:CONFIGURATION -eq "Release") {
-            Push-AppveyorArtifact "PoorMansTSqlFormatterNppPlugin\bin\$env:CONFIGURATION\PoorMansTSqlFormatterNppPlugin.dll" -FileName PoorMansTSqlFormatterNppPlugin.dll
+            Push-AppveyorArtifact "PoorMansTSqlFormatterNppPlugin\bin\$env:PLATFORM\$env:CONFIGURATION\PoorMansTSqlFormatterNppPlugin.dll" -FileName PoorMansTSqlFormatterNppPlugin.dll
         }
 
         if ($($env:APPVEYOR_REPO_TAG) -eq "true" -and $env:CONFIGURATION -eq "Release" -and $env:PLATFORMTOOLSET -eq "v140_xp") {
@@ -47,7 +48,7 @@ after_build:
             }
             if($env:PLATFORM -eq "x86"){
             $ZipFileName = "PoorMansTSqlFormatterNppPlugin_$($env:APPVEYOR_REPO_TAG_NAME)_x86.zip"
-            7z a $ZipFileName PoorMansTSqlFormatterNppPlugin\bin\$env:CONFIGURATION\PoorMansTSqlFormatterNppPlugin.dll
+            7z a $ZipFileName PoorMansTSqlFormatterNppPlugin\bin\$env:PLATFORM\$env:CONFIGURATION\PoorMansTSqlFormatterNppPlugin.dll
             }
         }
 

@@ -28,8 +28,12 @@ namespace PoorMansTSqlFormatterTests
     [TestFixture]
     public class CmdLineTests
     {
-        private const string FORMATTER_EXECUTABLE = "..\\..\\..\\PoorMansTSqlFormatterCmdLine\\bin\\Debug\\SqlFormatter.exe";
-
+        #if DEBUG
+            private const string FORMATTER_EXECUTABLE = "..\\..\\..\\PoorMansTSqlFormatterCmdLine\\bin\\Debug\\SqlFormatter.exe";
+        #else
+            private const string FORMATTER_EXECUTABLE = "..\\..\\..\\PoorMansTSqlFormatterCmdLine\\bin\\Release\\SqlFormatter.exe";
+        #endif
+        
         [Test]
         public void TestCmdLineFormattingSwitches()
         {
