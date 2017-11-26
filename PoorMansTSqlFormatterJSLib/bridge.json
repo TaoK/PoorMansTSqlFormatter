@@ -5,11 +5,17 @@
     "enabled": true
   },
 
+  "combineScripts": true,
+
   "html": {
     "disabled": true
   },
 
-  "cleanOutputFolderBeforeBuild": false
+  "reflection": {
+    "disabled": true
+  },
+  
+  "cleanOutputFolderBeforeBuild": true
 
   // More config options available at
   // https://github.com/bridgedotnet/Bridge/wiki/global-configuration

@@ -77,12 +77,10 @@
     <script>
         $(function () {
             var minflag = false;
+            var debugflag = false;
 
             var scriptURLList = [
-                'JSLibReference/bridge.' + (minflag ? "min." : "") + 'js',
-                'JSLibReference/bridge.meta.' + (minflag ? "min." : "") + 'js',
-                'JSLibReference/PoorMansTSqlFormatterJS.' + (minflag ? "min." : "") + 'js',
-                'JSLibReference/PoorMansTSqlFormatterJS.meta.' + (minflag ? "min." : "") + 'js',
+                'JSLibReference/' + (debugflag ? "Debug/" : "Release/") + 'PoorMansTSqlFormatterJS.' + (minflag ? "min." : "") + 'js',
                 'DemoSupportFiles/formattingmapper.js'
             ];
 
@@ -124,8 +122,5 @@
             </div>
         </div>
     </div>
-    <footer>
-        Please note - <b>Debug</b> JS libraries are copied from the PoorMansTSqlFormatterJSLib project, whenever this WebDemo project is built. If the compiled JS files are missing (if a debug build has not completed), then the WebDemo project will report an error at build time.
-    </footer>
 </body>
 </html>

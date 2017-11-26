@@ -28363,3 +28363,5703 @@ Bridge.define("System.Text.RegularExpressions.RegexParser", {
     // @source Finally.js
 
 })(this);
+
+/**
+ * @version   : 16.0.0-beta4 - Bridge.NET
+ * @author    : Object.NET, Inc. http://bridge.net/
+ * @date      : 2017-06-27
+ * @copyright : Copyright 2008-2017 Object.NET, Inc. http://object.net/
+ * @license   : See license.txt and https://github.com/bridgedotnet/Bridge/blob/master/LICENSE.md
+ */
+
+    var $m = Bridge.setMetadata,
+        $n = [System,System.Text.RegularExpressions,System.Collections,System.Collections.Generic,System.Collections.ObjectModel,System.Threading,System.Text,System.Globalization,System.Threading.Tasks,System.Net.WebSockets,System.Runtime.CompilerServices,Bridge.Utils];
+    $m($n[0].BitConverter, function () { return {"att":1048961,"a":2,"s":true,"m":[{"a":1,"n":"CheckArguments","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1},{"n":"size","pt":$n[0].Int32,"ps":2}],"sn":"checkArguments","rt":$n[0].Void,"p":[$n[0].Array.type(System.Byte),$n[0].Int32,$n[0].Int32]},{"a":1,"n":"CreateLong","is":true,"t":8,"pi":[{"n":"low","pt":$n[0].Int32,"ps":0},{"n":"high","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (low, high) { return System.Int64([low, high]); },"rt":$n[0].Int64,"p":[$n[0].Int32,$n[0].Int32]},{"a":1,"n":"CreateULong","is":true,"t":8,"pi":[{"n":"low","pt":$n[0].Int32,"ps":0},{"n":"high","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (low, high) { return System.UInt64([low, high]); },"rt":$n[0].UInt64,"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"DoubleToInt64Bits","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"sn":"doubleToInt64Bits","rt":$n[0].Int64,"p":[$n[0].Double]},{"a":2,"n":"GetBytes","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Boolean,"ps":0}],"sn":"getBytes","rt":$n[0].Array.type(System.Byte),"p":[$n[0].Boolean]},{"a":2,"n":"GetBytes","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Char,"ps":0}],"sn":"getBytes$1","rt":$n[0].Array.type(System.Byte),"p":[$n[0].Char]},{"a":2,"n":"GetBytes","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"sn":"getBytes$2","rt":$n[0].Array.type(System.Byte),"p":[$n[0].Double]},{"a":2,"n":"GetBytes","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int16,"ps":0}],"sn":"getBytes$3","rt":$n[0].Array.type(System.Byte),"p":[$n[0].Int16]},{"a":2,"n":"GetBytes","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"sn":"getBytes$4","rt":$n[0].Array.type(System.Byte),"p":[$n[0].Int32]},{"a":2,"n":"GetBytes","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"getBytes$5","rt":$n[0].Array.type(System.Byte),"p":[$n[0].Int64]},{"a":2,"n":"GetBytes","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Single,"ps":0}],"sn":"getBytes$6","rt":$n[0].Array.type(System.Byte),"p":[$n[0].Single]},{"a":2,"n":"GetBytes","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt16,"ps":0}],"sn":"getBytes$7","rt":$n[0].Array.type(System.Byte),"p":[$n[0].UInt16]},{"a":2,"n":"GetBytes","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt32,"ps":0}],"sn":"getBytes$8","rt":$n[0].Array.type(System.Byte),"p":[$n[0].UInt32]},{"a":2,"n":"GetBytes","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"sn":"getBytes$9","rt":$n[0].Array.type(System.Byte),"p":[$n[0].UInt64]},{"a":1,"n":"GetHexValue","is":true,"t":8,"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"sn":"getHexValue","rt":$n[0].Char,"p":[$n[0].Int32]},{"a":1,"n":"GetIsLittleEndian","is":true,"t":8,"sn":"getIsLittleEndian","rt":$n[0].Boolean},{"a":1,"n":"GetLongHigh","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"tpc":0,"def":function (value) { return value.value.high; },"rt":$n[0].Int32,"p":[$n[0].Int64]},{"a":1,"n":"GetLongLow","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"tpc":0,"def":function (value) { return value.value.low; },"rt":$n[0].Int32,"p":[$n[0].Int64]},{"a":1,"n":"GetView","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"getView","rt":DataView,"p":[$n[0].Int64]},{"a":1,"n":"GetViewBytes","is":true,"t":8,"pi":[{"n":"view","pt":DataView,"ps":0},{"n":"count","dv":-1,"o":true,"pt":$n[0].Int32,"ps":1},{"n":"startIndex","dv":0,"o":true,"pt":$n[0].Int32,"ps":2}],"sn":"getViewBytes","rt":$n[0].Array.type(System.Byte),"p":[DataView,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Int64BitsToDouble","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"int64BitsToDouble","rt":$n[0].Double,"p":[$n[0].Int64]},{"a":1,"n":"SetViewBytes","is":true,"t":8,"pi":[{"n":"view","pt":DataView,"ps":0},{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":1},{"n":"count","dv":-1,"o":true,"pt":$n[0].Int32,"ps":2},{"n":"startIndex","dv":0,"o":true,"pt":$n[0].Int32,"ps":3}],"sn":"setViewBytes","rt":$n[0].Void,"p":[DataView,$n[0].Array.type(System.Byte),$n[0].Int32,$n[0].Int32]},{"a":2,"n":"ToBoolean","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"sn":"toBoolean","rt":$n[0].Boolean,"p":[$n[0].Array.type(System.Byte),$n[0].Int32]},{"a":2,"n":"ToChar","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"sn":"toChar","rt":$n[0].Char,"p":[$n[0].Array.type(System.Byte),$n[0].Int32]},{"a":2,"n":"ToDouble","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"sn":"toDouble","rt":$n[0].Double,"p":[$n[0].Array.type(System.Byte),$n[0].Int32]},{"a":2,"n":"ToInt16","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"sn":"toInt16","rt":$n[0].Int16,"p":[$n[0].Array.type(System.Byte),$n[0].Int32]},{"a":2,"n":"ToInt32","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"sn":"toInt32","rt":$n[0].Int32,"p":[$n[0].Array.type(System.Byte),$n[0].Int32]},{"a":2,"n":"ToInt64","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"sn":"toInt64","rt":$n[0].Int64,"p":[$n[0].Array.type(System.Byte),$n[0].Int32]},{"a":2,"n":"ToSingle","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"sn":"toSingle","rt":$n[0].Single,"p":[$n[0].Array.type(System.Byte),$n[0].Int32]},{"a":2,"n":"ToString","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].Array.type(System.Byte)]},{"a":2,"n":"ToString","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"sn":"toString$1","rt":$n[0].String,"p":[$n[0].Array.type(System.Byte),$n[0].Int32]},{"a":2,"n":"ToString","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1},{"n":"length","pt":$n[0].Int32,"ps":2}],"sn":"toString$2","rt":$n[0].String,"p":[$n[0].Array.type(System.Byte),$n[0].Int32,$n[0].Int32]},{"a":2,"n":"ToUInt16","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"sn":"toUInt16","rt":$n[0].UInt16,"p":[$n[0].Array.type(System.Byte),$n[0].Int32]},{"a":2,"n":"ToUInt32","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"sn":"toUInt32","rt":$n[0].UInt32,"p":[$n[0].Array.type(System.Byte),$n[0].Int32]},{"a":2,"n":"ToUInt64","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Array.type(System.Byte),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"sn":"toUInt64","rt":$n[0].UInt64,"p":[$n[0].Array.type(System.Byte),$n[0].Int32]},{"a":1,"n":"View","is":true,"t":8,"pi":[{"n":"length","pt":$n[0].Int32,"ps":0}],"sn":"view","rt":DataView,"p":[$n[0].Int32]},{"a":1,"n":"Arg_ArrayPlusOffTooSmall","is":true,"t":4,"rt":$n[0].String,"sn":"arg_ArrayPlusOffTooSmall"},{"a":2,"n":"IsLittleEndian","is":true,"t":4,"rt":$n[0].Boolean,"sn":"isLittleEndian","ro":true}]}; });
+    $m($n[0].FormattableString, function () { return {"att":1048705,"a":2,"m":[{"a":3,"n":".ctor","t":1,"sn":"ctor"},{"ab":true,"a":2,"n":"GetArgument","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"sn":"getArgument","rt":$n[0].Object,"p":[$n[0].Int32]},{"ab":true,"a":2,"n":"GetArguments","t":8,"sn":"getArguments","rt":$n[0].Array.type(System.Object)},{"a":2,"n":"Invariant","is":true,"t":8,"pi":[{"n":"formattable","pt":$n[0].FormattableString,"ps":0}],"sn":"invariant","rt":$n[0].String,"p":[$n[0].FormattableString]},{"ov":true,"a":2,"n":"ToString","t":8,"sn":"toString","rt":$n[0].String},{"ab":true,"a":2,"n":"ToString","t":8,"pi":[{"n":"formatProvider","pt":$n[0].IFormatProvider,"ps":0}],"sn":"toString$1","rt":$n[0].String,"p":[$n[0].IFormatProvider]},{"ab":true,"a":2,"n":"ArgumentCount","t":16,"rt":$n[0].Int32,"g":{"ab":true,"a":2,"n":"get_ArgumentCount","t":8,"rt":$n[0].Int32,"fg":"ArgumentCount"},"fn":"ArgumentCount"},{"ab":true,"a":2,"n":"Format","t":16,"rt":$n[0].String,"g":{"ab":true,"a":2,"n":"get_Format","t":8,"rt":$n[0].String,"fg":"Format"},"fn":"Format"}]}; });
+    $m($n[0].FormattableStringImpl, function () { return {"att":1048576,"a":4,"m":[{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Array.type(System.Object)],"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"args","ip":true,"pt":$n[0].Array.type(System.Object),"ps":1}],"sn":"ctor"},{"ov":true,"a":2,"n":"GetArgument","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"sn":"getArgument","rt":$n[0].Object,"p":[$n[0].Int32]},{"ov":true,"a":2,"n":"GetArguments","t":8,"sn":"getArguments","rt":$n[0].Array.type(System.Object)},{"ov":true,"a":2,"n":"ToString","t":8,"pi":[{"n":"formatProvider","pt":$n[0].IFormatProvider,"ps":0}],"sn":"toString$1","rt":$n[0].String,"p":[$n[0].IFormatProvider]},{"ov":true,"a":2,"n":"ArgumentCount","t":16,"rt":$n[0].Int32,"g":{"ov":true,"a":2,"n":"get_ArgumentCount","t":8,"rt":$n[0].Int32,"fg":"ArgumentCount"},"fn":"ArgumentCount"},{"ov":true,"a":2,"n":"Format","t":16,"rt":$n[0].String,"g":{"ov":true,"a":2,"n":"get_Format","t":8,"rt":$n[0].String,"fg":"Format"},"fn":"Format"},{"a":1,"n":"args","t":4,"rt":$n[0].Array.type(System.Object),"sn":"args"},{"a":1,"n":"format","t":4,"rt":$n[0].String,"sn":"format"}]}; });
+    $m($n[0].Guid, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Array.type(System.Byte)],"pi":[{"n":"b","pt":$n[0].Array.type(System.Byte),"ps":0}],"sn":"$ctor1"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"uuid","pt":$n[0].String,"ps":0}],"sn":"$ctor4"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int16,$n[0].Int16,$n[0].Array.type(System.Byte)],"pi":[{"n":"a","pt":$n[0].Int32,"ps":0},{"n":"b","pt":$n[0].Int16,"ps":1},{"n":"c","pt":$n[0].Int16,"ps":2},{"n":"d","pt":$n[0].Array.type(System.Byte),"ps":3}],"sn":"$ctor3"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int16,$n[0].Int16,$n[0].Byte,$n[0].Byte,$n[0].Byte,$n[0].Byte,$n[0].Byte,$n[0].Byte,$n[0].Byte,$n[0].Byte],"pi":[{"n":"a","pt":$n[0].Int32,"ps":0},{"n":"b","pt":$n[0].Int16,"ps":1},{"n":"c","pt":$n[0].Int16,"ps":2},{"n":"d","pt":$n[0].Byte,"ps":3},{"n":"e","pt":$n[0].Byte,"ps":4},{"n":"f","pt":$n[0].Byte,"ps":5},{"n":"g","pt":$n[0].Byte,"ps":6},{"n":"h","pt":$n[0].Byte,"ps":7},{"n":"i","pt":$n[0].Byte,"ps":8},{"n":"j","pt":$n[0].Byte,"ps":9},{"n":"k","pt":$n[0].Byte,"ps":10}],"sn":"$ctor2"},{"a":2,"n":".ctor","t":1,"p":[$n[0].UInt32,$n[0].UInt16,$n[0].UInt16,$n[0].Byte,$n[0].Byte,$n[0].Byte,$n[0].Byte,$n[0].Byte,$n[0].Byte,$n[0].Byte,$n[0].Byte],"pi":[{"n":"a","pt":$n[0].UInt32,"ps":0},{"n":"b","pt":$n[0].UInt16,"ps":1},{"n":"c","pt":$n[0].UInt16,"ps":2},{"n":"d","pt":$n[0].Byte,"ps":3},{"n":"e","pt":$n[0].Byte,"ps":4},{"n":"f","pt":$n[0].Byte,"ps":5},{"n":"g","pt":$n[0].Byte,"ps":6},{"n":"h","pt":$n[0].Byte,"ps":7},{"n":"i","pt":$n[0].Byte,"ps":8},{"n":"j","pt":$n[0].Byte,"ps":9},{"n":"k","pt":$n[0].Byte,"ps":10}],"sn":"$ctor5"},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"value","pt":$n[0].Guid,"ps":0}],"sn":"compareTo","rt":$n[0].Int32,"p":[$n[0].Guid]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"o","pt":$n[0].Guid,"ps":0}],"sn":"equalsT","rt":$n[0].Boolean,"p":[$n[0].Guid]},{"ov":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"o","pt":$n[0].Object,"ps":0}],"sn":"equals","rt":$n[0].Boolean,"p":[$n[0].Object]},{"a":1,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"sn":"format$1","rt":$n[0].String,"p":[$n[0].String]},{"a":1,"n":"FromString","t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0}],"sn":"fromString","rt":$n[0].Void,"p":[$n[0].String]},{"ov":true,"a":2,"n":"GetHashCode","t":8,"sn":"getHashCode","rt":$n[0].Int32},{"a":1,"n":"MakeBinary","is":true,"t":8,"pi":[{"n":"x","pt":$n[0].Byte,"ps":0}],"sn":"makeBinary","rt":$n[0].String,"p":[$n[0].Byte]},{"a":2,"n":"NewGuid","is":true,"t":8,"sn":"newGuid","rt":$n[0].Guid},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0}],"sn":"parse","rt":$n[0].Guid,"p":[$n[0].String]},{"a":2,"n":"ParseExact","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"format","pt":$n[0].String,"ps":1}],"sn":"parseExact","rt":$n[0].Guid,"p":[$n[0].String,$n[0].String]},{"a":1,"n":"ParseInternal","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"format","pt":$n[0].String,"ps":1},{"n":"check","pt":$n[0].Boolean,"ps":2}],"sn":"parseInternal","rt":$n[0].Boolean,"p":[$n[0].String,$n[0].String,$n[0].Boolean]},{"a":2,"n":"ToByteArray","t":8,"sn":"toByteArray","rt":$n[0].Array.type(System.Byte)},{"ov":true,"a":2,"n":"ToString","t":8,"sn":"toString","rt":$n[0].String},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"sn":"toString$1","rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"formatProvider","pt":$n[0].IFormatProvider,"ps":1}],"sn":"format","rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].Guid,"ps":1}],"sn":"tryParse","rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Guid]},{"a":2,"n":"TryParseExact","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"format","pt":$n[0].String,"ps":1},{"n":"result","out":true,"pt":$n[0].Guid,"ps":2}],"sn":"tryParseExact","rt":$n[0].Boolean,"p":[$n[0].String,$n[0].String,$n[0].Guid]},{"a":2,"n":"op_Equality","is":true,"t":8,"pi":[{"n":"a","pt":$n[0].Guid,"ps":0},{"n":"b","pt":$n[0].Guid,"ps":1}],"sn":"op_Equality","rt":$n[0].Boolean,"p":[$n[0].Guid,$n[0].Guid]},{"a":2,"n":"op_Inequality","is":true,"t":8,"pi":[{"n":"a","pt":$n[0].Guid,"ps":0},{"n":"b","pt":$n[0].Guid,"ps":1}],"sn":"op_Inequality","rt":$n[0].Boolean,"p":[$n[0].Guid,$n[0].Guid]},{"a":2,"n":"Empty","is":true,"t":4,"rt":$n[0].Guid,"sn":"empty","ro":true},{"a":1,"n":"NonFormat","is":true,"t":4,"rt":$n[1].Regex,"sn":"nonFormat","ro":true},{"a":1,"n":"Replace","is":true,"t":4,"rt":$n[1].Regex,"sn":"replace","ro":true},{"a":1,"n":"Rnd","is":true,"t":4,"rt":$n[0].Random,"sn":"rnd","ro":true},{"a":1,"n":"Split","is":true,"t":4,"rt":$n[1].Regex,"sn":"split","ro":true},{"a":1,"n":"Valid","is":true,"t":4,"rt":$n[1].Regex,"sn":"valid","ro":true},{"a":1,"n":"_a","t":4,"rt":$n[0].Int32,"sn":"_a"},{"a":1,"n":"_b","t":4,"rt":$n[0].Int16,"sn":"_b"},{"a":1,"n":"_c","t":4,"rt":$n[0].Int16,"sn":"_c"},{"a":1,"n":"_d","t":4,"rt":$n[0].Byte,"sn":"_d"},{"a":1,"n":"_e","t":4,"rt":$n[0].Byte,"sn":"_e"},{"a":1,"n":"_f","t":4,"rt":$n[0].Byte,"sn":"_f"},{"a":1,"n":"_g","t":4,"rt":$n[0].Byte,"sn":"_g"},{"a":1,"n":"_h","t":4,"rt":$n[0].Byte,"sn":"_h"},{"a":1,"n":"_i","t":4,"rt":$n[0].Byte,"sn":"_i"},{"a":1,"n":"_j","t":4,"rt":$n[0].Byte,"sn":"_j"},{"a":1,"n":"_k","t":4,"rt":$n[0].Byte,"sn":"_k"},{"a":1,"n":"error1","is":true,"t":4,"rt":$n[0].String,"sn":"error1"}]}; });
+    $m($n[0].Random, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"seed","pt":$n[0].Int32,"ps":0}],"sn":"$ctor1"},{"a":1,"n":"GetSampleForLargeRange","t":8,"sn":"getSampleForLargeRange","rt":$n[0].Double},{"a":1,"n":"InternalSample","t":8,"sn":"internalSample","rt":$n[0].Int32},{"v":true,"a":2,"n":"Next","t":8,"sn":"next","rt":$n[0].Int32},{"v":true,"a":2,"n":"Next","t":8,"pi":[{"n":"maxValue","pt":$n[0].Int32,"ps":0}],"sn":"next$1","rt":$n[0].Int32,"p":[$n[0].Int32]},{"v":true,"a":2,"n":"Next","t":8,"pi":[{"n":"minValue","pt":$n[0].Int32,"ps":0},{"n":"maxValue","pt":$n[0].Int32,"ps":1}],"sn":"next$2","rt":$n[0].Int32,"p":[$n[0].Int32,$n[0].Int32]},{"v":true,"a":2,"n":"NextBytes","t":8,"pi":[{"n":"buffer","pt":$n[0].Array.type(System.Byte),"ps":0}],"sn":"nextBytes","rt":$n[0].Void,"p":[$n[0].Array.type(System.Byte)]},{"v":true,"a":2,"n":"NextDouble","t":8,"sn":"nextDouble","rt":$n[0].Double},{"v":true,"a":3,"n":"Sample","t":8,"sn":"sample","rt":$n[0].Double},{"a":1,"n":"MBIG","is":true,"t":4,"rt":$n[0].Int32,"sn":"MBIG"},{"a":1,"n":"MSEED","is":true,"t":4,"rt":$n[0].Int32,"sn":"MSEED"},{"a":1,"n":"MZ","is":true,"t":4,"rt":$n[0].Int32,"sn":"MZ"},{"a":1,"n":"SeedArray","t":4,"rt":$n[0].Array.type(System.Int32),"sn":"seedArray"},{"a":1,"n":"inext","t":4,"rt":$n[0].Int32,"sn":"inext"},{"a":1,"n":"inextp","t":4,"rt":$n[0].Int32,"sn":"inextp"}]}; });
+    $m($n[0].IndexOutOfRangeException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"sn":"ctor"}]}; });
+    $m($n[0].ArgumentNullException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"paramName","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"def":function (message, innerException) { return new System.ArgumentNullException(null, message, innerException); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].String],"pi":[{"n":"paramName","pt":$n[0].String,"ps":0},{"n":"message","pt":$n[0].String,"ps":1}],"sn":"ctor"}]}; });
+    $m($n[0].ArgumentException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"def":function (message, innerException) { return new System.ArgumentException(message, null, innerException); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"paramName","pt":$n[0].String,"ps":1}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"paramName","pt":$n[0].String,"ps":1},{"n":"innerException","pt":$n[0].Exception,"ps":2}],"sn":"ctor"},{"a":2,"n":"ParamName","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_ParamName","t":8,"rt":$n[0].String,"fg":"ParamName"},"fn":"ParamName"}]}; });
+    $m($n[0].ArithmeticException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"sn":"ctor"}]}; });
+    $m($n[0].Console, function () { return {"att":1048833,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"Clear","is":true,"t":8,"sn":"Clear","rt":$n[0].Void},{"a":2,"n":"Read","is":true,"t":8,"tpc":0,"def":function () { return prompt(); },"rt":$n[0].String},{"a":2,"n":"ReadLine","is":true,"t":8,"tpc":0,"def":function () { return prompt(); },"rt":$n[0].String},{"a":2,"n":"ReadLine","is":true,"t":8,"pi":[{"n":"text","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (text) { return prompt(text); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ReadLine","is":true,"t":8,"pi":[{"n":"text","pt":$n[0].String,"ps":0},{"n":"value","pt":$n[0].String,"ps":1}],"tpc":0,"def":function (text, value) { return prompt(text, value); },"rt":$n[0].String,"p":[$n[0].String,$n[0].String]},{"a":1,"n":"TransformChars","is":true,"t":8,"pi":[{"n":"buffer","pt":$n[0].Array.type(System.Char),"ps":0},{"n":"all","pt":$n[0].Int32,"ps":1},{"n":"index","pt":$n[0].Int32,"ps":2},{"n":"count","pt":$n[0].Int32,"ps":3}],"sn":"TransformChars","rt":$n[0].String,"p":[$n[0].Array.type(System.Char),$n[0].Int32,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Boolean,"ps":0}],"tpc":0,"def":function (value) { return System.Console.Write(System.Boolean.toString(value)); },"rt":$n[0].Void,"p":[$n[0].Boolean]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (value) { return System.Console.Write(String.fromCharCode(value)); },"rt":$n[0].Void,"p":[$n[0].Char]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"buffer","pt":$n[0].Array.type(System.Char),"ps":0}],"tpc":0,"def":function (buffer) { return System.Console.Write(System.Console.TransformChars(buffer, 1)); },"rt":$n[0].Void,"p":[$n[0].Array.type(System.Char)]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (value) { return System.Console.Write(value.toString('G')); },"rt":$n[0].Void,"p":[$n[0].Decimal]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"tpc":0,"def":function (value) { return System.Console.Write(System.Double.format(value)); },"rt":$n[0].Void,"p":[$n[0].Double]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"sn":"Write","rt":$n[0].Void,"p":[$n[0].Int32]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"Write","rt":$n[0].Void,"p":[$n[0].Int64]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Object,"ps":0}],"sn":"Write","rt":$n[0].Void,"p":[$n[0].Object]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Single,"ps":0}],"sn":"Write","rt":$n[0].Void,"p":[$n[0].Single]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"sn":"Write","rt":$n[0].Void,"p":[$n[0].String]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt32,"ps":0}],"sn":"Write","rt":$n[0].Void,"p":[$n[0].UInt32]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"sn":"Write","rt":$n[0].Void,"p":[$n[0].UInt64]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"arg0","pt":$n[0].Object,"ps":1}],"tpc":0,"def":function (format, arg0) { return System.Console.Write(System.String.format(format, arg0)); },"rt":$n[0].Void,"p":[$n[0].String,$n[0].Object]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"arg","ip":true,"pt":$n[0].Array.type(System.Object),"ps":1}],"tpc":0,"def":function (format, arg) { return System.Console.Write(System.String.format(format, arg)); },"rt":$n[0].Void,"p":[$n[0].String,$n[0].Array.type(System.Object)]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"buffer","pt":$n[0].Array.type(System.Char),"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (buffer, index, count) { return System.Console.Write(System.Console.TransformChars(buffer, 0, index, count)); },"rt":$n[0].Void,"p":[$n[0].Array.type(System.Char),$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"arg0","pt":$n[0].Object,"ps":1},{"n":"arg1","pt":$n[0].Object,"ps":2}],"tpc":0,"def":function (format, arg0, arg1) { return System.Console.Write(System.String.format(format, arg0, arg1)); },"rt":$n[0].Void,"p":[$n[0].String,$n[0].Object,$n[0].Object]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"arg0","pt":$n[0].Object,"ps":1},{"n":"arg1","pt":$n[0].Object,"ps":2},{"n":"arg2","pt":$n[0].Object,"ps":3}],"tpc":0,"def":function (format, arg0, arg1, arg2) { return System.Console.Write(System.String.format(format, arg0, arg1, arg2)); },"rt":$n[0].Void,"p":[$n[0].String,$n[0].Object,$n[0].Object,$n[0].Object]},{"a":2,"n":"Write","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"arg0","pt":$n[0].Object,"ps":1},{"n":"arg1","pt":$n[0].Object,"ps":2},{"n":"arg2","pt":$n[0].Object,"ps":3},{"n":"arg3","pt":$n[0].Object,"ps":4}],"tpc":0,"def":function (format, arg0, arg1, arg2, arg3) { return System.Console.Write(System.String.format(format, [arg0, arg1, arg2, arg3])); },"rt":$n[0].Void,"p":[$n[0].String,$n[0].Object,$n[0].Object,$n[0].Object,$n[0].Object]},{"a":2,"n":"WriteLine","is":true,"t":8,"sn":"WriteLine","rt":$n[0].Void},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Boolean,"ps":0}],"tpc":0,"def":function (value) { return System.Console.WriteLine(System.Boolean.toString(value)); },"rt":$n[0].Void,"p":[$n[0].Boolean]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (value) { return System.Console.WriteLine(String.fromCharCode(value)); },"rt":$n[0].Void,"p":[$n[0].Char]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"buffer","pt":$n[0].Array.type(System.Char),"ps":0}],"tpc":0,"def":function (buffer) { return System.Console.WriteLine(System.Console.TransformChars(buffer, 1)); },"rt":$n[0].Void,"p":[$n[0].Array.type(System.Char)]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (value) { return System.Console.WriteLine(value.toString('G')); },"rt":$n[0].Void,"p":[$n[0].Decimal]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"tpc":0,"def":function (value) { return System.Console.WriteLine(System.Double.format(value)); },"rt":$n[0].Void,"p":[$n[0].Double]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"sn":"WriteLine","rt":$n[0].Void,"p":[$n[0].Int32]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"WriteLine","rt":$n[0].Void,"p":[$n[0].Int64]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Nullable$1(System.Decimal),"ps":0}],"tpc":0,"def":function (value) { return System.Console.WriteLine(value && value.toString('G')); },"rt":$n[0].Void,"p":[$n[0].Nullable$1(System.Decimal)]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Object,"ps":0}],"sn":"WriteLine","rt":$n[0].Void,"p":[$n[0].Object]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Single,"ps":0}],"tpc":0,"def":function (value) { return System.Console.WriteLine(System.Single.format(value)); },"rt":$n[0].Void,"p":[$n[0].Single]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"sn":"WriteLine","rt":$n[0].Void,"p":[$n[0].String]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"value","pt":Function,"ps":0}],"tpc":0,"def":function (value) { return System.Console.WriteLine(Bridge.getTypeName(value)); },"rt":$n[0].Void,"p":[Function]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt32,"ps":0}],"sn":"WriteLine","rt":$n[0].Void,"p":[$n[0].UInt32]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"sn":"WriteLine","rt":$n[0].Void,"p":[$n[0].UInt64]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"arg0","pt":$n[0].Object,"ps":1}],"tpc":0,"def":function (format, arg0) { return System.Console.WriteLine(System.String.format(format, arg0)); },"rt":$n[0].Void,"p":[$n[0].String,$n[0].Object]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"arg","ip":true,"pt":$n[0].Array.type(System.Object),"ps":1}],"tpc":0,"def":function (format, arg) { return System.Console.WriteLine(System.String.format(format, arg)); },"rt":$n[0].Void,"p":[$n[0].String,$n[0].Array.type(System.Object)]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"buffer","pt":$n[0].Array.type(System.Char),"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (buffer, index, count) { return System.Console.WriteLine(System.Console.TransformChars(buffer, 0, index, count)); },"rt":$n[0].Void,"p":[$n[0].Array.type(System.Char),$n[0].Int32,$n[0].Int32]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"arg0","pt":$n[0].Object,"ps":1},{"n":"arg1","pt":$n[0].Object,"ps":2}],"tpc":0,"def":function (format, arg0, arg1) { return System.Console.WriteLine(System.String.format(format, arg0, arg1)); },"rt":$n[0].Void,"p":[$n[0].String,$n[0].Object,$n[0].Object]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"arg0","pt":$n[0].Object,"ps":1},{"n":"arg1","pt":$n[0].Object,"ps":2},{"n":"arg2","pt":$n[0].Object,"ps":3}],"tpc":0,"def":function (format, arg0, arg1, arg2) { return System.Console.WriteLine(System.String.format(format, arg0, arg1, arg2)); },"rt":$n[0].Void,"p":[$n[0].String,$n[0].Object,$n[0].Object,$n[0].Object]},{"a":2,"n":"WriteLine","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"arg0","pt":$n[0].Object,"ps":1},{"n":"arg1","pt":$n[0].Object,"ps":2},{"n":"arg2","pt":$n[0].Object,"ps":3},{"n":"arg3","pt":$n[0].Object,"ps":4}],"tpc":0,"def":function (format, arg0, arg1, arg2, arg3) { return System.Console.WriteLine(System.String.format(format, [arg0, arg1, arg2, arg3])); },"rt":$n[0].Void,"p":[$n[0].String,$n[0].Object,$n[0].Object,$n[0].Object,$n[0].Object]}]}; });
+    $m($n[0].ArraySegment, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"p":[System.Array.type(System.Object)],"pi":[{"n":"array","pt":System.Array.type(System.Object),"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[System.Array.type(System.Object),$n[0].Int32,$n[0].Int32],"pi":[{"n":"array","pt":System.Array.type(System.Object),"ps":0},{"n":"offset","pt":$n[0].Int32,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2}],"sn":"ctor"},{"a":2,"n":"Array","t":16,"rt":System.Array.type(System.Object),"g":{"a":2,"n":"get_Array","t":8,"tpc":0,"def":function () { return getArray(); },"rt":System.Array.type(System.Object)}},{"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Count","t":8,"tpc":0,"def":function () { return getCount(); },"rt":$n[0].Int32}},{"a":2,"n":"Offset","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Offset","t":8,"tpc":0,"def":function () { return getOffset(); },"rt":$n[0].Int32}}]}; });
+    $m($n[0].Enum, function () { return {"att":1048705,"a":2,"m":[{"a":3,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"target","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (target) { return Bridge.compare(this, target); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"ov":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (other) { return System.Enum.equals(this, other, Bridge.getType(this)); },"rt":$n[0].Boolean,"p":[$n[0].Object]},{"a":2,"n":"Format","is":true,"t":8,"pi":[{"n":"enumType","pt":Function,"ps":0},{"n":"value","pt":$n[0].Object,"ps":1},{"n":"format","pt":$n[0].String,"ps":2}],"sn":"format","rt":$n[0].String,"p":[Function,$n[0].Object,$n[0].String]},{"a":2,"n":"GetName","is":true,"t":8,"pi":[{"n":"enumType","pt":Function,"ps":0},{"n":"value","pt":$n[0].Object,"ps":1}],"sn":"getName","rt":$n[0].String,"p":[Function,$n[0].Object]},{"a":2,"n":"GetNames","is":true,"t":8,"pi":[{"n":"enumType","pt":Function,"ps":0}],"sn":"getNames","rt":$n[0].Array.type(System.String),"p":[Function]},{"a":2,"n":"GetValues","is":true,"t":8,"pi":[{"n":"enumType","pt":Function,"ps":0}],"sn":"getValues","rt":Array,"p":[Function]},{"a":2,"n":"HasFlag","t":8,"pi":[{"n":"flag","pt":$n[0].Enum,"ps":0}],"tpc":0,"def":function (flag) { return System.Enum.hasFlag(this, flag); },"rt":$n[0].Boolean,"p":[$n[0].Enum]},{"a":2,"n":"IsDefined","is":true,"t":8,"pi":[{"n":"enumType","pt":Function,"ps":0},{"n":"value","pt":$n[0].Object,"ps":1}],"sn":"isDefined","rt":$n[0].Boolean,"p":[Function,$n[0].Object]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"enumType","pt":Function,"ps":0},{"n":"value","pt":$n[0].String,"ps":1}],"sn":"parse","rt":$n[0].Enum,"p":[Function,$n[0].String]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"enumType","pt":Function,"ps":0},{"n":"value","pt":$n[0].String,"ps":1},{"n":"ignoreCase","pt":$n[0].Boolean,"ps":2}],"sn":"parse","rt":$n[0].Enum,"p":[Function,$n[0].String,$n[0].Boolean]},{"ov":true,"a":2,"n":"ToString","t":8,"tpc":0,"def":function () { return System.Enum.toString(Bridge.getType(this), this); },"rt":$n[0].String},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.Enum.format(Bridge.getType(this), this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"formatProvider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, formatProvider) { return System.Enum.format(Bridge.getType(this), this, format); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"ToString","is":true,"t":8,"pi":[{"n":"enumType","pt":Function,"ps":0},{"n":"value","pt":$n[0].Enum,"ps":1}],"sn":"toString","rt":$n[0].String,"p":[Function,$n[0].Enum]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":System.Object,"ps":1}],"tpc":1,"def":function (TEnum, value, result) { return System.Enum.tryParse(TEnum, value, result); },"rt":$n[0].Boolean,"p":[$n[0].String,System.Object]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"ignoreCase","pt":$n[0].Boolean,"ps":1},{"n":"result","out":true,"pt":System.Object,"ps":2}],"tpc":1,"def":function (TEnum, value, ignoreCase, result) { return System.Enum.tryParse(TEnum, value, result, ignoreCase); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Boolean,System.Object]}]}; });
+    $m($n[0].Environment, function () { return {"att":385,"a":2,"s":true,"m":[{"n":".cctor","t":1,"sn":"ctor","sm":true},{"a":2,"n":"Exit","is":true,"t":8,"pi":[{"n":"exitCode","pt":$n[0].Int32,"ps":0}],"sn":"exit","rt":$n[0].Void,"p":[$n[0].Int32]},{"a":2,"n":"ExpandEnvironmentVariables","is":true,"t":8,"pi":[{"n":"name","pt":$n[0].String,"ps":0}],"sn":"expandEnvironmentVariables","rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"FailFast","is":true,"t":8,"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"failFast","rt":$n[0].Void,"p":[$n[0].String]},{"a":2,"n":"FailFast","is":true,"t":8,"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"exception","pt":$n[0].Exception,"ps":1}],"sn":"failFast$1","rt":$n[0].Void,"p":[$n[0].String,$n[0].Exception]},{"a":2,"n":"GetCommandLineArgs","is":true,"t":8,"sn":"getCommandLineArgs","rt":$n[0].Array.type(System.String)},{"a":2,"n":"GetEnvironmentVariable","is":true,"t":8,"pi":[{"n":"variable","pt":$n[0].String,"ps":0}],"sn":"getEnvironmentVariable","rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"GetEnvironmentVariable","is":true,"t":8,"pi":[{"n":"variable","pt":$n[0].String,"ps":0},{"n":"target","pt":$n[0].EnvironmentVariableTarget,"ps":1}],"sn":"getEnvironmentVariable$1","rt":$n[0].String,"p":[$n[0].String,$n[0].EnvironmentVariableTarget]},{"a":2,"n":"GetEnvironmentVariables","is":true,"t":8,"sn":"getEnvironmentVariables","rt":$n[2].IDictionary},{"a":2,"n":"GetEnvironmentVariables","is":true,"t":8,"pi":[{"n":"target","pt":$n[0].EnvironmentVariableTarget,"ps":0}],"sn":"getEnvironmentVariables$1","rt":$n[2].IDictionary,"p":[$n[0].EnvironmentVariableTarget]},{"a":2,"n":"GetFolderPath","is":true,"t":8,"pi":[{"n":"folder","pt":$n[0].Environment.SpecialFolder,"ps":0}],"tpc":0,"def":function (folder) { return ""; },"rt":$n[0].String,"p":[$n[0].Environment.SpecialFolder]},{"a":2,"n":"GetFolderPath","is":true,"t":8,"pi":[{"n":"folder","pt":$n[0].Environment.SpecialFolder,"ps":0},{"n":"option","pt":$n[0].Environment.SpecialFolderOption,"ps":1}],"tpc":0,"def":function (folder, option) { return ""; },"rt":$n[0].String,"p":[$n[0].Environment.SpecialFolder,$n[0].Environment.SpecialFolderOption]},{"a":2,"n":"GetLogicalDrives","is":true,"t":8,"sn":"getLogicalDrives","rt":$n[0].Array.type(System.String)},{"a":1,"n":"PatchDictionary","is":true,"t":8,"pi":[{"n":"d","pt":$n[3].Dictionary$2(System.String,System.String),"ps":0}],"sn":"patchDictionary","rt":$n[3].Dictionary$2(System.String,System.String),"p":[$n[3].Dictionary$2(System.String,System.String)]},{"a":2,"n":"SetEnvironmentVariable","is":true,"t":8,"pi":[{"n":"variable","pt":$n[0].String,"ps":0},{"n":"value","pt":$n[0].String,"ps":1}],"sn":"setEnvironmentVariable","rt":$n[0].Void,"p":[$n[0].String,$n[0].String]},{"a":2,"n":"SetEnvironmentVariable","is":true,"t":8,"pi":[{"n":"variable","pt":$n[0].String,"ps":0},{"n":"value","pt":$n[0].String,"ps":1},{"n":"target","pt":$n[0].EnvironmentVariableTarget,"ps":2}],"sn":"setEnvironmentVariable$1","rt":$n[0].Void,"p":[$n[0].String,$n[0].String,$n[0].EnvironmentVariableTarget]},{"a":2,"n":"CommandLine","is":true,"t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_CommandLine","t":8,"rt":$n[0].String,"fg":"CommandLine","is":true},"fn":"CommandLine"},{"a":2,"n":"CurrentDirectory","is":true,"t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_CurrentDirectory","t":8,"rt":$n[0].String,"fg":"CurrentDirectory","is":true},"s":{"a":2,"n":"set_CurrentDirectory","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"CurrentDirectory","is":true},"fn":"CurrentDirectory"},{"a":2,"n":"CurrentManagedThreadId","is":true,"t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_CurrentManagedThreadId","is":true,"t":8,"tpc":0,"def":function () { return 0; },"rt":$n[0].Int32}},{"a":2,"n":"ExitCode","is":true,"t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_ExitCode","t":8,"rt":$n[0].Int32,"fg":"ExitCode","is":true},"s":{"a":2,"n":"set_ExitCode","t":8,"p":[$n[0].Int32],"rt":$n[0].Void,"fs":"ExitCode","is":true},"fn":"ExitCode"},{"a":1,"n":"Global","is":true,"t":16,"rt":System.Object,"g":{"a":1,"n":"get_Global","is":true,"t":8,"tpc":0,"def":function () { return Bridge.global; },"rt":System.Object},"s":{"a":1,"n":"set_Global","is":true,"t":8,"pi":[{"n":"value","pt":System.Object,"ps":0}],"sn":"Global","rt":$n[0].Void,"p":[System.Object]}},{"a":2,"n":"HasShutdownStarted","is":true,"t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_HasShutdownStarted","is":true,"t":8,"tpc":0,"def":function () { return false; },"rt":$n[0].Boolean},"s":{"a":1,"n":"set_HasShutdownStarted","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Boolean,"ps":0}],"sn":"HasShutdownStarted","rt":$n[0].Void,"p":[$n[0].Boolean]}},{"a":2,"n":"Is64BitOperatingSystem","is":true,"t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_Is64BitOperatingSystem","t":8,"rt":$n[0].Boolean,"fg":"Is64BitOperatingSystem","is":true},"fn":"Is64BitOperatingSystem"},{"a":2,"n":"Is64BitProcess","is":true,"t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_Is64BitProcess","is":true,"t":8,"tpc":0,"def":function () { return false; },"rt":$n[0].Boolean},"s":{"a":1,"n":"set_Is64BitProcess","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Boolean,"ps":0}],"sn":"Is64BitProcess","rt":$n[0].Void,"p":[$n[0].Boolean]}},{"a":1,"n":"Location","is":true,"t":16,"rt":System.Object,"g":{"a":1,"n":"get_Location","t":8,"rt":System.Object,"fg":"Location","is":true},"fn":"Location"},{"a":2,"n":"MachineName","is":true,"t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_MachineName","is":true,"t":8,"tpc":0,"def":function () { return ""; },"rt":$n[0].String},"s":{"a":1,"n":"set_MachineName","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"sn":"MachineName","rt":$n[0].Void,"p":[$n[0].String]}},{"a":2,"n":"NewLine","is":true,"t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_NewLine","is":true,"t":8,"tpc":0,"def":function () { return '\n'; },"rt":$n[0].String}},{"a":2,"n":"OSVersion","is":true,"t":16,"rt":$n[0].Object,"g":{"a":2,"n":"get_OSVersion","is":true,"t":8,"tpc":0,"def":function () { return null; },"rt":$n[0].Object},"s":{"a":1,"n":"set_OSVersion","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Object,"ps":0}],"sn":"OSVersion","rt":$n[0].Void,"p":[$n[0].Object]}},{"a":2,"n":"ProcessorCount","is":true,"t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_ProcessorCount","t":8,"rt":$n[0].Int32,"fg":"ProcessorCount","is":true},"fn":"ProcessorCount"},{"a":2,"n":"StackTrace","is":true,"t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_StackTrace","t":8,"rt":$n[0].String,"fg":"StackTrace","is":true},"fn":"StackTrace"},{"a":2,"n":"SystemDirectory","is":true,"t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_SystemDirectory","is":true,"t":8,"tpc":0,"def":function () { return ""; },"rt":$n[0].String},"s":{"a":1,"n":"set_SystemDirectory","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"sn":"SystemDirectory","rt":$n[0].Void,"p":[$n[0].String]}},{"a":2,"n":"SystemPageSize","is":true,"t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_SystemPageSize","is":true,"t":8,"tpc":0,"def":function () { return 1; },"rt":$n[0].Int32},"s":{"a":1,"n":"set_SystemPageSize","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"sn":"SystemPageSize","rt":$n[0].Void,"p":[$n[0].Int32]}},{"a":2,"n":"TickCount","is":true,"t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_TickCount","is":true,"t":8,"tpc":0,"def":function () { return Date.now(); },"rt":$n[0].Int32},"s":{"a":1,"n":"set_TickCount","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"sn":"TickCount","rt":$n[0].Void,"p":[$n[0].Int32]}},{"a":2,"n":"UserDomainName","is":true,"t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_UserDomainName","is":true,"t":8,"tpc":0,"def":function () { return ""; },"rt":$n[0].String},"s":{"a":1,"n":"set_UserDomainName","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"sn":"UserDomainName","rt":$n[0].Void,"p":[$n[0].String]}},{"a":2,"n":"UserInteractive","is":true,"t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_UserInteractive","is":true,"t":8,"tpc":0,"def":function () { return true; },"rt":$n[0].Boolean},"s":{"a":1,"n":"set_UserInteractive","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Boolean,"ps":0}],"sn":"UserInteractive","rt":$n[0].Void,"p":[$n[0].Boolean]}},{"a":2,"n":"UserName","is":true,"t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_UserName","is":true,"t":8,"tpc":0,"def":function () { return ""; },"rt":$n[0].String},"s":{"a":1,"n":"set_UserName","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"sn":"UserName","rt":$n[0].Void,"p":[$n[0].String]}},{"a":2,"n":"Version","is":true,"t":16,"rt":$n[0].Version,"g":{"a":2,"n":"get_Version","t":8,"rt":$n[0].Version,"fg":"Version","is":true},"fn":"Version"},{"a":2,"n":"WorkingSet","is":true,"t":16,"rt":$n[0].Int64,"g":{"a":2,"n":"get_WorkingSet","is":true,"t":8,"tpc":0,"def":function () { return System.Int64(0); },"rt":$n[0].Int64},"s":{"a":1,"n":"set_WorkingSet","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"WorkingSet","rt":$n[0].Void,"p":[$n[0].Int64]}},{"a":1,"n":"Variables","is":true,"t":4,"rt":$n[3].Dictionary$2(System.String,System.String),"sn":"variables"},{"a":1,"n":"__Property__Initializer__ExitCode","is":true,"t":4,"rt":$n[0].Int32,"sn":"__Property__Initializer__ExitCode"}]}; });
+    $m($n[0].IDisposable, function () { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"Dispose","t":8,"sn":"System$IDisposable$dispose","rt":$n[0].Void}]}; });
+    $m($n[0].OutOfMemoryException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"def":function (message, innerException) { return new System.OutOfMemoryException(message, innerException); }}]}; });
+    $m($n[0].RankException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"sn":"ctor"}]}; });
+    $m($n[0].AggregateException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[3].IEnumerable$1(System.Exception)],"pi":[{"n":"innerExceptions","pt":$n[3].IEnumerable$1(System.Exception),"ps":0}],"def":function (innerExceptions) { return new System.AggregateException(null, innerExceptions); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Array.type(System.Exception)],"pi":[{"n":"innerExceptions","ip":true,"pt":$n[0].Array.type(System.Exception),"ps":0}],"def":function (innerExceptions) { return new System.AggregateException(null, Array.prototype.slice.call((arguments, 0))); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[3].IEnumerable$1(System.Exception)],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerExceptions","pt":$n[3].IEnumerable$1(System.Exception),"ps":1}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Array.type(System.Exception)],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerExceptions","ip":true,"pt":$n[0].Array.type(System.Exception),"ps":1}],"def":function (message, innerExceptions) { return new System.AggregateException(message, Array.prototype.slice.call((arguments, 1))); }},{"a":2,"n":"Flatten","t":8,"sn":"flatten","rt":$n[0].AggregateException},{"a":2,"n":"Handle","t":8,"pi":[{"n":"predicate","pt":Function,"ps":0}],"sn":"handle","rt":$n[0].Void,"p":[Function]},{"a":2,"n":"InnerExceptions","t":16,"rt":$n[4].ReadOnlyCollection$1(System.Exception),"g":{"a":2,"n":"get_InnerExceptions","t":8,"rt":$n[4].ReadOnlyCollection$1(System.Exception),"fg":"innerExceptions"},"fn":"innerExceptions"}]}; });
+    $m($n[0].OperationCanceledException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"def":function (message) { return new System.OperationCanceledException(message, System.Threading.CancellationToken.none); }},{"a":2,"n":".ctor","t":1,"p":[$n[5].CancellationToken],"pi":[{"n":"token","pt":$n[5].CancellationToken,"ps":0}],"def":function (token) { return new System.OperationCanceledException(null, token); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"def":function (message, innerException) { return new System.OperationCanceledException(message, System.Threading.CancellationToken.none, innerException); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[5].CancellationToken],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"token","pt":$n[5].CancellationToken,"ps":1}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception,$n[5].CancellationToken],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1},{"n":"token","pt":$n[5].CancellationToken,"ps":2}],"def":function (message, innerException, token) { return new System.OperationCanceledException(message, token, innerException); }},{"a":2,"n":"CancellationToken","t":16,"rt":$n[5].CancellationToken,"g":{"a":2,"n":"get_CancellationToken","t":8,"rt":$n[5].CancellationToken,"fg":"cancellationToken"},"s":{"a":1,"n":"set_CancellationToken","t":8,"p":[$n[5].CancellationToken],"rt":$n[0].Void,"fs":"cancellationToken"},"fn":"cancellationToken"}]}; });
+    $m($n[0].SystemException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"def":function (message, innerException) { return new System.SystemException(message, innerException); }}]}; });
+    $m($n[0].TimeoutException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"def":function (message, innerException) { return new System.TimeoutException(message, innerException); }}]}; });
+    $m($n[0].Uri, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"uriString","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":"AbsoluteUri","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_AbsoluteUri","t":8,"tpc":0,"def":function () { return getAbsoluteUri(); },"rt":$n[0].String}}]}; });
+    $m($n[0].Version, function () { return {"att":1048833,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"version","pt":$n[0].String,"ps":0}],"sn":"$ctor4"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int32],"pi":[{"n":"major","pt":$n[0].Int32,"ps":0},{"n":"minor","pt":$n[0].Int32,"ps":1}],"sn":"$ctor1"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32],"pi":[{"n":"major","pt":$n[0].Int32,"ps":0},{"n":"minor","pt":$n[0].Int32,"ps":1},{"n":"build","pt":$n[0].Int32,"ps":2}],"sn":"$ctor2"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32],"pi":[{"n":"major","pt":$n[0].Int32,"ps":0},{"n":"minor","pt":$n[0].Int32,"ps":1},{"n":"build","pt":$n[0].Int32,"ps":2},{"n":"revision","pt":$n[0].Int32,"ps":3}],"sn":"$ctor3"},{"a":1,"n":"AppendPositiveNumber","is":true,"t":8,"pi":[{"n":"num","pt":$n[0].Int32,"ps":0},{"n":"sb","pt":$n[6].StringBuilder,"ps":1}],"sn":"appendPositiveNumber","rt":$n[0].Void,"p":[$n[0].Int32,$n[6].StringBuilder]},{"a":2,"n":"Clone","t":8,"sn":"clone","rt":$n[0].Object},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"version","pt":$n[0].Object,"ps":0}],"sn":"compareTo$1","rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"value","pt":$n[0].Version,"ps":0}],"sn":"compareTo","rt":$n[0].Int32,"p":[$n[0].Version]},{"ov":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"sn":"equals","rt":$n[0].Boolean,"p":[$n[0].Object]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"obj","pt":$n[0].Version,"ps":0}],"sn":"equalsT","rt":$n[0].Boolean,"p":[$n[0].Version]},{"ov":true,"a":2,"n":"GetHashCode","t":8,"sn":"getHashCode","rt":$n[0].Int32},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0}],"sn":"parse","rt":$n[0].Version,"p":[$n[0].String]},{"ov":true,"a":2,"n":"ToString","t":8,"sn":"toString","rt":$n[0].String},{"a":2,"n":"ToString","t":8,"pi":[{"n":"fieldCount","pt":$n[0].Int32,"ps":0}],"sn":"toString$1","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].Version,"ps":1}],"sn":"tryParse","rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Version]},{"a":1,"n":"TryParseComponent","is":true,"t":8,"pi":[{"n":"component","pt":$n[0].String,"ps":0},{"n":"componentName","pt":$n[0].String,"ps":1},{"n":"result","ref":true,"pt":$n[0].Version.VersionResult,"ps":2},{"n":"parsedComponent","out":true,"pt":$n[0].Int32,"ps":3}],"sn":"tryParseComponent","rt":$n[0].Boolean,"p":[$n[0].String,$n[0].String,$n[0].Version.VersionResult,$n[0].Int32]},{"a":1,"n":"TryParseVersion","is":true,"t":8,"pi":[{"n":"version","pt":$n[0].String,"ps":0},{"n":"result","ref":true,"pt":$n[0].Version.VersionResult,"ps":1}],"sn":"tryParseVersion","rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Version.VersionResult]},{"a":2,"n":"op_Equality","is":true,"t":8,"pi":[{"n":"v1","pt":$n[0].Version,"ps":0},{"n":"v2","pt":$n[0].Version,"ps":1}],"sn":"op_Equality","rt":$n[0].Boolean,"p":[$n[0].Version,$n[0].Version]},{"a":2,"n":"op_GreaterThan","is":true,"t":8,"pi":[{"n":"v1","pt":$n[0].Version,"ps":0},{"n":"v2","pt":$n[0].Version,"ps":1}],"sn":"op_GreaterThan","rt":$n[0].Boolean,"p":[$n[0].Version,$n[0].Version]},{"a":2,"n":"op_GreaterThanOrEqual","is":true,"t":8,"pi":[{"n":"v1","pt":$n[0].Version,"ps":0},{"n":"v2","pt":$n[0].Version,"ps":1}],"sn":"op_GreaterThanOrEqual","rt":$n[0].Boolean,"p":[$n[0].Version,$n[0].Version]},{"a":2,"n":"op_Inequality","is":true,"t":8,"pi":[{"n":"v1","pt":$n[0].Version,"ps":0},{"n":"v2","pt":$n[0].Version,"ps":1}],"sn":"op_Inequality","rt":$n[0].Boolean,"p":[$n[0].Version,$n[0].Version]},{"a":2,"n":"op_LessThan","is":true,"t":8,"pi":[{"n":"v1","pt":$n[0].Version,"ps":0},{"n":"v2","pt":$n[0].Version,"ps":1}],"sn":"op_LessThan","rt":$n[0].Boolean,"p":[$n[0].Version,$n[0].Version]},{"a":2,"n":"op_LessThanOrEqual","is":true,"t":8,"pi":[{"n":"v1","pt":$n[0].Version,"ps":0},{"n":"v2","pt":$n[0].Version,"ps":1}],"sn":"op_LessThanOrEqual","rt":$n[0].Boolean,"p":[$n[0].Version,$n[0].Version]},{"a":2,"n":"Build","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Build","t":8,"rt":$n[0].Int32,"fg":"Build"},"fn":"Build"},{"a":2,"n":"Major","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Major","t":8,"rt":$n[0].Int32,"fg":"Major"},"fn":"Major"},{"a":2,"n":"MajorRevision","t":16,"rt":$n[0].Int16,"g":{"a":2,"n":"get_MajorRevision","t":8,"rt":$n[0].Int16,"fg":"MajorRevision"},"fn":"MajorRevision"},{"a":2,"n":"Minor","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Minor","t":8,"rt":$n[0].Int32,"fg":"Minor"},"fn":"Minor"},{"a":2,"n":"MinorRevision","t":16,"rt":$n[0].Int16,"g":{"a":2,"n":"get_MinorRevision","t":8,"rt":$n[0].Int16,"fg":"MinorRevision"},"fn":"MinorRevision"},{"a":2,"n":"Revision","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Revision","t":8,"rt":$n[0].Int32,"fg":"Revision"},"fn":"Revision"},{"a":1,"n":"SeparatorsArray","is":true,"t":4,"rt":$n[0].Char,"sn":"separatorsArray","ro":true},{"a":1,"n":"ZERO_CHAR_VALUE","is":true,"t":4,"rt":$n[0].Int32,"sn":"ZERO_CHAR_VALUE"},{"a":1,"n":"_Build","t":4,"rt":$n[0].Int32,"sn":"_Build"},{"a":1,"n":"_Major","t":4,"rt":$n[0].Int32,"sn":"_Major"},{"a":1,"n":"_Minor","t":4,"rt":$n[0].Int32,"sn":"_Minor"},{"a":1,"n":"_Revision","t":4,"rt":$n[0].Int32,"sn":"_Revision"}]}; });
+    $m($n[0].Version.ParseFailureKind, function () { return {"td":$n[0].Version,"att":261,"a":4,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"ArgumentException","is":true,"t":4,"rt":$n[0].Version.ParseFailureKind,"sn":"ArgumentException"},{"a":2,"n":"ArgumentNullException","is":true,"t":4,"rt":$n[0].Version.ParseFailureKind,"sn":"ArgumentNullException"},{"a":2,"n":"ArgumentOutOfRangeException","is":true,"t":4,"rt":$n[0].Version.ParseFailureKind,"sn":"ArgumentOutOfRangeException"},{"a":2,"n":"FormatException","is":true,"t":4,"rt":$n[0].Version.ParseFailureKind,"sn":"FormatException"}]}; });
+    $m($n[0].Version.VersionResult, function () { return {"td":$n[0].Version,"att":1048845,"a":4,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":4,"n":"GetVersionParseException","t":8,"sn":"getVersionParseException","rt":$n[0].Exception},{"a":4,"n":"Init","t":8,"pi":[{"n":"argumentName","pt":$n[0].String,"ps":0},{"n":"canThrow","pt":$n[0].Boolean,"ps":1}],"sn":"init","rt":$n[0].Void,"p":[$n[0].String,$n[0].Boolean]},{"a":4,"n":"SetFailure","t":8,"pi":[{"n":"failure","pt":$n[0].Version.ParseFailureKind,"ps":0}],"sn":"setFailure","rt":$n[0].Void,"p":[$n[0].Version.ParseFailureKind]},{"a":4,"n":"SetFailure","t":8,"pi":[{"n":"failure","pt":$n[0].Version.ParseFailureKind,"ps":0},{"n":"argument","pt":$n[0].String,"ps":1}],"sn":"setFailure$1","rt":$n[0].Void,"p":[$n[0].Version.ParseFailureKind,$n[0].String]},{"a":4,"n":"m_argumentName","t":4,"rt":$n[0].String,"sn":"m_argumentName"},{"a":4,"n":"m_canThrow","t":4,"rt":$n[0].Boolean,"sn":"m_canThrow"},{"a":4,"n":"m_exceptionArgument","t":4,"rt":$n[0].String,"sn":"m_exceptionArgument"},{"a":4,"n":"m_failure","t":4,"rt":$n[0].Version.ParseFailureKind,"sn":"m_failure"},{"a":4,"n":"m_parsedVersion","t":4,"rt":$n[0].Version,"sn":"m_parsedVersion"}]}; });
+    $m($n[0].OverflowException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"sn":"ctor"}]}; });
+    $m($n[0].ArgumentOutOfRangeException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"paramName","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"def":function (message, innerException) { return new System.ArgumentOutOfRangeException(null, message, innerException); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].String],"pi":[{"n":"paramName","pt":$n[0].String,"ps":0},{"n":"message","pt":$n[0].String,"ps":1}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Object,$n[0].String],"pi":[{"n":"paramName","pt":$n[0].String,"ps":0},{"n":"actualValue","pt":$n[0].Object,"ps":1},{"n":"message","pt":$n[0].String,"ps":2}],"def":function (paramName, actualValue, message) { return new System.ArgumentOutOfRangeException(paramName, message, null, actualValue); }},{"a":2,"n":"ActualValue","t":16,"rt":$n[0].Object,"g":{"a":2,"n":"get_ActualValue","t":8,"rt":$n[0].Object,"fg":"ActualValue"},"fn":"ActualValue"}]}; });
+    $m($n[0].Boolean, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":".ctor","t":1,"p":[System.Object],"pi":[{"n":"_","pt":System.Object,"ps":0}],"def":function (_) { return false; }},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].Boolean,"ps":0}],"tpc":0,"def":function (other) { return Bridge.compare(this, other); },"rt":$n[0].Int32,"p":[$n[0].Boolean]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (obj) { return Bridge.compare(this, other); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Boolean,"ps":0}],"tpc":0,"def":function (other) { return this === other; },"rt":$n[0].Boolean,"p":[$n[0].Boolean]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (value) { return System.Boolean.parse(value); },"rt":$n[0].Boolean,"p":[$n[0].String]},{"ov":true,"a":2,"n":"ToString","t":8,"tpc":0,"def":function () { return System.Boolean.toString(this); },"rt":$n[0].String},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].Boolean,"ps":1}],"tpc":0,"def":function (value, result) { return System.Boolean.tryParse(value, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Boolean]},{"a":4,"n":"False","is":true,"t":4,"rt":$n[0].Int32,"sn":"False"},{"a":2,"n":"FalseString","is":true,"t":4,"rt":$n[0].String,"sn":"falseString","ro":true},{"a":4,"n":"True","is":true,"t":4,"rt":$n[0].Int32,"sn":"True"},{"a":2,"n":"TrueString","is":true,"t":4,"rt":$n[0].String,"sn":"trueString","ro":true}]}; });
+    $m($n[0].Char, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"def":function () { return Number; }},{"a":1,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"def":function (i) { return Number; }},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (other) { return Bridge.compare(this, other); },"rt":$n[0].Int32,"p":[$n[0].Char]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (obj) { return Bridge.compare(this, obj); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (other) { return this === other; },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"ov":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (other) { return System.Char.equals(this, other); },"rt":$n[0].Boolean,"p":[$n[0].Object]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.Char.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.Char.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"ov":true,"a":2,"n":"GetHashCode","t":8,"tpc":0,"def":function () { return System.Char.getHashCode(this); },"rt":$n[0].Int32},{"a":2,"n":"IsControl","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return System.Char.isControl(ch); },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"a":2,"n":"IsControl","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, index) { return System.Char.isControl(s.charCodeAt(index)); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"IsDigit","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return System.Char.isDigit(ch); },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"a":2,"n":"IsDigit","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, index) { return System.Char.isDigit(s.charCodeAt(index)); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"IsHighSurrogate","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return System.Char.isHighSurrogate(ch); },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"a":2,"n":"IsHighSurrogate","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, index) { return System.Char.isHighSurrogate(s.charCodeAt(index)); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"IsLetter","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return System.Char.isLetter(ch); },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"a":2,"n":"IsLetter","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, index) { return System.Char.isLetter(s.charCodeAt(index)); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"IsLetterOrDigit","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return (System.Char.isDigit(ch) || System.Char.isLetter(ch)); },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"a":2,"n":"IsLetterOrDigit","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, index) { return (System.Char.isDigit(s.charCodeAt(index)) || System.Char.isLetter(s.charCodeAt(index))); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"IsLowSurrogate","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return System.Char.isLowSurrogate(ch); },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"a":2,"n":"IsLowSurrogate","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, index) { return System.Char.isLowSurrogate(s.charCodeAt(index)); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"IsLower","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return Bridge.isLower(ch); },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"a":2,"n":"IsNumber","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return System.Char.isNumber(ch); },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"a":2,"n":"IsNumber","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, index) { return System.Char.isNumber(s.charCodeAt(index)); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"IsPunctuation","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return System.Char.isPunctuation(ch); },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"a":2,"n":"IsPunctuation","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, index) { return System.Char.isPunctuation(s.charCodeAt(index)); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"IsSeparator","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return System.Char.isSeparator(ch); },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"a":2,"n":"IsSeparator","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, index) { return System.Char.isSeparator(s.charCodeAt(index)); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"IsSurrogate","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return System.Char.isSurrogate(ch); },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"a":2,"n":"IsSurrogate","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, index) { return System.Char.isSurrogate(s.charCodeAt(index)); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"IsSurrogatePair","is":true,"t":8,"pi":[{"n":"ch1","pt":$n[0].Char,"ps":0},{"n":"ch2","pt":$n[0].Char,"ps":1}],"tpc":0,"def":function (ch1, ch2) { return (System.Char.isHighSurrogate(ch1) && System.Char.isLowSurrogate(ch2)); },"rt":$n[0].Boolean,"p":[$n[0].Char,$n[0].Char]},{"a":2,"n":"IsSurrogatePair","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, index) { return (System.Char.isHighSurrogate(s.charCodeAt(index)) && System.Char.isLowSurrogate(s.charCodeAt(index+1))); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"IsSymbol","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return System.Char.isSymbol(ch); },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"a":2,"n":"IsSymbol","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, index) { return System.Char.isSymbol(s.charCodeAt(index)); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"IsUpper","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return Bridge.isUpper(ch); },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"a":2,"n":"IsWhiteSpace","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return System.Char.isWhiteSpace(String.fromCharCode(ch)); },"rt":$n[0].Boolean,"p":[$n[0].Char]},{"a":2,"n":"IsWhiteSpace","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, index) { return System.Char.isWhiteSpace(s.charAt(index)); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (s) { return System.Char.charCodeAt(s, 0); },"rt":$n[0].Char,"p":[$n[0].String]},{"a":2,"n":"ToLower","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return String.fromCharCode(ch).toLowerCase().charCodeAt(0); },"rt":$n[0].Char,"p":[$n[0].Char]},{"ov":true,"a":2,"n":"ToString","t":8,"tpc":0,"def":function () { return String.fromCharCode(this); },"rt":$n[0].String},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.Char.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.Char.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"ToUpper","is":true,"t":8,"pi":[{"n":"ch","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (ch) { return String.fromCharCode(ch).toUpperCase().charCodeAt(0); },"rt":$n[0].Char,"p":[$n[0].Char]},{"a":2,"n":"MaxValue","is":true,"t":4,"rt":$n[0].Char,"sn":"MaxValue"},{"a":2,"n":"MinValue","is":true,"t":4,"rt":$n[0].Char,"sn":"MinValue"}]}; });
+    $m($n[0].DateTime, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int64],"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"def":function (value) { return System.DateTime.fromTicks(value); }},{"a":1,"n":".ctor","t":1,"p":[System.Object],"pi":[{"n":"_","pt":System.Object,"ps":0}],"def":function (_) { return System.DateTime.getDefaultValue(); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"dateString","pt":$n[0].String,"ps":0}],"def":function (dateString) { return new Date(dateString); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int32],"pi":[{"n":"year","pt":$n[0].Int32,"ps":0},{"n":"month","pt":$n[0].Int32,"ps":1}],"def":function (year, month) { return new Date(year, month - 1); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32],"pi":[{"n":"year","pt":$n[0].Int32,"ps":0},{"n":"month","pt":$n[0].Int32,"ps":1},{"n":"day","pt":$n[0].Int32,"ps":2}],"def":function (year, month, day) { return new Date(year, month - 1, day); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32],"pi":[{"n":"year","pt":$n[0].Int32,"ps":0},{"n":"month","pt":$n[0].Int32,"ps":1},{"n":"day","pt":$n[0].Int32,"ps":2},{"n":"hours","pt":$n[0].Int32,"ps":3}],"def":function (year, month, day, hours) { return new Date(year, month - 1, day, hours); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32],"pi":[{"n":"year","pt":$n[0].Int32,"ps":0},{"n":"month","pt":$n[0].Int32,"ps":1},{"n":"day","pt":$n[0].Int32,"ps":2},{"n":"hours","pt":$n[0].Int32,"ps":3},{"n":"minutes","pt":$n[0].Int32,"ps":4}],"def":function (year, month, day, hours, minutes) { return new Date(year, month - 1, day, hours, minutes); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32],"pi":[{"n":"year","pt":$n[0].Int32,"ps":0},{"n":"month","pt":$n[0].Int32,"ps":1},{"n":"day","pt":$n[0].Int32,"ps":2},{"n":"hours","pt":$n[0].Int32,"ps":3},{"n":"minutes","pt":$n[0].Int32,"ps":4},{"n":"seconds","pt":$n[0].Int32,"ps":5}],"def":function (year, month, day, hours, minutes, seconds) { return new Date(year, month - 1, day, hours, minutes, seconds); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32],"pi":[{"n":"year","pt":$n[0].Int32,"ps":0},{"n":"month","pt":$n[0].Int32,"ps":1},{"n":"day","pt":$n[0].Int32,"ps":2},{"n":"hours","pt":$n[0].Int32,"ps":3},{"n":"minutes","pt":$n[0].Int32,"ps":4},{"n":"seconds","pt":$n[0].Int32,"ps":5},{"n":"milliseconds","pt":$n[0].Int32,"ps":6}],"def":function (year, month, day, hours, minutes, seconds, milliseconds) { return new Date(year, month - 1, day, hours, minutes, seconds, milliseconds); }},{"a":2,"n":"Add","t":8,"pi":[{"n":"value","pt":$n[0].TimeSpan,"ps":0}],"tpc":0,"def":function (value) { return new Date((this).getTime() + ((value).ticks.div(10000).toNumber())); },"rt":$n[0].DateTime,"p":[$n[0].TimeSpan]},{"a":2,"n":"AddDays","t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"tpc":0,"def":function (value) { return new Date(this.valueOf() + Math.round((value) * 864e5)); },"rt":$n[0].DateTime,"p":[$n[0].Double]},{"a":2,"n":"AddHours","t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"tpc":0,"def":function (value) { return new Date(this.valueOf() + Math.round((value) * 36e5)); },"rt":$n[0].DateTime,"p":[$n[0].Double]},{"a":2,"n":"AddMilliseconds","t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"tpc":0,"def":function (value) { return new Date(this.valueOf() + Math.round(value)); },"rt":$n[0].DateTime,"p":[$n[0].Double]},{"a":2,"n":"AddMinutes","t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"tpc":0,"def":function (value) { return new Date(this.valueOf() + Math.round((value) * 6e4)); },"rt":$n[0].DateTime,"p":[$n[0].Double]},{"a":2,"n":"AddMonths","t":8,"pi":[{"n":"months","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (months) { return System.DateTime.addMonths(this, months); },"rt":$n[0].DateTime,"p":[$n[0].Int32]},{"a":2,"n":"AddSeconds","t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"tpc":0,"def":function (value) { return new Date(this.valueOf() + Math.round((value) * 1e3)); },"rt":$n[0].DateTime,"p":[$n[0].Double]},{"a":2,"n":"AddTicks","t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"tpc":0,"def":function (value) { return new Date(System.Int64((this).getTime()).add((value).div(10000)).toNumber()); },"rt":$n[0].DateTime,"p":[$n[0].Int64]},{"a":2,"n":"AddYears","t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (value) { return ($t = this, new Date($t.getFullYear() + value, $t.getMonth(), $t.getDate(), $t.getHours(), $t.getMinutes(), $t.getSeconds(), $t.getMilliseconds())); },"rt":$n[0].DateTime,"p":[$n[0].Int32]},{"a":2,"n":"Compare","is":true,"t":8,"pi":[{"n":"t1","pt":$n[0].DateTime,"ps":0},{"n":"t2","pt":$n[0].DateTime,"ps":1}],"tpc":0,"def":function (t1, t2) { return Bridge.compare(t1, t2); },"rt":$n[0].Int32,"p":[$n[0].DateTime,$n[0].DateTime]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].DateTime,"ps":0}],"tpc":0,"def":function (other) { return Bridge.compare(this, other); },"rt":$n[0].Int32,"p":[$n[0].DateTime]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (other) { return Bridge.compare(this, other); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"DaysInMonth","is":true,"t":8,"pi":[{"n":"year","pt":$n[0].Int32,"ps":0},{"n":"month","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (year, month) { return (new Date(year, month, -1).getDate() + 1); },"rt":$n[0].Int32,"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].DateTime,"ps":0}],"tpc":0,"def":function (other) { return Bridge.equalsT(this, other); },"rt":$n[0].Boolean,"p":[$n[0].DateTime]},{"a":2,"n":"Equals","is":true,"t":8,"pi":[{"n":"t1","pt":$n[0].DateTime,"ps":0},{"n":"t2","pt":$n[0].DateTime,"ps":1}],"tpc":0,"def":function (t1, t2) { return Bridge.equalsT(t1, t2); },"rt":$n[0].Boolean,"p":[$n[0].DateTime,$n[0].DateTime]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.DateTime.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.DateTime.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"GetDate","t":8,"sn":"getDate","rt":$n[0].Int32},{"a":2,"n":"GetDay","t":8,"sn":"getDay","rt":$n[0].Int32},{"a":2,"n":"GetFullYear","t":8,"sn":"getFullYear","rt":$n[0].Int32},{"a":2,"n":"GetHours","t":8,"sn":"getHours","rt":$n[0].Int32},{"a":2,"n":"GetMilliseconds","t":8,"sn":"getMilliseconds","rt":$n[0].Int32},{"a":2,"n":"GetMinutes","t":8,"sn":"getMinutes","rt":$n[0].Int32},{"a":2,"n":"GetMonth","t":8,"tpc":0,"def":function () { return (this.getMonth() + 1); },"rt":$n[0].Int32},{"a":2,"n":"GetSeconds","t":8,"sn":"getSeconds","rt":$n[0].Int32},{"a":2,"n":"GetTime","t":8,"sn":"getTime","rt":$n[0].Int64},{"a":2,"n":"GetTimezoneOffset","t":8,"sn":"getTimezoneOffset","rt":$n[0].Int32},{"a":2,"n":"GetUtcDate","t":8,"sn":"getUTCDate","rt":$n[0].Int32},{"a":2,"n":"GetUtcDay","t":8,"sn":"getUTCDay","rt":$n[0].Int32},{"a":2,"n":"GetUtcFullYear","t":8,"sn":"getUTCFullYear","rt":$n[0].Int32},{"a":2,"n":"GetUtcHours","t":8,"sn":"getUTCHours","rt":$n[0].Int32},{"a":2,"n":"GetUtcMilliseconds","t":8,"sn":"getUTCMilliseconds","rt":$n[0].Int32},{"a":2,"n":"GetUtcMinutes","t":8,"sn":"getUTCMinutes","rt":$n[0].Int32},{"a":2,"n":"GetUtcMonth","t":8,"tpc":0,"def":function () { return (this.getUTCMonth() + 1); },"rt":$n[0].Int32},{"a":2,"n":"GetUtcSeconds","t":8,"sn":"getUTCSeconds","rt":$n[0].Int32},{"a":2,"n":"IsDaylightSavingTime","t":8,"tpc":0,"def":function () { return System.DateTime.isDaylightSavingTime(this); },"rt":$n[0].Boolean},{"a":2,"n":"IsLeapYear","is":true,"t":8,"pi":[{"n":"year","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (year) { return (new Date(year, 2, -1).getDate() === 28); },"rt":$n[0].Boolean,"p":[$n[0].Int32]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (value) { return System.DateTime.parse(value); },"rt":$n[0].DateTime,"p":[$n[0].String]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"utc","pt":$n[0].Boolean,"ps":1}],"tpc":0,"def":function (value, utc) { return System.DateTime.parse(value, null, utc); },"rt":$n[0].DateTime,"p":[$n[0].String,$n[0].Boolean]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (value, provider) { return System.DateTime.parse(value, provider); },"rt":$n[0].DateTime,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1},{"n":"utc","pt":$n[0].Boolean,"ps":2}],"tpc":0,"def":function (value, provider, utc) { return System.DateTime.parse(value, provider, utc); },"rt":$n[0].DateTime,"p":[$n[0].String,$n[0].IFormatProvider,$n[0].Boolean]},{"a":2,"n":"ParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"format","pt":$n[0].String,"ps":1}],"tpc":0,"def":function (value, format) { return System.DateTime.parseExact(value, format); },"rt":$n[0].DateTime,"p":[$n[0].String,$n[0].String]},{"a":2,"n":"ParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"formats","pt":$n[0].Array.type(System.String),"ps":1}],"tpc":0,"def":function (value, formats) { return System.DateTime.parseExact(value, formats); },"rt":$n[0].DateTime,"p":[$n[0].String,$n[0].Array.type(System.String)]},{"a":2,"n":"ParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"format","pt":$n[0].String,"ps":1},{"n":"utc","pt":$n[0].Boolean,"ps":2}],"tpc":0,"def":function (value, format, utc) { return System.DateTime.parseExact(value, format, null, utc); },"rt":$n[0].DateTime,"p":[$n[0].String,$n[0].String,$n[0].Boolean]},{"a":2,"n":"ParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"format","pt":$n[0].String,"ps":1},{"n":"provider","pt":$n[0].IFormatProvider,"ps":2}],"tpc":0,"def":function (value, format, provider) { return System.DateTime.parseExact(value, format, provider); },"rt":$n[0].DateTime,"p":[$n[0].String,$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"ParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"formats","pt":$n[0].Array.type(System.String),"ps":1},{"n":"utc","pt":$n[0].Boolean,"ps":2}],"tpc":0,"def":function (value, formats, utc) { return System.DateTime.parseExact(value, formats, null, utc); },"rt":$n[0].DateTime,"p":[$n[0].String,$n[0].Array.type(System.String),$n[0].Boolean]},{"a":2,"n":"ParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"formats","pt":$n[0].Array.type(System.String),"ps":1},{"n":"provider","pt":$n[0].IFormatProvider,"ps":2}],"tpc":0,"def":function (value, formats, provider) { return System.DateTime.parseExact(value, formats, provider); },"rt":$n[0].DateTime,"p":[$n[0].String,$n[0].Array.type(System.String),$n[0].IFormatProvider]},{"a":2,"n":"ParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"format","pt":$n[0].String,"ps":1},{"n":"provider","pt":$n[0].IFormatProvider,"ps":2},{"n":"utc","pt":$n[0].Boolean,"ps":3}],"tpc":0,"def":function (value, format, provider, utc) { return System.DateTime.parseExact(value, format, provider, utc); },"rt":$n[0].DateTime,"p":[$n[0].String,$n[0].String,$n[0].IFormatProvider,$n[0].Boolean]},{"a":2,"n":"ParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"formats","pt":$n[0].Array.type(System.String),"ps":1},{"n":"provider","pt":$n[0].IFormatProvider,"ps":2},{"n":"utc","pt":$n[0].Boolean,"ps":3}],"tpc":0,"def":function (value, formats, provider, utc) { return System.DateTime.parseExact(value, formats, provider, utc); },"rt":$n[0].DateTime,"p":[$n[0].String,$n[0].Array.type(System.String),$n[0].IFormatProvider,$n[0].Boolean]},{"a":2,"n":"Subtract","t":8,"pi":[{"n":"value","pt":$n[0].DateTime,"ps":0}],"tpc":0,"def":function (value) { return System.DateTime.subdd(this, value); },"rt":$n[0].TimeSpan,"p":[$n[0].DateTime]},{"a":2,"n":"Subtract","t":8,"pi":[{"n":"value","pt":$n[0].TimeSpan,"ps":0}],"tpc":0,"def":function (value) { return new Date(this - new Date((value).ticks.div(10000).toNumber())); },"rt":$n[0].DateTime,"p":[$n[0].TimeSpan]},{"a":2,"n":"ToDateString","t":8,"sn":"toDateString","rt":$n[0].String},{"a":2,"n":"ToISOString","t":8,"sn":"toISOString","rt":$n[0].String},{"a":2,"n":"ToLocalTime","t":8,"tpc":0,"def":function () { return System.DateTime.toLocal(this); },"rt":$n[0].DateTime},{"a":2,"n":"ToLocaleDateString","t":8,"sn":"toLocaleDateString","rt":$n[0].String},{"a":2,"n":"ToLocaleTimeString","t":8,"sn":"toLocaleTimeString","rt":$n[0].String},{"a":2,"n":"ToShortDateString","t":8,"tpc":0,"def":function () { return System.DateTime.format(this, 'd'); },"rt":$n[0].String},{"a":2,"n":"ToShortTimeString","t":8,"tpc":0,"def":function () { return System.DateTime.format(this, 't'); },"rt":$n[0].String},{"ov":true,"a":2,"n":"ToString","t":8,"tpc":0,"def":function () { return System.DateTime.format(this); },"rt":$n[0].String},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.DateTime.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.DateTime.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"ToTimeString","t":8,"sn":"toTimeString","rt":$n[0].String},{"a":2,"n":"ToUniversalTime","t":8,"tpc":0,"def":function () { return System.DateTime.toUTC(this); },"rt":$n[0].DateTime},{"a":2,"n":"ToUtcString","t":8,"sn":"toUTCString","rt":$n[0].String},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].DateTime,"ps":1}],"tpc":0,"def":function (value, result) { return System.DateTime.tryParse(value, null, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].DateTime]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].DateTime,"ps":1},{"n":"utc","pt":$n[0].Boolean,"ps":2}],"tpc":0,"def":function (value, result, utc) { return System.DateTime.tryParse(value, null, result, utc); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].DateTime,$n[0].Boolean]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1},{"n":"result","out":true,"pt":$n[0].DateTime,"ps":2}],"tpc":0,"def":function (value, provider, result) { return System.DateTime.tryParse(value, provider, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].IFormatProvider,$n[0].DateTime]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1},{"n":"result","out":true,"pt":$n[0].DateTime,"ps":2},{"n":"utc","pt":$n[0].Boolean,"ps":3}],"tpc":0,"def":function (value, provider, result, utc) { return System.DateTime.tryParse(value, provider, result, utc); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].IFormatProvider,$n[0].DateTime,$n[0].Boolean]},{"a":2,"n":"TryParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"format","pt":$n[0].String,"ps":1},{"n":"result","out":true,"pt":$n[0].DateTime,"ps":2}],"tpc":0,"def":function (value, format, result) { return System.DateTime.tryParseExact(value, format, null, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].String,$n[0].DateTime]},{"a":2,"n":"TryParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"formats","pt":$n[0].Array.type(System.String),"ps":1},{"n":"result","out":true,"pt":$n[0].DateTime,"ps":2}],"tpc":0,"def":function (value, formats, result) { return System.DateTime.tryParseExact(value, formats, null, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Array.type(System.String),$n[0].DateTime]},{"a":2,"n":"TryParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"format","pt":$n[0].String,"ps":1},{"n":"result","out":true,"pt":$n[0].DateTime,"ps":2},{"n":"utc","pt":$n[0].Boolean,"ps":3}],"tpc":0,"def":function (value, format, result, utc) { return System.DateTime.tryParseExact(value, format, null, result, utc); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].String,$n[0].DateTime,$n[0].Boolean]},{"a":2,"n":"TryParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"format","pt":$n[0].String,"ps":1},{"n":"provider","pt":$n[0].IFormatProvider,"ps":2},{"n":"result","out":true,"pt":$n[0].DateTime,"ps":3}],"tpc":0,"def":function (value, format, provider, result) { return System.DateTime.tryParseExact(value, format, provider, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].String,$n[0].IFormatProvider,$n[0].DateTime]},{"a":2,"n":"TryParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"formats","pt":$n[0].Array.type(System.String),"ps":1},{"n":"result","out":true,"pt":$n[0].DateTime,"ps":2},{"n":"utc","pt":$n[0].Boolean,"ps":3}],"tpc":0,"def":function (value, formats, result, utc) { return System.DateTime.tryParseExact(value, formats, null, result, utc); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Array.type(System.String),$n[0].DateTime,$n[0].Boolean]},{"a":2,"n":"TryParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"formats","pt":$n[0].Array.type(System.String),"ps":1},{"n":"provider","pt":$n[0].IFormatProvider,"ps":2},{"n":"result","out":true,"pt":$n[0].DateTime,"ps":3}],"tpc":0,"def":function (value, formats, provider, result) { return System.DateTime.tryParseExact(value, formats, provider, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Array.type(System.String),$n[0].IFormatProvider,$n[0].DateTime]},{"a":2,"n":"TryParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"format","pt":$n[0].String,"ps":1},{"n":"provider","pt":$n[0].IFormatProvider,"ps":2},{"n":"result","out":true,"pt":$n[0].DateTime,"ps":3},{"n":"utc","pt":$n[0].Boolean,"ps":4}],"tpc":0,"def":function (value, format, provider, result, utc) { return System.DateTime.tryParseExact(value, format, provider, result, utc); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].String,$n[0].IFormatProvider,$n[0].DateTime,$n[0].Boolean]},{"a":2,"n":"TryParseExact","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"formats","pt":$n[0].Array.type(System.String),"ps":1},{"n":"provider","pt":$n[0].IFormatProvider,"ps":2},{"n":"result","out":true,"pt":$n[0].DateTime,"ps":3},{"n":"utc","pt":$n[0].Boolean,"ps":4}],"tpc":0,"def":function (value, formats, provider, result, utc) { return System.DateTime.tryParseExact(value, formats, provider, result, utc); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Array.type(System.String),$n[0].IFormatProvider,$n[0].DateTime,$n[0].Boolean]},{"a":2,"n":"Utc","is":true,"t":8,"pi":[{"n":"year","pt":$n[0].Int32,"ps":0},{"n":"month","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (year, month) { return System.DateTime.utc(year, month); },"rt":$n[0].Int64,"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Utc","is":true,"t":8,"pi":[{"n":"year","pt":$n[0].Int32,"ps":0},{"n":"month","pt":$n[0].Int32,"ps":1},{"n":"day","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (year, month, day) { return System.DateTime.utc(year, month, day); },"rt":$n[0].Int64,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Utc","is":true,"t":8,"pi":[{"n":"year","pt":$n[0].Int32,"ps":0},{"n":"month","pt":$n[0].Int32,"ps":1},{"n":"day","pt":$n[0].Int32,"ps":2},{"n":"hours","pt":$n[0].Int32,"ps":3}],"tpc":0,"def":function (year, month, day, hours) { return System.DateTime.utc(year, month, day, hours); },"rt":$n[0].Int64,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Utc","is":true,"t":8,"pi":[{"n":"year","pt":$n[0].Int32,"ps":0},{"n":"month","pt":$n[0].Int32,"ps":1},{"n":"day","pt":$n[0].Int32,"ps":2},{"n":"hours","pt":$n[0].Int32,"ps":3},{"n":"minutes","pt":$n[0].Int32,"ps":4}],"tpc":0,"def":function (year, month, day, hours, minutes) { return System.DateTime.utc(year, month, day, hours, minutes); },"rt":$n[0].Int64,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Utc","is":true,"t":8,"pi":[{"n":"year","pt":$n[0].Int32,"ps":0},{"n":"month","pt":$n[0].Int32,"ps":1},{"n":"day","pt":$n[0].Int32,"ps":2},{"n":"hours","pt":$n[0].Int32,"ps":3},{"n":"minutes","pt":$n[0].Int32,"ps":4},{"n":"seconds","pt":$n[0].Int32,"ps":5}],"tpc":0,"def":function (year, month, day, hours, minutes, seconds) { return System.DateTime.utc(year, month, day, hours, minutes, seconds); },"rt":$n[0].Int64,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Utc","is":true,"t":8,"pi":[{"n":"year","pt":$n[0].Int32,"ps":0},{"n":"month","pt":$n[0].Int32,"ps":1},{"n":"day","pt":$n[0].Int32,"ps":2},{"n":"hours","pt":$n[0].Int32,"ps":3},{"n":"minutes","pt":$n[0].Int32,"ps":4},{"n":"seconds","pt":$n[0].Int32,"ps":5},{"n":"ms","pt":$n[0].Int32,"ps":6}],"tpc":0,"def":function (year, month, day, hours, minutes, seconds, ms) { return System.DateTime.utc(year, month, day, hours, minutes, seconds, ms); },"rt":$n[0].Int64,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32]},{"ov":true,"a":2,"n":"ValueOf","t":8,"sn":"valueOf","rt":$n[0].Object},{"a":2,"n":"op_Addition","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].DateTime,"ps":0},{"n":"t","pt":$n[0].TimeSpan,"ps":1}],"tpc":0,"def":function (d, t) { return System.DateTime.adddt(d, t); },"rt":$n[0].DateTime,"p":[$n[0].DateTime,$n[0].TimeSpan]},{"a":2,"n":"op_Equality","is":true,"t":8,"pi":[{"n":"a","pt":$n[0].DateTime,"ps":0},{"n":"b","pt":$n[0].DateTime,"ps":1}],"tpc":0,"def":function (a, b) { return Bridge.equals(a, b); },"rt":$n[0].Boolean,"p":[$n[0].DateTime,$n[0].DateTime]},{"a":2,"n":"op_GreaterThan","is":true,"t":8,"pi":[{"n":"a","pt":$n[0].DateTime,"ps":0},{"n":"b","pt":$n[0].DateTime,"ps":1}],"tpc":0,"def":function (a, b) { return System.DateTime.gt(a, b); },"rt":$n[0].Boolean,"p":[$n[0].DateTime,$n[0].DateTime]},{"a":2,"n":"op_GreaterThanOrEqual","is":true,"t":8,"pi":[{"n":"a","pt":$n[0].DateTime,"ps":0},{"n":"b","pt":$n[0].DateTime,"ps":1}],"tpc":0,"def":function (a, b) { return System.DateTime.gte(a, b); },"rt":$n[0].Boolean,"p":[$n[0].DateTime,$n[0].DateTime]},{"a":2,"n":"op_Inequality","is":true,"t":8,"pi":[{"n":"a","pt":$n[0].DateTime,"ps":0},{"n":"b","pt":$n[0].DateTime,"ps":1}],"tpc":0,"def":function (a, b) { return !Bridge.equals(a, b); },"rt":$n[0].Boolean,"p":[$n[0].DateTime,$n[0].DateTime]},{"a":2,"n":"op_LessThan","is":true,"t":8,"pi":[{"n":"a","pt":$n[0].DateTime,"ps":0},{"n":"b","pt":$n[0].DateTime,"ps":1}],"tpc":0,"def":function (a, b) { return System.DateTime.lt(a, b); },"rt":$n[0].Boolean,"p":[$n[0].DateTime,$n[0].DateTime]},{"a":2,"n":"op_LessThanOrEqual","is":true,"t":8,"pi":[{"n":"a","pt":$n[0].DateTime,"ps":0},{"n":"b","pt":$n[0].DateTime,"ps":1}],"tpc":0,"def":function (a, b) { return System.DateTime.lte(a, b); },"rt":$n[0].Boolean,"p":[$n[0].DateTime,$n[0].DateTime]},{"a":2,"n":"op_Subtraction","is":true,"t":8,"pi":[{"n":"a","pt":$n[0].DateTime,"ps":0},{"n":"b","pt":$n[0].DateTime,"ps":1}],"tpc":0,"def":function (a, b) { return System.DateTime.subdd(a, b); },"rt":$n[0].TimeSpan,"p":[$n[0].DateTime,$n[0].DateTime]},{"a":2,"n":"op_Subtraction","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].DateTime,"ps":0},{"n":"t","pt":$n[0].TimeSpan,"ps":1}],"tpc":0,"def":function (d, t) { return System.DateTime.subdt(d, t); },"rt":$n[0].DateTime,"p":[$n[0].DateTime,$n[0].TimeSpan]},{"a":2,"n":"Date","t":16,"rt":$n[0].DateTime,"g":{"a":2,"n":"get_Date","t":8,"tpc":0,"def":function () { return ($t1 = this, new Date($t1.getFullYear(), $t1.getMonth(), $t1.getDate())); },"rt":$n[0].DateTime}},{"a":2,"n":"Day","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Day","t":8,"tpc":0,"def":function () { return this.getDate(); },"rt":$n[0].Int32}},{"a":2,"n":"DayOfWeek","t":16,"rt":$n[0].DayOfWeek,"g":{"a":2,"n":"get_DayOfWeek","t":8,"tpc":0,"def":function () { return this.getDay(); },"rt":$n[0].DayOfWeek}},{"a":2,"n":"DayOfYear","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_DayOfYear","t":8,"tpc":0,"def":function () { return ($t2 = this, Math.ceil(($t2 - new Date($t2.getFullYear(), 0, 1)) / 864e5)); },"rt":$n[0].Int32}},{"a":2,"n":"Hour","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Hour","t":8,"tpc":0,"def":function () { return this.getHours(); },"rt":$n[0].Int32}},{"a":2,"n":"Millisecond","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Millisecond","t":8,"tpc":0,"def":function () { return this.getMilliseconds(); },"rt":$n[0].Int32}},{"a":2,"n":"Minute","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Minute","t":8,"tpc":0,"def":function () { return this.getMinutes(); },"rt":$n[0].Int32}},{"a":2,"n":"Month","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Month","t":8,"tpc":0,"def":function () { return (this.getMonth() + 1); },"rt":$n[0].Int32}},{"a":2,"n":"Now","is":true,"t":16,"rt":$n[0].DateTime,"g":{"a":2,"n":"get_Now","is":true,"t":8,"tpc":0,"def":function () { return new Date(); },"rt":$n[0].DateTime}},{"a":2,"n":"Second","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Second","t":8,"tpc":0,"def":function () { return this.getSeconds(); },"rt":$n[0].Int32}},{"a":2,"n":"Ticks","t":16,"rt":$n[0].Int64,"g":{"a":2,"n":"get_Ticks","t":8,"tpc":0,"def":function () { return System.DateTime.getTicks(this); },"rt":$n[0].Int64}},{"a":2,"n":"TimeOfDay","t":16,"rt":$n[0].TimeSpan,"g":{"a":2,"n":"get_TimeOfDay","t":8,"tpc":0,"def":function () { return System.DateTime.timeOfDay(this); },"rt":$n[0].TimeSpan}},{"a":2,"n":"Today","is":true,"t":16,"rt":$n[0].DateTime,"g":{"a":2,"n":"get_Today","is":true,"t":8,"tpc":0,"def":function () { return System.DateTime.today(); },"rt":$n[0].DateTime}},{"a":2,"n":"UtcNow","is":true,"t":16,"rt":$n[0].DateTime,"g":{"a":2,"n":"get_UtcNow","is":true,"t":8,"tpc":0,"def":function () { return System.DateTime.utcNow(); },"rt":$n[0].DateTime}},{"a":2,"n":"Year","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Year","t":8,"tpc":0,"def":function () { return this.getFullYear(); },"rt":$n[0].Int32}},{"a":2,"n":"MaxValue","is":true,"t":4,"rt":$n[0].DateTime,"sn":"maxValue","ro":true},{"a":2,"n":"MinValue","is":true,"t":4,"rt":$n[0].DateTime,"sn":"minValue","ro":true}]}; });
+    $m($n[0].DayOfWeek, function () { return {"att":257,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"Friday","is":true,"t":4,"rt":$n[0].DayOfWeek,"sn":"Friday"},{"a":2,"n":"Monday","is":true,"t":4,"rt":$n[0].DayOfWeek,"sn":"Monday"},{"a":2,"n":"Saturday","is":true,"t":4,"rt":$n[0].DayOfWeek,"sn":"Saturday"},{"a":2,"n":"Sunday","is":true,"t":4,"rt":$n[0].DayOfWeek,"sn":"Sunday"},{"a":2,"n":"Thursday","is":true,"t":4,"rt":$n[0].DayOfWeek,"sn":"Thursday"},{"a":2,"n":"Tuesday","is":true,"t":4,"rt":$n[0].DayOfWeek,"sn":"Tuesday"},{"a":2,"n":"Wednesday","is":true,"t":4,"rt":$n[0].DayOfWeek,"sn":"Wednesday"}]}; });
+    $m($n[0].Double, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"def":function () { return Number; }},{"a":1,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"def":function (i) { return Number; }},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].Double,"ps":0}],"tpc":0,"def":function (other) { return Bridge.compare(this, other); },"rt":$n[0].Int32,"p":[$n[0].Double]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (obj) { return Bridge.compare(this, obj); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Double,"ps":0}],"tpc":0,"def":function (other) { return this === other; },"rt":$n[0].Boolean,"p":[$n[0].Double]},{"ov":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (other) { return System.Double.equals(this, other); },"rt":$n[0].Boolean,"p":[$n[0].Object]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.Double.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.Double.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"ov":true,"a":2,"n":"GetHashCode","t":8,"tpc":0,"def":function () { return System.Double.getHashCode(this); },"rt":$n[0].Int32},{"a":2,"n":"IsFinite","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Double,"ps":0}],"tpc":0,"def":function (d) { return isFinite(d); },"rt":$n[0].Boolean,"p":[$n[0].Double]},{"a":2,"n":"IsInfinity","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Double,"ps":0}],"tpc":0,"def":function (d) { return (Math.abs(d) === Number.POSITIVE_INFINITY); },"rt":$n[0].Boolean,"p":[$n[0].Double]},{"a":2,"n":"IsNaN","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Double,"ps":0}],"tpc":0,"def":function (d) { return isNaN(d); },"rt":$n[0].Boolean,"p":[$n[0].Double]},{"a":2,"n":"IsNegativeInfinity","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Double,"ps":0}],"tpc":0,"def":function (d) { return (d === Number.NEGATIVE_INFINITY); },"rt":$n[0].Boolean,"p":[$n[0].Double]},{"a":2,"n":"IsPositiveInfinity","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Double,"ps":0}],"tpc":0,"def":function (d) { return (d === Number.POSITIVE_INFINITY); },"rt":$n[0].Boolean,"p":[$n[0].Double]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (s) { return System.Double.parse(s); },"rt":$n[0].Double,"p":[$n[0].String]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (s, provider) { return Bridge.Int.parseFloat(s, provider); },"rt":$n[0].Double,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"ToExponential","t":8,"sn":"toExponential","rt":$n[0].String},{"a":2,"n":"ToExponential","t":8,"pi":[{"n":"fractionDigits","pt":$n[0].Int32,"ps":0}],"sn":"toExponential","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToFixed","t":8,"sn":"toFixed","rt":$n[0].String},{"a":2,"n":"ToFixed","t":8,"pi":[{"n":"fractionDigits","pt":$n[0].Int32,"ps":0}],"sn":"toFixed","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToPrecision","t":8,"sn":"toPrecision","rt":$n[0].String},{"a":2,"n":"ToPrecision","t":8,"pi":[{"n":"precision","pt":$n[0].Int32,"ps":0}],"sn":"toPrecision","rt":$n[0].String,"p":[$n[0].Int32]},{"ov":true,"a":2,"n":"ToString","t":8,"tpc":0,"def":function () { return System.Double.format(this); },"rt":$n[0].String},{"a":2,"n":"ToString","t":8,"pi":[{"n":"provider","pt":$n[0].IFormatProvider,"ps":0}],"tpc":0,"def":function (provider) { return System.Double.format(this, "G", provider); },"rt":$n[0].String,"p":[$n[0].IFormatProvider]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"radix","pt":$n[0].Int32,"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.Double.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.Double.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].Double,"ps":1}],"tpc":0,"def":function (s, result) { return System.Double.tryParse(s, null, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Double]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1},{"n":"result","out":true,"pt":$n[0].Double,"ps":2}],"tpc":0,"def":function (s, provider, result) { return System.Double.tryParse(s, provider, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].IFormatProvider,$n[0].Double]},{"a":2,"n":"Epsilon","is":true,"t":4,"rt":$n[0].Double,"sn":"Epsilon"},{"a":2,"n":"MaxValue","is":true,"t":4,"rt":$n[0].Double,"sn":"MaxValue"},{"a":2,"n":"MinValue","is":true,"t":4,"rt":$n[0].Double,"sn":"MinValue"},{"a":2,"n":"NaN","is":true,"t":4,"rt":$n[0].Double,"sn":"naN","ro":true},{"a":2,"n":"NegativeInfinity","is":true,"t":4,"rt":$n[0].Double,"sn":"negativeInfinity","ro":true},{"a":2,"n":"PositiveInfinity","is":true,"t":4,"rt":$n[0].Double,"sn":"positiveInfinity","ro":true}]}; });
+    $m($n[0].ICloneable, function () { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"Clone","t":8,"tpc":0,"def":function () { return Bridge.clone(this); },"rt":$n[0].Object}]}; });
+    $m($n[0].IFormatProvider, function () { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"GetFormat","t":8,"pi":[{"n":"formatType","pt":Function,"ps":0}],"sn":"System$IFormatProvider$getFormat","rt":$n[0].Object,"p":[Function]}]}; });
+    $m($n[0].SByte, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"def":function () { return Number; }},{"a":1,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"def":function (i) { return Number; }},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (obj) { return Bridge.compare(this, obj); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].SByte,"ps":0}],"tpc":0,"def":function (other) { return Bridge.compare(this, other); },"rt":$n[0].Int32,"p":[$n[0].SByte]},{"ov":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (other) { return System.SByte.equals(this, other); },"rt":$n[0].Boolean,"p":[$n[0].Object]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].SByte,"ps":0}],"tpc":0,"def":function (other) { return this === other; },"rt":$n[0].Boolean,"p":[$n[0].SByte]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.SByte.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.SByte.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (s) { return System.SByte.parse(s); },"rt":$n[0].SByte,"p":[$n[0].String]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"radix","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, radix) { return System.SByte.parse(s, radix); },"rt":$n[0].SByte,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"radix","pt":$n[0].Int32,"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.SByte.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.SByte.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].SByte,"ps":1}],"tpc":0,"def":function (s, result) { return System.SByte.tryParse(s, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].SByte]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].SByte,"ps":1},{"n":"radix","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (s, result, radix) { return System.SByte.tryParse(s, result, radix); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].SByte,$n[0].Int32]},{"a":2,"n":"MaxValue","is":true,"t":4,"rt":$n[0].SByte,"sn":"MaxValue"},{"a":2,"n":"MinValue","is":true,"t":4,"rt":$n[0].SByte,"sn":"MinValue"}]}; });
+    $m($n[0].Byte, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"def":function () { return Number; }},{"a":1,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"def":function (i) { return Number; }},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].Byte,"ps":0}],"tpc":0,"def":function (other) { return Bridge.compare(this, other); },"rt":$n[0].Int32,"p":[$n[0].Byte]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (obj) { return Bridge.compare(this, obj); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Byte,"ps":0}],"tpc":0,"def":function (other) { return this === other; },"rt":$n[0].Boolean,"p":[$n[0].Byte]},{"ov":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (other) { return System.Byte.equals(this, other); },"rt":$n[0].Boolean,"p":[$n[0].Object]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.Byte.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.Byte.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (s) { return System.Byte.parse(s); },"rt":$n[0].Byte,"p":[$n[0].String]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"radix","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, radix) { return System.Byte.parse(s, radix); },"rt":$n[0].Byte,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"radix","pt":$n[0].Int32,"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.Byte.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.Byte.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].Byte,"ps":1}],"tpc":0,"def":function (s, result) { return System.Byte.tryParse(s, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Byte]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].Byte,"ps":1},{"n":"radix","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (s, result, radix) { return System.Byte.tryParse(s, result, radix); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Byte,$n[0].Int32]},{"a":2,"n":"MaxValue","is":true,"t":4,"rt":$n[0].Byte,"sn":"MaxValue"},{"a":2,"n":"MinValue","is":true,"t":4,"rt":$n[0].Byte,"sn":"MinValue"}]}; });
+    $m($n[0].Int16, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"def":function () { return Number; }},{"a":1,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"def":function (i) { return Number; }},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].Int16,"ps":0}],"tpc":0,"def":function (other) { return Bridge.compare(this, other); },"rt":$n[0].Int32,"p":[$n[0].Int16]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (obj) { return Bridge.compare(this, obj); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Int16,"ps":0}],"tpc":0,"def":function (other) { return this === other; },"rt":$n[0].Boolean,"p":[$n[0].Int16]},{"ov":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (other) { return System.Int16.equals(this, other); },"rt":$n[0].Boolean,"p":[$n[0].Object]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.Int16.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.Int16.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (s) { return System.Int16.parse(s); },"rt":$n[0].Int16,"p":[$n[0].String]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"radix","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, radix) { return System.Int16.parse(s, radix); },"rt":$n[0].Int16,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"radix","pt":$n[0].Int32,"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.Int16.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.Int16.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].Int16,"ps":1}],"tpc":0,"def":function (s, result) { return System.Int16.tryParse(s, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int16]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].Int16,"ps":1},{"n":"radix","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (s, result, radix) { return System.Int16.tryParse(s, result, radix); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int16,$n[0].Int32]},{"a":2,"n":"MaxValue","is":true,"t":4,"rt":$n[0].Int16,"sn":"MaxValue"},{"a":2,"n":"MinValue","is":true,"t":4,"rt":$n[0].Int16,"sn":"MinValue"}]}; });
+    $m($n[0].Single, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"def":function () { return Number; }},{"a":1,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"def":function (i) { return Number; }},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (obj) { return Bridge.compare(this, obj); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].Single,"ps":0}],"tpc":0,"def":function (other) { return Bridge.compare(this, other); },"rt":$n[0].Int32,"p":[$n[0].Single]},{"ov":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (other) { return System.Single.equals(this, other); },"rt":$n[0].Boolean,"p":[$n[0].Object]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Single,"ps":0}],"tpc":0,"def":function (other) { return this === other; },"rt":$n[0].Boolean,"p":[$n[0].Single]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.Single.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.Single.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"ov":true,"a":2,"n":"GetHashCode","t":8,"tpc":0,"def":function () { return System.Single.getHashCode(this); },"rt":$n[0].Int32},{"a":2,"n":"IsFinite","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Single,"ps":0}],"tpc":0,"def":function (d) { return isFinite(d); },"rt":$n[0].Boolean,"p":[$n[0].Single]},{"a":2,"n":"IsInfinity","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Single,"ps":0}],"tpc":0,"def":function (d) { return (Math.abs(d) === Number.POSITIVE_INFINITY); },"rt":$n[0].Boolean,"p":[$n[0].Single]},{"a":2,"n":"IsNaN","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Single,"ps":0}],"tpc":0,"def":function (d) { return isNaN(d); },"rt":$n[0].Boolean,"p":[$n[0].Single]},{"a":2,"n":"IsNegativeInfinity","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Single,"ps":0}],"tpc":0,"def":function (d) { return (d === Number.NEGATIVE_INFINITY); },"rt":$n[0].Boolean,"p":[$n[0].Single]},{"a":2,"n":"IsPositiveInfinity","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Single,"ps":0}],"tpc":0,"def":function (d) { return (d === Number.POSITIVE_INFINITY); },"rt":$n[0].Boolean,"p":[$n[0].Single]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (s) { return System.Single.parse(s); },"rt":$n[0].Single,"p":[$n[0].String]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (s, provider) { return System.Single.parse(s, provider); },"rt":$n[0].Single,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"ToExponential","t":8,"sn":"toExponential","rt":$n[0].String},{"a":2,"n":"ToExponential","t":8,"pi":[{"n":"fractionDigits","pt":$n[0].Int32,"ps":0}],"sn":"toExponential","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToFixed","t":8,"sn":"toFixed","rt":$n[0].String},{"a":2,"n":"ToFixed","t":8,"pi":[{"n":"fractionDigits","pt":$n[0].Int32,"ps":0}],"sn":"toFixed","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToPrecision","t":8,"sn":"toPrecision","rt":$n[0].String},{"a":2,"n":"ToPrecision","t":8,"pi":[{"n":"precision","pt":$n[0].Int32,"ps":0}],"sn":"toPrecision","rt":$n[0].String,"p":[$n[0].Int32]},{"ov":true,"a":2,"n":"ToString","t":8,"tpc":0,"def":function () { return System.Single.format(this); },"rt":$n[0].String},{"a":2,"n":"ToString","t":8,"pi":[{"n":"provider","pt":$n[0].IFormatProvider,"ps":0}],"tpc":0,"def":function (provider) { return System.Single.format(this, "G", provider); },"rt":$n[0].String,"p":[$n[0].IFormatProvider]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"radix","pt":$n[0].Int32,"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.Single.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.Single.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].Single,"ps":1}],"tpc":0,"def":function (s, result) { return System.Single.tryParse(s, null, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Single]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1},{"n":"result","out":true,"pt":$n[0].Single,"ps":2}],"tpc":0,"def":function (s, provider, result) { return System.Single.tryParse(s, provider, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].IFormatProvider,$n[0].Single]},{"a":2,"n":"Epsilon","is":true,"t":4,"rt":$n[0].Single,"sn":"Epsilon"},{"a":2,"n":"MaxValue","is":true,"t":4,"rt":$n[0].Single,"sn":"MaxValue"},{"a":2,"n":"MinValue","is":true,"t":4,"rt":$n[0].Single,"sn":"MinValue"},{"a":2,"n":"NaN","is":true,"t":4,"rt":$n[0].Single,"sn":"naN","ro":true},{"a":2,"n":"NegativeInfinity","is":true,"t":4,"rt":$n[0].Single,"sn":"negativeInfinity","ro":true},{"a":2,"n":"PositiveInfinity","is":true,"t":4,"rt":$n[0].Single,"sn":"positiveInfinity","ro":true}]}; });
+    $m($n[0].UInt16, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"def":function () { return Number; }},{"a":1,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"def":function (i) { return Number; }},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (obj) { return Bridge.compare(this, obj); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].UInt16,"ps":0}],"tpc":0,"def":function (other) { return Bridge.compare(this, other); },"rt":$n[0].Int32,"p":[$n[0].UInt16]},{"ov":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (other) { return System.UInt16.equals(this, other); },"rt":$n[0].Boolean,"p":[$n[0].Object]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].UInt16,"ps":0}],"tpc":0,"def":function (other) { return this === other; },"rt":$n[0].Boolean,"p":[$n[0].UInt16]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.UInt16.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.UInt16.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (s) { return System.UInt16.parse(s); },"rt":$n[0].UInt16,"p":[$n[0].String]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"radix","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, radix) { return System.UInt16.parse(s, radix); },"rt":$n[0].UInt16,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"radix","pt":$n[0].Int32,"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.UInt16.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.UInt16.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].UInt16,"ps":1}],"tpc":0,"def":function (s, result) { return System.UInt16.tryParse(s, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].UInt16]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].UInt16,"ps":1},{"n":"radix","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (s, result, radix) { return System.UInt16.tryParse(s, result, radix); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].UInt16,$n[0].Int32]},{"a":2,"n":"MaxValue","is":true,"t":4,"rt":$n[0].UInt16,"sn":"MaxValue"},{"a":2,"n":"MinValue","is":true,"t":4,"rt":$n[0].UInt16,"sn":"MinValue"}]}; });
+    $m($n[0].Int32, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"def":function () { return Number; }},{"a":1,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"def":function (i) { return Number; }},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (other) { return Bridge.compare(this, other); },"rt":$n[0].Int32,"p":[$n[0].Int32]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (obj) { return Bridge.compare(this, obj); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (other) { return this === other; },"rt":$n[0].Boolean,"p":[$n[0].Int32]},{"ov":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (other) { return System.Int32.equals(this, other); },"rt":$n[0].Boolean,"p":[$n[0].Object]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.Int32.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.Int32.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (s) { return System.Int32.parse(s); },"rt":$n[0].Int32,"p":[$n[0].String]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"radix","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, radix) { return System.Int32.parse(s, radix); },"rt":$n[0].Int32,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"radix","pt":$n[0].Int32,"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.Int32.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.Int32.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, result) { return System.Int32.tryParse(s, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].Int32,"ps":1},{"n":"radix","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (s, result, radix) { return System.Int32.tryParse(s, result, radix); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"MaxValue","is":true,"t":4,"rt":$n[0].Int32,"sn":"MaxValue"},{"a":2,"n":"MinValue","is":true,"t":4,"rt":$n[0].Int32,"sn":"MinValue"}]}; });
+    $m($n[0].Int64, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"sn":"ctor"},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].Int64,"ps":0}],"sn":"compareTo","rt":$n[0].Int32,"p":[$n[0].Int64]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"sn":"compareTo","rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Int64,"ps":0}],"sn":"equalsT","rt":$n[0].Boolean,"p":[$n[0].Int64]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"sn":"format","rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"sn":"format","rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (s) { return System.Int64.parse(s); },"rt":$n[0].Int64,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"radix","pt":$n[0].Int32,"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"sn":"format","rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].Int64,"ps":1}],"tpc":0,"def":function (s, result) { return System.Int64.tryParse(s, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"sn":"op_Explicit","rt":$n[0].Int64,"p":[$n[0].Double]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"op_Explicit","rt":$n[0].Byte,"p":[$n[0].Int64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"op_Explicit","rt":$n[0].Char,"p":[$n[0].Int64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"op_Explicit","rt":$n[0].Double,"p":[$n[0].Int64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"op_Explicit","rt":$n[0].Int16,"p":[$n[0].Int64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"op_Explicit","rt":$n[0].Int32,"p":[$n[0].Int64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"op_Explicit","rt":$n[0].SByte,"p":[$n[0].Int64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"op_Explicit","rt":$n[0].Single,"p":[$n[0].Int64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"op_Explicit","rt":$n[0].UInt16,"p":[$n[0].Int64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"op_Explicit","rt":$n[0].UInt32,"p":[$n[0].Int64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"op_Explicit","rt":$n[0].UInt64,"p":[$n[0].Int64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Single,"ps":0}],"sn":"op_Explicit","rt":$n[0].Int64,"p":[$n[0].Single]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"sn":"op_Explicit","rt":$n[0].Int64,"p":[$n[0].UInt64]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Byte,"ps":0}],"sn":"op_Implicit","rt":$n[0].Int64,"p":[$n[0].Byte]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Char,"ps":0}],"sn":"op_Implicit","rt":$n[0].Int64,"p":[$n[0].Char]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int16,"ps":0}],"sn":"op_Implicit","rt":$n[0].Int64,"p":[$n[0].Int16]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"sn":"op_Implicit","rt":$n[0].Int64,"p":[$n[0].Int32]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].SByte,"ps":0}],"sn":"op_Implicit","rt":$n[0].Int64,"p":[$n[0].SByte]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt16,"ps":0}],"sn":"op_Implicit","rt":$n[0].Int64,"p":[$n[0].UInt16]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt32,"ps":0}],"sn":"op_Implicit","rt":$n[0].Int64,"p":[$n[0].UInt32]},{"a":2,"n":"MaxValue","is":true,"t":4,"rt":$n[0].Int64,"sn":"MaxValue"},{"a":2,"n":"MinValue","is":true,"t":4,"rt":$n[0].Int64,"sn":"MinValue"}]}; });
+    $m($n[0].UInt64, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"sn":"ctor"},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"sn":"compareTo","rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].UInt64,"ps":0}],"sn":"compareTo","rt":$n[0].Int32,"p":[$n[0].UInt64]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].UInt64,"ps":0}],"sn":"equalsT","rt":$n[0].Boolean,"p":[$n[0].UInt64]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"sn":"format","rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"sn":"format","rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (s) { return System.UInt64.parse(s); },"rt":$n[0].UInt64,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"radix","pt":$n[0].Int32,"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"sn":"format","rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].UInt64,"ps":1}],"tpc":0,"def":function (s, result) { return System.UInt64.tryParse(s, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].UInt64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"sn":"op_Explicit","rt":$n[0].UInt64,"p":[$n[0].Double]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Single,"ps":0}],"sn":"op_Explicit","rt":$n[0].UInt64,"p":[$n[0].Single]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"sn":"op_Explicit","rt":$n[0].Byte,"p":[$n[0].UInt64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"sn":"op_Explicit","rt":$n[0].Char,"p":[$n[0].UInt64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"sn":"op_Explicit","rt":$n[0].Double,"p":[$n[0].UInt64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"sn":"op_Explicit","rt":$n[0].Int16,"p":[$n[0].UInt64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"sn":"op_Explicit","rt":$n[0].Int32,"p":[$n[0].UInt64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"sn":"op_Explicit","rt":$n[0].SByte,"p":[$n[0].UInt64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"sn":"op_Explicit","rt":$n[0].Single,"p":[$n[0].UInt64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"sn":"op_Explicit","rt":$n[0].UInt16,"p":[$n[0].UInt64]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"sn":"op_Explicit","rt":$n[0].UInt32,"p":[$n[0].UInt64]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Byte,"ps":0}],"sn":"op_Implicit","rt":$n[0].UInt64,"p":[$n[0].Byte]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Char,"ps":0}],"sn":"op_Implicit","rt":$n[0].UInt64,"p":[$n[0].Char]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int16,"ps":0}],"sn":"op_Implicit","rt":$n[0].UInt64,"p":[$n[0].Int16]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"sn":"op_Implicit","rt":$n[0].UInt64,"p":[$n[0].Int32]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].SByte,"ps":0}],"sn":"op_Implicit","rt":$n[0].UInt64,"p":[$n[0].SByte]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt16,"ps":0}],"sn":"op_Implicit","rt":$n[0].UInt64,"p":[$n[0].UInt16]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt32,"ps":0}],"sn":"op_Implicit","rt":$n[0].UInt64,"p":[$n[0].UInt32]},{"a":2,"n":"MaxValue","is":true,"t":4,"rt":$n[0].UInt64,"sn":"MaxValue"},{"a":2,"n":"MinValue","is":true,"t":4,"rt":$n[0].UInt64,"sn":"MinValue"}]}; });
+    $m($n[0].UInt32, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"def":function () { return Number; }},{"a":1,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"def":function (i) { return Number; }},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (obj) { return Bridge.compare(this, obj); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].UInt32,"ps":0}],"tpc":0,"def":function (other) { return Bridge.compare(this, other); },"rt":$n[0].Int32,"p":[$n[0].UInt32]},{"ov":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (other) { return System.UInt32.equals(this, other); },"rt":$n[0].Boolean,"p":[$n[0].Object]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].UInt32,"ps":0}],"tpc":0,"def":function (other) { return this === other; },"rt":$n[0].Boolean,"p":[$n[0].UInt32]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.UInt32.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.UInt32.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (s) { return System.UInt32.parse(s); },"rt":$n[0].UInt32,"p":[$n[0].String]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"radix","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (s, radix) { return System.UInt32.parse(s, radix); },"rt":$n[0].UInt32,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"radix","pt":$n[0].Int32,"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return System.UInt32.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return System.UInt32.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].UInt32,"ps":1}],"tpc":0,"def":function (s, result) { return System.UInt32.tryParse(s, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].UInt32]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].UInt32,"ps":1},{"n":"radix","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (s, result, radix) { return System.UInt32.tryParse(s, result, radix); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].UInt32,$n[0].Int32]},{"a":2,"n":"MaxValue","is":true,"t":4,"rt":$n[0].UInt32,"sn":"MaxValue"},{"a":2,"n":"MinValue","is":true,"t":4,"rt":$n[0].UInt32,"sn":"MinValue"}]}; });
+    $m($n[0].DivideByZeroException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"sn":"ctor"}]}; });
+    $m($n[0].FormatException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"sn":"ctor"}]}; });
+    $m($n[0].IFormattable, function () { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"formatProvider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, formatProvider) { return Bridge.format(this, format, formatProvider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]}]}; });
+    $m($n[0].Decimal, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"def":function () { return System.Decimal; }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Double],"pi":[{"n":"d","pt":$n[0].Double,"ps":0}],"def":function (d) { return System.Decimal(d); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"def":function (i) { return System.Decimal(i); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int64],"pi":[{"n":"n","pt":$n[0].Int64,"ps":0}],"def":function (n) { return System.Decimal(n); }},{"a":1,"n":".ctor","t":1,"p":[System.Object],"pi":[{"n":"_","pt":System.Object,"ps":0}],"def":function (_) { return System.Decimal(0); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Single],"pi":[{"n":"f","pt":$n[0].Single,"ps":0}],"def":function (f) { return System.Decimal(f); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].UInt32],"pi":[{"n":"i","pt":$n[0].UInt32,"ps":0}],"def":function (i) { return System.Decimal(i); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].UInt64],"pi":[{"n":"n","pt":$n[0].UInt64,"ps":0}],"def":function (n) { return System.Decimal(n); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Boolean,$n[0].Byte],"pi":[{"n":"lo","pt":$n[0].Int32,"ps":0},{"n":"mid","pt":$n[0].Int32,"ps":1},{"n":"hi","pt":$n[0].Int32,"ps":2},{"n":"isNegative","pt":$n[0].Boolean,"ps":3},{"n":"scale","pt":$n[0].Byte,"ps":4}],"def":function (lo, mid, hi, isNegative, scale) { return System.Decimal; }},{"a":2,"n":"Abs","t":8,"sn":"abs","rt":$n[0].Decimal},{"a":2,"n":"Add","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.add(d2); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"Ceiling","t":8,"sn":"ceil","rt":$n[0].Decimal},{"a":2,"n":"Ceiling","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (d) { return d.ceil(); },"rt":$n[0].Decimal,"p":[$n[0].Decimal]},{"a":2,"n":"Compare","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.compareTo(d2); },"rt":$n[0].Int32,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (other) { return this.compareTo(other); },"rt":$n[0].Int32,"p":[$n[0].Decimal]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (obj) { return this.compareTo(obj); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"ComparedTo","t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0}],"sn":"comparedTo","rt":$n[0].Int32,"p":[$n[0].Decimal]},{"a":2,"n":"DecimalPlaces","t":8,"sn":"decimalPlaces","rt":$n[0].Int32},{"a":2,"n":"Divide","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.div(d2); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"DividedToIntegerBy","t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0}],"sn":"dividedToIntegerBy","rt":$n[0].Decimal,"p":[$n[0].Decimal]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Decimal,"ps":0}],"sn":"equalsT","rt":$n[0].Boolean,"p":[$n[0].Decimal]},{"ov":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"o","pt":$n[0].Object,"ps":0}],"sn":"equals","rt":$n[0].Boolean,"p":[$n[0].Object]},{"a":2,"n":"Equals","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.equals(d2); },"rt":$n[0].Boolean,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"Exp","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (d) { return System.Decimal.exp(d); },"rt":$n[0].Decimal,"p":[$n[0].Decimal]},{"a":2,"n":"Exponential","t":8,"sn":"exponential","rt":$n[0].Decimal},{"a":2,"n":"Floor","t":8,"sn":"floor","rt":$n[0].Decimal},{"a":2,"n":"Floor","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (d) { return d.floor(); },"rt":$n[0].Decimal,"p":[$n[0].Decimal]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return Bridge.Int.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return Bridge.Int.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"ov":true,"a":2,"n":"GetHashCode","t":8,"sn":"getHashCode","rt":$n[0].Int32},{"a":2,"n":"IsFinite","t":8,"sn":"isFinite","rt":$n[0].Boolean},{"a":2,"n":"IsInteger","t":8,"sn":"isInteger","rt":$n[0].Boolean},{"a":2,"n":"IsNaN","t":8,"sn":"isNaN","rt":$n[0].Boolean},{"a":2,"n":"IsNegative","t":8,"sn":"isNegative","rt":$n[0].Boolean},{"a":2,"n":"IsZero","t":8,"sn":"isZero","rt":$n[0].Boolean},{"a":2,"n":"Ln","t":8,"sn":"ln","rt":$n[0].Decimal},{"a":2,"n":"Ln","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (d) { return System.Decimal.ln(d); },"rt":$n[0].Decimal,"p":[$n[0].Decimal]},{"a":2,"n":"Log","t":8,"pi":[{"n":"logBase","pt":$n[0].Decimal,"ps":0}],"sn":"log","rt":$n[0].Decimal,"p":[$n[0].Decimal]},{"a":2,"n":"Log","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0},{"n":"logBase","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d, logBase) { return System.Decimal.log(d, logBase); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"Max","is":true,"t":8,"pi":[{"n":"values","ip":true,"pt":$n[0].Array.type(System.Decimal),"ps":0}],"sn":"max","rt":$n[0].Decimal,"p":[$n[0].Array.type(System.Decimal)]},{"a":2,"n":"Min","is":true,"t":8,"pi":[{"n":"values","ip":true,"pt":$n[0].Array.type(System.Decimal),"ps":0}],"sn":"min","rt":$n[0].Decimal,"p":[$n[0].Array.type(System.Decimal)]},{"a":2,"n":"Multiply","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.mul(d2); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"Negate","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (d) { return System.Decimal(0).sub(d); },"rt":$n[0].Decimal,"p":[$n[0].Decimal]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (s) { return System.Decimal(s); },"rt":$n[0].Decimal,"p":[$n[0].String]},{"a":2,"n":"Parse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (s, provider) { return System.Decimal(s, provider); },"rt":$n[0].Decimal,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"Pow","t":8,"pi":[{"n":"n","pt":$n[0].Double,"ps":0}],"sn":"pow","rt":$n[0].Decimal,"p":[$n[0].Double]},{"a":2,"n":"Pow","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0},{"n":"exponent","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d, exponent) { return System.Decimal.pow(d, exponent); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"Precision","t":8,"sn":"precision","rt":$n[0].Int32},{"a":2,"n":"Random","is":true,"t":8,"pi":[{"n":"dp","pt":$n[0].Int32,"ps":0}],"sn":"random","rt":$n[0].Decimal,"p":[$n[0].Int32]},{"a":2,"n":"Remainder","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.mod(d2); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"Round","t":8,"sn":"round","rt":$n[0].Decimal},{"a":2,"n":"Round","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (d) { return System.Decimal.round(d, 6); },"rt":$n[0].Decimal,"p":[$n[0].Decimal]},{"a":2,"n":"Round","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0},{"n":"decimals","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (d, decimals) { return System.Decimal.toDecimalPlaces(d, decimals, 6); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,$n[0].Int32]},{"a":2,"n":"Round","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0},{"n":"mode","pt":Number,"ps":1}],"tpc":0,"def":function (d, mode) { return System.Decimal.round(d, mode); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,Number]},{"a":2,"n":"Round","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0},{"n":"decimals","pt":$n[0].Int32,"ps":1},{"n":"mode","pt":Number,"ps":2}],"tpc":0,"def":function (d, decimals, mode) { return System.Decimal.toDecimalPlaces(d, decimals, mode); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,$n[0].Int32,Number]},{"a":2,"n":"SetConfig","is":true,"t":8,"pi":[{"n":"config","pt":$n[0].Object,"ps":0}],"sn":"setConfig","rt":$n[0].Void,"p":[$n[0].Object]},{"a":2,"n":"Sqrt","t":8,"sn":"sqrt","rt":$n[0].Decimal},{"a":2,"n":"Sqrt","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (d) { return System.Decimal.sqrt(d); },"rt":$n[0].Decimal,"p":[$n[0].Decimal]},{"a":2,"n":"Subtract","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.sub(d2); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"ToByte","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (value) { return System.Decimal.toInt(value); },"rt":$n[0].Byte,"p":[$n[0].Decimal]},{"a":2,"n":"ToChar","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (value) { return System.Decimal.toInt(value); },"rt":$n[0].Char,"p":[$n[0].Decimal]},{"a":2,"n":"ToDecimalPlaces","t":8,"pi":[{"n":"dp","pt":$n[0].Int32,"ps":0},{"n":"rm","pt":Number,"ps":1}],"sn":"toDecimalPlaces","rt":$n[0].Decimal,"p":[$n[0].Int32,Number]},{"a":2,"n":"ToDouble","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (value) { return System.Decimal.toFloat(value); },"rt":$n[0].Double,"p":[$n[0].Decimal]},{"a":2,"n":"ToExponential","t":8,"pi":[{"n":"dp","pt":$n[0].Int32,"ps":0},{"n":"rm","pt":Number,"ps":1}],"sn":"toExponential","rt":$n[0].String,"p":[$n[0].Int32,Number]},{"a":2,"n":"ToFixed","t":8,"pi":[{"n":"dp","pt":$n[0].Int32,"ps":0},{"n":"rm","pt":Number,"ps":1}],"sn":"toFixed","rt":$n[0].String,"p":[$n[0].Int32,Number]},{"a":2,"n":"ToFormat","t":8,"sn":"toFormat","rt":$n[0].String},{"a":2,"n":"ToFormat","t":8,"pi":[{"n":"config","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (config) { return toFormat(null, null,config); },"rt":$n[0].String,"p":[$n[0].Object]},{"a":2,"n":"ToFormat","t":8,"pi":[{"n":"dp","pt":$n[0].Int32,"ps":0}],"sn":"toFormat","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"ToFormat","t":8,"pi":[{"n":"dp","pt":$n[0].Int32,"ps":0},{"n":"rm","pt":Number,"ps":1}],"sn":"toFormat","rt":$n[0].String,"p":[$n[0].Int32,Number]},{"a":2,"n":"ToFormat","t":8,"pi":[{"n":"dp","pt":$n[0].Int32,"ps":0},{"n":"rm","pt":Number,"ps":1},{"n":"config","pt":$n[0].Object,"ps":2}],"sn":"toFormat","rt":$n[0].String,"p":[$n[0].Int32,Number,$n[0].Object]},{"a":2,"n":"ToFormat","t":8,"pi":[{"n":"dp","pt":$n[0].Int32,"ps":0},{"n":"rm","pt":Number,"ps":1},{"n":"provider","pt":$n[0].IFormatProvider,"ps":2}],"sn":"toFormat","rt":$n[0].String,"p":[$n[0].Int32,Number,$n[0].IFormatProvider]},{"a":2,"n":"ToInt16","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (value) { return System.Decimal.toInt(value); },"rt":$n[0].Int16,"p":[$n[0].Decimal]},{"a":2,"n":"ToInt32","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (value) { return System.Decimal.toInt(value); },"rt":$n[0].Int32,"p":[$n[0].Decimal]},{"a":2,"n":"ToInt64","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (value) { return System.Decimal.toInt(value); },"rt":$n[0].Int64,"p":[$n[0].Decimal]},{"a":2,"n":"ToPrecision","t":8,"pi":[{"n":"sd","pt":$n[0].Int32,"ps":0},{"n":"rm","pt":Number,"ps":1}],"sn":"toPrecision","rt":$n[0].String,"p":[$n[0].Int32,Number]},{"a":2,"n":"ToSByte","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (value) { return System.Decimal.toInt(value); },"rt":$n[0].SByte,"p":[$n[0].Decimal]},{"a":2,"n":"ToSignificantDigits","t":8,"pi":[{"n":"sd","pt":$n[0].Int32,"ps":0},{"n":"rm","pt":Number,"ps":1}],"sn":"toSignificantDigits","rt":$n[0].Decimal,"p":[$n[0].Int32,Number]},{"a":2,"n":"ToSingle","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (value) { return System.Decimal.toFloat(value); },"rt":$n[0].Single,"p":[$n[0].Decimal]},{"ov":true,"a":2,"n":"ToString","t":8,"sn":"toString","rt":$n[0].String},{"a":2,"n":"ToString","t":8,"pi":[{"n":"provider","pt":$n[0].IFormatProvider,"ps":0}],"tpc":0,"def":function (provider) { return Bridge.Int.format(this, "G", provider); },"rt":$n[0].String,"p":[$n[0].IFormatProvider]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (format) { return Bridge.Int.format(this, format); },"rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"tpc":0,"def":function (format, provider) { return Bridge.Int.format(this, format, provider); },"rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"ToUInt16","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (value) { return System.Decimal.toInt(value); },"rt":$n[0].UInt16,"p":[$n[0].Decimal]},{"a":2,"n":"ToUInt32","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (value) { return System.Decimal.toInt(value); },"rt":$n[0].UInt32,"p":[$n[0].Decimal]},{"a":2,"n":"ToUInt64","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (value) { return System.Decimal.toInt(value); },"rt":$n[0].UInt64,"p":[$n[0].Decimal]},{"a":2,"n":"Truncate","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (d) { return d.trunc(); },"rt":$n[0].Decimal,"p":[$n[0].Decimal]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"result","out":true,"pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (s, result) { return System.Decimal.tryParse(s, null, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Decimal]},{"a":2,"n":"TryParse","is":true,"t":8,"pi":[{"n":"s","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1},{"n":"result","out":true,"pt":$n[0].Decimal,"ps":2}],"tpc":0,"def":function (s, provider, result) { return System.Decimal.tryParse(s, provider, result); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].IFormatProvider,$n[0].Decimal]},{"a":2,"n":"op_Addition","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.add(d2); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"op_Decrement","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (d) { return d.dec(); },"rt":$n[0].Decimal,"p":[$n[0].Decimal]},{"a":2,"n":"op_Division","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.div(d2); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"op_Equality","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.equalsT(d2); },"rt":$n[0].Boolean,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"sn":"op_Explicit","rt":$n[0].Byte,"p":[$n[0].Decimal]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"sn":"op_Explicit","rt":$n[0].Char,"p":[$n[0].Decimal]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"sn":"op_Explicit","rt":$n[0].Double,"p":[$n[0].Decimal]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"sn":"op_Explicit","rt":$n[0].Int16,"p":[$n[0].Decimal]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"sn":"op_Explicit","rt":$n[0].Int32,"p":[$n[0].Decimal]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"sn":"op_Explicit","rt":$n[0].Int64,"p":[$n[0].Decimal]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"sn":"op_Explicit","rt":$n[0].SByte,"p":[$n[0].Decimal]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"sn":"op_Explicit","rt":$n[0].Single,"p":[$n[0].Decimal]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"sn":"op_Explicit","rt":$n[0].UInt16,"p":[$n[0].Decimal]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"sn":"op_Explicit","rt":$n[0].UInt32,"p":[$n[0].Decimal]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"sn":"op_Explicit","rt":$n[0].UInt64,"p":[$n[0].Decimal]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"sn":"op_Explicit","rt":$n[0].Decimal,"p":[$n[0].Double]},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Single,"ps":0}],"sn":"op_Explicit","rt":$n[0].Decimal,"p":[$n[0].Single]},{"a":2,"n":"op_GreaterThan","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.gt(d2); },"rt":$n[0].Boolean,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"op_GreaterThanOrEqual","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.gte(d2); },"rt":$n[0].Boolean,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Byte,"ps":0}],"sn":"op_Implicit","rt":$n[0].Decimal,"p":[$n[0].Byte]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Char,"ps":0}],"sn":"op_Implicit","rt":$n[0].Decimal,"p":[$n[0].Char]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int16,"ps":0}],"sn":"op_Implicit","rt":$n[0].Decimal,"p":[$n[0].Int16]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"sn":"op_Implicit","rt":$n[0].Decimal,"p":[$n[0].Int32]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"op_Implicit","rt":$n[0].Decimal,"p":[$n[0].Int64]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].SByte,"ps":0}],"sn":"op_Implicit","rt":$n[0].Decimal,"p":[$n[0].SByte]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt16,"ps":0}],"sn":"op_Implicit","rt":$n[0].Decimal,"p":[$n[0].UInt16]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt32,"ps":0}],"sn":"op_Implicit","rt":$n[0].Decimal,"p":[$n[0].UInt32]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"sn":"op_Implicit","rt":$n[0].Decimal,"p":[$n[0].UInt64]},{"a":2,"n":"op_Increment","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (d) { return d.inc(); },"rt":$n[0].Decimal,"p":[$n[0].Decimal]},{"a":2,"n":"op_Inequality","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.ne(d2); },"rt":$n[0].Boolean,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"op_LessThan","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.lt(d2); },"rt":$n[0].Boolean,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"op_LessThanOrEqual","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.lte(d2); },"rt":$n[0].Boolean,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"op_Modulus","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.mod(d2); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"op_Multiply","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.mul(d2); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"op_Subtraction","is":true,"t":8,"pi":[{"n":"d1","pt":$n[0].Decimal,"ps":0},{"n":"d2","pt":$n[0].Decimal,"ps":1}],"tpc":0,"def":function (d1, d2) { return d1.sub(d2); },"rt":$n[0].Decimal,"p":[$n[0].Decimal,$n[0].Decimal]},{"a":2,"n":"op_UnaryNegation","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (d) { return d.neg(); },"rt":$n[0].Decimal,"p":[$n[0].Decimal]},{"a":2,"n":"op_UnaryPlus","is":true,"t":8,"pi":[{"n":"d","pt":$n[0].Decimal,"ps":0}],"tpc":0,"def":function (d) { return d.clone(); },"rt":$n[0].Decimal,"p":[$n[0].Decimal]},{"a":2,"n":"MaxValue","is":true,"t":4,"rt":$n[0].Decimal,"sn":"MaxValue"},{"a":2,"n":"MinValue","is":true,"t":4,"rt":$n[0].Decimal,"sn":"MinValue"},{"a":2,"n":"MinusOne","is":true,"t":4,"rt":$n[0].Decimal,"sn":"MinusOne"},{"a":2,"n":"One","is":true,"t":4,"rt":$n[0].Decimal,"sn":"One"},{"a":2,"n":"Zero","is":true,"t":4,"rt":$n[0].Decimal,"sn":"Zero"}]}; });
+    $m($n[0].IComparable, function () { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"CompareTo","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (obj) { return Bridge.compare(this, obj); },"rt":$n[0].Int32,"p":[$n[0].Object]}]}; });
+    $m($n[0].IComparable$1, function (T) { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"CompareTo","t":8,"pi":[{"n":"other","pt":T,"ps":0}],"tpc":0,"def":function (other) { return Bridge.compare(this, other, false, T); },"rt":$n[0].Int32,"p":[T]}]}; });
+    $m($n[0].IEquatable$1, function (T) { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":T,"ps":0}],"tpc":0,"def":function (other) { return Bridge.equalsT(this, other, T); },"rt":$n[0].Boolean,"p":[T]}]}; });
+    $m($n[0].InvalidCastException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"sn":"ctor"}]}; });
+    $m($n[0].InvalidOperationException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"sn":"ctor"}]}; });
+    $m($n[0].Exception, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"sn":"ctor"},{"v":true,"a":2,"n":"GetBaseException","t":8,"sn":"getBaseException","rt":$n[0].Exception},{"v":true,"a":2,"n":"Data","t":16,"rt":$n[3].IDictionary$2(System.Object,System.Object),"g":{"v":true,"a":2,"n":"get_Data","t":8,"rt":$n[3].IDictionary$2(System.Object,System.Object),"fg":"Data"},"fn":"Data"},{"v":true,"a":2,"n":"InnerException","t":16,"rt":$n[0].Exception,"g":{"v":true,"a":2,"n":"get_InnerException","t":8,"rt":$n[0].Exception,"fg":"InnerException"},"fn":"InnerException"},{"v":true,"a":2,"n":"Message","t":16,"rt":$n[0].String,"g":{"v":true,"a":2,"n":"get_Message","t":8,"rt":$n[0].String,"fg":"Message"},"fn":"Message"},{"v":true,"a":2,"n":"StackTrace","t":16,"rt":$n[0].String,"g":{"v":true,"a":2,"n":"get_StackTrace","t":8,"rt":$n[0].String,"fg":"StackTrace"},"fn":"StackTrace"}]}; });
+    $m($n[0].NotImplementedException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"sn":"ctor"}]}; });
+    $m($n[0].NotSupportedException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"sn":"ctor"}]}; });
+    $m($n[0].Nullable$1, function (T) { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[T],"pi":[{"n":"value","pt":T,"ps":0}],"def":function (value) { return value; }},{"ov":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (other) { return System.Nullable.equalsT(this, other); },"rt":$n[0].Boolean,"p":[$n[0].Object]},{"ov":true,"a":2,"n":"GetHashCode","t":8,"tpc":0,"def":function () { return System.Nullable.getHashCode(this, T); },"rt":$n[0].Int32},{"a":2,"n":"GetValueOrDefault","t":8,"tpc":0,"def":function () { return System.Nullable.getValueOrDefault(this, T); },"rt":T},{"a":2,"n":"GetValueOrDefault","t":8,"pi":[{"n":"defaultValue","pt":T,"ps":0}],"tpc":0,"def":function (defaultValue) { return System.Nullable.getValueOrDefault(this, defaultValue); },"rt":T,"p":[T]},{"ov":true,"a":2,"n":"ToString","t":8,"tpc":0,"def":function () { return System.Nullable.toString(this, T); },"rt":$n[0].String},{"a":2,"n":"op_Explicit","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Nullable$1(T),"ps":0}],"tpc":0,"def":function (value) { return System.Nullable.getValue(this); },"rt":T,"p":[$n[0].Nullable$1(T)]},{"a":2,"n":"op_Implicit","is":true,"t":8,"pi":[{"n":"value","pt":T,"ps":0}],"sn":"op_Implicit","rt":$n[0].Nullable$1(T),"p":[T]},{"a":2,"n":"HasValue","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_HasValue","t":8,"tpc":0,"def":function () { return System.Nullable.hasValue(this); },"rt":$n[0].Boolean}},{"a":2,"n":"Value","t":16,"rt":T,"g":{"a":2,"n":"get_Value","t":8,"tpc":0,"def":function () { return System.Nullable.getValue(this); },"rt":T}}]}; });
+    $m($n[0].NullReferenceException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"sn":"ctor"}]}; });
+    $m($n[0].String, function () { return {"att":1048833,"a":2,"m":[{"a":2,"n":".ctor","t":1,"def":function () { return ""; }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Array.type(System.Char)],"pi":[{"n":"value","pt":$n[0].Array.type(System.Char),"ps":0}],"def":function (value) { return String.fromCharCode.apply(null, value); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Char,$n[0].Int32],"pi":[{"n":"c","pt":$n[0].Char,"ps":0},{"n":"count","pt":$n[0].Int32,"ps":1}],"def":function (c, count) { return System.String.fromCharCount(c, count); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Array.type(System.Char),$n[0].Int32,$n[0].Int32],"pi":[{"n":"value","pt":$n[0].Array.type(System.Char),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1},{"n":"length","pt":$n[0].Int32,"ps":2}],"def":function (value, startIndex, length) { return String.fromCharCode.apply(null, value.slice(startIndex, startIndex + length)); }},{"a":2,"n":"Clone","t":8,"tpc":0,"def":function () { return this; },"rt":$n[0].Object},{"a":2,"n":"Compare","is":true,"t":8,"pi":[{"n":"strA","pt":$n[0].String,"ps":0},{"n":"strB","pt":$n[0].String,"ps":1}],"tpc":0,"def":function (strA, strB) { return System.String.compare(strA, strB); },"rt":$n[0].Int32,"p":[$n[0].String,$n[0].String]},{"a":2,"n":"Compare","is":true,"t":8,"pi":[{"n":"strA","pt":$n[0].String,"ps":0},{"n":"strB","pt":$n[0].String,"ps":1},{"n":"ignoreCase","pt":$n[0].Boolean,"ps":2}],"tpc":0,"def":function (strA, strB, ignoreCase) { return System.String.compare(strA, strB, ignoreCase); },"rt":$n[0].Int32,"p":[$n[0].String,$n[0].String,$n[0].Boolean]},{"a":2,"n":"Compare","is":true,"t":8,"pi":[{"n":"strA","pt":$n[0].String,"ps":0},{"n":"strB","pt":$n[0].String,"ps":1},{"n":"comparisonType","pt":Number,"ps":2}],"tpc":0,"def":function (strA, strB, comparisonType) { return System.String.compare(strA, strB, comparisonType); },"rt":$n[0].Int32,"p":[$n[0].String,$n[0].String,Number]},{"a":2,"n":"Compare","is":true,"t":8,"pi":[{"n":"strA","pt":$n[0].String,"ps":0},{"n":"strB","pt":$n[0].String,"ps":1},{"n":"ignoreCase","pt":$n[0].Boolean,"ps":2},{"n":"culture","pt":$n[7].CultureInfo,"ps":3}],"tpc":0,"def":function (strA, strB, ignoreCase, culture) { return System.String.compare(strA, strB, ignoreCase, culture); },"rt":$n[0].Int32,"p":[$n[0].String,$n[0].String,$n[0].Boolean,$n[7].CultureInfo]},{"a":2,"n":"Compare","is":true,"t":8,"pi":[{"n":"strA","pt":$n[0].String,"ps":0},{"n":"indexA","pt":$n[0].Int32,"ps":1},{"n":"strB","pt":$n[0].String,"ps":2},{"n":"indexB","pt":$n[0].Int32,"ps":3},{"n":"length","pt":$n[0].Int32,"ps":4}],"tpc":0,"def":function (strA, indexA, strB, indexB, length) { return System.String.compare(strA.substr(indexA, length), strB.substr(indexB, length)); },"rt":$n[0].Int32,"p":[$n[0].String,$n[0].Int32,$n[0].String,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Compare","is":true,"t":8,"pi":[{"n":"strA","pt":$n[0].String,"ps":0},{"n":"indexA","pt":$n[0].Int32,"ps":1},{"n":"strB","pt":$n[0].String,"ps":2},{"n":"indexB","pt":$n[0].Int32,"ps":3},{"n":"length","pt":$n[0].Int32,"ps":4},{"n":"ignoreCase","pt":$n[0].Boolean,"ps":5}],"tpc":0,"def":function (strA, indexA, strB, indexB, length, ignoreCase) { return System.String.compare(strA.substr(indexA, length), strB.substr(indexB, length), ignoreCase); },"rt":$n[0].Int32,"p":[$n[0].String,$n[0].Int32,$n[0].String,$n[0].Int32,$n[0].Int32,$n[0].Boolean]},{"a":2,"n":"Compare","is":true,"t":8,"pi":[{"n":"strA","pt":$n[0].String,"ps":0},{"n":"indexA","pt":$n[0].Int32,"ps":1},{"n":"strB","pt":$n[0].String,"ps":2},{"n":"indexB","pt":$n[0].Int32,"ps":3},{"n":"length","pt":$n[0].Int32,"ps":4},{"n":"comparisonType","pt":Number,"ps":5}],"tpc":0,"def":function (strA, indexA, strB, indexB, length, comparisonType) { return System.String.compare(strA.substr(indexA, length), strB.substr(indexB, length), comparisonType); },"rt":$n[0].Int32,"p":[$n[0].String,$n[0].Int32,$n[0].String,$n[0].Int32,$n[0].Int32,Number]},{"a":2,"n":"Compare","is":true,"t":8,"pi":[{"n":"strA","pt":$n[0].String,"ps":0},{"n":"indexA","pt":$n[0].Int32,"ps":1},{"n":"strB","pt":$n[0].String,"ps":2},{"n":"indexB","pt":$n[0].Int32,"ps":3},{"n":"length","pt":$n[0].Int32,"ps":4},{"n":"ignoreCase","pt":$n[0].Boolean,"ps":5},{"n":"culture","pt":$n[7].CultureInfo,"ps":6}],"tpc":0,"def":function (strA, indexA, strB, indexB, length, ignoreCase, culture) { return System.String.compare(strA.substr(indexA, length), strB.substr(indexB, length), ignoreCase, culture); },"rt":$n[0].Int32,"p":[$n[0].String,$n[0].Int32,$n[0].String,$n[0].Int32,$n[0].Int32,$n[0].Boolean,$n[7].CultureInfo]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"value","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (value) { return System.String.compare(this, value.toString()); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"strB","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (strB) { return System.String.compare(this, strB); },"rt":$n[0].Int32,"p":[$n[0].String]},{"a":2,"n":"Concat","is":true,"t":8,"pi":[{"n":"values","pt":$n[3].IEnumerable$1(System.String),"ps":0}],"tpc":0,"def":function (values) { return System.String.concat(Bridge.toArray(values)); },"rt":$n[0].String,"p":[$n[3].IEnumerable$1(System.String)]},{"a":2,"n":"Concat","is":true,"t":8,"pi":[{"n":"values","pt":$n[3].IEnumerable$1(System.Object),"ps":0}],"tpc":1,"def":function (T, values) { return System.String.concat(Bridge.toArray(values)); },"rt":$n[0].String,"p":[$n[3].IEnumerable$1(System.Object)]},{"a":2,"n":"Concat","is":true,"t":8,"pi":[{"n":"arg0","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (arg0) { return System.String.concat(arg0); },"rt":$n[0].String,"p":[$n[0].Object]},{"a":2,"n":"Concat","is":true,"t":8,"pi":[{"n":"args","ip":true,"pt":$n[0].Array.type(System.Object),"ps":0}],"tpc":0,"def":function (args) { return System.String.concat(Array.prototype.slice.call((arguments, 0))); },"rt":$n[0].String,"p":[$n[0].Array.type(System.Object)]},{"a":2,"n":"Concat","is":true,"t":8,"pi":[{"n":"values","ip":true,"pt":$n[0].Array.type(System.String),"ps":0}],"tpc":0,"def":function (values) { return System.String.concat(Array.prototype.slice.call((arguments, 0))); },"rt":$n[0].String,"p":[$n[0].Array.type(System.String)]},{"a":2,"n":"Concat","is":true,"t":8,"pi":[{"n":"arg0","pt":$n[0].Object,"ps":0},{"n":"arg1","pt":$n[0].Object,"ps":1}],"tpc":0,"def":function (arg0, arg1) { return System.String.concat(arg0, arg1); },"rt":$n[0].String,"p":[$n[0].Object,$n[0].Object]},{"a":2,"n":"Concat","is":true,"t":8,"pi":[{"n":"str0","pt":$n[0].String,"ps":0},{"n":"str1","pt":$n[0].String,"ps":1}],"tpc":0,"def":function (str0, str1) { return System.String.concat(str0, str1); },"rt":$n[0].String,"p":[$n[0].String,$n[0].String]},{"a":2,"n":"Concat","is":true,"t":8,"pi":[{"n":"arg0","pt":$n[0].Object,"ps":0},{"n":"arg1","pt":$n[0].Object,"ps":1},{"n":"arg2","pt":$n[0].Object,"ps":2}],"tpc":0,"def":function (arg0, arg1, arg2) { return System.String.concat(arg0, arg1, arg2); },"rt":$n[0].String,"p":[$n[0].Object,$n[0].Object,$n[0].Object]},{"a":2,"n":"Concat","is":true,"t":8,"pi":[{"n":"str0","pt":$n[0].String,"ps":0},{"n":"str1","pt":$n[0].String,"ps":1},{"n":"str2","pt":$n[0].String,"ps":2}],"tpc":0,"def":function (str0, str1, str2) { return System.String.concat(str0, str1, str2); },"rt":$n[0].String,"p":[$n[0].String,$n[0].String,$n[0].String]},{"a":2,"n":"Concat","is":true,"t":8,"pi":[{"n":"arg0","pt":$n[0].Object,"ps":0},{"n":"arg1","pt":$n[0].Object,"ps":1},{"n":"arg2","pt":$n[0].Object,"ps":2},{"n":"arg3","pt":$n[0].Object,"ps":3}],"tpc":0,"def":function (arg0, arg1, arg2, arg3) { return System.String.concat(arg0, arg1, arg2, arg3); },"rt":$n[0].String,"p":[$n[0].Object,$n[0].Object,$n[0].Object,$n[0].Object]},{"a":2,"n":"Concat","is":true,"t":8,"pi":[{"n":"str0","pt":$n[0].String,"ps":0},{"n":"str1","pt":$n[0].String,"ps":1},{"n":"str2","pt":$n[0].String,"ps":2},{"n":"str3","pt":$n[0].String,"ps":3}],"tpc":0,"def":function (str0, str1, str2, str3) { return System.String.concat(str0, str1, str2, str3); },"rt":$n[0].String,"p":[$n[0].String,$n[0].String,$n[0].String,$n[0].String]},{"a":2,"n":"Concat","is":true,"t":8,"pi":[{"n":"arg0","pt":$n[0].Object,"ps":0},{"n":"arg1","pt":$n[0].Object,"ps":1},{"n":"arg2","pt":$n[0].Object,"ps":2},{"n":"arg3","pt":$n[0].Object,"ps":3},{"n":"args","ip":true,"pt":$n[0].Array.type(System.Object),"ps":4}],"tpc":0,"def":function (arg0, arg1, arg2, arg3, args) { return System.String.concat(arg0, arg1, arg2, arg3, args); },"rt":$n[0].String,"p":[$n[0].Object,$n[0].Object,$n[0].Object,$n[0].Object,$n[0].Array.type(System.Object)]},{"a":2,"n":"Contains","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (value) { return System.String.contains(this,value); },"rt":$n[0].Boolean,"p":[$n[0].String]},{"a":2,"n":"EndsWith","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (value) { return System.String.endsWith(this, value); },"rt":$n[0].Boolean,"p":[$n[0].String]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (value) { return System.String.equals(this, value); },"rt":$n[0].Boolean,"p":[$n[0].String]},{"a":2,"n":"Equals","is":true,"t":8,"pi":[{"n":"a","pt":$n[0].String,"ps":0},{"n":"b","pt":$n[0].String,"ps":1}],"tpc":0,"def":function (a, b) { return System.String.equals(a, b); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].String]},{"a":2,"n":"Equals","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"comparisonType","pt":Number,"ps":1}],"tpc":0,"def":function (value, comparisonType) { return System.String.equals(this, value, comparisonType); },"rt":$n[0].Boolean,"p":[$n[0].String,Number]},{"a":2,"n":"Equals","is":true,"t":8,"pi":[{"n":"a","pt":$n[0].String,"ps":0},{"n":"b","pt":$n[0].String,"ps":1},{"n":"comparisonType","pt":Number,"ps":2}],"tpc":0,"def":function (a, b, comparisonType) { return System.String.equals(a, b, comparisonType); },"rt":$n[0].Boolean,"p":[$n[0].String,$n[0].String,Number]},{"a":2,"n":"Format","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"arg0","pt":$n[0].Object,"ps":1}],"tpc":0,"def":function (format, arg0) { return System.String.format(format, arg0); },"rt":$n[0].String,"p":[$n[0].String,$n[0].Object]},{"a":2,"n":"Format","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"args","ip":true,"pt":$n[0].Array.type(System.Object),"ps":1}],"tpc":0,"def":function (format, args) { return System.String.format(format, args); },"rt":$n[0].String,"p":[$n[0].String,$n[0].Array.type(System.Object)]},{"a":2,"n":"Format","is":true,"t":8,"pi":[{"n":"provider","pt":$n[0].IFormatProvider,"ps":0},{"n":"format","pt":$n[0].String,"ps":1},{"n":"arg0","pt":$n[0].Object,"ps":2}],"tpc":0,"def":function (provider, format, arg0) { return System.String.formatProvider(provider, format, arg0); },"rt":$n[0].String,"p":[$n[0].IFormatProvider,$n[0].String,$n[0].Object]},{"a":2,"n":"Format","is":true,"t":8,"pi":[{"n":"provider","pt":$n[0].IFormatProvider,"ps":0},{"n":"format","pt":$n[0].String,"ps":1},{"n":"args","ip":true,"pt":$n[0].Array.type(System.Object),"ps":2}],"tpc":0,"def":function (provider, format, args) { return System.String.formatProvider(provider, format, args); },"rt":$n[0].String,"p":[$n[0].IFormatProvider,$n[0].String,$n[0].Array.type(System.Object)]},{"a":2,"n":"Format","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"arg0","pt":$n[0].Object,"ps":1},{"n":"arg1","pt":$n[0].Object,"ps":2}],"tpc":0,"def":function (format, arg0, arg1) { return System.String.format(format, arg0, arg1); },"rt":$n[0].String,"p":[$n[0].String,$n[0].Object,$n[0].Object]},{"a":2,"n":"Format","is":true,"t":8,"pi":[{"n":"provider","pt":$n[0].IFormatProvider,"ps":0},{"n":"format","pt":$n[0].String,"ps":1},{"n":"arg0","pt":$n[0].Object,"ps":2},{"n":"arg1","pt":$n[0].Object,"ps":3}],"tpc":0,"def":function (provider, format, arg0, arg1) { return System.String.formatProvider(provider, format, arg0, arg1); },"rt":$n[0].String,"p":[$n[0].IFormatProvider,$n[0].String,$n[0].Object,$n[0].Object]},{"a":2,"n":"Format","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"arg0","pt":$n[0].Object,"ps":1},{"n":"arg1","pt":$n[0].Object,"ps":2},{"n":"arg2","pt":$n[0].Object,"ps":3}],"tpc":0,"def":function (format, arg0, arg1, arg2) { return System.String.format(format, arg0, arg1, arg2); },"rt":$n[0].String,"p":[$n[0].String,$n[0].Object,$n[0].Object,$n[0].Object]},{"a":2,"n":"Format","is":true,"t":8,"pi":[{"n":"provider","pt":$n[0].IFormatProvider,"ps":0},{"n":"format","pt":$n[0].String,"ps":1},{"n":"arg0","pt":$n[0].Object,"ps":2},{"n":"arg1","pt":$n[0].Object,"ps":3},{"n":"arg2","pt":$n[0].Object,"ps":4}],"tpc":0,"def":function (provider, format, arg0, arg1, arg2) { return System.String.formatProvider(provider, format, arg0, arg1, arg2); },"rt":$n[0].String,"p":[$n[0].IFormatProvider,$n[0].String,$n[0].Object,$n[0].Object,$n[0].Object]},{"a":2,"n":"GetEnumerator","t":8,"tpc":0,"def":function () { return Bridge.getEnumerator(this); },"rt":$n[0].CharEnumerator},{"a":2,"n":"IndexOf","t":8,"pi":[{"n":"value","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (value) { return System.String.indexOf(this, String.fromCharCode(value)); },"rt":$n[0].Int32,"p":[$n[0].Char]},{"a":2,"n":"IndexOf","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (value) { return System.String.indexOf(this, value); },"rt":$n[0].Int32,"p":[$n[0].String]},{"a":2,"n":"IndexOf","t":8,"pi":[{"n":"value","pt":$n[0].Char,"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (value, startIndex) { return System.String.indexOf(this, String.fromCharCode(value), startIndex); },"rt":$n[0].Int32,"p":[$n[0].Char,$n[0].Int32]},{"a":2,"n":"IndexOf","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (value, startIndex) { return System.String.indexOf(this, value, startIndex); },"rt":$n[0].Int32,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"IndexOf","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"comparisonType","pt":Number,"ps":1}],"tpc":0,"def":function (value, comparisonType) { return ($t3 = this, System.String.indexOf($t3, value, 0, $t3.length, comparisonType)); },"rt":$n[0].Int32,"p":[$n[0].String,Number]},{"a":2,"n":"IndexOf","t":8,"pi":[{"n":"value","pt":$n[0].Char,"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (value, startIndex, count) { return System.String.indexOf(this, String.fromCharCode(value), startIndex, count); },"rt":$n[0].Int32,"p":[$n[0].Char,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"IndexOf","t":8,"pi":[{"n":"searchValue","pt":$n[0].String,"ps":0},{"n":"fromIndex","pt":$n[0].Int32,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (searchValue, fromIndex, count) { return System.String.indexOf(this, searchValue, fromIndex, count); },"rt":$n[0].Int32,"p":[$n[0].String,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"IndexOf","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1},{"n":"comparisonType","pt":Number,"ps":2}],"tpc":0,"def":function (value, startIndex, comparisonType) { return ($t4 = this, System.String.indexOf($t4, value, startIndex, $t4.length, comparisonType)); },"rt":$n[0].Int32,"p":[$n[0].String,$n[0].Int32,Number]},{"a":2,"n":"IndexOf","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2},{"n":"comparisonType","pt":Number,"ps":3}],"tpc":0,"def":function (value, startIndex, count, comparisonType) { return System.String.indexOf(this, value, startIndex, count, comparisonType); },"rt":$n[0].Int32,"p":[$n[0].String,$n[0].Int32,$n[0].Int32,Number]},{"a":2,"n":"IndexOfAny","t":8,"pi":[{"n":"anyOf","pt":$n[0].Array.type(System.Char),"ps":0}],"tpc":0,"def":function (anyOf) { return System.String.indexOfAny(this, anyOf); },"rt":$n[0].Int32,"p":[$n[0].Array.type(System.Char)]},{"a":2,"n":"IndexOfAny","t":8,"pi":[{"n":"anyOf","pt":$n[0].Array.type(System.Char),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (anyOf, startIndex) { return System.String.indexOfAny(this, anyOf, startIndex); },"rt":$n[0].Int32,"p":[$n[0].Array.type(System.Char),$n[0].Int32]},{"a":2,"n":"IndexOfAny","t":8,"pi":[{"n":"anyOf","pt":$n[0].Array.type(System.Char),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (anyOf, startIndex, count) { return System.String.indexOfAny(this, anyOf, startIndex, count); },"rt":$n[0].Int32,"p":[$n[0].Array.type(System.Char),$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Insert","t":8,"pi":[{"n":"startIndex","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].String,"ps":1}],"tpc":0,"def":function (startIndex, value) { return System.String.insert(startIndex, this, value); },"rt":$n[0].String,"p":[$n[0].Int32,$n[0].String]},{"a":2,"n":"IsNullOrEmpty","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (value) { return System.String.isNullOrEmpty(value); },"rt":$n[0].Boolean,"p":[$n[0].String]},{"a":2,"n":"IsNullOrWhiteSpace","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (value) { return System.String.isNullOrWhiteSpace(value); },"rt":$n[0].Boolean,"p":[$n[0].String]},{"a":2,"n":"Join","is":true,"t":8,"pi":[{"n":"separator","pt":$n[0].String,"ps":0},{"n":"values","pt":$n[3].IEnumerable$1(System.String),"ps":1}],"tpc":0,"def":function (separator, values) { return Bridge.toArray(values).join(separator); },"rt":$n[0].String,"p":[$n[0].String,$n[3].IEnumerable$1(System.String)]},{"a":2,"n":"Join","is":true,"t":8,"pi":[{"n":"separator","pt":$n[0].String,"ps":0},{"n":"values","pt":$n[3].IEnumerable$1(System.Object),"ps":1}],"tpc":1,"def":function (T, separator, values) { return Bridge.toArray(values).join(separator); },"rt":$n[0].String,"p":[$n[0].String,$n[3].IEnumerable$1(System.Object)]},{"a":2,"n":"Join","is":true,"t":8,"pi":[{"n":"separator","pt":$n[0].String,"ps":0},{"n":"values","ip":true,"pt":$n[0].Array.type(System.Object),"ps":1}],"tpc":0,"def":function (separator, values) { return Array.prototype.slice.call((arguments, 1)).join(separator); },"rt":$n[0].String,"p":[$n[0].String,$n[0].Array.type(System.Object)]},{"a":2,"n":"Join","is":true,"t":8,"pi":[{"n":"separator","pt":$n[0].String,"ps":0},{"n":"value","ip":true,"pt":$n[0].Array.type(System.String),"ps":1}],"tpc":0,"def":function (separator, value) { return Array.prototype.slice.call((arguments, 1)).join(separator); },"rt":$n[0].String,"p":[$n[0].String,$n[0].Array.type(System.String)]},{"a":2,"n":"Join","is":true,"t":8,"pi":[{"n":"separator","pt":$n[0].String,"ps":0},{"n":"value","pt":$n[0].Array.type(System.String),"ps":1},{"n":"startIndex","pt":$n[0].Int32,"ps":2},{"n":"count","pt":$n[0].Int32,"ps":3}],"tpc":0,"def":function (separator, value, startIndex, count) { return value.slice(startIndex, startIndex + count).join(separator); },"rt":$n[0].String,"p":[$n[0].String,$n[0].Array.type(System.String),$n[0].Int32,$n[0].Int32]},{"a":2,"n":"LastIndexOf","t":8,"pi":[{"n":"value","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (value) { return this.lastIndexOf(String.fromCharCode(value)); },"rt":$n[0].Int32,"p":[$n[0].Char]},{"a":2,"n":"LastIndexOf","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"sn":"lastIndexOf","rt":$n[0].Int32,"p":[$n[0].String]},{"a":2,"n":"LastIndexOf","t":8,"pi":[{"n":"value","pt":$n[0].Char,"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (value, startIndex) { return this.lastIndexOf(String.fromCharCode(value), startIndex); },"rt":$n[0].Int32,"p":[$n[0].Char,$n[0].Int32]},{"a":2,"n":"LastIndexOf","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"sn":"lastIndexOf","rt":$n[0].Int32,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"LastIndexOf","t":8,"pi":[{"n":"value","pt":$n[0].Char,"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (value, startIndex, count) { return System.String.lastIndexOf(this, String.fromCharCode(value), startIndex, count); },"rt":$n[0].Int32,"p":[$n[0].Char,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"LastIndexOf","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (value, startIndex, count) { return System.String.lastIndexOf(this, value, startIndex, count); },"rt":$n[0].Int32,"p":[$n[0].String,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"LastIndexOfAny","t":8,"pi":[{"n":"anyOf","ip":true,"pt":$n[0].Array.type(System.Char),"ps":0}],"tpc":0,"def":function (anyOf) { return System.String.lastIndexOfAny(this, Array.prototype.slice.call((arguments, 0))); },"rt":$n[0].Int32,"p":[$n[0].Array.type(System.Char)]},{"a":2,"n":"LastIndexOfAny","t":8,"pi":[{"n":"anyOf","pt":$n[0].Array.type(System.Char),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (anyOf, startIndex) { return System.String.lastIndexOfAny(this, anyOf, startIndex); },"rt":$n[0].Int32,"p":[$n[0].Array.type(System.Char),$n[0].Int32]},{"a":2,"n":"LastIndexOfAny","t":8,"pi":[{"n":"anyOf","pt":$n[0].Array.type(System.Char),"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2}],"tpc":0,"def":function (anyOf, startIndex, count) { return System.String.lastIndexOfAny(this, anyOf, startIndex, count); },"rt":$n[0].Int32,"p":[$n[0].Array.type(System.Char),$n[0].Int32,$n[0].Int32]},{"a":2,"n":"PadLeft","t":8,"pi":[{"n":"totalWidth","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (totalWidth) { return System.String.alignString(this, totalWidth); },"rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"PadLeft","t":8,"pi":[{"n":"totalWidth","pt":$n[0].Int32,"ps":0},{"n":"paddingChar","pt":$n[0].Char,"ps":1}],"tpc":0,"def":function (totalWidth, paddingChar) { return System.String.alignString(this, totalWidth, paddingChar); },"rt":$n[0].String,"p":[$n[0].Int32,$n[0].Char]},{"a":2,"n":"PadRight","t":8,"pi":[{"n":"totalWidth","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (totalWidth) { return System.String.alignString(this, -totalWidth); },"rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"PadRight","t":8,"pi":[{"n":"totalWidth","pt":$n[0].Int32,"ps":0},{"n":"paddingChar","pt":$n[0].Char,"ps":1}],"tpc":0,"def":function (totalWidth, paddingChar) { return System.String.alignString(this, -totalWidth, paddingChar); },"rt":$n[0].String,"p":[$n[0].Int32,$n[0].Char]},{"a":2,"n":"Remove","t":8,"pi":[{"n":"startIndex","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (startIndex) { return System.String.remove(this, startIndex); },"rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"Remove","t":8,"pi":[{"n":"startIndex","pt":$n[0].Int32,"ps":0},{"n":"count","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (startIndex, count) { return System.String.remove(this, startIndex, count); },"rt":$n[0].String,"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Replace","t":8,"pi":[{"n":"oldChar","pt":$n[0].Char,"ps":0},{"n":"newChar","pt":$n[0].Char,"ps":1}],"tpc":0,"def":function (oldChar, newChar) { return System.String.replaceAll(this, String.fromCharCode(oldChar), String.fromCharCode(newChar)); },"rt":$n[0].String,"p":[$n[0].Char,$n[0].Char]},{"a":2,"n":"Replace","t":8,"pi":[{"n":"oldValue","pt":$n[0].String,"ps":0},{"n":"newValue","pt":$n[0].String,"ps":1}],"tpc":0,"def":function (oldValue, newValue) { return System.String.replaceAll(this, oldValue, newValue); },"rt":$n[0].String,"p":[$n[0].String,$n[0].String]},{"a":2,"n":"Split","t":8,"pi":[{"n":"separator","ip":true,"pt":$n[0].Array.type(System.Char),"ps":0}],"tpc":0,"def":function (separator) { return System.String.split(this, Array.prototype.slice.call((arguments, 0)).map(function(i) {{ return String.fromCharCode(i); }})); },"rt":$n[0].Array.type(System.String),"p":[$n[0].Array.type(System.Char)]},{"a":2,"n":"Split","t":8,"pi":[{"n":"separator","pt":$n[0].Array.type(System.Char),"ps":0},{"n":"count","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (separator, count) { return System.String.split(this, separator.map(function(i) {{ return String.fromCharCode(i); }}), count); },"rt":$n[0].Array.type(System.String),"p":[$n[0].Array.type(System.Char),$n[0].Int32]},{"a":2,"n":"Split","t":8,"pi":[{"n":"separator","pt":$n[0].Array.type(System.Char),"ps":0},{"n":"options","pt":Number,"ps":1}],"tpc":0,"def":function (separator, options) { return System.String.split(this, separator.map(function(i) {{ return String.fromCharCode(i); }}), null, options); },"rt":$n[0].Array.type(System.String),"p":[$n[0].Array.type(System.Char),Number]},{"a":2,"n":"Split","t":8,"pi":[{"n":"separator","pt":$n[0].Array.type(System.String),"ps":0},{"n":"options","pt":Number,"ps":1}],"tpc":0,"def":function (separator, options) { return System.String.split(this, separator, null, options); },"rt":$n[0].Array.type(System.String),"p":[$n[0].Array.type(System.String),Number]},{"a":2,"n":"Split","t":8,"pi":[{"n":"separator","pt":$n[0].Array.type(System.Char),"ps":0},{"n":"count","pt":$n[0].Int32,"ps":1},{"n":"options","pt":Number,"ps":2}],"tpc":0,"def":function (separator, count, options) { return System.String.split(this, separator.map(function(i) {{ return String.fromCharCode(i); }}), count, options); },"rt":$n[0].Array.type(System.String),"p":[$n[0].Array.type(System.Char),$n[0].Int32,Number]},{"a":2,"n":"Split","t":8,"pi":[{"n":"separator","pt":$n[0].Array.type(System.String),"ps":0},{"n":"count","pt":$n[0].Int32,"ps":1},{"n":"options","pt":Number,"ps":2}],"tpc":0,"def":function (separator, count, options) { return System.String.split(this, separator, count, options); },"rt":$n[0].Array.type(System.String),"p":[$n[0].Array.type(System.String),$n[0].Int32,Number]},{"a":2,"n":"StartsWith","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (value) { return System.String.startsWith(this, value); },"rt":$n[0].Boolean,"p":[$n[0].String]},{"a":2,"n":"Substring","t":8,"pi":[{"n":"startIndex","pt":$n[0].Int32,"ps":0}],"sn":"substr","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"Substring","t":8,"pi":[{"n":"startIndex","pt":$n[0].Int32,"ps":0},{"n":"length","pt":$n[0].Int32,"ps":1}],"sn":"substr","rt":$n[0].String,"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"ToCharArray","t":8,"tpc":0,"def":function () { return ($t5 = this, System.String.toCharArray($t5, 0, $t5.length)); },"rt":$n[0].Array.type(System.Char)},{"a":2,"n":"ToCharArray","t":8,"pi":[{"n":"startIndex","pt":$n[0].Int32,"ps":0},{"n":"length","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (startIndex, length) { return System.String.toCharArray(this, startIndex, length); },"rt":$n[0].Array.type(System.Char),"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"ToLower","t":8,"tpc":0,"def":function () { return this.toLowerCase(); },"rt":$n[0].String},{"a":2,"n":"ToUpper","t":8,"tpc":0,"def":function () { return this.toUpperCase(); },"rt":$n[0].String},{"a":2,"n":"Trim","t":8,"sn":"trim","rt":$n[0].String},{"a":2,"n":"Trim","t":8,"pi":[{"n":"trimChars","ip":true,"pt":$n[0].Array.type(System.Char),"ps":0}],"tpc":0,"def":function (trimChars) { return System.String.trim(this, Array.prototype.slice.call((arguments, 0))); },"rt":$n[0].String,"p":[$n[0].Array.type(System.Char)]},{"a":2,"n":"TrimEnd","t":8,"tpc":0,"def":function () { return System.String.trimEnd(this); },"rt":$n[0].String},{"a":2,"n":"TrimEnd","t":8,"pi":[{"n":"trimChars","ip":true,"pt":$n[0].Array.type(System.Char),"ps":0}],"tpc":0,"def":function (trimChars) { return System.String.trimEnd(this, Array.prototype.slice.call((arguments, 0))); },"rt":$n[0].String,"p":[$n[0].Array.type(System.Char)]},{"a":2,"n":"TrimStart","t":8,"tpc":0,"def":function () { return System.String.trimStart(this); },"rt":$n[0].String},{"a":2,"n":"TrimStart","t":8,"pi":[{"n":"trimChars","ip":true,"pt":$n[0].Array.type(System.Char),"ps":0}],"tpc":0,"def":function (trimChars) { return System.String.trimStart(this, Array.prototype.slice.call((arguments, 0))); },"rt":$n[0].String,"p":[$n[0].Array.type(System.Char)]},{"a":2,"n":"op_Equality","is":true,"t":8,"pi":[{"n":"s1","pt":$n[0].String,"ps":0},{"n":"s2","pt":$n[0].String,"ps":1}],"sn":"op_Equality","rt":$n[0].Boolean,"p":[$n[0].String,$n[0].String]},{"a":2,"n":"op_Inequality","is":true,"t":8,"pi":[{"n":"s1","pt":$n[0].String,"ps":0},{"n":"s2","pt":$n[0].String,"ps":1}],"sn":"op_Inequality","rt":$n[0].Boolean,"p":[$n[0].String,$n[0].String]},{"a":2,"n":"Item","t":16,"rt":$n[0].Char,"p":[$n[0].Int32],"i":true,"ipi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"g":{"a":2,"n":"get_Item","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (index) { return charCodeAt(index); },"rt":$n[0].Char,"p":[$n[0].Int32]}},{"a":2,"n":"Length","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Length","t":8,"rt":$n[0].Int32,"fg":"length"},"fn":"length"},{"a":2,"n":"Empty","is":true,"t":4,"rt":$n[0].String,"sn":"Empty"}]}; });
+    $m($n[0].TimeSpan, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int64],"pi":[{"n":"ticks","pt":$n[0].Int64,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32],"pi":[{"n":"hours","pt":$n[0].Int32,"ps":0},{"n":"minutes","pt":$n[0].Int32,"ps":1},{"n":"seconds","pt":$n[0].Int32,"ps":2}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32],"pi":[{"n":"days","pt":$n[0].Int32,"ps":0},{"n":"hours","pt":$n[0].Int32,"ps":1},{"n":"minutes","pt":$n[0].Int32,"ps":2},{"n":"seconds","pt":$n[0].Int32,"ps":3}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32,$n[0].Int32],"pi":[{"n":"days","pt":$n[0].Int32,"ps":0},{"n":"hours","pt":$n[0].Int32,"ps":1},{"n":"minutes","pt":$n[0].Int32,"ps":2},{"n":"seconds","pt":$n[0].Int32,"ps":3},{"n":"milliseconds","pt":$n[0].Int32,"ps":4}],"sn":"ctor"},{"a":2,"n":"Add","t":8,"pi":[{"n":"ts","pt":$n[0].TimeSpan,"ps":0}],"sn":"add","rt":$n[0].TimeSpan,"p":[$n[0].TimeSpan]},{"a":2,"n":"Compare","is":true,"t":8,"pi":[{"n":"t1","pt":$n[0].TimeSpan,"ps":0},{"n":"t2","pt":$n[0].TimeSpan,"ps":1}],"tpc":0,"def":function (t1, t2) { return t1.compareTo(t2); },"rt":$n[0].Int32,"p":[$n[0].TimeSpan,$n[0].TimeSpan]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"value","pt":$n[0].Object,"ps":0}],"sn":"compareTo","rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"CompareTo","t":8,"pi":[{"n":"value","pt":$n[0].TimeSpan,"ps":0}],"sn":"compareTo","rt":$n[0].Int32,"p":[$n[0].TimeSpan]},{"a":2,"n":"Duration","t":8,"sn":"duration","rt":$n[0].TimeSpan},{"a":2,"n":"Equals","t":8,"pi":[{"n":"obj","pt":$n[0].TimeSpan,"ps":0}],"sn":"equalsT","rt":$n[0].Boolean,"p":[$n[0].TimeSpan]},{"a":2,"n":"Equals","is":true,"t":8,"pi":[{"n":"t1","pt":$n[0].TimeSpan,"ps":0},{"n":"t2","pt":$n[0].TimeSpan,"ps":1}],"tpc":0,"def":function (t1, t2) { return (t1).ticks.eq((t2).ticks); },"rt":$n[0].Boolean,"p":[$n[0].TimeSpan,$n[0].TimeSpan]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Format","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"sn":"toString","rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"FromDays","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"sn":"fromDays","rt":$n[0].TimeSpan,"p":[$n[0].Double]},{"a":2,"n":"FromHours","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"sn":"fromHours","rt":$n[0].TimeSpan,"p":[$n[0].Double]},{"a":2,"n":"FromMilliseconds","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"sn":"fromMilliseconds","rt":$n[0].TimeSpan,"p":[$n[0].Double]},{"a":2,"n":"FromMinutes","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"sn":"fromMinutes","rt":$n[0].TimeSpan,"p":[$n[0].Double]},{"a":2,"n":"FromSeconds","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"sn":"fromSeconds","rt":$n[0].TimeSpan,"p":[$n[0].Double]},{"a":2,"n":"FromTicks","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"sn":"fromTicks","rt":$n[0].TimeSpan,"p":[$n[0].Int64]},{"a":2,"n":"Negate","t":8,"sn":"negate","rt":$n[0].TimeSpan},{"a":2,"n":"Subtract","t":8,"pi":[{"n":"ts","pt":$n[0].TimeSpan,"ps":0}],"sn":"subtract","rt":$n[0].TimeSpan,"p":[$n[0].TimeSpan]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"sn":"toString","rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"ToString","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"provider","pt":$n[0].IFormatProvider,"ps":1}],"sn":"format","rt":$n[0].String,"p":[$n[0].String,$n[0].IFormatProvider]},{"a":2,"n":"op_Addition","is":true,"t":8,"pi":[{"n":"t1","pt":$n[0].TimeSpan,"ps":0},{"n":"t2","pt":$n[0].TimeSpan,"ps":1}],"tpc":0,"def":function (t1, t2) { return System.TimeSpan.add(t1, t2); },"rt":$n[0].TimeSpan,"p":[$n[0].TimeSpan,$n[0].TimeSpan]},{"a":2,"n":"op_Equality","is":true,"t":8,"pi":[{"n":"t1","pt":$n[0].TimeSpan,"ps":0},{"n":"t2","pt":$n[0].TimeSpan,"ps":1}],"tpc":0,"def":function (t1, t2) { return System.TimeSpan.eq(t1, t2); },"rt":$n[0].Boolean,"p":[$n[0].TimeSpan,$n[0].TimeSpan]},{"a":2,"n":"op_GreaterThan","is":true,"t":8,"pi":[{"n":"t1","pt":$n[0].TimeSpan,"ps":0},{"n":"t2","pt":$n[0].TimeSpan,"ps":1}],"tpc":0,"def":function (t1, t2) { return System.TimeSpan.gt(t1, t2); },"rt":$n[0].Boolean,"p":[$n[0].TimeSpan,$n[0].TimeSpan]},{"a":2,"n":"op_GreaterThanOrEqual","is":true,"t":8,"pi":[{"n":"t1","pt":$n[0].TimeSpan,"ps":0},{"n":"t2","pt":$n[0].TimeSpan,"ps":1}],"tpc":0,"def":function (t1, t2) { return System.TimeSpan.gte(t1, t2); },"rt":$n[0].Boolean,"p":[$n[0].TimeSpan,$n[0].TimeSpan]},{"a":2,"n":"op_Inequality","is":true,"t":8,"pi":[{"n":"t1","pt":$n[0].TimeSpan,"ps":0},{"n":"t2","pt":$n[0].TimeSpan,"ps":1}],"tpc":0,"def":function (t1, t2) { return System.TimeSpan.neq(t1, t2); },"rt":$n[0].Boolean,"p":[$n[0].TimeSpan,$n[0].TimeSpan]},{"a":2,"n":"op_LessThan","is":true,"t":8,"pi":[{"n":"t1","pt":$n[0].TimeSpan,"ps":0},{"n":"t2","pt":$n[0].TimeSpan,"ps":1}],"tpc":0,"def":function (t1, t2) { return System.TimeSpan.lt(t1, t2); },"rt":$n[0].Boolean,"p":[$n[0].TimeSpan,$n[0].TimeSpan]},{"a":2,"n":"op_LessThanOrEqual","is":true,"t":8,"pi":[{"n":"t1","pt":$n[0].TimeSpan,"ps":0},{"n":"t2","pt":$n[0].TimeSpan,"ps":1}],"tpc":0,"def":function (t1, t2) { return System.TimeSpan.lte(t1, t2); },"rt":$n[0].Boolean,"p":[$n[0].TimeSpan,$n[0].TimeSpan]},{"a":2,"n":"op_Subtraction","is":true,"t":8,"pi":[{"n":"t1","pt":$n[0].TimeSpan,"ps":0},{"n":"t2","pt":$n[0].TimeSpan,"ps":1}],"tpc":0,"def":function (t1, t2) { return System.TimeSpan.sub(t1, t2); },"rt":$n[0].TimeSpan,"p":[$n[0].TimeSpan,$n[0].TimeSpan]},{"a":2,"n":"op_UnaryNegation","is":true,"t":8,"pi":[{"n":"t","pt":$n[0].TimeSpan,"ps":0}],"tpc":0,"def":function (t) { return System.TimeSpan.neg(t); },"rt":$n[0].TimeSpan,"p":[$n[0].TimeSpan]},{"a":2,"n":"op_UnaryPlus","is":true,"t":8,"pi":[{"n":"t","pt":$n[0].TimeSpan,"ps":0}],"tpc":0,"def":function (t) { return System.TimeSpan.plus(t); },"rt":$n[0].TimeSpan,"p":[$n[0].TimeSpan]},{"a":2,"n":"Days","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Days","t":8,"tpc":0,"def":function () { return getDays(); },"rt":$n[0].Int32}},{"a":2,"n":"Hours","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Hours","t":8,"tpc":0,"def":function () { return getHours(); },"rt":$n[0].Int32}},{"a":2,"n":"Milliseconds","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Milliseconds","t":8,"tpc":0,"def":function () { return getMilliseconds(); },"rt":$n[0].Int32}},{"a":2,"n":"Minutes","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Minutes","t":8,"tpc":0,"def":function () { return getMinutes(); },"rt":$n[0].Int32}},{"a":2,"n":"Seconds","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Seconds","t":8,"tpc":0,"def":function () { return getSeconds(); },"rt":$n[0].Int32}},{"a":2,"n":"Ticks","t":16,"rt":$n[0].Int64,"g":{"a":2,"n":"get_Ticks","t":8,"tpc":0,"def":function () { return getTicks(); },"rt":$n[0].Int64}},{"a":2,"n":"TotalDays","t":16,"rt":$n[0].Double,"g":{"a":2,"n":"get_TotalDays","t":8,"tpc":0,"def":function () { return getTotalDays(); },"rt":$n[0].Double}},{"a":2,"n":"TotalHours","t":16,"rt":$n[0].Double,"g":{"a":2,"n":"get_TotalHours","t":8,"tpc":0,"def":function () { return getTotalHours(); },"rt":$n[0].Double}},{"a":2,"n":"TotalMilliseconds","t":16,"rt":$n[0].Double,"g":{"a":2,"n":"get_TotalMilliseconds","t":8,"tpc":0,"def":function () { return getTotalMilliseconds(); },"rt":$n[0].Double}},{"a":2,"n":"TotalMinutes","t":16,"rt":$n[0].Double,"g":{"a":2,"n":"get_TotalMinutes","t":8,"tpc":0,"def":function () { return getTotalMinutes(); },"rt":$n[0].Double}},{"a":2,"n":"TotalSeconds","t":16,"rt":$n[0].Double,"g":{"a":2,"n":"get_TotalSeconds","t":8,"tpc":0,"def":function () { return getTotalSeconds(); },"rt":$n[0].Double}},{"a":2,"n":"MaxValue","is":true,"t":4,"rt":$n[0].TimeSpan,"sn":"maxValue","ro":true},{"a":2,"n":"MinValue","is":true,"t":4,"rt":$n[0].TimeSpan,"sn":"minValue","ro":true},{"a":2,"n":"TicksPerDay","is":true,"t":4,"rt":$n[0].Int64,"sn":"TicksPerDay"},{"a":2,"n":"TicksPerHour","is":true,"t":4,"rt":$n[0].Int64,"sn":"TicksPerHour"},{"a":2,"n":"TicksPerMillisecond","is":true,"t":4,"rt":$n[0].Int64,"sn":"TicksPerMillisecond"},{"a":2,"n":"TicksPerMinute","is":true,"t":4,"rt":$n[0].Int64,"sn":"TicksPerMinute"},{"a":2,"n":"TicksPerSecond","is":true,"t":4,"rt":$n[0].Int64,"sn":"TicksPerSecond"},{"a":2,"n":"Zero","is":true,"t":4,"rt":$n[0].TimeSpan,"sn":"zero","ro":true}]}; });
+    $m($n[0].Void, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"}]}; });
+    $m($n[7].CultureNotFoundException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"def":function (message) { return new System.Globalization.CultureNotFoundException(null, null, message); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"def":function (message, innerException) { return new System.Globalization.CultureNotFoundException(null, null, message, innerException); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].String],"pi":[{"n":"paramName","pt":$n[0].String,"ps":0},{"n":"message","pt":$n[0].String,"ps":1}],"def":function (paramName, message) { return new System.Globalization.CultureNotFoundException(paramName, null, message); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Int32,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"invalidCultureId","pt":$n[0].Int32,"ps":1},{"n":"innerException","pt":$n[0].Exception,"ps":2}],"def":function (message, invalidCultureId, innerException) { return new System.Globalization.CultureNotFoundException(null, null, message, innerException, invalidCultureId); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Int32,$n[0].String],"pi":[{"n":"paramName","pt":$n[0].String,"ps":0},{"n":"invalidCultureId","pt":$n[0].Int32,"ps":1},{"n":"message","pt":$n[0].String,"ps":2}],"def":function (paramName, invalidCultureId, message) { return new System.Globalization.CultureNotFoundException(paramName, null, message, null, invalidCultureId); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"invalidCultureName","pt":$n[0].String,"ps":1},{"n":"innerException","pt":$n[0].Exception,"ps":2}],"def":function (message, invalidCultureName, innerException) { return new System.Globalization.CultureNotFoundException(null, invalidCultureName, message, innerException); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].String,$n[0].String],"pi":[{"n":"paramName","pt":$n[0].String,"ps":0},{"n":"invalidCultureName","pt":$n[0].String,"ps":1},{"n":"message","pt":$n[0].String,"ps":2}],"def":function (paramName, invalidCultureName, message) { return new System.Globalization.CultureNotFoundException(paramName, invalidCultureName, message); }},{"a":2,"n":"InvalidCultureId","t":16,"rt":$n[0].Nullable$1(System.Int32),"g":{"a":2,"n":"get_InvalidCultureId","t":8,"tpc":0,"def":function () { return getInvalidCultureId(); },"rt":$n[0].Nullable$1(System.Int32)}},{"a":2,"n":"InvalidCultureName","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_InvalidCultureName","t":8,"tpc":0,"def":function () { return getInvalidCultureName(); },"rt":$n[0].String}}]}; });
+    $m($n[7].CultureInfo, function () { return {"att":1048833,"a":2,"m":[{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"name","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":"Clone","t":8,"sn":"clone","rt":$n[0].Object},{"a":2,"n":"CreateSpecificCulture","is":true,"t":8,"pi":[{"n":"name","pt":$n[0].String,"ps":0}],"sn":"getCultureInfo","rt":$n[7].CultureInfo,"p":[$n[0].String]},{"a":2,"n":"GetCultureInfo","is":true,"t":8,"pi":[{"n":"name","pt":$n[0].String,"ps":0}],"sn":"getCultureInfo","rt":$n[7].CultureInfo,"p":[$n[0].String]},{"a":2,"n":"GetCultures","is":true,"t":8,"sn":"getCultures","rt":System.Array.type(System.Globalization.CultureInfo)},{"a":2,"n":"GetFormat","t":8,"pi":[{"n":"formatType","pt":Function,"ps":0}],"sn":"getFormat","rt":$n[0].Object,"p":[Function]},{"a":2,"n":"CurrentCulture","is":true,"t":16,"rt":$n[7].CultureInfo,"g":{"a":2,"n":"get_CurrentCulture","is":true,"t":8,"tpc":0,"def":function () { return this.getCurrentCulture(); },"rt":$n[7].CultureInfo},"s":{"a":2,"n":"set_CurrentCulture","is":true,"t":8,"pi":[{"n":"value","pt":$n[7].CultureInfo,"ps":0}],"tpc":0,"def":function (value) { return this.setCurrentCulture(value); },"rt":$n[0].Void,"p":[$n[7].CultureInfo]}},{"a":2,"n":"DateTimeFormat","t":16,"rt":$n[7].DateTimeFormatInfo,"g":{"a":2,"n":"get_DateTimeFormat","t":8,"rt":$n[7].DateTimeFormatInfo,"fg":"dateTimeFormat"},"s":{"a":2,"n":"set_DateTimeFormat","t":8,"p":[$n[7].DateTimeFormatInfo],"rt":$n[0].Void,"fs":"dateTimeFormat"},"fn":"dateTimeFormat"},{"a":2,"n":"EnglishName","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_EnglishName","t":8,"rt":$n[0].String,"fg":"englishName"},"s":{"a":2,"n":"set_EnglishName","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"englishName"},"fn":"englishName"},{"a":2,"n":"InvariantCulture","is":true,"t":16,"rt":$n[7].CultureInfo,"g":{"a":2,"n":"get_InvariantCulture","t":8,"rt":$n[7].CultureInfo,"fg":"invariantCulture","is":true},"fn":"invariantCulture"},{"a":2,"n":"Name","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_Name","t":8,"rt":$n[0].String,"fg":"name"},"fn":"name"},{"a":2,"n":"NativeName","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_NativeName","t":8,"rt":$n[0].String,"fg":"nativeName"},"s":{"a":2,"n":"set_NativeName","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"nativeName"},"fn":"nativeName"},{"a":2,"n":"NumberFormat","t":16,"rt":$n[7].NumberFormatInfo,"g":{"a":2,"n":"get_NumberFormat","t":8,"rt":$n[7].NumberFormatInfo,"fg":"numberFormat"},"s":{"a":2,"n":"set_NumberFormat","t":8,"p":[$n[7].NumberFormatInfo],"rt":$n[0].Void,"fs":"numberFormat"},"fn":"numberFormat"}]}; });
+    $m($n[7].DateTimeFormatInfo, function () { return {"att":1048833,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"Clone","t":8,"sn":"clone","rt":$n[0].Object},{"a":2,"n":"GetAbbreviatedDayName","t":8,"pi":[{"n":"dayofweek","pt":$n[0].DayOfWeek,"ps":0}],"sn":"getAbbreviatedDayName","rt":$n[0].String,"p":[$n[0].DayOfWeek]},{"a":2,"n":"GetAbbreviatedMonthName","t":8,"pi":[{"n":"month","pt":$n[0].Int32,"ps":0}],"sn":"getAbbreviatedMonthName","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"GetAllDateTimePatterns","t":8,"sn":"getAllDateTimePatterns","rt":$n[0].Array.type(System.String)},{"a":2,"n":"GetAllDateTimePatterns","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0}],"sn":"getAllDateTimePatterns","rt":$n[0].Array.type(System.String),"p":[$n[0].String]},{"a":2,"n":"GetDayName","t":8,"pi":[{"n":"dayofweek","pt":$n[0].DayOfWeek,"ps":0}],"sn":"getDayName","rt":$n[0].String,"p":[$n[0].DayOfWeek]},{"a":2,"n":"GetFormat","t":8,"pi":[{"n":"formatType","pt":Function,"ps":0}],"sn":"getFormat","rt":$n[0].Object,"p":[Function]},{"a":2,"n":"GetMonthName","t":8,"pi":[{"n":"month","pt":$n[0].Int32,"ps":0}],"sn":"getMonthName","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"GetShortestDayName","t":8,"pi":[{"n":"dayOfWeek","pt":$n[0].DayOfWeek,"ps":0}],"sn":"getShortestDayName","rt":$n[0].String,"p":[$n[0].DayOfWeek]},{"a":2,"n":"AMDesignator","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_AMDesignator","t":8,"rt":$n[0].String,"fg":"amDesignator"},"s":{"a":2,"n":"set_AMDesignator","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"amDesignator"},"fn":"amDesignator"},{"a":2,"n":"AbbreviatedDayNames","t":16,"rt":$n[0].Array.type(System.String),"g":{"a":2,"n":"get_AbbreviatedDayNames","t":8,"rt":$n[0].Array.type(System.String),"fg":"abbreviatedDayNames"},"s":{"a":2,"n":"set_AbbreviatedDayNames","t":8,"p":[$n[0].Array.type(System.String)],"rt":$n[0].Void,"fs":"abbreviatedDayNames"},"fn":"abbreviatedDayNames"},{"a":2,"n":"AbbreviatedMonthGenitiveNames","t":16,"rt":$n[0].Array.type(System.String),"g":{"a":2,"n":"get_AbbreviatedMonthGenitiveNames","t":8,"rt":$n[0].Array.type(System.String),"fg":"abbreviatedMonthGenitiveNames"},"s":{"a":2,"n":"set_AbbreviatedMonthGenitiveNames","t":8,"p":[$n[0].Array.type(System.String)],"rt":$n[0].Void,"fs":"abbreviatedMonthGenitiveNames"},"fn":"abbreviatedMonthGenitiveNames"},{"a":2,"n":"AbbreviatedMonthNames","t":16,"rt":$n[0].Array.type(System.String),"g":{"a":2,"n":"get_AbbreviatedMonthNames","t":8,"rt":$n[0].Array.type(System.String),"fg":"abbreviatedMonthNames"},"s":{"a":2,"n":"set_AbbreviatedMonthNames","t":8,"p":[$n[0].Array.type(System.String)],"rt":$n[0].Void,"fs":"abbreviatedMonthNames"},"fn":"abbreviatedMonthNames"},{"a":2,"n":"CurrentInfo","is":true,"t":16,"rt":$n[7].DateTimeFormatInfo,"g":{"a":2,"n":"get_CurrentInfo","t":8,"rt":$n[7].DateTimeFormatInfo,"fg":"currentInfo","is":true},"fn":"currentInfo"},{"a":2,"n":"DateSeparator","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_DateSeparator","t":8,"rt":$n[0].String,"fg":"dateSeparator"},"s":{"a":2,"n":"set_DateSeparator","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"dateSeparator"},"fn":"dateSeparator"},{"a":2,"n":"DayNames","t":16,"rt":$n[0].Array.type(System.String),"g":{"a":2,"n":"get_DayNames","t":8,"rt":$n[0].Array.type(System.String),"fg":"dayNames"},"s":{"a":2,"n":"set_DayNames","t":8,"p":[$n[0].Array.type(System.String)],"rt":$n[0].Void,"fs":"dayNames"},"fn":"dayNames"},{"a":2,"n":"FirstDayOfWeek","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_FirstDayOfWeek","t":8,"rt":$n[0].Int32,"fg":"firstDayOfWeek"},"s":{"a":2,"n":"set_FirstDayOfWeek","t":8,"p":[$n[0].Int32],"rt":$n[0].Void,"fs":"firstDayOfWeek"},"fn":"firstDayOfWeek"},{"a":2,"n":"FullDateTimePattern","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_FullDateTimePattern","t":8,"rt":$n[0].String,"fg":"fullDateTimePattern"},"s":{"a":2,"n":"set_FullDateTimePattern","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"fullDateTimePattern"},"fn":"fullDateTimePattern"},{"a":2,"n":"InvariantInfo","is":true,"t":16,"rt":$n[7].DateTimeFormatInfo,"g":{"a":2,"n":"get_InvariantInfo","t":8,"rt":$n[7].DateTimeFormatInfo,"fg":"invariantInfo","is":true},"fn":"invariantInfo"},{"a":2,"n":"LongDatePattern","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_LongDatePattern","t":8,"rt":$n[0].String,"fg":"longDatePattern"},"s":{"a":2,"n":"set_LongDatePattern","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"longDatePattern"},"fn":"longDatePattern"},{"a":2,"n":"LongTimePattern","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_LongTimePattern","t":8,"rt":$n[0].String,"fg":"longTimePattern"},"s":{"a":2,"n":"set_LongTimePattern","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"longTimePattern"},"fn":"longTimePattern"},{"a":2,"n":"MonthDayPattern","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_MonthDayPattern","t":8,"rt":$n[0].String,"fg":"monthDayPattern"},"s":{"a":2,"n":"set_MonthDayPattern","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"monthDayPattern"},"fn":"monthDayPattern"},{"a":2,"n":"MonthGenitiveNames","t":16,"rt":$n[0].Array.type(System.String),"g":{"a":2,"n":"get_MonthGenitiveNames","t":8,"rt":$n[0].Array.type(System.String),"fg":"monthGenitiveNames"},"s":{"a":2,"n":"set_MonthGenitiveNames","t":8,"p":[$n[0].Array.type(System.String)],"rt":$n[0].Void,"fs":"monthGenitiveNames"},"fn":"monthGenitiveNames"},{"a":2,"n":"MonthNames","t":16,"rt":$n[0].Array.type(System.String),"g":{"a":2,"n":"get_MonthNames","t":8,"rt":$n[0].Array.type(System.String),"fg":"monthNames"},"s":{"a":2,"n":"set_MonthNames","t":8,"p":[$n[0].Array.type(System.String)],"rt":$n[0].Void,"fs":"monthNames"},"fn":"monthNames"},{"a":2,"n":"PMDesignator","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_PMDesignator","t":8,"rt":$n[0].String,"fg":"pmDesignator"},"s":{"a":2,"n":"set_PMDesignator","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"pmDesignator"},"fn":"pmDesignator"},{"a":2,"n":"RFC1123Pattern","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_RFC1123Pattern","t":8,"rt":$n[0].String,"fg":"rfc1123Pattern"},"s":{"a":2,"n":"set_RFC1123Pattern","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"rfc1123Pattern"},"fn":"rfc1123Pattern"},{"a":2,"n":"RoundtripFormat","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_RoundtripFormat","t":8,"rt":$n[0].String,"fg":"roundtripFormat"},"s":{"a":2,"n":"set_RoundtripFormat","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"roundtripFormat"},"fn":"roundtripFormat"},{"a":2,"n":"ShortDatePattern","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_ShortDatePattern","t":8,"rt":$n[0].String,"fg":"shortDatePattern"},"s":{"a":2,"n":"set_ShortDatePattern","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"shortDatePattern"},"fn":"shortDatePattern"},{"a":2,"n":"ShortTimePattern","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_ShortTimePattern","t":8,"rt":$n[0].String,"fg":"shortTimePattern"},"s":{"a":2,"n":"set_ShortTimePattern","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"shortTimePattern"},"fn":"shortTimePattern"},{"a":2,"n":"ShortestDayNames","t":16,"rt":$n[0].Array.type(System.String),"g":{"a":2,"n":"get_ShortestDayNames","t":8,"rt":$n[0].Array.type(System.String),"fg":"shortestDayNames"},"s":{"a":2,"n":"set_ShortestDayNames","t":8,"p":[$n[0].Array.type(System.String)],"rt":$n[0].Void,"fs":"shortestDayNames"},"fn":"shortestDayNames"},{"a":2,"n":"SortableDateTimePattern","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_SortableDateTimePattern","t":8,"rt":$n[0].String,"fg":"sortableDateTimePattern"},"s":{"a":2,"n":"set_SortableDateTimePattern","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"sortableDateTimePattern"},"fn":"sortableDateTimePattern"},{"a":2,"n":"TimeSeparator","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_TimeSeparator","t":8,"rt":$n[0].String,"fg":"timeSeparator"},"s":{"a":2,"n":"set_TimeSeparator","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"timeSeparator"},"fn":"timeSeparator"},{"a":2,"n":"UniversalSortableDateTimePattern","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_UniversalSortableDateTimePattern","t":8,"rt":$n[0].String,"fg":"universalSortableDateTimePattern"},"s":{"a":2,"n":"set_UniversalSortableDateTimePattern","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"universalSortableDateTimePattern"},"fn":"universalSortableDateTimePattern"},{"a":2,"n":"YearMonthPattern","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_YearMonthPattern","t":8,"rt":$n[0].String,"fg":"yearMonthPattern"},"s":{"a":2,"n":"set_YearMonthPattern","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"yearMonthPattern"},"fn":"yearMonthPattern"}]}; });
+    $m($n[7].NumberFormatInfo, function () { return {"att":1048833,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"Clone","t":8,"sn":"clone","rt":$n[0].Object},{"a":2,"n":"GetFormat","t":8,"pi":[{"n":"formatType","pt":Function,"ps":0}],"sn":"getFormat","rt":$n[0].Object,"p":[Function]},{"a":2,"n":"CurrencyDecimalDigits","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_CurrencyDecimalDigits","t":8,"rt":$n[0].Int32,"fg":"currencyDecimalDigits"},"s":{"a":2,"n":"set_CurrencyDecimalDigits","t":8,"p":[$n[0].Int32],"rt":$n[0].Void,"fs":"currencyDecimalDigits"},"fn":"currencyDecimalDigits"},{"a":2,"n":"CurrencyDecimalSeparator","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_CurrencyDecimalSeparator","t":8,"rt":$n[0].String,"fg":"currencyDecimalSeparator"},"s":{"a":2,"n":"set_CurrencyDecimalSeparator","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"currencyDecimalSeparator"},"fn":"currencyDecimalSeparator"},{"a":2,"n":"CurrencyGroupSeparator","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_CurrencyGroupSeparator","t":8,"rt":$n[0].String,"fg":"currencyGroupSeparator"},"s":{"a":2,"n":"set_CurrencyGroupSeparator","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"currencyGroupSeparator"},"fn":"currencyGroupSeparator"},{"a":2,"n":"CurrencyGroupSizes","t":16,"rt":$n[0].Array.type(System.Int32),"g":{"a":2,"n":"get_CurrencyGroupSizes","t":8,"rt":$n[0].Array.type(System.Int32),"fg":"currencyGroupSizes"},"s":{"a":2,"n":"set_CurrencyGroupSizes","t":8,"p":[$n[0].Array.type(System.Int32)],"rt":$n[0].Void,"fs":"currencyGroupSizes"},"fn":"currencyGroupSizes"},{"a":2,"n":"CurrencyNegativePattern","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_CurrencyNegativePattern","t":8,"rt":$n[0].Int32,"fg":"currencyNegativePattern"},"s":{"a":2,"n":"set_CurrencyNegativePattern","t":8,"p":[$n[0].Int32],"rt":$n[0].Void,"fs":"currencyNegativePattern"},"fn":"currencyNegativePattern"},{"a":2,"n":"CurrencyPositivePattern","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_CurrencyPositivePattern","t":8,"rt":$n[0].Int32,"fg":"currencyPositivePattern"},"s":{"a":2,"n":"set_CurrencyPositivePattern","t":8,"p":[$n[0].Int32],"rt":$n[0].Void,"fs":"currencyPositivePattern"},"fn":"currencyPositivePattern"},{"a":2,"n":"CurrencySymbol","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_CurrencySymbol","t":8,"rt":$n[0].String,"fg":"currencySymbol"},"s":{"a":2,"n":"set_CurrencySymbol","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"currencySymbol"},"fn":"currencySymbol"},{"a":2,"n":"CurrentInfo","is":true,"t":16,"rt":$n[7].NumberFormatInfo,"g":{"a":2,"n":"get_CurrentInfo","t":8,"rt":$n[7].NumberFormatInfo,"fg":"currentInfo","is":true},"fn":"currentInfo"},{"a":2,"n":"InvariantInfo","is":true,"t":16,"rt":$n[7].NumberFormatInfo,"g":{"a":2,"n":"get_InvariantInfo","t":8,"rt":$n[7].NumberFormatInfo,"fg":"invariantInfo","is":true},"fn":"invariantInfo"},{"a":2,"n":"NaNSymbol","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_NaNSymbol","t":8,"rt":$n[0].String,"fg":"nanSymbol"},"s":{"a":2,"n":"set_NaNSymbol","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"nanSymbol"},"fn":"nanSymbol"},{"a":2,"n":"NegativeInfinitySymbol","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_NegativeInfinitySymbol","t":8,"rt":$n[0].String,"fg":"negativeInfinitySymbol"},"s":{"a":2,"n":"set_NegativeInfinitySymbol","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"negativeInfinitySymbol"},"fn":"negativeInfinitySymbol"},{"a":2,"n":"NegativeSign","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_NegativeSign","t":8,"rt":$n[0].String,"fg":"negativeSign"},"s":{"a":2,"n":"set_NegativeSign","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"negativeSign"},"fn":"negativeSign"},{"a":2,"n":"NumberDecimalDigits","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_NumberDecimalDigits","t":8,"rt":$n[0].Int32,"fg":"numberDecimalDigits"},"s":{"a":2,"n":"set_NumberDecimalDigits","t":8,"p":[$n[0].Int32],"rt":$n[0].Void,"fs":"numberDecimalDigits"},"fn":"numberDecimalDigits"},{"a":2,"n":"NumberDecimalSeparator","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_NumberDecimalSeparator","t":8,"rt":$n[0].String,"fg":"numberDecimalSeparator"},"s":{"a":2,"n":"set_NumberDecimalSeparator","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"numberDecimalSeparator"},"fn":"numberDecimalSeparator"},{"a":2,"n":"NumberGroupSeparator","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_NumberGroupSeparator","t":8,"rt":$n[0].String,"fg":"numberGroupSeparator"},"s":{"a":2,"n":"set_NumberGroupSeparator","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"numberGroupSeparator"},"fn":"numberGroupSeparator"},{"a":2,"n":"NumberGroupSizes","t":16,"rt":$n[0].Array.type(System.Int32),"g":{"a":2,"n":"get_NumberGroupSizes","t":8,"rt":$n[0].Array.type(System.Int32),"fg":"numberGroupSizes"},"s":{"a":2,"n":"set_NumberGroupSizes","t":8,"p":[$n[0].Array.type(System.Int32)],"rt":$n[0].Void,"fs":"numberGroupSizes"},"fn":"numberGroupSizes"},{"a":2,"n":"PercentDecimalDigits","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_PercentDecimalDigits","t":8,"rt":$n[0].Int32,"fg":"percentDecimalDigits"},"s":{"a":2,"n":"set_PercentDecimalDigits","t":8,"p":[$n[0].Int32],"rt":$n[0].Void,"fs":"percentDecimalDigits"},"fn":"percentDecimalDigits"},{"a":2,"n":"PercentDecimalSeparator","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_PercentDecimalSeparator","t":8,"rt":$n[0].String,"fg":"percentDecimalSeparator"},"s":{"a":2,"n":"set_PercentDecimalSeparator","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"percentDecimalSeparator"},"fn":"percentDecimalSeparator"},{"a":2,"n":"PercentGroupSeparator","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_PercentGroupSeparator","t":8,"rt":$n[0].String,"fg":"percentGroupSeparator"},"s":{"a":2,"n":"set_PercentGroupSeparator","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"percentGroupSeparator"},"fn":"percentGroupSeparator"},{"a":2,"n":"PercentGroupSizes","t":16,"rt":$n[0].Array.type(System.Int32),"g":{"a":2,"n":"get_PercentGroupSizes","t":8,"rt":$n[0].Array.type(System.Int32),"fg":"percentGroupSizes"},"s":{"a":2,"n":"set_PercentGroupSizes","t":8,"p":[$n[0].Array.type(System.Int32)],"rt":$n[0].Void,"fs":"percentGroupSizes"},"fn":"percentGroupSizes"},{"a":2,"n":"PercentNegativePattern","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_PercentNegativePattern","t":8,"rt":$n[0].Int32,"fg":"percentNegativePattern"},"s":{"a":2,"n":"set_PercentNegativePattern","t":8,"p":[$n[0].Int32],"rt":$n[0].Void,"fs":"percentNegativePattern"},"fn":"percentNegativePattern"},{"a":2,"n":"PercentPositivePattern","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_PercentPositivePattern","t":8,"rt":$n[0].Int32,"fg":"percentPositivePattern"},"s":{"a":2,"n":"set_PercentPositivePattern","t":8,"p":[$n[0].Int32],"rt":$n[0].Void,"fs":"percentPositivePattern"},"fn":"percentPositivePattern"},{"a":2,"n":"PercentSymbol","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_PercentSymbol","t":8,"rt":$n[0].String,"fg":"percentSymbol"},"s":{"a":2,"n":"set_PercentSymbol","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"percentSymbol"},"fn":"percentSymbol"},{"a":2,"n":"PositiveInfinitySymbol","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_PositiveInfinitySymbol","t":8,"rt":$n[0].String,"fg":"positiveInfinitySymbol"},"s":{"a":2,"n":"set_PositiveInfinitySymbol","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"positiveInfinitySymbol"},"fn":"positiveInfinitySymbol"},{"a":2,"n":"PositiveSign","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_PositiveSign","t":8,"rt":$n[0].String,"fg":"positiveSign"},"s":{"a":2,"n":"set_PositiveSign","t":8,"p":[$n[0].String],"rt":$n[0].Void,"fs":"positiveSign"},"fn":"positiveSign"}]}; });
+    $m($n[5].Timer, function () { return {"att":1048833,"a":2,"m":[{"a":2,"n":".ctor","t":1,"p":[Function],"pi":[{"n":"callback","pt":Function,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[Function,$n[0].Object,$n[0].Int32,$n[0].Int32],"pi":[{"n":"callback","pt":Function,"ps":0},{"n":"state","pt":$n[0].Object,"ps":1},{"n":"dueTime","pt":$n[0].Int32,"ps":2},{"n":"period","pt":$n[0].Int32,"ps":3}],"sn":"$ctor1"},{"a":2,"n":".ctor","t":1,"p":[Function,$n[0].Object,$n[0].Int64,$n[0].Int64],"pi":[{"n":"callback","pt":Function,"ps":0},{"n":"state","pt":$n[0].Object,"ps":1},{"n":"dueTime","pt":$n[0].Int64,"ps":2},{"n":"period","pt":$n[0].Int64,"ps":3}],"sn":"$ctor2"},{"a":2,"n":".ctor","t":1,"p":[Function,$n[0].Object,$n[0].TimeSpan,$n[0].TimeSpan],"pi":[{"n":"callback","pt":Function,"ps":0},{"n":"state","pt":$n[0].Object,"ps":1},{"n":"dueTime","pt":$n[0].TimeSpan,"ps":2},{"n":"period","pt":$n[0].TimeSpan,"ps":3}],"sn":"$ctor3"},{"a":2,"n":".ctor","t":1,"p":[Function,$n[0].Object,$n[0].UInt32,$n[0].UInt32],"pi":[{"n":"callback","pt":Function,"ps":0},{"n":"state","pt":$n[0].Object,"ps":1},{"n":"dueTime","pt":$n[0].UInt32,"ps":2},{"n":"period","pt":$n[0].UInt32,"ps":3}],"sn":"$ctor4"},{"a":2,"n":"Change","t":8,"pi":[{"n":"dueTime","pt":$n[0].Int32,"ps":0},{"n":"period","pt":$n[0].Int32,"ps":1}],"sn":"change","rt":$n[0].Boolean,"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Change","t":8,"pi":[{"n":"dueTime","pt":$n[0].Int64,"ps":0},{"n":"period","pt":$n[0].Int64,"ps":1}],"sn":"change$1","rt":$n[0].Boolean,"p":[$n[0].Int64,$n[0].Int64]},{"a":2,"n":"Change","t":8,"pi":[{"n":"dueTime","pt":$n[0].TimeSpan,"ps":0},{"n":"period","pt":$n[0].TimeSpan,"ps":1}],"sn":"change$2","rt":$n[0].Boolean,"p":[$n[0].TimeSpan,$n[0].TimeSpan]},{"a":2,"n":"Change","t":8,"pi":[{"n":"dueTime","pt":$n[0].UInt32,"ps":0},{"n":"period","pt":$n[0].UInt32,"ps":1}],"sn":"change$3","rt":$n[0].Boolean,"p":[$n[0].UInt32,$n[0].UInt32]},{"a":1,"n":"ChangeTimer","t":8,"pi":[{"n":"dueTime","pt":$n[0].Int64,"ps":0},{"n":"period","pt":$n[0].Int64,"ps":1}],"sn":"changeTimer","rt":$n[0].Boolean,"p":[$n[0].Int64,$n[0].Int64]},{"a":1,"n":"ClearTimeout","t":8,"sn":"clearTimeout","rt":$n[0].Void},{"a":2,"n":"Dispose","t":8,"sn":"dispose","rt":$n[0].Void},{"a":1,"n":"HandleCallback","t":8,"sn":"handleCallback","rt":$n[0].Void},{"a":1,"n":"RunTimer","t":8,"pi":[{"n":"period","pt":$n[0].Int64,"ps":0},{"n":"checkDispose","dv":true,"o":true,"pt":$n[0].Boolean,"ps":1}],"sn":"runTimer","rt":$n[0].Boolean,"p":[$n[0].Int64,$n[0].Boolean]},{"a":1,"n":"TimerSetup","t":8,"pi":[{"n":"callback","pt":Function,"ps":0},{"n":"state","pt":$n[0].Object,"ps":1},{"n":"dueTime","pt":$n[0].Int64,"ps":2},{"n":"period","pt":$n[0].Int64,"ps":3}],"sn":"timerSetup","rt":$n[0].Boolean,"p":[Function,$n[0].Object,$n[0].Int64,$n[0].Int64]},{"a":1,"n":"EXC_DISPOSED","is":true,"t":4,"rt":$n[0].String,"sn":"EXC_DISPOSED"},{"a":1,"n":"EXC_LESS","is":true,"t":4,"rt":$n[0].String,"sn":"EXC_LESS"},{"a":1,"n":"EXC_MORE","is":true,"t":4,"rt":$n[0].String,"sn":"EXC_MORE"},{"a":1,"n":"MAX_SUPPORTED_TIMEOUT","is":true,"t":4,"rt":$n[0].UInt32,"sn":"MAX_SUPPORTED_TIMEOUT"},{"a":1,"n":"disposed","t":4,"rt":$n[0].Boolean,"sn":"disposed"},{"a":4,"n":"dueTime","t":4,"rt":$n[0].Int64,"sn":"dueTime"},{"a":1,"n":"id","t":4,"rt":$n[0].Nullable$1(System.Int32),"sn":"id"},{"a":4,"n":"period","t":4,"rt":$n[0].Int64,"sn":"period"},{"a":1,"n":"state","t":4,"rt":$n[0].Object,"sn":"state"},{"a":1,"n":"timerCallback","t":4,"rt":Function,"sn":"timerCallback"}]}; });
+    $m($n[5].CancellationToken, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Boolean],"pi":[{"n":"canceled","pt":$n[0].Boolean,"ps":0}],"sn":"ctor"},{"a":2,"n":"Register","t":8,"pi":[{"n":"callback","pt":Function,"ps":0}],"sn":"register","rt":$n[5].CancellationTokenRegistration,"p":[Function]},{"a":2,"n":"Register","t":8,"pi":[{"n":"callback","pt":Function,"ps":0},{"n":"useSynchronizationContext","pt":$n[0].Boolean,"ps":1}],"tpc":0,"def":function (callback, useSynchronizationContext) { return this.register(callback); },"rt":$n[5].CancellationTokenRegistration,"p":[Function,$n[0].Boolean]},{"a":2,"n":"Register","t":8,"pi":[{"n":"callback","pt":Function,"ps":0},{"n":"state","pt":$n[0].Object,"ps":1}],"sn":"register","rt":$n[5].CancellationTokenRegistration,"p":[Function,$n[0].Object]},{"a":2,"n":"Register","t":8,"pi":[{"n":"callback","pt":Function,"ps":0},{"n":"state","pt":$n[0].Object,"ps":1},{"n":"useSynchronizationContext","pt":$n[0].Boolean,"ps":2}],"tpc":0,"def":function (callback, state, useSynchronizationContext) { return this.register(callback, state); },"rt":$n[5].CancellationTokenRegistration,"p":[Function,$n[0].Object,$n[0].Boolean]},{"a":2,"n":"ThrowIfCancellationRequested","t":8,"sn":"throwIfCancellationRequested","rt":$n[0].Void},{"a":2,"n":"CanBeCanceled","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_CanBeCanceled","t":8,"tpc":0,"def":function () { return getCanBeCanceled(); },"rt":$n[0].Boolean}},{"a":2,"n":"IsCancellationRequested","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsCancellationRequested","t":8,"tpc":0,"def":function () { return getIsCancellationRequested(); },"rt":$n[0].Boolean}},{"a":2,"n":"None","is":true,"t":16,"rt":$n[5].CancellationToken,"g":{"a":2,"n":"get_None","t":8,"rt":$n[5].CancellationToken,"fg":"none","is":true},"fn":"none"}]}; });
+    $m($n[5].CancellationTokenRegistration, function () { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"Dispose","t":8,"sn":"dispose","rt":$n[0].Void},{"a":2,"n":"Equals","t":8,"pi":[{"n":"other","pt":$n[5].CancellationTokenRegistration,"ps":0}],"sn":"equalsT","rt":$n[0].Boolean,"p":[$n[5].CancellationTokenRegistration]},{"a":2,"n":"op_Equality","is":true,"t":8,"pi":[{"n":"left","pt":$n[5].CancellationTokenRegistration,"ps":0},{"n":"right","pt":$n[5].CancellationTokenRegistration,"ps":1}],"tpc":0,"def":function (left, right) { return Bridge.equals(left, right); },"rt":$n[0].Boolean,"p":[$n[5].CancellationTokenRegistration,$n[5].CancellationTokenRegistration]},{"a":2,"n":"op_Inequality","is":true,"t":8,"pi":[{"n":"left","pt":$n[5].CancellationTokenRegistration,"ps":0},{"n":"right","pt":$n[5].CancellationTokenRegistration,"ps":1}],"tpc":0,"def":function (left, right) { return !Bridge.equals(left, right); },"rt":$n[0].Boolean,"p":[$n[5].CancellationTokenRegistration,$n[5].CancellationTokenRegistration]}]}; });
+    $m($n[5].CancellationTokenSource, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"millisecondsDelay","pt":$n[0].Int32,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].TimeSpan],"pi":[{"n":"delay","pt":$n[0].TimeSpan,"ps":0}],"def":function (delay) { return new System.Threading.CancellationTokenSource(delay.ticks / 10000); }},{"a":2,"n":"Cancel","t":8,"sn":"cancel","rt":$n[0].Void},{"a":2,"n":"Cancel","t":8,"pi":[{"n":"throwOnFirstException","pt":$n[0].Boolean,"ps":0}],"sn":"cancel","rt":$n[0].Void,"p":[$n[0].Boolean]},{"a":2,"n":"CancelAfter","t":8,"pi":[{"n":"millisecondsDelay","pt":$n[0].Int32,"ps":0}],"sn":"cancelAfter","rt":$n[0].Void,"p":[$n[0].Int32]},{"a":2,"n":"CancelAfter","t":8,"pi":[{"n":"delay","pt":$n[0].TimeSpan,"ps":0}],"tpc":0,"def":function (delay) { return this.cancelAfter(delay.ticks / 10000); },"rt":$n[0].Void,"p":[$n[0].TimeSpan]},{"a":2,"n":"CreateLinkedTokenSource","is":true,"t":8,"pi":[{"n":"tokens","ip":true,"pt":System.Array.type(System.Threading.CancellationToken),"ps":0}],"tpc":0,"def":function (tokens) { return System.Threading.CancellationTokenSource.createLinked(tokens); },"rt":$n[5].CancellationTokenSource,"p":[System.Array.type(System.Threading.CancellationToken)]},{"a":2,"n":"CreateLinkedTokenSource","is":true,"t":8,"pi":[{"n":"token1","pt":$n[5].CancellationToken,"ps":0},{"n":"token2","pt":$n[5].CancellationToken,"ps":1}],"sn":"createLinked","rt":$n[5].CancellationTokenSource,"p":[$n[5].CancellationToken,$n[5].CancellationToken]},{"a":2,"n":"Dispose","t":8,"sn":"dispose","rt":$n[0].Void},{"a":2,"n":"IsCancellationRequested","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsCancellationRequested","t":8,"rt":$n[0].Boolean,"fg":"isCancellationRequested"},"s":{"a":1,"n":"set_IsCancellationRequested","t":8,"p":[$n[0].Boolean],"rt":$n[0].Void,"fs":"isCancellationRequested"},"fn":"isCancellationRequested"},{"a":2,"n":"Token","t":16,"rt":$n[5].CancellationToken,"g":{"a":2,"n":"get_Token","t":8,"rt":$n[5].CancellationToken,"fg":"token"},"s":{"a":1,"n":"set_Token","t":8,"p":[$n[5].CancellationToken],"rt":$n[0].Void,"fs":"token"},"fn":"token"}]}; });
+    $m($n[8].Task, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"p":[Function],"pi":[{"n":"action","pt":Function,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[Function,$n[0].Object],"pi":[{"n":"action","pt":Function,"ps":0},{"n":"state","pt":$n[0].Object,"ps":1}],"sn":"ctor"},{"a":2,"n":"Complete","t":8,"pi":[{"n":"result","dv":null,"o":true,"pt":$n[0].Object,"ps":0}],"sn":"complete","rt":$n[0].Void,"p":[$n[0].Object]},{"a":2,"n":"ContinueWith","t":8,"pi":[{"n":"continuationAction","pt":Function,"ps":0}],"sn":"continueWith","rt":$n[8].Task,"p":[Function]},{"a":2,"n":"ContinueWith","t":8,"pi":[{"n":"continuationFunction","pt":Function,"ps":0}],"tpc":1,"tprm":["TResult"],"sn":"continueWith","rt":$n[8].Task$1,"p":[Function]},{"a":2,"n":"Delay","is":true,"t":8,"pi":[{"n":"millisecondDelay","pt":$n[0].Int32,"ps":0}],"sn":"delay","rt":$n[8].Task,"p":[$n[0].Int32]},{"a":2,"n":"Dispose","t":8,"sn":"dispose","rt":$n[0].Void},{"a":2,"n":"FromCallback","is":true,"t":8,"pi":[{"n":"target","pt":$n[0].Object,"ps":0},{"n":"method","pt":$n[0].String,"ps":1},{"n":"otherArguments","ip":true,"pt":$n[0].Array.type(System.Object),"ps":2}],"sn":"fromCallback","rt":$n[8].Task,"p":[$n[0].Object,$n[0].String,$n[0].Array.type(System.Object)]},{"a":2,"n":"FromCallback","is":true,"t":8,"pi":[{"n":"target","pt":$n[0].Object,"ps":0},{"n":"method","pt":$n[0].String,"ps":1},{"n":"otherArguments","ip":true,"pt":$n[0].Array.type(System.Object),"ps":2}],"tpc":1,"tprm":["TResult"],"sn":"fromCallback","rt":$n[8].Task$1,"p":[$n[0].Object,$n[0].String,$n[0].Array.type(System.Object)]},{"a":2,"n":"FromCallbackResult","is":true,"t":8,"pi":[{"n":"target","pt":$n[0].Object,"ps":0},{"n":"method","pt":$n[0].String,"ps":1},{"n":"resultHandler","pt":Function,"ps":2},{"n":"otherArguments","ip":true,"pt":$n[0].Array.type(System.Object),"ps":3}],"sn":"fromCallbackResult","rt":$n[8].Task,"p":[$n[0].Object,$n[0].String,Function,$n[0].Array.type(System.Object)]},{"a":2,"n":"FromCallbackResult","is":true,"t":8,"pi":[{"n":"target","pt":$n[0].Object,"ps":0},{"n":"method","pt":$n[0].String,"ps":1},{"n":"resultHandler","pt":Function,"ps":2},{"n":"otherArguments","ip":true,"pt":$n[0].Array.type(System.Object),"ps":3}],"tpc":1,"tprm":["TResult"],"sn":"fromCallbackResult","rt":$n[8].Task$1,"p":[$n[0].Object,$n[0].String,Function,$n[0].Array.type(System.Object)]},{"a":2,"n":"FromPromise","is":true,"t":8,"pi":[{"n":"promise","pt":Bridge.IPromise,"ps":0}],"sn":"fromPromise","rt":$n[8].Task$1,"p":[Bridge.IPromise]},{"a":2,"n":"FromPromise","is":true,"t":8,"pi":[{"n":"promise","pt":Bridge.IPromise,"ps":0},{"n":"resultHandler","pt":Function,"ps":1}],"tpc":1,"tprm":["TResult"],"sn":"fromPromise","rt":$n[8].Task$1,"p":[Bridge.IPromise,Function]},{"a":2,"n":"FromPromise","is":true,"t":8,"pi":[{"n":"promise","pt":Bridge.IPromise,"ps":0},{"n":"resultHandler","pt":Function,"ps":1},{"n":"errorHandler","pt":Function,"ps":2}],"tpc":1,"tprm":["TResult"],"sn":"fromPromise","rt":$n[8].Task$1,"p":[Bridge.IPromise,Function,Function]},{"a":2,"n":"FromPromise","is":true,"t":8,"pi":[{"n":"promise","pt":Bridge.IPromise,"ps":0},{"n":"resultHandler","pt":Function,"ps":1},{"n":"errorHandler","pt":Function,"ps":2},{"n":"progressHandler","pt":Function,"ps":3}],"tpc":1,"tprm":["TResult"],"sn":"fromPromise","rt":$n[8].Task$1,"p":[Bridge.IPromise,Function,Function,Function]},{"a":2,"n":"FromResult","is":true,"t":8,"pi":[{"n":"result","pt":System.Object,"ps":0}],"tpc":1,"tprm":["TResult"],"sn":"fromResult","rt":$n[8].Task$1,"p":[System.Object]},{"a":2,"n":"GetAwaiter","t":8,"sn":"getAwaiter","rt":$n[8].TaskAwaiter},{"a":2,"n":"Run","is":true,"t":8,"pi":[{"n":"action","pt":Function,"ps":0}],"sn":"run","rt":$n[8].Task,"p":[Function]},{"a":2,"n":"Run","is":true,"t":8,"pi":[{"n":"function","pt":Function,"ps":0}],"tpc":1,"tprm":["TResult"],"sn":"run","rt":$n[8].Task$1,"p":[Function]},{"a":2,"n":"Start","t":8,"sn":"start","rt":$n[0].Void},{"a":2,"n":"WhenAll","is":true,"t":8,"pi":[{"n":"tasks","pt":$n[3].IEnumerable$1(System.Threading.Tasks.Task),"ps":0}],"sn":"whenAll","rt":$n[8].Task,"p":[$n[3].IEnumerable$1(System.Threading.Tasks.Task)]},{"a":2,"n":"WhenAll","is":true,"t":8,"pi":[{"n":"tasks","pt":$n[3].IEnumerable$1(System.Threading.Tasks.Task$1),"ps":0}],"tpc":1,"tprm":["TResult"],"sn":"whenAll","rt":$n[8].Task$1,"p":[$n[3].IEnumerable$1(System.Threading.Tasks.Task$1)]},{"a":2,"n":"WhenAll","is":true,"t":8,"pi":[{"n":"tasks","ip":true,"pt":System.Array.type(System.Threading.Tasks.Task),"ps":0}],"sn":"whenAll","rt":$n[8].Task,"p":[System.Array.type(System.Threading.Tasks.Task)]},{"a":2,"n":"WhenAll","is":true,"t":8,"pi":[{"n":"tasks","ip":true,"pt":System.Array.type(System.Threading.Tasks.Task$1),"ps":0}],"tpc":1,"tprm":["TResult"],"sn":"whenAll","rt":$n[8].Task$1,"p":[System.Array.type(System.Threading.Tasks.Task$1)]},{"a":2,"n":"WhenAny","is":true,"t":8,"pi":[{"n":"tasks","pt":$n[3].IEnumerable$1(System.Threading.Tasks.Task),"ps":0}],"sn":"whenAny","rt":$n[8].Task$1,"p":[$n[3].IEnumerable$1(System.Threading.Tasks.Task)]},{"a":2,"n":"WhenAny","is":true,"t":8,"pi":[{"n":"tasks","pt":$n[3].IEnumerable$1(System.Threading.Tasks.Task$1),"ps":0}],"tpc":1,"tprm":["TResult"],"sn":"whenAny","rt":$n[8].Task$1,"p":[$n[3].IEnumerable$1(System.Threading.Tasks.Task$1)]},{"a":2,"n":"WhenAny","is":true,"t":8,"pi":[{"n":"tasks","ip":true,"pt":System.Array.type(System.Threading.Tasks.Task),"ps":0}],"sn":"whenAny","rt":$n[8].Task$1,"p":[System.Array.type(System.Threading.Tasks.Task)]},{"a":2,"n":"WhenAny","is":true,"t":8,"pi":[{"n":"tasks","ip":true,"pt":System.Array.type(System.Threading.Tasks.Task$1),"ps":0}],"tpc":1,"tprm":["TResult"],"sn":"whenAny","rt":$n[8].Task$1,"p":[System.Array.type(System.Threading.Tasks.Task$1)]},{"a":2,"n":"Exception","t":16,"rt":$n[0].AggregateException,"g":{"a":2,"n":"get_Exception","t":8,"rt":$n[0].AggregateException,"fg":"exception"},"fn":"exception"},{"a":2,"n":"IsCanceled","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsCanceled","t":8,"tpc":0,"def":function () { return isCanceled(); },"rt":$n[0].Boolean}},{"a":2,"n":"IsCompleted","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsCompleted","t":8,"tpc":0,"def":function () { return isCompleted(); },"rt":$n[0].Boolean}},{"a":2,"n":"IsFaulted","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsFaulted","t":8,"tpc":0,"def":function () { return isFaulted(); },"rt":$n[0].Boolean}},{"a":2,"n":"Status","t":16,"rt":$n[8].TaskStatus,"g":{"a":2,"n":"get_Status","t":8,"rt":$n[8].TaskStatus,"fg":"status"},"fn":"status"}]}; });
+    $m($n[8].Task$1, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"p":[Function],"pi":[{"n":"function","pt":Function,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[Function,$n[0].Object],"pi":[{"n":"function","pt":Function,"ps":0},{"n":"state","pt":$n[0].Object,"ps":1}],"sn":"ctor"},{"a":2,"n":"ContinueWith","t":8,"pi":[{"n":"continuationAction","pt":Function,"ps":0}],"sn":"continueWith","rt":$n[8].Task,"p":[Function]},{"a":2,"n":"ContinueWith","t":8,"pi":[{"n":"continuationFunction","pt":Function,"ps":0}],"sn":"continueWith","rt":$n[8].Task$1,"p":[Function]},{"a":2,"n":"GetAwaiter","t":8,"sn":"getAwaiter","rt":$n[8].Task(System.Object)},{"a":2,"n":"SetResult","t":8,"pi":[{"n":"result","pt":System.Object,"ps":0}],"sn":"setResult","rt":$n[0].Void,"p":[System.Object]},{"a":2,"n":"Result","t":16,"rt":System.Object,"g":{"a":2,"n":"get_Result","t":8,"tpc":0,"def":function () { return getResult(); },"rt":System.Object}}]}; });
+    $m($n[8].TaskCanceledException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[8].Task],"pi":[{"n":"task","pt":$n[8].Task,"ps":0}],"def":function (task) { return new System.Threading.Tasks.TaskCanceledException(null, task); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"def":function (message, innerException) { return new System.Threading.Tasks.TaskCanceledException(message, null, innerException); }},{"a":2,"n":"Task","t":16,"rt":$n[8].Task,"g":{"a":2,"n":"get_Task","t":8,"rt":$n[8].Task,"fg":"task"},"s":{"a":1,"n":"set_Task","t":8,"p":[$n[8].Task],"rt":$n[0].Void,"fs":"task"},"fn":"task"}]}; });
+    $m($n[8].TaskCompletionSource, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"SetCanceled","t":8,"sn":"setCanceled","rt":$n[0].Void},{"a":2,"n":"SetException","t":8,"pi":[{"n":"exceptions","pt":$n[3].IEnumerable$1(System.Exception),"ps":0}],"sn":"setException","rt":$n[0].Void,"p":[$n[3].IEnumerable$1(System.Exception)]},{"a":2,"n":"SetException","t":8,"pi":[{"n":"exception","pt":$n[0].Exception,"ps":0}],"sn":"setException","rt":$n[0].Void,"p":[$n[0].Exception]},{"a":2,"n":"SetResult","t":8,"pi":[{"n":"result","pt":System.Object,"ps":0}],"sn":"setResult","rt":$n[0].Void,"p":[System.Object]},{"a":2,"n":"TrySetCanceled","t":8,"sn":"trySetCanceled","rt":$n[0].Boolean},{"a":2,"n":"TrySetException","t":8,"pi":[{"n":"exceptions","pt":$n[3].IEnumerable$1(System.Exception),"ps":0}],"sn":"trySetException","rt":$n[0].Boolean,"p":[$n[3].IEnumerable$1(System.Exception)]},{"a":2,"n":"TrySetException","t":8,"pi":[{"n":"exception","pt":$n[0].Exception,"ps":0}],"sn":"trySetException","rt":$n[0].Boolean,"p":[$n[0].Exception]},{"a":2,"n":"TrySetResult","t":8,"pi":[{"n":"result","pt":System.Object,"ps":0}],"sn":"trySetResult","rt":$n[0].Boolean,"p":[System.Object]},{"a":2,"n":"Task","t":16,"rt":$n[8].Task$1,"g":{"a":2,"n":"get_Task","t":8,"rt":$n[8].Task$1,"fg":"task"},"fn":"task"}]}; });
+    $m($n[6].StringBuilder, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"capacity","pt":$n[0].Int32,"ps":0}],"def":function (capacity) { return new System.Text.StringBuilder("", capacity); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Int32],"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"capacity","pt":$n[0].Int32,"ps":1}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Int32,$n[0].Int32],"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1},{"n":"length","pt":$n[0].Int32,"ps":2}],"sn":"ctor"},{"a":2,"n":"Append","t":8,"pi":[{"n":"value","pt":$n[0].Boolean,"ps":0}],"sn":"append","rt":$n[6].StringBuilder,"p":[$n[0].Boolean]},{"a":2,"n":"Append","t":8,"pi":[{"n":"value","pt":$n[0].Byte,"ps":0}],"sn":"append","rt":$n[6].StringBuilder,"p":[$n[0].Byte]},{"a":2,"n":"Append","t":8,"pi":[{"n":"value","pt":$n[0].Char,"ps":0}],"tpc":0,"def":function (value) { return append(String.fromCharCode(value)); },"rt":$n[6].StringBuilder,"p":[$n[0].Char]},{"a":2,"n":"Append","t":8,"pi":[{"n":"value","pt":$n[0].Decimal,"ps":0}],"sn":"append","rt":$n[6].StringBuilder,"p":[$n[0].Decimal]},{"a":2,"n":"Append","t":8,"pi":[{"n":"value","pt":$n[0].Double,"ps":0}],"sn":"append","rt":$n[6].StringBuilder,"p":[$n[0].Double]},{"a":2,"n":"Append","t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"sn":"append","rt":$n[6].StringBuilder,"p":[$n[0].Int32]},{"a":2,"n":"Append","t":8,"pi":[{"n":"value","pt":$n[0].Int64,"ps":0}],"tpc":0,"def":function (value) { return this.append(value.toString()); },"rt":$n[6].StringBuilder,"p":[$n[0].Int64]},{"a":2,"n":"Append","t":8,"pi":[{"n":"value","pt":$n[0].Object,"ps":0}],"sn":"append","rt":$n[6].StringBuilder,"p":[$n[0].Object]},{"a":2,"n":"Append","t":8,"pi":[{"n":"value","pt":$n[0].Single,"ps":0}],"sn":"append","rt":$n[6].StringBuilder,"p":[$n[0].Single]},{"a":2,"n":"Append","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"sn":"append","rt":$n[6].StringBuilder,"p":[$n[0].String]},{"a":2,"n":"Append","t":8,"pi":[{"n":"value","pt":$n[0].UInt32,"ps":0}],"sn":"append","rt":$n[6].StringBuilder,"p":[$n[0].UInt32]},{"a":2,"n":"Append","t":8,"pi":[{"n":"value","pt":$n[0].UInt64,"ps":0}],"tpc":0,"def":function (value) { return this.append(value.toString()); },"rt":$n[6].StringBuilder,"p":[$n[0].UInt64]},{"a":2,"n":"Append","t":8,"pi":[{"n":"value","pt":$n[0].Char,"ps":0},{"n":"repeatCount","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (value, repeatCount) { return append(String.fromCharCode(value), repeatCount); },"rt":$n[6].StringBuilder,"p":[$n[0].Char,$n[0].Int32]},{"a":2,"n":"Append","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2}],"sn":"append","rt":$n[6].StringBuilder,"p":[$n[0].String,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"AppendFormat","t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"args","ip":true,"pt":$n[0].Array.type(System.Object),"ps":1}],"sn":"appendFormat","rt":$n[6].StringBuilder,"p":[$n[0].String,$n[0].Array.type(System.Object)]},{"a":2,"n":"AppendLine","t":8,"sn":"appendLine","rt":$n[6].StringBuilder},{"a":2,"n":"AppendLine","t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"sn":"appendLine","rt":$n[6].StringBuilder,"p":[$n[0].String]},{"a":2,"n":"Clear","t":8,"sn":"clear","rt":$n[6].StringBuilder},{"a":2,"n":"Equals","t":8,"pi":[{"n":"sb","pt":$n[6].StringBuilder,"ps":0}],"sn":"equals","rt":$n[0].Boolean,"p":[$n[6].StringBuilder]},{"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].Boolean,"ps":1}],"sn":"insert","rt":$n[6].StringBuilder,"p":[$n[0].Int32,$n[0].Boolean]},{"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].Char,"ps":1}],"tpc":0,"def":function (index, value) { return insert(index, String.fromCharCode(value)); },"rt":$n[6].StringBuilder,"p":[$n[0].Int32,$n[0].Char]},{"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].Decimal,"ps":1}],"sn":"insert","rt":$n[6].StringBuilder,"p":[$n[0].Int32,$n[0].Decimal]},{"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].Double,"ps":1}],"sn":"insert","rt":$n[6].StringBuilder,"p":[$n[0].Int32,$n[0].Double]},{"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].Int32,"ps":1}],"sn":"insert","rt":$n[6].StringBuilder,"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].Int64,"ps":1}],"tpc":0,"def":function (index, value) { return this.insert(index, value.toString()); },"rt":$n[6].StringBuilder,"p":[$n[0].Int32,$n[0].Int64]},{"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].Object,"ps":1}],"sn":"insert","rt":$n[6].StringBuilder,"p":[$n[0].Int32,$n[0].Object]},{"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].Single,"ps":1}],"sn":"insert","rt":$n[6].StringBuilder,"p":[$n[0].Int32,$n[0].Single]},{"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].String,"ps":1}],"sn":"insert","rt":$n[6].StringBuilder,"p":[$n[0].Int32,$n[0].String]},{"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].UInt32,"ps":1}],"sn":"insert","rt":$n[6].StringBuilder,"p":[$n[0].Int32,$n[0].UInt32]},{"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].UInt64,"ps":1}],"tpc":0,"def":function (index, value) { return this.insert(index, value.toString()); },"rt":$n[6].StringBuilder,"p":[$n[0].Int32,$n[0].UInt64]},{"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].String,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2}],"sn":"insert","rt":$n[6].StringBuilder,"p":[$n[0].Int32,$n[0].String,$n[0].Int32]},{"a":2,"n":"Remove","t":8,"pi":[{"n":"startIndex","pt":$n[0].Int32,"ps":0},{"n":"length","pt":$n[0].Int32,"ps":1}],"sn":"remove","rt":$n[6].StringBuilder,"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Replace","t":8,"pi":[{"n":"oldChar","pt":$n[0].Char,"ps":0},{"n":"newChar","pt":$n[0].Char,"ps":1}],"tpc":0,"def":function (oldChar, newChar) { return replace(String.fromCharCode(oldChar), String.fromCharCode(newChar)); },"rt":$n[6].StringBuilder,"p":[$n[0].Char,$n[0].Char]},{"a":2,"n":"Replace","t":8,"pi":[{"n":"oldValue","pt":$n[0].String,"ps":0},{"n":"newValue","pt":$n[0].String,"ps":1}],"sn":"replace","rt":$n[6].StringBuilder,"p":[$n[0].String,$n[0].String]},{"a":2,"n":"Replace","t":8,"pi":[{"n":"oldChar","pt":$n[0].Char,"ps":0},{"n":"newChar","pt":$n[0].Char,"ps":1},{"n":"startIndex","pt":$n[0].Int32,"ps":2},{"n":"count","pt":$n[0].Int32,"ps":3}],"tpc":0,"def":function (oldChar, newChar, startIndex, count) { return replace(String.fromCharCode(oldChar), String.fromCharCode(newChar), startIndex, count); },"rt":$n[6].StringBuilder,"p":[$n[0].Char,$n[0].Char,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Replace","t":8,"pi":[{"n":"oldValue","pt":$n[0].String,"ps":0},{"n":"newValue","pt":$n[0].String,"ps":1},{"n":"startIndex","pt":$n[0].Int32,"ps":2},{"n":"count","pt":$n[0].Int32,"ps":3}],"sn":"replace","rt":$n[6].StringBuilder,"p":[$n[0].String,$n[0].String,$n[0].Int32,$n[0].Int32]},{"ov":true,"a":2,"n":"ToString","t":8,"sn":"toString","rt":$n[0].String},{"a":2,"n":"ToString","t":8,"pi":[{"n":"startIndex","pt":$n[0].Int32,"ps":0},{"n":"length","pt":$n[0].Int32,"ps":1}],"sn":"toString","rt":$n[0].String,"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Capacity","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Capacity","t":8,"tpc":0,"def":function () { return getCapacity(); },"rt":$n[0].Int32},"s":{"a":2,"n":"set_Capacity","t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (value) { return setCapacity(value); },"rt":$n[0].Void,"p":[$n[0].Int32]}},{"a":2,"n":"Length","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Length","t":8,"tpc":0,"def":function () { return getLength(); },"rt":$n[0].Int32},"s":{"a":2,"n":"set_Length","t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (value) { return setLength(value); },"rt":$n[0].Void,"p":[$n[0].Int32]}}]}; });
+    $m($n[1].Capture, function () { return {"att":1048577,"a":2,"m":[{"a":4,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Int32,$n[0].Int32],"pi":[{"n":"text","pt":$n[0].String,"ps":0},{"n":"i","pt":$n[0].Int32,"ps":1},{"n":"l","pt":$n[0].Int32,"ps":2}],"sn":"ctor"},{"ov":true,"a":2,"n":"ToString","t":8,"sn":"toString","rt":$n[0].String},{"a":2,"n":"Index","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Index","t":8,"tpc":0,"def":function () { return getIndex(); },"rt":$n[0].Int32}},{"a":2,"n":"Length","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Length","t":8,"tpc":0,"def":function () { return getLength(); },"rt":$n[0].Int32}},{"a":2,"n":"Value","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_Value","t":8,"tpc":0,"def":function () { return getValue(); },"rt":$n[0].String}}]}; });
+    $m($n[1].CaptureCollection, function () { return {"att":1048577,"a":2,"m":[{"a":4,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":Array,"ps":0},{"n":"arrayIndex","pt":$n[0].Int32,"ps":1}],"sn":"copyTo","rt":$n[0].Void,"p":[Array,$n[0].Int32]},{"a":2,"n":"GetEnumerator","t":8,"sn":"getEnumerator","rt":$n[2].IEnumerator},{"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Count","t":8,"tpc":0,"def":function () { return getCount(); },"rt":$n[0].Int32}},{"a":2,"n":"IsReadOnly","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsReadOnly","t":8,"tpc":0,"def":function () { return getIsReadOnly(); },"rt":$n[0].Boolean}},{"a":2,"n":"IsSynchronized","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsSynchronized","t":8,"tpc":0,"def":function () { return getIsSynchronized(); },"rt":$n[0].Boolean}},{"a":2,"n":"Item","t":16,"rt":$n[1].Capture,"p":[$n[0].Int32],"i":true,"ipi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"g":{"a":2,"n":"get_Item","t":8,"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (i) { return get(i); },"rt":$n[1].Capture,"p":[$n[0].Int32]}},{"a":2,"n":"SyncRoot","t":16,"rt":$n[0].Object,"g":{"a":2,"n":"get_SyncRoot","t":8,"tpc":0,"def":function () { return getSyncRoot(); },"rt":$n[0].Object}}]}; });
+    $m($n[1].Group, function () { return {"att":1048577,"a":2,"m":[{"a":4,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Array.type(System.Int32),$n[0].Int32],"pi":[{"n":"text","pt":$n[0].String,"ps":0},{"n":"caps","pt":$n[0].Array.type(System.Int32),"ps":1},{"n":"capcount","pt":$n[0].Int32,"ps":2}],"sn":"ctor"},{"a":2,"n":"Synchronized","is":true,"t":8,"pi":[{"n":"inner","pt":$n[1].Group,"ps":0}],"sn":"synchronized","rt":$n[1].Group,"p":[$n[1].Group]},{"a":2,"n":"Captures","t":16,"rt":$n[1].CaptureCollection,"g":{"a":2,"n":"get_Captures","t":8,"tpc":0,"def":function () { return getCaptures(); },"rt":$n[1].CaptureCollection}},{"a":2,"n":"Success","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_Success","t":8,"tpc":0,"def":function () { return getSuccess(); },"rt":$n[0].Boolean}}]}; });
+    $m($n[1].GroupCollection, function () { return {"att":1048577,"a":2,"m":[{"a":4,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":Array,"ps":0},{"n":"arrayIndex","pt":$n[0].Int32,"ps":1}],"sn":"copyTo","rt":$n[0].Void,"p":[Array,$n[0].Int32]},{"a":2,"n":"GetEnumerator","t":8,"sn":"getEnumerator","rt":$n[2].IEnumerator},{"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Count","t":8,"tpc":0,"def":function () { return getCount(); },"rt":$n[0].Int32}},{"a":2,"n":"IsReadOnly","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsReadOnly","t":8,"tpc":0,"def":function () { return getIsReadOnly(); },"rt":$n[0].Boolean}},{"a":2,"n":"IsSynchronized","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsSynchronized","t":8,"tpc":0,"def":function () { return getIsSynchronized(); },"rt":$n[0].Boolean}},{"a":2,"n":"Item","t":16,"rt":$n[1].Group,"p":[$n[0].Int32],"i":true,"ipi":[{"n":"groupnum","pt":$n[0].Int32,"ps":0}],"g":{"a":2,"n":"get_Item","t":8,"pi":[{"n":"groupnum","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (groupnum) { return get(groupnum); },"rt":$n[1].Group,"p":[$n[0].Int32]}},{"a":2,"n":"Item","t":16,"rt":$n[1].Group,"p":[$n[0].String],"i":true,"ipi":[{"n":"groupname","pt":$n[0].String,"ps":0}],"g":{"a":2,"n":"get_Item","t":8,"pi":[{"n":"groupname","pt":$n[0].String,"ps":0}],"tpc":0,"def":function (groupname) { return getByName(groupname); },"rt":$n[1].Group,"p":[$n[0].String]}},{"a":2,"n":"SyncRoot","t":16,"rt":$n[0].Object,"g":{"a":2,"n":"get_SyncRoot","t":8,"tpc":0,"def":function () { return getSyncRoot(); },"rt":$n[0].Object}}]}; });
+    $m($n[1].Match, function () { return {"att":1048577,"a":2,"m":[{"a":4,"n":".ctor","t":1,"p":[$n[1].Regex,$n[0].Int32,$n[0].String,$n[0].Int32,$n[0].Int32,$n[0].Int32],"pi":[{"n":"regex","pt":$n[1].Regex,"ps":0},{"n":"capcount","pt":$n[0].Int32,"ps":1},{"n":"text","pt":$n[0].String,"ps":2},{"n":"begpos","pt":$n[0].Int32,"ps":3},{"n":"len","pt":$n[0].Int32,"ps":4},{"n":"startpos","pt":$n[0].Int32,"ps":5}],"sn":"ctor"},{"a":2,"n":"NextMatch","t":8,"sn":"nextMatch","rt":$n[1].Match},{"v":true,"a":2,"n":"Result","t":8,"pi":[{"n":"replacement","pt":$n[0].String,"ps":0}],"sn":"result","rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"Synchronized","is":true,"t":8,"pi":[{"n":"inner","pt":$n[1].Match,"ps":0}],"sn":"synchronized","rt":$n[1].Match,"p":[$n[1].Match]},{"a":2,"n":"Empty","is":true,"t":16,"rt":$n[1].Match,"g":{"a":2,"n":"get_Empty","is":true,"t":8,"tpc":0,"def":function () { return this.getEmpty(); },"rt":$n[1].Match}},{"v":true,"a":2,"n":"Groups","t":16,"rt":$n[1].GroupCollection,"g":{"v":true,"a":2,"n":"get_Groups","t":8,"tpc":0,"def":function () { return getGroups(); },"rt":$n[1].GroupCollection}}]}; });
+    $m($n[1].MatchCollection, function () { return {"att":1048577,"a":2,"m":[{"a":4,"n":".ctor","t":1,"p":[$n[1].Regex,$n[0].String,$n[0].Int32,$n[0].Int32,$n[0].Int32],"pi":[{"n":"regex","pt":$n[1].Regex,"ps":0},{"n":"input","pt":$n[0].String,"ps":1},{"n":"beginning","pt":$n[0].Int32,"ps":2},{"n":"length","pt":$n[0].Int32,"ps":3},{"n":"startat","pt":$n[0].Int32,"ps":4}],"sn":"ctor"},{"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":Array,"ps":0},{"n":"arrayIndex","pt":$n[0].Int32,"ps":1}],"sn":"copyTo","rt":$n[0].Void,"p":[Array,$n[0].Int32]},{"a":2,"n":"GetEnumerator","t":8,"sn":"getEnumerator","rt":$n[2].IEnumerator},{"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Count","t":8,"tpc":0,"def":function () { return getCount(); },"rt":$n[0].Int32}},{"a":2,"n":"IsReadOnly","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsReadOnly","t":8,"tpc":0,"def":function () { return getIsReadOnly(); },"rt":$n[0].Boolean}},{"a":2,"n":"IsSynchronized","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsSynchronized","t":8,"tpc":0,"def":function () { return getIsSynchronized(); },"rt":$n[0].Boolean}},{"v":true,"a":2,"n":"Item","t":16,"rt":$n[1].Match,"p":[$n[0].Int32],"i":true,"ipi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"g":{"v":true,"a":2,"n":"get_Item","t":8,"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (i) { return get(i); },"rt":$n[1].Match,"p":[$n[0].Int32]}},{"a":2,"n":"SyncRoot","t":16,"rt":$n[0].Object,"g":{"a":2,"n":"get_SyncRoot","t":8,"tpc":0,"def":function () { return getSyncRoot(); },"rt":$n[0].Object}}]}; });
+    $m($n[1].Regex, function () { return {"att":1048833,"a":2,"m":[{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"pattern","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[1].RegexOptions],"pi":[{"n":"pattern","pt":$n[0].String,"ps":0},{"n":"options","pt":$n[1].RegexOptions,"ps":1}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[1].RegexOptions,$n[0].TimeSpan],"pi":[{"n":"pattern","pt":$n[0].String,"ps":0},{"n":"options","pt":$n[1].RegexOptions,"ps":1},{"n":"matchTimeout","pt":$n[0].TimeSpan,"ps":2}],"sn":"ctor"},{"a":2,"n":"Escape","is":true,"t":8,"pi":[{"n":"str","pt":$n[0].String,"ps":0}],"sn":"escape","rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"GetGroupNames","t":8,"sn":"getGroupNames","rt":$n[0].Array.type(System.String)},{"a":2,"n":"GetGroupNumbers","t":8,"sn":"getGroupNumbers","rt":$n[0].Array.type(System.Int32)},{"a":2,"n":"GroupNameFromNumber","t":8,"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"sn":"groupNameFromNumber","rt":$n[0].String,"p":[$n[0].Int32]},{"a":2,"n":"GroupNumberFromName","t":8,"pi":[{"n":"name","pt":$n[0].String,"ps":0}],"sn":"groupNumberFromName","rt":$n[0].Int32,"p":[$n[0].String]},{"a":2,"n":"IsMatch","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0}],"sn":"isMatch","rt":$n[0].Boolean,"p":[$n[0].String]},{"a":2,"n":"IsMatch","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"startat","pt":$n[0].Int32,"ps":1}],"sn":"isMatch","rt":$n[0].Boolean,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"IsMatch","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1}],"sn":"isMatch","rt":$n[0].Boolean,"p":[$n[0].String,$n[0].String]},{"a":2,"n":"IsMatch","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1},{"n":"options","pt":$n[1].RegexOptions,"ps":2}],"sn":"isMatch","rt":$n[0].Boolean,"p":[$n[0].String,$n[0].String,$n[1].RegexOptions]},{"a":2,"n":"IsMatch","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1},{"n":"options","pt":$n[1].RegexOptions,"ps":2},{"n":"matchTimeout","pt":$n[0].TimeSpan,"ps":3}],"sn":"isMatch","rt":$n[0].Boolean,"p":[$n[0].String,$n[0].String,$n[1].RegexOptions,$n[0].TimeSpan]},{"a":2,"n":"Match","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0}],"sn":"match","rt":$n[1].Match,"p":[$n[0].String]},{"a":2,"n":"Match","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"startat","pt":$n[0].Int32,"ps":1}],"sn":"match","rt":$n[1].Match,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"Match","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1}],"sn":"match","rt":$n[1].Match,"p":[$n[0].String,$n[0].String]},{"a":2,"n":"Match","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"beginning","pt":$n[0].Int32,"ps":1},{"n":"length","pt":$n[0].Int32,"ps":2}],"sn":"match","rt":$n[1].Match,"p":[$n[0].String,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Match","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1},{"n":"options","pt":$n[1].RegexOptions,"ps":2}],"sn":"match","rt":$n[1].Match,"p":[$n[0].String,$n[0].String,$n[1].RegexOptions]},{"a":2,"n":"Match","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1},{"n":"options","pt":$n[1].RegexOptions,"ps":2},{"n":"matchTimeout","pt":$n[0].TimeSpan,"ps":3}],"sn":"match","rt":$n[1].Match,"p":[$n[0].String,$n[0].String,$n[1].RegexOptions,$n[0].TimeSpan]},{"a":2,"n":"Matches","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0}],"sn":"matches","rt":$n[1].MatchCollection,"p":[$n[0].String]},{"a":2,"n":"Matches","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"startat","pt":$n[0].Int32,"ps":1}],"sn":"matches","rt":$n[1].MatchCollection,"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"Matches","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1}],"sn":"matches","rt":$n[1].MatchCollection,"p":[$n[0].String,$n[0].String]},{"a":2,"n":"Matches","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1},{"n":"options","pt":$n[1].RegexOptions,"ps":2}],"sn":"matches","rt":$n[1].MatchCollection,"p":[$n[0].String,$n[0].String,$n[1].RegexOptions]},{"a":2,"n":"Matches","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1},{"n":"options","pt":$n[1].RegexOptions,"ps":2},{"n":"matchTimeout","pt":$n[0].TimeSpan,"ps":3}],"sn":"matches","rt":$n[1].MatchCollection,"p":[$n[0].String,$n[0].String,$n[1].RegexOptions,$n[0].TimeSpan]},{"a":2,"n":"Replace","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"replacement","pt":$n[0].String,"ps":1}],"sn":"replace","rt":$n[0].String,"p":[$n[0].String,$n[0].String]},{"a":2,"n":"Replace","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"evaluator","pt":Function,"ps":1}],"sn":"replace","rt":$n[0].String,"p":[$n[0].String,Function]},{"a":2,"n":"Replace","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"replacement","pt":$n[0].String,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2}],"sn":"replace","rt":$n[0].String,"p":[$n[0].String,$n[0].String,$n[0].Int32]},{"a":2,"n":"Replace","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1},{"n":"replacement","pt":$n[0].String,"ps":2}],"sn":"replace","rt":$n[0].String,"p":[$n[0].String,$n[0].String,$n[0].String]},{"a":2,"n":"Replace","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1},{"n":"evaluator","pt":Function,"ps":2}],"sn":"replace","rt":$n[0].String,"p":[$n[0].String,$n[0].String,Function]},{"a":2,"n":"Replace","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"evaluator","pt":Function,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2}],"sn":"replace","rt":$n[0].String,"p":[$n[0].String,Function,$n[0].Int32]},{"a":2,"n":"Replace","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"replacement","pt":$n[0].String,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2},{"n":"startat","pt":$n[0].Int32,"ps":3}],"sn":"replace","rt":$n[0].String,"p":[$n[0].String,$n[0].String,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Replace","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1},{"n":"replacement","pt":$n[0].String,"ps":2},{"n":"options","pt":$n[1].RegexOptions,"ps":3}],"sn":"replace","rt":$n[0].String,"p":[$n[0].String,$n[0].String,$n[0].String,$n[1].RegexOptions]},{"a":2,"n":"Replace","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1},{"n":"evaluator","pt":Function,"ps":2},{"n":"options","pt":$n[1].RegexOptions,"ps":3}],"sn":"replace","rt":$n[0].String,"p":[$n[0].String,$n[0].String,Function,$n[1].RegexOptions]},{"a":2,"n":"Replace","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"evaluator","pt":Function,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2},{"n":"startat","pt":$n[0].Int32,"ps":3}],"sn":"replace","rt":$n[0].String,"p":[$n[0].String,Function,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Replace","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1},{"n":"replacement","pt":$n[0].String,"ps":2},{"n":"options","pt":$n[1].RegexOptions,"ps":3},{"n":"matchTimeout","pt":$n[0].TimeSpan,"ps":4}],"sn":"replace","rt":$n[0].String,"p":[$n[0].String,$n[0].String,$n[0].String,$n[1].RegexOptions,$n[0].TimeSpan]},{"a":2,"n":"Replace","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1},{"n":"evaluator","pt":Function,"ps":2},{"n":"options","pt":$n[1].RegexOptions,"ps":3},{"n":"matchTimeout","pt":$n[0].TimeSpan,"ps":4}],"sn":"replace","rt":$n[0].String,"p":[$n[0].String,$n[0].String,Function,$n[1].RegexOptions,$n[0].TimeSpan]},{"a":2,"n":"Split","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0}],"sn":"split","rt":$n[0].Array.type(System.String),"p":[$n[0].String]},{"a":2,"n":"Split","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"count","pt":$n[0].Int32,"ps":1}],"sn":"split","rt":$n[0].Array.type(System.String),"p":[$n[0].String,$n[0].Int32]},{"a":2,"n":"Split","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1}],"sn":"split","rt":$n[0].Array.type(System.String),"p":[$n[0].String,$n[0].String]},{"a":2,"n":"Split","t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"count","pt":$n[0].Int32,"ps":1},{"n":"startat","pt":$n[0].Int32,"ps":2}],"sn":"split","rt":$n[0].Array.type(System.String),"p":[$n[0].String,$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Split","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1},{"n":"options","pt":$n[1].RegexOptions,"ps":2}],"sn":"split","rt":$n[0].Array.type(System.String),"p":[$n[0].String,$n[0].String,$n[1].RegexOptions]},{"a":2,"n":"Split","is":true,"t":8,"pi":[{"n":"input","pt":$n[0].String,"ps":0},{"n":"pattern","pt":$n[0].String,"ps":1},{"n":"options","pt":$n[1].RegexOptions,"ps":2},{"n":"matchTimeout","pt":$n[0].TimeSpan,"ps":3}],"sn":"split","rt":$n[0].Array.type(System.String),"p":[$n[0].String,$n[0].String,$n[1].RegexOptions,$n[0].TimeSpan]},{"a":2,"n":"Unescape","is":true,"t":8,"pi":[{"n":"str","pt":$n[0].String,"ps":0}],"sn":"unescape","rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"MatchTimeout","t":16,"rt":$n[0].TimeSpan,"g":{"a":2,"n":"get_MatchTimeout","t":8,"tpc":0,"def":function () { return getMatchTimeout(); },"rt":$n[0].TimeSpan}},{"a":2,"n":"Options","t":16,"rt":$n[1].RegexOptions,"g":{"a":2,"n":"get_Options","t":8,"tpc":0,"def":function () { return getOptions(); },"rt":$n[1].RegexOptions}},{"a":2,"n":"RightToLeft","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_RightToLeft","t":8,"tpc":0,"def":function () { return getRightToLeft(); },"rt":$n[0].Boolean}}]}; });
+    $m($n[9].ClientWebSocket, function () { return {"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"Abort","t":8,"sn":"abort","rt":$n[0].Void},{"a":2,"n":"CloseAsync","t":8,"pi":[{"n":"closeStatus","pt":$n[9].WebSocketCloseStatus,"ps":0},{"n":"statusDescription","pt":$n[0].String,"ps":1},{"n":"cancellationToken","pt":$n[5].CancellationToken,"ps":2}],"sn":"closeAsync","rt":$n[8].Task,"p":[$n[9].WebSocketCloseStatus,$n[0].String,$n[5].CancellationToken]},{"a":2,"n":"CloseOutputAsync","t":8,"pi":[{"n":"closeStatus","pt":$n[9].WebSocketCloseStatus,"ps":0},{"n":"statusDescription","pt":$n[0].String,"ps":1},{"n":"cancellationToken","pt":$n[5].CancellationToken,"ps":2}],"sn":"closeOutputAsync","rt":$n[8].Task,"p":[$n[9].WebSocketCloseStatus,$n[0].String,$n[5].CancellationToken]},{"a":2,"n":"ConnectAsync","t":8,"pi":[{"n":"uri","pt":$n[0].Uri,"ps":0},{"n":"cancellationToken","pt":$n[5].CancellationToken,"ps":1}],"sn":"connectAsync","rt":$n[8].Task,"p":[$n[0].Uri,$n[5].CancellationToken]},{"a":2,"n":"Dispose","t":8,"sn":"dispose","rt":$n[0].Void},{"a":2,"n":"ReceiveAsync","t":8,"pi":[{"n":"buffer","pt":$n[0].ArraySegment,"ps":0},{"n":"cancellationToken","pt":$n[5].CancellationToken,"ps":1}],"sn":"receiveAsync","rt":$n[8].Task$1,"p":[$n[0].ArraySegment,$n[5].CancellationToken]},{"a":2,"n":"SendAsync","t":8,"pi":[{"n":"buffer","pt":$n[0].ArraySegment,"ps":0},{"n":"messageType","pt":$n[9].WebSocketMessageType,"ps":1},{"n":"endOfMessage","dv":true,"o":true,"pt":$n[0].Boolean,"ps":2},{"n":"cancellationToken","dv":null,"o":true,"pt":$n[5].CancellationToken,"ps":3}],"sn":"sendAsync","rt":$n[8].Task,"p":[$n[0].ArraySegment,$n[9].WebSocketMessageType,$n[0].Boolean,$n[5].CancellationToken]},{"a":2,"n":"CloseStatus","t":16,"rt":$n[0].Nullable$1(System.Net.WebSockets.WebSocketCloseStatus),"g":{"a":2,"n":"get_CloseStatus","t":8,"tpc":0,"def":function () { return getCloseStatus(); },"rt":$n[0].Nullable$1(System.Net.WebSockets.WebSocketCloseStatus)}},{"a":2,"n":"CloseStatusDescription","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_CloseStatusDescription","t":8,"tpc":0,"def":function () { return getCloseStatusDescription(); },"rt":$n[0].String}},{"a":2,"n":"Options","t":16,"rt":$n[9].ClientWebSocketOptions,"g":{"a":2,"n":"get_Options","t":8,"tpc":0,"def":function () { return getOptions(); },"rt":$n[9].ClientWebSocketOptions}},{"a":2,"n":"State","t":16,"rt":$n[9].WebSocketState,"g":{"a":2,"n":"get_State","t":8,"tpc":0,"def":function () { return getState(); },"rt":$n[9].WebSocketState}},{"a":2,"n":"SubProtocol","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_SubProtocol","t":8,"tpc":0,"def":function () { return getSubProtocol(); },"rt":$n[0].String}}]}; });
+    $m($n[9].ClientWebSocketOptions, function () { return {"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"AddSubProtocol","t":8,"pi":[{"n":"subProtocol","pt":$n[0].String,"ps":0}],"sn":"addSubProtocol","rt":$n[0].Void,"p":[$n[0].String]}]}; });
+    $m($n[9].WebSocketReceiveResult, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[9].WebSocketMessageType,$n[0].Boolean],"pi":[{"n":"count","pt":$n[0].Int32,"ps":0},{"n":"messageType","pt":$n[9].WebSocketMessageType,"ps":1},{"n":"endOfMessage","pt":$n[0].Boolean,"ps":2}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[9].WebSocketMessageType,$n[0].Boolean,$n[0].Nullable$1(System.Net.WebSockets.WebSocketCloseStatus),$n[0].String],"pi":[{"n":"count","pt":$n[0].Int32,"ps":0},{"n":"messageType","pt":$n[9].WebSocketMessageType,"ps":1},{"n":"endOfMessage","pt":$n[0].Boolean,"ps":2},{"n":"closeStatus","pt":$n[0].Nullable$1(System.Net.WebSockets.WebSocketCloseStatus),"ps":3},{"n":"closeStatusDescription","pt":$n[0].String,"ps":4}],"sn":"ctor"},{"a":2,"n":"CloseStatus","t":16,"rt":$n[0].Nullable$1(System.Net.WebSockets.WebSocketCloseStatus),"g":{"a":2,"n":"get_CloseStatus","t":8,"tpc":0,"def":function () { return getCloseStatus(); },"rt":$n[0].Nullable$1(System.Net.WebSockets.WebSocketCloseStatus)}},{"a":2,"n":"CloseStatusDescription","t":16,"rt":$n[0].String,"g":{"a":2,"n":"get_CloseStatusDescription","t":8,"tpc":0,"def":function () { return getCloseStatusDescription(); },"rt":$n[0].String}},{"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Count","t":8,"tpc":0,"def":function () { return getCount(); },"rt":$n[0].Int32}},{"a":2,"n":"EndOfMessage","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_EndOfMessage","t":8,"tpc":0,"def":function () { return getEndOfMessage(); },"rt":$n[0].Boolean}},{"a":2,"n":"MessageType","t":16,"rt":$n[9].WebSocketMessageType,"g":{"a":2,"n":"get_MessageType","t":8,"tpc":0,"def":function () { return getMessageType(); },"rt":$n[9].WebSocketMessageType}}]}; });
+    $m($n[10].FormattableStringFactory, function () { return {"att":1048961,"a":2,"s":true,"m":[{"a":2,"n":"Create","is":true,"t":8,"pi":[{"n":"format","pt":$n[0].String,"ps":0},{"n":"args","ip":true,"pt":$n[0].Array.type(System.Object),"ps":1}],"sn":"create","rt":$n[0].FormattableString,"p":[$n[0].String,$n[0].Array.type(System.Object)]}]}; });
+    $m($n[2].BitArray, function () { return {"att":1048833,"a":2,"m":[{"a":2,"n":".ctor","t":1,"p":[$n[0].Array.type(System.Boolean)],"pi":[{"n":"values","pt":$n[0].Array.type(System.Boolean),"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Array.type(System.Byte)],"pi":[{"n":"bytes","pt":$n[0].Array.type(System.Byte),"ps":0}],"sn":"$ctor1"},{"a":2,"n":".ctor","t":1,"p":[$n[2].BitArray],"pi":[{"n":"bits","pt":$n[2].BitArray,"ps":0}],"sn":"$ctor2"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"length","pt":$n[0].Int32,"ps":0}],"sn":"$ctor3"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Array.type(System.Int32)],"pi":[{"n":"values","pt":$n[0].Array.type(System.Int32),"ps":0}],"sn":"$ctor5"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[0].Boolean],"pi":[{"n":"length","pt":$n[0].Int32,"ps":0},{"n":"defaultValue","pt":$n[0].Boolean,"ps":1}],"sn":"$ctor4"},{"a":2,"n":"And","t":8,"pi":[{"n":"value","pt":$n[2].BitArray,"ps":0}],"sn":"and","rt":$n[2].BitArray,"p":[$n[2].BitArray]},{"a":2,"n":"Clone","t":8,"sn":"clone","rt":$n[0].Object},{"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":Array,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"sn":"copyTo","rt":$n[0].Void,"p":[Array,$n[0].Int32]},{"a":2,"n":"Get","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"sn":"get","rt":$n[0].Boolean,"p":[$n[0].Int32]},{"a":1,"n":"GetArrayLength","is":true,"t":8,"pi":[{"n":"n","pt":$n[0].Int32,"ps":0},{"n":"div","pt":$n[0].Int32,"ps":1}],"sn":"getArrayLength","rt":$n[0].Int32,"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"GetEnumerator","t":8,"sn":"getEnumerator","rt":$n[2].IEnumerator},{"a":2,"n":"Not","t":8,"sn":"not","rt":$n[2].BitArray},{"a":2,"n":"Or","t":8,"pi":[{"n":"value","pt":$n[2].BitArray,"ps":0}],"sn":"or","rt":$n[2].BitArray,"p":[$n[2].BitArray]},{"a":2,"n":"Set","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].Boolean,"ps":1}],"sn":"set","rt":$n[0].Void,"p":[$n[0].Int32,$n[0].Boolean]},{"a":2,"n":"SetAll","t":8,"pi":[{"n":"value","pt":$n[0].Boolean,"ps":0}],"sn":"setAll","rt":$n[0].Void,"p":[$n[0].Boolean]},{"a":2,"n":"Xor","t":8,"pi":[{"n":"value","pt":$n[2].BitArray,"ps":0}],"sn":"xor","rt":$n[2].BitArray,"p":[$n[2].BitArray]},{"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Count","t":8,"rt":$n[0].Int32,"fg":"Count"},"fn":"Count"},{"a":2,"n":"IsReadOnly","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsReadOnly","t":8,"rt":$n[0].Boolean,"fg":"IsReadOnly"},"fn":"IsReadOnly"},{"a":2,"n":"IsSynchronized","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsSynchronized","t":8,"rt":$n[0].Boolean,"fg":"IsSynchronized"},"fn":"IsSynchronized"},{"a":2,"n":"Item","t":16,"rt":$n[0].Boolean,"p":[$n[0].Int32],"i":true,"ipi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"g":{"a":2,"n":"get_Item","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"sn":"getItem","rt":$n[0].Boolean,"p":[$n[0].Int32]},"s":{"a":2,"n":"set_Item","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].Boolean,"ps":1}],"sn":"setItem","rt":$n[0].Void,"p":[$n[0].Int32,$n[0].Boolean]}},{"a":2,"n":"Length","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Length","t":8,"rt":$n[0].Int32,"fg":"Length"},"s":{"a":2,"n":"set_Length","t":8,"p":[$n[0].Int32],"rt":$n[0].Void,"fs":"Length"},"fn":"Length"},{"a":1,"n":"BitsPerByte","is":true,"t":4,"rt":$n[0].Int32,"sn":"BitsPerByte"},{"a":1,"n":"BitsPerInt32","is":true,"t":4,"rt":$n[0].Int32,"sn":"BitsPerInt32"},{"a":1,"n":"BytesPerInt32","is":true,"t":4,"rt":$n[0].Int32,"sn":"BytesPerInt32"},{"a":1,"n":"_ShrinkThreshold","is":true,"t":4,"rt":$n[0].Int32,"sn":"_ShrinkThreshold"},{"a":1,"n":"_version","t":4,"rt":$n[0].Int32,"sn":"_version"},{"a":1,"n":"m_array","t":4,"rt":$n[0].Array.type(System.Int32),"sn":"m_array"},{"a":1,"n":"m_length","t":4,"rt":$n[0].Int32,"sn":"m_length"}]}; });
+    $m($n[2].BitArray.BitArrayEnumeratorSimple, function () { return {"td":$n[2].BitArray,"att":1048579,"a":1,"m":[{"a":4,"n":".ctor","t":1,"p":[$n[2].BitArray],"pi":[{"n":"bitarray","pt":$n[2].BitArray,"ps":0}],"sn":"ctor"},{"v":true,"a":2,"n":"MoveNext","t":8,"sn":"moveNext","rt":$n[0].Boolean},{"a":2,"n":"Reset","t":8,"sn":"reset","rt":$n[0].Void},{"v":true,"a":2,"n":"Current","t":16,"rt":$n[0].Object,"g":{"v":true,"a":2,"n":"get_Current","t":8,"rt":$n[0].Object,"fg":"Current"},"fn":"Current"},{"a":1,"n":"bitarray","t":4,"rt":$n[2].BitArray,"sn":"bitarray"},{"a":1,"n":"currentElement","t":4,"rt":$n[0].Boolean,"sn":"currentElement"},{"a":1,"n":"index","t":4,"rt":$n[0].Int32,"sn":"index"},{"a":1,"n":"version","t":4,"rt":$n[0].Int32,"sn":"version"}]}; });
+    $m($n[2].HashHelpers, function () { return {"att":1048960,"a":4,"s":true,"m":[{"a":2,"n":"ExpandPrime","is":true,"t":8,"pi":[{"n":"oldSize","pt":$n[0].Int32,"ps":0}],"sn":"expandPrime","rt":$n[0].Int32,"p":[$n[0].Int32]},{"a":2,"n":"GetMinPrime","is":true,"t":8,"sn":"getMinPrime","rt":$n[0].Int32},{"a":2,"n":"GetPrime","is":true,"t":8,"pi":[{"n":"min","pt":$n[0].Int32,"ps":0}],"sn":"getPrime","rt":$n[0].Int32,"p":[$n[0].Int32]},{"a":2,"n":"IsPrime","is":true,"t":8,"pi":[{"n":"candidate","pt":$n[0].Int32,"ps":0}],"sn":"isPrime","rt":$n[0].Boolean,"p":[$n[0].Int32]},{"a":1,"n":"HashPrime","is":true,"t":4,"rt":$n[0].Int32,"sn":"HashPrime"},{"a":2,"n":"MaxPrimeArrayLength","is":true,"t":4,"rt":$n[0].Int32,"sn":"MaxPrimeArrayLength"},{"a":2,"n":"primes","is":true,"t":4,"rt":$n[0].Array.type(System.Int32),"sn":"primes","ro":true}]}; });
+    $m($n[2].IDictionary, function () { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"Add","t":8,"pi":[{"n":"key","pt":$n[0].Object,"ps":0},{"n":"value","pt":$n[0].Object,"ps":1}],"sn":"System$Collections$IDictionary$add","rt":$n[0].Void,"p":[$n[0].Object,$n[0].Object]},{"ab":true,"a":2,"n":"ContainsKey","t":8,"pi":[{"n":"key","pt":$n[0].Object,"ps":0}],"sn":"System$Collections$IDictionary$containsKey","rt":$n[0].Boolean,"p":[$n[0].Object]},{"ab":true,"a":2,"n":"Remove","t":8,"pi":[{"n":"key","pt":$n[0].Object,"ps":0}],"sn":"System$Collections$IDictionary$remove","rt":$n[0].Boolean,"p":[$n[0].Object]},{"ab":true,"a":2,"n":"IsReadOnly","t":16,"rt":$n[0].Boolean,"g":{"ab":true,"a":2,"n":"get_IsReadOnly","t":8,"rt":$n[0].Boolean,"fg":"System$Collections$IDictionary$IsReadOnly"},"s":{"ab":true,"a":1,"n":"set_IsReadOnly","t":8,"p":[$n[0].Boolean],"rt":$n[0].Void,"fs":"System$Collections$IDictionary$IsReadOnly"},"fn":"System$Collections$IDictionary$IsReadOnly"},{"ab":true,"a":2,"n":"Item","t":16,"rt":$n[0].Object,"p":[$n[0].Object],"i":true,"ipi":[{"n":"key","pt":$n[0].Object,"ps":0}],"g":{"ab":true,"a":2,"n":"get_Item","t":8,"pi":[{"n":"key","pt":$n[0].Object,"ps":0}],"sn":"System$Collections$IDictionary$getItem","rt":$n[0].Object,"p":[$n[0].Object]},"s":{"ab":true,"a":2,"n":"set_Item","t":8,"pi":[{"n":"key","pt":$n[0].Object,"ps":0},{"n":"value","pt":$n[0].Object,"ps":1}],"sn":"System$Collections$IDictionary$setItem","rt":$n[0].Void,"p":[$n[0].Object,$n[0].Object]}},{"ab":true,"a":2,"n":"Keys","t":16,"rt":$n[2].ICollection,"g":{"ab":true,"a":2,"n":"get_Keys","t":8,"rt":$n[2].ICollection,"fg":"System$Collections$IDictionary$Keys"},"s":{"ab":true,"a":1,"n":"set_Keys","t":8,"p":[$n[2].ICollection],"rt":$n[0].Void,"fs":"System$Collections$IDictionary$Keys"},"fn":"System$Collections$IDictionary$Keys"},{"ab":true,"a":2,"n":"Values","t":16,"rt":$n[2].ICollection,"g":{"ab":true,"a":2,"n":"get_Values","t":8,"rt":$n[2].ICollection,"fg":"System$Collections$IDictionary$Values"},"s":{"ab":true,"a":1,"n":"set_Values","t":8,"p":[$n[2].ICollection],"rt":$n[0].Void,"fs":"System$Collections$IDictionary$Values"},"fn":"System$Collections$IDictionary$Values"}]}; });
+    $m($n[2].IList, function () { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"Add","t":8,"pi":[{"n":"item","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (item) { return System.Array.add(this, item); },"rt":$n[0].Void,"p":[$n[0].Object]},{"ab":true,"a":2,"n":"Clear","t":8,"tpc":0,"def":function () { return System.Array.clear(this); },"rt":$n[0].Void},{"ab":true,"a":2,"n":"Contains","t":8,"pi":[{"n":"item","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (item) { return System.Array.contains(this, item); },"rt":$n[0].Boolean,"p":[$n[0].Object]},{"ab":true,"a":2,"n":"IndexOf","t":8,"pi":[{"n":"item","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (item) { return System.Array.indexOf(this, item, 0, null); },"rt":$n[0].Int32,"p":[$n[0].Object]},{"ab":true,"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"item","pt":$n[0].Object,"ps":1}],"tpc":0,"def":function (index, item) { return System.Array.insert(this, index, item); },"rt":$n[0].Void,"p":[$n[0].Int32,$n[0].Object]},{"ab":true,"a":2,"n":"Remove","t":8,"pi":[{"n":"item","pt":$n[0].Object,"ps":0}],"tpc":0,"def":function (item) { return System.Array.remove(this, item); },"rt":$n[0].Boolean,"p":[$n[0].Object]},{"ab":true,"a":2,"n":"RemoveAt","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (index) { return System.Array.removeAt(this, index); },"rt":$n[0].Void,"p":[$n[0].Int32]},{"ab":true,"a":2,"n":"IsReadOnly","t":16,"rt":$n[0].Boolean,"g":{"ab":true,"a":2,"n":"get_IsReadOnly","t":8,"tpc":0,"def":function () { return System.Array.getIsReadOnly(this); },"rt":$n[0].Boolean},"s":{"ab":true,"a":1,"n":"set_IsReadOnly","t":8,"pi":[{"n":"value","pt":$n[0].Boolean,"ps":0}],"sn":"System$Collections$IList$IsReadOnly","rt":$n[0].Void,"p":[$n[0].Boolean]}},{"ab":true,"a":2,"n":"Item","t":16,"rt":$n[0].Object,"p":[$n[0].Int32],"i":true,"ipi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"g":{"ab":true,"a":2,"n":"get_Item","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (index) { return System.Array.getItem(this, index); },"rt":$n[0].Object,"p":[$n[0].Int32]},"s":{"ab":true,"a":2,"n":"set_Item","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":$n[0].Object,"ps":1}],"tpc":0,"def":function (index, value) { return System.Array.setItem(this, index); },"rt":$n[0].Void,"p":[$n[0].Int32,$n[0].Object]}}]}; });
+    $m($n[2].ICollection, function () { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":Array,"ps":0},{"n":"arrayIndex","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (array, arrayIndex) { return System.Array.copyTo(this, array, arrayIndex); },"rt":$n[0].Void,"p":[Array,$n[0].Int32]},{"ab":true,"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"ab":true,"a":2,"n":"get_Count","t":8,"tpc":0,"def":function () { return System.Array.getCount(this); },"rt":$n[0].Int32},"s":{"ab":true,"a":1,"n":"set_Count","t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"sn":"System$Collections$ICollection$Count","rt":$n[0].Void,"p":[$n[0].Int32]}}]}; });
+    $m($n[2].IEnumerable, function () { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"GetEnumerator","t":8,"tpc":0,"def":function () { return Bridge.getEnumerator(this); },"rt":$n[2].IEnumerator}]}; });
+    $m($n[2].IEnumerator, function () { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"MoveNext","t":8,"sn":"System$Collections$IEnumerator$moveNext","rt":$n[0].Boolean},{"ab":true,"a":2,"n":"Reset","t":8,"sn":"System$Collections$IEnumerator$reset","rt":$n[0].Void},{"ab":true,"a":2,"n":"Current","t":16,"rt":$n[0].Object,"g":{"ab":true,"a":2,"n":"get_Current","t":8,"rt":$n[0].Object,"fg":"System$Collections$IEnumerator$Current"},"s":{"ab":true,"a":1,"n":"set_Current","t":8,"p":[$n[0].Object],"rt":$n[0].Void,"fs":"System$Collections$IEnumerator$Current"},"fn":"System$Collections$IEnumerator$Current"}]}; });
+    $m($n[2].IEqualityComparer, function () { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"x","pt":$n[0].Object,"ps":0},{"n":"y","pt":$n[0].Object,"ps":1}],"sn":"System$Collections$IEqualityComparer$equals","rt":$n[0].Boolean,"p":[$n[0].Object,$n[0].Object]},{"ab":true,"a":2,"n":"GetHashCode","t":8,"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"sn":"System$Collections$IEqualityComparer$getHashCode","rt":$n[0].Int32,"p":[$n[0].Object]}]}; });
+    $m($n[4].ReadOnlyCollection$1, function (T) { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"p":[$n[3].IList$1(T)],"pi":[{"n":"list","pt":$n[3].IList$1(T),"ps":0}],"sn":"ctor"},{"a":2,"n":"Contains","t":8,"pi":[{"n":"value","pt":T,"ps":0}],"sn":"contains","rt":$n[0].Boolean,"p":[T]},{"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":System.Array.type(T),"ps":0},{"n":"arrayIndex","pt":$n[0].Int32,"ps":1}],"sn":"copyTo","rt":$n[0].Void,"p":[System.Array.type(T),$n[0].Int32]},{"a":2,"n":"GetEnumerator","t":8,"sn":"getEnumerator","rt":$n[3].IEnumerator$1(T)},{"a":2,"n":"IndexOf","t":8,"pi":[{"n":"value","pt":T,"ps":0}],"sn":"indexOf","rt":$n[0].Int32,"p":[T]},{"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Count","t":8,"rt":$n[0].Int32,"fg":"Count"},"fn":"Count"},{"a":2,"n":"Item","t":16,"rt":T,"p":[$n[0].Int32],"i":true,"ipi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"g":{"a":2,"n":"get_Item","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"sn":"get","rt":T,"p":[$n[0].Int32]}}]}; });
+    $m($n[3].BitHelper, function () { return {"att":1048832,"a":4,"m":[{"a":4,"n":".ctor","t":1,"p":[$n[0].Array.type(System.Int32),$n[0].Int32],"pi":[{"n":"bitArray","pt":$n[0].Array.type(System.Int32),"ps":0},{"n":"length","pt":$n[0].Int32,"ps":1}],"sn":"ctor"},{"a":4,"n":"IsMarked","t":8,"pi":[{"n":"bitPosition","pt":$n[0].Int32,"ps":0}],"sn":"isMarked","rt":$n[0].Boolean,"p":[$n[0].Int32]},{"a":4,"n":"MarkBit","t":8,"pi":[{"n":"bitPosition","pt":$n[0].Int32,"ps":0}],"sn":"markBit","rt":$n[0].Void,"p":[$n[0].Int32]},{"a":4,"n":"ToIntArrayLength","is":true,"t":8,"pi":[{"n":"n","pt":$n[0].Int32,"ps":0}],"sn":"toIntArrayLength","rt":$n[0].Int32,"p":[$n[0].Int32]},{"a":1,"n":"IntSize","is":true,"t":4,"rt":$n[0].Byte,"sn":"IntSize"},{"a":1,"n":"MarkedBitFlag","is":true,"t":4,"rt":$n[0].Byte,"sn":"MarkedBitFlag"},{"a":1,"n":"_array","t":4,"rt":$n[0].Array.type(System.Int32),"sn":"_array","ro":true},{"a":1,"n":"_length","t":4,"rt":$n[0].Int32,"sn":"_length","ro":true}]}; });
+    $m(Bridge.Collections.EnumerableHelpers, function () { return {"att":1048960,"a":4,"s":true,"m":[{"a":4,"n":"ToArray","is":true,"t":8,"pi":[{"n":"source","pt":$n[3].IEnumerable$1(System.Object),"ps":0}],"tpc":1,"tprm":["T"],"sn":"toArray","rt":System.Array.type(System.Object),"p":[$n[3].IEnumerable$1(System.Object)]},{"a":4,"n":"ToArray","is":true,"t":8,"pi":[{"n":"source","pt":$n[3].IEnumerable$1(System.Object),"ps":0},{"n":"length","out":true,"pt":$n[0].Int32,"ps":1}],"tpc":1,"tprm":["T"],"sn":"toArray$1","rt":System.Array.type(System.Object),"p":[$n[3].IEnumerable$1(System.Object),$n[0].Int32]}]}; });
+    $m($n[3].HashSet$1, function (T) { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[3].IEnumerable$1(T)],"pi":[{"n":"collection","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"$ctor1"},{"a":2,"n":".ctor","t":1,"p":[$n[3].IEqualityComparer$1(T)],"pi":[{"n":"comparer","pt":$n[3].IEqualityComparer$1(T),"ps":0}],"sn":"$ctor3"},{"a":2,"n":".ctor","t":1,"p":[$n[3].IEnumerable$1(T),$n[3].IEqualityComparer$1(T)],"pi":[{"n":"collection","pt":$n[3].IEnumerable$1(T),"ps":0},{"n":"comparer","pt":$n[3].IEqualityComparer$1(T),"ps":1}],"sn":"$ctor2"},{"a":2,"n":"Add","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"sn":"add","rt":$n[0].Boolean,"p":[T]},{"a":1,"n":"AddIfNotPresent","t":8,"pi":[{"n":"value","pt":T,"ps":0}],"sn":"addIfNotPresent","rt":$n[0].Boolean,"p":[T]},{"a":1,"n":"AddOrGetLocation","t":8,"pi":[{"n":"value","pt":T,"ps":0},{"n":"location","out":true,"pt":$n[0].Int32,"ps":1}],"sn":"addOrGetLocation","rt":$n[0].Boolean,"p":[T,$n[0].Int32]},{"a":1,"n":"AreEqualityComparersEqual","is":true,"t":8,"pi":[{"n":"set1","pt":$n[3].HashSet$1(T),"ps":0},{"n":"set2","pt":$n[3].HashSet$1(T),"ps":1}],"sn":"areEqualityComparersEqual","rt":$n[0].Boolean,"p":[$n[3].HashSet$1(T),$n[3].HashSet$1(T)]},{"a":2,"n":"ArrayClear","t":8,"pi":[{"n":"array","pt":Array,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1},{"n":"length","pt":$n[0].Int32,"ps":2}],"sn":"arrayClear","rt":$n[0].Void,"p":[Array,$n[0].Int32,$n[0].Int32]},{"a":1,"n":"CheckUniqueAndUnfoundElements","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0},{"n":"returnIfUnfound","pt":$n[0].Boolean,"ps":1}],"sn":"checkUniqueAndUnfoundElements","rt":$n[3].HashSet$1.ElementCount(T),"p":[$n[3].IEnumerable$1(T),$n[0].Boolean]},{"a":2,"n":"Clear","t":8,"sn":"clear","rt":$n[0].Void},{"a":2,"n":"Contains","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"sn":"contains","rt":$n[0].Boolean,"p":[T]},{"a":1,"n":"ContainsAllElements","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"containsAllElements","rt":$n[0].Boolean,"p":[$n[3].IEnumerable$1(T)]},{"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":System.Array.type(T),"ps":0}],"sn":"copyTo$1","rt":$n[0].Void,"p":[System.Array.type(T)]},{"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":System.Array.type(T),"ps":0},{"n":"arrayIndex","pt":$n[0].Int32,"ps":1}],"sn":"copyTo","rt":$n[0].Void,"p":[System.Array.type(T),$n[0].Int32]},{"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":System.Array.type(T),"ps":0},{"n":"arrayIndex","pt":$n[0].Int32,"ps":1},{"n":"count","pt":$n[0].Int32,"ps":2}],"sn":"copyTo$2","rt":$n[0].Void,"p":[System.Array.type(T),$n[0].Int32,$n[0].Int32]},{"a":2,"n":"ExceptWith","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"exceptWith","rt":$n[0].Void,"p":[$n[3].IEnumerable$1(T)]},{"a":2,"n":"GetEnumerator","t":8,"sn":"getEnumerator","rt":$n[3].HashSet$1.Enumerator(T)},{"a":4,"n":"HashSetEquals","is":true,"t":8,"pi":[{"n":"set1","pt":$n[3].HashSet$1(T),"ps":0},{"n":"set2","pt":$n[3].HashSet$1(T),"ps":1},{"n":"comparer","pt":$n[3].IEqualityComparer$1(T),"ps":2}],"sn":"hashSetEquals","rt":$n[0].Boolean,"p":[$n[3].HashSet$1(T),$n[3].HashSet$1(T),$n[3].IEqualityComparer$1(T)]},{"a":1,"n":"IncreaseCapacity","t":8,"sn":"increaseCapacity","rt":$n[0].Void},{"a":1,"n":"Initialize","t":8,"pi":[{"n":"capacity","pt":$n[0].Int32,"ps":0}],"sn":"initialize","rt":$n[0].Void,"p":[$n[0].Int32]},{"a":1,"n":"InternalGetHashCode","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"sn":"internalGetHashCode","rt":$n[0].Int32,"p":[T]},{"a":1,"n":"InternalIndexOf","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"sn":"internalIndexOf","rt":$n[0].Int32,"p":[T]},{"a":2,"n":"IntersectWith","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"intersectWith","rt":$n[0].Void,"p":[$n[3].IEnumerable$1(T)]},{"a":1,"n":"IntersectWithEnumerable","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"intersectWithEnumerable","rt":$n[0].Void,"p":[$n[3].IEnumerable$1(T)]},{"a":1,"n":"IntersectWithHashSetWithSameEC","t":8,"pi":[{"n":"other","pt":$n[3].HashSet$1(T),"ps":0}],"sn":"intersectWithHashSetWithSameEC","rt":$n[0].Void,"p":[$n[3].HashSet$1(T)]},{"a":2,"n":"IsProperSubsetOf","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"isProperSubsetOf","rt":$n[0].Boolean,"p":[$n[3].IEnumerable$1(T)]},{"a":2,"n":"IsProperSupersetOf","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"isProperSupersetOf","rt":$n[0].Boolean,"p":[$n[3].IEnumerable$1(T)]},{"a":2,"n":"IsSubsetOf","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"isSubsetOf","rt":$n[0].Boolean,"p":[$n[3].IEnumerable$1(T)]},{"a":1,"n":"IsSubsetOfHashSetWithSameEC","t":8,"pi":[{"n":"other","pt":$n[3].HashSet$1(T),"ps":0}],"sn":"isSubsetOfHashSetWithSameEC","rt":$n[0].Boolean,"p":[$n[3].HashSet$1(T)]},{"a":2,"n":"IsSupersetOf","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"isSupersetOf","rt":$n[0].Boolean,"p":[$n[3].IEnumerable$1(T)]},{"a":2,"n":"Overlaps","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"overlaps","rt":$n[0].Boolean,"p":[$n[3].IEnumerable$1(T)]},{"a":2,"n":"Remove","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"sn":"remove","rt":$n[0].Boolean,"p":[T]},{"a":2,"n":"RemoveWhere","t":8,"pi":[{"n":"match","pt":Function,"ps":0}],"sn":"removeWhere","rt":$n[0].Int32,"p":[Function]},{"a":1,"n":"SetCapacity","t":8,"pi":[{"n":"newSize","pt":$n[0].Int32,"ps":0},{"n":"forceNewHashCodes","pt":$n[0].Boolean,"ps":1}],"sn":"setCapacity","rt":$n[0].Void,"p":[$n[0].Int32,$n[0].Boolean]},{"a":2,"n":"SetEquals","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"setEquals","rt":$n[0].Boolean,"p":[$n[3].IEnumerable$1(T)]},{"a":2,"n":"SymmetricExceptWith","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"symmetricExceptWith","rt":$n[0].Void,"p":[$n[3].IEnumerable$1(T)]},{"a":1,"n":"SymmetricExceptWithEnumerable","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"symmetricExceptWithEnumerable","rt":$n[0].Void,"p":[$n[3].IEnumerable$1(T)]},{"a":1,"n":"SymmetricExceptWithUniqueHashSet","t":8,"pi":[{"n":"other","pt":$n[3].HashSet$1(T),"ps":0}],"sn":"symmetricExceptWithUniqueHashSet","rt":$n[0].Void,"p":[$n[3].HashSet$1(T)]},{"a":4,"n":"ToArray","t":8,"sn":"toArray","rt":System.Array.type(T)},{"a":2,"n":"TrimExcess","t":8,"sn":"trimExcess","rt":$n[0].Void},{"a":2,"n":"UnionWith","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"unionWith","rt":$n[0].Void,"p":[$n[3].IEnumerable$1(T)]},{"a":2,"n":"Comparer","t":16,"rt":$n[3].IEqualityComparer$1(T),"g":{"a":2,"n":"get_Comparer","t":8,"rt":$n[3].IEqualityComparer$1(T),"fg":"Comparer"},"fn":"Comparer"},{"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Count","t":8,"rt":$n[0].Int32,"fg":"Count"},"fn":"Count"},{"a":2,"n":"IsReadOnly","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsReadOnly","t":8,"rt":$n[0].Boolean,"fg":"IsReadOnly"},"fn":"IsReadOnly"},{"a":1,"n":"Lower31BitMask","is":true,"t":4,"rt":$n[0].Int32,"sn":"Lower31BitMask"},{"a":1,"n":"ShrinkThreshold","is":true,"t":4,"rt":$n[0].Int32,"sn":"ShrinkThreshold"},{"a":1,"n":"_buckets","t":4,"rt":$n[0].Array.type(System.Int32),"sn":"_buckets"},{"a":1,"n":"_comparer","t":4,"rt":$n[3].IEqualityComparer$1(T),"sn":"_comparer"},{"a":1,"n":"_count","t":4,"rt":$n[0].Int32,"sn":"_count"},{"a":1,"n":"_freeList","t":4,"rt":$n[0].Int32,"sn":"_freeList"},{"a":1,"n":"_lastIndex","t":4,"rt":$n[0].Int32,"sn":"_lastIndex"},{"a":1,"n":"_slots","t":4,"rt":System.Array.type(System.Collections.Generic.HashSet$1.Slot(T)),"sn":"_slots"},{"a":1,"n":"_version","t":4,"rt":$n[0].Int32,"sn":"_version"}]}; });
+    $m($n[3].HashSet$1.ElementCount, function (T) { return {"td":$n[3].HashSet$1(T),"att":1048845,"a":4,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":4,"n":"unfoundCount","t":4,"rt":$n[0].Int32,"sn":"unfoundCount"},{"a":4,"n":"uniqueCount","t":4,"rt":$n[0].Int32,"sn":"uniqueCount"}]}; });
+    $m($n[3].HashSet$1.Slot, function (T) { return {"td":$n[3].HashSet$1(T),"att":1048845,"a":4,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":4,"n":"hashCode","t":4,"rt":$n[0].Int32,"sn":"hashCode"},{"a":4,"n":"next","t":4,"rt":$n[0].Int32,"sn":"next"},{"a":4,"n":"value","t":4,"rt":T,"sn":"value"}]}; });
+    $m($n[3].HashSet$1.Enumerator, function (T) { return {"td":$n[3].HashSet$1(T),"att":1048842,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":4,"n":".ctor","t":1,"p":[$n[3].HashSet$1(T)],"pi":[{"n":"set","pt":$n[3].HashSet$1(T),"ps":0}],"sn":"$ctor1"},{"a":2,"n":"Dispose","t":8,"sn":"dispose","rt":$n[0].Void},{"a":2,"n":"MoveNext","t":8,"sn":"moveNext","rt":$n[0].Boolean},{"a":2,"n":"Current","t":16,"rt":T,"g":{"a":2,"n":"get_Current","t":8,"rt":T,"fg":"Current"},"fn":"Current"},{"a":1,"n":"_current","t":4,"rt":T,"sn":"_current"},{"a":1,"n":"_index","t":4,"rt":$n[0].Int32,"sn":"_index"},{"a":1,"n":"_set","t":4,"rt":$n[3].HashSet$1(T),"sn":"_set"},{"a":1,"n":"_version","t":4,"rt":$n[0].Int32,"sn":"_version"}]}; });
+    $m($n[3].IReadOnlyDictionary$2, function (TKey, TValue) { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"ContainsKey","t":8,"pi":[{"n":"key","pt":TKey,"ps":0}],"sn":"System$Collections$Generic$IReadOnlyDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$containsKey","rt":$n[0].Boolean,"p":[TKey]},{"ab":true,"a":2,"n":"TryGetValue","t":8,"pi":[{"n":"key","pt":TKey,"ps":0},{"n":"value","out":true,"pt":TValue,"ps":1}],"sn":"System$Collections$Generic$IReadOnlyDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$tryGetValue","rt":$n[0].Boolean,"p":[TKey,TValue]},{"ab":true,"a":2,"n":"Item","t":16,"rt":TValue,"p":[TKey],"i":true,"ipi":[{"n":"key","pt":TKey,"ps":0}],"g":{"ab":true,"a":2,"n":"get_Item","t":8,"pi":[{"n":"key","pt":TKey,"ps":0}],"sn":"System$Collections$Generic$IReadOnlyDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getItem","rt":TValue,"p":[TKey]}},{"ab":true,"a":2,"n":"Keys","t":16,"rt":$n[3].IEnumerable$1(TKey),"g":{"ab":true,"a":2,"n":"get_Keys","t":8,"rt":$n[3].IEnumerable$1(TKey),"fg":"\"System$Collections$Generic$IReadOnlyDictionary$2$\" + Bridge.getTypeAlias(TKey) + \"$\" + Bridge.getTypeAlias(TValue) + \"$Keys\""},"s":{"ab":true,"a":1,"n":"set_Keys","t":8,"p":[$n[3].IEnumerable$1(TKey)],"rt":$n[0].Void,"fs":"\"System$Collections$Generic$IReadOnlyDictionary$2$\" + Bridge.getTypeAlias(TKey) + \"$\" + Bridge.getTypeAlias(TValue) + \"$Keys\""},"fn":"\"System$Collections$Generic$IReadOnlyDictionary$2$\" + Bridge.getTypeAlias(TKey) + \"$\" + Bridge.getTypeAlias(TValue) + \"$Keys\""},{"ab":true,"a":2,"n":"Values","t":16,"rt":$n[3].IEnumerable$1(TValue),"g":{"ab":true,"a":2,"n":"get_Values","t":8,"rt":$n[3].IEnumerable$1(TValue),"fg":"\"System$Collections$Generic$IReadOnlyDictionary$2$\" + Bridge.getTypeAlias(TKey) + \"$\" + Bridge.getTypeAlias(TValue) + \"$Values\""},"s":{"ab":true,"a":1,"n":"set_Values","t":8,"p":[$n[3].IEnumerable$1(TValue)],"rt":$n[0].Void,"fs":"\"System$Collections$Generic$IReadOnlyDictionary$2$\" + Bridge.getTypeAlias(TKey) + \"$\" + Bridge.getTypeAlias(TValue) + \"$Values\""},"fn":"\"System$Collections$Generic$IReadOnlyDictionary$2$\" + Bridge.getTypeAlias(TKey) + \"$\" + Bridge.getTypeAlias(TValue) + \"$Values\""}]}; });
+    $m($n[3].Queue$1, function (T) { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[3].IEnumerable$1(T)],"pi":[{"n":"collection","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"$ctor1"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"capacity","pt":$n[0].Int32,"ps":0}],"sn":"$ctor2"},{"a":2,"n":"Clear","t":8,"sn":"clear","rt":$n[0].Void},{"a":2,"n":"Contains","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"sn":"contains","rt":$n[0].Boolean,"p":[T]},{"v":true,"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":Array,"ps":0},{"n":"index","pt":$n[0].Int32,"ps":1}],"sn":"copyTo","rt":$n[0].Void,"p":[Array,$n[0].Int32]},{"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":System.Array.type(T),"ps":0},{"n":"arrayIndex","pt":$n[0].Int32,"ps":1}],"sn":"copyTo$1","rt":$n[0].Void,"p":[System.Array.type(T),$n[0].Int32]},{"a":2,"n":"Dequeue","t":8,"sn":"dequeue","rt":T},{"a":2,"n":"Enqueue","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"sn":"enqueue","rt":$n[0].Void,"p":[T]},{"a":1,"n":"GetElement","t":8,"pi":[{"n":"i","pt":$n[0].Int32,"ps":0}],"sn":"getElement","rt":T,"p":[$n[0].Int32]},{"a":2,"n":"GetEnumerator","t":8,"sn":"getEnumerator","rt":$n[3].Queue$1.Enumerator(T)},{"a":1,"n":"MoveNext","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"sn":"moveNext","rt":$n[0].Int32,"p":[$n[0].Int32]},{"a":2,"n":"Peek","t":8,"sn":"peek","rt":T},{"a":1,"n":"SetCapacity","t":8,"pi":[{"n":"capacity","pt":$n[0].Int32,"ps":0}],"sn":"setCapacity","rt":$n[0].Void,"p":[$n[0].Int32]},{"a":2,"n":"ToArray","t":8,"sn":"toArray","rt":System.Array.type(T)},{"a":2,"n":"TrimExcess","t":8,"sn":"trimExcess","rt":$n[0].Void},{"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Count","t":8,"rt":$n[0].Int32,"fg":"Count"},"fn":"Count"},{"a":2,"n":"IsReadOnly","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsReadOnly","t":8,"rt":$n[0].Boolean,"fg":"IsReadOnly"},"fn":"IsReadOnly"},{"a":1,"n":"DefaultCapacity","is":true,"t":4,"rt":$n[0].Int32,"sn":"DefaultCapacity"},{"a":1,"n":"GrowFactor","is":true,"t":4,"rt":$n[0].Int32,"sn":"GrowFactor"},{"a":1,"n":"MinimumGrow","is":true,"t":4,"rt":$n[0].Int32,"sn":"MinimumGrow"},{"a":1,"n":"_array","t":4,"rt":System.Array.type(T),"sn":"_array"},{"a":1,"n":"_head","t":4,"rt":$n[0].Int32,"sn":"_head"},{"a":1,"n":"_size","t":4,"rt":$n[0].Int32,"sn":"_size"},{"a":1,"n":"_tail","t":4,"rt":$n[0].Int32,"sn":"_tail"},{"a":1,"n":"_version","t":4,"rt":$n[0].Int32,"sn":"_version"}]}; });
+    $m($n[3].Queue$1.Enumerator, function (T) { return {"td":$n[3].Queue$1(T),"att":1048842,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":4,"n":".ctor","t":1,"p":[$n[3].Queue$1(T)],"pi":[{"n":"q","pt":$n[3].Queue$1(T),"ps":0}],"sn":"$ctor1"},{"a":2,"n":"Dispose","t":8,"sn":"dispose","rt":$n[0].Void},{"a":2,"n":"MoveNext","t":8,"sn":"moveNext","rt":$n[0].Boolean},{"a":2,"n":"Current","t":16,"rt":T,"g":{"a":2,"n":"get_Current","t":8,"rt":T,"fg":"Current"},"fn":"Current"},{"a":1,"n":"_currentElement","t":4,"rt":T,"sn":"_currentElement"},{"a":1,"n":"_index","t":4,"rt":$n[0].Int32,"sn":"_index"},{"a":1,"n":"_q","t":4,"rt":$n[3].Queue$1(T),"sn":"_q"},{"a":1,"n":"_version","t":4,"rt":$n[0].Int32,"sn":"_version"}]}; });
+    $m($n[3].Stack$1, function (T) { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[3].IEnumerable$1(T)],"pi":[{"n":"collection","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"$ctor1"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"capacity","pt":$n[0].Int32,"ps":0}],"sn":"$ctor2"},{"a":2,"n":"Clear","t":8,"sn":"clear","rt":$n[0].Void},{"a":2,"n":"Contains","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"sn":"contains","rt":$n[0].Boolean,"p":[T]},{"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":Array,"ps":0},{"n":"arrayIndex","pt":$n[0].Int32,"ps":1}],"sn":"copyTo","rt":$n[0].Void,"p":[Array,$n[0].Int32]},{"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":System.Array.type(T),"ps":0},{"n":"arrayIndex","pt":$n[0].Int32,"ps":1}],"sn":"copyTo$1","rt":$n[0].Void,"p":[System.Array.type(T),$n[0].Int32]},{"a":2,"n":"GetEnumerator","t":8,"sn":"getEnumerator","rt":$n[3].Stack$1.Enumerator(T)},{"a":2,"n":"Peek","t":8,"sn":"peek","rt":T},{"a":2,"n":"Pop","t":8,"sn":"pop","rt":T},{"a":2,"n":"Push","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"sn":"push","rt":$n[0].Void,"p":[T]},{"a":2,"n":"ToArray","t":8,"sn":"toArray","rt":System.Array.type(T)},{"a":2,"n":"TrimExcess","t":8,"sn":"trimExcess","rt":$n[0].Void},{"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Count","t":8,"rt":$n[0].Int32,"fg":"Count"},"fn":"Count"},{"a":2,"n":"IsReadOnly","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsReadOnly","t":8,"rt":$n[0].Boolean,"fg":"IsReadOnly"},"fn":"IsReadOnly"},{"a":1,"n":"DefaultCapacity","is":true,"t":4,"rt":$n[0].Int32,"sn":"DefaultCapacity"},{"a":1,"n":"_array","t":4,"rt":System.Array.type(T),"sn":"_array"},{"a":1,"n":"_size","t":4,"rt":$n[0].Int32,"sn":"_size"},{"a":1,"n":"_version","t":4,"rt":$n[0].Int32,"sn":"_version"}]}; });
+    $m($n[3].Stack$1.Enumerator, function (T) { return {"td":$n[3].Stack$1(T),"att":1048842,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":4,"n":".ctor","t":1,"p":[$n[3].Stack$1(T)],"pi":[{"n":"stack","pt":$n[3].Stack$1(T),"ps":0}],"sn":"$ctor1"},{"a":2,"n":"Dispose","t":8,"sn":"dispose","rt":$n[0].Void},{"a":2,"n":"MoveNext","t":8,"sn":"moveNext","rt":$n[0].Boolean},{"a":2,"n":"Current","t":16,"rt":T,"g":{"a":2,"n":"get_Current","t":8,"rt":T,"fg":"Current"},"fn":"Current"},{"a":1,"n":"_currentElement","t":4,"rt":T,"sn":"_currentElement"},{"a":1,"n":"_index","t":4,"rt":$n[0].Int32,"sn":"_index"},{"a":1,"n":"_stack","t":4,"rt":$n[3].Stack$1(T),"sn":"_stack"},{"a":1,"n":"_version","t":4,"rt":$n[0].Int32,"sn":"_version"}]}; });
+    $m($n[3].IReadOnlyCollection$1, function (T) { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"ab":true,"a":2,"n":"get_Count","t":8,"tpc":0,"def":function () { return System.Array.getCount(this, T); },"rt":$n[0].Int32},"s":{"ab":true,"a":1,"n":"set_Count","t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"sn":"System$Collections$Generic$IReadOnlyCollection$1$" + Bridge.getTypeAlias(T) + "$Count","rt":$n[0].Void,"p":[$n[0].Int32]}}]}; });
+    $m($n[3].IReadOnlyList$1, function (T) { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"Item","t":16,"rt":T,"p":[$n[0].Int32],"i":true,"ipi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"g":{"ab":true,"a":2,"n":"get_Item","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (index) { return System.Array.getItem(this, index, T); },"rt":T,"p":[$n[0].Int32]}}]}; });
+    $m($n[3].IComparer$1, function (T) { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"Compare","t":8,"pi":[{"n":"x","pt":T,"ps":0},{"n":"y","pt":T,"ps":1}],"sn":"System$Collections$Generic$IComparer$1$" + Bridge.getTypeAlias(T) + "$compare","rt":$n[0].Int32,"p":[T,T]}]}; });
+    $m($n[3].IList$1, function (T) { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"IndexOf","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"tpc":0,"def":function (item) { return System.Array.indexOf(this, item, 0, null, T); },"rt":$n[0].Int32,"p":[T]},{"ab":true,"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"item","pt":T,"ps":1}],"tpc":0,"def":function (index, item) { return System.Array.insert(this, index, item, T); },"rt":$n[0].Void,"p":[$n[0].Int32,T]},{"ab":true,"a":2,"n":"RemoveAt","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (index) { return System.Array.removeAt(this, index, T); },"rt":$n[0].Void,"p":[$n[0].Int32]},{"ab":true,"a":2,"n":"Item","t":16,"rt":T,"p":[$n[0].Int32],"i":true,"ipi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"g":{"ab":true,"a":2,"n":"get_Item","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"tpc":0,"def":function (index) { return System.Array.getItem(this, index, T); },"rt":T,"p":[$n[0].Int32]},"s":{"ab":true,"a":2,"n":"set_Item","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":T,"ps":1}],"tpc":0,"def":function (index, value) { return System.Array.setItem(this, index, T); },"rt":$n[0].Void,"p":[$n[0].Int32,T]}}]}; });
+    $m($n[3].ISet$1, function (T) { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"Add","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"sn":"System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$add","rt":$n[0].Boolean,"p":[T]},{"ab":true,"a":2,"n":"ExceptWith","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$exceptWith","rt":$n[0].Void,"p":[$n[3].IEnumerable$1(T)]},{"ab":true,"a":2,"n":"IntersectWith","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$intersectWith","rt":$n[0].Void,"p":[$n[3].IEnumerable$1(T)]},{"ab":true,"a":2,"n":"IsProperSubsetOf","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$isProperSubsetOf","rt":$n[0].Boolean,"p":[$n[3].IEnumerable$1(T)]},{"ab":true,"a":2,"n":"IsProperSupersetOf","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$isProperSupersetOf","rt":$n[0].Boolean,"p":[$n[3].IEnumerable$1(T)]},{"ab":true,"a":2,"n":"IsSubsetOf","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$isSubsetOf","rt":$n[0].Boolean,"p":[$n[3].IEnumerable$1(T)]},{"ab":true,"a":2,"n":"IsSupersetOf","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$isSupersetOf","rt":$n[0].Boolean,"p":[$n[3].IEnumerable$1(T)]},{"ab":true,"a":2,"n":"Overlaps","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$overlaps","rt":$n[0].Boolean,"p":[$n[3].IEnumerable$1(T)]},{"ab":true,"a":2,"n":"SetEquals","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$setEquals","rt":$n[0].Boolean,"p":[$n[3].IEnumerable$1(T)]},{"ab":true,"a":2,"n":"SymmetricExceptWith","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$symmetricExceptWith","rt":$n[0].Void,"p":[$n[3].IEnumerable$1(T)]},{"ab":true,"a":2,"n":"UnionWith","t":8,"pi":[{"n":"other","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$unionWith","rt":$n[0].Void,"p":[$n[3].IEnumerable$1(T)]}]}; });
+    $m($n[3].Dictionary$2, function (TKey, TValue) { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[3].IDictionary$2(TKey,TValue)],"pi":[{"n":"dictionary","pt":$n[3].IDictionary$2(TKey,TValue),"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[3].IEqualityComparer$1(TKey)],"pi":[{"n":"comparer","pt":$n[3].IEqualityComparer$1(TKey),"ps":0}],"def":function (comparer) { return new (System.Collections.Generic.Dictionary$2(TKey, TValue))(null, comparer); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"capacity","pt":$n[0].Int32,"ps":0}],"def":function (capacity) { return new (System.Collections.Generic.Dictionary$2(TKey, TValue))(); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Object],"pi":[{"n":"obj","pt":$n[0].Object,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[3].IDictionary$2(TKey,TValue),$n[3].IEqualityComparer$1(TKey)],"pi":[{"n":"dictionary","pt":$n[3].IDictionary$2(TKey,TValue),"ps":0},{"n":"comparer","pt":$n[3].IEqualityComparer$1(TKey),"ps":1}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32,$n[3].IEqualityComparer$1(TKey)],"pi":[{"n":"capacity","pt":$n[0].Int32,"ps":0},{"n":"comparer","pt":$n[3].IEqualityComparer$1(TKey),"ps":1}],"def":function (capacity, comparer) { return new (System.Collections.Generic.Dictionary$2(TKey, TValue))(null, comparer); }},{"a":2,"n":".ctor","t":1,"p":[$n[0].Object,$n[3].IEqualityComparer$1(TKey)],"pi":[{"n":"obj","pt":$n[0].Object,"ps":0},{"n":"comparer","pt":$n[3].IEqualityComparer$1(TKey),"ps":1}],"sn":"ctor"},{"a":2,"n":"Add","t":8,"pi":[{"n":"key","pt":TKey,"ps":0},{"n":"value","pt":TValue,"ps":1}],"sn":"add","rt":$n[0].Void,"p":[TKey,TValue]},{"a":2,"n":"Clear","t":8,"sn":"clear","rt":$n[0].Void},{"a":2,"n":"ContainsKey","t":8,"pi":[{"n":"key","pt":TKey,"ps":0}],"sn":"containsKey","rt":$n[0].Boolean,"p":[TKey]},{"a":2,"n":"ContainsValue","t":8,"pi":[{"n":"value","pt":TValue,"ps":0}],"sn":"containsValue","rt":$n[0].Boolean,"p":[TValue]},{"a":2,"n":"Get","t":8,"pi":[{"n":"key","pt":TKey,"ps":0}],"sn":"get","rt":TValue,"p":[TKey]},{"a":2,"n":"GetEnumerator","t":8,"sn":"getEnumerator","rt":$n[3].IEnumerator$1(System.Collections.Generic.KeyValuePair$2(TKey,TValue))},{"a":1,"n":"Items","t":8,"pi":[{"n":"key","pt":TKey,"ps":0}],"sn":"items","rt":TValue,"p":[TKey]},{"a":2,"n":"Remove","t":8,"pi":[{"n":"key","pt":TKey,"ps":0}],"sn":"remove","rt":$n[0].Boolean,"p":[TKey]},{"a":2,"n":"Set","t":8,"pi":[{"n":"key","pt":TKey,"ps":0},{"n":"value","pt":TValue,"ps":1}],"sn":"set","rt":$n[0].Void,"p":[TKey,TValue]},{"a":2,"n":"TryGetValue","t":8,"pi":[{"n":"key","pt":TKey,"ps":0},{"n":"value","out":true,"pt":TValue,"ps":1}],"sn":"tryGetValue","rt":$n[0].Boolean,"p":[TKey,TValue]},{"a":2,"n":"Comparer","t":16,"rt":$n[3].IEqualityComparer$1(TKey),"g":{"a":2,"n":"get_Comparer","t":8,"rt":$n[3].IEqualityComparer$1(TKey),"fg":"comparer"},"fn":"comparer"},{"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Count","t":8,"rt":$n[0].Int32,"fg":"count"},"fn":"count"},{"a":2,"n":"IsReadOnly","t":16,"rt":$n[0].Boolean,"g":{"a":2,"n":"get_IsReadOnly","t":8,"tpc":0,"def":function () { return getIsReadOnly(); },"rt":$n[0].Boolean}},{"a":2,"n":"Item","t":16,"rt":TValue,"p":[TKey],"i":true,"ipi":[{"n":"key","pt":TKey,"ps":0}],"g":{"a":2,"n":"get_Item","t":8,"pi":[{"n":"key","pt":TKey,"ps":0}],"sn":"get","rt":TValue,"p":[TKey]},"s":{"a":2,"n":"set_Item","t":8,"pi":[{"n":"key","pt":TKey,"ps":0},{"n":"value","pt":TValue,"ps":1}],"sn":"set","rt":$n[0].Void,"p":[TKey,TValue]}},{"a":2,"n":"Keys","t":16,"rt":$n[3].ICollection$1(TKey),"g":{"a":2,"n":"get_Keys","t":8,"tpc":0,"def":function () { return getKeys(); },"rt":$n[3].ICollection$1(TKey)}},{"a":2,"n":"Values","t":16,"rt":$n[3].ICollection$1(TValue),"g":{"a":2,"n":"get_Values","t":8,"tpc":0,"def":function () { return getValues(); },"rt":$n[3].ICollection$1(TValue)}}]}; });
+    $m($n[3].ICollection$1, function (T) { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"Add","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"tpc":0,"def":function (item) { return System.Array.add(this, item, T); },"rt":$n[0].Void,"p":[T]},{"ab":true,"a":2,"n":"Clear","t":8,"tpc":0,"def":function () { return System.Array.clear(this, T); },"rt":$n[0].Void},{"ab":true,"a":2,"n":"Contains","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"tpc":0,"def":function (item) { return System.Array.contains(this, item, T); },"rt":$n[0].Boolean,"p":[T]},{"ab":true,"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":System.Array.type(T),"ps":0},{"n":"arrayIndex","pt":$n[0].Int32,"ps":1}],"tpc":0,"def":function (array, arrayIndex) { return System.Array.copyTo(this, array, arrayIndex, T); },"rt":$n[0].Void,"p":[System.Array.type(T),$n[0].Int32]},{"ab":true,"a":2,"n":"Remove","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"tpc":0,"def":function (item) { return System.Array.remove(this, item, T); },"rt":$n[0].Boolean,"p":[T]},{"ab":true,"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"ab":true,"a":2,"n":"get_Count","t":8,"tpc":0,"def":function () { return System.Array.getCount(this, T); },"rt":$n[0].Int32},"s":{"ab":true,"a":1,"n":"set_Count","t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"sn":"System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$Count","rt":$n[0].Void,"p":[$n[0].Int32]}},{"ab":true,"a":2,"n":"IsReadOnly","t":16,"rt":$n[0].Boolean,"g":{"ab":true,"a":2,"n":"get_IsReadOnly","t":8,"tpc":0,"def":function () { return System.Array.getIsReadOnly(this, T); },"rt":$n[0].Boolean},"s":{"ab":true,"a":1,"n":"set_IsReadOnly","t":8,"pi":[{"n":"value","pt":$n[0].Boolean,"ps":0}],"sn":"System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$IsReadOnly","rt":$n[0].Void,"p":[$n[0].Boolean]}}]}; });
+    $m($n[3].IDictionary$2, function (TKey, TValue) { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"Add","t":8,"pi":[{"n":"key","pt":TKey,"ps":0},{"n":"value","pt":TValue,"ps":1}],"sn":"System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$add","rt":$n[0].Void,"p":[TKey,TValue]},{"ab":true,"a":2,"n":"ContainsKey","t":8,"pi":[{"n":"key","pt":TKey,"ps":0}],"sn":"System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$containsKey","rt":$n[0].Boolean,"p":[TKey]},{"ab":true,"a":2,"n":"Remove","t":8,"pi":[{"n":"key","pt":TKey,"ps":0}],"sn":"System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$remove","rt":$n[0].Boolean,"p":[TKey]},{"ab":true,"a":2,"n":"TryGetValue","t":8,"pi":[{"n":"key","pt":TKey,"ps":0},{"n":"value","out":true,"pt":TValue,"ps":1}],"sn":"System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$tryGetValue","rt":$n[0].Boolean,"p":[TKey,TValue]},{"ab":true,"a":2,"n":"Item","t":16,"rt":TValue,"p":[TKey],"i":true,"ipi":[{"n":"key","pt":TKey,"ps":0}],"g":{"ab":true,"a":2,"n":"get_Item","t":8,"pi":[{"n":"key","pt":TKey,"ps":0}],"sn":"System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getItem","rt":TValue,"p":[TKey]},"s":{"ab":true,"a":2,"n":"set_Item","t":8,"pi":[{"n":"key","pt":TKey,"ps":0},{"n":"value","pt":TValue,"ps":1}],"sn":"System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$setItem","rt":$n[0].Void,"p":[TKey,TValue]}},{"ab":true,"a":2,"n":"Keys","t":16,"rt":$n[3].ICollection$1(TKey),"g":{"ab":true,"a":2,"n":"get_Keys","t":8,"rt":$n[3].ICollection$1(TKey),"fg":"\"System$Collections$Generic$IDictionary$2$\" + Bridge.getTypeAlias(TKey) + \"$\" + Bridge.getTypeAlias(TValue) + \"$Keys\""},"s":{"ab":true,"a":1,"n":"set_Keys","t":8,"p":[$n[3].ICollection$1(TKey)],"rt":$n[0].Void,"fs":"\"System$Collections$Generic$IDictionary$2$\" + Bridge.getTypeAlias(TKey) + \"$\" + Bridge.getTypeAlias(TValue) + \"$Keys\""},"fn":"\"System$Collections$Generic$IDictionary$2$\" + Bridge.getTypeAlias(TKey) + \"$\" + Bridge.getTypeAlias(TValue) + \"$Keys\""},{"ab":true,"a":2,"n":"Values","t":16,"rt":$n[3].ICollection$1(TValue),"g":{"ab":true,"a":2,"n":"get_Values","t":8,"rt":$n[3].ICollection$1(TValue),"fg":"\"System$Collections$Generic$IDictionary$2$\" + Bridge.getTypeAlias(TKey) + \"$\" + Bridge.getTypeAlias(TValue) + \"$Values\""},"s":{"ab":true,"a":1,"n":"set_Values","t":8,"p":[$n[3].ICollection$1(TValue)],"rt":$n[0].Void,"fs":"\"System$Collections$Generic$IDictionary$2$\" + Bridge.getTypeAlias(TKey) + \"$\" + Bridge.getTypeAlias(TValue) + \"$Values\""},"fn":"\"System$Collections$Generic$IDictionary$2$\" + Bridge.getTypeAlias(TKey) + \"$\" + Bridge.getTypeAlias(TValue) + \"$Values\""}]}; });
+    $m($n[3].IEnumerable$1, function (T) { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"GetEnumerator","t":8,"tpc":0,"def":function () { return Bridge.getEnumerator(this, T); },"rt":$n[3].IEnumerator$1(T)}]}; });
+    $m($n[3].IEnumerator$1, function (T) { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"Current","t":16,"rt":T,"g":{"ab":true,"a":2,"n":"get_Current","t":8,"rt":T,"fg":"\"System$Collections$Generic$IEnumerator$1$\" + Bridge.getTypeAlias(T) + \"$Current$1\""},"s":{"ab":true,"a":1,"n":"set_Current","t":8,"p":[T],"rt":$n[0].Void,"fs":"\"System$Collections$Generic$IEnumerator$1$\" + Bridge.getTypeAlias(T) + \"$Current$1\""},"fn":"\"System$Collections$Generic$IEnumerator$1$\" + Bridge.getTypeAlias(T) + \"$Current$1\""}]}; });
+    $m($n[3].IEqualityComparer$1, function (T) { return {"att":161,"a":2,"m":[{"ab":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"x","pt":T,"ps":0},{"n":"y","pt":T,"ps":1}],"sn":"System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$equals2","rt":$n[0].Boolean,"p":[T,T]},{"ab":true,"a":2,"n":"GetHashCode","t":8,"pi":[{"n":"obj","pt":T,"ps":0}],"sn":"System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$getHashCode2","rt":$n[0].Int32,"p":[T]}]}; });
+    $m($n[3].EqualityComparer$1, function (T) { return {"att":1048705,"a":2,"m":[{"a":3,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"v":true,"a":2,"n":"Equals","t":8,"pi":[{"n":"x","pt":T,"ps":0},{"n":"y","pt":T,"ps":1}],"sn":"equals2","rt":$n[0].Boolean,"p":[T,T]},{"v":true,"a":2,"n":"GetHashCode","t":8,"pi":[{"n":"obj","pt":T,"ps":0}],"sn":"getHashCode2","rt":$n[0].Int32,"p":[T]},{"a":2,"n":"Default","is":true,"t":16,"rt":$n[3].EqualityComparer$1(T),"g":{"a":2,"n":"get_Default","is":true,"t":8,"tpc":0,"def":function () { return System.Collections.Generic.EqualityComparer$1(T).def; },"rt":$n[3].EqualityComparer$1(T)}}]}; });
+    $m($n[3].KeyValuePair$2, function (TKey, TValue) { return {"att":1048841,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[TKey,TValue],"pi":[{"n":"key","pt":TKey,"ps":0},{"n":"value","pt":TValue,"ps":1}],"sn":"ctor"},{"a":2,"n":"Key","t":16,"rt":TKey,"g":{"a":2,"n":"get_Key","t":8,"rt":TKey,"fg":"key"},"fn":"key"},{"a":2,"n":"Value","t":16,"rt":TValue,"g":{"a":2,"n":"get_Value","t":8,"rt":TValue,"fg":"value"},"fn":"value"}]}; });
+    $m($n[3].List$1, function (T) { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[3].IEnumerable$1(T)],"pi":[{"n":"items","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].Int32],"pi":[{"n":"capacity","pt":$n[0].Int32,"ps":0}],"sn":"ctor"},{"a":2,"n":"Add","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"sn":"add","rt":$n[0].Void,"p":[T]},{"a":2,"n":"AddRange","t":8,"pi":[{"n":"items","pt":$n[3].IEnumerable$1(T),"ps":0}],"sn":"addRange","rt":$n[0].Void,"p":[$n[3].IEnumerable$1(T)]},{"a":2,"n":"BinarySearch","t":8,"pi":[{"n":"value","pt":T,"ps":0}],"sn":"binarySearch","rt":$n[0].Int32,"p":[T]},{"a":2,"n":"BinarySearch","t":8,"pi":[{"n":"value","pt":T,"ps":0},{"n":"comparer","pt":$n[3].IComparer$1(T),"ps":1}],"sn":"binarySearch","rt":$n[0].Int32,"p":[T,$n[3].IComparer$1(T)]},{"a":2,"n":"BinarySearch","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"length","pt":$n[0].Int32,"ps":1},{"n":"value","pt":T,"ps":2}],"sn":"binarySearch","rt":$n[0].Int32,"p":[$n[0].Int32,$n[0].Int32,T]},{"a":2,"n":"BinarySearch","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"length","pt":$n[0].Int32,"ps":1},{"n":"value","pt":T,"ps":2},{"n":"comparer","pt":$n[3].IComparer$1(T),"ps":3}],"sn":"binarySearch","rt":$n[0].Int32,"p":[$n[0].Int32,$n[0].Int32,T,$n[3].IComparer$1(T)]},{"a":2,"n":"Clear","t":8,"sn":"clear","rt":$n[0].Void},{"a":2,"n":"Contains","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"sn":"contains","rt":$n[0].Boolean,"p":[T]},{"a":2,"n":"ConvertAll","t":8,"pi":[{"n":"converter","pt":Function,"ps":0}],"tpc":1,"def":function (TOutput, converter) { return this.convertAll(TOutput, converter); },"rt":$n[3].List$1(System.Object),"p":[Function]},{"a":2,"n":"CopyTo","t":8,"pi":[{"n":"array","pt":System.Array.type(T),"ps":0},{"n":"arrayIndex","pt":$n[0].Int32,"ps":1}],"sn":"copyTo","rt":$n[0].Void,"p":[System.Array.type(T),$n[0].Int32]},{"a":2,"n":"ForEach","t":8,"pi":[{"n":"action","pt":Function,"ps":0}],"sn":"forEach","rt":$n[0].Void,"p":[Function]},{"a":2,"n":"Get","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"sn":"get","rt":T,"p":[$n[0].Int32]},{"a":2,"n":"GetEnumerator","t":8,"sn":"getEnumerator","rt":$n[3].IEnumerator$1(T)},{"a":2,"n":"GetRange","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"sn":"getRange","rt":$n[3].List$1(T),"p":[$n[0].Int32]},{"a":2,"n":"GetRange","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"count","pt":$n[0].Int32,"ps":1}],"sn":"getRange","rt":$n[3].List$1(T),"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"IndexOf","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"sn":"indexOf","rt":$n[0].Int32,"p":[T]},{"a":2,"n":"IndexOf","t":8,"pi":[{"n":"item","pt":T,"ps":0},{"n":"startIndex","pt":$n[0].Int32,"ps":1}],"sn":"indexOf","rt":$n[0].Int32,"p":[T,$n[0].Int32]},{"a":2,"n":"Insert","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"item","pt":T,"ps":1}],"sn":"insert","rt":$n[0].Void,"p":[$n[0].Int32,T]},{"a":2,"n":"InsertRange","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"items","pt":$n[3].IEnumerable$1(T),"ps":1}],"sn":"insertRange","rt":$n[0].Void,"p":[$n[0].Int32,$n[3].IEnumerable$1(T)]},{"a":1,"n":"Items","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"sn":"items","rt":T,"p":[$n[0].Int32]},{"a":2,"n":"Join","t":8,"sn":"join","rt":$n[0].String},{"a":2,"n":"Join","t":8,"pi":[{"n":"delimiter","pt":$n[0].String,"ps":0}],"sn":"join","rt":$n[0].String,"p":[$n[0].String]},{"a":2,"n":"LastIndexOf","t":8,"pi":[{"n":"item","pt":$n[0].Object,"ps":0}],"sn":"lastIndexOf","rt":$n[0].Int32,"p":[$n[0].Object]},{"a":2,"n":"LastIndexOf","t":8,"pi":[{"n":"item","pt":$n[0].Object,"ps":0},{"n":"fromIndex","pt":$n[0].Int32,"ps":1}],"sn":"lastIndexOf","rt":$n[0].Int32,"p":[$n[0].Object,$n[0].Int32]},{"a":2,"n":"Remove","t":8,"pi":[{"n":"item","pt":T,"ps":0}],"sn":"remove","rt":$n[0].Boolean,"p":[T]},{"a":2,"n":"RemoveAt","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"sn":"removeAt","rt":$n[0].Void,"p":[$n[0].Int32]},{"a":2,"n":"RemoveRange","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"count","pt":$n[0].Int32,"ps":1}],"sn":"removeRange","rt":$n[0].Void,"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Reverse","t":8,"sn":"reverse","rt":$n[0].Void},{"a":2,"n":"Set","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":T,"ps":1}],"sn":"set","rt":$n[0].Void,"p":[$n[0].Int32,T]},{"a":2,"n":"Slice","t":8,"pi":[{"n":"start","pt":$n[0].Int32,"ps":0}],"sn":"slice","rt":$n[3].List$1(T),"p":[$n[0].Int32]},{"a":2,"n":"Slice","t":8,"pi":[{"n":"start","pt":$n[0].Int32,"ps":0},{"n":"end","pt":$n[0].Int32,"ps":1}],"sn":"slice","rt":$n[3].List$1(T),"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Sort","t":8,"sn":"sort","rt":$n[0].Void},{"a":2,"n":"Sort","t":8,"pi":[{"n":"comparer","pt":$n[3].IComparer$1(T),"ps":0}],"tpc":0,"def":function (comparer) { return this.sort(Bridge.fn.bind(comparer, comparer.compare)); },"rt":$n[0].Void,"p":[$n[3].IComparer$1(T)]},{"a":2,"n":"Sort","t":8,"pi":[{"n":"comparison","pt":Function,"ps":0}],"sn":"sort","rt":$n[0].Void,"p":[Function]},{"a":2,"n":"Splice","t":8,"pi":[{"n":"start","pt":$n[0].Int32,"ps":0},{"n":"deleteCount","pt":$n[0].Int32,"ps":1}],"sn":"splice","rt":$n[0].Void,"p":[$n[0].Int32,$n[0].Int32]},{"a":2,"n":"Splice","t":8,"pi":[{"n":"start","pt":$n[0].Int32,"ps":0},{"n":"deleteCount","pt":$n[0].Int32,"ps":1},{"n":"itemsToInsert","pt":$n[3].IEnumerable$1(T),"ps":2}],"sn":"splice","rt":$n[0].Void,"p":[$n[0].Int32,$n[0].Int32,$n[3].IEnumerable$1(T)]},{"a":2,"n":"ToArray","t":8,"sn":"toArray","rt":System.Array.type(T)},{"a":2,"n":"TrimExcess","t":8,"sn":"trimExcess","rt":$n[0].Void},{"a":2,"n":"Unshift","t":8,"pi":[{"n":"items","ip":true,"pt":System.Array.type(T),"ps":0}],"sn":"unshift","rt":$n[0].Void,"p":[System.Array.type(T)]},{"a":2,"n":"Capacity","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Capacity","t":8,"rt":$n[0].Int32,"fg":"Capacity"},"s":{"a":2,"n":"set_Capacity","t":8,"p":[$n[0].Int32],"rt":$n[0].Void,"fs":"Capacity"},"fn":"Capacity"},{"a":2,"n":"Count","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_Count","t":8,"rt":$n[0].Int32,"fg":"Count"},"fn":"Count"},{"a":2,"n":"Item","t":16,"rt":T,"p":[$n[0].Int32],"i":true,"ipi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"g":{"a":2,"n":"get_Item","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0}],"sn":"getItem","rt":T,"p":[$n[0].Int32]},"s":{"a":2,"n":"set_Item","t":8,"pi":[{"n":"index","pt":$n[0].Int32,"ps":0},{"n":"value","pt":T,"ps":1}],"sn":"setItem","rt":$n[0].Void,"p":[$n[0].Int32,T]}}]}; });
+    $m($n[3].KeyNotFoundException, function () { return {"att":1048577,"a":2,"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String],"pi":[{"n":"message","pt":$n[0].String,"ps":0}],"sn":"ctor"},{"a":2,"n":".ctor","t":1,"p":[$n[0].String,$n[0].Exception],"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"innerException","pt":$n[0].Exception,"ps":1}],"sn":"ctor"}]}; });
+    $m(Bridge.Console, function () { return {"att":1048577,"a":2,"m":[{"a":1,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":"BuildConsoleMessage","t":8,"pi":[{"n":"message","pt":$n[0].String,"ps":0},{"n":"messageType","pt":Bridge.Console.MessageType,"ps":1}],"sn":"buildConsoleMessage","rt":Bridge.Console.Element,"p":[$n[0].String,Bridge.Console.MessageType]},{"a":2,"n":"Clear","is":true,"t":8,"sn":"clear","rt":$n[0].Void},{"a":2,"n":"Close","t":8,"sn":"close","rt":$n[0].Void},{"a":2,"n":"Debug","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"sn":"debug","rt":$n[0].Void,"p":[$n[0].String]},{"a":2,"n":"Error","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].String,"ps":0}],"sn":"error","rt":$n[0].Void,"p":[$n[0].String]},{"a":2,"n":"Hide","is":true,"t":8,"sn":"hide","rt":$n[0].Void},{"a":2,"n":"HideTooltip","t":8,"sn":"hideTooltip","rt":$n[0].Void},{"a":1,"n":"Init","t":8,"pi":[{"n":"reinit","dv":false,"o":true,"pt":$n[0].Boolean,"ps":0}],"sn":"init","rt":$n[0].Void,"p":[$n[0].Boolean]},{"a":2,"n":"InitConsoleFunctions","is":true,"t":8,"sn":"initConsoleFunctions","rt":$n[0].Void},{"a":2,"n":"Log","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Object,"ps":0},{"n":"newLine","dv":true,"o":true,"pt":$n[0].Boolean,"ps":1}],"sn":"log","rt":$n[0].Void,"p":[$n[0].Object,$n[0].Boolean]},{"a":1,"n":"LogBase","is":true,"t":8,"pi":[{"n":"value","pt":$n[0].Object,"ps":0},{"n":"newLine","dv":true,"o":true,"pt":$n[0].Boolean,"ps":1},{"n":"messageType","dv":0,"o":true,"pt":Bridge.Console.MessageType,"ps":2}],"sn":"logBase","rt":$n[0].Void,"p":[$n[0].Object,$n[0].Boolean,Bridge.Console.MessageType]},{"a":1,"n":"Obj2Css","t":8,"pi":[{"n":"obj","pt":$n[3].Dictionary$2(System.String,System.String),"ps":0}],"sn":"obj2Css","rt":$n[0].String,"p":[$n[3].Dictionary$2(System.String,System.String)]},{"a":1,"n":"SetAttributes","t":8,"pi":[{"n":"el","pt":Bridge.Console.Element,"ps":0},{"n":"attrs","pt":$n[3].Dictionary$2(System.String,System.String),"ps":1}],"sn":"setAttributes","rt":$n[0].Void,"p":[Bridge.Console.Element,$n[3].Dictionary$2(System.String,System.String)]},{"a":2,"n":"Show","is":true,"t":8,"sn":"show","rt":$n[0].Void},{"a":2,"n":"ShowTooltip","t":8,"sn":"showTooltip","rt":$n[0].Void},{"a":2,"n":"Toggle","is":true,"t":8,"sn":"toggle","rt":$n[0].Void},{"a":1,"n":"UnwrapBodyContent","t":8,"sn":"unwrapBodyContent","rt":$n[0].Void},{"a":1,"n":"WrapBodyContent","t":8,"sn":"wrapBodyContent","rt":$n[0].Void},{"a":2,"n":"Instance","is":true,"t":16,"rt":Bridge.Console,"g":{"a":2,"n":"get_Instance","t":8,"rt":Bridge.Console,"fg":"instance","is":true},"fn":"instance"},{"a":1,"n":"BODY_WRAPPER_ID","is":true,"t":4,"rt":$n[0].String,"sn":"BODY_WRAPPER_ID"},{"a":1,"n":"BridgeConsoleLabel","t":4,"rt":Bridge.Console.Element,"sn":"bridgeConsoleLabel"},{"a":1,"n":"BridgeIcon","t":4,"rt":Bridge.Console.Element,"sn":"bridgeIcon"},{"a":1,"n":"BridgeIconPath","t":4,"rt":Bridge.Console.Element,"sn":"bridgeIconPath"},{"a":2,"n":"BufferedOutput","t":4,"rt":$n[0].String,"sn":"bufferedOutput"},{"a":1,"n":"CONSOLE_MESSAGES_ID","is":true,"t":4,"rt":$n[0].String,"sn":"CONSOLE_MESSAGES_ID"},{"a":1,"n":"CloseBtn","t":4,"rt":Bridge.Console.Element,"sn":"closeBtn"},{"a":1,"n":"CloseIcon","t":4,"rt":Bridge.Console.Element,"sn":"closeIcon"},{"a":1,"n":"CloseIconPath","t":4,"rt":Bridge.Console.Element,"sn":"closeIconPath"},{"a":1,"n":"ConsoleBody","t":4,"rt":Bridge.Console.Element,"sn":"consoleBody"},{"a":1,"n":"ConsoleHeader","t":4,"rt":Bridge.Console.Element,"sn":"consoleHeader"},{"a":1,"n":"ConsoleMessages","t":4,"rt":Bridge.Console.Element,"sn":"consoleMessages"},{"a":1,"n":"ConsoleWrap","t":4,"rt":Bridge.Console.Element,"sn":"consoleWrap"},{"a":2,"n":"CurrentMessageElement","t":4,"rt":$n[0].Object,"sn":"currentMessageElement"},{"a":1,"n":"Hidden","t":4,"rt":$n[0].Boolean,"sn":"hidden"},{"a":1,"n":"IsNewLine","t":4,"rt":$n[0].Boolean,"sn":"isNewLine"},{"a":1,"n":"Position","is":true,"t":4,"rt":$n[0].String,"sn":"position"},{"a":1,"n":"Tooltip","t":4,"rt":Bridge.Console.Element,"sn":"tooltip"},{"a":1,"n":"consoleHeaderHeight","t":4,"rt":$n[0].String,"sn":"consoleHeaderHeight"},{"a":1,"n":"consoleHeight","t":4,"rt":$n[0].String,"sn":"consoleHeight"},{"a":1,"n":"instance","is":true,"t":4,"rt":Bridge.Console,"sn":"instance$1"},{"a":1,"n":"svgNS","t":4,"rt":$n[0].String,"sn":"svgNS"}]}; });
+    $m($n[11].SystemAssemblyVersion, function () { return {"att":1048576,"a":4,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"Version","is":true,"t":8,"sn":"version","rt":$n[0].Void}]}; });
+
+/**
+ * A simple free (AGPL) T-SQL formatting library for JS
+ * @version 1.6.12.2815
+ * @copyright Copyright ©  2011-2017 Tao Klerks
+ * @compiler Bridge.NET 16.0.0-beta4
+ */
+Bridge.assembly("PoorMansTSqlFormatterJS", function ($asm, globals) {
+    "use strict";
+
+    Bridge.define("PoorMansTSqlFormatterLib._SqlFormattingManager", {
+        $kind: "interface"
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.BaseFormatterState", {
+        fields: {
+            _outBuilder: null
+        },
+        props: {
+            HtmlOutput: false
+        },
+        ctors: {
+            init: function () {
+                this._outBuilder = new System.Text.StringBuilder();
+            },
+            ctor: function (htmlOutput) {
+                this.$initialize();
+                this.HtmlOutput = htmlOutput;
+            }
+        },
+        methods: {
+            AddOutputContent: function (content) {
+                this.AddOutputContent$1(content, null);
+            },
+            AddOutputContent$1: function (content, htmlClassName) {
+                if (this.HtmlOutput) {
+                    if (!System.String.isNullOrEmpty(htmlClassName)) {
+                        this._outBuilder.append(System.String.concat("<span class=\"", htmlClassName, "\">"));
+                    }
+                    this._outBuilder.append(PoorMansTSqlFormatterLib.Utils.HtmlEncode(content));
+                    if (!System.String.isNullOrEmpty(htmlClassName)) {
+                        this._outBuilder.append("</span>");
+                    }
+                } else {
+                    this._outBuilder.append(content);
+                }
+            },
+            OpenClass: function (htmlClassName) {
+                if (htmlClassName == null) {
+                    throw new System.ArgumentNullException("htmlClassName");
+                }
+
+                if (this.HtmlOutput) {
+                    this._outBuilder.append(System.String.concat("<span class=\"", htmlClassName, "\">"));
+                }
+            },
+            CloseClass: function () {
+                if (this.HtmlOutput) {
+                    this._outBuilder.append("</span>");
+                }
+            },
+            AddOutputContentRaw: function (content) {
+                this._outBuilder.append(content);
+            },
+            AddOutputLineBreak: function () {
+                this._outBuilder.append('\n');
+            },
+            DumpOutput: function () {
+                return this._outBuilder.toString();
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter", {
+        $kind: "interface"
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Interfaces.ISqlTokenFormatter", {
+        $kind: "interface"
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.SpecialRegionType", {
+        $kind: "enum",
+        statics: {
+            fields: {
+                NoFormat: 1,
+                Minify: 2
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions", {
+        statics: {
+            fields: {
+                _defaultOptions: null
+            },
+            ctors: {
+                init: function () {
+                    this._defaultOptions = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions.ctor();
+                }
+            }
+        },
+        fields: {
+            _indentString: null
+        },
+        props: {
+            IndentString: {
+                get: function () {
+                    return this._indentString;
+                },
+                set: function (value) {
+                    this._indentString = System.String.replaceAll(System.String.replaceAll(value, "\\t", "\t"), "\\s", " ");
+                }
+            },
+            SpacesPerTab: 0,
+            MaxLineWidth: 0,
+            ExpandCommaLists: false,
+            TrailingCommas: false,
+            SpaceAfterExpandedComma: false,
+            ExpandBooleanExpressions: false,
+            ExpandCaseStatements: false,
+            ExpandBetweenConditions: false,
+            UppercaseKeywords: false,
+            BreakJoinOnSections: false,
+            HTMLColoring: false,
+            KeywordStandardization: false,
+            ExpandInLists: false,
+            NewClauseLineBreaks: 0,
+            NewStatementLineBreaks: 0
+        },
+        ctors: {
+            ctor: function () {
+                this.$initialize();
+                this.IndentString = "\t";
+                this.SpacesPerTab = 4;
+                this.MaxLineWidth = 999;
+                this.ExpandCommaLists = true;
+                this.TrailingCommas = false;
+                this.SpaceAfterExpandedComma = false;
+                this.ExpandBooleanExpressions = true;
+                this.ExpandBetweenConditions = true;
+                this.ExpandCaseStatements = true;
+                this.UppercaseKeywords = true;
+                this.BreakJoinOnSections = false;
+                this.HTMLColoring = false;
+                this.KeywordStandardization = false;
+                this.ExpandInLists = true;
+                this.NewClauseLineBreaks = 1;
+                this.NewStatementLineBreaks = 2;
+            },
+            $ctor1: function (serializedString) {
+                PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions.ctor.call(this);
+                var $t;
+
+                if (System.String.isNullOrEmpty(serializedString)) {
+                    return;
+                }
+
+                //PLEASE NOTE: This is not reusable/general-purpose key-value serialization: it does not handle commas in data.
+                // This will need to be enhanced if we ever need to store formatter options that might contain equals signs or 
+                // commas.
+                $t = Bridge.getEnumerator(System.String.split(serializedString, [44].map(function(i) {{ return String.fromCharCode(i); }})));
+                try {
+                    while ($t.moveNext()) {
+                        var kvp = $t.Current;
+                        var splitPair = System.String.split(kvp, [61].map(function(i) {{ return String.fromCharCode(i); }}));
+                        var key = splitPair[System.Array.index(0, splitPair)];
+                        var value = splitPair[System.Array.index(1, splitPair)];
+
+                        if (Bridge.referenceEquals(key, "IndentString")) {
+                            this.IndentString = value;
+                        } else {
+                            if (Bridge.referenceEquals(key, "SpacesPerTab")) {
+                                this.SpacesPerTab = System.Convert.toInt32(value);
+                            } else {
+                                if (Bridge.referenceEquals(key, "MaxLineWidth")) {
+                                    this.MaxLineWidth = System.Convert.toInt32(value);
+                                } else {
+                                    if (Bridge.referenceEquals(key, "ExpandCommaLists")) {
+                                        this.ExpandCommaLists = System.Convert.toBoolean(value);
+                                    } else {
+                                        if (Bridge.referenceEquals(key, "TrailingCommas")) {
+                                            this.TrailingCommas = System.Convert.toBoolean(value);
+                                        } else {
+                                            if (Bridge.referenceEquals(key, "SpaceAfterExpandedComma")) {
+                                                this.SpaceAfterExpandedComma = System.Convert.toBoolean(value);
+                                            } else {
+                                                if (Bridge.referenceEquals(key, "ExpandBooleanExpressions")) {
+                                                    this.ExpandBooleanExpressions = System.Convert.toBoolean(value);
+                                                } else {
+                                                    if (Bridge.referenceEquals(key, "ExpandBetweenConditions")) {
+                                                        this.ExpandBetweenConditions = System.Convert.toBoolean(value);
+                                                    } else {
+                                                        if (Bridge.referenceEquals(key, "ExpandCaseStatements")) {
+                                                            this.ExpandCaseStatements = System.Convert.toBoolean(value);
+                                                        } else {
+                                                            if (Bridge.referenceEquals(key, "UppercaseKeywords")) {
+                                                                this.UppercaseKeywords = System.Convert.toBoolean(value);
+                                                            } else {
+                                                                if (Bridge.referenceEquals(key, "BreakJoinOnSections")) {
+                                                                    this.BreakJoinOnSections = System.Convert.toBoolean(value);
+                                                                } else {
+                                                                    if (Bridge.referenceEquals(key, "HTMLColoring")) {
+                                                                        this.HTMLColoring = System.Convert.toBoolean(value);
+                                                                    } else {
+                                                                        if (Bridge.referenceEquals(key, "KeywordStandardization")) {
+                                                                            this.KeywordStandardization = System.Convert.toBoolean(value);
+                                                                        } else {
+                                                                            if (Bridge.referenceEquals(key, "ExpandInLists")) {
+                                                                                this.ExpandInLists = System.Convert.toBoolean(value);
+                                                                            } else {
+                                                                                if (Bridge.referenceEquals(key, "NewClauseLineBreaks")) {
+                                                                                    this.NewClauseLineBreaks = System.Convert.toInt32(value);
+                                                                                } else {
+                                                                                    if (Bridge.referenceEquals(key, "NewStatementLineBreaks")) {
+                                                                                        this.NewStatementLineBreaks = System.Convert.toInt32(value);
+                                                                                    } else {
+                                                                                        throw new System.ArgumentException(System.String.concat("Unknown option: ", key));
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } finally {
+                    if (Bridge.is($t, System.IDisposable)) {
+                        $t.System$IDisposable$dispose();
+                    }
+                }
+        }
+    },
+    methods: {
+        ToSerializedString: function () {
+            var overrides = new (System.Collections.Generic.Dictionary$2(System.String,System.String))();
+
+            if (!Bridge.referenceEquals(this.IndentString, PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.IndentString)) {
+                overrides.add("IndentString", this.IndentString);
+            }
+            if (this.SpacesPerTab !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.SpacesPerTab) {
+                overrides.add("SpacesPerTab", this.SpacesPerTab.toString());
+            }
+            if (this.MaxLineWidth !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.MaxLineWidth) {
+                overrides.add("MaxLineWidth", this.MaxLineWidth.toString());
+            }
+            if (this.ExpandCommaLists !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.ExpandCommaLists) {
+                overrides.add("ExpandCommaLists", System.Boolean.toString(this.ExpandCommaLists));
+            }
+            if (this.TrailingCommas !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.TrailingCommas) {
+                overrides.add("TrailingCommas", System.Boolean.toString(this.TrailingCommas));
+            }
+            if (this.SpaceAfterExpandedComma !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.SpaceAfterExpandedComma) {
+                overrides.add("SpaceAfterExpandedComma", System.Boolean.toString(this.SpaceAfterExpandedComma));
+            }
+            if (this.ExpandBooleanExpressions !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.ExpandBooleanExpressions) {
+                overrides.add("ExpandBooleanExpressions", System.Boolean.toString(this.ExpandBooleanExpressions));
+            }
+            if (this.ExpandBetweenConditions !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.ExpandBetweenConditions) {
+                overrides.add("ExpandBetweenConditions", System.Boolean.toString(this.ExpandBetweenConditions));
+            }
+            if (this.ExpandCaseStatements !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.ExpandCaseStatements) {
+                overrides.add("ExpandCaseStatements", System.Boolean.toString(this.ExpandCaseStatements));
+            }
+            if (this.UppercaseKeywords !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.UppercaseKeywords) {
+                overrides.add("UppercaseKeywords", System.Boolean.toString(this.UppercaseKeywords));
+            }
+            if (this.BreakJoinOnSections !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.BreakJoinOnSections) {
+                overrides.add("BreakJoinOnSections", System.Boolean.toString(this.BreakJoinOnSections));
+            }
+            if (this.HTMLColoring !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.HTMLColoring) {
+                overrides.add("HTMLColoring", System.Boolean.toString(this.HTMLColoring));
+            }
+            if (this.KeywordStandardization !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.KeywordStandardization) {
+                overrides.add("KeywordStandardization", System.Boolean.toString(this.KeywordStandardization));
+            }
+            if (this.ExpandInLists !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.ExpandInLists) {
+                overrides.add("ExpandInLists", System.Boolean.toString(this.ExpandInLists));
+            }
+            if (this.NewClauseLineBreaks !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.NewClauseLineBreaks) {
+                overrides.add("NewClauseLineBreaks", this.NewClauseLineBreaks.toString());
+            }
+            if (this.NewStatementLineBreaks !== PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions._defaultOptions.NewStatementLineBreaks) {
+                overrides.add("NewStatementLineBreaks", this.NewStatementLineBreaks.toString());
+            }
+            this.NewStatementLineBreaks = 2;
+
+            if (overrides.count === 0) {
+                return "";
+            }
+            return System.Linq.Enumerable.from(overrides).select($asm.$.PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions.f1).toArray(System.String).join(",");
+
+        }
+    }
+    });
+
+    Bridge.ns("PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions", $asm.$);
+
+    Bridge.apply($asm.$.PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions, {
+        f1: function (kvp) {
+            return System.String.concat(kvp.key, "=", kvp.value);
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Interfaces.ISqlTokenizer", {
+        $kind: "interface"
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Interfaces.ISqlTokenParser", {
+        $kind: "interface"
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Interfaces.IToken", {
+        $kind: "interface"
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Interfaces.MessagingConstants", {
+        statics: {
+            fields: {
+                FormatErrorDefaultMessage: null
+            },
+            ctors: {
+                init: function () {
+                    this.FormatErrorDefaultMessage = "--WARNING! ERRORS ENCOUNTERED DURING SQL PARSING!";
+                }
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants", {
+        statics: {
+            fields: {
+                CLASS_OPERATOR: null,
+                CLASS_COMMENT: null,
+                CLASS_STRING: null,
+                CLASS_FUNCTION: null,
+                CLASS_KEYWORD: null,
+                CLASS_ERRORHIGHLIGHT: null
+            },
+            ctors: {
+                init: function () {
+                    this.CLASS_OPERATOR = "SQLOperator";
+                    this.CLASS_COMMENT = "SQLComment";
+                    this.CLASS_STRING = "SQLString";
+                    this.CLASS_FUNCTION = "SQLFunction";
+                    this.CLASS_KEYWORD = "SQLKeyword";
+                    this.CLASS_ERRORHIGHLIGHT = "SQLErrorHighlight";
+                }
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants", {
+        statics: {
+            fields: {
+                ENAME_SQL_ROOT: null,
+                ENAME_SQL_STATEMENT: null,
+                ENAME_SQL_CLAUSE: null,
+                ENAME_SET_OPERATOR_CLAUSE: null,
+                ENAME_INSERT_CLAUSE: null,
+                ENAME_BEGIN_END_BLOCK: null,
+                ENAME_TRY_BLOCK: null,
+                ENAME_CATCH_BLOCK: null,
+                ENAME_BATCH_SEPARATOR: null,
+                ENAME_CASE_STATEMENT: null,
+                ENAME_CASE_INPUT: null,
+                ENAME_CASE_WHEN: null,
+                ENAME_CASE_THEN: null,
+                ENAME_CASE_ELSE: null,
+                ENAME_IF_STATEMENT: null,
+                ENAME_ELSE_CLAUSE: null,
+                ENAME_BOOLEAN_EXPRESSION: null,
+                ENAME_WHILE_LOOP: null,
+                ENAME_CURSOR_DECLARATION: null,
+                ENAME_CURSOR_FOR_BLOCK: null,
+                ENAME_CURSOR_FOR_OPTIONS: null,
+                ENAME_CTE_WITH_CLAUSE: null,
+                ENAME_CTE_ALIAS: null,
+                ENAME_CTE_AS_BLOCK: null,
+                ENAME_BEGIN_TRANSACTION: null,
+                ENAME_COMMIT_TRANSACTION: null,
+                ENAME_ROLLBACK_TRANSACTION: null,
+                ENAME_SAVE_TRANSACTION: null,
+                ENAME_DDL_DECLARE_BLOCK: null,
+                ENAME_DDL_PROCEDURAL_BLOCK: null,
+                ENAME_DDL_OTHER_BLOCK: null,
+                ENAME_DDL_AS_BLOCK: null,
+                ENAME_DDL_PARENS: null,
+                ENAME_DDL_SUBCLAUSE: null,
+                ENAME_DDL_RETURNS: null,
+                ENAME_DDLDETAIL_PARENS: null,
+                ENAME_DDL_WITH_CLAUSE: null,
+                ENAME_PERMISSIONS_BLOCK: null,
+                ENAME_PERMISSIONS_DETAIL: null,
+                ENAME_PERMISSIONS_TARGET: null,
+                ENAME_PERMISSIONS_RECIPIENT: null,
+                ENAME_TRIGGER_CONDITION: null,
+                ENAME_SELECTIONTARGET_PARENS: null,
+                ENAME_EXPRESSION_PARENS: null,
+                ENAME_FUNCTION_PARENS: null,
+                ENAME_IN_PARENS: null,
+                ENAME_FUNCTION_KEYWORD: null,
+                ENAME_DATATYPE_KEYWORD: null,
+                ENAME_COMPOUNDKEYWORD: null,
+                ENAME_OTHERKEYWORD: null,
+                ENAME_LABEL: null,
+                ENAME_CONTAINER_OPEN: null,
+                ENAME_CONTAINER_MULTISTATEMENT: null,
+                ENAME_CONTAINER_SINGLESTATEMENT: null,
+                ENAME_CONTAINER_GENERALCONTENT: null,
+                ENAME_CONTAINER_CLOSE: null,
+                ENAME_SELECTIONTARGET: null,
+                ENAME_MERGE_CLAUSE: null,
+                ENAME_MERGE_TARGET: null,
+                ENAME_MERGE_USING: null,
+                ENAME_MERGE_CONDITION: null,
+                ENAME_MERGE_WHEN: null,
+                ENAME_MERGE_THEN: null,
+                ENAME_MERGE_ACTION: null,
+                ENAME_JOIN_ON_SECTION: null,
+                ENAME_PSEUDONAME: null,
+                ENAME_WHITESPACE: null,
+                ENAME_OTHERNODE: null,
+                ENAME_COMMENT_SINGLELINE: null,
+                ENAME_COMMENT_SINGLELINE_CSTYLE: null,
+                ENAME_COMMENT_MULTILINE: null,
+                ENAME_STRING: null,
+                ENAME_NSTRING: null,
+                ENAME_QUOTED_STRING: null,
+                ENAME_BRACKET_QUOTED_NAME: null,
+                ENAME_COMMA: null,
+                ENAME_PERIOD: null,
+                ENAME_SEMICOLON: null,
+                ENAME_SCOPERESOLUTIONOPERATOR: null,
+                ENAME_ASTERISK: null,
+                ENAME_EQUALSSIGN: null,
+                ENAME_ALPHAOPERATOR: null,
+                ENAME_OTHEROPERATOR: null,
+                ENAME_AND_OPERATOR: null,
+                ENAME_OR_OPERATOR: null,
+                ENAME_BETWEEN_CONDITION: null,
+                ENAME_BETWEEN_LOWERBOUND: null,
+                ENAME_BETWEEN_UPPERBOUND: null,
+                ENAME_NUMBER_VALUE: null,
+                ENAME_MONETARY_VALUE: null,
+                ENAME_BINARY_VALUE: null,
+                ANAME_ERRORFOUND: null,
+                ANAME_HASERROR: null,
+                ANAME_DATALOSS: null,
+                ANAME_SIMPLETEXT: null,
+                ENAMELIST_COMMENT: null,
+                ENAMELIST_NONCONTENT: null,
+                ENAMELIST_NONSEMANTICCONTENT: null
+            },
+            ctors: {
+                init: function () {
+                    this.ENAME_SQL_ROOT = "SqlRoot";
+                    this.ENAME_SQL_STATEMENT = "SqlStatement";
+                    this.ENAME_SQL_CLAUSE = "Clause";
+                    this.ENAME_SET_OPERATOR_CLAUSE = "SetOperatorClause";
+                    this.ENAME_INSERT_CLAUSE = "InsertClause";
+                    this.ENAME_BEGIN_END_BLOCK = "BeginEndBlock";
+                    this.ENAME_TRY_BLOCK = "TryBlock";
+                    this.ENAME_CATCH_BLOCK = "CatchBlock";
+                    this.ENAME_BATCH_SEPARATOR = "BatchSeparator";
+                    this.ENAME_CASE_STATEMENT = "CaseStatement";
+                    this.ENAME_CASE_INPUT = "Input";
+                    this.ENAME_CASE_WHEN = "When";
+                    this.ENAME_CASE_THEN = "Then";
+                    this.ENAME_CASE_ELSE = "CaseElse";
+                    this.ENAME_IF_STATEMENT = "IfStatement";
+                    this.ENAME_ELSE_CLAUSE = "ElseClause";
+                    this.ENAME_BOOLEAN_EXPRESSION = "BooleanExpression";
+                    this.ENAME_WHILE_LOOP = "WhileLoop";
+                    this.ENAME_CURSOR_DECLARATION = "CursorDeclaration";
+                    this.ENAME_CURSOR_FOR_BLOCK = "CursorForBlock";
+                    this.ENAME_CURSOR_FOR_OPTIONS = "CursorForOptions";
+                    this.ENAME_CTE_WITH_CLAUSE = "CTEWithClause";
+                    this.ENAME_CTE_ALIAS = "CTEAlias";
+                    this.ENAME_CTE_AS_BLOCK = "CTEAsBlock";
+                    this.ENAME_BEGIN_TRANSACTION = "BeginTransaction";
+                    this.ENAME_COMMIT_TRANSACTION = "CommitTransaction";
+                    this.ENAME_ROLLBACK_TRANSACTION = "RollbackTransaction";
+                    this.ENAME_SAVE_TRANSACTION = "SaveTransaction";
+                    this.ENAME_DDL_DECLARE_BLOCK = "DDLDeclareBlock";
+                    this.ENAME_DDL_PROCEDURAL_BLOCK = "DDLProceduralBlock";
+                    this.ENAME_DDL_OTHER_BLOCK = "DDLOtherBlock";
+                    this.ENAME_DDL_AS_BLOCK = "DDLAsBlock";
+                    this.ENAME_DDL_PARENS = "DDLParens";
+                    this.ENAME_DDL_SUBCLAUSE = "DDLSubClause";
+                    this.ENAME_DDL_RETURNS = "DDLReturns";
+                    this.ENAME_DDLDETAIL_PARENS = "DDLDetailParens";
+                    this.ENAME_DDL_WITH_CLAUSE = "DDLWith";
+                    this.ENAME_PERMISSIONS_BLOCK = "PermissionsBlock";
+                    this.ENAME_PERMISSIONS_DETAIL = "PermissionsDetail";
+                    this.ENAME_PERMISSIONS_TARGET = "PermissionsTarget";
+                    this.ENAME_PERMISSIONS_RECIPIENT = "PermissionsRecipient";
+                    this.ENAME_TRIGGER_CONDITION = "TriggerCondition";
+                    this.ENAME_SELECTIONTARGET_PARENS = "SelectionTargetParens";
+                    this.ENAME_EXPRESSION_PARENS = "ExpressionParens";
+                    this.ENAME_FUNCTION_PARENS = "FunctionParens";
+                    this.ENAME_IN_PARENS = "InParens";
+                    this.ENAME_FUNCTION_KEYWORD = "FunctionKeyword";
+                    this.ENAME_DATATYPE_KEYWORD = "DataTypeKeyword";
+                    this.ENAME_COMPOUNDKEYWORD = "CompoundKeyword";
+                    this.ENAME_OTHERKEYWORD = "OtherKeyword";
+                    this.ENAME_LABEL = "Label";
+                    this.ENAME_CONTAINER_OPEN = "ContainerOpen";
+                    this.ENAME_CONTAINER_MULTISTATEMENT = "ContainerMultiStatementBody";
+                    this.ENAME_CONTAINER_SINGLESTATEMENT = "ContainerSingleStatementBody";
+                    this.ENAME_CONTAINER_GENERALCONTENT = "ContainerContentBody";
+                    this.ENAME_CONTAINER_CLOSE = "ContainerClose";
+                    this.ENAME_SELECTIONTARGET = "SelectionTarget";
+                    this.ENAME_MERGE_CLAUSE = "MergeClause";
+                    this.ENAME_MERGE_TARGET = "MergeTarget";
+                    this.ENAME_MERGE_USING = "MergeUsing";
+                    this.ENAME_MERGE_CONDITION = "MergeCondition";
+                    this.ENAME_MERGE_WHEN = "MergeWhen";
+                    this.ENAME_MERGE_THEN = "MergeThen";
+                    this.ENAME_MERGE_ACTION = "MergeAction";
+                    this.ENAME_JOIN_ON_SECTION = "JoinOn";
+                    this.ENAME_PSEUDONAME = "PseudoName";
+                    this.ENAME_WHITESPACE = "WhiteSpace";
+                    this.ENAME_OTHERNODE = "Other";
+                    this.ENAME_COMMENT_SINGLELINE = "SingleLineComment";
+                    this.ENAME_COMMENT_SINGLELINE_CSTYLE = "SingleLineCommentCStyle";
+                    this.ENAME_COMMENT_MULTILINE = "MultiLineComment";
+                    this.ENAME_STRING = "String";
+                    this.ENAME_NSTRING = "NationalString";
+                    this.ENAME_QUOTED_STRING = "QuotedString";
+                    this.ENAME_BRACKET_QUOTED_NAME = "BracketQuotedName";
+                    this.ENAME_COMMA = "Comma";
+                    this.ENAME_PERIOD = "Period";
+                    this.ENAME_SEMICOLON = "Semicolon";
+                    this.ENAME_SCOPERESOLUTIONOPERATOR = "ScopeResolutionOperator";
+                    this.ENAME_ASTERISK = "Asterisk";
+                    this.ENAME_EQUALSSIGN = "EqualsSign";
+                    this.ENAME_ALPHAOPERATOR = "AlphaOperator";
+                    this.ENAME_OTHEROPERATOR = "OtherOperator";
+                    this.ENAME_AND_OPERATOR = "And";
+                    this.ENAME_OR_OPERATOR = "Or";
+                    this.ENAME_BETWEEN_CONDITION = "Between";
+                    this.ENAME_BETWEEN_LOWERBOUND = "LowerBound";
+                    this.ENAME_BETWEEN_UPPERBOUND = "UpperBound";
+                    this.ENAME_NUMBER_VALUE = "NumberValue";
+                    this.ENAME_MONETARY_VALUE = "MonetaryValue";
+                    this.ENAME_BINARY_VALUE = "BinaryValue";
+                    this.ANAME_ERRORFOUND = "errorFound";
+                    this.ANAME_HASERROR = "hasError";
+                    this.ANAME_DATALOSS = "dataLossLimitation";
+                    this.ANAME_SIMPLETEXT = "simpleText";
+                    this.ENAMELIST_COMMENT = System.Array.init([PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_MULTILINE, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE_CSTYLE], System.String);
+                    this.ENAMELIST_NONCONTENT = System.Array.init([PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHITESPACE, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_MULTILINE, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE_CSTYLE], System.String);
+                    this.ENAMELIST_NONSEMANTICCONTENT = System.Array.init([PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_OTHER_BLOCK, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_DECLARE_BLOCK], System.String);
+                }
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Interfaces.SqlTokenType", {
+        $kind: "enum",
+        statics: {
+            fields: {
+                OpenParens: 0,
+                CloseParens: 1,
+                WhiteSpace: 2,
+                OtherNode: 3,
+                SingleLineComment: 4,
+                SingleLineCommentCStyle: 5,
+                MultiLineComment: 6,
+                String: 7,
+                NationalString: 8,
+                BracketQuotedName: 9,
+                QuotedString: 10,
+                Comma: 11,
+                Period: 12,
+                Semicolon: 13,
+                Colon: 14,
+                Asterisk: 15,
+                EqualsSign: 16,
+                MonetaryValue: 17,
+                Number: 18,
+                BinaryValue: 19,
+                OtherOperator: 20,
+                PseudoName: 21
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping", {
+        statics: {
+            props: {
+                Instance: null
+            },
+            ctors: {
+                ctor: function () {
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance = new (System.Collections.Generic.Dictionary$2(System.String,System.String))();
+
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("PROCEDURE", "PROC");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("LEFT OUTER JOIN", "LEFT JOIN");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("RIGHT OUTER JOIN", "RIGHT JOIN");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("FULL OUTER JOIN", "FULL JOIN");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("INNER JOIN", "JOIN");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("TRANSACTION", "TRAN");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("BEGIN TRANSACTION", "BEGIN TRAN");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("COMMIT TRANSACTION", "COMMIT TRAN");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("ROLLBACK TRANSACTION", "ROLLBACK TRAN");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("VARBINARY", "BINARY VARYING");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("VARCHAR", "CHARACTER VARYING");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("CHARACTER", "CHAR");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("CHAR VARYING", "VARCHAR");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("DECIMAL", "DEC");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("FLOAT", "DOUBLE PRECISION");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("INTEGER", "INT");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("NCHAR", "NATIONAL CHARACTER");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("NATIONAL CHAR", "NCHAR");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("NVARCHAR", "NATIONAL CHARACTER VARYING");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("NATIONAL CHAR VARYING", "NVARCHAR");
+                    PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance.add("NTEXT", "NATIONAL TEXT");
+                }
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType", {
+        $kind: "enum",
+        statics: {
+            fields: {
+                OperatorKeyword: 0,
+                FunctionKeyword: 1,
+                DataTypeKeyword: 2,
+                OtherKeyword: 3
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.ParseStructure.Node", {
+        $kind: "interface"
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions", {
+        statics: {
+            methods: {
+                FollowingChild: function (value, fromChild) {
+                    var $t;
+                    if (value == null) {
+                        return null;
+                    }
+
+                    if (fromChild == null) {
+                        throw new System.ArgumentNullException("fromChild");
+                    }
+
+                    var targetFound = false;
+                    var sibling = null;
+
+                    $t = Bridge.getEnumerator(value.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, PoorMansTSqlFormatterLib.ParseStructure.Node);
+                    try {
+                        while ($t.moveNext()) {
+                            var child = $t.Current;
+                            if (targetFound) {
+                                sibling = child;
+                                break;
+                            }
+
+                            if (Bridge.referenceEquals(child, fromChild)) {
+                                targetFound = true;
+                            }
+                        }
+                    } finally {
+                        if (Bridge.is($t, System.IDisposable)) {
+                            $t.System$IDisposable$dispose();
+                        }
+                    }
+                    return sibling;
+                },
+                PreviousChild: function (value, fromChild) {
+                    var $t;
+                    if (value == null) {
+                        return null;
+                    }
+
+                    if (fromChild == null) {
+                        throw new System.ArgumentNullException("fromChild");
+                    }
+
+                    var previousSibling = null;
+
+                    $t = Bridge.getEnumerator(value.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, PoorMansTSqlFormatterLib.ParseStructure.Node);
+                    try {
+                        while ($t.moveNext()) {
+                            var child = $t.Current;
+                            if (Bridge.referenceEquals(child, fromChild)) {
+                                return previousSibling;
+                            }
+
+                            previousSibling = child;
+                        }
+                    } finally {
+                        if (Bridge.is($t, System.IDisposable)) {
+                            $t.System$IDisposable$dispose();
+                        }
+                    }
+                    return null;
+                },
+                NextSibling: function (value) {
+                    if (value == null || value.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent == null) {
+                        return null;
+                    }
+
+                    return PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.FollowingChild(value.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent, value);
+                },
+                PreviousSibling: function (value) {
+                    if (value == null || value.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent == null) {
+                        return null;
+                    }
+
+                    return PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.PreviousChild(value.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent, value);
+                },
+                RootContainer: function (value) {
+                    if (value == null) {
+                        return null;
+                    }
+
+                    var currentParent = value;
+                    while (currentParent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent != null) {
+                        currentParent = currentParent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                    }
+                    return currentParent;
+                },
+                ChildrenByName: function (value, name) {
+                    if (value == null) {
+                        return System.Linq.Enumerable.empty();
+                    }
+
+                    return System.Linq.Enumerable.from(value.PoorMansTSqlFormatterLib$ParseStructure$Node$Children).where(function (p) {
+                            return Bridge.referenceEquals(p.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, name);
+                        });
+                },
+                ChildrenByNames: function (value, names) {
+                    if (value == null) {
+                        return System.Linq.Enumerable.empty();
+                    }
+
+                    return System.Linq.Enumerable.from(value.PoorMansTSqlFormatterLib$ParseStructure$Node$Children).where(function (p) {
+                            return System.Linq.Enumerable.from(names).contains(p.PoorMansTSqlFormatterLib$ParseStructure$Node$Name);
+                        });
+                },
+                ChildrenExcludingNames: function (value, names) {
+                    if (value == null) {
+                        return System.Linq.Enumerable.empty();
+                    }
+
+                    return System.Linq.Enumerable.from(value.PoorMansTSqlFormatterLib$ParseStructure$Node$Children).where(function (p) {
+                            return !System.Linq.Enumerable.from(names).contains(p.PoorMansTSqlFormatterLib$ParseStructure$Node$Name);
+                        });
+                },
+                ChildByName: function (value, name) {
+                    return System.Linq.Enumerable.from(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(value, name)).singleOrDefault(null, null);
+                },
+                ChildByNames: function (value, names) {
+                    return System.Linq.Enumerable.from(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByNames(value, names)).singleOrDefault(null, null);
+                },
+                ChildExcludingNames: function (value, names) {
+                    return System.Linq.Enumerable.from(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenExcludingNames(value, names)).singleOrDefault(null, null);
+                },
+                ExtractStructureBetween: function (startingElement, endingElement) {
+                    var $t;
+                    var currentNode = startingElement;
+                    var previousNode = null;
+                    var remainder = null;
+                    var remainderPosition = null;
+
+                    while (currentNode != null) {
+                        if (Bridge.equals(currentNode, endingElement)) {
+                            break;
+                        }
+
+                        if (previousNode != null) {
+                            var copyOfThisNode = PoorMansTSqlFormatterLib.ParseStructure.NodeFactory.CreateNode(currentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, currentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue);
+
+                            $t = Bridge.getEnumerator(currentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Attributes, System.Collections.Generic.KeyValuePair$2(System.String,System.String));
+                            try {
+                                while ($t.moveNext()) {
+                                    var attribute = $t.Current;
+                                    copyOfThisNode.PoorMansTSqlFormatterLib$ParseStructure$Node$SetAttribute(attribute.key, attribute.value);
+                                }
+                            } finally {
+                                if (Bridge.is($t, System.IDisposable)) {
+                                    $t.System$IDisposable$dispose();
+                                }
+                            }
+                            if (remainderPosition == null) {
+                                remainderPosition = copyOfThisNode;
+                                remainder = copyOfThisNode;
+                            } else if (Bridge.equals(currentNode, previousNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent) && remainderPosition.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent != null) {
+                                remainderPosition = remainderPosition.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                            } else if (Bridge.equals(currentNode, previousNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent) && remainderPosition.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent == null) {
+                                copyOfThisNode.PoorMansTSqlFormatterLib$ParseStructure$Node$AddChild(remainderPosition);
+                                remainderPosition = copyOfThisNode;
+                                remainder = copyOfThisNode;
+                            } else if (Bridge.equals(currentNode, PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.NextSibling(previousNode)) && remainderPosition.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent != null) {
+                                remainderPosition.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$AddChild(copyOfThisNode);
+                                remainderPosition = copyOfThisNode;
+                            } else if (Bridge.equals(currentNode, PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.NextSibling(previousNode)) && remainderPosition.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent == null) {
+                                var copyOfThisNodesParent = PoorMansTSqlFormatterLib.ParseStructure.NodeFactory.CreateNode(currentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, currentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue);
+                                remainder = copyOfThisNodesParent;
+                                remainder.PoorMansTSqlFormatterLib$ParseStructure$Node$AddChild(remainderPosition);
+                                remainder.PoorMansTSqlFormatterLib$ParseStructure$Node$AddChild(copyOfThisNode);
+                                remainderPosition = copyOfThisNode;
+                            } else {
+                                //we must be a child
+                                remainderPosition.PoorMansTSqlFormatterLib$ParseStructure$Node$AddChild(copyOfThisNode);
+                                remainderPosition = copyOfThisNode;
+                            }
+                        }
+
+                        var nextNode = null;
+                        if (previousNode != null && System.Linq.Enumerable.from(currentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Children).any() && !(Bridge.equals(currentNode, previousNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent))) {
+                            nextNode = System.Linq.Enumerable.from(currentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Children).firstOrDefault(null, null);
+                        } else if (PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.NextSibling(currentNode) != null) {
+                            nextNode = PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.NextSibling(currentNode);
+                        } else {
+                            nextNode = currentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                        }
+
+                        previousNode = currentNode;
+                        currentNode = nextNode;
+                    }
+
+                    return remainder;
+                }
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.ParseStructure.NodeFactory", {
+        statics: {
+            methods: {
+                CreateNode: function (name, textValue) {
+                    var $t;
+                    return ($t = new PoorMansTSqlFormatterLib.ParseStructure.NodeImpl(), $t.Name = name, $t.TextValue = textValue, $t);
+                }
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.StandardKeywordRemapping", {
+        statics: {
+            props: {
+                Instance: null
+            },
+            ctors: {
+                ctor: function () {
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance = new (System.Collections.Generic.Dictionary$2(System.String,System.String))();
+
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("PROC", "PROCEDURE");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("LEFT OUTER JOIN", "LEFT JOIN");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("RIGHT OUTER JOIN", "RIGHT JOIN");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("FULL OUTER JOIN", "FULL JOIN");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("JOIN", "INNER JOIN");
+                    //TODO: This is now wrong in MERGE statements... we now need a scope-limitation strategy :(
+                    //Instance.Add("INSERT", "INSERT INTO");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("TRAN", "TRANSACTION");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("BEGIN TRAN", "BEGIN TRANSACTION");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("COMMIT TRAN", "COMMIT TRANSACTION");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("ROLLBACK TRAN", "ROLLBACK TRANSACTION");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("BINARY VARYING", "VARBINARY");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("CHAR VARYING", "VARCHAR");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("CHARACTER", "CHAR");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("CHARACTER VARYING", "VARCHAR");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("DEC", "DECIMAL");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("DOUBLE PRECISION", "FLOAT");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("INTEGER", "INT");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("NATIONAL CHARACTER", "NCHAR");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("NATIONAL CHAR", "NCHAR");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("NATIONAL CHARACTER VARYING", "NVARCHAR");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("NATIONAL CHAR VARYING", "NVARCHAR");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("NATIONAL TEXT", "NTEXT");
+                    PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance.add("OUT", "OUTPUT");
+                    //TODO: This is wrong when a TIMESTAMP column is unnamed; ROWVERSION does not auto-name. Due to context-sensitivity, this mapping is disabled for now.
+                    // REF: http://msdn.microsoft.com/en-us/library/ms182776.aspx
+                    //Instance.Add("TIMESTAMP", "ROWVERSION");
+                }
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Tokenizers.SimplifiedStringReader", {
+        fields: {
+            inputChars: null,
+            nextCharIndex: 0
+        },
+        props: {
+            LastCharacterPosition: {
+                get: function () {
+                    if (this.nextCharIndex <= this.inputChars.length) {
+                        return System.Int64(this.nextCharIndex);
+                    } else {
+                        return System.Int64(this.inputChars.length);
+                    }
+                }
+            }
+        },
+        ctors: {
+            init: function () {
+                this.nextCharIndex = 0;
+            },
+            ctor: function (inputString) {
+                this.$initialize();
+                this.inputChars = System.String.toCharArray(inputString, 0, inputString.length);
+            }
+        },
+        methods: {
+            Read: function () {
+                var nextChar = this.Peek();
+                this.nextCharIndex = (this.nextCharIndex + 1) | 0;
+                return nextChar;
+            },
+            Peek: function () {
+                if (this.nextCharIndex < this.inputChars.length) {
+                    return this.inputChars[System.Array.index(this.nextCharIndex, this.inputChars)];
+                } else {
+                    return -1;
+                }
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType", {
+        $kind: "enum",
+        statics: {
+            fields: {
+                WhiteSpace: 0,
+                OtherNode: 1,
+                SingleLineComment: 2,
+                SingleLineCommentCStyle: 3,
+                BlockComment: 4,
+                String: 5,
+                NString: 6,
+                QuotedString: 7,
+                BracketQuotedName: 8,
+                OtherOperator: 9,
+                Number: 10,
+                BinaryValue: 11,
+                MonetaryValue: 12,
+                DecimalValue: 13,
+                FloatValue: 14,
+                PseudoName: 15,
+                SingleAsterisk: 16,
+                SingleDollar: 17,
+                SingleHyphen: 18,
+                SingleSlash: 19,
+                SingleN: 20,
+                SingleLT: 21,
+                SingleGT: 22,
+                SingleExclamation: 23,
+                SinglePeriod: 24,
+                SingleZero: 25,
+                SinglePipe: 26,
+                SingleEquals: 27,
+                SingleOtherCompoundableOperator: 28
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.TokenizationState", {
+        props: {
+            TokenContainer: null,
+            InputReader: null,
+            CurrentTokenizationType: null,
+            CurrentTokenValue: null,
+            CommentNesting: 0,
+            CurrentCharInt: 0,
+            CurrentChar: {
+                get: function () {
+                    if (this.CurrentCharInt < 0) {
+                        throw new System.InvalidOperationException("No character has been read from the stream");
+                    }
+
+                    if (!this.HasUnprocessedCurrentCharacter) {
+                        throw new System.InvalidOperationException("The current character has already been consumed");
+                    }
+
+                    return ((this.CurrentCharInt) & 65535);
+                }
+            },
+            RequestedMarkerPosition: null,
+            HasUnprocessedCurrentCharacter: false
+        },
+        ctors: {
+            init: function () {
+                this.TokenContainer = new PoorMansTSqlFormatterLib.TokenList();
+                this.CurrentTokenValue = new System.Text.StringBuilder();
+                this.CommentNesting = 0;
+                this.CurrentCharInt = -1;
+            },
+            ctor: function (inputSQL, requestedMarkerPosition) {
+                this.$initialize();
+                if (System.Nullable.liftcmp("gt", requestedMarkerPosition, System.Int64.lift(inputSQL.length))) {
+                    throw new System.ArgumentException("Requested marker position cannot be beyond the end of the input string", "requestedMarkerPosition");
+                }
+
+                this.InputReader = new PoorMansTSqlFormatterLib.Tokenizers.SimplifiedStringReader(inputSQL);
+                this.RequestedMarkerPosition = requestedMarkerPosition;
+            }
+        },
+        methods: {
+            ReadNextCharacter: function () {
+                if (this.HasUnprocessedCurrentCharacter) {
+                    throw new System.Exception("Unprocessed character detected!");
+                }
+
+                this.CurrentCharInt = this.InputReader.Read();
+
+                if (this.CurrentCharInt >= 0) {
+                    this.HasUnprocessedCurrentCharacter = true;
+                }
+            },
+            ConsumeCurrentCharacterIntoToken: function () {
+                if (!this.HasUnprocessedCurrentCharacter) {
+                    throw new System.Exception("No current character to consume!");
+                }
+
+                this.CurrentTokenValue.append(String.fromCharCode(this.CurrentChar));
+                this.HasUnprocessedCurrentCharacter = false;
+            },
+            HasRemainingCharacters: function () {
+                if (!this.HasUnprocessedCurrentCharacter) {
+                    throw new System.Exception("No current character to consume!");
+                }
+
+                this.CurrentTokenValue.append(String.fromCharCode(this.CurrentChar));
+                this.HasUnprocessedCurrentCharacter = false;
+            },
+            DiscardNextCharacter: function () {
+                this.ReadNextCharacter();
+                this.HasUnprocessedCurrentCharacter = false;
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Utils", {
+        statics: {
+            methods: {
+                HtmlEncode: function (raw) {
+                    var $t;
+                    /* 
+                      This is a "Roll Your Own" implementation of HtmlEncode, which was necessary in the end because people want
+                      to use the library with .Net 3.5 Client Profile and other restricted environments; the dependency on 
+                      System.Web just for HtmlEncode was always a little disturbing anyway.
+                      I've attempted to optimize the implementation towards strings that don't actually contain any special 
+                      characters, and I've also skipped some of the more interesting stuff that I see in the MS implementation
+                      (pointers, and some special handling in the WinAnsi special range of characters?), keeping it to the basic 
+                      4 "known bad" characters.
+                    */
+
+                    if (raw == null) {
+                        return null;
+                    }
+
+                    var outBuilder = null;
+                    var latestCheckPos = 0;
+                    var latestReplacementPos = 0;
+
+                    $t = Bridge.getEnumerator(raw);
+                    try {
+                        while ($t.moveNext()) {
+                            var c = $t.Current;
+                            var replacementString = null;
+
+                            switch (c) {
+                                case 62: 
+                                    replacementString = "&gt;";
+                                    break;
+                                case 60: 
+                                    replacementString = "&lt;";
+                                    break;
+                                case 38: 
+                                    replacementString = "&amp;";
+                                    break;
+                                case 34: 
+                                    replacementString = "&quot;";
+                                    break;
+                            }
+
+                            if (replacementString != null) {
+                                if (outBuilder == null) {
+                                    outBuilder = new System.Text.StringBuilder("", raw.length);
+                                }
+
+                                if (latestReplacementPos < latestCheckPos) {
+                                    outBuilder.append(raw.substr(latestReplacementPos, ((latestCheckPos - latestReplacementPos) | 0)));
+                                }
+
+                                outBuilder.append(replacementString);
+
+                                latestReplacementPos = (latestCheckPos + 1) | 0;
+                            }
+
+                            latestCheckPos = (latestCheckPos + 1) | 0;
+                        }
+                    } finally {
+                        if (Bridge.is($t, System.IDisposable)) {
+                            $t.System$IDisposable$dispose();
+                        }
+                    }
+                    if (outBuilder != null) {
+                        if (latestReplacementPos < latestCheckPos) {
+                            outBuilder.append(raw.substr(latestReplacementPos));
+                        }
+
+                        return outBuilder.toString();
+                    } else {
+                        return raw;
+                    }
+                },
+                ToLowerInvariant$1: function (value) {
+                    return value.toLowerCase();
+                },
+                ToLowerInvariant: function (value) {
+                    return String.fromCharCode(value).toLowerCase().charCodeAt(0);
+                },
+                ToUpperInvariant$1: function (value) {
+                    return value.toUpperCase();
+                },
+                ToUpperInvariant: function (value) {
+                    return String.fromCharCode(value).toUpperCase().charCodeAt(0);
+                }
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper", {
+        inherits: [PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter],
+        statics: {
+            fields: {
+                HTML_OUTER_PAGE: null
+            },
+            ctors: {
+                init: function () {
+                    this.HTML_OUTER_PAGE = "<!DOCTYPE html >\r\n<html>\r\n<head>\r\n</head>\r\n<body>\r\n<style type=\"text/css\">\r\n.SQLCode {{\r\n\tfont-size: 13px;\r\n\tfont-weight: bold;\r\n\tfont-family: monospace;;\r\n\twhite-space: pre;\r\n    -o-tab-size: 4;\r\n    -moz-tab-size: 4;\r\n    -webkit-tab-size: 4;\r\n}}\r\n.SQLComment {{\r\n\tcolor: #00AA00;\r\n}}\r\n.SQLString {{\r\n\tcolor: #AA0000;\r\n}}\r\n.SQLFunction {{\r\n\tcolor: #AA00AA;\r\n}}\r\n.SQLKeyword {{\r\n\tcolor: #0000AA;\r\n}}\r\n.SQLOperator {{\r\n\tcolor: #777777;\r\n}}\r\n.SQLErrorHighlight {{\r\n\tbackground-color: #FFFF00;\r\n}}\r\n\r\n\r\n</style>\r\n<pre class=\"SQLCode\">{0}</pre>\r\n</body>\r\n</html>\r\n";
+                }
+            }
+        },
+        fields: {
+            _underlyingFormatter: null
+        },
+        props: {
+            HTMLFormatted: {
+                get: function () {
+                    return true;
+                }
+            },
+            ErrorOutputPrefix: {
+                get: function () {
+                    return this._underlyingFormatter.PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$ErrorOutputPrefix;
+                },
+                set: function (value) {
+                    throw new System.NotSupportedException("Error output prefix should be set on the underlying formatter - it cannot be set on the Html Page Wrapper.");
+                }
+            }
+        },
+        alias: [
+            "HTMLFormatted", "PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$HTMLFormatted",
+            "ErrorOutputPrefix", "PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$ErrorOutputPrefix",
+            "FormatSQLTree", "PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$FormatSQLTree"
+        ],
+        ctors: {
+            ctor: function (underlyingFormatter) {
+                this.$initialize();
+                if (underlyingFormatter == null) {
+                    throw new System.ArgumentNullException("underlyingFormatter");
+                }
+
+                this._underlyingFormatter = underlyingFormatter;
+            }
+        },
+        methods: {
+            FormatSQLTree: function (sqlTree) {
+                var formattedResult = this._underlyingFormatter.PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$FormatSQLTree(sqlTree);
+                if (this._underlyingFormatter.PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$HTMLFormatted) {
+                    return System.String.format(PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper.HTML_OUTER_PAGE, formattedResult);
+                } else {
+                    return System.String.format(PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper.HTML_OUTER_PAGE, PoorMansTSqlFormatterLib.Utils.HtmlEncode(formattedResult));
+                }
+            }
+        }
+    });
+
+    /** @namespace PoorMansTSqlFormatterLib.Formatters */
+
+    /**
+     * This formatter is intended to output *exactly the same content as initially parsed*, unless the 
+     "HtmlColoring" option is enabled (then it should look the same in HTML, except for the coloring).
+     *
+     * @public
+     * @class PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter
+     * @implements  PoorMansTSqlFormatterLib.Interfaces.ISqlTokenFormatter
+     * @implements  PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter
+     */
+    Bridge.define("PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter", {
+        inherits: [PoorMansTSqlFormatterLib.Interfaces.ISqlTokenFormatter,PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter],
+        statics: {
+            methods: {
+                ProcessSqlNodeList: function (rootList, state) {
+                    var $t;
+                    $t = Bridge.getEnumerator(rootList, PoorMansTSqlFormatterLib.ParseStructure.Node);
+                    try {
+                        while ($t.moveNext()) {
+                            var contentElement = $t.Current;
+                            PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter.ProcessSqlNode(state, contentElement);
+                        }
+                    } finally {
+                        if (Bridge.is($t, System.IDisposable)) {
+                            $t.System$IDisposable$dispose();
+                        }
+                    }},
+                ProcessSqlNode: function (state, contentElement) {
+                    var $t;
+                    if (Bridge.referenceEquals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_HASERROR), "1")) {
+                        state.OpenClass(PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_ERRORHIGHLIGHT);
+                    }
+
+                    switch (contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Name) {
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDLDETAIL_PARENS: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PARENS: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_FUNCTION_PARENS: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IN_PARENS: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EXPRESSION_PARENS: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS: 
+                            state.AddOutputContent("(");
+                            PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state);
+                            state.AddOutputContent(")");
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_ROOT: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BOOLEAN_EXPRESSION: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_OTHER_BLOCK: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_DECLARE_BLOCK: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_DECLARATION: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BEGIN_END_BLOCK: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_TRY_BLOCK: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CATCH_BLOCK: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_STATEMENT: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_INPUT: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_WHEN: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_THEN: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_ELSE: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IF_STATEMENT: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ELSE_CLAUSE: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHILE_LOOP: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_AS_BLOCK: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_CONDITION: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_LOWERBOUND: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_UPPERBOUND: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_WITH_CLAUSE: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_ALIAS: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_AS_BLOCK: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_FOR_BLOCK: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_FOR_OPTIONS: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_TRIGGER_CONDITION: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMPOUNDKEYWORD: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BEGIN_TRANSACTION: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ROLLBACK_TRANSACTION: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SAVE_TRANSACTION: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMIT_TRANSACTION: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BATCH_SEPARATOR: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SET_OPERATOR_CLAUSE: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_MULTISTATEMENT: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_SINGLESTATEMENT: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_CLOSE: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_BLOCK: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_DETAIL: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_TARGET: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_RECIPIENT: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_WITH_CLAUSE: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_CLAUSE: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_TARGET: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_USING: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_CONDITION: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_WHEN: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_THEN: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_ACTION: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_JOIN_ON_SECTION: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_RETURNS: 
+                            $t = Bridge.getEnumerator(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, PoorMansTSqlFormatterLib.ParseStructure.Node);
+                            try {
+                                while ($t.moveNext()) {
+                                    var childNode = $t.Current;
+                                    PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter.ProcessSqlNode(state, childNode);
+                                }
+                            } finally {
+                                if (Bridge.is($t, System.IDisposable)) {
+                                    $t.System$IDisposable$dispose();
+                                }
+                            }break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_MULTILINE: 
+                            state.AddOutputContent$1(System.String.concat("/*", contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "*/"), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_COMMENT);
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE: 
+                            state.AddOutputContent$1(System.String.concat("--", contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_COMMENT);
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE_CSTYLE: 
+                            state.AddOutputContent$1(System.String.concat("//", contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_COMMENT);
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_STRING: 
+                            state.AddOutputContent$1(System.String.concat("'", System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "'", "''"), "'"), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_STRING);
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_NSTRING: 
+                            state.AddOutputContent$1(System.String.concat("N'", System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "'", "''"), "'"), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_STRING);
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_QUOTED_STRING: 
+                            state.AddOutputContent(System.String.concat("\"", System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "\"", "\"\""), "\""));
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BRACKET_QUOTED_NAME: 
+                            state.AddOutputContent(System.String.concat("[", System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "]", "]]"), "]"));
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMA: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERIOD: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SEMICOLON: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ASTERISK: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EQUALSSIGN: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SCOPERESOLUTIONOPERATOR: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ALPHAOPERATOR: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHEROPERATOR: 
+                            state.AddOutputContent$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_AND_OPERATOR: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OR_OPERATOR: 
+                            state.AddOutputContent$1(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD).PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_FUNCTION_KEYWORD: 
+                            state.AddOutputContent$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_FUNCTION);
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DATATYPE_KEYWORD: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PSEUDONAME: 
+                            state.AddOutputContent$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_KEYWORD);
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERNODE: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHITESPACE: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_NUMBER_VALUE: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MONETARY_VALUE: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BINARY_VALUE: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_LABEL: 
+                            state.AddOutputContent(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue);
+                            break;
+                        default: 
+                            throw new System.Exception("Unrecognized element in SQL Xml!");
+                    }
+
+                    if (Bridge.referenceEquals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_HASERROR), "1")) {
+                        state.CloseClass();
+                    }
+                }
+            }
+        },
+        props: {
+            HTMLColoring: false,
+            HTMLFormatted: {
+                get: function () {
+                    return this.HTMLColoring;
+                }
+            },
+            ErrorOutputPrefix: null
+        },
+        alias: [
+            "HTMLFormatted", "PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$HTMLFormatted",
+            "ErrorOutputPrefix", "PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$ErrorOutputPrefix",
+            "ErrorOutputPrefix", "PoorMansTSqlFormatterLib$Interfaces$ISqlTokenFormatter$ErrorOutputPrefix",
+            "FormatSQLTree", "PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$FormatSQLTree",
+            "FormatSQLTokens", "PoorMansTSqlFormatterLib$Interfaces$ISqlTokenFormatter$FormatSQLTokens"
+        ],
+        ctors: {
+            ctor: function () {
+                PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter.$ctor1.call(this, false);
+            },
+            $ctor1: function (htmlColoring) {
+                this.$initialize();
+                this.HTMLColoring = htmlColoring;
+                this.ErrorOutputPrefix = System.String.concat(PoorMansTSqlFormatterLib.Interfaces.MessagingConstants.FormatErrorDefaultMessage, '\n');
+            }
+        },
+        methods: {
+            FormatSQLTree: function (sqlTreeDoc) {
+                var state = new PoorMansTSqlFormatterLib.BaseFormatterState(this.HTMLColoring);
+
+                if (Bridge.referenceEquals(sqlTreeDoc.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_ROOT) && Bridge.referenceEquals(sqlTreeDoc.PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_ERRORFOUND), "1")) {
+                    state.AddOutputContent(this.ErrorOutputPrefix);
+                }
+
+                //pass "doc" itself into process: useful/necessary when formatting NOFORMAT sub-regions from standard formatter
+                PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter.ProcessSqlNodeList(System.Array.init([sqlTreeDoc], PoorMansTSqlFormatterLib.ParseStructure.Node), state);
+                return state.DumpOutput();
+            },
+            FormatSQLTokens: function (sqlTokenList) {
+                var $t;
+                var outString = new System.Text.StringBuilder();
+
+                if (sqlTokenList.PoorMansTSqlFormatterLib$Interfaces$ITokenList$HasUnfinishedToken) {
+                    outString.append(this.ErrorOutputPrefix);
+                }
+
+                $t = Bridge.getEnumerator(sqlTokenList, PoorMansTSqlFormatterLib.Interfaces.IToken);
+                try {
+                    while ($t.moveNext()) {
+                        var entry = $t.Current;
+                        switch (entry.PoorMansTSqlFormatterLib$Interfaces$IToken$Type) {
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.MultiLineComment: 
+                                outString.append("/*");
+                                outString.append(entry.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                outString.append("*/");
+                                break;
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.SingleLineComment: 
+                                outString.append("--");
+                                outString.append(entry.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                break;
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.SingleLineCommentCStyle: 
+                                outString.append("//");
+                                outString.append(entry.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                break;
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.String: 
+                                outString.append("'");
+                                outString.append(System.String.replaceAll(entry.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, "'", "''"));
+                                outString.append("'");
+                                break;
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.NationalString: 
+                                outString.append("N'");
+                                outString.append(System.String.replaceAll(entry.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, "'", "''"));
+                                outString.append("'");
+                                break;
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.QuotedString: 
+                                outString.append("\"");
+                                outString.append(System.String.replaceAll(entry.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, "\"", "\"\""));
+                                outString.append("\"");
+                                break;
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.BracketQuotedName: 
+                                outString.append("[");
+                                outString.append(System.String.replaceAll(entry.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, "]", "]]"));
+                                outString.append("]");
+                                break;
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OpenParens: 
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.CloseParens: 
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Comma: 
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Period: 
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Semicolon: 
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Colon: 
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Asterisk: 
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.EqualsSign: 
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherNode: 
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.WhiteSpace: 
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherOperator: 
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Number: 
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.BinaryValue: 
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.MonetaryValue: 
+                            case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.PseudoName: 
+                                outString.append(entry.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                break;
+                            default: 
+                                throw new System.Exception("Unrecognized Token Type in Token List!");
+                        }
+                    }
+                } finally {
+                    if (Bridge.is($t, System.IDisposable)) {
+                        $t.System$IDisposable$dispose();
+                    }
+                }
+                return outString.toString();
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter", {
+        inherits: [PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter],
+        statics: {
+            fields: {
+                MIN_CASE_WORD_LENGTH: 0,
+                MAX_CASE_WORD_LENGTH: 0
+            },
+            ctors: {
+                init: function () {
+                    this.MIN_CASE_WORD_LENGTH = 2;
+                    this.MAX_CASE_WORD_LENGTH = 8;
+                }
+            }
+        },
+        fields: {
+            KeywordMapping: null,
+            _randomizer: null,
+            _currentCaseLength: 0,
+            _currentCaseLimit: 0,
+            _currentlyUppercase: false
+        },
+        props: {
+            RandomizeCase: false,
+            RandomizeColor: false,
+            RandomizeLineLength: false,
+            PreserveComments: false,
+            HTMLFormatted: {
+                get: function () {
+                    return this.RandomizeColor;
+                }
+            },
+            ErrorOutputPrefix: null
+        },
+        alias: [
+            "HTMLFormatted", "PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$HTMLFormatted",
+            "ErrorOutputPrefix", "PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$ErrorOutputPrefix",
+            "FormatSQLTree", "PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$FormatSQLTree"
+        ],
+        ctors: {
+            init: function () {
+                this.KeywordMapping = new (System.Collections.Generic.Dictionary$2(System.String,System.String))();
+                this._randomizer = new System.Random.ctor();
+                this._currentCaseLength = 0;
+                this._currentCaseLimit = PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.MAX_CASE_WORD_LENGTH;
+                this._currentlyUppercase = false;
+            },
+            ctor: function () {
+                PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.$ctor1.call(this, false, false, false, false, false);
+            },
+            $ctor1: function (randomizeCase, randomizeColor, randomizeLineLength, preserveComments, subtituteKeywords) {
+                this.$initialize();
+                this.RandomizeCase = randomizeCase;
+                this.RandomizeColor = randomizeColor;
+                this.RandomizeLineLength = randomizeLineLength;
+                this.PreserveComments = preserveComments;
+                if (subtituteKeywords) {
+                    this.KeywordMapping = PoorMansTSqlFormatterLib.ObfuscatingKeywordMapping.Instance;
+                }
+
+                this.ErrorOutputPrefix = System.String.concat(PoorMansTSqlFormatterLib.Interfaces.MessagingConstants.FormatErrorDefaultMessage, '\n');
+
+                if (this.RandomizeCase) {
+                    this._currentCaseLimit = this._randomizer.next$2(PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.MIN_CASE_WORD_LENGTH, PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.MAX_CASE_WORD_LENGTH);
+                    this._currentlyUppercase = this._randomizer.next$2(0, 2) === 0;
+                }
+            }
+        },
+        methods: {
+            FormatSQLTree: function (sqlTreeDoc) {
+                //thread-safe - each call to FormatSQLTree() gets its own independent state object
+                var state = new PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.TSqlObfuscatingFormattingState(this.RandomizeColor, this.RandomizeLineLength);
+
+                if (Bridge.referenceEquals(sqlTreeDoc.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_ROOT) && Bridge.referenceEquals(sqlTreeDoc.PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_ERRORFOUND), "1")) {
+                    state.AddOutputContent(this.ErrorOutputPrefix);
+                }
+
+                //pass "doc" itself into process: useful/necessary when formatting MINIFY sub-regions from standard formatter
+                this.ProcessSqlNodeList(System.Array.init([sqlTreeDoc], PoorMansTSqlFormatterLib.ParseStructure.Node), state);
+                state.BreakIfExpected();
+                return state.DumpOutput();
+            },
+            ProcessSqlNodeList: function (rootList, state) {
+                var $t;
+                $t = Bridge.getEnumerator(rootList, PoorMansTSqlFormatterLib.ParseStructure.Node);
+                try {
+                    while ($t.moveNext()) {
+                        var contentElement = $t.Current;
+                        this.ProcessSqlNode(contentElement, state);
+                    }
+                } finally {
+                    if (Bridge.is($t, System.IDisposable)) {
+                        $t.System$IDisposable$dispose();
+                    }
+                }},
+            ProcessSqlNode: function (contentElement, state) {
+                switch (contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Name) {
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_ROOT: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SET_OPERATOR_CLAUSE: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_OTHER_BLOCK: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_DECLARE_BLOCK: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_DECLARATION: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BEGIN_TRANSACTION: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SAVE_TRANSACTION: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMIT_TRANSACTION: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ROLLBACK_TRANSACTION: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_CLOSE: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHILE_LOOP: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IF_STATEMENT: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_WITH_CLAUSE: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_BLOCK: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_DETAIL: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_CLAUSE: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_TARGET: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_INPUT: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BOOLEAN_EXPRESSION: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_LOWERBOUND: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_UPPERBOUND: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_SINGLESTATEMENT: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_MULTISTATEMENT: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_ACTION: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_TARGET: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_RECIPIENT: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_WITH_CLAUSE: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_CONDITION: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_THEN: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_JOIN_ON_SECTION: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_ALIAS: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ELSE_CLAUSE: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_AS_BLOCK: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_FOR_BLOCK: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_TRIGGER_CONDITION: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_FOR_OPTIONS: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_AS_BLOCK: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_RETURNS: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_USING: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_WHEN: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_CONDITION: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BEGIN_END_BLOCK: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_TRY_BLOCK: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CATCH_BLOCK: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_STATEMENT: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_WHEN: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_THEN: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_ELSE: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_AND_OPERATOR: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OR_OPERATOR: 
+                        //these are all containers, and therefore have no impact on obfuscated output.
+                        this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state);
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDLDETAIL_PARENS: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_FUNCTION_PARENS: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IN_PARENS: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PARENS: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EXPRESSION_PARENS: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS: 
+                        state.SpaceExpected = false;
+                        state.AddOutputContent("(");
+                        this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state);
+                        state.SpaceExpected = false;
+                        state.SpaceExpectedForAnsiString = false;
+                        state.AddOutputContent(")");
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHITESPACE: 
+                        //do nothing
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_MULTILINE: 
+                        if (this.PreserveComments) {
+                            state.SpaceExpected = false;
+                            state.AddOutputContent(System.String.concat("/*", contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "*/"));
+                        }
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE: 
+                        if (this.PreserveComments) {
+                            state.SpaceExpected = false;
+                            state.AddOutputContent(System.String.concat("--", System.String.replaceAll(System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "\r", ""), "\n", "")));
+                            state.BreakExpected = true;
+                        }
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE_CSTYLE: 
+                        if (this.PreserveComments) {
+                            state.SpaceExpected = false;
+                            state.AddOutputContent(System.String.concat("//", System.String.replaceAll(System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "\r", ""), "\n", "")));
+                            state.BreakExpected = true;
+                        }
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BATCH_SEPARATOR: 
+                        //newline regardless of whether previous element recommended a break or not.
+                        state.BreakExpected = true;
+                        this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state);
+                        state.BreakExpected = true;
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_STRING: 
+                        state.SpaceIfExpectedForAnsiString();
+                        state.SpaceExpected = false;
+                        state.AddOutputContent(System.String.concat("'", System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "'", "''"), "'"));
+                        state.SpaceExpectedForAnsiString = true;
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_NSTRING: 
+                        state.AddOutputContent(System.String.concat("N'", System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "'", "''"), "'"));
+                        state.SpaceExpectedForAnsiString = true;
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BRACKET_QUOTED_NAME: 
+                        state.SpaceExpected = false;
+                        state.AddOutputContent(System.String.concat("[", System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "]", "]]"), "]"));
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_QUOTED_STRING: 
+                        state.SpaceExpected = false;
+                        state.AddOutputContent(System.String.concat("\"", System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "\"", "\"\""), "\""));
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMA: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERIOD: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SEMICOLON: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SCOPERESOLUTIONOPERATOR: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ASTERISK: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EQUALSSIGN: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHEROPERATOR: 
+                        state.SpaceExpected = false;
+                        state.AddOutputContent(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue);
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMPOUNDKEYWORD: 
+                        state.AddOutputContent(this.FormatKeyword(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_SIMPLETEXT)));
+                        state.SpaceExpected = true;
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_LABEL: 
+                        state.AddOutputContent(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue);
+                        state.BreakExpected = true;
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ALPHAOPERATOR: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DATATYPE_KEYWORD: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PSEUDONAME: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BINARY_VALUE: 
+                        state.AddOutputContent(this.FormatKeyword(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue));
+                        state.SpaceExpected = true;
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_NUMBER_VALUE: 
+                        state.AddOutputContent(this.FormatKeyword(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue));
+                        if (!System.String.contains(PoorMansTSqlFormatterLib.Utils.ToLowerInvariant$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue),"e")) {
+                            state.SpaceExpectedForE = true;
+                            if (System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "0")) {
+                                state.SpaceExpectedForX = true;
+                            }
+                        }
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MONETARY_VALUE: 
+                        if (!System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue.substr(0, 1), "$")) {
+                            state.SpaceExpected = false;
+                        }
+                        state.AddOutputContent(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue);
+                        if (contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue.length === 1) {
+                            state.SpaceExpectedForPlusMinus = true;
+                        }
+                        break;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERNODE: 
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_FUNCTION_KEYWORD: 
+                        state.AddOutputContent(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue);
+                        state.SpaceExpected = true;
+                        break;
+                    default: 
+                        throw new System.Exception("Unrecognized element in SQL Xml!");
+                }
+            },
+            FormatKeyword: function (keyword) {
+                var outputKeyword = { };
+                if (!this.KeywordMapping.System$Collections$Generic$IDictionary$2$System$String$System$String$tryGetValue(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(keyword), outputKeyword)) {
+                    outputKeyword.v = keyword;
+                }
+
+                if (this.RandomizeCase) {
+                    return this.GetCaseRandomized(outputKeyword.v);
+                } else {
+                    return outputKeyword.v;
+                }
+            },
+            GetCaseRandomized: function (outputKeyword) {
+                var keywordCharArray = System.String.toCharArray(outputKeyword, 0, outputKeyword.length);
+                for (var i = 0; i < keywordCharArray.length; i = (i + 1) | 0) {
+                    if (this._currentCaseLength === this._currentCaseLimit) {
+                        this._currentCaseLimit = this._randomizer.next$2(PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.MIN_CASE_WORD_LENGTH, PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.MAX_CASE_WORD_LENGTH);
+                        this._currentlyUppercase = this._randomizer.next$2(0, 2) === 0;
+                        this._currentCaseLength = 0;
+                    }
+
+                    keywordCharArray[System.Array.index(i, keywordCharArray)] = this._currentlyUppercase ? PoorMansTSqlFormatterLib.Utils.ToUpperInvariant(keywordCharArray[System.Array.index(i, keywordCharArray)]) : PoorMansTSqlFormatterLib.Utils.ToLowerInvariant(keywordCharArray[System.Array.index(i, keywordCharArray)]);
+                    this._currentCaseLength = (this._currentCaseLength + 1) | 0;
+                }
+                return String.fromCharCode.apply(null, keywordCharArray);
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.TSqlObfuscatingFormattingState", {
+        inherits: [PoorMansTSqlFormatterLib.BaseFormatterState],
+        statics: {
+            fields: {
+                MIN_COLOR_WORD_LENGTH: 0,
+                MAX_COLOR_WORD_LENGTH: 0,
+                MIN_LINE_LENGTH: 0,
+                MAX_LINE_LENGTH: 0
+            },
+            ctors: {
+                init: function () {
+                    this.MIN_COLOR_WORD_LENGTH = 3;
+                    this.MAX_COLOR_WORD_LENGTH = 15;
+                    this.MIN_LINE_LENGTH = 10;
+                    this.MAX_LINE_LENGTH = 80;
+                }
+            }
+        },
+        fields: {
+            _randomizer: null,
+            _currentLineLength: 0,
+            _thisLineLimit: 0,
+            _currentColorLength: 0,
+            _currentColorLimit: 0,
+            _currentColor: null
+        },
+        props: {
+            RandomizeColor: false,
+            RandomizeLineLength: false,
+            BreakExpected: false,
+            SpaceExpectedForAnsiString: false,
+            SpaceExpectedForE: false,
+            SpaceExpectedForX: false,
+            SpaceExpectedForPlusMinus: false,
+            SpaceExpected: false
+        },
+        ctors: {
+            init: function () {
+                this._randomizer = new System.Random.ctor();
+                this._currentLineLength = 0;
+                this._thisLineLimit = PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.TSqlObfuscatingFormattingState.MAX_LINE_LENGTH;
+                this._currentColorLength = 0;
+                this._currentColorLimit = PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.TSqlObfuscatingFormattingState.MAX_COLOR_WORD_LENGTH;
+            },
+            ctor: function (randomizeColor, randomizeLineLength) {
+                this.$initialize();
+                PoorMansTSqlFormatterLib.BaseFormatterState.ctor.call(this, randomizeColor);
+                this.RandomizeColor = randomizeColor;
+                this.RandomizeLineLength = randomizeLineLength;
+
+                if (this.RandomizeColor) {
+                    this._currentColorLimit = this._randomizer.next$2(PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.TSqlObfuscatingFormattingState.MIN_COLOR_WORD_LENGTH, PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.TSqlObfuscatingFormattingState.MAX_COLOR_WORD_LENGTH);
+                    this._currentColor = System.String.format("#{0:x2}{1:x2}{2:x2}", Bridge.box(this._randomizer.next$2(0, 127), System.Int32), Bridge.box(this._randomizer.next$2(0, 127), System.Int32), Bridge.box(this._randomizer.next$2(0, 127), System.Int32));
+                }
+                if (this.RandomizeLineLength) {
+                    this._thisLineLimit = this._randomizer.next$2(PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.TSqlObfuscatingFormattingState.MIN_LINE_LENGTH, PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.TSqlObfuscatingFormattingState.MAX_LINE_LENGTH);
+                }
+            }
+        },
+        methods: {
+            BreakIfExpected: function () {
+                if (this.BreakExpected) {
+                    this.BreakExpected = false;
+                    PoorMansTSqlFormatterLib.BaseFormatterState.prototype.AddOutputLineBreak.call(this);
+                    this.SetSpaceNoLongerExpected();
+                    this._currentLineLength = 0;
+
+                    if (this.RandomizeLineLength) {
+                        this._thisLineLimit = this._randomizer.next$2(10, 80);
+                    }
+                }
+            },
+            SpaceIfExpectedForAnsiString: function () {
+                if (this.SpaceExpectedForAnsiString) {
+                    PoorMansTSqlFormatterLib.BaseFormatterState.prototype.AddOutputContent$1.call(this, " ", null);
+                    this.SetSpaceNoLongerExpected();
+                }
+            },
+            SpaceIfExpected: function () {
+                if (this.SpaceExpected) {
+                    PoorMansTSqlFormatterLib.BaseFormatterState.prototype.AddOutputContent$1.call(this, " ", null);
+                    this.SetSpaceNoLongerExpected();
+                }
+            },
+            AddOutputContent$1: function (content, htmlClassName) {
+                if (htmlClassName != null) {
+                    throw new System.NotSupportedException("Obfuscating formatter does not use html class names...");
+                }
+
+                this.BreakIfExpected();
+                this.SpaceIfExpected();
+                if (this._currentLineLength > 0 && ((this._currentLineLength + content.length) | 0) > this._thisLineLimit) {
+                    this.BreakExpected = true;
+                    this.BreakIfExpected();
+                } else if ((this.SpaceExpectedForE && System.String.equals(content.substr(0, 1).toLowerCase(), "e")) || (this.SpaceExpectedForX && System.String.equals(content.substr(0, 1).toLowerCase(), "x")) || (this.SpaceExpectedForPlusMinus && System.String.equals(content.substr(0, 1), "+")) || (this.SpaceExpectedForPlusMinus && System.String.equals(content.substr(0, 1), "-"))) {
+                    this.SpaceExpected = true;
+                    this.SpaceIfExpected();
+                }
+
+                this._currentLineLength = (this._currentLineLength + content.length) | 0;
+                if (this.RandomizeColor) {
+                    var lengthWritten = 0;
+                    while (lengthWritten < content.length) {
+                        if (this._currentColorLength === this._currentColorLimit) {
+                            this._currentColorLimit = this._randomizer.next$2(PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.TSqlObfuscatingFormattingState.MIN_COLOR_WORD_LENGTH, PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.TSqlObfuscatingFormattingState.MAX_COLOR_WORD_LENGTH);
+                            this._currentColor = System.String.format("#{0:x2}{1:x2}{2:x2}", Bridge.box(this._randomizer.next$2(0, 127), System.Int32), Bridge.box(this._randomizer.next$2(0, 127), System.Int32), Bridge.box(this._randomizer.next$2(0, 127), System.Int32));
+                            this._currentColorLength = 0;
+                        }
+
+                        var writing;
+                        if (((content.length - lengthWritten) | 0) < ((this._currentColorLimit - this._currentColorLength) | 0)) {
+                            writing = (content.length - lengthWritten) | 0;
+                        } else {
+                            writing = (this._currentColorLimit - this._currentColorLength) | 0;
+                        }
+
+                        PoorMansTSqlFormatterLib.BaseFormatterState.prototype.AddOutputContentRaw.call(this, "<span style=\"color: ");
+                        PoorMansTSqlFormatterLib.BaseFormatterState.prototype.AddOutputContentRaw.call(this, this._currentColor);
+                        PoorMansTSqlFormatterLib.BaseFormatterState.prototype.AddOutputContentRaw.call(this, ";\">");
+                        PoorMansTSqlFormatterLib.BaseFormatterState.prototype.AddOutputContentRaw.call(this, PoorMansTSqlFormatterLib.Utils.HtmlEncode(content.substr(lengthWritten, writing)));
+                        PoorMansTSqlFormatterLib.BaseFormatterState.prototype.AddOutputContentRaw.call(this, "</span>");
+                        lengthWritten = (lengthWritten + writing) | 0;
+                        this._currentColorLength = (this._currentColorLength + writing) | 0;
+                    }
+                } else {
+                    PoorMansTSqlFormatterLib.BaseFormatterState.prototype.AddOutputContent$1.call(this, content, null);
+                }
+                this.SetSpaceNoLongerExpected();
+            },
+            SetSpaceNoLongerExpected: function () {
+                this.SpaceExpected = false;
+                this.SpaceExpectedForAnsiString = false;
+                this.SpaceExpectedForE = false;
+                this.SpaceExpectedForX = false;
+                this.SpaceExpectedForPlusMinus = false;
+            },
+            AddOutputLineBreak: function () {
+                //don't want the outer code to write line breaks at all
+                throw new System.NotSupportedException();
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter", {
+        inherits: [PoorMansTSqlFormatterLib.Interfaces.ISqlTreeFormatter],
+        fields: {
+            KeywordMapping: null
+        },
+        props: {
+            Options: null,
+            IndentString: {
+                get: function () {
+                    return this.Options.IndentString;
+                },
+                set: function (value) {
+                    this.Options.IndentString = value;
+                }
+            },
+            SpacesPerTab: {
+                get: function () {
+                    return this.Options.SpacesPerTab;
+                },
+                set: function (value) {
+                    this.Options.SpacesPerTab = value;
+                }
+            },
+            MaxLineWidth: {
+                get: function () {
+                    return this.Options.MaxLineWidth;
+                },
+                set: function (value) {
+                    this.Options.MaxLineWidth = value;
+                }
+            },
+            ExpandCommaLists: {
+                get: function () {
+                    return this.Options.ExpandCommaLists;
+                },
+                set: function (value) {
+                    this.Options.ExpandCommaLists = value;
+                }
+            },
+            TrailingCommas: {
+                get: function () {
+                    return this.Options.TrailingCommas;
+                },
+                set: function (value) {
+                    this.Options.TrailingCommas = value;
+                }
+            },
+            SpaceAfterExpandedComma: {
+                get: function () {
+                    return this.Options.SpaceAfterExpandedComma;
+                },
+                set: function (value) {
+                    this.Options.SpaceAfterExpandedComma = value;
+                }
+            },
+            ExpandBooleanExpressions: {
+                get: function () {
+                    return this.Options.ExpandBooleanExpressions;
+                },
+                set: function (value) {
+                    this.Options.ExpandBooleanExpressions = value;
+                }
+            },
+            ExpandCaseStatements: {
+                get: function () {
+                    return this.Options.ExpandCaseStatements;
+                },
+                set: function (value) {
+                    this.Options.ExpandCaseStatements = value;
+                }
+            },
+            ExpandBetweenConditions: {
+                get: function () {
+                    return this.Options.ExpandBetweenConditions;
+                },
+                set: function (value) {
+                    this.Options.ExpandBetweenConditions = value;
+                }
+            },
+            UppercaseKeywords: {
+                get: function () {
+                    return this.Options.UppercaseKeywords;
+                },
+                set: function (value) {
+                    this.Options.UppercaseKeywords = value;
+                }
+            },
+            BreakJoinOnSections: {
+                get: function () {
+                    return this.Options.BreakJoinOnSections;
+                },
+                set: function (value) {
+                    this.Options.BreakJoinOnSections = value;
+                }
+            },
+            HTMLColoring: {
+                get: function () {
+                    return this.Options.HTMLColoring;
+                },
+                set: function (value) {
+                    this.Options.HTMLColoring = value;
+                }
+            },
+            HTMLFormatted: {
+                get: function () {
+                    return this.Options.HTMLColoring;
+                }
+            },
+            ErrorOutputPrefix: null
+        },
+        alias: [
+            "HTMLFormatted", "PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$HTMLFormatted",
+            "ErrorOutputPrefix", "PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$ErrorOutputPrefix",
+            "FormatSQLTree", "PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$FormatSQLTree"
+        ],
+        ctors: {
+            init: function () {
+                this.KeywordMapping = new (System.Collections.Generic.Dictionary$2(System.String,System.String))();
+            },
+            ctor: function () {
+                PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.$ctor1.call(this, new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions.ctor());
+            },
+            $ctor1: function (options) {
+                this.$initialize();
+                if (options == null) {
+                    throw new System.ArgumentNullException("options");
+                }
+
+                this.Options = options;
+
+                if (options.KeywordStandardization) {
+                    this.KeywordMapping = PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance;
+                }
+                this.ErrorOutputPrefix = System.String.concat(PoorMansTSqlFormatterLib.Interfaces.MessagingConstants.FormatErrorDefaultMessage, '\n');
+            },
+            $ctor2: function (indentString, spacesPerTab, maxLineWidth, expandCommaLists, trailingCommas, spaceAfterExpandedComma, expandBooleanExpressions, expandCaseStatements, expandBetweenConditions, breakJoinOnSections, uppercaseKeywords, htmlColoring, keywordStandardization) {
+                this.$initialize();                var $t;
+
+                this.Options = ($t = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions.ctor(), $t.IndentString = indentString, $t.SpacesPerTab = spacesPerTab, $t.MaxLineWidth = maxLineWidth, $t.ExpandCommaLists = expandCommaLists, $t.TrailingCommas = trailingCommas, $t.SpaceAfterExpandedComma = spaceAfterExpandedComma, $t.ExpandBooleanExpressions = expandBooleanExpressions, $t.ExpandBetweenConditions = expandBetweenConditions, $t.ExpandCaseStatements = expandCaseStatements, $t.UppercaseKeywords = uppercaseKeywords, $t.BreakJoinOnSections = breakJoinOnSections, $t.HTMLColoring = htmlColoring, $t.KeywordStandardization = keywordStandardization, $t);
+
+                if (keywordStandardization) {
+                    this.KeywordMapping = PoorMansTSqlFormatterLib.StandardKeywordRemapping.Instance;
+                }
+                this.ErrorOutputPrefix = System.String.concat(PoorMansTSqlFormatterLib.Interfaces.MessagingConstants.FormatErrorDefaultMessage, '\n');
+        }
+    },
+    methods: {
+        FormatSQLTree: function (sqlTreeDoc) {
+            //thread-safe - each call to FormatSQLTree() gets its own independent state object
+            var state = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.TSqlStandardFormattingState.$ctor1(this.Options.HTMLColoring, this.Options.IndentString, this.Options.SpacesPerTab, this.Options.MaxLineWidth, 0);
+
+            if (Bridge.referenceEquals(sqlTreeDoc.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_ROOT) && Bridge.referenceEquals(sqlTreeDoc.PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_ERRORFOUND), "1")) {
+                state.AddOutputContent(this.ErrorOutputPrefix);
+            }
+
+            this.ProcessSqlNodeList(sqlTreeDoc.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state);
+
+            this.WhiteSpace_BreakAsExpected(state);
+
+            //someone forgot to close a "[noformat]" or "[minify]" region... we'll assume that's ok
+            if (System.Nullable.eq(state.SpecialRegionActive, PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.SpecialRegionType.NoFormat)) {
+                var skippedXml = PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ExtractStructureBetween(state.RegionStartNode, sqlTreeDoc);
+                var tempFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter.$ctor1(this.Options.HTMLColoring);
+                state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+            } else if (System.Nullable.eq(state.SpecialRegionActive, PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.SpecialRegionType.Minify)) {
+                var skippedXml1 = PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ExtractStructureBetween(state.RegionStartNode, sqlTreeDoc);
+                var tempFormatter1 = new PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.ctor();
+                if (this.HTMLFormatted) {
+                    state.AddOutputContentRaw(PoorMansTSqlFormatterLib.Utils.HtmlEncode(tempFormatter1.FormatSQLTree(skippedXml1)));
+                } else {
+                    state.AddOutputContentRaw(tempFormatter1.FormatSQLTree(skippedXml1));
+                }
+            }
+            return state.DumpOutput();
+        },
+        ProcessSqlNodeList: function (rootList, state) {
+            var $t;
+            $t = Bridge.getEnumerator(rootList, PoorMansTSqlFormatterLib.ParseStructure.Node);
+            try {
+                while ($t.moveNext()) {
+                    var contentElement = $t.Current;
+                    this.ProcessSqlNode(contentElement, state);
+                }
+            } finally {
+                if (Bridge.is($t, System.IDisposable)) {
+                    $t.System$IDisposable$dispose();
+                }
+            }},
+        ProcessSqlNode: function (contentElement, state) {
+            var $t, $t1, $t2;
+            var initialIndent = state.IndentLevel;
+
+            if (Bridge.referenceEquals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_HASERROR), "1")) {
+                state.OpenClass(PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_ERRORHIGHLIGHT);
+            }
+
+            switch (contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Name) {
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT: 
+                    this.WhiteSpace_SeparateStatements(contentElement, state);
+                    state.ResetKeywords();
+                    this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state);
+                    state.StatementBreakExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE: 
+                    state.UnIndentInitialBreak = true;
+                    this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state.IncrementIndent());
+                    state.DecrementIndent();
+                    if (this.Options.NewClauseLineBreaks > 0) {
+                        state.BreakExpected = true;
+                    }
+                    if (this.Options.NewClauseLineBreaks > 1) {
+                        state.AdditionalBreaksExpected = (this.Options.NewClauseLineBreaks - 1) | 0;
+                    }
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SET_OPERATOR_CLAUSE: 
+                    state.DecrementIndent();
+                    state.WhiteSpace_BreakToNextLine(); //this is the one already recommended by the start of the clause
+                    state.WhiteSpace_BreakToNextLine(); //this is the one we additionally want to apply
+                    this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state.IncrementIndent());
+                    state.BreakExpected = true;
+                    state.AdditionalBreaksExpected = 1;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BATCH_SEPARATOR: 
+                    //newline regardless of whether previous element recommended a break or not.
+                    state.WhiteSpace_BreakToNextLine();
+                    this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state);
+                    state.BreakExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_OTHER_BLOCK: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_DECLARE_BLOCK: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_DECLARATION: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BEGIN_TRANSACTION: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SAVE_TRANSACTION: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMIT_TRANSACTION: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ROLLBACK_TRANSACTION: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_CLOSE: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHILE_LOOP: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IF_STATEMENT: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_WITH_CLAUSE: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_BLOCK: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_DETAIL: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_CLAUSE: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_TARGET: 
+                    this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state);
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_INPUT: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BOOLEAN_EXPRESSION: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_LOWERBOUND: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_UPPERBOUND: 
+                    this.WhiteSpace_SeparateWords(state);
+                    this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state);
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_SINGLESTATEMENT: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_MULTISTATEMENT: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_ACTION: 
+                    var singleStatementIsIf = false;
+                    $t = Bridge.getEnumerator(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT), PoorMansTSqlFormatterLib.ParseStructure.Node);
+                    try {
+                        while ($t.moveNext()) {
+                            var statement = $t.Current;
+                            $t1 = Bridge.getEnumerator(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(statement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE), PoorMansTSqlFormatterLib.ParseStructure.Node);
+                            try {
+                                while ($t1.moveNext()) {
+                                    var clause = $t1.Current;
+                                    $t2 = Bridge.getEnumerator(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(clause, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IF_STATEMENT), PoorMansTSqlFormatterLib.ParseStructure.Node);
+                                    try {
+                                        while ($t2.moveNext()) {
+                                            var ifStatement = $t2.Current;
+                                            singleStatementIsIf = true;
+                                        }
+                                    } finally {
+                                        if (Bridge.is($t2, System.IDisposable)) {
+                                            $t2.System$IDisposable$dispose();
+                                        }
+                                    }
+                                }
+                            } finally {
+                                if (Bridge.is($t1, System.IDisposable)) {
+                                    $t1.System$IDisposable$dispose();
+                                }
+                            }
+                        }
+                    } finally {
+                        if (Bridge.is($t, System.IDisposable)) {
+                            $t.System$IDisposable$dispose();
+                        }
+                    }if (singleStatementIsIf && System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ELSE_CLAUSE)) {
+                        //artificially decrement indent and skip new statement break for "ELSE IF" constructs
+                        state.DecrementIndent();
+                    } else {
+                        state.BreakExpected = true;
+                    }
+                    this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state);
+                    if (singleStatementIsIf && System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ELSE_CLAUSE)) {
+                        //bring indent back to symmetrical level
+                        state.IncrementIndent();
+                    }
+                    state.StatementBreakExpected = false; //the responsibility for breaking will be with the OUTER statement; there should be no consequence propagating out from statements in this container;
+                    state.UnIndentInitialBreak = false; //if there was no word spacing after the last content statement's clause starter, doesn't mean the unIndent should propagate to the following content!
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_TARGET: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_RECIPIENT: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_WITH_CLAUSE: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_CONDITION: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_THEN: 
+                    state.BreakExpected = true;
+                    state.UnIndentInitialBreak = true;
+                    this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state.IncrementIndent());
+                    state.DecrementIndent();
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_JOIN_ON_SECTION: 
+                    if (this.Options.BreakJoinOnSections) {
+                        state.BreakExpected = true;
+                    }
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN), state);
+                    if (this.Options.BreakJoinOnSections) {
+                        state.IncrementIndent();
+                    }
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT), state);
+                    if (this.Options.BreakJoinOnSections) {
+                        state.DecrementIndent();
+                    }
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_ALIAS: 
+                    state.UnIndentInitialBreak = true;
+                    this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state);
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ELSE_CLAUSE: 
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN), state.DecrementIndent());
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_SINGLESTATEMENT), state.IncrementIndent());
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_AS_BLOCK: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_FOR_BLOCK: 
+                    state.BreakExpected = true;
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN), state.DecrementIndent());
+                    state.BreakExpected = true;
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT), state);
+                    state.IncrementIndent();
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_TRIGGER_CONDITION: 
+                    state.DecrementIndent();
+                    state.WhiteSpace_BreakToNextLine();
+                    this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state.IncrementIndent());
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_FOR_OPTIONS: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_AS_BLOCK: 
+                    state.BreakExpected = true;
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN), state.DecrementIndent());
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT), state.IncrementIndent());
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_RETURNS: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_USING: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_WHEN: 
+                    state.BreakExpected = true;
+                    state.UnIndentInitialBreak = true;
+                    this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state);
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_CONDITION: 
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN), state);
+                    state.IncrementIndent();
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_LOWERBOUND), state.IncrementIndent());
+                    if (this.Options.ExpandBetweenConditions) {
+                        state.BreakExpected = true;
+                    }
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_CLOSE), state.DecrementIndent());
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_UPPERBOUND), state.IncrementIndent());
+                    state.DecrementIndent();
+                    state.DecrementIndent();
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDLDETAIL_PARENS: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_FUNCTION_PARENS: 
+                    //simply process sub-nodes - don't add space or expect any linebreaks (but respect linebreaks if necessary)
+                    state.WordSeparatorExpected = false;
+                    this.WhiteSpace_BreakAsExpected(state);
+                    state.AddOutputContent$1(this.FormatOperator("("), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
+                    this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, state.IncrementIndent());
+                    state.DecrementIndent();
+                    this.WhiteSpace_BreakAsExpected(state);
+                    state.AddOutputContent$1(this.FormatOperator(")"), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
+                    state.WordSeparatorExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PARENS: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EXPRESSION_PARENS: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IN_PARENS: 
+                    this.WhiteSpace_SeparateWords(state);
+                    if (System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EXPRESSION_PARENS) || System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IN_PARENS)) {
+                        state.IncrementIndent();
+                    }
+                    state.AddOutputContent$1(this.FormatOperator("("), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
+                    var innerState = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.TSqlStandardFormattingState.ctor(state);
+                    this.ProcessSqlNodeList(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, innerState);
+                    //if there was a linebreak in the parens content, or if it wanted one to follow, then put linebreaks before and after.
+                    if (innerState.BreakExpected || innerState.OutputContainsLineBreak) {
+                        if (!innerState.StartsWithBreak) {
+                            state.WhiteSpace_BreakToNextLine();
+                        }
+                        state.Assimilate(innerState);
+                        state.WhiteSpace_BreakToNextLine();
+                    } else {
+                        state.Assimilate(innerState);
+                    }
+                    state.AddOutputContent$1(this.FormatOperator(")"), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
+                    if (System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EXPRESSION_PARENS) || System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IN_PARENS)) {
+                        state.DecrementIndent();
+                    }
+                    state.WordSeparatorExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BEGIN_END_BLOCK: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_TRY_BLOCK: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CATCH_BLOCK: 
+                    if (System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_SINGLESTATEMENT)) {
+                        state.DecrementIndent();
+                    }
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN), state);
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_MULTISTATEMENT), state);
+                    state.DecrementIndent();
+                    state.BreakExpected = true;
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_CLOSE), state);
+                    state.IncrementIndent();
+                    if (System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_SINGLESTATEMENT)) {
+                        state.IncrementIndent();
+                    }
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_STATEMENT: 
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN), state);
+                    state.IncrementIndent();
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_INPUT), state);
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_WHEN), state);
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_ELSE), state);
+                    if (this.Options.ExpandCaseStatements) {
+                        state.BreakExpected = true;
+                    }
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_CLOSE), state);
+                    state.DecrementIndent();
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_WHEN: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_THEN: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_ELSE: 
+                    if (this.Options.ExpandCaseStatements) {
+                        state.BreakExpected = true;
+                    }
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN), state);
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT), state.IncrementIndent());
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_THEN), state);
+                    state.DecrementIndent();
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_AND_OPERATOR: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OR_OPERATOR: 
+                    if (this.Options.ExpandBooleanExpressions) {
+                        state.BreakExpected = true;
+                    }
+                    this.ProcessSqlNode(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildByName(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD), state);
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_MULTILINE: 
+                    if (System.Nullable.eq(state.SpecialRegionActive, PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.SpecialRegionType.NoFormat) && System.String.contains(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue),"[/NOFORMAT]")) {
+                        var skippedXml = PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ExtractStructureBetween(state.RegionStartNode, contentElement);
+                        if (skippedXml != null) {
+                            var tempFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter.$ctor1(this.Options.HTMLColoring);
+                            state.AddOutputContentRaw(tempFormatter.FormatSQLTree(skippedXml));
+                            state.WordSeparatorExpected = false;
+                            state.BreakExpected = false;
+                        }
+                        state.SpecialRegionActive = null;
+                        state.RegionStartNode = null;
+                    } else if (System.Nullable.eq(state.SpecialRegionActive, PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.SpecialRegionType.Minify) && System.String.contains(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue),"[/MINIFY]")) {
+                        var skippedXml1 = PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ExtractStructureBetween(state.RegionStartNode, contentElement);
+                        if (skippedXml1 != null) {
+                            var tempFormatter1 = new PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.ctor();
+                            if (this.HTMLFormatted) {
+                                state.AddOutputContentRaw(PoorMansTSqlFormatterLib.Utils.HtmlEncode(tempFormatter1.FormatSQLTree(skippedXml1)));
+                            } else {
+                                state.AddOutputContentRaw(tempFormatter1.FormatSQLTree(skippedXml1));
+                            }
+                            state.WordSeparatorExpected = false;
+                            state.BreakExpected = false;
+                        }
+                        state.SpecialRegionActive = null;
+                        state.RegionStartNode = null;
+                    }
+                    this.WhiteSpace_SeparateComment(contentElement, state);
+                    state.AddOutputContent$1(System.String.concat("/*", contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "*/"), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_COMMENT);
+                    if (System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) || (PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.NextSibling(contentElement) != null && System.String.equals(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.NextSibling(contentElement).PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHITESPACE) && System.Text.RegularExpressions.Regex.isMatch(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.NextSibling(contentElement).PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "(\\r|\\n)+"))) {
+                        state.BreakExpected = true;
+                    } else {
+                        state.WordSeparatorExpected = true;
+                    }
+                    if (state.SpecialRegionActive == null && System.String.contains(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue),"[NOFORMAT]")) {
+                        //state.AddOutputLineBreak();
+                        state.SpecialRegionActive = PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.SpecialRegionType.NoFormat;
+                        state.RegionStartNode = contentElement;
+                    } else if (state.SpecialRegionActive == null && System.String.contains(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue),"[MINIFY]")) {
+                        //state.AddOutputLineBreak();
+                        state.SpecialRegionActive = PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.SpecialRegionType.Minify;
+                        state.RegionStartNode = contentElement;
+                    }
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE_CSTYLE: 
+                    if (System.Nullable.eq(state.SpecialRegionActive, PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.SpecialRegionType.NoFormat) && System.String.contains(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue),"[/NOFORMAT]")) {
+                        var skippedXml2 = PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ExtractStructureBetween(state.RegionStartNode, contentElement);
+                        if (skippedXml2 != null) {
+                            var tempFormatter2 = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter.$ctor1(this.Options.HTMLColoring);
+                            state.AddOutputContentRaw(tempFormatter2.FormatSQLTree(skippedXml2));
+                            state.WordSeparatorExpected = false;
+                            state.BreakExpected = false;
+                        }
+                        state.SpecialRegionActive = null;
+                        state.RegionStartNode = null;
+                    } else if (System.Nullable.eq(state.SpecialRegionActive, PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.SpecialRegionType.Minify) && System.String.contains(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue),"[/MINIFY]")) {
+                        var skippedXml3 = PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ExtractStructureBetween(state.RegionStartNode, contentElement);
+                        if (skippedXml3 != null) {
+                            var tempFormatter3 = new PoorMansTSqlFormatterLib.Formatters.TSqlObfuscatingFormatter.ctor();
+                            if (this.HTMLFormatted) {
+                                state.AddOutputContentRaw(PoorMansTSqlFormatterLib.Utils.HtmlEncode(tempFormatter3.FormatSQLTree(skippedXml3)));
+                            } else {
+                                state.AddOutputContentRaw(tempFormatter3.FormatSQLTree(skippedXml3));
+                            }
+                            state.WordSeparatorExpected = false;
+                            state.BreakExpected = false;
+                        }
+                        state.SpecialRegionActive = null;
+                        state.RegionStartNode = null;
+                    }
+                    this.WhiteSpace_SeparateComment(contentElement, state);
+                    state.AddOutputContent$1(System.String.concat((Bridge.referenceEquals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE) ? "--" : "//"), System.String.replaceAll(System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "\r", ""), "\n", "")), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_COMMENT);
+                    state.BreakExpected = true;
+                    state.SourceBreakPending = true;
+                    if (state.SpecialRegionActive == null && System.String.contains(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue),"[NOFORMAT]")) {
+                        state.AddOutputLineBreak();
+                        state.SpecialRegionActive = PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.SpecialRegionType.NoFormat;
+                        state.RegionStartNode = contentElement;
+                    } else if (state.SpecialRegionActive == null && System.String.contains(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue),"[MINIFY]")) {
+                        state.AddOutputLineBreak();
+                        state.SpecialRegionActive = PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.SpecialRegionType.Minify;
+                        state.RegionStartNode = contentElement;
+                    }
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_STRING: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_NSTRING: 
+                    this.WhiteSpace_SeparateWords(state);
+                    var outValue = null;
+                    if (System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_NSTRING)) {
+                        outValue = System.String.concat("N'", System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "'", "''"), "'");
+                    } else {
+                        outValue = System.String.concat("'", System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "'", "''"), "'");
+                    }
+                    state.AddOutputContent$1(outValue, PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_STRING);
+                    state.WordSeparatorExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BRACKET_QUOTED_NAME: 
+                    this.WhiteSpace_SeparateWords(state);
+                    state.AddOutputContent(System.String.concat("[", System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "]", "]]"), "]"));
+                    state.WordSeparatorExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_QUOTED_STRING: 
+                    this.WhiteSpace_SeparateWords(state);
+                    state.AddOutputContent(System.String.concat("\"", System.String.replaceAll(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "\"", "\"\""), "\""));
+                    state.WordSeparatorExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMA: 
+                    //comma always ignores requested word spacing
+                    if (this.Options.TrailingCommas) {
+                        this.WhiteSpace_BreakAsExpected(state);
+                        state.AddOutputContent$1(this.FormatOperator(","), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
+
+                        if ((this.Options.ExpandCommaLists && !(System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDLDETAIL_PARENS) || System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_FUNCTION_PARENS) || System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IN_PARENS))) || (this.Options.ExpandInLists && System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IN_PARENS))) {
+                            state.BreakExpected = true;
+                        } else {
+                            state.WordSeparatorExpected = true;
+                        }
+                    } else {
+                        if ((this.Options.ExpandCommaLists && !(System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDLDETAIL_PARENS) || System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_FUNCTION_PARENS) || System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IN_PARENS))) || (this.Options.ExpandInLists && System.String.equals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IN_PARENS))) {
+                            state.WhiteSpace_BreakToNextLine();
+                            state.AddOutputContent$1(this.FormatOperator(","), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
+                            if (this.Options.SpaceAfterExpandedComma) {
+                                state.WordSeparatorExpected = true;
+                            }
+                        } else {
+                            this.WhiteSpace_BreakAsExpected(state);
+                            state.AddOutputContent$1(this.FormatOperator(","), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
+                            state.WordSeparatorExpected = true;
+                        }
+
+                    }
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERIOD: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SEMICOLON: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SCOPERESOLUTIONOPERATOR: 
+                    //always ignores requested word spacing, and doesn't request a following space either.
+                    state.WordSeparatorExpected = false;
+                    this.WhiteSpace_BreakAsExpected(state);
+                    state.AddOutputContent$1(this.FormatOperator(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ASTERISK: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EQUALSSIGN: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ALPHAOPERATOR: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHEROPERATOR: 
+                    this.WhiteSpace_SeparateWords(state);
+                    state.AddOutputContent$1(this.FormatOperator(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_OPERATOR);
+                    state.WordSeparatorExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMPOUNDKEYWORD: 
+                    this.WhiteSpace_SeparateWords(state);
+                    state.SetRecentKeyword(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_SIMPLETEXT));
+                    state.AddOutputContent$1(this.FormatKeyword(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_SIMPLETEXT)), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_KEYWORD);
+                    state.WordSeparatorExpected = true;
+                    this.ProcessSqlNodeList(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByNames(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAMELIST_COMMENT), state.IncrementIndent());
+                    state.DecrementIndent();
+                    state.WordSeparatorExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DATATYPE_KEYWORD: 
+                    this.WhiteSpace_SeparateWords(state);
+                    state.SetRecentKeyword(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue);
+                    state.AddOutputContent$1(this.FormatKeyword(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_KEYWORD);
+                    state.WordSeparatorExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PSEUDONAME: 
+                    this.WhiteSpace_SeparateWords(state);
+                    state.AddOutputContent$1(this.FormatKeyword(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue), PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_KEYWORD);
+                    state.WordSeparatorExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_FUNCTION_KEYWORD: 
+                    this.WhiteSpace_SeparateWords(state);
+                    state.SetRecentKeyword(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue);
+                    state.AddOutputContent$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, PoorMansTSqlFormatterLib.Interfaces.SqlHtmlConstants.CLASS_FUNCTION);
+                    state.WordSeparatorExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERNODE: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MONETARY_VALUE: 
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_LABEL: 
+                    this.WhiteSpace_SeparateWords(state);
+                    state.AddOutputContent(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue);
+                    state.WordSeparatorExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_NUMBER_VALUE: 
+                    this.WhiteSpace_SeparateWords(state);
+                    state.AddOutputContent(PoorMansTSqlFormatterLib.Utils.ToLowerInvariant$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue));
+                    state.WordSeparatorExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BINARY_VALUE: 
+                    this.WhiteSpace_SeparateWords(state);
+                    state.AddOutputContent("0x");
+                    state.AddOutputContent(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue.substr(2)));
+                    state.WordSeparatorExpected = true;
+                    break;
+                case PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHITESPACE: 
+                    //take note if it's a line-breaking space, but don't DO anything here
+                    if (System.Text.RegularExpressions.Regex.isMatch(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "(\\r|\\n)+")) {
+                        state.SourceBreakPending = true;
+                    }
+                    break;
+                default: 
+                    throw new System.Exception("Unrecognized element in SQL Xml!");
+            }
+
+            if (Bridge.referenceEquals(contentElement.PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_HASERROR), "1")) {
+                state.CloseClass();
+            }
+
+            if (initialIndent !== state.IndentLevel) {
+                throw new System.Exception("Messed up the indenting!! Check code/stack or panic!");
+            }
+        },
+        FormatKeyword: function (keyword) {
+            var outputKeyword = { };
+            if (!this.KeywordMapping.System$Collections$Generic$IDictionary$2$System$String$System$String$tryGetValue(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(keyword), outputKeyword)) {
+                outputKeyword.v = keyword;
+            }
+
+            if (this.Options.UppercaseKeywords) {
+                return PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(outputKeyword.v);
+            } else {
+                return PoorMansTSqlFormatterLib.Utils.ToLowerInvariant$1(outputKeyword.v);
+            }
+        },
+        FormatOperator: function (operatorValue) {
+            if (this.Options.UppercaseKeywords) {
+                return PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(operatorValue);
+            } else {
+                return PoorMansTSqlFormatterLib.Utils.ToLowerInvariant$1(operatorValue);
+            }
+        },
+        WhiteSpace_SeparateStatements: function (contentElement, state) {
+            if (state.StatementBreakExpected) {
+                //check whether this is a DECLARE/SET clause with similar precedent, and therefore exempt from double-linebreak.
+                var thisClauseStarter = this.FirstSemanticElementChild(contentElement);
+                if (!(thisClauseStarter != null && System.String.equals(thisClauseStarter.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD) && state.GetRecentKeyword() != null && ((System.String.equals(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(thisClauseStarter.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue), "SET") && System.String.equals(state.GetRecentKeyword(), "SET")) || (System.String.equals(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(thisClauseStarter.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue), "DECLARE") && System.String.equals(state.GetRecentKeyword(), "DECLARE")) || (System.String.equals(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(thisClauseStarter.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue), "PRINT") && System.String.equals(state.GetRecentKeyword(), "PRINT"))))) {
+                    for (var i = this.Options.NewStatementLineBreaks; i > 0; i = (i - 1) | 0) {
+                        state.AddOutputLineBreak();
+                    }
+                } else {
+                    for (var i1 = this.Options.NewClauseLineBreaks; i1 > 0; i1 = (i1 - 1) | 0) {
+                        state.AddOutputLineBreak();
+                    }
+                }
+
+                state.Indent(state.IndentLevel);
+                state.BreakExpected = false;
+                state.AdditionalBreaksExpected = 0;
+                state.SourceBreakPending = false;
+                state.StatementBreakExpected = false;
+                state.WordSeparatorExpected = false;
+            }
+        },
+        FirstSemanticElementChild: function (contentElement) {
+            var target = null;
+            while (contentElement != null) {
+                target = System.Linq.Enumerable.from(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenExcludingNames(contentElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAMELIST_NONCONTENT)).firstOrDefault(null, null);
+
+                if (target != null && System.Array.contains(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAMELIST_NONSEMANTICCONTENT, target.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, System.String)) {
+                    contentElement = target;
+                } else {
+                    contentElement = null;
+                }
+            }
+
+            return target;
+        },
+        WhiteSpace_SeparateWords: function (state) {
+            if (state.BreakExpected || state.AdditionalBreaksExpected > 0) {
+                var wasUnIndent = state.UnIndentInitialBreak;
+                if (wasUnIndent) {
+                    state.DecrementIndent();
+                }
+                this.WhiteSpace_BreakAsExpected(state);
+                if (wasUnIndent) {
+                    state.IncrementIndent();
+                }
+            } else if (state.WordSeparatorExpected) {
+                state.AddOutputSpace();
+            }
+            state.UnIndentInitialBreak = false;
+            state.SourceBreakPending = false;
+            state.WordSeparatorExpected = false;
+        },
+        WhiteSpace_SeparateComment: function (contentElement, state) {
+            if (state.CurrentLineHasContent && state.SourceBreakPending) {
+                state.BreakExpected = true;
+                this.WhiteSpace_BreakAsExpected(state);
+            } else if (state.WordSeparatorExpected) {
+                state.AddOutputSpace();
+            }
+            state.SourceBreakPending = false;
+            state.WordSeparatorExpected = false;
+        },
+        WhiteSpace_BreakAsExpected: function (state) {
+            if (state.BreakExpected) {
+                state.WhiteSpace_BreakToNextLine();
+            }
+            while (state.AdditionalBreaksExpected > 0) {
+                state.WhiteSpace_BreakToNextLine();
+                state.AdditionalBreaksExpected = (state.AdditionalBreaksExpected - 1) | 0;
+            }
+        }
+    }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.TSqlStandardFormattingState", {
+        inherits: [PoorMansTSqlFormatterLib.BaseFormatterState],
+        statics: {
+            fields: {
+                _startsWithBreakChecker: null,
+                _lineBreakMatcher: null
+            },
+            ctors: {
+                init: function () {
+                    this._startsWithBreakChecker = new System.Text.RegularExpressions.Regex.ctor("^\\s*(\\r|\\n)", 0);
+                    this._lineBreakMatcher = new System.Text.RegularExpressions.Regex.ctor("(\\r|\\n)+");
+                }
+            }
+        },
+        fields: {
+            _mostRecentKeywordsAtEachLevel: null
+        },
+        props: {
+            IndentString: null,
+            IndentLength: 0,
+            MaxLineWidth: 0,
+            StatementBreakExpected: false,
+            BreakExpected: false,
+            WordSeparatorExpected: false,
+            SourceBreakPending: false,
+            AdditionalBreaksExpected: 0,
+            UnIndentInitialBreak: false,
+            IndentLevel: 0,
+            CurrentLineLength: 0,
+            CurrentLineHasContent: false,
+            SpecialRegionActive: null,
+            RegionStartNode: null,
+            StartsWithBreak: {
+                get: function () {
+                    return PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.TSqlStandardFormattingState._startsWithBreakChecker.isMatch(this._outBuilder.toString());
+                }
+            },
+            OutputContainsLineBreak: {
+                get: function () {
+                    return PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.TSqlStandardFormattingState._lineBreakMatcher.isMatch(this._outBuilder.toString());
+                }
+            }
+        },
+        ctors: {
+            init: function () {
+                this._mostRecentKeywordsAtEachLevel = new (System.Collections.Generic.Dictionary$2(System.Int32,System.String))();
+            },
+            $ctor1: function (htmlOutput, indentString, spacesPerTab, maxLineWidth, initialIndentLevel) {
+                this.$initialize();
+                PoorMansTSqlFormatterLib.BaseFormatterState.ctor.call(this, htmlOutput);
+                this.IndentLevel = initialIndentLevel;
+                this.HtmlOutput = htmlOutput;
+                this.IndentString = indentString;
+                this.MaxLineWidth = maxLineWidth;
+
+                var tabCount = (System.String.split(indentString, [9].map(function(i) {{ return String.fromCharCode(i); }})).length - 1) | 0;
+                var tabExtraCharacters = (tabCount * (((spacesPerTab - 1) | 0))) | 0;
+                this.IndentLength = (indentString.length + tabExtraCharacters) | 0;
+            },
+            ctor: function (sourceState) {
+                this.$initialize();
+                PoorMansTSqlFormatterLib.BaseFormatterState.ctor.call(this, sourceState.HtmlOutput);
+                this.IndentLevel = sourceState.IndentLevel;
+                this.HtmlOutput = sourceState.HtmlOutput;
+                this.IndentString = sourceState.IndentString;
+                this.IndentLength = sourceState.IndentLength;
+                this.MaxLineWidth = sourceState.MaxLineWidth;
+                //TODO: find a way out of the cross-dependent wrapping maze...
+                //CurrentLineLength = sourceState.CurrentLineLength;
+                this.CurrentLineLength = (this.IndentLevel * this.IndentLength) | 0;
+                this.CurrentLineHasContent = sourceState.CurrentLineHasContent;
+            }
+        },
+        methods: {
+            AddOutputContent: function (content) {
+                if (this.SpecialRegionActive == null) {
+                    this.AddOutputContent$1(content, null);
+                }
+            },
+            AddOutputContent$1: function (content, htmlClassName) {
+                if (this.CurrentLineHasContent && (((content.length + this.CurrentLineLength) | 0) > this.MaxLineWidth)) {
+                    this.WhiteSpace_BreakToNextLine();
+                }
+
+                if (this.SpecialRegionActive == null) {
+                    PoorMansTSqlFormatterLib.BaseFormatterState.prototype.AddOutputContent$1.call(this, content, htmlClassName);
+                }
+
+                this.CurrentLineHasContent = true;
+                this.CurrentLineLength = (this.CurrentLineLength + content.length) | 0;
+            },
+            AddOutputLineBreak: function () {
+
+                //if linebreaks are added directly in the content (eg in comments or strings), they 
+                // won't be accounted for here - that's ok.
+                if (this.SpecialRegionActive == null) {
+                    PoorMansTSqlFormatterLib.BaseFormatterState.prototype.AddOutputLineBreak.call(this);
+                }
+                this.CurrentLineLength = 0;
+                this.CurrentLineHasContent = false;
+            },
+            AddOutputSpace: function () {
+                if (this.SpecialRegionActive == null) {
+                    this._outBuilder.append(" ");
+                }
+            },
+            Indent: function (indentLevel) {
+                for (var i = 0; i < indentLevel; i = (i + 1) | 0) {
+                    if (this.SpecialRegionActive == null) {
+                        PoorMansTSqlFormatterLib.BaseFormatterState.prototype.AddOutputContent$1.call(this, this.IndentString, "");
+                    } //that is, add the indent as HTMLEncoded content if necessary, but no weird linebreak-adding
+                    this.CurrentLineLength = (this.CurrentLineLength + this.IndentLength) | 0;
+                }
+            },
+            WhiteSpace_BreakToNextLine: function () {
+                this.AddOutputLineBreak();
+                this.Indent(this.IndentLevel);
+                this.BreakExpected = false;
+                this.SourceBreakPending = false;
+                this.WordSeparatorExpected = false;
+            },
+            Assimilate: function (partialState) {
+                //TODO: find a way out of the cross-dependent wrapping maze...
+                this.CurrentLineLength = (this.CurrentLineLength + partialState.CurrentLineLength) | 0;
+                this.CurrentLineHasContent = this.CurrentLineHasContent || partialState.CurrentLineHasContent;
+                if (this.SpecialRegionActive == null) {
+                    this._outBuilder.append(partialState.DumpOutput());
+                }
+            },
+            IncrementIndent: function () {
+                this.IndentLevel = (this.IndentLevel + 1) | 0;
+                return this;
+            },
+            DecrementIndent: function () {
+                this.IndentLevel = (this.IndentLevel - 1) | 0;
+                return this;
+            },
+            SetRecentKeyword: function (ElementName) {
+                if (!this._mostRecentKeywordsAtEachLevel.containsKey(this.IndentLevel)) {
+                    this._mostRecentKeywordsAtEachLevel.add(this.IndentLevel, PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(ElementName));
+                }
+            },
+            GetRecentKeyword: function () {
+                var $t;
+                var keywordFound = null;
+                var keywordFoundAt = null;
+                $t = Bridge.getEnumerator(this._mostRecentKeywordsAtEachLevel.getKeys(), System.Int32);
+                try {
+                    while ($t.moveNext()) {
+                        var key = $t.Current;
+                        if ((keywordFoundAt == null || System.Nullable.getValue(keywordFoundAt) > key) && key >= this.IndentLevel) {
+                            keywordFoundAt = key;
+                            keywordFound = this._mostRecentKeywordsAtEachLevel.get(key);
+                        }
+                    }
+                } finally {
+                    if (Bridge.is($t, System.IDisposable)) {
+                        $t.System$IDisposable$dispose();
+                    }
+                }return keywordFound;
+            },
+            ResetKeywords: function () {
+                var $t, $t1;
+                var descendentLevelKeys = new (System.Collections.Generic.List$1(System.Int32))();
+                $t = Bridge.getEnumerator(this._mostRecentKeywordsAtEachLevel.getKeys(), System.Int32);
+                try {
+                    while ($t.moveNext()) {
+                        var key = $t.Current;
+                        if (key >= this.IndentLevel) {
+                            descendentLevelKeys.add(key);
+                        }
+                    }
+                } finally {
+                    if (Bridge.is($t, System.IDisposable)) {
+                        $t.System$IDisposable$dispose();
+                    }
+                }$t1 = Bridge.getEnumerator(descendentLevelKeys);
+                try {
+                    while ($t1.moveNext()) {
+                        var key1 = $t1.Current;
+                        this._mostRecentKeywordsAtEachLevel.remove(key1);
+                    }
+                } finally {
+                    if (Bridge.is($t1, System.IDisposable)) {
+                        $t1.System$IDisposable$dispose();
+                    }
+                }}
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Interfaces.ITokenList", {
+        inherits: [System.Collections.Generic.IList$1(PoorMansTSqlFormatterLib.Interfaces.IToken)],
+        $kind: "interface"
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser", {
+        inherits: [PoorMansTSqlFormatterLib.Interfaces.ISqlTokenParser],
+        statics: {
+            fields: {
+                _JoinDetector: null,
+                _CursorDetector: null,
+                _TriggerConditionDetector: null
+            },
+            props: {
+                KeywordList: null
+            },
+            ctors: {
+                init: function () {
+                    this._JoinDetector = new System.Text.RegularExpressions.Regex.ctor("^((RIGHT|INNER|LEFT|CROSS|FULL) )?(OUTER )?((HASH|LOOP|MERGE|REMOTE) )?(JOIN|APPLY) ");
+                    this._CursorDetector = new System.Text.RegularExpressions.Regex.ctor("^DECLARE (?:[#\\$0-9@-Z_a-z\\xAA\\xB5\\xBA\\xC0-\\xD6\\xD8-\\xF6\\xF8-\\u02C1\\u02C6-\\u02D1\\u02E0-\\u02E4\\u02EC\\u02EE\\u0370-\\u0374\\u0376\\u0377\\u037A-\\u037D\\u037F\\u0386\\u0388-\\u038A\\u038C\\u038E-\\u03A1\\u03A3-\\u03F5\\u03F7-\\u0481\\u048A-\\u052F\\u0531-\\u0556\\u0559\\u0561-\\u0587\\u05D0-\\u05EA\\u05F0-\\u05F2\\u0620-\\u064A\\u066E\\u066F\\u0671-\\u06D3\\u06D5\\u06E5\\u06E6\\u06EE\\u06EF\\u06FA-\\u06FC\\u06FF\\u0710\\u0712-\\u072F\\u074D-\\u07A5\\u07B1\\u07CA-\\u07EA\\u07F4\\u07F5\\u07FA\\u0800-\\u0815\\u081A\\u0824\\u0828\\u0840-\\u0858\\u0860-\\u086A\\u08A0-\\u08B4\\u08B6-\\u08BD\\u0904-\\u0939\\u093D\\u0950\\u0958-\\u0961\\u0971-\\u0980\\u0985-\\u098C\\u098F\\u0990\\u0993-\\u09A8\\u09AA-\\u09B0\\u09B2\\u09B6-\\u09B9\\u09BD\\u09CE\\u09DC\\u09DD\\u09DF-\\u09E1\\u09F0\\u09F1\\u09FC\\u0A05-\\u0A0A\\u0A0F\\u0A10\\u0A13-\\u0A28\\u0A2A-\\u0A30\\u0A32\\u0A33\\u0A35\\u0A36\\u0A38\\u0A39\\u0A59-\\u0A5C\\u0A5E\\u0A72-\\u0A74\\u0A85-\\u0A8D\\u0A8F-\\u0A91\\u0A93-\\u0AA8\\u0AAA-\\u0AB0\\u0AB2\\u0AB3\\u0AB5-\\u0AB9\\u0ABD\\u0AD0\\u0AE0\\u0AE1\\u0AF9\\u0B05-\\u0B0C\\u0B0F\\u0B10\\u0B13-\\u0B28\\u0B2A-\\u0B30\\u0B32\\u0B33\\u0B35-\\u0B39\\u0B3D\\u0B5C\\u0B5D\\u0B5F-\\u0B61\\u0B71\\u0B83\\u0B85-\\u0B8A\\u0B8E-\\u0B90\\u0B92-\\u0B95\\u0B99\\u0B9A\\u0B9C\\u0B9E\\u0B9F\\u0BA3\\u0BA4\\u0BA8-\\u0BAA\\u0BAE-\\u0BB9\\u0BD0\\u0C05-\\u0C0C\\u0C0E-\\u0C10\\u0C12-\\u0C28\\u0C2A-\\u0C39\\u0C3D\\u0C58-\\u0C5A\\u0C60\\u0C61\\u0C80\\u0C85-\\u0C8C\\u0C8E-\\u0C90\\u0C92-\\u0CA8\\u0CAA-\\u0CB3\\u0CB5-\\u0CB9\\u0CBD\\u0CDE\\u0CE0\\u0CE1\\u0CF1\\u0CF2\\u0D05-\\u0D0C\\u0D0E-\\u0D10\\u0D12-\\u0D3A\\u0D3D\\u0D4E\\u0D54-\\u0D56\\u0D5F-\\u0D61\\u0D7A-\\u0D7F\\u0D85-\\u0D96\\u0D9A-\\u0DB1\\u0DB3-\\u0DBB\\u0DBD\\u0DC0-\\u0DC6\\u0E01-\\u0E30\\u0E32\\u0E33\\u0E40-\\u0E46\\u0E81\\u0E82\\u0E84\\u0E87\\u0E88\\u0E8A\\u0E8D\\u0E94-\\u0E97\\u0E99-\\u0E9F\\u0EA1-\\u0EA3\\u0EA5\\u0EA7\\u0EAA\\u0EAB\\u0EAD-\\u0EB0\\u0EB2\\u0EB3\\u0EBD\\u0EC0-\\u0EC4\\u0EC6\\u0EDC-\\u0EDF\\u0F00\\u0F40-\\u0F47\\u0F49-\\u0F6C\\u0F88-\\u0F8C\\u1000-\\u102A\\u103F\\u1050-\\u1055\\u105A-\\u105D\\u1061\\u1065\\u1066\\u106E-\\u1070\\u1075-\\u1081\\u108E\\u10A0-\\u10C5\\u10C7\\u10CD\\u10D0-\\u10FA\\u10FC-\\u1248\\u124A-\\u124D\\u1250-\\u1256\\u1258\\u125A-\\u125D\\u1260-\\u1288\\u128A-\\u128D\\u1290-\\u12B0\\u12B2-\\u12B5\\u12B8-\\u12BE\\u12C0\\u12C2-\\u12C5\\u12C8-\\u12D6\\u12D8-\\u1310\\u1312-\\u1315\\u1318-\\u135A\\u1380-\\u138F\\u13A0-\\u13F5\\u13F8-\\u13FD\\u1401-\\u166C\\u166F-\\u167F\\u1681-\\u169A\\u16A0-\\u16EA\\u16F1-\\u16F8\\u1700-\\u170C\\u170E-\\u1711\\u1720-\\u1731\\u1740-\\u1751\\u1760-\\u176C\\u176E-\\u1770\\u1780-\\u17B3\\u17D7\\u17DC\\u1820-\\u1877\\u1880-\\u1884\\u1887-\\u18A8\\u18AA\\u18B0-\\u18F5\\u1900-\\u191E\\u1950-\\u196D\\u1970-\\u1974\\u1980-\\u19AB\\u19B0-\\u19C9\\u1A00-\\u1A16\\u1A20-\\u1A54\\u1AA7\\u1B05-\\u1B33\\u1B45-\\u1B4B\\u1B83-\\u1BA0\\u1BAE\\u1BAF\\u1BBA-\\u1BE5\\u1C00-\\u1C23\\u1C4D-\\u1C4F\\u1C5A-\\u1C7D\\u1C80-\\u1C88\\u1CE9-\\u1CEC\\u1CEE-\\u1CF1\\u1CF5\\u1CF6\\u1D00-\\u1DBF\\u1E00-\\u1F15\\u1F18-\\u1F1D\\u1F20-\\u1F45\\u1F48-\\u1F4D\\u1F50-\\u1F57\\u1F59\\u1F5B\\u1F5D\\u1F5F-\\u1F7D\\u1F80-\\u1FB4\\u1FB6-\\u1FBC\\u1FBE\\u1FC2-\\u1FC4\\u1FC6-\\u1FCC\\u1FD0-\\u1FD3\\u1FD6-\\u1FDB\\u1FE0-\\u1FEC\\u1FF2-\\u1FF4\\u1FF6-\\u1FFC\\u2071\\u207F\\u2090-\\u209C\\u2102\\u2107\\u210A-\\u2113\\u2115\\u2119-\\u211D\\u2124\\u2126\\u2128\\u212A-\\u212D\\u212F-\\u2139\\u213C-\\u213F\\u2145-\\u2149\\u214E\\u2183\\u2184\\u2C00-\\u2C2E\\u2C30-\\u2C5E\\u2C60-\\u2CE4\\u2CEB-\\u2CEE\\u2CF2\\u2CF3\\u2D00-\\u2D25\\u2D27\\u2D2D\\u2D30-\\u2D67\\u2D6F\\u2D80-\\u2D96\\u2DA0-\\u2DA6\\u2DA8-\\u2DAE\\u2DB0-\\u2DB6\\u2DB8-\\u2DBE\\u2DC0-\\u2DC6\\u2DC8-\\u2DCE\\u2DD0-\\u2DD6\\u2DD8-\\u2DDE\\u2E2F\\u3005\\u3006\\u3031-\\u3035\\u303B\\u303C\\u3041-\\u3096\\u309D-\\u309F\\u30A1-\\u30FA\\u30FC-\\u30FF\\u3105-\\u312E\\u3131-\\u318E\\u31A0-\\u31BA\\u31F0-\\u31FF\\u3400-\\u4DB5\\u4E00-\\u9FEA\\uA000-\\uA48C\\uA4D0-\\uA4FD\\uA500-\\uA60C\\uA610-\\uA61F\\uA62A\\uA62B\\uA640-\\uA66E\\uA67F-\\uA69D\\uA6A0-\\uA6E5\\uA717-\\uA71F\\uA722-\\uA788\\uA78B-\\uA7AE\\uA7B0-\\uA7B7\\uA7F7-\\uA801\\uA803-\\uA805\\uA807-\\uA80A\\uA80C-\\uA822\\uA840-\\uA873\\uA882-\\uA8B3\\uA8F2-\\uA8F7\\uA8FB\\uA8FD\\uA90A-\\uA925\\uA930-\\uA946\\uA960-\\uA97C\\uA984-\\uA9B2\\uA9CF\\uA9E0-\\uA9E4\\uA9E6-\\uA9EF\\uA9FA-\\uA9FE\\uAA00-\\uAA28\\uAA40-\\uAA42\\uAA44-\\uAA4B\\uAA60-\\uAA76\\uAA7A\\uAA7E-\\uAAAF\\uAAB1\\uAAB5\\uAAB6\\uAAB9-\\uAABD\\uAAC0\\uAAC2\\uAADB-\\uAADD\\uAAE0-\\uAAEA\\uAAF2-\\uAAF4\\uAB01-\\uAB06\\uAB09-\\uAB0E\\uAB11-\\uAB16\\uAB20-\\uAB26\\uAB28-\\uAB2E\\uAB30-\\uAB5A\\uAB5C-\\uAB65\\uAB70-\\uABE2\\uAC00-\\uD7A3\\uD7B0-\\uD7C6\\uD7CB-\\uD7FB\\uF900-\\uFA6D\\uFA70-\\uFAD9\\uFB00-\\uFB06\\uFB13-\\uFB17\\uFB1D\\uFB1F-\\uFB28\\uFB2A-\\uFB36\\uFB38-\\uFB3C\\uFB3E\\uFB40\\uFB41\\uFB43\\uFB44\\uFB46-\\uFBB1\\uFBD3-\\uFD3D\\uFD50-\\uFD8F\\uFD92-\\uFDC7\\uFDF0-\\uFDFB\\uFE70-\\uFE74\\uFE76-\\uFEFC\\uFF21-\\uFF3A\\uFF41-\\uFF5A\\uFF66-\\uFFBE\\uFFC2-\\uFFC7\\uFFCA-\\uFFCF\\uFFD2-\\uFFD7\\uFFDA-\\uFFDC]|\\uD800[\\uDC00-\\uDC0B\\uDC0D-\\uDC26\\uDC28-\\uDC3A\\uDC3C\\uDC3D\\uDC3F-\\uDC4D\\uDC50-\\uDC5D\\uDC80-\\uDCFA\\uDE80-\\uDE9C\\uDEA0-\\uDED0\\uDF00-\\uDF1F\\uDF2D-\\uDF40\\uDF42-\\uDF49\\uDF50-\\uDF75\\uDF80-\\uDF9D\\uDFA0-\\uDFC3\\uDFC8-\\uDFCF]|\\uD801[\\uDC00-\\uDC9D\\uDCB0-\\uDCD3\\uDCD8-\\uDCFB\\uDD00-\\uDD27\\uDD30-\\uDD63\\uDE00-\\uDF36\\uDF40-\\uDF55\\uDF60-\\uDF67]|\\uD802[\\uDC00-\\uDC05\\uDC08\\uDC0A-\\uDC35\\uDC37\\uDC38\\uDC3C\\uDC3F-\\uDC55\\uDC60-\\uDC76\\uDC80-\\uDC9E\\uDCE0-\\uDCF2\\uDCF4\\uDCF5\\uDD00-\\uDD15\\uDD20-\\uDD39\\uDD80-\\uDDB7\\uDDBE\\uDDBF\\uDE00\\uDE10-\\uDE13\\uDE15-\\uDE17\\uDE19-\\uDE33\\uDE60-\\uDE7C\\uDE80-\\uDE9C\\uDEC0-\\uDEC7\\uDEC9-\\uDEE4\\uDF00-\\uDF35\\uDF40-\\uDF55\\uDF60-\\uDF72\\uDF80-\\uDF91]|\\uD803[\\uDC00-\\uDC48\\uDC80-\\uDCB2\\uDCC0-\\uDCF2]|\\uD804[\\uDC03-\\uDC37\\uDC83-\\uDCAF\\uDCD0-\\uDCE8\\uDD03-\\uDD26\\uDD50-\\uDD72\\uDD76\\uDD83-\\uDDB2\\uDDC1-\\uDDC4\\uDDDA\\uDDDC\\uDE00-\\uDE11\\uDE13-\\uDE2B\\uDE80-\\uDE86\\uDE88\\uDE8A-\\uDE8D\\uDE8F-\\uDE9D\\uDE9F-\\uDEA8\\uDEB0-\\uDEDE\\uDF05-\\uDF0C\\uDF0F\\uDF10\\uDF13-\\uDF28\\uDF2A-\\uDF30\\uDF32\\uDF33\\uDF35-\\uDF39\\uDF3D\\uDF50\\uDF5D-\\uDF61]|\\uD805[\\uDC00-\\uDC34\\uDC47-\\uDC4A\\uDC80-\\uDCAF\\uDCC4\\uDCC5\\uDCC7\\uDD80-\\uDDAE\\uDDD8-\\uDDDB\\uDE00-\\uDE2F\\uDE44\\uDE80-\\uDEAA\\uDF00-\\uDF19]|\\uD806[\\uDCA0-\\uDCDF\\uDCFF\\uDE00\\uDE0B-\\uDE32\\uDE3A\\uDE50\\uDE5C-\\uDE83\\uDE86-\\uDE89\\uDEC0-\\uDEF8]|\\uD807[\\uDC00-\\uDC08\\uDC0A-\\uDC2E\\uDC40\\uDC72-\\uDC8F\\uDD00-\\uDD06\\uDD08\\uDD09\\uDD0B-\\uDD30\\uDD46]|\\uD808[\\uDC00-\\uDF99]|\\uD809[\\uDC80-\\uDD43]|[\\uD80C\\uD81C-\\uD820\\uD840-\\uD868\\uD86A-\\uD86C\\uD86F-\\uD872\\uD874-\\uD879][\\uDC00-\\uDFFF]|\\uD80D[\\uDC00-\\uDC2E]|\\uD811[\\uDC00-\\uDE46]|\\uD81A[\\uDC00-\\uDE38\\uDE40-\\uDE5E\\uDED0-\\uDEED\\uDF00-\\uDF2F\\uDF40-\\uDF43\\uDF63-\\uDF77\\uDF7D-\\uDF8F]|\\uD81B[\\uDF00-\\uDF44\\uDF50\\uDF93-\\uDF9F\\uDFE0\\uDFE1]|\\uD821[\\uDC00-\\uDFEC]|\\uD822[\\uDC00-\\uDEF2]|\\uD82C[\\uDC00-\\uDD1E\\uDD70-\\uDEFB]|\\uD82F[\\uDC00-\\uDC6A\\uDC70-\\uDC7C\\uDC80-\\uDC88\\uDC90-\\uDC99]|\\uD835[\\uDC00-\\uDC54\\uDC56-\\uDC9C\\uDC9E\\uDC9F\\uDCA2\\uDCA5\\uDCA6\\uDCA9-\\uDCAC\\uDCAE-\\uDCB9\\uDCBB\\uDCBD-\\uDCC3\\uDCC5-\\uDD05\\uDD07-\\uDD0A\\uDD0D-\\uDD14\\uDD16-\\uDD1C\\uDD1E-\\uDD39\\uDD3B-\\uDD3E\\uDD40-\\uDD44\\uDD46\\uDD4A-\\uDD50\\uDD52-\\uDEA5\\uDEA8-\\uDEC0\\uDEC2-\\uDEDA\\uDEDC-\\uDEFA\\uDEFC-\\uDF14\\uDF16-\\uDF34\\uDF36-\\uDF4E\\uDF50-\\uDF6E\\uDF70-\\uDF88\\uDF8A-\\uDFA8\\uDFAA-\\uDFC2\\uDFC4-\\uDFCB]|\\uD83A[\\uDC00-\\uDCC4\\uDD00-\\uDD43]|\\uD83B[\\uDE00-\\uDE03\\uDE05-\\uDE1F\\uDE21\\uDE22\\uDE24\\uDE27\\uDE29-\\uDE32\\uDE34-\\uDE37\\uDE39\\uDE3B\\uDE42\\uDE47\\uDE49\\uDE4B\\uDE4D-\\uDE4F\\uDE51\\uDE52\\uDE54\\uDE57\\uDE59\\uDE5B\\uDE5D\\uDE5F\\uDE61\\uDE62\\uDE64\\uDE67-\\uDE6A\\uDE6C-\\uDE72\\uDE74-\\uDE77\\uDE79-\\uDE7C\\uDE7E\\uDE80-\\uDE89\\uDE8B-\\uDE9B\\uDEA1-\\uDEA3\\uDEA5-\\uDEA9\\uDEAB-\\uDEBB]|\\uD869[\\uDC00-\\uDED6\\uDF00-\\uDFFF]|\\uD86D[\\uDC00-\\uDF34\\uDF40-\\uDFFF]|\\uD86E[\\uDC00-\\uDC1D\\uDC20-\\uDFFF]|\\uD873[\\uDC00-\\uDEA1\\uDEB0-\\uDFFF]|\\uD87A[\\uDC00-\\uDFE0]|\\uD87E[\\uDC00-\\uDE1D])+ ((INSENSITIVE|SCROLL) ){0,2}CURSOR ");
+                    this._TriggerConditionDetector = new System.Text.RegularExpressions.Regex.ctor("^(FOR|AFTER|INSTEAD OF)( (INSERT|UPDATE|DELETE) (, (INSERT|UPDATE|DELETE) )?(, (INSERT|UPDATE|DELETE) )?)");
+                },
+                ctor: function () {
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.InitializeKeywordList();
+                    System.Linq.Enumerable.from(PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList).take(3);
+                }
+            },
+            methods: {
+                ContentStartsWithKeyword: function (providedContainer, contentToMatch) {
+                    var firstEntryOfProvidedContainer = Bridge.cast(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.RootContainer(providedContainer), PoorMansTSqlFormatterLib.ParseTree).GetFirstNonWhitespaceNonCommentChildElement(providedContainer);
+                    var targetFound = false;
+                    var keywordUpperValue = null;
+
+                    if (firstEntryOfProvidedContainer != null && System.String.equals(firstEntryOfProvidedContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD) && firstEntryOfProvidedContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue != null) {
+                        keywordUpperValue = PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(firstEntryOfProvidedContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue);
+                    }
+
+                    if (firstEntryOfProvidedContainer != null && System.String.equals(firstEntryOfProvidedContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMPOUNDKEYWORD)) {
+                        keywordUpperValue = firstEntryOfProvidedContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_SIMPLETEXT);
+                    }
+
+                    if (keywordUpperValue != null) {
+                        targetFound = System.String.equals(keywordUpperValue, contentToMatch) || System.String.startsWith(keywordUpperValue, System.String.concat(contentToMatch, " "));
+                    } else {
+                        //if contentToMatch was passed in as null, means we were looking for a NON-keyword.
+                        targetFound = contentToMatch == null;
+                    }
+
+                    return targetFound;
+                },
+                IsStatementStarter: function (token) {
+                    //List created from experience, and augmented with individual sections of MSDN:
+                    // http://msdn.microsoft.com/en-us/library/ff848799.aspx
+                    // http://msdn.microsoft.com/en-us/library/ff848727.aspx
+                    // http://msdn.microsoft.com/en-us/library/ms174290.aspx
+                    // etc...
+                    var uppercaseValue = PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                    return (token.PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherNode && (System.String.equals(uppercaseValue, "ALTER") || System.String.equals(uppercaseValue, "BACKUP") || System.String.equals(uppercaseValue, "BREAK") || System.String.equals(uppercaseValue, "CLOSE") || System.String.equals(uppercaseValue, "CHECKPOINT") || System.String.equals(uppercaseValue, "COMMIT") || System.String.equals(uppercaseValue, "CONTINUE") || System.String.equals(uppercaseValue, "CREATE") || System.String.equals(uppercaseValue, "DBCC") || System.String.equals(uppercaseValue, "DEALLOCATE") || System.String.equals(uppercaseValue, "DELETE") || System.String.equals(uppercaseValue, "DECLARE") || System.String.equals(uppercaseValue, "DENY") || System.String.equals(uppercaseValue, "DROP") || System.String.equals(uppercaseValue, "EXEC") || System.String.equals(uppercaseValue, "EXECUTE") || System.String.equals(uppercaseValue, "FETCH") || System.String.equals(uppercaseValue, "GOTO") || System.String.equals(uppercaseValue, "GRANT") || System.String.equals(uppercaseValue, "IF") || System.String.equals(uppercaseValue, "INSERT") || System.String.equals(uppercaseValue, "KILL") || System.String.equals(uppercaseValue, "MERGE") || System.String.equals(uppercaseValue, "OPEN") || System.String.equals(uppercaseValue, "PRINT") || System.String.equals(uppercaseValue, "RAISERROR") || System.String.equals(uppercaseValue, "RECONFIGURE") || System.String.equals(uppercaseValue, "RESTORE") || System.String.equals(uppercaseValue, "RETURN") || System.String.equals(uppercaseValue, "REVERT") || System.String.equals(uppercaseValue, "REVOKE") || System.String.equals(uppercaseValue, "SELECT") || System.String.equals(uppercaseValue, "SET") || System.String.equals(uppercaseValue, "SETUSER") || System.String.equals(uppercaseValue, "SHUTDOWN") || System.String.equals(uppercaseValue, "TRUNCATE") || System.String.equals(uppercaseValue, "UPDATE") || System.String.equals(uppercaseValue, "USE") || System.String.equals(uppercaseValue, "WAITFOR") || System.String.equals(uppercaseValue, "WHILE")));
+                },
+                IsClauseStarter: function (token) {
+                    //Note: some clause starters are handled separately: Joins, RETURNS clauses, etc.
+                    var uppercaseValue = PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                    return (token.PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherNode && (System.String.equals(uppercaseValue, "DELETE") || System.String.equals(uppercaseValue, "EXCEPT") || System.String.equals(uppercaseValue, "FOR") || System.String.equals(uppercaseValue, "FROM") || System.String.equals(uppercaseValue, "GROUP") || System.String.equals(uppercaseValue, "HAVING") || System.String.equals(uppercaseValue, "INNER") || System.String.equals(uppercaseValue, "INTERSECT") || System.String.equals(uppercaseValue, "INTO") || System.String.equals(uppercaseValue, "INSERT") || System.String.equals(uppercaseValue, "MERGE") || System.String.equals(uppercaseValue, "ORDER") || System.String.equals(uppercaseValue, "OUTPUT") || System.String.equals(uppercaseValue, "PIVOT") || System.String.equals(uppercaseValue, "RETURNS") || System.String.equals(uppercaseValue, "SELECT") || System.String.equals(uppercaseValue, "UNION") || System.String.equals(uppercaseValue, "UNPIVOT") || System.String.equals(uppercaseValue, "UPDATE") || System.String.equals(uppercaseValue, "USING") || System.String.equals(uppercaseValue, "VALUES") || System.String.equals(uppercaseValue, "WHERE") || System.String.equals(uppercaseValue, "WITH")));
+                },
+                IsLineBreakingWhiteSpaceOrComment: function (token) {
+                    return (token.PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.WhiteSpace && System.Text.RegularExpressions.Regex.isMatch(token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, "(\\r|\\n)+")) || token.PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.SingleLineComment;
+                },
+                InitializeKeywordList: function () {
+                    //List originally copied from Side by Side SQL Comparer project from CodeProject:
+                    // http://www.codeproject.com/KB/database/SideBySideSQLComparer.aspx
+                    // Added some entries that are not strictly speaking keywords, such as 
+                    // cursor options "READ_ONLY", "FAST_FORWARD", etc.
+                    // also added numerous missing entries, such as "Xml", etc
+                    // Could/Should check against MSDN Ref: http://msdn.microsoft.com/en-us/library/ms189822.aspx
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList = new (System.Collections.Generic.Dictionary$2(System.String,PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType))();
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@CONNECTIONS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@CPU_BUSY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@CURSOR_ROWS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@DATEFIRST", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@DBTS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@ERROR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@FETCH_STATUS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@IDENTITY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@IDLE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@IO_BUSY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@LANGID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@LANGUAGE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@LOCK_TIMEOUT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@MAX_CONNECTIONS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@MAX_PRECISION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@NESTLEVEL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@OPTIONS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@PACKET_ERRORS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@PACK_RECEIVED", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@PACK_SENT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@PROCID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@REMSERVER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@ROWCOUNT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@SERVERNAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@SERVICENAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@SPID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@TEXTSIZE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@TIMETICKS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@TOTAL_ERRORS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@TOTAL_READ", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@TOTAL_WRITE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@TRANCOUNT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("@@VERSION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ABS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ACOS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ACTIVATION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ADD", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ALL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OperatorKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ALTER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("AND", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OperatorKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ANSI_DEFAULTS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ANSI_NULLS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ANSI_NULL_DFLT_OFF", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ANSI_NULL_DFLT_ON", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ANSI_PADDING", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ANSI_WARNINGS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ANY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OperatorKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("APP_NAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ARITHABORT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ARITHIGNORE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("AS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ASC", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ASCII", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ASIN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ATAN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ATN2", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("AUTHORIZATION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("AVG", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("BACKUP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("BEGIN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("BETWEEN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OperatorKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("BIGINT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("BINARY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("BIT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("BREAK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("BROWSE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("BULK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("BY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CALLER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CASCADE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CASE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CAST", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CATALOG", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CEILING", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CHAR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CHARACTER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CHARINDEX", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CHECK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CHECKALLOC", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CHECKCATALOG", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CHECKCONSTRAINTS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CHECKDB", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CHECKFILEGROUP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CHECKIDENT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CHECKPOINT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CHECKSUM", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CHECKSUM_AGG", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CHECKTABLE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CLEANTABLE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CLOSE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CLUSTERED", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("COALESCE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("COLLATIONPROPERTY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("COLLECTION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("COLUMN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("COLUMNPROPERTY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("COL_LENGTH", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("COL_NAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("COMMIT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("COMMITTED", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("COMPUTE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CONCAT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CONCAT_NULL_YIELDS_NULL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CONCURRENCYVIOLATION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CONFIRM", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CONSTRAINT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CONTAINS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CONTAINSTABLE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CONTINUE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CONTROL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CONTROLROW", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CONVERT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("COS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("COT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("COUNT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("COUNT_BIG", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CREATE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CROSS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CURRENT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CURRENT_DATE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CURRENT_TIME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CURRENT_TIMESTAMP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CURRENT_USER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CURSOR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CURSOR_CLOSE_ON_COMMIT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("CURSOR_STATUS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DATABASE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DATABASEPROPERTY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DATABASEPROPERTYEX", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DATALENGTH", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DATEADD", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DATEDIFF", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DATEFIRST", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DATEFORMAT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DATENAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DATE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DATEPART", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DATETIME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DATETIME2", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DATETIMEOFFSET", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DAY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DBCC", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DBREINDEX", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DBREPAIR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DB_ID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DB_NAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DEADLOCK_PRIORITY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DEALLOCATE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DEC", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DECIMAL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DECLARE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DEFAULT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DEFINITION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DEGREES", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DELAY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DELETE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DENY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DESC", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DIFFERENCE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DISABLE_DEF_CNST_CHK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DISK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DISTINCT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DISTRIBUTED", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DOUBLE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DROP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DROPCLEANBUFFERS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DUMMY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DUMP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("DYNAMIC", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ELSE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ENCRYPTION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ERRLVL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ERROREXIT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ESCAPE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("EXCEPT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("EXEC", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("EXECUTE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("EXISTS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OperatorKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("EXIT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("EXP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("EXPAND", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("EXTERNAL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FAST", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FAST_FORWARD", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FASTFIRSTROW", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FETCH", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FILE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FILEGROUPPROPERTY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FILEGROUP_ID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FILEGROUP_NAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FILEPROPERTY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FILE_ID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FILE_IDEX", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FILE_NAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FILLFACTOR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FIPS_FLAGGER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FLOAT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FLOOR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FLOPPY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FMTONLY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FOR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FORCE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FORCED", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FORCEPLAN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FOREIGN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FORMATMESSAGE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FORWARD_ONLY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FREEPROCCACHE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FREESESSIONCACHE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FREESYSTEMCACHE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FREETEXT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FREETEXTTABLE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FROM", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FULL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FULLTEXT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FULLTEXTCATALOGPROPERTY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FULLTEXTSERVICEPROPERTY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("FUNCTION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("GEOGRAPHY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("GETANCESTOR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("GETANSINULL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("GETDATE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("GETDESCENDANT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("GETLEVEL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("GETREPARENTEDVALUE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("GETROOT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("GLOBAL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("GO", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("GOTO", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("GRANT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("GROUP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("GROUPING", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("HASH", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("HAVING", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("HELP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("HIERARCHYID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("HOLDLOCK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("HOST_ID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("HOST_NAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IDENTITY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IDENTITYCOL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IDENTITY_INSERT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IDENT_CURRENT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IDENT_INCR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IDENT_SEED", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IF", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IGNORE_CONSTRAINTS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IGNORE_TRIGGERS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IMAGE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IMPLICIT_TRANSACTIONS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OperatorKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("INDEX", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("INDEXDEFRAG", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("INDEXKEY_PROPERTY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("INDEXPROPERTY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("INDEX_COL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("INNER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("INPUTBUFFER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("INSENSITIVE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("INSERT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("INT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("INTEGER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("INTERSECT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("INTO", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IO", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ISDATE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ISDESCENDANTOF", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ISNULL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ISNUMERIC", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ISOLATION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IS_MEMBER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("IS_SRVROLEMEMBER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("JOIN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("KEEP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("KEEPDEFAULTS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("KEEPFIXED", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("KEEPIDENTITY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("KEY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("KEYSET", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("KILL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LANGUAGE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LEFT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LEN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LEVEL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LIKE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OperatorKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LINENO", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LOAD", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LOCAL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LOCK_TIMEOUT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LOG", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LOG10", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LOGIN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LOOP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LOWER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("LTRIM", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("MATCHED", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("MAX", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("MAX_QUEUE_READERS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("MAXDOP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("MAXRECURSION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("MERGE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("MIN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("MIRROREXIT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("MODIFY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("MONEY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("MONTH", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("MOVE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NAMES", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NATIONAL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NCHAR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NEWID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NEXT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NOCHECK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NOCOUNT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NODES", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NOEXEC", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NOEXPAND", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NOLOCK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NONCLUSTERED", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NOT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OperatorKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NOWAIT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NTEXT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NTILE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NULL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NULLIF", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NUMERIC", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NUMERIC_ROUNDABORT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("NVARCHAR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OBJECTPROPERTY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OBJECTPROPERTYEX", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OBJECT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OBJECT_ID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OBJECT_NAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OF", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OFF", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OFFSETS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ON", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ONCE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ONLY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OPEN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OPENDATASOURCE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OPENQUERY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OPENROWSET", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OPENTRAN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OPTIMIZE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OPTIMISTIC", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OPTION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OperatorKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ORDER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OUTER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OUT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OUTPUT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OUTPUTBUFFER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OVER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("OWNER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PAGLOCK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PARAMETERIZATION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PARSE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PARSENAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PARSEONLY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PARTITION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PATINDEX", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PERCENT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PERM", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PERMANENT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PERMISSIONS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PI", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PINTABLE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PIPE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PLAN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("POWER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PREPARE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PRIMARY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PRINT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PRIVILEGES", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PROC", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PROCCACHE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PROCEDURE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PROCEDURE_NAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PROCESSEXIT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PROCID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PROFILE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("PUBLIC", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("QUERY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("QUERY_GOVERNOR_COST_LIMIT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("QUEUE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("QUOTED_IDENTIFIER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("QUOTENAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("RADIANS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("RAISERROR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("RAND", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("READ", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("READCOMMITTED", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("READCOMMITTEDLOCK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("READPAST", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("READTEXT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("READUNCOMMITTED", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("READ_ONLY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("REAL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("RECOMPILE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("RECONFIGURE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("REFERENCES", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("REMOTE_PROC_TRANSACTIONS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("REPEATABLE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("REPEATABLEREAD", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("REPLACE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("REPLICATE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("REPLICATION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("RESTORE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("RESTRICT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("RETURN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("RETURNS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("REVERSE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("REVERT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("REVOKE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("RIGHT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ROBUST", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ROLE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ROLLBACK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ROUND", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ROWCOUNT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ROWGUIDCOL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ROWLOCK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("ROWVERSION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("RTRIM", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("RULE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SAVE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SCHEMA", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SCHEMA_ID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SCHEMA_NAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SCOPE_IDENTITY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SCROLL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SCROLL_LOCKS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SELECT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SELF", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SERIALIZABLE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SERVER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SERVERPROPERTY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SESSIONPROPERTY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SESSION_USER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SET", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SETUSER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SHOWCONTIG", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SHOWPLAN_ALL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SHOWPLAN_TEXT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SHOW_STATISTICS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SHRINKDATABASE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SHRINKFILE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SHUTDOWN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SIGN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SIMPLE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SIN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SMALLDATETIME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SMALLINT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SMALLMONEY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SOME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OperatorKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SOUNDEX", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SPACE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SQLPERF", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SQL_VARIANT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SQL_VARIANT_PROPERTY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SQRT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SQUARE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("STATE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("STATISTICS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("STATIC", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("STATS_DATE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("STATUS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("STDEV", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("STDEVP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("STOPLIST", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("STR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("STUFF", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SUBSTRING", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SUM", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SUSER_ID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SUSER_NAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SUSER_SID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SUSER_SNAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SYNONYM", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SYSNAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("SYSTEM_USER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TABLE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TABLOCK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TABLOCKX", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TAN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TAPE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TEMP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TEMPORARY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TEXT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TEXTPTR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TEXTSIZE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TEXTVALID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("THEN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TIME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword); //not strictly-speaking true, can also be keyword in WAITFOR TIME
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TIMESTAMP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TINYINT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TO", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TOP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TOSTRING", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TRACEOFF", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TRACEON", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TRACESTATUS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TRAN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TRANSACTION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TRIGGER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TRUNCATE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TSEQUAL", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TYPEPROPERTY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TYPE_ID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TYPE_NAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("TYPE_WARNING", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("UNCOMMITTED", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("UNICODE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("UNION", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("UNIQUE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("UNIQUEIDENTIFIER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("UNKNOWN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("UNPINTABLE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("UPDATE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("UPDATETEXT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("UPDATEUSAGE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("UPDLOCK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("UPPER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("USE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("USER", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("USEROPTIONS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("USER_ID", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("USER_NAME", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("USING", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("VALUE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("VALUES", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("VAR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("VARBINARY", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("VARCHAR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("VARP", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("VARYING", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("VIEW", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("VIEWS", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("WAITFOR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("WHEN", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("WHERE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("WHILE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("WITH", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("WORK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("WRITE", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("WRITETEXT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("XACT_ABORT", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("XLOCK", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("XML", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword);
+                    PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.add("YEAR", PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword);
+                }
+            }
+        },
+        alias: ["ParseSQL", "PoorMansTSqlFormatterLib$Interfaces$ISqlTokenParser$ParseSQL"],
+        methods: {
+            ParseSQL: function (tokenList) {
+                var $t, $t1, $t2, $t3;
+                var sqlTree = new PoorMansTSqlFormatterLib.ParseTree(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_ROOT);
+                sqlTree.StartNewStatement();
+
+                var tokenCount = System.Array.getCount(tokenList, PoorMansTSqlFormatterLib.Interfaces.IToken);
+                var tokenID = { v : 0 };
+                while (tokenID.v < tokenCount) {
+                    var token = System.Array.getItem(tokenList, tokenID.v, PoorMansTSqlFormatterLib.Interfaces.IToken);
+
+                    switch (token.PoorMansTSqlFormatterLib$Interfaces$IToken$Type) {
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OpenParens: 
+                            var firstNonCommentParensSibling = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
+                            var lastNonCommentParensSibling = sqlTree.GetLastNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
+                            var isInsertOrValuesClause = (firstNonCommentParensSibling != null && ((System.String.equals(firstNonCommentParensSibling.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD) && System.String.startsWith(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(firstNonCommentParensSibling.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue), "INSERT")) || (System.String.equals(firstNonCommentParensSibling.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMPOUNDKEYWORD) && System.String.startsWith(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(firstNonCommentParensSibling.PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_SIMPLETEXT)), "INSERT ")) || (System.String.equals(firstNonCommentParensSibling.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD) && System.String.startsWith(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(firstNonCommentParensSibling.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue), "VALUES"))));
+                            if (System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_ALIAS) && System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_WITH_CLAUSE)) {
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PARENS, "");
+                            } else {
+                                if (System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_AS_BLOCK)) {
+                                    sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS, "");
+                                } else {
+                                    if (firstNonCommentParensSibling == null && System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET)) {
+                                        sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS, "");
+                                    } else {
+                                        if (firstNonCommentParensSibling != null && System.String.equals(firstNonCommentParensSibling.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SET_OPERATOR_CLAUSE)) {
+                                            sqlTree.ConsiderStartingNewClause();
+                                            sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS, "");
+                                        } else if (this.IsLatestTokenADDLDetailValue(sqlTree)) {
+                                            sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDLDETAIL_PARENS, "");
+                                        } else {
+                                            if (System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK) || System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_OTHER_BLOCK) || System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_DECLARE_BLOCK) || (System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && (firstNonCommentParensSibling != null && System.String.equals(firstNonCommentParensSibling.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD) && System.String.startsWith(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(firstNonCommentParensSibling.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue), "OPTION"))) || isInsertOrValuesClause) {
+                                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PARENS, "");
+                                            } else {
+                                                if ((lastNonCommentParensSibling != null && System.String.equals(lastNonCommentParensSibling.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ALPHAOPERATOR) && System.String.equals(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(lastNonCommentParensSibling.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue), "IN"))) {
+                                                    sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IN_PARENS, "");
+                                                } else {
+                                                    if (this.IsLatestTokenAMiscName(sqlTree)) {
+                                                        sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_FUNCTION_PARENS, "");
+                                                    } else {
+                                                        sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EXPRESSION_PARENS, "");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.CloseParens: 
+                            //we're not likely to actually have a "SingleStatement" in parens, but 
+                            // we definitely want the side-effects (all the lower-level escapes)
+                            sqlTree.EscapeAnySingleOrPartialStatementContainers();
+                            //check whether we expected to end the parens...
+                            if (System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDLDETAIL_PARENS) || System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PARENS) || System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_FUNCTION_PARENS) || System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IN_PARENS) || System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EXPRESSION_PARENS) || System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS)) {
+                                sqlTree.MoveToAncestorContainer(1); //unspecified parent node...
+                            } else if (System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS) && System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_AS_BLOCK)) {
+                                sqlTree.MoveToAncestorContainer$1(4, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_WITH_CLAUSE);
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT, "");
+                            } else if (System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && (System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EXPRESSION_PARENS) || System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IN_PARENS) || System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS))) {
+                                sqlTree.MoveToAncestorContainer(2); //unspecified grandfather node.
+                            } else {
+                                sqlTree.SaveNewElementWithError(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERNODE, ")");
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherNode: 
+                            //prepare multi-keyword detection by "peeking" up to 7 keywords ahead
+                            var significantTokenPositions = this.GetSignificantTokenPositions(tokenList, tokenID.v, 7);
+                            var significantTokensString = this.ExtractTokensString(tokenList, significantTokenPositions);
+                            if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_DETAIL)) {
+                                //if we're in a permissions detail clause, we can expect all sorts of statements 
+                                // starters and should ignore them all; the only possible keywords to escape are
+                                // "ON" and "TO".
+                                if (System.String.startsWith(significantTokensString, "ON ")) {
+                                    sqlTree.MoveToAncestorContainer$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_BLOCK);
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_TARGET, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                } else if (System.String.startsWith(significantTokensString, "TO ") || System.String.startsWith(significantTokensString, "FROM ")) {
+                                    sqlTree.MoveToAncestorContainer$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_BLOCK);
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_RECIPIENT, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                } else {
+                                    //default to "some classification of permission"
+                                    sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "CREATE PROC") || System.String.startsWith(significantTokensString, "CREATE FUNC") || System.String.startsWith(significantTokensString, "CREATE TRIGGER ") || System.String.startsWith(significantTokensString, "CREATE VIEW ") || System.String.startsWith(significantTokensString, "ALTER PROC") || System.String.startsWith(significantTokensString, "ALTER FUNC") || System.String.startsWith(significantTokensString, "ALTER TRIGGER ") || System.String.startsWith(significantTokensString, "ALTER VIEW ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK, "");
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            } else if (PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser._CursorDetector.isMatch(significantTokensString)) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_DECLARATION, "");
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            } else if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK) && PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser._TriggerConditionDetector.isMatch(significantTokensString)) {
+                                //horrible complicated forward-search, to avoid having to keep a different "Trigger Condition" state for Update, Insert and Delete statement-starting keywords 
+                                var triggerConditions = PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser._TriggerConditionDetector.match(significantTokensString);
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_TRIGGER_CONDITION, "");
+                                var triggerConditionType = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMPOUNDKEYWORD, "");
+
+                                //first set the "trigger condition type": FOR, INSTEAD OF, AFTER
+                                var triggerConditionTypeSimpleText = triggerConditions.getGroups().get(1).getValue();
+                                triggerConditionType.PoorMansTSqlFormatterLib$ParseStructure$Node$SetAttribute(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_SIMPLETEXT, triggerConditionTypeSimpleText);
+                                var triggerConditionTypeNodeCount = System.String.split(triggerConditionTypeSimpleText, System.Array.init([32], System.Char).map(function(i) {{ return String.fromCharCode(i); }})).length; //there's probably a better way of counting words...
+                                this.AppendNodesWithMapping(sqlTree, tokenList.PoorMansTSqlFormatterLib$Interfaces$ITokenList$getRangeByIndex(significantTokenPositions.getItem(0), significantTokenPositions.getItem(((triggerConditionTypeNodeCount - 1) | 0))), PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, triggerConditionType);
+
+                                //then get the count of conditions (INSERT, UPDATE, DELETE) and add those too...
+                                var triggerConditionNodeCount = (System.String.split(triggerConditions.getGroups().get(2).getValue(), System.Array.init([32], System.Char).map(function(i) {{ return String.fromCharCode(i); }})).length - 2) | 0; //there's probably a better way of counting words...
+                                this.AppendNodesWithMapping(sqlTree, tokenList.PoorMansTSqlFormatterLib$Interfaces$ITokenList$getRangeByIndex(((significantTokenPositions.getItem(((triggerConditionTypeNodeCount - 1) | 0)) + 1) | 0), significantTokenPositions.getItem(((((triggerConditionTypeNodeCount + triggerConditionNodeCount) | 0) - 1) | 0))), PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, sqlTree.CurrentContainer);
+                                tokenID.v = significantTokenPositions.getItem(((((triggerConditionTypeNodeCount + triggerConditionNodeCount) | 0) - 1) | 0));
+                                sqlTree.MoveToAncestorContainer$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK);
+                            } else if (System.String.startsWith(significantTokensString, "FOR ")) {
+                                sqlTree.EscapeAnyBetweenConditions();
+                                sqlTree.EscapeAnySelectionTarget();
+                                sqlTree.EscapeJoinCondition();
+
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_DECLARATION)) {
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_FOR_BLOCK, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                    sqlTree.StartNewStatement();
+                                } else if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && sqlTree.PathNameMatches$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(3, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_FOR_BLOCK)) {
+                                    sqlTree.MoveToAncestorContainer$1(4, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_DECLARATION);
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_FOR_OPTIONS, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                } else {
+                                    //Assume FOR clause if we're at clause level
+                                    // (otherwise, eg in OPTIMIZE FOR UNKNOWN, this will just not do anything)
+                                    sqlTree.ConsiderStartingNewClause();
+
+                                    sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "DECLARE ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_DECLARE_BLOCK, "");
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            } else if (System.String.startsWith(significantTokensString, "CREATE ") || System.String.startsWith(significantTokensString, "ALTER ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_OTHER_BLOCK, "");
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            } else if (System.String.startsWith(significantTokensString, "GRANT ") || System.String.startsWith(significantTokensString, "DENY ") || System.String.startsWith(significantTokensString, "REVOKE ")) {
+                                if (System.String.startsWith(significantTokensString, "GRANT ") && sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_WITH_CLAUSE) && sqlTree.PathNameMatches$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_BLOCK) && sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer) == null) {
+                                    //this MUST be a "WITH GRANT OPTION" option...
+                                    sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                } else {
+                                    sqlTree.ConsiderStartingNewStatement();
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_BLOCK, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_DETAIL);
+                                }
+                            } else if (System.String.equals(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK) && System.String.startsWith(significantTokensString, "RETURNS ")) {
+                                sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_RETURNS, ""));
+                            } else if (System.String.startsWith(significantTokensString, "AS ")) {
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK)) {
+                                    var nextKeywordType = { v : new PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType() };
+                                    var isDataTypeDefinition = false;
+                                    if (significantTokenPositions.Count > 1 && PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.tryGetValue(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(System.Array.getItem(tokenList, significantTokenPositions.getItem(1), PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Value), nextKeywordType)) {
+                                        if (nextKeywordType.v === PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword) {
+                                            isDataTypeDefinition = true;
+                                        }
+                                    }
+
+                                    if (isDataTypeDefinition) {
+                                        //this is actually a data type declaration (redundant "AS"...), save as regular token.
+                                        sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                    } else {
+                                        //this is the start of the object content definition
+                                        sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_AS_BLOCK, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                        sqlTree.StartNewStatement();
+                                    }
+                                } else if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_WITH_CLAUSE) && sqlTree.PathNameMatches$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK)) {
+                                    sqlTree.MoveToAncestorContainer$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK);
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_AS_BLOCK, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                    sqlTree.StartNewStatement();
+                                } else if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_ALIAS) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_WITH_CLAUSE)) {
+                                    sqlTree.MoveToAncestorContainer$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_WITH_CLAUSE);
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_AS_BLOCK, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                } else {
+                                    sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "BEGIN DISTRIBUTED TRANSACTION ") || System.String.startsWith(significantTokensString, "BEGIN DISTRIBUTED TRAN ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BEGIN_TRANSACTION, ""), tokenID, significantTokenPositions, 3);
+                            } else if (System.String.startsWith(significantTokensString, "BEGIN TRANSACTION ") || System.String.startsWith(significantTokensString, "BEGIN TRAN ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BEGIN_TRANSACTION, ""), tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "SAVE TRANSACTION ") || System.String.startsWith(significantTokensString, "SAVE TRAN ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SAVE_TRANSACTION, ""), tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "COMMIT TRANSACTION ") || System.String.startsWith(significantTokensString, "COMMIT TRAN ") || System.String.startsWith(significantTokensString, "COMMIT WORK ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMIT_TRANSACTION, ""), tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "COMMIT ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMIT_TRANSACTION, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value));
+                            } else if (System.String.startsWith(significantTokensString, "ROLLBACK TRANSACTION ") || System.String.startsWith(significantTokensString, "ROLLBACK TRAN ") || System.String.startsWith(significantTokensString, "ROLLBACK WORK ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ROLLBACK_TRANSACTION, ""), tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "ROLLBACK ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ROLLBACK_TRANSACTION, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value));
+                            } else if (System.String.startsWith(significantTokensString, "BEGIN TRY ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                var newTryBlock = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_TRY_BLOCK, "");
+                                var tryContainerOpen = sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN, "", newTryBlock);
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, tryContainerOpen, tokenID, significantTokenPositions, 2);
+                                var tryMultiContainer = sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_MULTISTATEMENT, "", newTryBlock);
+                                sqlTree.StartNewStatement$1(tryMultiContainer);
+                            } else if (System.String.startsWith(significantTokensString, "BEGIN CATCH ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                var newCatchBlock = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CATCH_BLOCK, "");
+                                var catchContainerOpen = sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN, "", newCatchBlock);
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, catchContainerOpen, tokenID, significantTokenPositions, 2);
+                                var catchMultiContainer = sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_MULTISTATEMENT, "", newCatchBlock);
+                                sqlTree.StartNewStatement$1(catchMultiContainer);
+                            } else if (System.String.startsWith(significantTokensString, "BEGIN ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BEGIN_END_BLOCK, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_MULTISTATEMENT);
+                                sqlTree.StartNewStatement();
+                            } else if (System.String.startsWith(significantTokensString, "MERGE ")) {
+                                //According to BOL, MERGE is a fully reserved keyword from compat 100 onwards, for the MERGE statement only.
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.ConsiderStartingNewClause();
+                                sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_CLAUSE, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_TARGET);
+                            } else if (System.String.startsWith(significantTokensString, "USING ")) {
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_TARGET)) {
+                                    sqlTree.MoveToAncestorContainer$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_CLAUSE);
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_USING, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET);
+                                } else {
+                                    sqlTree.SaveNewElementWithError(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERNODE, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "ON ")) {
+                                sqlTree.EscapeAnySelectionTarget();
+
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_USING)) {
+                                    sqlTree.MoveToAncestorContainer$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_CLAUSE);
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_CONDITION, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                } else if (!sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK) && !sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_OTHER_BLOCK) && !sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_WITH_CLAUSE) && !sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EXPRESSION_PARENS) && !PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.ContentStartsWithKeyword(sqlTree.CurrentContainer, "SET")) {
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_JOIN_ON_SECTION, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                } else {
+                                    sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "CASE ")) {
+                                sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_STATEMENT, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_INPUT);
+                            } else if (System.String.startsWith(significantTokensString, "WHEN ")) {
+                                sqlTree.EscapeMergeAction();
+
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_INPUT) || (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_THEN))) {
+                                    if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_INPUT)) {
+                                        sqlTree.MoveToAncestorContainer$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_STATEMENT);
+                                    } else {
+                                        sqlTree.MoveToAncestorContainer$1(3, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_STATEMENT);
+                                    }
+
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_WHEN, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                } else if ((sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_CONDITION)) || sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_WHEN)) {
+                                    if (sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_CONDITION)) {
+                                        sqlTree.MoveToAncestorContainer$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_CLAUSE);
+                                    } else {
+                                        sqlTree.MoveToAncestorContainer$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_CLAUSE);
+                                    }
+
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_WHEN, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                } else {
+                                    sqlTree.SaveNewElementWithError(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERNODE, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "THEN ")) {
+                                sqlTree.EscapeAnyBetweenConditions();
+
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_WHEN)) {
+                                    sqlTree.MoveToAncestorContainer$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_WHEN);
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_THEN, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                } else if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_WHEN)) {
+                                    sqlTree.MoveToAncestorContainer$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_WHEN);
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_THEN, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_ACTION);
+                                    sqlTree.StartNewStatement();
+                                } else {
+                                    sqlTree.SaveNewElementWithError(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERNODE, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "OUTPUT ")) {
+                                var isSprocArgument = false;
+
+                                //We're looking for sproc calls - they can't be nested inside anything else (as far as I know)
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && (PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.ContentStartsWithKeyword(sqlTree.CurrentContainer, "EXEC") || PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.ContentStartsWithKeyword(sqlTree.CurrentContainer, "EXECUTE") || PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.ContentStartsWithKeyword(sqlTree.CurrentContainer, null))) {
+                                    isSprocArgument = true;
+                                }
+
+                                //Also proc definitions - argument lists without parens
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK)) {
+                                    isSprocArgument = true;
+                                }
+
+                                if (!isSprocArgument) {
+                                    sqlTree.EscapeMergeAction();
+                                    sqlTree.ConsiderStartingNewClause();
+                                }
+
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            } else if (System.String.startsWith(significantTokensString, "OPTION ")) {
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_WITH_CLAUSE)) {
+                                    //"OPTION" keyword here is NOT indicative of a new clause.
+                                } else {
+                                    sqlTree.EscapeMergeAction();
+                                    sqlTree.ConsiderStartingNewClause();
+                                }
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            } else if (System.String.startsWith(significantTokensString, "END TRY ")) {
+                                sqlTree.EscapeAnySingleOrPartialStatementContainers();
+
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && sqlTree.PathNameMatches$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_MULTISTATEMENT) && sqlTree.PathNameMatches$1(3, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_TRY_BLOCK)) {
+                                    //clause.statement.multicontainer.try
+                                    var tryBlock = sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                                    var tryContainerClose = sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_CLOSE, "", tryBlock);
+                                    this.ProcessCompoundKeyword$1(tokenList, sqlTree, tryContainerClose, tokenID, significantTokenPositions, 2);
+                                    sqlTree.CurrentContainer = tryBlock.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                                } else {
+                                    this.ProcessCompoundKeywordWithError(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, 2);
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "END CATCH ")) {
+                                sqlTree.EscapeAnySingleOrPartialStatementContainers();
+
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && sqlTree.PathNameMatches$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_MULTISTATEMENT) && sqlTree.PathNameMatches$1(3, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CATCH_BLOCK)) {
+                                    //clause.statement.multicontainer.catch
+                                    var catchBlock = sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                                    var catchContainerClose = sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_CLOSE, "", catchBlock);
+                                    this.ProcessCompoundKeyword$1(tokenList, sqlTree, catchContainerClose, tokenID, significantTokenPositions, 2);
+                                    sqlTree.CurrentContainer = catchBlock.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                                } else {
+                                    this.ProcessCompoundKeywordWithError(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, 2);
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "END ")) {
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_THEN)) {
+                                    sqlTree.MoveToAncestorContainer$1(3, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_STATEMENT);
+                                    sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_CLOSE, ""));
+                                    sqlTree.MoveToAncestorContainer(1); //unnamed container
+                                } else if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_ELSE)) {
+                                    sqlTree.MoveToAncestorContainer$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_STATEMENT);
+                                    sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_CLOSE, ""));
+                                    sqlTree.MoveToAncestorContainer(1); //unnamed container
+                                } else {
+                                    //Begin/End block handling
+                                    sqlTree.EscapeAnySingleOrPartialStatementContainers();
+
+                                    if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && sqlTree.PathNameMatches$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_MULTISTATEMENT) && sqlTree.PathNameMatches$1(3, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BEGIN_END_BLOCK)) {
+                                        var beginBlock = sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                                        var beginContainerClose = sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_CLOSE, "", beginBlock);
+                                        sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, beginContainerClose);
+                                        sqlTree.CurrentContainer = beginBlock.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                                    } else {
+                                        sqlTree.SaveNewElementWithError(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                    }
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "GO ")) {
+                                sqlTree.EscapeAnySingleOrPartialStatementContainers();
+
+                                if ((tokenID.v === 0 || PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.IsLineBreakingWhiteSpaceOrComment(System.Array.getItem(tokenList, ((tokenID.v - 1) | 0), PoorMansTSqlFormatterLib.Interfaces.IToken))) && this.IsFollowedByLineBreakingWhiteSpaceOrSingleLineCommentOrEnd(tokenList, tokenID.v)) {
+                                    // we found a batch separator - were we supposed to?
+                                    if (sqlTree.FindValidBatchEnd()) {
+                                        var sqlRoot = PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.RootContainer(sqlTree);
+                                        var batchSeparator = sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BATCH_SEPARATOR, "", sqlRoot);
+                                        sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, batchSeparator);
+                                        sqlTree.StartNewStatement$1(sqlRoot);
+                                    } else {
+                                        sqlTree.SaveNewElementWithError(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                    }
+                                } else {
+                                    sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "EXECUTE AS ")) {
+                                var executeAsInWithOptions = false;
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_WITH_CLAUSE) && (this.IsLatestTokenAComma(sqlTree) || !sqlTree.HasNonWhiteSpaceNonCommentContent(sqlTree.CurrentContainer))) {
+                                    executeAsInWithOptions = true;
+                                }
+
+                                if (!executeAsInWithOptions) {
+                                    sqlTree.ConsiderStartingNewStatement();
+                                    sqlTree.ConsiderStartingNewClause();
+                                }
+
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "EXEC ") || System.String.startsWith(significantTokensString, "EXECUTE ")) {
+                                var execShouldntTryToStartNewStatement = false;
+
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && (PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.ContentStartsWithKeyword(sqlTree.CurrentContainer, "INSERT") || PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.ContentStartsWithKeyword(sqlTree.CurrentContainer, "INSERT INTO"))) {
+                                    var existingClauseCount = sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent != null ? System.Linq.Enumerable.from(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE)).count() : 0;
+                                    if (existingClauseCount === 1) {
+                                        execShouldntTryToStartNewStatement = true;
+                                    }
+                                }
+
+                                if (!execShouldntTryToStartNewStatement) {
+                                    sqlTree.ConsiderStartingNewStatement();
+                                }
+
+                                sqlTree.ConsiderStartingNewClause();
+
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            } else if (PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser._JoinDetector.isMatch(significantTokensString)) {
+                                sqlTree.ConsiderStartingNewClause();
+                                var joinText = PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser._JoinDetector.match(significantTokensString).getValue();
+                                var targetKeywordCount = System.String.split(joinText, System.Array.init([32], System.Char).map(function(i) {{ return String.fromCharCode(i); }}), null, 1).length;
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, targetKeywordCount);
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET, "");
+                            } else if (System.String.startsWith(significantTokensString, "UNION ALL ")) {
+                                sqlTree.ConsiderStartingNewClause();
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SET_OPERATOR_CLAUSE, ""), tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "UNION ") || System.String.startsWith(significantTokensString, "INTERSECT ") || System.String.startsWith(significantTokensString, "EXCEPT ")) {
+                                sqlTree.ConsiderStartingNewClause();
+                                var unionClause = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SET_OPERATOR_CLAUSE, "");
+                                sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, unionClause);
+                            } else if (System.String.startsWith(significantTokensString, "WHILE ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                var newWhileLoop = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHILE_LOOP, "");
+                                var whileContainerOpen = sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN, "", newWhileLoop);
+                                sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, whileContainerOpen);
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BOOLEAN_EXPRESSION, "", newWhileLoop);
+                            } else if (System.String.startsWith(significantTokensString, "IF ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IF_STATEMENT, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BOOLEAN_EXPRESSION);
+                            } else if (System.String.startsWith(significantTokensString, "ELSE ")) {
+                                sqlTree.EscapeAnyBetweenConditions();
+                                sqlTree.EscapeAnySelectionTarget();
+                                sqlTree.EscapeJoinCondition();
+
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_THEN)) {
+                                    sqlTree.MoveToAncestorContainer$1(3, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_STATEMENT);
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CASE_ELSE, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                } else {
+                                    sqlTree.EscapePartialStatementContainers();
+
+                                    if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && sqlTree.PathNameMatches$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_SINGLESTATEMENT)) {
+                                        //we need to pop up the single-statement containers stack to the next "if" that doesn't have an "else" (if any; else error).
+                                        // LOCAL SEARCH - we're not actually changing the "CurrentContainer" until we decide to start a statement.
+                                        var currentNode = sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                                        var stopSearching = false;
+                                        while (!stopSearching) {
+                                            if (sqlTree.PathNameMatches(currentNode, 1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IF_STATEMENT)) {
+                                                //if this is in an "If", then the "Else" must still be available - yay!
+                                                sqlTree.CurrentContainer = currentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                                                sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ELSE_CLAUSE, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_SINGLESTATEMENT);
+                                                sqlTree.StartNewStatement();
+                                                stopSearching = true;
+                                            } else if (sqlTree.PathNameMatches(currentNode, 1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ELSE_CLAUSE)) {
+                                                //If this is in an "Else", we should skip its parent "IF" altogether, and go to the next singlestatementcontainer candidate.
+                                                //singlestatementcontainer.else.if.clause.statement.NEWCANDIDATE
+                                                currentNode = currentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                                            } else if (sqlTree.PathNameMatches(currentNode, 1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHILE_LOOP)) {
+                                                //If this is in a "While", we should skip to the next singlestatementcontainer candidate.
+                                                //singlestatementcontainer.while.clause.statement.NEWCANDIDATE
+                                                currentNode = currentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                                            } else {
+                                                //if this isn't a known single-statement container, then we're lost.
+                                                sqlTree.SaveNewElementWithError(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                                stopSearching = true;
+                                            }
+                                        }
+                                    } else {
+                                        sqlTree.SaveNewElementWithError(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                    }
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "INSERT INTO ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.ConsiderStartingNewClause();
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "NATIONAL CHARACTER VARYING ")) {
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, 3);
+                            } else if (System.String.startsWith(significantTokensString, "NATIONAL CHAR VARYING ")) {
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, 3);
+                            } else if (System.String.startsWith(significantTokensString, "BINARY VARYING ")) {
+                                //TODO: Figure out how to handle "Compound Keyword Datatypes" so they are still correctly highlighted
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "CHAR VARYING ")) {
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "CHARACTER VARYING ")) {
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "DOUBLE PRECISION ")) {
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "NATIONAL CHARACTER ")) {
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "NATIONAL CHAR ")) {
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "NATIONAL TEXT ")) {
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "INSERT ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.ConsiderStartingNewClause();
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            } else if (System.String.startsWith(significantTokensString, "BULK INSERT ")) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.ConsiderStartingNewClause();
+                                this.ProcessCompoundKeyword$1(tokenList, sqlTree, sqlTree.CurrentContainer, tokenID, significantTokenPositions, 2);
+                            } else if (System.String.startsWith(significantTokensString, "SELECT ")) {
+                                if (sqlTree.NewStatementDue) {
+                                    sqlTree.ConsiderStartingNewStatement();
+                                }
+
+                                var selectShouldntTryToStartNewStatement = false;
+
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE)) {
+                                    var firstStatementClause = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent);
+
+                                    var isPrecededByInsertStatement = false;
+                                    $t = Bridge.getEnumerator(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE), PoorMansTSqlFormatterLib.ParseStructure.Node);
+                                    try {
+                                        while ($t.moveNext()) {
+                                            var clause = $t.Current;
+                                            if (PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.ContentStartsWithKeyword(clause, "INSERT")) {
+                                                isPrecededByInsertStatement = true;
+                                            }
+                                        }
+                                    } finally {
+                                        if (Bridge.is($t, System.IDisposable)) {
+                                            $t.System$IDisposable$dispose();
+                                        }
+                                    }
+                                    if (isPrecededByInsertStatement) {
+                                        var existingSelectClauseFound = false;
+                                        $t1 = Bridge.getEnumerator(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE), PoorMansTSqlFormatterLib.ParseStructure.Node);
+                                        try {
+                                            while ($t1.moveNext()) {
+                                                var clause1 = $t1.Current;
+                                                if (PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.ContentStartsWithKeyword(clause1, "SELECT")) {
+                                                    existingSelectClauseFound = true;
+                                                }
+                                            }
+                                        } finally {
+                                            if (Bridge.is($t1, System.IDisposable)) {
+                                                $t1.System$IDisposable$dispose();
+                                            }
+                                        }
+                                        var existingValuesClauseFound = false;
+                                        $t2 = Bridge.getEnumerator(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE), PoorMansTSqlFormatterLib.ParseStructure.Node);
+                                        try {
+                                            while ($t2.moveNext()) {
+                                                var clause2 = $t2.Current;
+                                                if (PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.ContentStartsWithKeyword(clause2, "VALUES")) {
+                                                    existingValuesClauseFound = true;
+                                                }
+                                            }
+                                        } finally {
+                                            if (Bridge.is($t2, System.IDisposable)) {
+                                                $t2.System$IDisposable$dispose();
+                                            }
+                                        }
+                                        var existingExecClauseFound = false;
+                                        $t3 = Bridge.getEnumerator(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenByName(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE), PoorMansTSqlFormatterLib.ParseStructure.Node);
+                                        try {
+                                            while ($t3.moveNext()) {
+                                                var clause3 = $t3.Current;
+                                                if (PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.ContentStartsWithKeyword(clause3, "EXEC") || PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.ContentStartsWithKeyword(clause3, "EXECUTE")) {
+                                                    existingExecClauseFound = true;
+                                                }
+                                            }
+                                        } finally {
+                                            if (Bridge.is($t3, System.IDisposable)) {
+                                                $t3.System$IDisposable$dispose();
+                                            }
+                                        }
+                                        if (!existingSelectClauseFound && !existingValuesClauseFound && !existingExecClauseFound) {
+                                            selectShouldntTryToStartNewStatement = true;
+                                        }
+                                    }
+
+                                    var firstEntryOfThisClause = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
+                                    if (firstEntryOfThisClause != null && System.String.equals(firstEntryOfThisClause.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SET_OPERATOR_CLAUSE)) {
+                                        selectShouldntTryToStartNewStatement = true;
+                                    }
+                                }
+
+                                if (!selectShouldntTryToStartNewStatement) {
+                                    sqlTree.ConsiderStartingNewStatement();
+                                }
+
+                                sqlTree.ConsiderStartingNewClause();
+
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            } else if (System.String.startsWith(significantTokensString, "UPDATE ")) {
+                                if (sqlTree.NewStatementDue) {
+                                    sqlTree.ConsiderStartingNewStatement();
+                                }
+
+                                if (!(sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_FOR_OPTIONS))) {
+                                    sqlTree.ConsiderStartingNewStatement();
+                                    sqlTree.ConsiderStartingNewClause();
+                                }
+
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            } else if (System.String.startsWith(significantTokensString, "TO ")) {
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_TARGET)) {
+                                    sqlTree.MoveToAncestorContainer$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_BLOCK);
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_RECIPIENT, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                } else {
+                                    //I don't currently know whether there is any other place where "TO" can be used in T-SQL...
+                                    // TODO: look into that.
+                                    // -> for now, we'll just save as a random keyword without raising an error.
+                                    sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "FROM ")) {
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_TARGET)) {
+                                    sqlTree.MoveToAncestorContainer$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_BLOCK);
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_RECIPIENT, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                } else {
+                                    sqlTree.ConsiderStartingNewClause();
+                                    sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                    sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET, "");
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "CASCADE ") && sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_RECIPIENT)) {
+                                sqlTree.MoveToAncestorContainer$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_BLOCK);
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT, "", sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_WITH_CLAUSE, ""));
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            } else if (System.String.startsWith(significantTokensString, "SET ")) {
+                                var firstNonCommentSibling2 = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
+                                if (!(firstNonCommentSibling2 != null && System.String.equals(firstNonCommentSibling2.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD) && System.String.startsWith(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(firstNonCommentSibling2.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue), "UPDATE"))) {
+                                    sqlTree.ConsiderStartingNewStatement();
+                                }
+
+                                sqlTree.ConsiderStartingNewClause();
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            } else if (System.String.startsWith(significantTokensString, "BETWEEN ")) {
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_CONDITION, "");
+                                sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN, ""));
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_LOWERBOUND, "");
+                            } else if (System.String.startsWith(significantTokensString, "AND ")) {
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_LOWERBOUND)) {
+                                    sqlTree.MoveToAncestorContainer$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_CONDITION);
+                                    sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_CLOSE, ""));
+                                    sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_UPPERBOUND, "");
+                                } else {
+                                    sqlTree.EscapeAnyBetweenConditions();
+                                    sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_AND_OPERATOR, ""));
+                                }
+                            } else if (System.String.startsWith(significantTokensString, "OR ")) {
+                                sqlTree.EscapeAnyBetweenConditions();
+                                sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OR_OPERATOR, ""));
+                            } else if (System.String.startsWith(significantTokensString, "WITH ")) {
+                                if (sqlTree.NewStatementDue) {
+                                    sqlTree.ConsiderStartingNewStatement();
+                                }
+
+                                if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && !sqlTree.HasNonWhiteSpaceNonCommentContent(sqlTree.CurrentContainer)) {
+                                    sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_WITH_CLAUSE, "");
+                                    sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN, ""));
+                                    sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_ALIAS, "");
+                                } else if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_RECIPIENT)) {
+                                    sqlTree.MoveToAncestorContainer$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_BLOCK);
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_WITH_CLAUSE, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                } else if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK) || sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_OTHER_BLOCK)) {
+                                    sqlTree.StartNewContainer(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_WITH_CLAUSE, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT);
+                                } else if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET)) {
+                                    sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                } else {
+                                    sqlTree.ConsiderStartingNewClause();
+                                    sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                                }
+                            } else if (System.Array.getCount(tokenList, PoorMansTSqlFormatterLib.Interfaces.IToken) > ((tokenID.v + 1) | 0) && System.Array.getItem(tokenList, ((tokenID.v + 1) | 0), PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Colon && !(System.Array.getCount(tokenList, PoorMansTSqlFormatterLib.Interfaces.IToken) > ((tokenID.v + 2) | 0) && System.Array.getItem(tokenList, ((tokenID.v + 2) | 0), PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Colon)) {
+                                sqlTree.ConsiderStartingNewStatement();
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_LABEL, System.String.concat(token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, System.Array.getItem(tokenList, ((tokenID.v + 1) | 0), PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Value));
+                                tokenID.v = (tokenID.v + 1) | 0;
+                            } else {
+                                //miscellaneous single-word tokens, which may or may not be statement starters and/or clause starters
+
+                                //check for statements starting...
+                                if (PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.IsStatementStarter(token) || sqlTree.NewStatementDue) {
+                                    sqlTree.ConsiderStartingNewStatement();
+                                }
+
+                                //check for statements starting...
+                                if (PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.IsClauseStarter(token)) {
+                                    sqlTree.ConsiderStartingNewClause();
+                                }
+
+                                var newNodeName = PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERNODE;
+                                var matchedKeywordType = { v : new PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType() };
+                                if (PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordList.tryGetValue(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value), matchedKeywordType)) {
+                                    switch (matchedKeywordType.v) {
+                                        case PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OperatorKeyword: 
+                                            newNodeName = PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ALPHAOPERATOR;
+                                            break;
+                                        case PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.FunctionKeyword: 
+                                            newNodeName = PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_FUNCTION_KEYWORD;
+                                            break;
+                                        case PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.DataTypeKeyword: 
+                                            newNodeName = PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DATATYPE_KEYWORD;
+                                            break;
+                                        case PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser.KeywordType.OtherKeyword: 
+                                            sqlTree.EscapeAnySelectionTarget();
+                                            newNodeName = PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD;
+                                            break;
+                                        default: 
+                                            throw new System.Exception("Unrecognized Keyword Type!");
+                                    }
+                                }
+
+                                sqlTree.SaveNewElement(newNodeName, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Semicolon: 
+                            sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SEMICOLON, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            sqlTree.NewStatementDue = true;
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Colon: 
+                            if (System.Array.getCount(tokenList, PoorMansTSqlFormatterLib.Interfaces.IToken) > ((tokenID.v + 1) | 0) && System.Array.getItem(tokenList, ((tokenID.v + 1) | 0), PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Colon) {
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SCOPERESOLUTIONOPERATOR, System.String.concat(token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, System.Array.getItem(tokenList, ((tokenID.v + 1) | 0), PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Value));
+                                tokenID.v = (tokenID.v + 1) | 0;
+                            } else if (System.Array.getCount(tokenList, PoorMansTSqlFormatterLib.Interfaces.IToken) > ((tokenID.v + 1) | 0) && System.Array.getItem(tokenList, ((tokenID.v + 1) | 0), PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherNode) {
+                                //This SHOULD never happen in valid T-SQL, but can happen in DB2 or NexusDB or PostgreSQL 
+                                // code (host variables) - so be nice and handle it anyway.
+                                sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERNODE, System.String.concat(token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, System.Array.getItem(tokenList, ((tokenID.v + 1) | 0), PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Value));
+                                tokenID.v = (tokenID.v + 1) | 0;
+                            } else {
+                                sqlTree.SaveNewElementWithError(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHEROPERATOR, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Comma: 
+                            var isCTESplitter = (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_WITH_CLAUSE));
+                            sqlTree.SaveNewElement(this.GetEquivalentSqlNodeName(token.PoorMansTSqlFormatterLib$Interfaces$IToken$Type), token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            if (isCTESplitter) {
+                                sqlTree.MoveToAncestorContainer$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_WITH_CLAUSE);
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_ALIAS, "");
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.EqualsSign: 
+                            sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EQUALSSIGN, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_DECLARE_BLOCK)) {
+                                sqlTree.CurrentContainer = sqlTree.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT, "");
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.MultiLineComment: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.SingleLineComment: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.SingleLineCommentCStyle: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.WhiteSpace: 
+                            //create in statement rather than clause if there are no siblings yet
+                            if (sqlTree.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && sqlTree.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && !System.Linq.Enumerable.from(sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Children).any()) {
+                                sqlTree.SaveNewElementAsPriorSibling(this.GetEquivalentSqlNodeName(token.PoorMansTSqlFormatterLib$Interfaces$IToken$Type), token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, sqlTree.CurrentContainer);
+                            } else {
+                                sqlTree.SaveNewElement(this.GetEquivalentSqlNodeName(token.PoorMansTSqlFormatterLib$Interfaces$IToken$Type), token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.BracketQuotedName: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Asterisk: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Period: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherOperator: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.NationalString: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.String: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.QuotedString: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Number: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.BinaryValue: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.MonetaryValue: 
+                        case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.PseudoName: 
+                            sqlTree.SaveNewElement(this.GetEquivalentSqlNodeName(token.PoorMansTSqlFormatterLib$Interfaces$IToken$Type), token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            break;
+                        default: 
+                            throw new System.Exception("Unrecognized element encountered!");
+                    }
+
+                    tokenID.v = (tokenID.v + 1) | 0;
+                }
+
+                if (tokenList.PoorMansTSqlFormatterLib$Interfaces$ITokenList$HasUnfinishedToken) {
+                    sqlTree.SetError();
+                }
+
+                if (!sqlTree.FindValidBatchEnd()) {
+                    sqlTree.SetError();
+                }
+
+                return sqlTree;
+            },
+            ProcessCompoundKeywordWithError: function (tokenList, sqlTree, currentContainerElement, tokenID, significantTokenPositions, keywordCount) {
+                this.ProcessCompoundKeyword$1(tokenList, sqlTree, currentContainerElement, tokenID, significantTokenPositions, keywordCount);
+                sqlTree.SetError();
+            },
+            ProcessCompoundKeyword$1: function (tokenList, sqlTree, targetContainer, tokenID, significantTokenPositions, keywordCount) {
+                var compoundKeyword = sqlTree.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMPOUNDKEYWORD, "", targetContainer);
+                var targetText = System.String.trimEnd(this.ExtractTokensString(tokenList, significantTokenPositions.getRange(0, keywordCount)));
+                compoundKeyword.PoorMansTSqlFormatterLib$ParseStructure$Node$SetAttribute(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_SIMPLETEXT, targetText);
+                this.AppendNodesWithMapping(sqlTree, tokenList.PoorMansTSqlFormatterLib$Interfaces$ITokenList$getRangeByIndex(significantTokenPositions.getItem(0), significantTokenPositions.getItem(((keywordCount - 1) | 0))), PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, compoundKeyword);
+                tokenID.v = significantTokenPositions.getItem(((keywordCount - 1) | 0));
+            },
+            ProcessCompoundKeyword: function (sqlTree, newElementName, tokenID, currentContainerElement, compoundKeywordCount, compoundKeywordTokenCounts, compoundKeywordRawStrings) {
+                var newElement = PoorMansTSqlFormatterLib.ParseStructure.NodeFactory.CreateNode(newElementName, this.GetCompoundKeyword(tokenID, compoundKeywordCount, compoundKeywordTokenCounts, compoundKeywordRawStrings));
+                sqlTree.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$AddChild(newElement);
+                return newElement;
+            },
+            AppendNodesWithMapping: function (sqlTree, tokens, otherTokenMappingName, targetContainer) {
+                var $t;
+                $t = Bridge.getEnumerator(tokens, PoorMansTSqlFormatterLib.Interfaces.IToken);
+                try {
+                    while ($t.moveNext()) {
+                        var token = $t.Current;
+                        var elementName;
+                        if (token.PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherNode) {
+                            elementName = otherTokenMappingName;
+                        } else {
+                            elementName = this.GetEquivalentSqlNodeName(token.PoorMansTSqlFormatterLib$Interfaces$IToken$Type);
+                        }
+
+                        sqlTree.SaveNewElement$1(elementName, token.PoorMansTSqlFormatterLib$Interfaces$IToken$Value, targetContainer);
+                    }
+                } finally {
+                    if (Bridge.is($t, System.IDisposable)) {
+                        $t.System$IDisposable$dispose();
+                    }
+                }},
+            ExtractTokensString: function (tokenList, significantTokenPositions) {
+                var $t;
+                var keywordSB = new System.Text.StringBuilder();
+                $t = Bridge.getEnumerator(significantTokenPositions, System.Int32);
+                try {
+                    while ($t.moveNext()) {
+                        var tokenPos = $t.Current;
+                        //grr, this could be more elegant.
+                        if (System.Array.getItem(tokenList, tokenPos, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Comma) {
+                            keywordSB.append(",");
+                        } else {
+                            keywordSB.append(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(System.Array.getItem(tokenList, tokenPos, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Value));
+                        }
+                        keywordSB.append(" ");
+                    }
+                } finally {
+                    if (Bridge.is($t, System.IDisposable)) {
+                        $t.System$IDisposable$dispose();
+                    }
+                }return keywordSB.toString();
+            },
+            GetEquivalentSqlNodeName: function (tokenType) {
+                switch (tokenType) {
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.WhiteSpace: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHITESPACE;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.SingleLineComment: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.SingleLineCommentCStyle: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE_CSTYLE;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.MultiLineComment: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_MULTILINE;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.BracketQuotedName: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BRACKET_QUOTED_NAME;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Asterisk: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ASTERISK;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.EqualsSign: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EQUALSSIGN;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Comma: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMA;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Period: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERIOD;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.NationalString: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_NSTRING;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.String: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_STRING;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.QuotedString: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_QUOTED_STRING;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherOperator: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHEROPERATOR;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Number: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_NUMBER_VALUE;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.MonetaryValue: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MONETARY_VALUE;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.BinaryValue: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BINARY_VALUE;
+                    case PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.PseudoName: 
+                        return PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PSEUDONAME;
+                    default: 
+                        throw new System.Exception("Mapping not found for provided Token Type");
+                }
+            },
+            GetKeywordMatchPhrase: function (tokenList, tokenID, rawKeywordParts, tokenCounts, overflowNodes) {
+                var phrase = "";
+                var phraseComponentsFound = 0;
+                rawKeywordParts.v = new (System.Collections.Generic.List$1(System.String))();
+                overflowNodes.v = new (System.Collections.Generic.List$1(System.Collections.Generic.List$1(PoorMansTSqlFormatterLib.Interfaces.IToken)))();
+                tokenCounts.v = new (System.Collections.Generic.List$1(System.Int32))();
+                var precedingWhitespace = "";
+                var originalTokenID = tokenID;
+
+                while (tokenID < System.Array.getCount(tokenList, PoorMansTSqlFormatterLib.Interfaces.IToken) && phraseComponentsFound < 7) {
+                    if (System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherNode || System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.BracketQuotedName || System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Comma) {
+                        phrase = System.String.concat(phrase, (System.String.concat(PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Value), " ")));
+                        phraseComponentsFound = (phraseComponentsFound + 1) | 0;
+                        rawKeywordParts.v.add(System.String.concat(precedingWhitespace, System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Value));
+
+                        tokenID = (tokenID + 1) | 0;
+                        tokenCounts.v.add(((tokenID - originalTokenID) | 0));
+
+                        //found a possible phrase component - skip past any upcoming whitespace or comments, keeping track.
+                        overflowNodes.v.add(new (System.Collections.Generic.List$1(PoorMansTSqlFormatterLib.Interfaces.IToken))());
+                        precedingWhitespace = "";
+                        while (tokenID < System.Array.getCount(tokenList, PoorMansTSqlFormatterLib.Interfaces.IToken) && (System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.WhiteSpace || System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.SingleLineComment || System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.MultiLineComment)) {
+                            if (System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.WhiteSpace) {
+                                precedingWhitespace = System.String.concat(precedingWhitespace, System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                            } else {
+                                overflowNodes.v.getItem(((phraseComponentsFound - 1) | 0)).add(System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken));
+                            }
+
+                            tokenID = (tokenID + 1) | 0;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+
+                return phrase;
+            },
+            GetSignificantTokenPositions: function (tokenList, tokenID, searchDistance) {
+                var significantTokenPositions = new (System.Collections.Generic.List$1(System.Int32))();
+                var originalTokenID = tokenID;
+
+                while (tokenID < System.Array.getCount(tokenList, PoorMansTSqlFormatterLib.Interfaces.IToken) && significantTokenPositions.Count < searchDistance) {
+                    if (System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherNode || System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.BracketQuotedName || System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Comma) {
+                        significantTokenPositions.add(tokenID);
+                        tokenID = (tokenID + 1) | 0;
+
+                        //found a possible phrase component - skip past any upcoming whitespace or comments, keeping track.
+                        while (tokenID < System.Array.getCount(tokenList, PoorMansTSqlFormatterLib.Interfaces.IToken) && (System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.WhiteSpace || System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.SingleLineComment || System.Array.getItem(tokenList, tokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.MultiLineComment)) {
+                            tokenID = (tokenID + 1) | 0;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+
+                return significantTokenPositions;
+            },
+            GetCompoundKeyword: function (tokenID, compoundKeywordCount, compoundKeywordTokenCounts, compoundKeywordRawStrings) {
+                tokenID.v = (tokenID.v + (((compoundKeywordTokenCounts.getItem(((compoundKeywordCount - 1) | 0)) - 1) | 0))) | 0;
+                var outString = "";
+                for (var i = 0; i < compoundKeywordCount; i = (i + 1) | 0) {
+                    outString = System.String.concat(outString, compoundKeywordRawStrings.getItem(i));
+                }
+                return outString;
+            },
+            IsLatestTokenADDLDetailValue: function (sqlTree) {
+                var latestContentNode = System.Linq.Enumerable.from(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenExcludingNames(sqlTree.CurrentContainer, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAMELIST_NONCONTENT)).lastOrDefault(null, null);
+                if (latestContentNode != null && (System.String.equals(latestContentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD) || System.String.equals(latestContentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DATATYPE_KEYWORD) || System.String.equals(latestContentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMPOUNDKEYWORD))) {
+                    var uppercaseText = null;
+                    if (System.String.equals(latestContentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMPOUNDKEYWORD)) {
+                        uppercaseText = latestContentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_SIMPLETEXT);
+                    } else {
+                        uppercaseText = PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(latestContentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue);
+                    }
+
+                    return (System.String.equals(uppercaseText, "NVARCHAR") || System.String.equals(uppercaseText, "VARCHAR") || System.String.equals(uppercaseText, "DECIMAL") || System.String.equals(uppercaseText, "DEC") || System.String.equals(uppercaseText, "NUMERIC") || System.String.equals(uppercaseText, "VARBINARY") || System.String.equals(uppercaseText, "DEFAULT") || System.String.equals(uppercaseText, "IDENTITY") || System.String.equals(uppercaseText, "XML") || System.String.endsWith(uppercaseText, "VARYING") || System.String.endsWith(uppercaseText, "CHAR") || System.String.endsWith(uppercaseText, "CHARACTER") || System.String.equals(uppercaseText, "FLOAT") || System.String.equals(uppercaseText, "DATETIMEOFFSET") || System.String.equals(uppercaseText, "DATETIME2") || System.String.equals(uppercaseText, "TIME"));
+                }
+                return false;
+            },
+            IsLatestTokenAComma: function (sqlTree) {
+                var latestContent = System.Linq.Enumerable.from(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenExcludingNames(sqlTree.CurrentContainer, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAMELIST_NONCONTENT)).lastOrDefault(null, null);
+                return latestContent != null && System.String.equals(latestContent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMA);
+            },
+            IsLatestTokenAMiscName: function (sqlTree) {
+                var latestContent = System.Linq.Enumerable.from(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenExcludingNames(sqlTree.CurrentContainer, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAMELIST_NONCONTENT)).lastOrDefault(null, null);
+
+                if (latestContent != null) {
+                    var testValue = PoorMansTSqlFormatterLib.Utils.ToUpperInvariant$1(latestContent.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue);
+
+                    if (System.String.equals(latestContent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BRACKET_QUOTED_NAME)) {
+                        return true;
+                    }
+
+                    if ((System.String.equals(latestContent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERNODE) || System.String.equals(latestContent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_FUNCTION_KEYWORD)) && !(System.String.equals(testValue, "AND") || System.String.equals(testValue, "OR") || System.String.equals(testValue, "NOT") || System.String.equals(testValue, "BETWEEN") || System.String.equals(testValue, "LIKE") || System.String.equals(testValue, "CONTAINS") || System.String.equals(testValue, "EXISTS") || System.String.equals(testValue, "FREETEXT") || System.String.equals(testValue, "IN") || System.String.equals(testValue, "ALL") || System.String.equals(testValue, "SOME") || System.String.equals(testValue, "ANY") || System.String.equals(testValue, "FROM") || System.String.equals(testValue, "JOIN") || System.String.endsWith(testValue, " JOIN") || System.String.equals(testValue, "UNION") || System.String.equals(testValue, "UNION ALL") || System.String.equals(testValue, "USING") || System.String.equals(testValue, "AS") || System.String.endsWith(testValue, " APPLY"))) {
+                        return true;
+                    }
+                }
+
+                return false;
+            },
+            IsFollowedByLineBreakingWhiteSpaceOrSingleLineCommentOrEnd: function (tokenList, tokenID) {
+                var currTokenID = (tokenID + 1) | 0;
+                while (System.Array.getCount(tokenList, PoorMansTSqlFormatterLib.Interfaces.IToken) >= ((currTokenID + 1) | 0)) {
+                    if (System.Array.getItem(tokenList, currTokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.SingleLineComment) {
+                        return true;
+                    } else {
+                        if (System.Array.getItem(tokenList, currTokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Type === PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.WhiteSpace) {
+                            if (System.Text.RegularExpressions.Regex.isMatch(System.Array.getItem(tokenList, currTokenID, PoorMansTSqlFormatterLib.Interfaces.IToken).PoorMansTSqlFormatterLib$Interfaces$IToken$Value, "(\\r|\\n)+")) {
+                                return true;
+                            } else {
+                                currTokenID = (currTokenID + 1) | 0;
+                            }
+                        } else {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.ParseStructure.NodeImpl", {
+        inherits: [PoorMansTSqlFormatterLib.ParseStructure.Node],
+        props: {
+            Name: null,
+            TextValue: null,
+            Parent: null,
+            Attributes: null,
+            Children: null
+        },
+        alias: [
+            "Name", "PoorMansTSqlFormatterLib$ParseStructure$Node$Name",
+            "TextValue", "PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue",
+            "Parent", "PoorMansTSqlFormatterLib$ParseStructure$Node$Parent",
+            "Attributes", "PoorMansTSqlFormatterLib$ParseStructure$Node$Attributes",
+            "Children", "PoorMansTSqlFormatterLib$ParseStructure$Node$Children",
+            "AddChild", "PoorMansTSqlFormatterLib$ParseStructure$Node$AddChild",
+            "InsertChildBefore", "PoorMansTSqlFormatterLib$ParseStructure$Node$InsertChildBefore",
+            "RemoveChild", "PoorMansTSqlFormatterLib$ParseStructure$Node$RemoveChild",
+            "GetAttributeValue", "PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue",
+            "SetAttribute", "PoorMansTSqlFormatterLib$ParseStructure$Node$SetAttribute",
+            "RemoveAttribute", "PoorMansTSqlFormatterLib$ParseStructure$Node$RemoveAttribute"
+        ],
+        ctors: {
+            ctor: function () {
+                this.$initialize();
+                this.Attributes = new (System.Collections.Generic.Dictionary$2(System.String,System.String))();
+                this.Children = new (System.Collections.Generic.List$1(PoorMansTSqlFormatterLib.ParseStructure.Node))();
+            }
+        },
+        methods: {
+            AddChild: function (child) {
+                this.SetParentOnChild(child);
+                System.Array.add(Bridge.cast(this.Children, System.Collections.Generic.IList$1(PoorMansTSqlFormatterLib.ParseStructure.Node)), child, PoorMansTSqlFormatterLib.ParseStructure.Node);
+            },
+            InsertChildBefore: function (newChild, existingChild) {
+                this.SetParentOnChild(newChild);
+                var childList = Bridge.as(this.Children, System.Collections.Generic.IList$1(PoorMansTSqlFormatterLib.ParseStructure.Node));
+                System.Array.insert(childList, System.Array.indexOf(childList, existingChild, 0, null, PoorMansTSqlFormatterLib.ParseStructure.Node), newChild, PoorMansTSqlFormatterLib.ParseStructure.Node);
+            },
+            SetParentOnChild: function (child) {
+                //TODO: NOT THREAD-SAFE AT ALL!
+                if (child.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent != null) {
+                    throw new System.ArgumentException("Child cannot already have a parent!");
+                }
+                Bridge.cast(child, PoorMansTSqlFormatterLib.ParseStructure.NodeImpl).Parent = this;
+            },
+            RemoveChild: function (child) {
+                //TODO: NOT THREAD-SAFE AT ALL!
+                System.Array.remove(Bridge.cast(this.Children, System.Collections.Generic.IList$1(PoorMansTSqlFormatterLib.ParseStructure.Node)), child, PoorMansTSqlFormatterLib.ParseStructure.Node);
+                Bridge.cast(child, PoorMansTSqlFormatterLib.ParseStructure.NodeImpl).Parent = null;
+            },
+            GetAttributeValue: function (aName) {
+                var outVal = { v : null };
+                this.Attributes.System$Collections$Generic$IDictionary$2$System$String$System$String$tryGetValue(aName, outVal);
+                return outVal.v;
+            },
+            SetAttribute: function (name, value) {
+                this.Attributes.System$Collections$Generic$IDictionary$2$System$String$System$String$setItem(name, value);
+            },
+            RemoveAttribute: function (name) {
+                this.Attributes.System$Collections$Generic$IDictionary$2$System$String$System$String$remove(name);
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.SqlFormattingManager", {
+        inherits: [PoorMansTSqlFormatterLib._SqlFormattingManager],
+        statics: {
+            methods: {
+                DefaultFormat: function (inputSQL) {
+                    return new PoorMansTSqlFormatterLib.SqlFormattingManager.ctor().Format(inputSQL);
+                },
+                DefaultFormat$1: function (inputSQL, errorsEncountered) {
+                    return new PoorMansTSqlFormatterLib.SqlFormattingManager.ctor().Format$1(inputSQL, errorsEncountered);
+                }
+            }
+        },
+        props: {
+            Tokenizer: null,
+            Parser: null,
+            Formatter: null
+        },
+        alias: ["Format", "PoorMansTSqlFormatterLib$_SqlFormattingManager$Format"],
+        ctors: {
+            ctor: function () {
+                PoorMansTSqlFormatterLib.SqlFormattingManager.$ctor1.call(this, new PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer(), new PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser(), new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter.ctor());
+            },
+            $ctor2: function (formatter) {
+                PoorMansTSqlFormatterLib.SqlFormattingManager.$ctor1.call(this, new PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer(), new PoorMansTSqlFormatterLib.Parsers.TSqlStandardParser(), formatter);
+            },
+            $ctor1: function (tokenizer, parser, formatter) {
+                this.$initialize();
+                this.Tokenizer = tokenizer;
+                this.Parser = parser;
+                this.Formatter = formatter;
+            }
+        },
+        methods: {
+            Format: function (inputSQL) {
+                var error = { v : false };
+                return this.Format$1(inputSQL, error);
+            },
+            Format$1: function (inputSQL, errorEncountered) {
+                var sqlTree = this.Parser.PoorMansTSqlFormatterLib$Interfaces$ISqlTokenParser$ParseSQL(this.Tokenizer.PoorMansTSqlFormatterLib$Interfaces$ISqlTokenizer$TokenizeSQL(inputSQL));
+                errorEncountered.v = (Bridge.referenceEquals(sqlTree.PoorMansTSqlFormatterLib$ParseStructure$Node$GetAttributeValue(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_ERRORFOUND), "1"));
+                return this.Formatter.PoorMansTSqlFormatterLib$Interfaces$ISqlTreeFormatter$FormatSQLTree(sqlTree);
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Token", {
+        inherits: [PoorMansTSqlFormatterLib.Interfaces.IToken],
+        props: {
+            Type: 0,
+            Value: null
+        },
+        alias: [
+            "Type", "PoorMansTSqlFormatterLib$Interfaces$IToken$Type",
+            "Value", "PoorMansTSqlFormatterLib$Interfaces$IToken$Value"
+        ],
+        ctors: {
+            ctor: function (type, value) {
+                this.$initialize();
+                this.Type = type;
+                this.Value = value;
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer", {
+        inherits: [PoorMansTSqlFormatterLib.Interfaces.ISqlTokenizer],
+        statics: {
+            methods: {
+                IsWhitespace: function (targetCharacter) {
+                    return (targetCharacter === 32 || targetCharacter === 9 || targetCharacter === 10 || targetCharacter === 13);
+                },
+                IsNonWordCharacter: function (currentCharacter) {
+                    //characters that pop you out of a regular "word" context (maybe into a new word)
+                    return (PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.IsWhitespace(currentCharacter) || PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.IsOperatorCharacter(currentCharacter) || (PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.IsCurrencyPrefix(currentCharacter) && currentCharacter !== 36) || currentCharacter === 39 || currentCharacter === 34 || currentCharacter === 44 || currentCharacter === 46 || currentCharacter === 91 || currentCharacter === 40 || currentCharacter === 41 || currentCharacter === 33 || currentCharacter === 59 || currentCharacter === 58);
+                },
+                IsCompoundableOperatorCharacter: function (currentCharacter) {
+                    //operator characters that can be compounded by a subsequent "equals" sign
+                    return (currentCharacter === 47 || currentCharacter === 45 || currentCharacter === 43 || currentCharacter === 42 || currentCharacter === 37 || currentCharacter === 38 || currentCharacter === 94 || currentCharacter === 60 || currentCharacter === 62 || currentCharacter === 124);
+                },
+                IsOperatorCharacter: function (currentCharacter) {
+                    //operator characters
+                    return (currentCharacter === 47 || currentCharacter === 45 || currentCharacter === 43 || currentCharacter === 37 || currentCharacter === 42 || currentCharacter === 38 || currentCharacter === 124 || currentCharacter === 94 || currentCharacter === 61 || currentCharacter === 60 || currentCharacter === 62 || currentCharacter === 126);
+                },
+                IsCurrencyPrefix: function (currentCharacter) {
+                    //symbols that SQL Server recognizes as currency prefixes - these also happen to 
+                    // be word-breakers, except the dollar. Ref:
+                    // http://msdn.microsoft.com/en-us/library/ms188688.aspx
+                    return (currentCharacter === 36 || currentCharacter === 162 || currentCharacter === 163 || currentCharacter === 164 || currentCharacter === 165 || currentCharacter === 2546 || currentCharacter === 2547 || currentCharacter === 3647 || currentCharacter === 6107 || currentCharacter === 8352 || currentCharacter === 8353 || currentCharacter === 8354 || currentCharacter === 8355 || currentCharacter === 8356 || currentCharacter === 8357 || currentCharacter === 8358 || currentCharacter === 8359 || currentCharacter === 8360 || currentCharacter === 8361 || currentCharacter === 8362 || currentCharacter === 8363 || currentCharacter === 8364 || currentCharacter === 8365 || currentCharacter === 8366 || currentCharacter === 8367 || currentCharacter === 8368 || currentCharacter === 8369 || currentCharacter === 65020 || currentCharacter === 65129 || currentCharacter === 65284 || currentCharacter === 65504 || currentCharacter === 65505 || currentCharacter === 65509 || currentCharacter === 65510);
+                },
+                CompleteTokenAndProcessNext: function (state) {
+                    PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteToken(state, true);
+                    PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.ProcessOrOpenToken(state);
+                },
+                AppendCharAndCompleteToken: function (state) {
+                    state.ConsumeCurrentCharacterIntoToken();
+                    PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteToken(state, false);
+                },
+                SwallowOutstandingCharacterAndCompleteToken: function (state) {
+                    //this is for cases where we *know* we are swallowing the "current character" (not putting it in the output)
+                    state.HasUnprocessedCurrentCharacter = false;
+                    PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteToken(state, false);
+                },
+                ProcessOrOpenToken: function (state) {
+                    if (state.CurrentTokenizationType != null) {
+                        throw new System.Exception("Cannot start a new Token: existing Tokenization Type is not null");
+                    }
+
+                    if (!state.HasUnprocessedCurrentCharacter) {
+                        throw new System.Exception("Cannot start a new Token: no (outstanding) current character specified!");
+                    }
+
+                    //start a new value.
+                    state.CurrentTokenValue.setLength(0);
+
+                    if (PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.IsWhitespace(state.CurrentChar)) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.WhiteSpace;
+                        state.ConsumeCurrentCharacterIntoToken();
+                    } else if (state.CurrentChar === 45) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleHyphen;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing, will be reinserted later
+                    } else if (state.CurrentChar === 36) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleDollar;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing, will be reinserted later
+                    } else if (state.CurrentChar === 47) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleSlash;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing, will be reinserted later
+                    } else if (state.CurrentChar === 78) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleN;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing, will be reinserted later except N-string case
+                    } else if (state.CurrentChar === 39) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.String;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing
+                    } else if (state.CurrentChar === 34) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.QuotedString;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing
+                    } else if (state.CurrentChar === 91) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.BracketQuotedName;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing
+                    } else if (state.CurrentChar === 40) {
+                        PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveCurrentCharToNewToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OpenParens);
+                    } else if (state.CurrentChar === 41) {
+                        PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveCurrentCharToNewToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.CloseParens);
+                    } else if (state.CurrentChar === 44) {
+                        PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveCurrentCharToNewToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Comma);
+                    } else if (state.CurrentChar === 46) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SinglePeriod;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing, will be reinserted later
+                    } else if (state.CurrentChar === 48) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleZero;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing, will be reinserted later
+                    } else if (state.CurrentChar >= 49 && state.CurrentChar <= 57) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.Number;
+                        state.ConsumeCurrentCharacterIntoToken();
+                    } else if (PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.IsCurrencyPrefix(state.CurrentChar)) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.MonetaryValue;
+                        state.ConsumeCurrentCharacterIntoToken();
+                    } else if (state.CurrentChar === 59) {
+                        PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveCurrentCharToNewToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Semicolon);
+                    } else if (state.CurrentChar === 58) {
+                        PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveCurrentCharToNewToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Colon);
+                    } else if (state.CurrentChar === 42) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleAsterisk;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing, will be reinserted later
+                    } else if (state.CurrentChar === 61) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleEquals;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing, will be reinserted later
+                    } else if (state.CurrentChar === 60) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleLT;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing, will be reinserted later
+                    } else if (state.CurrentChar === 62) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleGT;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing, will be reinserted later
+                    } else if (state.CurrentChar === 33) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleExclamation;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing, will be reinserted later
+                    } else if (state.CurrentChar === 124) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SinglePipe;
+                        state.HasUnprocessedCurrentCharacter = false; //purposefully swallowing, will be reinserted later
+                    } else if (PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.IsCompoundableOperatorCharacter(state.CurrentChar)) {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleOtherCompoundableOperator;
+                        state.ConsumeCurrentCharacterIntoToken();
+                    } else if (PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.IsOperatorCharacter(state.CurrentChar)) {
+                        PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveCurrentCharToNewToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherOperator);
+                    } else {
+                        state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherNode;
+                        state.ConsumeCurrentCharacterIntoToken();
+                    }
+                },
+                CompleteToken: function (state, nextCharRead) {
+                    if (state.CurrentTokenizationType == null) {
+                        throw new System.Exception("Cannot complete Token, as there is no current Tokenization Type");
+                    }
+
+                    switch (state.CurrentTokenizationType) {
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.BlockComment: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.MultiLineComment, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherNode: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherNode, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.PseudoName: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.PseudoName, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleLineComment: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.SingleLineComment, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleLineCommentCStyle: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.SingleLineCommentCStyle, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleHyphen: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherOperator, "-");
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleDollar: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.MonetaryValue, "$");
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleSlash: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherOperator, "/");
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.WhiteSpace: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.WhiteSpace, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleN: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherNode, "N");
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleExclamation: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherNode, "!");
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SinglePipe: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherNode, "|");
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleGT: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherOperator, ">");
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleLT: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherOperator, "<");
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.NString: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.NationalString, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.String: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.String, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.QuotedString: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.QuotedString, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.BracketQuotedName: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.BracketQuotedName, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherOperator: 
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleOtherCompoundableOperator: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.OtherOperator, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleZero: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Number, "0");
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SinglePeriod: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Period, ".");
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleAsterisk: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Asterisk, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleEquals: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.EqualsSign, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.Number: 
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.DecimalValue: 
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.FloatValue: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.Number, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.BinaryValue: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.BinaryValue, state.CurrentTokenValue.toString());
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.MonetaryValue: 
+                            PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, PoorMansTSqlFormatterLib.Interfaces.SqlTokenType.MonetaryValue, state.CurrentTokenValue.toString());
+                            break;
+                        default: 
+                            throw new System.Exception("Unrecognized SQL Node Type");
+                    }
+
+                    state.CurrentTokenizationType = null;
+                },
+                SaveCurrentCharToNewToken: function (state, tokenType) {
+                    var charToSave = state.CurrentChar;
+                    state.HasUnprocessedCurrentCharacter = false; //because we're using it now!
+                    PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SaveToken(state, tokenType, String.fromCharCode(charToSave));
+                },
+                SaveToken: function (state, tokenType, tokenValue) {
+                    var foundToken = new PoorMansTSqlFormatterLib.Token(tokenType, tokenValue);
+                    state.TokenContainer.add(foundToken);
+
+                    var positionOfLastCharacterInToken = state.InputReader.LastCharacterPosition.sub(System.Int64((state.HasUnprocessedCurrentCharacter ? 1 : 0)));
+                    if (System.Nullable.liftne("ne", state.RequestedMarkerPosition, System.Int64.lift(null)) && state.TokenContainer.MarkerToken == null && System.Nullable.liftcmp("lte", state.RequestedMarkerPosition, positionOfLastCharacterInToken)) {
+                        state.TokenContainer.MarkerToken = foundToken;
+                        //TODO: this is wrong for container types, as commented elsewhere. the marker position will be too high.
+                        var rawPositionInToken = System.Nullable.lift2("sub", System.Int64.lift(foundToken.Value.length), (System.Nullable.lift2("sub", positionOfLastCharacterInToken, state.RequestedMarkerPosition)));
+                        // temporarily bypass overflow issues without fixing underlying problem
+                        state.TokenContainer.MarkerPosition = System.Nullable.liftcmp("gt", rawPositionInToken, System.Int64.lift(foundToken.Value.length)) ? System.Int64.lift(foundToken.Value.length) : rawPositionInToken;
+                    }
+                }
+            }
+        },
+        alias: [
+            "TokenizeSQL", "PoorMansTSqlFormatterLib$Interfaces$ISqlTokenizer$TokenizeSQL",
+            "TokenizeSQL$1", "PoorMansTSqlFormatterLib$Interfaces$ISqlTokenizer$TokenizeSQL$1"
+        ],
+        methods: {
+            TokenizeSQL: function (inputSQL) {
+                return this.TokenizeSQL$1(inputSQL, System.Int64.lift(null));
+            },
+            TokenizeSQL$1: function (inputSQL, requestedMarkerPosition) {
+                var state = new PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.TokenizationState(inputSQL, requestedMarkerPosition);
+
+                state.ReadNextCharacter();
+                while (state.HasUnprocessedCurrentCharacter) {
+                    if (state.CurrentTokenizationType == null) {
+                        PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.ProcessOrOpenToken(state);
+                        state.ReadNextCharacter();
+                        continue;
+                    }
+
+                    switch (System.Nullable.getValue(state.CurrentTokenizationType)) {
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.WhiteSpace: 
+                            if (PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.IsWhitespace(state.CurrentChar)) {
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SinglePeriod: 
+                            if (state.CurrentChar >= 48 && state.CurrentChar <= 57) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.DecimalValue;
+                                state.CurrentTokenValue.append(String.fromCharCode(46));
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else {
+                                state.CurrentTokenValue.append(String.fromCharCode(46));
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleZero: 
+                            if (state.CurrentChar === 120 || state.CurrentChar === 88) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.BinaryValue;
+                                state.CurrentTokenValue.append(String.fromCharCode(48));
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else if (state.CurrentChar >= 48 && state.CurrentChar <= 57) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.Number;
+                                state.CurrentTokenValue.append(String.fromCharCode(48));
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else if (state.CurrentChar === 46) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.DecimalValue;
+                                state.CurrentTokenValue.append(String.fromCharCode(48));
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else {
+                                state.CurrentTokenValue.append(String.fromCharCode(48));
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.Number: 
+                            if (state.CurrentChar === 101 || state.CurrentChar === 69) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.FloatValue;
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else if (state.CurrentChar === 46) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.DecimalValue;
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else if (state.CurrentChar >= 48 && state.CurrentChar <= 57) {
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.DecimalValue: 
+                            if (state.CurrentChar === 101 || state.CurrentChar === 69) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.FloatValue;
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else if (state.CurrentChar >= 48 && state.CurrentChar <= 57) {
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.FloatValue: 
+                            if (state.CurrentChar >= 48 && state.CurrentChar <= 57) {
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else if ((state.CurrentChar === 45 || state.CurrentChar === 43) && System.String.endsWith(state.CurrentTokenValue.toString().toUpperCase(), "E")) {
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.BinaryValue: 
+                            if ((state.CurrentChar >= 48 && state.CurrentChar <= 57) || (state.CurrentChar >= 65 && state.CurrentChar <= 70) || (state.CurrentChar >= 97 && state.CurrentChar <= 102)) {
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleDollar: 
+                            state.CurrentTokenValue.append(String.fromCharCode(36));
+                            if ((state.CurrentChar >= 65 && state.CurrentChar <= 90) || (state.CurrentChar >= 97 && state.CurrentChar <= 122)) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.PseudoName;
+                            } else {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.MonetaryValue;
+                            }
+                            state.ConsumeCurrentCharacterIntoToken();
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.MonetaryValue: 
+                            if (state.CurrentChar >= 48 && state.CurrentChar <= 57) {
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else if (state.CurrentChar === 45 && state.CurrentTokenValue.getLength() === 1) {
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else if (state.CurrentChar === 46 && !System.String.contains(state.CurrentTokenValue.toString(),".")) {
+                                state.ConsumeCurrentCharacterIntoToken();
+                            } else {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleHyphen: 
+                            if (state.CurrentChar === 45) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleLineComment;
+                                state.HasUnprocessedCurrentCharacter = false; //DISCARDING the hyphen because of weird standard
+                            } else if (state.CurrentChar === 61) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherOperator;
+                                state.CurrentTokenValue.append(String.fromCharCode(45));
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.AppendCharAndCompleteToken(state);
+                            } else {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherOperator;
+                                state.CurrentTokenValue.append(String.fromCharCode(45));
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleSlash: 
+                            if (state.CurrentChar === 42) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.BlockComment;
+                                state.HasUnprocessedCurrentCharacter = false; //DISCARDING the asterisk because of weird standard
+                                state.CommentNesting = (state.CommentNesting + 1) | 0;
+                            } else if (state.CurrentChar === 47) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleLineCommentCStyle;
+                                state.HasUnprocessedCurrentCharacter = false; //DISCARDING the slash because of weird standard
+                            } else if (state.CurrentChar === 61) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherOperator;
+                                state.CurrentTokenValue.append(String.fromCharCode(47));
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.AppendCharAndCompleteToken(state);
+                            } else {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherOperator;
+                                state.CurrentTokenValue.append(String.fromCharCode(47));
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleLineComment: 
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleLineCommentCStyle: 
+                            if (state.CurrentChar === 13 || state.CurrentChar === 10) {
+                                var nextCharInt = state.InputReader.Peek();
+                                if (state.CurrentChar === 13 && nextCharInt === 10) {
+                                    state.ConsumeCurrentCharacterIntoToken();
+                                    state.ReadNextCharacter();
+                                }
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.AppendCharAndCompleteToken(state);
+                            } else {
+                                state.ConsumeCurrentCharacterIntoToken();
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.BlockComment: 
+                            if (state.CurrentChar === 42) {
+                                if (state.InputReader.Peek() === 47) {
+                                    state.CommentNesting = (state.CommentNesting - 1) | 0;
+                                    if (state.CommentNesting > 0) {
+                                        state.ConsumeCurrentCharacterIntoToken();
+                                        state.ReadNextCharacter();
+                                        state.ConsumeCurrentCharacterIntoToken();
+                                    } else {
+                                        state.HasUnprocessedCurrentCharacter = false; //discarding the asterisk
+                                        state.ReadNextCharacter();
+                                        //TODO: DANGER DANGER why do "contained" token types have this inconsistent handling where the delimiters are not in the value???
+                                        PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SwallowOutstandingCharacterAndCompleteToken(state);
+                                    }
+                                } else {
+                                    state.ConsumeCurrentCharacterIntoToken();
+                                }
+                            } else {
+                                if (state.CurrentChar === 47 && state.InputReader.Peek() === 42) {
+                                    state.ConsumeCurrentCharacterIntoToken();
+                                    state.ReadNextCharacter();
+                                    state.ConsumeCurrentCharacterIntoToken();
+                                    state.CommentNesting = (state.CommentNesting + 1) | 0;
+                                } else {
+                                    state.ConsumeCurrentCharacterIntoToken();
+                                }
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherNode: 
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.PseudoName: 
+                            if (PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.IsNonWordCharacter(state.CurrentChar)) {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            } else {
+                                state.ConsumeCurrentCharacterIntoToken();
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleN: 
+                            if (state.CurrentChar === 39) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.NString;
+                                state.HasUnprocessedCurrentCharacter = false; //DISCARDING the apostrophe because of weird standard
+                            } else {
+                                if (PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.IsNonWordCharacter(state.CurrentChar)) {
+                                    PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                                } else {
+                                    state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherNode;
+                                    state.CurrentTokenValue.append(String.fromCharCode(78));
+                                    state.ConsumeCurrentCharacterIntoToken();
+                                }
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.NString: 
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.String: 
+                            if (state.CurrentChar === 39) {
+                                if (state.InputReader.Peek() === 39) {
+                                    //add the character (once)
+                                    state.ConsumeCurrentCharacterIntoToken();
+
+                                    //throw away the second character... because (for some reason?) we're storing the effective value" rather than the raw token...
+                                    state.DiscardNextCharacter();
+                                } else {
+                                    //TODO: DANGER DANGER why do "contained" token types have this inconsistent handling where the delimiters are not in the value???
+                                    PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SwallowOutstandingCharacterAndCompleteToken(state);
+                                }
+                            } else {
+                                state.ConsumeCurrentCharacterIntoToken();
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.QuotedString: 
+                            if (state.CurrentChar === 34) {
+                                if (state.InputReader.Peek() === 34) {
+                                    //add the character (once)
+                                    state.ConsumeCurrentCharacterIntoToken();
+
+                                    //throw away the second character... because (for some reason?) we're storing the effective value" rather than the raw token...
+                                    state.DiscardNextCharacter();
+                                } else {
+                                    //TODO: DANGER DANGER why do "contained" token types have this inconsistent handling where the delimiters are not in the value???
+                                    PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SwallowOutstandingCharacterAndCompleteToken(state);
+                                }
+                            } else {
+                                state.ConsumeCurrentCharacterIntoToken();
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.BracketQuotedName: 
+                            if (state.CurrentChar === 93) {
+                                if (state.InputReader.Peek() === 93) {
+                                    //add the character (once)
+                                    state.ConsumeCurrentCharacterIntoToken();
+
+                                    //throw away the second character... because (for some reason?) we're storing the effective value" rather than the raw token...
+                                    state.DiscardNextCharacter();
+                                } else {
+                                    //TODO: DANGER DANGER why do "contained" token types have this inconsistent handling where the delimiters are not in the value???
+                                    PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SwallowOutstandingCharacterAndCompleteToken(state);
+                                }
+                            } else {
+                                state.ConsumeCurrentCharacterIntoToken();
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleLT: 
+                            state.CurrentTokenValue.append(String.fromCharCode(60));
+                            state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherOperator;
+                            if (state.CurrentChar === 61 || state.CurrentChar === 62 || state.CurrentChar === 60) {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.AppendCharAndCompleteToken(state);
+                            } else {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleGT: 
+                            state.CurrentTokenValue.append(String.fromCharCode(62));
+                            state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherOperator;
+                            if (state.CurrentChar === 61 || state.CurrentChar === 62) {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.AppendCharAndCompleteToken(state);
+                            } else {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleAsterisk: 
+                            state.CurrentTokenValue.append(String.fromCharCode(42));
+                            if (state.CurrentChar === 61) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherOperator;
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.AppendCharAndCompleteToken(state);
+                            } else {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleOtherCompoundableOperator: 
+                            state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherOperator;
+                            if (state.CurrentChar === 61) {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.AppendCharAndCompleteToken(state);
+                            } else {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SinglePipe: 
+                            state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherOperator;
+                            state.CurrentTokenValue.append(String.fromCharCode(124));
+                            if (state.CurrentChar === 61 || state.CurrentChar === 124) {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.AppendCharAndCompleteToken(state);
+                            } else {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleEquals: 
+                            state.CurrentTokenValue.append(String.fromCharCode(61));
+                            if (state.CurrentChar === 61) {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.AppendCharAndCompleteToken(state);
+                            } else {
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        case PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.SingleExclamation: 
+                            state.CurrentTokenValue.append(String.fromCharCode(33));
+                            if (state.CurrentChar === 61 || state.CurrentChar === 60 || state.CurrentChar === 62) {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherOperator;
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.AppendCharAndCompleteToken(state);
+                            } else {
+                                state.CurrentTokenizationType = PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.OtherNode;
+                                PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.CompleteTokenAndProcessNext(state);
+                            }
+                            break;
+                        default: 
+                            throw new System.Exception("In-progress node unrecognized!");
+                    }
+
+                    state.ReadNextCharacter();
+                }
+
+
+                if (state.CurrentTokenizationType != null) {
+                    if (System.Nullable.getValue(state.CurrentTokenizationType) === PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.BlockComment || System.Nullable.getValue(state.CurrentTokenizationType) === PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.String || System.Nullable.getValue(state.CurrentTokenizationType) === PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.NString || System.Nullable.getValue(state.CurrentTokenizationType) === PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.QuotedString || System.Nullable.getValue(state.CurrentTokenizationType) === PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SqlTokenizationType.BracketQuotedName) {
+                        state.TokenContainer.HasUnfinishedToken = true;
+                    }
+
+                    PoorMansTSqlFormatterLib.Tokenizers.TSqlStandardTokenizer.SwallowOutstandingCharacterAndCompleteToken(state);
+                }
+
+                return state.TokenContainer;
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.ParseTree", {
+        inherits: [PoorMansTSqlFormatterLib.ParseStructure.NodeImpl,PoorMansTSqlFormatterLib.ParseStructure.Node],
+        statics: {
+            methods: {
+                HasNonWhiteSpaceNonSingleCommentContent: function (containerNode) {
+                    var $t;
+                    $t = Bridge.getEnumerator(containerNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Children, PoorMansTSqlFormatterLib.ParseStructure.Node);
+                    try {
+                        while ($t.moveNext()) {
+                            var testElement = $t.Current;
+                            if (!System.String.equals(testElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHITESPACE) && !System.String.equals(testElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE) && !System.String.equals(testElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_SINGLELINE_CSTYLE) && (!System.String.equals(testElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_COMMENT_MULTILINE) || System.Text.RegularExpressions.Regex.isMatch(testElement.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "(\\r|\\n)+"))) {
+                                return true;
+                            }
+                        }
+                    } finally {
+                        if (Bridge.is($t, System.IDisposable)) {
+                            $t.System$IDisposable$dispose();
+                        }
+                    }
+                    return false;
+                }
+            }
+        },
+        fields: {
+            _currentContainer: null,
+            _newStatementDue: false
+        },
+        props: {
+            CurrentContainer: {
+                get: function () {
+                    return this._currentContainer;
+                },
+                set: function (value) {
+                    if (value == null) {
+                        throw new System.ArgumentNullException("CurrentContainer");
+                    }
+
+                    if (!Bridge.equals(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.RootContainer(value), this)) {
+                        throw new System.Exception("Current Container node can only be set to an element in the current document.");
+                    }
+
+                    this._currentContainer = value;
+                }
+            },
+            NewStatementDue: {
+                get: function () {
+                    return this._newStatementDue;
+                },
+                set: function (value) {
+                    this._newStatementDue = value;
+                }
+            },
+            ErrorFound: {
+                get: function () {
+                    return this._newStatementDue;
+                },
+                set: function (value) {
+                    if (value) {
+                        this.SetAttribute(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_ERRORFOUND, "1");
+                    } else {
+                        this.RemoveAttribute(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_ERRORFOUND);
+                    }
+                }
+            }
+        },
+        ctors: {
+            ctor: function (rootName) {
+                this.$initialize();
+                PoorMansTSqlFormatterLib.ParseStructure.NodeImpl.ctor.call(this);
+                this.Name = rootName;
+                this.CurrentContainer = this;
+            }
+        },
+        methods: {
+            SetError: function () {
+                this.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$SetAttribute(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ANAME_HASERROR, "1");
+                this.ErrorFound = true;
+            },
+            SaveNewElement: function (newElementName, newElementValue) {
+                return this.SaveNewElement$1(newElementName, newElementValue, this.CurrentContainer);
+            },
+            SaveNewElement$1: function (newElementName, newElementValue, targetNode) {
+                var newElement = PoorMansTSqlFormatterLib.ParseStructure.NodeFactory.CreateNode(newElementName, newElementValue);
+                targetNode.PoorMansTSqlFormatterLib$ParseStructure$Node$AddChild(newElement);
+                return newElement;
+            },
+            SaveNewElementWithError: function (newElementName, newElementValue) {
+                var newElement = this.SaveNewElement(newElementName, newElementValue);
+                this.SetError();
+                return newElement;
+            },
+            SaveNewElementAsPriorSibling: function (newElementName, newElementValue, nodeToSaveBefore) {
+                var newElement = PoorMansTSqlFormatterLib.ParseStructure.NodeFactory.CreateNode(newElementName, newElementValue);
+                nodeToSaveBefore.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$InsertChildBefore(newElement, nodeToSaveBefore);
+                return newElement;
+            },
+            StartNewContainer: function (newElementName, containerOpenValue, containerType) {
+                this.CurrentContainer = this.SaveNewElement(newElementName, "");
+                var containerOpen = this.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_OPEN, "");
+                this.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_OTHERKEYWORD, containerOpenValue, containerOpen);
+                this.CurrentContainer = this.SaveNewElement(containerType, "");
+            },
+            StartNewStatement: function () {
+                this.StartNewStatement$1(this.CurrentContainer);
+            },
+            StartNewStatement$1: function (targetNode) {
+                this.NewStatementDue = false;
+                var newStatement = this.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT, "", targetNode);
+                this.CurrentContainer = this.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE, "", newStatement);
+            },
+            EscapeAnyBetweenConditions: function () {
+                if (this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_UPPERBOUND) && this.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BETWEEN_CONDITION)) {
+                    //we just ended the upper bound of a "BETWEEN" condition, need to pop back to the enclosing context
+                    this.MoveToAncestorContainer(2);
+                }
+            },
+            EscapeMergeAction: function () {
+                if (this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && this.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && this.PathNameMatches$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_ACTION) && this.HasNonWhiteSpaceNonCommentContent(this.CurrentContainer)) {
+                    this.MoveToAncestorContainer(4);
+                }
+            },
+            EscapePartialStatementContainers: function () {
+                if (this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK) || this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_OTHER_BLOCK) || this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_DECLARE_BLOCK)) {
+                    this.MoveToAncestorContainer(1);
+                } else {
+                    if (this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && this.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_FOR_OPTIONS)) {
+                        this.MoveToAncestorContainer(3);
+                    } else {
+                        if (this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && this.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_RECIPIENT)) {
+                            this.MoveToAncestorContainer(3);
+                        } else {
+                            if (this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && this.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_WITH_CLAUSE) && (this.PathNameMatches$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_PERMISSIONS_BLOCK) || this.PathNameMatches$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK) || this.PathNameMatches$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_OTHER_BLOCK) || this.PathNameMatches$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_DECLARE_BLOCK))) {
+                                this.MoveToAncestorContainer(3);
+                            } else {
+                                if (this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_MERGE_WHEN)) {
+                                    this.MoveToAncestorContainer(2);
+                                } else {
+                                    if (this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && (this.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CTE_WITH_CLAUSE) || this.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_DECLARE_BLOCK))) {
+                                        this.MoveToAncestorContainer(2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            EscapeAnySingleOrPartialStatementContainers: function () {
+                this.EscapeAnyBetweenConditions();
+                this.EscapeAnySelectionTarget();
+                this.EscapeJoinCondition();
+
+                if (this.HasNonWhiteSpaceNonCommentContent(this.CurrentContainer)) {
+                    this.EscapeCursorForBlock();
+                    this.EscapeMergeAction();
+                    this.EscapePartialStatementContainers();
+
+                    while (true) {
+                        if (this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && this.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && this.PathNameMatches$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_SINGLESTATEMENT)) {
+                            var currentSingleContainer = this.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                            if (this.PathNameMatches(currentSingleContainer, 1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_ELSE_CLAUSE)) {
+                                //we just ended the one and only statement in an else clause, and need to pop out to the same level as its parent if
+                                // singleContainer.else.if.CANDIDATE
+                                this.CurrentContainer = currentSingleContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                            } else {
+                                //we just ended the one statement of an if or while, and need to pop out the same level as that if or while
+                                // singleContainer.(if or while).CANDIDATE
+                                this.CurrentContainer = currentSingleContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            },
+            EscapeCursorForBlock: function () {
+                if (this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && this.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && this.PathNameMatches$1(2, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && this.PathNameMatches$1(3, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CURSOR_FOR_BLOCK) && this.HasNonWhiteSpaceNonCommentContent(this.CurrentContainer)) {
+                    this.MoveToAncestorContainer(5);
+                }
+            },
+            EscapeAndLocateNextStatementContainer: function (escapeEmptyContainer) {
+                this.EscapeAnySingleOrPartialStatementContainers();
+
+                if (this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_BOOLEAN_EXPRESSION) && (this.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IF_STATEMENT) || this.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHILE_LOOP))) {
+                    //we just ended the boolean clause of an if or while, and need to pop to the single-statement container.
+                    return this.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_SINGLESTATEMENT, "", this.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent);
+                } else if (this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && this.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT) && (escapeEmptyContainer || PoorMansTSqlFormatterLib.ParseTree.HasNonWhiteSpaceNonSingleCommentContent(this.CurrentContainer))) {
+                    return this.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                } else {
+                    return null;
+                }
+            },
+            MigrateApplicableCommentsFromContainer: function (previousContainerElement) {
+                var migrationContext = previousContainerElement;
+                var migrationCandidate = System.Linq.Enumerable.from(previousContainerElement.PoorMansTSqlFormatterLib$ParseStructure$Node$Children).last();
+
+                //keep track of where we're going to be prepending - this will change as we go moving stuff.
+                var insertBeforeNode = this.CurrentContainer;
+
+                while (migrationCandidate != null) {
+                    if (System.String.equals(migrationCandidate.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHITESPACE)) {
+                        migrationCandidate = PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.PreviousSibling(migrationCandidate);
+                        continue;
+                    } else if (PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.PreviousSibling(migrationCandidate) != null && System.Array.contains(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAMELIST_COMMENT, migrationCandidate.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, System.String) && System.Array.contains(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAMELIST_NONCONTENT, PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.PreviousSibling(migrationCandidate).PoorMansTSqlFormatterLib$ParseStructure$Node$Name, System.String)) {
+                        if (System.String.equals(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.PreviousSibling(migrationCandidate).PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_WHITESPACE) && System.Text.RegularExpressions.Regex.isMatch(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.PreviousSibling(migrationCandidate).PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue, "(\\r|\\n)+")) {
+                            //we have a match, so migrate everything considered so far (backwards from the end). need to keep track of where we're inserting.
+                            while (!Bridge.equals(System.Linq.Enumerable.from(migrationContext.PoorMansTSqlFormatterLib$ParseStructure$Node$Children).last(), migrationCandidate)) {
+                                var movingNode = System.Linq.Enumerable.from(migrationContext.PoorMansTSqlFormatterLib$ParseStructure$Node$Children).last();
+                                movingNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$RemoveChild(movingNode);
+                                this.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$InsertChildBefore(movingNode, insertBeforeNode);
+                                insertBeforeNode = movingNode;
+                            }
+                            migrationCandidate.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$RemoveChild(migrationCandidate);
+                            this.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$InsertChildBefore(migrationCandidate, insertBeforeNode);
+                            insertBeforeNode = migrationCandidate;
+
+                            //move on to the next candidate element for consideration.
+                            migrationCandidate = System.Linq.Enumerable.from(migrationContext.PoorMansTSqlFormatterLib$ParseStructure$Node$Children).last();
+                        } else {
+                            //this one wasn't properly separated from the previous node/entry, keep going in case there's a linebreak further up.
+                            migrationCandidate = PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.PreviousSibling(migrationCandidate);
+                        }
+                    } else if (!System.String.isNullOrEmpty(migrationCandidate.PoorMansTSqlFormatterLib$ParseStructure$Node$TextValue)) {
+                        //we found a non-whitespace non-comment node with text content. Stop trying to migrate comments.
+                        migrationCandidate = null;
+                    } else {
+                        //walk up the last found node, in case the comment got trapped in some substructure.
+                        migrationContext = migrationCandidate;
+                        migrationCandidate = System.Linq.Enumerable.from(migrationCandidate.PoorMansTSqlFormatterLib$ParseStructure$Node$Children).lastOrDefault(null, null);
+                    }
+                }
+            },
+            ConsiderStartingNewStatement: function () {
+                this.EscapeAnyBetweenConditions();
+                this.EscapeAnySelectionTarget();
+                this.EscapeJoinCondition();
+
+                //before single-statement-escaping
+                var previousContainerElement = this.CurrentContainer;
+
+                //context might change AND suitable ancestor selected
+                var nextStatementContainer = this.EscapeAndLocateNextStatementContainer(false);
+
+                //if suitable ancestor found, start statement and migrate in-between comments to the new statement
+                if (nextStatementContainer != null) {
+                    var inBetweenContainerElement = this.CurrentContainer;
+                    this.StartNewStatement$1(nextStatementContainer);
+                    if (!Bridge.equals(inBetweenContainerElement, previousContainerElement)) {
+                        this.MigrateApplicableCommentsFromContainer(inBetweenContainerElement);
+                    }
+                    this.MigrateApplicableCommentsFromContainer(previousContainerElement);
+                }
+            },
+            ConsiderStartingNewClause: function () {
+                this.EscapeAnySelectionTarget();
+                this.EscapeAnyBetweenConditions();
+                this.EscapePartialStatementContainers();
+                this.EscapeJoinCondition();
+
+                if (System.String.equals(this.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE) && PoorMansTSqlFormatterLib.ParseTree.HasNonWhiteSpaceNonSingleCommentContent(this.CurrentContainer)) {
+                    //complete current clause, start a new one in the same container
+                    var previousContainerElement = this.CurrentContainer;
+                    this.CurrentContainer = this.SaveNewElement$1(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE, "", this.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent);
+                    this.MigrateApplicableCommentsFromContainer(previousContainerElement);
+                } else if (System.String.equals(this.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_EXPRESSION_PARENS) || System.String.equals(this.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_IN_PARENS) || System.String.equals(this.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS) || System.String.equals(this.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_STATEMENT)) {
+                    //create new clause and set context to it.
+                    this.CurrentContainer = this.SaveNewElement(PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_CLAUSE, "");
+                }
+            },
+            EscapeAnySelectionTarget: function () {
+                if (this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SELECTIONTARGET)) {
+                    this.CurrentContainer = this.CurrentContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                }
+            },
+            EscapeJoinCondition: function () {
+                if (this.PathNameMatches$1(0, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && this.PathNameMatches$1(1, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_JOIN_ON_SECTION)) {
+                    this.MoveToAncestorContainer(2);
+                }
+            },
+            FindValidBatchEnd: function () {
+                var nextStatementContainer = this.EscapeAndLocateNextStatementContainer(true);
+                return nextStatementContainer != null && (System.String.equals(nextStatementContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_SQL_ROOT) || (System.String.equals(nextStatementContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT) && System.String.equals(nextStatementContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAME_DDL_AS_BLOCK)));
+            },
+            PathNameMatches$1: function (levelsUp, nameToMatch) {
+                return this.PathNameMatches(this.CurrentContainer, levelsUp, nameToMatch);
+            },
+            PathNameMatches: function (targetNode, levelsUp, nameToMatch) {
+                var currentNode = targetNode;
+                while (levelsUp > 0) {
+                    currentNode = currentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                    levelsUp = (levelsUp - 1) | 0;
+                }
+                return currentNode != null && System.String.equals(currentNode.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, nameToMatch);
+            },
+            HasNonWhiteSpaceNonCommentContent: function (containerNode) {
+                return System.Linq.Enumerable.from(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenExcludingNames(containerNode, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAMELIST_NONCONTENT)).any();
+            },
+            GetFirstNonWhitespaceNonCommentChildElement: function (targetElement) {
+                return System.Linq.Enumerable.from(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenExcludingNames(targetElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAMELIST_NONCONTENT)).firstOrDefault(null, null);
+            },
+            GetLastNonWhitespaceNonCommentChildElement: function (targetElement) {
+                return System.Linq.Enumerable.from(PoorMansTSqlFormatterLib.ParseStructure.NodeExtensions.ChildrenExcludingNames(targetElement, PoorMansTSqlFormatterLib.Interfaces.SqlStructureConstants.ENAMELIST_NONCONTENT)).lastOrDefault(null, null);
+            },
+            MoveToAncestorContainer: function (levelsUp) {
+                this.MoveToAncestorContainer$1(levelsUp, null);
+            },
+            MoveToAncestorContainer$1: function (levelsUp, targetContainerName) {
+                var candidateContainer = this.CurrentContainer;
+                while (levelsUp > 0) {
+                    candidateContainer = candidateContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Parent;
+                    levelsUp = (levelsUp - 1) | 0;
+                }
+                if (System.String.isNullOrEmpty(targetContainerName) || System.String.equals(candidateContainer.PoorMansTSqlFormatterLib$ParseStructure$Node$Name, targetContainerName)) {
+                    this.CurrentContainer = candidateContainer;
+                } else {
+                    throw new System.Exception("Ancestor node does not match expected name!");
+                }
+            }
+        }
+    });
+
+    Bridge.define("PoorMansTSqlFormatterLib.TokenList", {
+        inherits: [System.Collections.Generic.List$1(PoorMansTSqlFormatterLib.Interfaces.IToken),PoorMansTSqlFormatterLib.Interfaces.ITokenList],
+        props: {
+            HasUnfinishedToken: false,
+            MarkerToken: null,
+            MarkerPosition: null
+        },
+        alias: [
+            "HasUnfinishedToken", "PoorMansTSqlFormatterLib$Interfaces$ITokenList$HasUnfinishedToken",
+            "prettyPrint", "PoorMansTSqlFormatterLib$Interfaces$ITokenList$prettyPrint",
+            "getRange$2", "PoorMansTSqlFormatterLib$Interfaces$ITokenList$getRange",
+            "getRangeByIndex", "PoorMansTSqlFormatterLib$Interfaces$ITokenList$getRangeByIndex",
+            "MarkerToken", "PoorMansTSqlFormatterLib$Interfaces$ITokenList$MarkerToken",
+            "MarkerPosition", "PoorMansTSqlFormatterLib$Interfaces$ITokenList$MarkerPosition",
+            "getEnumerator", "System$Collections$IEnumerable$getEnumerator"
+        ],
+        methods: {
+            prettyPrint: function () {
+                var $t;
+                var outString = new System.Text.StringBuilder();
+                $t = Bridge.getEnumerator(this);
+                try {
+                    while ($t.moveNext()) {
+                        var contentToken = $t.Current;
+                        var tokenType = System.Enum.toString(PoorMansTSqlFormatterLib.Interfaces.SqlTokenType, contentToken.PoorMansTSqlFormatterLib$Interfaces$IToken$Type);
+                        outString.append(System.String.alignString(tokenType, -20));
+                        outString.append(": ");
+                        outString.append(contentToken.PoorMansTSqlFormatterLib$Interfaces$IToken$Value);
+                        if (Bridge.equals(contentToken, this.MarkerToken)) {
+                            outString.append(" (MARKER - pos ");
+                            outString.append(System.Nullable.toString(this.MarkerPosition, null));
+                            outString.append(")");
+                        }
+                        outString.appendLine();
+                    }
+                } finally {
+                    if (Bridge.is($t, System.IDisposable)) {
+                        $t.System$IDisposable$dispose();
+                    }
+                }return outString.toString();
+            },
+            getRange$2: function (index, count) {
+                return this.getRange(index, count);
+            },
+            getRangeByIndex: function (fromIndex, toIndex) {
+                return this.getRange$2(fromIndex, ((((toIndex - fromIndex) | 0) + 1) | 0));
+            }
+        }
+    });
+});
+

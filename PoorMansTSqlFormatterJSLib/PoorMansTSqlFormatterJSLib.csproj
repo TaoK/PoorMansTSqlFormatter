@@ -44,6 +44,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="bridge.Release.json" />
     <None Include="bridge.json" />
     <None Include="packages.config" />
   </ItemGroup>

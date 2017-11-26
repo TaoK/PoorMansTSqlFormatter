@@ -4,7 +4,17 @@ This changelog aims to follow the structure laid out at [Keep a Changelog](http:
 
 ## [Unreleased]
 
-(nothing yet)
+### Added 
+
+* "Version Bump" script, for simplifying the release process
+
+### Changed
+
+* Merge Pull Request #188
+    * Enhancements to Appveyor CI build, support Pure .Net targets / configuration
+    * Fixes to test of cmdline formatter
+    * Enhancement to JS output copy to WebDemo
+* Simplify JS generation: single file, no reflection data, split debug vs release, with sourcemap in debug only
 
 ## [1.6.11] - 2017-11-24
 
