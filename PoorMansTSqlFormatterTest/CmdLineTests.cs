@@ -39,6 +39,7 @@ namespace PoorMansTSqlFormatterTests
         {
             TestFormattingFlags("SELECT 1, 2", "SELECT 1\r\n\t,2", "");
             TestFormattingFlags("SELECT 1, 2", "SELECT 1, 2", "/ecl-");
+            TestFormattingFlags("SELECT 1, 2", "SELECT\r\n\t1\r\n\t,2", "/ess");
             TestFormattingFlags("SELECT 1, 2", "SELECT 1\r\n ,2", "/is:\" \"");
             TestFormattingFlags("SELECT 1, 2", "SELECT 1\r\n\t, 2", "/sac");
             TestFormattingFlags("SELECT 1, 2", "SELECT 1,\r\n\t2", "/tc");

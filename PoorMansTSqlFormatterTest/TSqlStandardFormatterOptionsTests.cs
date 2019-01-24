@@ -47,6 +47,7 @@ namespace PoorMansTSqlFormatterTests
             Assert.IsFalse(options.SpaceAfterExpandedComma);
             Assert.IsTrue(options.ExpandBooleanExpressions);
             Assert.IsTrue(options.ExpandCaseStatements);
+            Assert.IsFalse(options.ExpandSelectStatements);
             Assert.IsTrue(options.ExpandBetweenConditions);
             Assert.IsFalse(options.BreakJoinOnSections);
             Assert.IsTrue(options.UppercaseKeywords);
@@ -74,6 +75,7 @@ namespace PoorMansTSqlFormatterTests
                 + ",SpaceAfterExpandedComma=true"
                 + ",ExpandBooleanExpressions=False"
                 + ",ExpandCaseStatements=false"
+                + ",ExpandSelectStatements=true"
                 + ",ExpandBetweenConditions=false"
                 + ",BreakJoinOnSections=true"
                 + ",UppercaseKeywords=false"
@@ -89,6 +91,7 @@ namespace PoorMansTSqlFormatterTests
             Assert.IsTrue(options.SpaceAfterExpandedComma);
             Assert.IsFalse(options.ExpandBooleanExpressions);
             Assert.IsFalse(options.ExpandCaseStatements);
+            Assert.IsTrue(options.ExpandSelectStatements);
             Assert.IsFalse(options.ExpandBetweenConditions);
             Assert.IsTrue(options.BreakJoinOnSections);
             Assert.IsFalse(options.UppercaseKeywords);
@@ -109,6 +112,7 @@ namespace PoorMansTSqlFormatterTests
                     SpaceAfterExpandedComma = true,
                     ExpandBooleanExpressions = false,
                     ExpandCaseStatements = false,
+                    ExpandSelectStatements = true,
                     ExpandBetweenConditions = false,
                     BreakJoinOnSections = true,
                     UppercaseKeywords = false,
@@ -128,6 +132,7 @@ namespace PoorMansTSqlFormatterTests
             Assert.AreEqual(expected.SpaceAfterExpandedComma, actual.SpaceAfterExpandedComma);
             Assert.AreEqual(expected.ExpandBooleanExpressions, actual.ExpandBooleanExpressions);
             Assert.AreEqual(expected.ExpandCaseStatements, actual.ExpandCaseStatements);
+            Assert.AreEqual(expected.ExpandSelectStatements, actual.ExpandSelectStatements);
             Assert.AreEqual(expected.ExpandBetweenConditions, actual.ExpandBetweenConditions);
             Assert.AreEqual(expected.BreakJoinOnSections, actual.BreakJoinOnSections);
             Assert.AreEqual(expected.UppercaseKeywords, actual.UppercaseKeywords);

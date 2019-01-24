@@ -54,7 +54,7 @@ namespace PoorMansTSqlFormatterCmdLine
                     ExpandBetweenConditions = true,
                     ExpandBooleanExpressions = true,
                     ExpandCaseStatements = true,
-                    ExpandSelectStatements = true,
+                    ExpandSelectStatements = false,
                     ExpandCommaLists = true,
                     BreakJoinOnSections = false,
                     UppercaseKeywords = true,
