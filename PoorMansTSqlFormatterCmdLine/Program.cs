@@ -54,6 +54,7 @@ namespace PoorMansTSqlFormatterCmdLine
                     ExpandBetweenConditions = true,
                     ExpandBooleanExpressions = true,
                     ExpandCaseStatements = true,
+                    ExpandSelectStatements = true,
                     ExpandCommaLists = true,
                     BreakJoinOnSections = false,
                     UppercaseKeywords = true,
@@ -83,6 +84,7 @@ namespace PoorMansTSqlFormatterCmdLine
               .Add("ebc|expandBetweenConditions", delegate(string v) { options.ExpandBetweenConditions = v != null; })
               .Add("ebe|expandBooleanExpressions", delegate(string v) { options.ExpandBooleanExpressions = v != null; })
               .Add("ecs|expandCaseStatements", delegate(string v) { options.ExpandCaseStatements = v != null; })
+              .Add("ess|expandSelectStatements", delegate (string v) { options.ExpandSelectStatements = v != null; })
 			  .Add("ecl|expandCommaLists", delegate(string v) { options.ExpandCommaLists = v != null; })
 			  .Add("eil|expandInLists", delegate(string v) { options.ExpandInLists = v != null; })
 			  .Add("bjo|breakJoinOnSections", delegate(string v) { options.BreakJoinOnSections = v != null; })

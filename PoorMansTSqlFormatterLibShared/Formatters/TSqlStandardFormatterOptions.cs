@@ -40,6 +40,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             ExpandBooleanExpressions = true;
             ExpandBetweenConditions = true;
             ExpandCaseStatements = true;
+            ExpandSelectStatements = false;
             UppercaseKeywords = true;
             BreakJoinOnSections = false;
             HTMLColoring = false;
@@ -75,6 +76,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 				else if (key == "ExpandBooleanExpressions") ExpandBooleanExpressions = Convert.ToBoolean(value);
 				else if (key == "ExpandBetweenConditions") ExpandBetweenConditions = Convert.ToBoolean(value);
 				else if (key == "ExpandCaseStatements") ExpandCaseStatements = Convert.ToBoolean(value);
+                else if (key == "ExpandSelectStatements") ExpandSelectStatements = Convert.ToBoolean(value);
 				else if (key == "UppercaseKeywords") UppercaseKeywords = Convert.ToBoolean(value);
 				else if (key == "BreakJoinOnSections") BreakJoinOnSections = Convert.ToBoolean(value);
 				else if (key == "HTMLColoring") HTMLColoring = Convert.ToBoolean(value);
@@ -103,6 +105,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
             if (ExpandBooleanExpressions != _defaultOptions.ExpandBooleanExpressions) overrides.Add("ExpandBooleanExpressions", ExpandBooleanExpressions.ToString());
             if (ExpandBetweenConditions != _defaultOptions.ExpandBetweenConditions) overrides.Add("ExpandBetweenConditions", ExpandBetweenConditions.ToString());
             if (ExpandCaseStatements != _defaultOptions.ExpandCaseStatements) overrides.Add("ExpandCaseStatements", ExpandCaseStatements.ToString());
+            if (ExpandSelectStatements != _defaultOptions.ExpandSelectStatements) overrides.Add("ExpandSelectStatements", ExpandSelectStatements.ToString());
             if (UppercaseKeywords != _defaultOptions.UppercaseKeywords) overrides.Add("UppercaseKeywords", UppercaseKeywords.ToString());
             if (BreakJoinOnSections != _defaultOptions.BreakJoinOnSections) overrides.Add("BreakJoinOnSections", BreakJoinOnSections.ToString());
             if (HTMLColoring != _defaultOptions.HTMLColoring) overrides.Add("HTMLColoring", HTMLColoring.ToString());
@@ -137,6 +140,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
         public bool SpaceAfterExpandedComma { get; set; }
         public bool ExpandBooleanExpressions { get; set; }
         public bool ExpandCaseStatements { get; set; }
+        public bool ExpandSelectStatements { get; set; }
         public bool ExpandBetweenConditions { get; set; }
         public bool UppercaseKeywords { get; set; }
         public bool BreakJoinOnSections { get; set; }

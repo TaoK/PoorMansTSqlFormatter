@@ -98,6 +98,7 @@ namespace PoorMansTSqlFormatterDemo
             chk_SpaceAfterComma.Checked = Properties.Settings.Default.SpaceAfterComma;
             chk_ExpandBooleanExpressions.Checked = Properties.Settings.Default.ExpandBooleanExpressions;
             chk_ExpandCaseStatements.Checked = Properties.Settings.Default.ExpandCaseStatements;
+            chk_ExpandSelectStatements.Checked = Properties.Settings.Default.ExpandSelectStatements;
 			chk_ExpandBetweenConditions.Checked = Properties.Settings.Default.ExpandBetweenConditions;
 			chk_ExpandInLists.Checked = Properties.Settings.Default.ExpandInLists;
 			chk_BreakJoinOnSections.Checked = Properties.Settings.Default.BreakJoinOnSections;
@@ -179,6 +180,7 @@ namespace PoorMansTSqlFormatterDemo
                         SpaceAfterExpandedComma = chk_SpaceAfterComma.Checked,
                         ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked,
                         ExpandCaseStatements = chk_ExpandCaseStatements.Checked,
+                        ExpandSelectStatements= chk_ExpandSelectStatements.Checked,
 						ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked,
 						ExpandInLists = chk_ExpandInLists.Checked,
 						BreakJoinOnSections = chk_BreakJoinOnSections.Checked,

@@ -53,17 +53,22 @@ namespace PoorMansTSqlFormatterDemo
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txt_Input = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txt_TokenizedSql = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txt_ParsedXml = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.webBrowser_OutputSql = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.CustomContentWebBrowser();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.radio_Formatting_Identity = new System.Windows.Forms.RadioButton();
             this.radio_Formatting_Standard = new System.Windows.Forms.RadioButton();
             this.grp_Options = new System.Windows.Forms.GroupBox();
+            this.chk_ExpandSelectStatements = new System.Windows.Forms.CheckBox();
             this.chk_BreakJoinOnSections = new System.Windows.Forms.CheckBox();
             this.chk_ExpandInLists = new System.Windows.Forms.CheckBox();
             this.chk_EnableKeywordStandardization = new System.Windows.Forms.CheckBox();
@@ -101,14 +106,10 @@ namespace PoorMansTSqlFormatterDemo
             this.displayParsedSqlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displayFormattingOptionsAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.txt_Input = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
-            this.txt_TokenizedSql = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
-            this.txt_ParsedXml = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.SelectableTextBox();
-            this.webBrowser_OutputSql = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.CustomContentWebBrowser();
             this.englishToolStripMenuItem = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem();
             this.frenchToolStripMenuItem = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem();
             this.spanishToolStripMenuItem = new PoorMansTSqlFormatterDemo.FrameworkClassReplacements.RadioToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -169,6 +170,14 @@ namespace PoorMansTSqlFormatterDemo
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 
+            // txt_Input
+            // 
+            this.txt_Input.AcceptsReturn = true;
+            this.txt_Input.AcceptsTab = true;
+            resources.ApplyResources(this.txt_Input, "txt_Input");
+            this.txt_Input.Name = "txt_Input";
+            this.txt_Input.TextChanged += new System.EventHandler(this.txt_Input_TextChanged);
+            // 
             // splitContainer5
             // 
             resources.ApplyResources(this.splitContainer5, "splitContainer5");
@@ -189,12 +198,28 @@ namespace PoorMansTSqlFormatterDemo
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             // 
+            // txt_TokenizedSql
+            // 
+            this.txt_TokenizedSql.AcceptsReturn = true;
+            this.txt_TokenizedSql.AcceptsTab = true;
+            resources.ApplyResources(this.txt_TokenizedSql, "txt_TokenizedSql");
+            this.txt_TokenizedSql.Name = "txt_TokenizedSql";
+            this.txt_TokenizedSql.ReadOnly = true;
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.txt_ParsedXml);
             resources.ApplyResources(this.groupBox3, "groupBox3");
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.TabStop = false;
+            // 
+            // txt_ParsedXml
+            // 
+            this.txt_ParsedXml.AcceptsReturn = true;
+            this.txt_ParsedXml.AcceptsTab = true;
+            resources.ApplyResources(this.txt_ParsedXml, "txt_ParsedXml");
+            this.txt_ParsedXml.Name = "txt_ParsedXml";
+            this.txt_ParsedXml.ReadOnly = true;
             // 
             // splitContainer3
             // 
@@ -224,10 +249,16 @@ namespace PoorMansTSqlFormatterDemo
             resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             // 
+            // webBrowser_OutputSql
+            // 
+            resources.ApplyResources(this.webBrowser_OutputSql, "webBrowser_OutputSql");
+            this.webBrowser_OutputSql.Name = "webBrowser_OutputSql";
+            this.webBrowser_OutputSql.ScriptErrorsSuppressed = true;
+            // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.tableLayoutPanel2);
             resources.ApplyResources(this.groupBox5, "groupBox5");
+            this.groupBox5.Controls.Add(this.tableLayoutPanel2);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.TabStop = false;
             // 
@@ -262,6 +293,8 @@ namespace PoorMansTSqlFormatterDemo
             // 
             // grp_Options
             // 
+            resources.ApplyResources(this.grp_Options, "grp_Options");
+            this.grp_Options.Controls.Add(this.chk_ExpandSelectStatements);
             this.grp_Options.Controls.Add(this.chk_BreakJoinOnSections);
             this.grp_Options.Controls.Add(this.chk_ExpandInLists);
             this.grp_Options.Controls.Add(this.chk_EnableKeywordStandardization);
@@ -283,9 +316,17 @@ namespace PoorMansTSqlFormatterDemo
             this.grp_Options.Controls.Add(this.chk_ExpandBooleanExpressions);
             this.grp_Options.Controls.Add(this.chk_TrailingCommas);
             this.grp_Options.Controls.Add(this.chk_ExpandCommaLists);
-            resources.ApplyResources(this.grp_Options, "grp_Options");
             this.grp_Options.Name = "grp_Options";
             this.grp_Options.TabStop = false;
+            // 
+            // chk_ExpandSelectStatements
+            // 
+            resources.ApplyResources(this.chk_ExpandSelectStatements, "chk_ExpandSelectStatements");
+            this.chk_ExpandSelectStatements.Checked = true;
+            this.chk_ExpandSelectStatements.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chk_ExpandSelectStatements.Name = "chk_ExpandSelectStatements";
+            this.chk_ExpandSelectStatements.UseVisualStyleBackColor = true;
+            this.chk_ExpandSelectStatements.CheckedChanged += new System.EventHandler(this.FormatSettingsControlChanged);
             // 
             // chk_BreakJoinOnSections
             // 
@@ -435,8 +476,8 @@ namespace PoorMansTSqlFormatterDemo
             // 
             // grp_IdentityFormattingOptions
             // 
-            this.grp_IdentityFormattingOptions.Controls.Add(this.chk_IdentityColoring);
             resources.ApplyResources(this.grp_IdentityFormattingOptions, "grp_IdentityFormattingOptions");
+            this.grp_IdentityFormattingOptions.Controls.Add(this.chk_IdentityColoring);
             this.grp_IdentityFormattingOptions.Name = "grp_IdentityFormattingOptions";
             this.grp_IdentityFormattingOptions.TabStop = false;
             // 
@@ -458,12 +499,12 @@ namespace PoorMansTSqlFormatterDemo
             // 
             // grp_ObfuscationOptions
             // 
+            resources.ApplyResources(this.grp_ObfuscationOptions, "grp_ObfuscationOptions");
             this.grp_ObfuscationOptions.Controls.Add(this.chk_KeywordSubstitution);
             this.grp_ObfuscationOptions.Controls.Add(this.chk_PreserveComments);
             this.grp_ObfuscationOptions.Controls.Add(this.chk_RandomizeKeywordCase);
             this.grp_ObfuscationOptions.Controls.Add(this.chk_RandomizeLineLength);
             this.grp_ObfuscationOptions.Controls.Add(this.chk_RandomizeColor);
-            resources.ApplyResources(this.grp_ObfuscationOptions, "grp_ObfuscationOptions");
             this.grp_ObfuscationOptions.Name = "grp_ObfuscationOptions";
             this.grp_ObfuscationOptions.TabStop = false;
             // 
@@ -558,42 +599,6 @@ namespace PoorMansTSqlFormatterDemo
             this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
             resources.ApplyResources(this.languageToolStripMenuItem, "languageToolStripMenuItem");
             // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // txt_Input
-            // 
-            this.txt_Input.AcceptsReturn = true;
-            this.txt_Input.AcceptsTab = true;
-            resources.ApplyResources(this.txt_Input, "txt_Input");
-            this.txt_Input.Name = "txt_Input";
-            this.txt_Input.TextChanged += new System.EventHandler(this.txt_Input_TextChanged);
-            // 
-            // txt_TokenizedSql
-            // 
-            this.txt_TokenizedSql.AcceptsReturn = true;
-            this.txt_TokenizedSql.AcceptsTab = true;
-            resources.ApplyResources(this.txt_TokenizedSql, "txt_TokenizedSql");
-            this.txt_TokenizedSql.Name = "txt_TokenizedSql";
-            this.txt_TokenizedSql.ReadOnly = true;
-            // 
-            // txt_ParsedXml
-            // 
-            this.txt_ParsedXml.AcceptsReturn = true;
-            this.txt_ParsedXml.AcceptsTab = true;
-            resources.ApplyResources(this.txt_ParsedXml, "txt_ParsedXml");
-            this.txt_ParsedXml.Name = "txt_ParsedXml";
-            this.txt_ParsedXml.ReadOnly = true;
-            // 
-            // webBrowser_OutputSql
-            // 
-            resources.ApplyResources(this.webBrowser_OutputSql, "webBrowser_OutputSql");
-            this.webBrowser_OutputSql.Name = "webBrowser_OutputSql";
-            this.webBrowser_OutputSql.ScriptErrorsSuppressed = true;
-            // 
             // englishToolStripMenuItem
             // 
             this.englishToolStripMenuItem.CheckOnClick = true;
@@ -614,6 +619,12 @@ namespace PoorMansTSqlFormatterDemo
             this.spanishToolStripMenuItem.Name = "spanishToolStripMenuItem";
             resources.ApplyResources(this.spanishToolStripMenuItem, "spanishToolStripMenuItem");
             this.spanishToolStripMenuItem.CheckedChanged += new System.EventHandler(this.languageSettingsHandler);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -640,10 +651,12 @@ namespace PoorMansTSqlFormatterDemo
             this.groupBox3.PerformLayout();
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
+            this.splitContainer3.Panel2.PerformLayout();
             this.splitContainer3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.grp_Options.ResumeLayout(false);
@@ -720,6 +733,7 @@ namespace PoorMansTSqlFormatterDemo
 		private System.Windows.Forms.Label lbl_ClauseBreaks;
 		private System.Windows.Forms.TextBox txt_StatementBreaks;
 		private System.Windows.Forms.Label lbl_StatementBreaks;
+        private System.Windows.Forms.CheckBox chk_ExpandSelectStatements;
     }
 }
 

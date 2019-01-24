@@ -205,6 +205,21 @@ namespace PoorMansTSqlFormatterDemo.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ExpandSelectStatements
+        {
+            get
+            {
+                return ((bool)(this["ExpandSelectStatements"]));
+            }
+            set
+            {
+                this["ExpandSelectStatements"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ExpandBetweenConditions {
             get {

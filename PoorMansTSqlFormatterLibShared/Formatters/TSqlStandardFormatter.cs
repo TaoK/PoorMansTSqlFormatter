@@ -47,7 +47,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
         }
 
         [Obsolete("Use the constructor with the TSqlStandardFormatterOptions parameter")]
-        public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool breakJoinOnSections, bool uppercaseKeywords, bool htmlColoring, bool keywordStandardization)
+        public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandSelectStatements, bool expandBetweenConditions, bool breakJoinOnSections, bool uppercaseKeywords, bool htmlColoring, bool keywordStandardization)
         {
             Options = new TSqlStandardFormatterOptions
                 {
@@ -60,6 +60,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     ExpandBooleanExpressions = expandBooleanExpressions,
                     ExpandBetweenConditions = expandBetweenConditions,
                     ExpandCaseStatements = expandCaseStatements,
+                    ExpandSelectStatements = expandSelectStatements,
                     UppercaseKeywords = uppercaseKeywords,
                     BreakJoinOnSections = breakJoinOnSections,
                     HTMLColoring = htmlColoring,
@@ -258,7 +259,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                         state.BreakExpected = true;
                     ProcessSqlNodeList(contentElement.ChildrenByName(SqlStructureConstants.ENAME_CONTAINER_OPEN), state);
                     if (Options.BreakJoinOnSections)
-                        state.IncrementIndent();
+                      state.IncrementIndent();
                     ProcessSqlNodeList(contentElement.ChildrenByName(SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT), state);
                     if (Options.BreakJoinOnSections)
                         state.DecrementIndent();
@@ -626,7 +627,14 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     WhiteSpace_SeparateWords(state);
                     state.SetRecentKeyword(contentElement.TextValue);
                     state.AddOutputContent(FormatKeyword(contentElement.TextValue), SqlHtmlConstants.CLASS_KEYWORD);
-                    state.WordSeparatorExpected = true;
+                    if (Options.ExpandSelectStatements && contentElement.Parent.ChildrenByName(SqlStructureConstants.ENAME_COMMA).Any())
+                    {
+                        state.BreakExpected = true;
+                    }
+                    else
+                    {
+                        state.WordSeparatorExpected = true;
+                    }
                     break;
 
                 case SqlStructureConstants.ENAME_PSEUDONAME:
