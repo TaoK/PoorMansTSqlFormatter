@@ -2,7 +2,7 @@
 <!--
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0 and JS, written in C#. 
-Copyright (C) 2017 Tao Klerks
+Copyright (C) 2017-2019 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -58,6 +58,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   Value='APPLICATIONFOLDER=[APPLICATIONFOLDER];SSMS17FILE=[#PkgDefExtensionsHookup17]'
                   />
 
+    <CustomAction Id='PrepActionData18'
+                  Property='SetupPackageFilterAction18'
+                  Value='APPLICATIONFOLDER=[APPLICATIONFOLDER];SSMS18FILE=[#PkgDefExtensionsHookup18]'
+                  />
+
     <CustomAction Id="SetupPackageFilterAction2014" 
                   Return="check"
                   Execute="deferred"
@@ -82,10 +87,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                   Impersonate="no"
                   />
 
+    <CustomAction Id="SetupPackageFilterAction18"
+              Return="check"
+              Execute="deferred"
+              BinaryKey="PoorMansTSqlFormatterSSMSPackage.Setup.action.CA.dll"
+              DllEntry="PkgDefUpdateAction18"
+              Impersonate="no"
+                  />
+
     <InstallExecuteSequence>
       <Custom Action="PrepActionData2014" Before="InstallInitialize" />
       <Custom Action="PrepActionData2016" Before="InstallInitialize" />
       <Custom Action="PrepActionData17" Before="InstallInitialize" />
+      <Custom Action="PrepActionData18" Before="InstallInitialize" />
       <Custom Action="SetupPackageFilterAction2014" Before="InstallFinalize">
         <![CDATA[&SSMS2014Feature=3]]>
       </Custom>
@@ -94,6 +108,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </Custom>
       <Custom Action="SetupPackageFilterAction17" Before="InstallFinalize">
         <![CDATA[&SSMS17Feature=3]]>
+      </Custom>
+      <Custom Action="SetupPackageFilterAction18" Before="InstallFinalize">
+        <![CDATA[&SSMS18Feature=3]]>
       </Custom>
     </InstallExecuteSequence>
     
@@ -144,6 +161,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </Condition>
         <ComponentGroupRef Id="SSMS17ComponentGroup" />
       </Feature>
+      <Feature
+        Id="SSMS18Feature"
+        Title="SSMS 18 integration"
+        Level="1"
+        AllowAdvertise='no'
+        InstallDefault='local'
+        >
+        <Condition Level='0'>
+          <![CDATA[NOT SSMS18EXTENSIONSFOLDER]]>
+        </Condition>
+        <ComponentGroupRef Id="SSMS18ComponentGroup" />
+      </Feature>
     </Feature>
 
     <!-- for the "WixUI_Advanced" UI -->
@@ -185,9 +214,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <Property Id="SSMS17EXTENSIONSFOLDER">
       <RegistrySearch Id='SSMS17ExtensionsFolderRegistrySearch' Type='raw' Root='HKCU' Key='Software\Microsoft\SQL Server Management Studio\14.0_Config\Initialization' Name='ApplicationExtensionsFolder' />
     </Property>
+    <Property Id="SSMS18EXTENSIONSFOLDER">
+      <RegistrySearch Id='SSMS18ExtensionsFolderRegistrySearch' Type='raw' Root='HKCU' Key='Software\Microsoft\SQL Server Management Studio\18.0_IsoShell_Config\Initialization' Name='ApplicationExtensionsFolder' />
+    </Property>
 
-    <Condition Message='This setup requires SSMS 2014, 2016 or 17 installed.'>
-      <![CDATA[Installed OR SSMS2014EXTENSIONSFOLDER OR SSMS2016EXTENSIONSFOLDER OR SSMS17EXTENSIONSFOLDER]]>
+    <Condition Message='This setup requires SSMS 2014, 2016, 17 or 18 installed.'>
+      <![CDATA[Installed OR SSMS2014EXTENSIONSFOLDER OR SSMS2016EXTENSIONSFOLDER OR SSMS17EXTENSIONSFOLDER OR SSMS18EXTENSIONSFOLDER]]>
     </Condition>
   
   </Product>
@@ -207,6 +239,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <Directory Id="SSMS2014EXTENSIONSFOLDER" Name="2014DefaultFolder" />
       <Directory Id="SSMS2016EXTENSIONSFOLDER" Name="2016DefaultFolder" />
       <Directory Id="SSMS17EXTENSIONSFOLDER" Name="17DefaultFolder" />
+      <Directory Id="SSMS18EXTENSIONSFOLDER" Name="18DefaultFolder" />
     </Directory>
   </Fragment>
 
@@ -259,6 +292,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </Component>
       <Component Id="SSMS17PackageDefFile" Directory="SSMS17EXTENSIONSFOLDER" Guid='06f480cd-1c78-4e37-8f43-d8b79f1c6808'>
         <File Source="$(var.PoorMansTSqlFormatterSSMSPackage.TargetDir)PoorMansTSqlFormatterSSMSPackage.pkgdef" Id="PkgDefExtensionsHookup17" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+    <ComponentGroup Id="SSMS18ComponentGroup">
+      <Component Id='SSMS18StartupFlag' Directory='APPLICATIONFOLDER' Guid='2C1C0868-EF95-4288-B5F0-ED8FDB057F5D'>
+        <RegistryKey Root='HKCU' Key='Software\Microsoft\SQL Server Management Studio\15.0\Packages\{247609B1-2692-47D6-972A-976544685F0E}'>
+          <RegistryValue Type='integer' Name='SkipLoading' Value='1'/>
+        </RegistryKey>
+      </Component>
+      <Component Id="SSMS18PackageDefFile" Directory="SSMS18EXTENSIONSFOLDER" Guid='BB691122-C522-4ED6-808C-F8F3827D5BC2'>
+        <File Source="$(var.PoorMansTSqlFormatterSSMSPackage.TargetDir)PoorMansTSqlFormatterSSMSPackage.pkgdef" Id="PkgDefExtensionsHookup18" KeyPath="yes" />
       </Component>
     </ComponentGroup>
   </Fragment>  

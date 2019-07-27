@@ -31,6 +31,7 @@ namespace PoorMansTSqlFormatterSSMSPackage.Setup.action
         const string SSMS2014FILEKEY = "SSMS2014FILE";
         const string SSMS2016FILEKEY = "SSMS2016FILE";
         const string SSMS17FILEKEY = "SSMS17FILE";
+        const string SSMS18FILEKEY = "SSMS18FILE";
         const string APPLICATIONFOLDERKEY = "APPLICATIONFOLDER";
         const string CODEBASEENTRYPREFIX = "\"CodeBase\"=\"";
         const string PACKAGEFOLDERVARIABLE = "$PackageFolder$\\";
@@ -51,6 +52,12 @@ namespace PoorMansTSqlFormatterSSMSPackage.Setup.action
         public static ActionResult PkgDefUpdateAction17(Session session)
         {
             return PkgDefUpdateAction(session, session.CustomActionData[SSMS17FILEKEY]);
+        }
+
+        [CustomAction]
+        public static ActionResult PkgDefUpdateAction18(Session session)
+        {
+            return PkgDefUpdateAction(session, session.CustomActionData[SSMS18FILEKEY]);
         }
 
 
