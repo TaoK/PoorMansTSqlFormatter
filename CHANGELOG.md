@@ -89,6 +89,8 @@ This changelog aims to follow the structure laid out at [Keep a Changelog](http:
 * Patched NPP Plugin helper to support x64 (https://github.com/kbilsted/NotepadPlusPlusPluginPack.Net/pull/19)
 * Update build configurations to clarify DotNet vs x86 vs x64
 * (in retrospect) broke "[noformat]" and "[minify]" region handling 
+* SqlTree change: is no longer an XML document! New lighter-weight structure supports JS transpiling. **SEMANTIC VERSIONING VIOLATION**
+
 
 ## [1.5.3] - 2013-10-23
 
