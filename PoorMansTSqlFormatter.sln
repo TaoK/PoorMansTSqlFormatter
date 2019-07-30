@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterVSPack
 		{679B3998-C5A5-4B64-8674-70BE959ACE6E} = {679B3998-C5A5-4B64-8674-70BE959ACE6E}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterVSPackage2019", "PoorMansTSqlFormatterVSPackage2019\PoorMansTSqlFormatterVSPackage2019.csproj", "{A160C033-3357-4BBB-9BF6-7B7D9971AD65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|PureDotNet = Debug|PureDotNet
@@ -222,6 +224,18 @@ Global
 		{B1175A57-8B7B-4B8D-ACE0-3597B6B729F8}.Release|x64.ActiveCfg = Release|Any CPU
 		{B1175A57-8B7B-4B8D-ACE0-3597B6B729F8}.Release|x86.ActiveCfg = Release|Any CPU
 		{B1175A57-8B7B-4B8D-ACE0-3597B6B729F8}.Release|x86.Build.0 = Release|Any CPU
+		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Debug|PureDotNet.ActiveCfg = Debug|Any CPU
+		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Debug|PureDotNet.Build.0 = Debug|Any CPU
+		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Debug|x64.Build.0 = Debug|Any CPU
+		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Debug|x86.Build.0 = Debug|Any CPU
+		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Release|PureDotNet.ActiveCfg = Release|Any CPU
+		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Release|PureDotNet.Build.0 = Release|Any CPU
+		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Release|x64.ActiveCfg = Release|Any CPU
+		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Release|x64.Build.0 = Release|Any CPU
+		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Release|x86.ActiveCfg = Release|Any CPU
+		{A160C033-3357-4BBB-9BF6-7B7D9971AD65}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

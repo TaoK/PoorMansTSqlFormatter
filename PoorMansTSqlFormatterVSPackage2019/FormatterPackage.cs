@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0 and JS, written in C#. 
-Copyright (C) 2011-2017 Tao Klerks
+Copyright (C) 2011-2019 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -27,21 +27,22 @@ using System;
 using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 
+
 //Please note, most of this code is duplicated across the SSMS Package, VS2015 extension, and VS2019 extension. 
 // Descriptions, GUIDs, Early SSMS support, and Async loading support differ.
 // (it would make sense to improve this at some point)
 namespace PoorMansTSqlFormatterSSMSPackage
 {
-    [PackageRegistration(UseManagedResourcesOnly = true)]  //General VSPackage hookup
+    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]  //General VSPackage hookup, 
     [InstalledProductRegistration("#ProductName", "#ProductDescription", "1.6.14")]  //Package Medatada, references to VSPackage.resx resource keys
-    [ProvideAutoLoad(VSConstants.UICONTEXT.NotBuildingAndNotDebugging_string)] // Auto-load for dynamic menu enabling/disabling; this context seems to work for SSMS and VS
+    [ProvideAutoLoad(VSConstants.UICONTEXT.NotBuildingAndNotDebugging_string, PackageAutoLoadFlags.BackgroundLoad)] // Auto-load for dynamic menu enabling/disabling; this context seems to work for SSMS and VS
     [ProvideMenuResource("Menus.ctmenu", 1)]  //Hook to command definitions / to vsct stuff
     [Guid(guidPoorMansTSqlFormatterSSMSPackagePkgString)] //Arbitrarily/randomly defined guid for this extension
-    public sealed class FormatterPackage : Package
+    public sealed class FormatterPackage : AsyncPackage
     {
         //These constants are duplicated in the vsct file
-        public const string guidPoorMansTSqlFormatterSSMSPackagePkgString = "247609b1-2692-47d6-972a-976544685f0e";
-        public const string guidPoorMansTSqlFormatterSSMSPackageCmdSetString = "5ea2e413-8351-4ca9-b0a0-34a9b241648b";
+        public const string guidPoorMansTSqlFormatterSSMSPackagePkgString = "14AD1DD1-11F6-47B6-8952-756127D4818C";
+        public const string guidPoorMansTSqlFormatterSSMSPackageCmdSetString = "49665075-9E93-4356-8E30-1137789DC81E";
         public const uint cmdidPoorMansFormatSQL = 0x100;
         public const uint cmdidPoorMansSqlOptions = 0x101;
 
@@ -56,15 +57,17 @@ namespace PoorMansTSqlFormatterSSMSPackage
         {
         }
 
-        protected override void Initialize()
+        protected override async System.Threading.Tasks.Task InitializeAsync(System.Threading.CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            base.Initialize();
+            await base.InitializeAsync(cancellationToken, progress);
 
             _SSMSHelper = new GenericVSHelper(true, null, null, null);
 
+            //Switch to UI thread, so that we're allowed to get services
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
             // Add our command handlers for the menu commands defined in the in the .vsct file, and enable them
-            OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-            if (null != mcs)
+            if (await GetServiceAsync(typeof(IMenuCommandService)).ConfigureAwait(false) is OleMenuCommandService mcs)
             {
                 CommandID menuCommandID;
                 OleMenuCommand menuCommand;
@@ -82,10 +85,7 @@ namespace PoorMansTSqlFormatterSSMSPackage
                 mcs.AddCommand(menuCommand);
             }
 
-            _packageLoadingDisableTimer = new System.Timers.Timer();
-            _packageLoadingDisableTimer.Elapsed += new System.Timers.ElapsedEventHandler(PackageDisableLoadingCallback);
-            _packageLoadingDisableTimer.Interval = 15000;
-            _packageLoadingDisableTimer.Enabled = true;
+            return;
         }
 
         private void FormatSqlCallback(object sender, EventArgs e)
@@ -107,31 +107,6 @@ namespace PoorMansTSqlFormatterSSMSPackage
                 queryingCommand.Enabled = true;
             else
                 queryingCommand.Enabled = false;
-        }
-
-        private void PackageDisableLoadingCallback(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            _packageLoadingDisableTimer.Enabled = false;
-            SetPackageLoadingDisableKeyIfRequired();
-        }
-
-        protected override int QueryClose(out bool canClose)
-        {
-            SetPackageLoadingDisableKeyIfRequired();
-            return base.QueryClose(out canClose);
-        }
-
-        /// <summary>
-        /// For SSMS 2015 and earlier, this will set a registry key to disable the extension. Strangely, extension loading only works for disabled extensions...
-        /// </summary>
-        private void SetPackageLoadingDisableKeyIfRequired()
-        {
-            DTE2 dte = (DTE2)GetService(typeof(DTE));
-            string fullName = dte.FullName.ToUpperInvariant();
-            int majorVersion = int.Parse(dte.Version.Split('.')[0]);
-
-            if ((fullName.Contains("SSMS") || fullName.Contains("MANAGEMENT STUDIO")) && majorVersion <= 2017)
-                UserRegistryRoot.CreateSubKey(@"Packages\{" + guidPoorMansTSqlFormatterSSMSPackagePkgString + "}").SetValue("SkipLoading", 1);
         }
     }
 }

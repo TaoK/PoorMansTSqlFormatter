@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0 and JS, written in C#. 
-Copyright (C) 2011-2017 Tao Klerks
+Copyright (C) 2011-2019 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -28,7 +28,8 @@ using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 
 
-//Please note, most of this code is duplicated in the SSMS Package. Only descriptions and GUIDs differ.
+//Please note, most of this code is duplicated across the SSMS Package, VS2015 extension, and VS2019 extension. 
+// Descriptions, GUIDs, Early SSMS support, and Async loading support differ.
 // (it would make sense to improve this at some point)
 namespace PoorMansTSqlFormatterSSMSPackage
 {
@@ -82,10 +83,6 @@ namespace PoorMansTSqlFormatterSSMSPackage
                 mcs.AddCommand(menuCommand);
             }
 
-            _packageLoadingDisableTimer = new System.Timers.Timer();
-            _packageLoadingDisableTimer.Elapsed += new System.Timers.ElapsedEventHandler(PackageDisableLoadingCallback);
-            _packageLoadingDisableTimer.Interval = 15000;
-            _packageLoadingDisableTimer.Enabled = true;
         }
 
         private void FormatSqlCallback(object sender, EventArgs e)
@@ -107,31 +104,6 @@ namespace PoorMansTSqlFormatterSSMSPackage
                 queryingCommand.Enabled = true;
             else
                 queryingCommand.Enabled = false;
-        }
-
-        private void PackageDisableLoadingCallback(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            _packageLoadingDisableTimer.Enabled = false;
-            SetPackageLoadingDisableKeyIfRequired();
-        }
-
-        protected override int QueryClose(out bool canClose)
-        {
-            SetPackageLoadingDisableKeyIfRequired();
-            return base.QueryClose(out canClose);
-        }
-
-        /// <summary>
-        /// For SSMS 2015 and earlier, this will set a registry key to disable the extension. Strangely, extension loading only works for disabled extensions...
-        /// </summary>
-        private void SetPackageLoadingDisableKeyIfRequired()
-        {
-            DTE2 dte = (DTE2)GetService(typeof(DTE));
-            string fullName = dte.FullName.ToUpperInvariant();
-            int majorVersion = int.Parse(dte.Version.Split('.')[0]);
-
-            if ((fullName.Contains("SSMS") || fullName.Contains("MANAGEMENT STUDIO")) && majorVersion <= 2017)
-                UserRegistryRoot.CreateSubKey(@"Packages\{" + guidPoorMansTSqlFormatterSSMSPackagePkgString + "}").SetValue("SkipLoading", 1);
         }
     }
 }
