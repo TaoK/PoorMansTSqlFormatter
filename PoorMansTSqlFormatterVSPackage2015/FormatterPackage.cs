@@ -64,8 +64,7 @@ namespace PoorMansTSqlFormatterSSMSPackage
             _SSMSHelper = new GenericVSHelper(true, null, null, null);
 
             // Add our command handlers for the menu commands defined in the in the .vsct file, and enable them
-            OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-            if (null != mcs)
+            if (GetService(typeof(IMenuCommandService)) is OleMenuCommandService mcs)
             {
                 CommandID menuCommandID;
                 OleMenuCommand menuCommand;
