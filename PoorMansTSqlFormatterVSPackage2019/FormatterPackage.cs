@@ -34,7 +34,7 @@ using System.Runtime.InteropServices;
 namespace PoorMansTSqlFormatterSSMSPackage
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]  //General VSPackage hookup, 
-    [InstalledProductRegistration("#ProductName", "#ProductDescription", "1.6.14")]  //Package Medatada, references to VSPackage.resx resource keys
+    [InstalledProductRegistration("#ProductName", "#ProductDescription", "1.6.15")]  //Package Medatada, references to VSPackage.resx resource keys
     [ProvideAutoLoad(VSConstants.UICONTEXT.NotBuildingAndNotDebugging_string, PackageAutoLoadFlags.BackgroundLoad)] // Auto-load for dynamic menu enabling/disabling; this context seems to work for SSMS and VS
     [ProvideMenuResource("Menus.ctmenu", 1)]  //Hook to command definitions / to vsct stuff
     [Guid(guidPoorMansTSqlFormatterSSMSPackagePkgString)] //Arbitrarily/randomly defined guid for this extension
