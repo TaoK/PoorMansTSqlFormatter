@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="14AD1DD1-11F6-47B6-8952-756127D4818C" Version="1.6.15" Language="en-US" Publisher="TaoKlerks" />
+    <Identity Id="14AD1DD1-11F6-47B6-8952-756127D4818C" Version="1.6.15" Language="en-US" Publisher="Tao Klerks" />
     <DisplayName>Poor Man's T-Sql Formatter VS Extension 2015</DisplayName>
     <Description xml:space="preserve">A simple free (AGPL) T-SQL Formatting Extension for Visual Studio 2013-2015.</Description>
     <MoreInfo>http://architectshack.com/PoorMansTSqlFormatter.ashx</MoreInfo>
