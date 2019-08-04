@@ -25,11 +25,11 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("PoorMansTSqlFormatterVSPackage")]
 [//Note, this is also in resources file for localization!
-assembly: AssemblyDescription("A simple free (AGPL) T-SQL Formatting Extension for Visual Studio 2013-2017.")]
+assembly: AssemblyDescription("A simple free (AGPL) T-SQL Formatting Extension for Visual Studio 2013.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PoorMansTSqlFormatterVSPackage")]
-[assembly: AssemblyCopyright("Copyright ©  2011-2017 Tao Klerks")]
+[assembly: AssemblyCopyright("Copyright ©  2011-2019 Tao Klerks")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.6.15.*")]

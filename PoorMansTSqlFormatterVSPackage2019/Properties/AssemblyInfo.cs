@@ -25,7 +25,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("PoorMansTSqlFormatterVSPackage2019")]
 [//Note, this is also in resources file for localization!
-assembly: AssemblyDescription("A simple free (AGPL) T-SQL Formatting Extension for Visual Studio 2017-2019.")]
+assembly: AssemblyDescription("A simple free (AGPL) T-SQL Formatting Extension for Visual Studio 2015-2019.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PoorMansTSqlFormatterVSPackage2019")]

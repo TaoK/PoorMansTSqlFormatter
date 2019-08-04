@@ -64,7 +64,7 @@ namespace PoorMansTSqlFormatterSSMSPackage
             _SSMSHelper = new GenericVSHelper(true, null, null, null);
 
             //Switch to UI thread, so that we're allowed to get services
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            await JoinableTaskFactory.SwitchToMainThreadAsync();
 
             // Add our command handlers for the menu commands defined in the in the .vsct file, and enable them
             if (await GetServiceAsync(typeof(IMenuCommandService)).ConfigureAwait(false) is OleMenuCommandService mcs)

@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ProductName" xml:space="preserve">
-    <value>PoorMansTSqlFormatterVSPackage2015</value>
+    <value>PoorMansTSqlFormatterVSPackage2013</value>
   </data>
   <data name="ProductDescription" xml:space="preserve">
-    <value>A simple free (AGPL) T-SQL Formatting Extension for Visual Studio 2013-2015</value>
+    <value>A simple free (AGPL) T-SQL Formatting Extension for Visual Studio 2013</value>
   </data>
 </root>
