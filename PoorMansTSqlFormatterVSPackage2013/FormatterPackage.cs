@@ -41,7 +41,7 @@ namespace PoorMansTSqlFormatterSSMSPackage
     public sealed class FormatterPackage : Package
     {
         //These constants are duplicated in the vsct file
-        public const string guidPoorMansTSqlFormatterSSMSPackagePkgString = "14AD1DD1-11F6-47B6-8952-756127D4818C";
+        public const string guidPoorMansTSqlFormatterSSMSPackagePkgString = "33ED8C3D-D283-4360-81BA-51A19B3781A6";
         public const string guidPoorMansTSqlFormatterSSMSPackageCmdSetString = "49665075-9E93-4356-8E30-1137789DC81E";
         public const uint cmdidPoorMansFormatSQL = 0x100;
         public const uint cmdidPoorMansSqlOptions = 0x101;
