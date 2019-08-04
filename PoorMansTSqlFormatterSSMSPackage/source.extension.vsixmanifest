@@ -30,8 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <InstallationTarget Id="ssms" Version="[1.0,]" />
   </Installation>
   <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,18.0)" DisplayName="Visual Studio core editor" />
-    <Prerequisite Id="Microsoft.VisualStudio.Component.Web" Version="[15.0,18.0)" DisplayName="Web development tools" />
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[12.0,18.0)" DisplayName="Visual Studio core editor" />
   </Prerequisites>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
