@@ -51,7 +51,6 @@ namespace PoorMansTSqlFormatterSSMSPackage
         //TODO: figure out how to deal with signing... where to keep the key, etc.
 
         private GenericVSHelper _SSMSHelper;
-        private System.Timers.Timer _packageLoadingDisableTimer;
 
         public FormatterPackage()
         {
