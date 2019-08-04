@@ -29,7 +29,7 @@ using System.Reflection;
 [assembly: AssemblyCopyright("Copyright ©  2011-2017 Tao Klerks")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.6.15.*")]
+[assembly: AssemblyVersion("1.6.16.*")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]
