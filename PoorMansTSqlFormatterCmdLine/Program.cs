@@ -57,7 +57,9 @@ namespace PoorMansTSqlFormatterCmdLine
                     ExpandCommaLists = true,
                     BreakJoinOnSections = false,
                     UppercaseKeywords = true,
-					ExpandInLists = true
+					ExpandInLists = true,
+                    AddBracketsAroundNames = false,
+                    RemoveBracketsAroundNames = false
                 };
             
             //bulk formatter options
@@ -88,6 +90,8 @@ namespace PoorMansTSqlFormatterCmdLine
 			  .Add("bjo|breakJoinOnSections", delegate(string v) { options.BreakJoinOnSections = v != null; })
               .Add("uk|uppercaseKeywords", delegate(string v) { options.UppercaseKeywords = v != null; })
               .Add("sk|standardizeKeywords", delegate(string v) { options.KeywordStandardization = v != null; })
+              .Add("ab|addBracketsAroundNames", delegate (string v) { options.AddBracketsAroundNames = v != null; })
+              .Add("rb|removeBracketsAroundNames", delegate (string v) { options.RemoveBracketsAroundNames = v != null; })
 
               .Add("ae|allowParsingErrors", delegate(string v) { allowParsingErrors = v != null; })
               .Add("e|extensions=", delegate(string v) { extensions.Add((v.StartsWith(".") ? "" : ".") + v); })
@@ -150,6 +154,13 @@ namespace PoorMansTSqlFormatterCmdLine
             {
                 showUsageError = true;
                 Console.Error.WriteLine(_generalResourceManager.GetString("UnrecognizedArgumentsErrorMessage"));
+            }
+
+            // then check for incompatible settings
+            if (options.AddBracketsAroundNames && options.RemoveBracketsAroundNames)
+            {
+                showUsageError = true;
+                Console.Error.WriteLine(_generalResourceManager.GetString("InvalidBracketsAroundNamesCombination"));
             }
 
             if (extensions.Count == 0)

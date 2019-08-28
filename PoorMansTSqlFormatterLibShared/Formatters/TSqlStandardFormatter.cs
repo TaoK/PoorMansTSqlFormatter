@@ -47,7 +47,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
         }
 
         [Obsolete("Use the constructor with the TSqlStandardFormatterOptions parameter")]
-        public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool breakJoinOnSections, bool uppercaseKeywords, bool htmlColoring, bool keywordStandardization)
+        public TSqlStandardFormatter(string indentString, int spacesPerTab, int maxLineWidth, bool expandCommaLists, bool trailingCommas, bool spaceAfterExpandedComma, bool expandBooleanExpressions, bool expandCaseStatements, bool expandBetweenConditions, bool breakJoinOnSections, bool uppercaseKeywords, bool htmlColoring, bool keywordStandardization, bool addBracketsAroundNames, bool removeBracketsAroundNames)
         {
             Options = new TSqlStandardFormatterOptions
                 {
@@ -63,7 +63,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     UppercaseKeywords = uppercaseKeywords,
                     BreakJoinOnSections = breakJoinOnSections,
                     HTMLColoring = htmlColoring,
-                    KeywordStandardization = keywordStandardization
+                    KeywordStandardization = keywordStandardization,
+                    AddBracketsAroundNames = addBracketsAroundNames,
+                    RemoveBracketsAroundNames = removeBracketsAroundNames
                 };
 
             if (keywordStandardization)
@@ -534,7 +536,14 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case SqlStructureConstants.ENAME_BRACKET_QUOTED_NAME:
                     WhiteSpace_SeparateWords(state);
-                    state.AddOutputContent("[" + contentElement.TextValue.Replace("]", "]]") + "]");
+                    if (Options.RemoveBracketsAroundNames)
+                    {
+                        state.AddOutputContent(contentElement.TextValue.Replace("[", "").Replace("]", ""));
+                    }
+                    else
+                    {
+                        state.AddOutputContent("[" + contentElement.TextValue.Replace("]", "]]") + "]");
+                    }
                     state.WordSeparatorExpected = true;
                     break;
 
@@ -646,7 +655,18 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlStructureConstants.ENAME_MONETARY_VALUE:
                 case SqlStructureConstants.ENAME_LABEL:
                     WhiteSpace_SeparateWords(state);
-                    state.AddOutputContent(contentElement.TextValue);
+                    if (Options.AddBracketsAroundNames)
+                    {
+                        state.AddOutputContent("[" + contentElement.TextValue + "]");
+                    }
+                    else if (Options.RemoveBracketsAroundNames)
+                    {
+                        state.AddOutputContent(contentElement.TextValue.Replace("[", "").Replace("]", ""));
+                    }
+                    else
+                    {
+                        state.AddOutputContent(contentElement.TextValue);
+                    }
                     state.WordSeparatorExpected = true;
                     break;
 

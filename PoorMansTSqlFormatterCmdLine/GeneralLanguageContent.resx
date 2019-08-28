@@ -180,6 +180,8 @@ ecl expandCommaLists (default: true)
 eil expandInLists (default: true)
 uk  uppercaseKeywords (default: true)
 sk  standardizeKeywords (default: false)
+ab  addBracketsAroundNames (default: false)
+rb  removeBracketsAroundNames (default: false)
 ae  allowParsingErrors (default: false)
 e   extensions (default: sql)
 r   recursive (default: false)
@@ -203,6 +205,9 @@ echo select somecolumn from sometable | SqlFormatter
   </data>
   <data name="UnrecognizedArgumentsErrorMessage" xml:space="preserve">
     <value>Unrecognized arguments found!</value>
+  </data>
+  <data name="InvalidBracketsAroundNamesCombination" xml:space="preserve">
+    <value>Cannot specify both 'ab' and 'rb'!</value>
   </data>
   <data name="UnrecognizedLanguageErrorMessage" xml:space="preserve">
     <value>The provided Language Code is not supported.</value>
