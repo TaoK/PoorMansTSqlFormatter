@@ -655,7 +655,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
                 case SqlStructureConstants.ENAME_MONETARY_VALUE:
                 case SqlStructureConstants.ENAME_LABEL:
                     WhiteSpace_SeparateWords(state);
-                    if (Options.AddBracketsAroundNames)
+                    if (Options.AddBracketsAroundNames && !contentElement.TextValue.StartsWith("@"))
                     {
                         state.AddOutputContent("[" + contentElement.TextValue + "]");
                     }
