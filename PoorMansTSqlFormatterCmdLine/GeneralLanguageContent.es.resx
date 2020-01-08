@@ -120,6 +120,9 @@
   <data name="UnrecognizedArgumentsErrorMessage" xml:space="preserve">
     <value>Hemos encontrado argumentos no reconocidos!</value>
   </data>
+  <data name="InvalidBracketsAroundNamesCombination" xml:space="preserve">
+    <value>InvalidBracketsAroundNamesCombination!</value>
+  </data>
   <data name="BackupFailureWarningMessage" xml:space="preserve">
     <value>Copia de seguridad fallada: {0}{1} Saltando este archivo.</value>
     <comment>{0} is the filename, {1} is a linebreak.</comment>
@@ -181,6 +184,8 @@ ecl expandCommaLists (predeterminado: verdadero)
 ecl expandInLists (predeterminado: verdadero)
 uk  uppercaseKeywords (predeterminado: verdadero)
 sk  standardizeKeywords (predeterminado: falso)
+ab  addBracketsAroundNames (predeterminado: falso)
+rb  removeBracketsAroundNames (predeterminado: falso)
 ae  allowParsingErrors (predeterminado: falso)
 e   extensions (predeterminado: sql)
 r   recursive (predeterminado: falso)

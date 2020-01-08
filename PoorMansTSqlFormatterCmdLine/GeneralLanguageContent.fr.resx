@@ -120,6 +120,9 @@
   <data name="UnrecognizedArgumentsErrorMessage" xml:space="preserve">
     <value>Paramètres inconnus trouvés!</value>
   </data>
+  <data name="InvalidBracketsAroundNamesCombination" xml:space="preserve">
+    <value>InvalidBracketsAroundNamesCombination!</value>
+  </data>
   <data name="BackupFailureWarningMessage" xml:space="preserve">
     <value>Sauvegarde échouée: {0}{1} On saute la mise en forme pour ce fichier.</value>
     <comment>{0} is the filename, {1} is a linebreak.</comment>
@@ -181,6 +184,8 @@ ecl expandCommaLists (par défaut: vrai)
 eil expandInLists (par défaut: vrai)
 uk  uppercaseKeywords (par défaut: vrai)
 sk  standardizeKeywords (par défaut: faux)
+ab  addBracketsAroundNames (par défaut: faux)
+rb  removeBracketsAroundNames (par défaut: faux)
 ae  allowParsingErrors (par défaut: faux)
 e   extensions (par défaut: sql)
 r   recursive (par défaut: faux)

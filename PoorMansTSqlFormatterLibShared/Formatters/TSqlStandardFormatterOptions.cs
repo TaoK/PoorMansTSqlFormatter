@@ -47,6 +47,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
 			ExpandInLists = true;
 			NewClauseLineBreaks = 1;
 			NewStatementLineBreaks = 2;
+            AddBracketsAroundNames = false;
+            RemoveBracketsAroundNames = false;
 		}
 
         //Doesn't particularly need to be lazy-loaded, and doesn't need to be threadsafe.
@@ -82,7 +84,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
 				else if (key == "ExpandInLists") ExpandInLists = Convert.ToBoolean(value);
 				else if (key == "NewClauseLineBreaks") NewClauseLineBreaks = Convert.ToInt32(value);
 				else if (key == "NewStatementLineBreaks") NewStatementLineBreaks = Convert.ToInt32(value);
-				else throw new ArgumentException("Unknown option: " + key);
+                else if (key == "AddBracketsAroundNames") AddBracketsAroundNames = Convert.ToBoolean(value);
+                else if (key == "RemoveBracketsAroundNames") RemoveBracketsAroundNames = Convert.ToBoolean(value);
+                else throw new ArgumentException("Unknown option: " + key);
             }
 
         }
@@ -111,7 +115,9 @@ namespace PoorMansTSqlFormatterLib.Formatters
 			if (NewClauseLineBreaks != _defaultOptions.NewClauseLineBreaks) overrides.Add("NewClauseLineBreaks", NewClauseLineBreaks.ToString());
 			if (NewStatementLineBreaks != _defaultOptions.NewStatementLineBreaks) overrides.Add("NewStatementLineBreaks", NewStatementLineBreaks.ToString());
 			NewStatementLineBreaks = 2;
-    
+            if (AddBracketsAroundNames != _defaultOptions.AddBracketsAroundNames) overrides.Add("AddBracketsAroundNames", AddBracketsAroundNames.ToString());
+            if (RemoveBracketsAroundNames != _defaultOptions.RemoveBracketsAroundNames) overrides.Add("RemoveBracketsAroundNames", RemoveBracketsAroundNames.ToString());
+
             if (overrides.Count == 0) return string.Empty;
             return string.Join(",", overrides.Select((kvp) => kvp.Key + "=" + kvp.Value).ToArray());
            
@@ -145,6 +151,8 @@ namespace PoorMansTSqlFormatterLib.Formatters
 		public bool ExpandInLists { get; set; }
 		public int NewClauseLineBreaks { get; set; }
 		public int NewStatementLineBreaks { get; set; }
+        public bool AddBracketsAroundNames { get; set; }
+        public bool RemoveBracketsAroundNames { get; set; }
 
     }
 }

@@ -106,6 +106,15 @@ namespace PoorMansTSqlFormatterCmdLine {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot specify both &apos;ab&apos; and &apos;rb&apos;!.
+        /// </summary>
+        internal static string InvalidBracketsAroundNamesCombination {
+            get {
+                return ResourceManager.GetString("InvalidBracketsAroundNamesCombination", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No files found matching filename/pattern ({0}) and extension ({1}).
         /// </summary>
         internal static string NoFilesFoundWarningMessage {
