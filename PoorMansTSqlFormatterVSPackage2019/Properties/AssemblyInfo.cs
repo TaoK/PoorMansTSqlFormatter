@@ -34,8 +34,6 @@ assembly: AssemblyDescription("A simple free (AGPL) T-SQL Formatting Extension f
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.6.16.*")]
 [assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyKeyFile("")]
-[assembly: AssemblyKeyName("")]
 
 [assembly: ComVisible(false)]     
 [assembly: CLSCompliant(false)]

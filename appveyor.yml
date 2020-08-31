@@ -4,7 +4,7 @@ image: Visual Studio 2017
 
 environment:
   matrix:
-    - PlatformToolset: v140_xp
+    - PlatformToolset: v141_xp
 
 platform:
     - x64
@@ -17,38 +17,40 @@ configuration:
 
 install:
     - if "%platform%"=="x64" set archi=amd64
+    - if "%platform%"=="x64" set platform_input=x64
+
     - if "%platform%"=="x86" set archi=x86
-    - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" %archi%
+    - if "%platform%"=="x86" set platform_input=x86
 
+    - if "%platform%"=="PureDotNet" set archi=amd64
+    - if "%platform%"=="PureDotNet" set platform_input=PureDotNet
 
-build:
-    parallel: true                  # enable MSBuild parallel builds
-    verbosity: minimal
+    - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %archi%
 
 build_script:
     - cd "%APPVEYOR_BUILD_FOLDER%"
-    - msbuild PoorMansTSqlFormatter.sln /m /p:configuration="%configuration%" /p:platform="%platform%" /p:PlatformToolset="%PlatformToolset%" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    - msbuild PoorMansTSqlFormatter.sln /m /p:configuration="%configuration%" /p:platform="%platform_input%" /p:PlatformToolset="%PlatformToolset%" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
     - cd "%APPVEYOR_BUILD_FOLDER%"
     - ps: >-
 
-        if ($env:PLATFORM -eq "x64" -and $env:CONFIGURATION -eq "Release") {
-            Push-AppveyorArtifact "PoorMansTSqlFormatterNppPlugin\bin\$env:PLATFORM\$env:CONFIGURATION\PoorMansTSqlFormatterNppPlugin.dll" -FileName PoorMansTSqlFormatterNppPlugin.dll
+        if ($env:PLATFORM_INPUT -eq "x64" -and $env:CONFIGURATION -eq "Release") {
+            Push-AppveyorArtifact "PoorMansTSqlFormatterNppPlugin\bin\$env:PLATFORM_INPUT\$env:CONFIGURATION\PoorMansTSqlFormatterNppPlugin.dll" -FileName PoorMansTSqlFormatterNppPlugin.dll
         }
 
-        if ($env:PLATFORM -eq "x86" -and $env:CONFIGURATION -eq "Release") {
-            Push-AppveyorArtifact "PoorMansTSqlFormatterNppPlugin\bin\$env:PLATFORM\$env:CONFIGURATION\PoorMansTSqlFormatterNppPlugin.dll" -FileName PoorMansTSqlFormatterNppPlugin.dll
+        if ($env:PLATFORM_INPUT -eq "x86" -and $env:CONFIGURATION -eq "Release") {
+            Push-AppveyorArtifact "PoorMansTSqlFormatterNppPlugin\bin\$env:PLATFORM_INPUT\$env:CONFIGURATION\PoorMansTSqlFormatterNppPlugin.dll" -FileName PoorMansTSqlFormatterNppPlugin.dll
         }
 
-        if ($($env:APPVEYOR_REPO_TAG) -eq "true" -and $env:CONFIGURATION -eq "Release" -and $env:PLATFORMTOOLSET -eq "v140_xp") {
-            if($env:PLATFORM -eq "x64"){
+        if ($($env:APPVEYOR_REPO_TAG) -eq "true" -and $env:CONFIGURATION -eq "Release" -and $env:PLATFORMTOOLSET -eq "v141_xp") {
+            if($env:PLATFORM_INPUT -eq "x64"){
             $ZipFileName = "PoorMansTSqlFormatterNppPlugin_$($env:APPVEYOR_REPO_TAG_NAME)_x64.zip"
-            7z a $ZipFileName PoorMansTSqlFormatterNppPlugin\bin\$env:PLATFORM\$env:CONFIGURATION\PoorMansTSqlFormatterNppPlugin.dll
+            7z a $ZipFileName PoorMansTSqlFormatterNppPlugin\bin\$env:PLATFORM_INPUT\$env:CONFIGURATION\PoorMansTSqlFormatterNppPlugin.dll
             }
-            if($env:PLATFORM -eq "x86"){
+            if($env:PLATFORM_INPUT -eq "x86"){
             $ZipFileName = "PoorMansTSqlFormatterNppPlugin_$($env:APPVEYOR_REPO_TAG_NAME)_x86.zip"
-            7z a $ZipFileName PoorMansTSqlFormatterNppPlugin\bin\$env:PLATFORM\$env:CONFIGURATION\PoorMansTSqlFormatterNppPlugin.dll
+            7z a $ZipFileName PoorMansTSqlFormatterNppPlugin\bin\$env:PLATFORM_INPUT\$env:CONFIGURATION\PoorMansTSqlFormatterNppPlugin.dll
             }
         }
 
@@ -66,5 +68,5 @@ deploy:
     force_update: true
     on:
         appveyor_repo_tag: true
-        PlatformToolset: v140_xp
+        PlatformToolset: v141_xp
         configuration: Release
