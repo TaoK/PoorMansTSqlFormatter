@@ -1,0 +1,1 @@
+﻿SELECT [Name] , Age FROM PERSON Where [Name] LIKE '%test'

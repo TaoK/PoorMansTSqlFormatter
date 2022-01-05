@@ -32,7 +32,7 @@ assembly: AssemblyDescription("A simple free (AGPL) T-SQL Formatting Extension f
 [assembly: AssemblyCopyright("Copyright ©  2011-2019 Tao Klerks")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.6.16.*")]
+[assembly: AssemblyVersion("1.6.16.1")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]

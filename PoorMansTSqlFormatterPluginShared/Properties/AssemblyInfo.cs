@@ -1,6 +1,6 @@
 ﻿/*
-Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
-library for .Net 2.0 and JS, written in C#. 
+Poor Man's T-SQL Formatter - a small free Transact-SQL formatting
+library for .Net 2.0 and JS, written in C#.
 Copyright (C) 2011-2017 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
@@ -30,4 +30,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.6.16.*")]
+[assembly: AssemblyVersion("1.6.16.1")]
