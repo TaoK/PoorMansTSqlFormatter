@@ -44,7 +44,7 @@
     <Compile Include="..\PoorMansTSqlFormatterLibShared\**\*.cs">
       <Link>_Inlined\PoorMansTSqlFormatterLibShared\%(RecursiveDir)%(Filename)%(Extension)</Link>
     </Compile>
-	</ItemGroup>
+  </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
   </ItemGroup>

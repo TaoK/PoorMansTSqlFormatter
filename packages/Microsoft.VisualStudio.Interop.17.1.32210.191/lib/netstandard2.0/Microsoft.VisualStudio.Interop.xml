@@ -1,0 +1,411 @@
+<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>Microsoft.VisualStudio.Interop</name>
+  </assembly>
+  <members>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IVsProgress.Report(System.Double)">
+      <summary>
+            Reports the progress of an operation.
+            </summary>
+      <param name="value">The progress of the operation.</param>
+      <remarks>
+        <paramref name="value" /> can be in the range [0.0..1.0], where 0.0 is 0%
+            complete and 1.0 is 100% complete.  A value outside that range indicates
+            indeterminate progress.
+            <para>
+            Implementers should be prepared for this method to be called on any thread.
+            </para></remarks>
+    </member>
+    <member name="T:Microsoft.VisualStudio.Shell.Interop.IVsAsyncSaveResult">
+      <summary>
+            The result of an asynchronous save operation.  This is the value returned from the
+            GetResult method on the asynchronous save's returned <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsTask" />.
+            </summary>
+    </member>
+    <member name="P:Microsoft.VisualStudio.Shell.Interop.IVsAsyncSaveResult.DataLossIncurred">
+      <summary>
+            This is set to <c>true</c> if the save was successful but there was data loss.
+            </summary>
+      <remarks>
+            Setting this to <c>true</c> is similar to returning STG_S_DATALOSS from synchronous
+            save operations.
+            </remarks>
+    </member>
+    <member name="P:Microsoft.VisualStudio.Shell.Interop.IVsAsyncSaveResult.SaveCanceled">
+      <summary>
+            This is set to <c>true</c> if the user canceled the save operation.
+            </summary>
+    </member>
+    <member name="P:Microsoft.VisualStudio.Shell.Interop.IVsAsyncSaveResult.FileName">
+      <summary>
+            The name of the saved file.  This can be <c>null</c> or empty if the name of the
+            saved file did not change.
+            </summary>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IVsAsyncRunningDocumentTable.SaveDocumentsAsync(System.UInt32,Microsoft.VisualStudio.Shell.Interop.IVsHierarchy,System.UInt32,System.UInt32,Microsoft.VisualStudio.Shell.Interop.IVsProgress)">
+      <summary>
+            Saves one or more documents asynchronously.
+            </summary>
+      <param name="saveOpts">The save options</param>
+      <param name="hierarchy">
+            The hierarchy that owns the document to save, or <c>null</c>.  This
+            parameter is only used if <paramref name="docCookie" /> is VSCOOKIE_NIL
+            and <paramref name="itemid" /> is not VSITEMID_SELECTION.  In that case,
+            if this parameter is non-null, then the document identified by
+            <paramref name="itemid" /> is saved.
+            </param>
+      <param name="itemid">
+            The item identifier for the document to save, or VSITEMID_SELECTION.
+            This parameter is only used if <paramref name="docCookie" /> is VSCOOKIE_NIL.
+            In that case, if this value is VSITEMID_SELECTION then all selected documents
+            are saved.  If this value is not VSITEMID_SELECTION and <paramref name="hierarchy" />
+            is non-null, this value must be something other than VSITEMID_NIL.
+            </param>
+      <param name="docCookie">
+            The cookie for the document, or VSCOOKIE_NIL.  If this parameter is not
+            VSCOOKIE_NIL, <paramref name="hierarchy" /> and <paramref name="itemid" /> are
+            ignored and the document identified by the cookie is saved.
+            </param>
+      <param name="progress">The interface through which progress is reported.</param>
+      <returns>A task representing the asynchronous operation</returns>
+      <remarks>
+            If <paramref name="docCookie" /> is VSCOOKIE_NIL, <paramref name="itemid" />
+            is not VSITEMID_SELECTION, and <paramref name="hierarchy" /> is <c>null</c>,
+            all dirty documents are saved.
+            <para>
+            Implementers should be prepared for this method to be called on any thread.
+            </para></remarks>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IVsAsyncShell.SaveDocDataToFileAsync(Microsoft.VisualStudio.Shell.Interop.VSSAVEFLAGS,System.Object,System.String,Microsoft.VisualStudio.Shell.Interop.IVsProgress)">
+      <summary>
+            Saves a docdata to a file asynchronously.
+            </summary>
+      <param name="flags">The save flags.</param>
+      <param name="persistFile">The file in which the docdata is to be saved.</param>
+      <param name="untitledPath">
+            File path to which the doc data for an as-yet unsaved document is to be saved.
+            </param>
+      <param name="progress">The interface through which progress is reported.</param>
+      <returns>
+            A task representing the asynchronous operation.  The result of the returned task
+            will be <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsAsyncSaveResult" />.
+            </returns>
+      <remarks>
+            Implementers should be prepared for this method to be called on any thread.
+            </remarks>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IVsAsyncSolution.SaveSolutionElementAsync(System.UInt32,Microsoft.VisualStudio.Shell.Interop.IVsHierarchy,System.UInt32,Microsoft.VisualStudio.Shell.Interop.IVsProgress)">
+      <summary>
+            Saves a solution element asynchronously.
+            </summary>
+      <param name="saveOpts">The save options.</param>
+      <param name="hierarchy">The hierarchy.</param>
+      <param name="docCookie">The document cookie.</param>
+      <param name="progress">The interface through which progress is reported.</param>
+      <returns>
+            A task representing the asynchronous operation.
+            </returns>
+      <remarks>
+            Implementers should be prepared for this method to be called on any thread.
+            </remarks>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IVsAsyncPersistHierarchyItem.SaveItemAsync(Microsoft.VisualStudio.Shell.Interop.VSSAVEFLAGS,System.String,System.UInt32,System.Object,Microsoft.VisualStudio.Shell.Interop.IVsProgress)">
+      <summary>
+            Saves a hierarchy item, asynchronously.
+            </summary>
+      <param name="flags">The save flags.</param>
+      <param name="silentSaveAsName">
+            The file name to be applied when <paramref name="flags" /> is set to VSSAVE_SilentSave.
+            </param>
+      <param name="itemid">The ID of the hierarchy item to be saved.</param>
+      <param name="docData">The document data of the item to be saved.</param>
+      <param name="progress">The interface through which progress is reported.</param>
+      <returns>
+            A task representing the asynchronous operation.  The result of the returned task
+            will be <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsAsyncSaveResult" />.  The <see cref="P:Microsoft.VisualStudio.Shell.Interop.IVsAsyncSaveResult.FileName" />
+            property is unused.
+            </returns>
+      <remarks>
+            Implementers should be prepared for this method to be called on any thread.
+            </remarks>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IVsAsyncPersistHierarchyItem.ReloadItemAsync(System.UInt32,Microsoft.VisualStudio.Shell.Interop.IVsProgress)">
+      <summary>
+            Reloads a hierarchy item, asynchronously.
+            </summary>
+      <param name="itemid">The ID of the hierarchy item to be reloaded.</param>
+      <param name="progress">The interface through which progress is reported.</param>
+      <returns>
+            A task representing the asynchronous operation.
+            </returns>
+      <remarks>
+            Implementers should be prepared for this method to be called on any thread.
+            </remarks>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IVsAsyncPersistDocData.LoadDocDataAsync(System.String,Microsoft.VisualStudio.Shell.Interop.IVsProgress)">
+      <summary>
+            Loads the document data for a given document, asynchronously.
+            </summary>
+      <param name="moniker">The moniker for the document to be loaded.</param>
+      <param name="progress">The interface through which progress is reported.</param>
+      <returns>
+            A task representing the asynchronous operation.
+            </returns>
+      <remarks>
+            Implementers should be prepared for this method to be called on any thread.
+            </remarks>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IVsAsyncPersistDocData.SaveDocDataAsync(System.UInt32,Microsoft.VisualStudio.Shell.Interop.IVsProgress)">
+      <summary>
+            Saves the document data, asynchronously.
+            </summary>
+      <param name="flags">The save flags</param>
+      <param name="progress">The interface through which progress is reported.</param>
+      <returns>
+            A task representing the asynchronous operation.  The result of the returned task
+            will be <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsAsyncSaveResult" />.
+            </returns>
+      <remarks>
+            Implementers should be prepared for this method to be called on any thread.
+            </remarks>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IVsAsyncPersistDocData.ReloadDocDataAsync(System.UInt32,Microsoft.VisualStudio.Shell.Interop.IVsProgress)">
+      <summary>
+            Reloads the document data asynchronously and in the process determines whether to ignore
+            a subsequent file change.
+            </summary>
+      <param name="flags">
+            Flag indicating whether to ignore the next file change when reloading the document data.
+            </param>
+      <param name="progress">The interface through which progress is reported.</param>
+      <returns>
+            A task representing the asynchronous operation.
+            </returns>
+      <remarks>
+            Implementers should be prepared for this method to be called on any thread.
+            </remarks>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IAsyncPersistFile.LoadAsync(System.String,System.UInt32,Microsoft.VisualStudio.Shell.Interop.IVsProgress)">
+      <summary>
+            Opens a specified file asynchronously and initializes an object from the file contents.
+            </summary>
+      <param name="filename">The name of the file to load.</param>
+      <param name="grfMode">
+            File format mode. If zero, the object uses the usual defaults as if the user had opened the file.
+            </param>
+      <param name="progress">The interface through which progress is reported.</param>
+      <returns>
+            A task representing the asynchronous operation.
+            </returns>
+      <remarks>
+            Implementers should be prepared for this method to be called on any thread.
+            </remarks>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IAsyncPersistFile.SaveAsync(System.String,System.Boolean,Microsoft.VisualStudio.Shell.Interop.IVsProgress)">
+      <summary>
+            Saves a copy of the object to the specified file, asynchronously.
+            </summary>
+      <param name="filename">
+            The file name. This parameter can be <c>null</c>, in which case the object is saved to its
+            current file. If the object is in the untitled state and <paramref name="filename" /> is <c>null</c>,
+            <see cref="T:System.ArgumentException" /> is thrown.
+            </param>
+      <param name="remember">
+            Indicates whether <paramref name="filename" /> is to be used as the current working file.  If
+            <c>true</c>, <paramref name="filename" /> becomes the current file and the object should clear
+            its dirty flag after the save. If <c>false</c>, this save operation is a Save a Copy As operation.
+            In this case, the current file is unchanged and the object does not clear its dirty flag.
+            If <paramref name="filename" /> is <c>null</c>, <paramref name="remember" /> is ignored.
+            </param>
+      <param name="progress">The interface through which progress is reported.</param>
+      <returns>
+            A task representing the asynchronous operation.  The result of the returned task
+            will be <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsAsyncSaveResult" />.  The <see cref="P:Microsoft.VisualStudio.Shell.Interop.IVsAsyncSaveResult.FileName" />
+            property is unused.
+            </returns>
+      <remarks>
+            Implementers should be prepared for this method to be called on any thread.
+            </remarks>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IAsyncPersistFileFormat.LoadAsync(System.String,System.UInt32,System.Boolean,Microsoft.VisualStudio.Shell.Interop.IVsProgress)">
+      <summary>
+            Opens a specified file asynchronously and initializes an object from the file contents.
+            </summary>
+      <param name="filename">The name of the file to load.</param>
+      <param name="grfMode">
+            File format mode. If zero, the object uses the usual defaults as if the user had opened the file.
+            </param>
+      <param name="readOnly">
+            A value of <c>true</c> indicates that the file should be opened as read-only.
+            </param>
+      <param name="progress">The interface through which progress is reported.</param>
+      <returns>
+            A task representing the asynchronous operation.
+            </returns>
+      <remarks>
+            Implementers should be prepared for this method to be called on any thread.
+            </remarks>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IAsyncPersistFileFormat.SaveAsync(System.String,System.Boolean,System.UInt32,Microsoft.VisualStudio.Shell.Interop.IVsProgress)">
+      <summary>
+            Saves a copy of the object to the specified file, asynchronously.
+            </summary>
+      <param name="filename">
+            The file name. This parameter can be <c>null</c>, in which case the object is saved to its
+            current file. If the object is in the untitled state and <paramref name="filename" /> is <c>null</c>,
+            <see cref="T:System.ArgumentException" /> is thrown.
+            </param>
+      <param name="remember">
+            Indicates whether <paramref name="filename" /> is to be used as the current working file.  If
+            <c>true</c>, <paramref name="filename" /> becomes the current file and the object should clear
+            its dirty flag after the save. If <c>false</c>, this save operation is a Save a Copy As operation.
+            In this case, the current file is unchanged and the object does not clear its dirty flag.
+            If <paramref name="filename" /> is <c>null</c>, <paramref name="remember" /> is ignored.
+            </param>
+      <param name="formatIndex">
+            A value that indicates the format in which the file will be saved. The caller passes <c>DEF_FORMAT_INDEX</c>
+            if the object is to choose its default (current) format. Otherwise, the value is interpreted as the index
+            into the list of formats, as returned by a call to the <see cref="M:Microsoft.VisualStudio.Shell.Interop.IPersistFileFormat.GetFormatList(System.String@)" />
+            method. An index value of 0 indicates the first format, 1 the second format, and so on.
+            </param>
+      <param name="progress">The interface through which progress is reported.</param>
+      <returns>
+            A task representing the asynchronous operation.  The result of the returned task
+            will be <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsAsyncSaveResult" />.  The <see cref="P:Microsoft.VisualStudio.Shell.Interop.IVsAsyncSaveResult.FileName" />
+            property is unused.
+            </returns>
+      <remarks>
+            Implementers should be prepared for this method to be called on any thread.
+            </remarks>
+    </member>
+    <member name="T:Microsoft.VisualStudio.Shell.Interop.__VSRDTSAVENOTIFICATIONFLAGS">
+      <summary>
+            A set of flags that describe attributes about a given save.
+            </summary>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IVsRunningDocumentTable6.NotifyOnBeforeSave(System.UInt32,System.UInt32,Microsoft.VisualStudio.Shell.Interop.IVsTask)">
+      <summary>
+            Notifies event listeners that a save is about to occur.
+            </summary>
+      <param name="cookie">The document cookie.</param>
+      <param name="saveNotificationFlags">Provides additional information about the save.</param>
+      <param name="saveTask">A task representing the save operation.</param>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IVsRunningDocumentTable6.NotifyOnAfterSave(System.UInt32,System.UInt32)">
+      <summary>
+            Notifies event listeners that a save has occurred.
+            </summary>
+      <param name="cookie">The document cookie.</param>
+      <param name="saveNotificationFlags">Provides additional information about the save.</param>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IVsRunningDocTableEvents7.OnBeforeSaveAsync(System.UInt32,System.UInt32,Microsoft.VisualStudio.Shell.Interop.IVsTask)">
+      <summary>
+             Called right before a save is about to occur.
+             </summary>
+      <param name="cookie">The document cookie.</param>
+      <param name="flags">Provides additional information about the save.</param>
+      <param name="saveTask">A task representing the save operation.</param>
+      <returns>A task representing an async operation.</returns>
+      <remarks>
+             When the RunningDocTable notifies the event sink about save events, it will first check if the event implements this
+             interface and call this method. If not, it will check if it implements <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsRunningDocTableEvents3" />
+             and call <see cref="M:Microsoft.VisualStudio.Shell.Interop.IVsRunningDocTableEvents3.OnBeforeSave(System.UInt32)" />. Note that this means the RDT will not call both methods.
+            
+             If the work done in this method is completely synchronous, then it should be awaited and wrapped around a call to jtf.Run().
+             </remarks>
+      <example>
+        <code>
+             async IVsTask OnBeforeSaveAsync(uint cookie, uint flags)
+             {
+                 await jtf.Run(() =&gt; /** Do work *// );
+             }
+             </code>
+      </example>
+      <para>
+             Implementers should be prepared for this method to be called on any thread.
+             </para>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Shell.Interop.IVsRunningDocTableEvents7.OnAfterSaveAsync(System.UInt32,System.UInt32)">
+      <summary>
+             Called right after a save has occurred.
+             </summary>
+      <param name="cookie">The document cookie.</param>
+      <param name="flags">Provides additional information about the save.</param>
+      <returns>A task representing an async operation.</returns>
+      <remarks>
+             When the RunningDocTable notifies the event sink about save events, it will first check if the event implements this
+             interface and call this method. If not, it will check if it implements <see cref="T:Microsoft.VisualStudio.Shell.Interop.IVsRunningDocTableEvents3" />
+             and call <see cref="M:Microsoft.VisualStudio.Shell.Interop.IVsRunningDocTableEvents3.OnAfterSave(System.UInt32)" />. Note that this means the RDT will not call both methods.
+            
+             If the work done in this method is completely synchronous, then it should be awaited and wrapped around a call to jtf.Run().
+             </remarks>
+      <example>
+        <code>
+             async IVsTask OnAfterSaveAsync(uint cookie, uint flags)
+             {
+                 await jtf.Run(() =&gt; /** Do work *// );
+             }
+             </code>
+      </example>
+      <para>
+             Implementers should be prepared for this method to be called on any thread.
+             </para>
+    </member>
+    <member name="M:Microsoft.VisualStudio.Designer.Interfaces.IVSMDPerPropertyBrowsing.GetPropertyAttributes(System.Int32,System.UInt32@,System.IntPtr,System.IntPtr)">
+      <summary>
+            Gets the list of attributes for the object.
+            </summary>
+      <param name="dispid">The dispid of the property to retrieve attributes</param>
+      <param name="pceltAttrs">the number of attribute type names in <paramref name="ppbstrTypeNames" /></param>
+      <param name="ppbstrTypeNames">Attribute type names, such as System.ComponentModel.BrowsableAttribute, or System.ComponentModel.DescriptionAttribute.  This can be the name of any type that derives from System.Attribute. The array is callee allocated and will be caller freed using <see cref="M:System.Runtime.InteropServices.Marshal.FreeCoTaskMem(System.IntPtr)" />. Strings themselves should be freed with <see cref="M:System.Runtime.InteropServices.Marshal.FreeBSTR(System.IntPtr)" />. It can also be a static instance name such as System.ComponentModel.BrowsableAttribute.No, which will cause the initializer value to be ignored.</param>
+      <param name="ppvarAttrValues">An array of variants to be used to initialize the given attributes.  If the attributes have a ctor that takes a parameter, the given argument will be used to iniitalize the attribute.  If the initializer is NULL, VT_EMPTY or VT_NULL, the default ctor will be called.  Variants will be caller freed individually by pInvoking VariantClear. The array must be freed calling <see cref="M:System.Runtime.InteropServices.Marshal.FreeCoTaskMem(System.IntPtr)" />.
+            </param>
+    </member>
+    <member name="M:EnvDTE90a.Process4.Attach2(System.Object)">
+      <summary>
+      </summary>
+      <param name="Engines">Single <see cref="T:System.String" /> or an array of either <see cref="T:System.String" /> or <see cref="T:EnvDTE80.Engine" /> objects</param>
+    </member>
+    <member name="M:EnvDTE90.Process3.Attach2(System.Object)">
+      <summary>
+      </summary>
+      <param name="Engines">Single <see cref="T:System.String" /> or an array of either <see cref="T:System.String" /> or <see cref="T:EnvDTE80.Engine" /> objects</param>
+    </member>
+    <member name="M:EnvDTE80.Process2.Attach2(System.Object)">
+      <summary>
+      </summary>
+      <param name="Engines">Single <see cref="T:System.String" /> or an array of either <see cref="T:System.String" /> or <see cref="T:EnvDTE80.Engine" /> objects</param>
+    </member>
+    <member name="M:EnvDTE80.TaskItems2.Add(System.String,System.String,System.String,EnvDTE.vsTaskPriority,System.Object,System.Boolean,System.String,System.Int32,System.Boolean,System.Boolean)">
+      <summary>
+      </summary>
+      <remarks>The <paramref name="Priority" /> defaults to <see cref="F:EnvDTE.vsTaskPriority.vsTaskPriorityMedium" /> in IDL but we can't default it here as the <paramref name="Icon" /> cannot be defaulted</remarks>
+    </member>
+    <member name="M:EnvDTE80.TaskItems2.Add2(System.String,System.String,System.String,EnvDTE.vsTaskPriority,System.Object,System.Boolean,System.String,System.Int32,System.Boolean,System.Boolean,System.Boolean)">
+      <summary>
+      </summary>
+      <remarks>The <paramref name="Priority" /> defaults to <see cref="F:EnvDTE.vsTaskPriority.vsTaskPriorityMedium" /> in IDL but we can't default it here as the <paramref name="Icon" /> cannot be defaulted</remarks>
+    </member>
+    <member name="M:EnvDTE80.EditPoint2.TryToShow(EnvDTE.vsPaneShowHow,System.Object)">
+      <summary>
+      </summary>
+      <remarks>The <paramref name="How" /> param defaults to <see cref="F:EnvDTE.vsPaneShowHow.vsPaneShowCentered" /> in IDL but we can't default it here because <paramref name="PointOrCount" /> can't be defaulted.</remarks>
+    </member>
+    <member name="M:EnvDTE80.TextPane2.TryToShow(EnvDTE.TextPoint,EnvDTE.vsPaneShowHow,System.Object)">
+      <summary>
+      </summary>
+      <remarks>The <paramref name="How" /> param defaults to <see cref="F:EnvDTE.vsPaneShowHow.vsPaneShowAsIs" /> in IDL but can't be defaulted here because <paramref name="PointOrCount" /> can't be defaulted.</remarks>
+    </member>
+    <member name="M:EnvDTE.TextPane.TryToShow(EnvDTE.TextPoint,EnvDTE.vsPaneShowHow,System.Object)">
+      <summary>
+      </summary>
+      <remarks>The <paramref name="How" /> param defaults to <see cref="F:EnvDTE.vsPaneShowHow.vsPaneShowAsIs" /> in IDL but can't be defaulted here because <paramref name="PointOrCount" /> can't be defaulted.</remarks>
+    </member>
+    <member name="M:EnvDTE.TaskItems.Add(System.String,System.String,System.String,EnvDTE.vsTaskPriority,System.Object,System.Boolean,System.String,System.Int32,System.Boolean,System.Boolean)">
+      <summary>
+      </summary>
+      <remarks>The <paramref name="Priority" /> defaults to <see cref="F:EnvDTE.vsTaskPriority.vsTaskPriorityMedium" /> in IDL but we can't default it here as the <paramref name="Icon" /> cannot be defaulted</remarks>
+    </member>
+  </members>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" /><DigestValue>+lQbU010JBqpjmz6WwiALJBaTnS0NzJtkCdeVhWqz1s=</DigestValue></Reference></SignedInfo><SignatureValue>iQwDEvxHvQ9wvbZGzOmhAr3NR4E6ChKNPMjkpDMoqRq/VPNPvN/YkfktboIPGjd4Dbo/Z5TDG7tLZajsRo+bbmq72QpvMO1Aq7BQE16QYtvNkaBuTEj8mhbe9Sx7GSkQTl6yc+WYOQylhJo+IGVRc7J6pZtnk2uss2vPAiZkpT9BPPSIEmHVuwQFbX+cR4vh0lWs6H294tuKSmREoWHMNKjbbYt7IunucVLSx2C/22Zb6NQ9XDfwcA/Zc6mge//3M9vWH38owctNNh0I9RIAN26/7be2hTc6YEKvJAIQzfGwTB3rc+eN1Uejg4OpgUbPBCnXEbZNbeoPY8vOAcQK8w==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>0OTPj7P1+wTbr+Qf9COrqA8I9DSTqNSq1UKju4IEV3HJJck61i+MTEoYyKLtiLG2Jxeu8F81QKuTpuKHvi380gzs43G+prNNIAaNDkGqsENQYo8iezbw3/NCNX1vTi++irdFqXNs6xoc3B3W+7qT678b0jTVL8St7IMO2E7d9eNdL6RKfMnwRJf4XfGcwL+OwwoCeY9c5tvebNUVWRzaejKIkBVThApuAMCtpdvIvmBEdSTuCKZUx+OLr81/aEZyR2jL1s2RKaMz8uIzTtgw6m3DbOM4ewFjIRNT1hVQPghyPxJ+ZwErwry5rkf7fKuG3PF0fECGSUEqftlOptpXTQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>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</X509Certificate><X509Certificate>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</X509Certificate><X509Certificate>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</X509Certificate></X509Data></KeyInfo><Object Id="ts-countersig"><X509Data><X509Certificate>MIIHDDCCBPSgAwIBAgITMwAAAZh2s4zF0AWhAQABAAABmDANBgkqhkiG9w0BAQsFADB8MQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMSYwJAYDVQQDEx1NaWNyb3NvZnQgVGltZS1TdGFtcCBQQ0EgMjAxMDAeFw0yMTEyMDIxOTA1MTVaFw0yMzAyMjgxOTA1MTVaMIHKMQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMSUwIwYDVQQLExxNaWNyb3NvZnQgQW1lcmljYSBPcGVyYXRpb25zMSYwJAYDVQQLEx1UaGFsZXMgVFNTIEVTTjoyMjY0LUUzM0UtNzgwQzElMCMGA1UEAxMcTWljcm9zb2Z0IFRpbWUtU3RhbXAgU2VydmljZTCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAMbUlaxWSynzEbiwsyd/F+K3dKEj7sbUx9NP7le9DO4A57yvkxEAUhNOaMXHOgsV+ZrEu89WWYOCQOLSuqw6z0CX2NXBhIVUX/BYLb4Hvo7KyLJGPD40+PkDhyYyE+oh02REsIT7C24j/AJqrf8t/iSgMa50hwRhGAyqpOg45QhXh7sR1hveT2tg83tKyXCwsVKn4W+b9BzLkqp+SYxfhLegnHsd2JCEpsrULpl+Jv7vrVuat08tPp512WfLCWzuEKsgi4W2BRtSPookhmfUxthjyGsAzn228ul4aYVbcaN4ECa8HECfuj0unafKRPXD0jSz113CkWeMtPY8rvgYNKzEVRkbVS0vKmL+RlyD1Z6c8BmlS08V87ky2J/wlryNdcsg/or5vkuJBXygjEVIF+AU3v9Mva1JJ9BVy+pfWZxI6vH+2yCrcvpgDEjo+XiHXNCtwCZOjKkSg9g1z9GVIGTqWOY3I0OxfeC0rynpzscJZSEX5iMyB9qdCYyNRixuN0SwLIvpACiNnR/qS143hxXqhsXBxQS+JjKBZt51pPzo4Z70sQ7E+6HOAW/ZmhtWvQnyGXUVV1xkVt8U3+B2Mdn+dwMOos1aBygygSHDDOjsUA5uoprF8HnMIGphKPjmaI07mDeE/wCALR5IIeXesrsk8yvUH7wlMe3BGRIrP/5zAgMBAAGjggE2MIIBMjAdBgNVHQ4EFgQUbpGEco2myDeaCiezstHlgdPN4TcwHwYDVR0jBBgwFoAUn6cVXQBeYl2D9OXSZacbUzUZ6XIwXwYDVR0fBFgwVjBUoFKgUIZOaHR0cDovL3d3dy5taWNyb3NvZnQuY29tL3BraW9wcy9jcmwvTWljcm9zb2Z0JTIwVGltZS1TdGFtcCUyMFBDQSUyMDIwMTAoMSkuY3JsMGwGCCsGAQUFBwEBBGAwXjBcBggrBgEFBQcwAoZQaHR0cDovL3d3dy5taWNyb3NvZnQuY29tL3BraW9wcy9jZXJ0cy9NaWNyb3NvZnQlMjBUaW1lLVN0YW1wJTIwUENBJTIwMjAxMCgxKS5jcnQwDAYDVR0TAQH/BAIwADATBgNVHSUEDDAKBggrBgEFBQcDCDANBgkqhkiG9w0BAQsFAAOCAgEAJPoHoXfeL/z3NdOCpDwvoJgwfH0GJoc5X7CTnck6uILN5ouNiBHKywmGaecn8J0drmqNxLC9Gm1alkk9UrmzGE4iNEE+Cz/f4RHS9LzsgD5oZt/s0XstlmXFY86X/IUGD2pne2k4Y6iFAidCfnOlXbeFailo3hzj2MYkcs8B/L27v5lIZC7DXgKxb9dEsQsdPXwjrRbS4o4Frk+bZWKiEyi9xuk1QIQRGog71Y/DMjAxFHDfj8uCO6yUcmin7/VV78J/I2rB5SbB6lAcmt37BMtSWCbgQ1tcXqLnaMV9ikRLAt0Cfnqj+mP6Cux3YusAQ9BHKHj2ta8j+pl86G1PYVabMXDogm9nsLNPU74VzSAgME2pqyzlBuaQ6QpjL1TucUDqqfdln4ytkywlOPuDEB/TIyRWrBhZlGThutj2rwkM+Zx81KNGtV+ljLMRUSp6YZqebG8MNPNLbCRIFrfNw3A6BiFYFOYl0uDKJYkZ6rKPWblvA2Cc7Do3NcKJUzN9vO12So51NHzwu0AkY1GN69aNB3leK0a56BKnaYwmCUXNHCSdxBq7UEmwKP/VoNjigyI7xyieSZpYGth7XVAJLz3r+xnBJ2cRQlqTSqmcFEUH5MdEjEiK8Io1vEbZBFnx2H3lw5eCjRi8E3lrWn6Ine83DOd5TYAgLvPeushs3Z8=</X509Certificate><X509Certificate>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</X509Certificate></X509Data><CounterSignature ts-format="cms-timestamp-message" xmlns="http://schemas.microsoft.com/xmldsig/timestamp/2003">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</CounterSignature></Object></Signature></doc>

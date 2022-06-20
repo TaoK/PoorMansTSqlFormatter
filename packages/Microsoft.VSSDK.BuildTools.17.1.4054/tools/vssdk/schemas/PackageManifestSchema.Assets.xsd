@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema version="1.0.0" 
+           attributeFormDefault="unqualified" 
+           elementFormDefault="qualified" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <xs:import namespace="http://schemas.microsoft.com/developer/vsx-schema-design/2011" schemaLocation="PackageManifestSchema.DesignNamespace.xsd" />
+  <xs:annotation>
+    <xs:documentation>
+      <!-- _locID_text="VsixSchema" _locComment="" -->This schema is used for installing extensions to Visual Studio.
+    </xs:documentation>
+  </xs:annotation>
+
+  <xs:simpleType name="StandardAssetTypes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Microsoft.VisualStudio.Analyzer" />
+      <xs:enumeration value="Microsoft.VisualStudio.Assembly" />
+      <xs:enumeration value="Microsoft.VisualStudio.ItemTemplate" />
+      <xs:enumeration value="Microsoft.VisualStudio.MefComponent" />
+      <xs:enumeration value="Microsoft.VisualStudio.ProjectTemplate" />
+      <xs:enumeration value="Microsoft.VisualStudio.ToolboxControl" />
+      <xs:enumeration value="Microsoft.VisualStudio.VsPackage" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="CustomAssetTypes">
+    <xs:restriction base="xs:string">
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="Assets">
+    <xs:sequence>
+      <xs:element name="Asset" minOccurs="0" maxOccurs="unbounded" type="Asset">
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="Asset">
+    <xs:sequence>
+      <xs:any minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+
+          </xs:documentation>
+        </xs:annotation>
+      </xs:any>
+    </xs:sequence>
+
+    <xs:attribute name="Type" use="required">
+      <xs:simpleType>
+      <xs:union memberTypes="StandardAssetTypes CustomAssetTypes">
+      <xs:annotation>
+        <xs:documentation>
+
+        </xs:documentation>
+      </xs:annotation>
+      </xs:union>
+      </xs:simpleType>
+    </xs:attribute>
+
+    <xs:attribute name="Path" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+
+    <xs:attribute name="TargetVersion" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation>
+          <!-- _locID_text="TargetVersion" _locComment="" -->The range of Visual Studio versions that this asset should be loaded for e.g. [15.0,16.0). Does not apply to assets of type ToolboxControl or VsPackage.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+
+    <xs:attributeGroup ref="d:DesignAttributes" />
+
+    <xs:anyAttribute processContents="lax" />
+    
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,11 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://schemas.microsoft.com/developer/vsx-schema-design/2011"
+  xmlns:base="http://schemas.microsoft.com/developer/vsx-schema/2011"
+  attributeFormDefault="qualified">
+
+  <xs:attributeGroup name="DesignAttributes">
+      <xs:attribute name="Source" type="xs:string"/>
+      <xs:attribute name="ProjectName" type="xs:string"/>
+  </xs:attributeGroup>
+
+</xs:schema>
