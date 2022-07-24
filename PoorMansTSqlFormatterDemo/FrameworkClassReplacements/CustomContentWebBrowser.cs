@@ -18,13 +18,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
 namespace PoorMansTSqlFormatterDemo.FrameworkClassReplacements
 {
-    public class CustomContentWebBrowser : System.Windows.Forms.WebBrowser
+    public class CustomContentWebBrowser : WebBrowser
     {
         // WebBrowser control, modified to allow easy setting of HTML content, based on:
         //http://weblogs.asp.net/gunnarpeipman/archive/2009/08/15/displaying-custom-html-in-webbrowser-control.aspx

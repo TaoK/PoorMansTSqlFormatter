@@ -18,10 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using NUnit.Framework;
-using System.IO;
 using System.Xml;
-using System.Collections.Generic;
 using PoorMansTSqlFormatterLib.Interfaces;
 using PoorMansTSqlFormatterLib.Parsers;
 using PoorMansTSqlFormatterLib.Tokenizers;
@@ -42,12 +39,12 @@ namespace PoorMansTSqlFormatterTests
             _parser = new TSqlStandardParser();
         }
 
-        public IEnumerable<string> GetParsedSqlFileNames()
+        public static IEnumerable<string> GetParsedSqlFileNames()
         {
             return Utils.FolderFileNameIterator(Utils.GetTestContentFolder(Utils.PARSEDSQLFOLDER));
         }
 
-        [Test, TestCaseSource("GetParsedSqlFileNames")]
+        [Test, TestCaseSource(nameof(GetParsedSqlFileNames))]
         public void ExpectedParseTree(string FileName)
         {
             XmlDocument expectedXmlDoc = new XmlDocument();
@@ -58,7 +55,7 @@ namespace PoorMansTSqlFormatterTests
             ITokenList tokenized = _tokenizer.TokenizeSQL(inputSql);
             Node parsed = _parser.ParseSQL(tokenized);
 
-            Assert.AreEqual(expectedXmlDoc.OuterXml, parsed.ToXmlDoc().OuterXml);
+            Assert.That(parsed.ToXmlDoc().OuterXml, Is.EqualTo(expectedXmlDoc.OuterXml));
         }
 
     }

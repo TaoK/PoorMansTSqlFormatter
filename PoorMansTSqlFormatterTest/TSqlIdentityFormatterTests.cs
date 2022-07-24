@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using NUnit.Framework;
 using PoorMansTSqlFormatterLib.Formatters;
 using PoorMansTSqlFormatterLib.Interfaces;
 using PoorMansTSqlFormatterLib.Parsers;
@@ -44,7 +43,7 @@ namespace PoorMansTSqlFormatterTests
             _tokenFormatter.ErrorOutputPrefix = "";
         }
 
-        [Test, TestCaseSource(typeof(Utils), "GetInputSqlFileNames")]
+        [Test, TestCaseSource(typeof(Utils), nameof(Utils.GetInputSqlFileNames))]
         public void ContentUnchangedByIdentityTokenFormatter(string FileName)
         {
             string inputSQL = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
@@ -53,7 +52,7 @@ namespace PoorMansTSqlFormatterTests
             Assert.AreEqual(inputSQL, outputSQL);
         }
 
-        [Test, TestCaseSource(typeof(Utils), "GetInputSqlFileNames")]
+        [Test, TestCaseSource(typeof(Utils), nameof(Utils.GetInputSqlFileNames))]
         public void ContentUnchangedByIdentityTreeFormatter(string FileName)
         {
             string inputSQL = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);

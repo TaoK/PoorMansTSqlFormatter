@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0 and JS, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2022 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -47,7 +47,7 @@ namespace PoorMansTSqlFormatterDemo
         /// </summary>
         private void InitializeComponent()
         {
-            FrameworkClassReplacements.SingleAssemblyComponentResourceManager resources = new FrameworkClassReplacements.SingleAssemblyComponentResourceManager(typeof(AboutBox));
+            System.ComponentModel.ComponentResourceManager resources = new(typeof(AboutBox));
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
             this.labelProductName = new System.Windows.Forms.Label();

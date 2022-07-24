@@ -18,8 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System;
-using NUnit.Framework;
 using System.Diagnostics;
 using System.Text;
 
@@ -28,12 +26,8 @@ namespace PoorMansTSqlFormatterTests
     [TestFixture]
     public class CmdLineTests
     {
-        #if DEBUG
-            private const string FORMATTER_EXECUTABLE = "..\\..\\..\\PoorMansTSqlFormatterCmdLine\\bin\\Debug\\SqlFormatter.exe";
-        #else
-            private const string FORMATTER_EXECUTABLE = "..\\..\\..\\PoorMansTSqlFormatterCmdLine\\bin\\Release\\SqlFormatter.exe";
-        #endif
-        
+        private const string FORMATTER_EXECUTABLE = "..\\..\\..\\..\\PoorMansTSqlFormatterCmdLine\\bin\\Release\\net6.0-windows\\publish\\win-x64\\PoorMansTSqlFormatterCmdLine.exe";
+
         [Test]
         public void TestCmdLineFormattingSwitches()
         {
@@ -113,7 +107,7 @@ namespace PoorMansTSqlFormatterTests
             formatterProcess.WaitForExit();
             if (formatterProcess.ExitCode != 0)
                 throw new Exception("Formatter reported error: " + formatterProcess.StandardError.ReadToEnd());
-            Assert.AreEqual(expectedOutputString + outputSuffix, outputString, "Output did not match expected");
+            Assert.That(outputString, Is.EqualTo(expectedOutputString + outputSuffix), "Output did not match expected");
         }
     }
 }

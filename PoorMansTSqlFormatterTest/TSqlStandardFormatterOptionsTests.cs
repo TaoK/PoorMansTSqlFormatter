@@ -21,10 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
 using PoorMansTSqlFormatterLib.Formatters;
 
 namespace PoorMansTSqlFormatterTests
@@ -38,20 +34,22 @@ namespace PoorMansTSqlFormatterTests
         public void Options_New_DefaultsToOriginalOptions()
         {
             var options = new TSqlStandardFormatterOptions();
-
-            Assert.AreEqual("\t", options.IndentString);
-            Assert.AreEqual(4, options.SpacesPerTab);
-            Assert.AreEqual(999, options.MaxLineWidth);
-            Assert.IsTrue(options.ExpandCommaLists);
-            Assert.IsFalse(options.TrailingCommas);
-            Assert.IsFalse(options.SpaceAfterExpandedComma);
-            Assert.IsTrue(options.ExpandBooleanExpressions);
-            Assert.IsTrue(options.ExpandCaseStatements);
-            Assert.IsTrue(options.ExpandBetweenConditions);
-            Assert.IsFalse(options.BreakJoinOnSections);
-            Assert.IsTrue(options.UppercaseKeywords);
-            Assert.IsFalse(options.HTMLColoring);
-            Assert.IsFalse(options.KeywordStandardization);
+            Assert.Multiple(() =>
+            {
+                Assert.That(options.IndentString, Is.EqualTo("\t"));
+                Assert.That(options.SpacesPerTab, Is.EqualTo(4));
+                Assert.That(options.MaxLineWidth, Is.EqualTo(999));
+                Assert.That(options.ExpandCommaLists, Is.True);
+                Assert.That(options.TrailingCommas, Is.False);
+                Assert.That(options.SpaceAfterExpandedComma, Is.False);
+                Assert.That(options.ExpandBooleanExpressions, Is.True);
+                Assert.That(options.ExpandCaseStatements, Is.True);
+                Assert.That(options.ExpandBetweenConditions, Is.True);
+                Assert.That(options.BreakJoinOnSections, Is.False);
+                Assert.That(options.UppercaseKeywords, Is.True);
+                Assert.That(options.HTMLColoring, Is.False);
+                Assert.That(options.KeywordStandardization, Is.False);
+            });
         }
 
         [Test]
@@ -59,7 +57,7 @@ namespace PoorMansTSqlFormatterTests
         {
             var options = new TSqlStandardFormatterOptions("TrailingCommas=True");
 
-            Assert.IsTrue(options.TrailingCommas);
+            Assert.That(options.TrailingCommas, Is.True);
         }
 
         [Test]
@@ -80,20 +78,22 @@ namespace PoorMansTSqlFormatterTests
                 + ",HTMLColoring=true"
                 + ",KeywordStandardization=true"
             );
-
-            Assert.AreEqual("    ", options.IndentString);
-            Assert.AreEqual(2, options.SpacesPerTab);
-            Assert.AreEqual(100, options.MaxLineWidth);
-            Assert.IsFalse(options.ExpandCommaLists);
-            Assert.IsTrue(options.TrailingCommas);
-            Assert.IsTrue(options.SpaceAfterExpandedComma);
-            Assert.IsFalse(options.ExpandBooleanExpressions);
-            Assert.IsFalse(options.ExpandCaseStatements);
-            Assert.IsFalse(options.ExpandBetweenConditions);
-            Assert.IsTrue(options.BreakJoinOnSections);
-            Assert.IsFalse(options.UppercaseKeywords);
-            Assert.IsTrue(options.HTMLColoring);
-            Assert.IsTrue(options.KeywordStandardization);
+            Assert.Multiple(() =>
+            {
+                Assert.That(options.IndentString, Is.EqualTo("    "));
+                Assert.That(options.SpacesPerTab, Is.EqualTo(2));
+                Assert.That(options.MaxLineWidth, Is.EqualTo(100));
+                Assert.That(options.ExpandCommaLists, Is.False);
+                Assert.That(options.TrailingCommas, Is.True);
+                Assert.That(options.SpaceAfterExpandedComma, Is.True);
+                Assert.That(options.ExpandBooleanExpressions, Is.False);
+                Assert.That(options.ExpandCaseStatements, Is.False);
+                Assert.That(options.ExpandBetweenConditions, Is.False);
+                Assert.That(options.BreakJoinOnSections, Is.True);
+                Assert.That(options.UppercaseKeywords, Is.False);
+                Assert.That(options.HTMLColoring, Is.True);
+                Assert.That(options.KeywordStandardization, Is.True);
+            });
         }
 
         [Test]
@@ -119,22 +119,22 @@ namespace PoorMansTSqlFormatterTests
             var serializedString = expected.ToSerializedString();
 
             var actual = new TSqlStandardFormatterOptions(serializedString);
-
-            Assert.AreEqual(expected.IndentString, actual.IndentString);
-            Assert.AreEqual(expected.SpacesPerTab, actual.SpacesPerTab);
-            Assert.AreEqual(expected.MaxLineWidth, actual.MaxLineWidth);
-            Assert.AreEqual(expected.ExpandCommaLists, actual.ExpandCommaLists);
-            Assert.AreEqual(expected.TrailingCommas, actual.TrailingCommas);
-            Assert.AreEqual(expected.SpaceAfterExpandedComma, actual.SpaceAfterExpandedComma);
-            Assert.AreEqual(expected.ExpandBooleanExpressions, actual.ExpandBooleanExpressions);
-            Assert.AreEqual(expected.ExpandCaseStatements, actual.ExpandCaseStatements);
-            Assert.AreEqual(expected.ExpandBetweenConditions, actual.ExpandBetweenConditions);
-            Assert.AreEqual(expected.BreakJoinOnSections, actual.BreakJoinOnSections);
-            Assert.AreEqual(expected.UppercaseKeywords, actual.UppercaseKeywords);
-            Assert.AreEqual(expected.HTMLColoring, actual.HTMLColoring);
-            Assert.AreEqual(expected.KeywordStandardization, actual.KeywordStandardization);
-
+            Assert.Multiple(() =>
+            {
+                Assert.That(actual.IndentString, Is.EqualTo(expected.IndentString));
+                Assert.That(actual.SpacesPerTab, Is.EqualTo(expected.SpacesPerTab));
+                Assert.That(actual.MaxLineWidth, Is.EqualTo(expected.MaxLineWidth));
+                Assert.That(actual.ExpandCommaLists, Is.EqualTo(expected.ExpandCommaLists));
+                Assert.That(actual.TrailingCommas, Is.EqualTo(expected.TrailingCommas));
+                Assert.That(actual.SpaceAfterExpandedComma, Is.EqualTo(expected.SpaceAfterExpandedComma));
+                Assert.That(actual.ExpandBooleanExpressions, Is.EqualTo(expected.ExpandBooleanExpressions));
+                Assert.That(actual.ExpandCaseStatements, Is.EqualTo(expected.ExpandCaseStatements));
+                Assert.That(actual.ExpandBetweenConditions, Is.EqualTo(expected.ExpandBetweenConditions));
+                Assert.That(actual.BreakJoinOnSections, Is.EqualTo(expected.BreakJoinOnSections));
+                Assert.That(actual.UppercaseKeywords, Is.EqualTo(expected.UppercaseKeywords));
+                Assert.That(actual.HTMLColoring, Is.EqualTo(expected.HTMLColoring));
+                Assert.That(actual.KeywordStandardization, Is.EqualTo(expected.KeywordStandardization));
+            });
         }
-
     }
 }

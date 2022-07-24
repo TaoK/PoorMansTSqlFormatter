@@ -21,7 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using NUnit.Framework;
 using PoorMansTSqlFormatterLib.Formatters;
 using PoorMansTSqlFormatterLib.Interfaces;
 using PoorMansTSqlFormatterLib.Parsers;
@@ -51,7 +50,7 @@ namespace PoorMansTSqlFormatterTests
             _obfuscatingFormatter = new TSqlObfuscatingFormatter();
         }
 
-        [Test, TestCaseSource(typeof(Utils), "GetInputSqlFileNames")]
+        [Test, TestCaseSource(typeof(Utils), nameof(Utils.GetInputSqlFileNames))]
         public void ObfuscatingFormatReformatMatch(string FileName)
         {
             string inputSQL = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);

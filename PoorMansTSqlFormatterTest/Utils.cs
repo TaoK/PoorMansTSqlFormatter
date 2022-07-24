@@ -43,7 +43,7 @@ namespace PoorMansTSqlFormatterTests
         public static string GetTestContentFolder(string folderName)
         {
             DirectoryInfo thisDirectory = new DirectoryInfo(".");
-            return Path.Combine(Path.Combine(thisDirectory.Parent.Parent.FullName, DATAFOLDER), folderName);
+            return Path.Combine(Path.Combine(thisDirectory.Parent?.Parent?.Parent?.FullName ?? String.Empty, DATAFOLDER), folderName);
         }
 
         public static IEnumerable<string> FolderFileNameIterator(string path)

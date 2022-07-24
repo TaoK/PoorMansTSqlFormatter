@@ -18,11 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using NUnit.Framework;
 using PoorMansTSqlFormatterLib.Interfaces;
 using PoorMansTSqlFormatterLib.Tokenizers;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PoorMansTSqlFormatterTests
 {
@@ -57,9 +54,9 @@ namespace PoorMansTSqlFormatterTests
         private void TestMarkerPosition(string inputSQLNoLineBreaks, int inputPosition)
         {
             ITokenList tokenized = _tokenizer.TokenizeSQL(inputSQLNoLineBreaks, inputPosition);
-            Assert.AreEqual(SqlTokenType.OtherNode, tokenized.MarkerToken.Type, "token type");
-            Assert.AreEqual("from", tokenized.MarkerToken.Value, "token value");
-            Assert.AreEqual(2, tokenized.MarkerPosition);
+            Assert.That(tokenized.MarkerToken?.Type, Is.EqualTo(SqlTokenType.OtherNode), "token type");
+            Assert.That(tokenized.MarkerToken?.Value, Is.EqualTo("from"), "token value");
+            Assert.That(tokenized.MarkerPosition, Is.EqualTo(2));
         }
     }
 }

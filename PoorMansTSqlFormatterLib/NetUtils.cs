@@ -40,7 +40,7 @@ namespace PoorMansTSqlFormatterLib
             {
                 XmlAttribute newAttribute = outDoc.CreateAttribute(null, attribute.Key, null);
                 newAttribute.Value = attribute.Value;
-                copyOfThisNode.Attributes.Append(newAttribute);
+                copyOfThisNode.Attributes?.Append(newAttribute);
             }
 
             copyOfThisNode.InnerText = currentNode.TextValue ?? "";

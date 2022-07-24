@@ -21,9 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System;
-using System.Windows.Forms;
-using System.Threading;
 using PoorMansTSqlFormatterLib;
 using PoorMansTSqlFormatterLib.Interfaces;
 
@@ -44,10 +41,10 @@ namespace PoorMansTSqlFormatterDemo
         ISqlTreeFormatter _formatter;
 
         bool _queuedRefresh = false;
-        object _refreshLock = new object();
+        readonly object _refreshLock = new();
         bool _settingsLoaded = false;
 
-        private FrameworkClassReplacements.SingleAssemblyResourceManager _generalResourceManager;
+        private readonly System.Resources.ResourceManager _generalResourceManager;
 
         public MainForm()
         {
@@ -70,8 +67,7 @@ namespace PoorMansTSqlFormatterDemo
 
             //set the UI language BEFORE initializeComponent...
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Properties.Settings.Default.UILanguage);
-            System.Globalization.CultureInfo test1 = Thread.CurrentThread.CurrentUICulture;
-            _generalResourceManager = new FrameworkClassReplacements.SingleAssemblyResourceManager("GeneralLanguageContent", System.Reflection.Assembly.GetExecutingAssembly(), typeof(Program));
+            _generalResourceManager = new("PoorMansTSqlFormatterDemo.GeneralLanguageContent", System.Reflection.Assembly.GetExecutingAssembly());
 
             InitializeComponent();
 
@@ -117,7 +113,7 @@ namespace PoorMansTSqlFormatterDemo
 
             _settingsLoaded = true;
 
-            SetFormatter();
+            _formatter = GetNewFormatter();
             UpdateDisplayLayout();
         }
 
@@ -166,28 +162,33 @@ namespace PoorMansTSqlFormatterDemo
 
         private void SetFormatter()
         {
+            _formatter = GetNewFormatter();
+        }
+
+        private ISqlTreeFormatter GetNewFormatter()
+        {
             ISqlTreeFormatter innerFormatter;
             if (radio_Formatting_Standard.Checked)
             {
                 innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatter(new PoorMansTSqlFormatterLib.Formatters.TSqlStandardFormatterOptions
-                    {
-                        IndentString = txt_Indent.Text,
-                        SpacesPerTab = int.Parse(txt_IndentWidth.Text),
-                        MaxLineWidth = int.Parse(txt_MaxWidth.Text),
-                        ExpandCommaLists = chk_ExpandCommaLists.Checked,
-                        TrailingCommas = chk_TrailingCommas.Checked,
-                        SpaceAfterExpandedComma = chk_SpaceAfterComma.Checked,
-                        ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked,
-                        ExpandCaseStatements = chk_ExpandCaseStatements.Checked,
-						ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked,
-						ExpandInLists = chk_ExpandInLists.Checked,
-						BreakJoinOnSections = chk_BreakJoinOnSections.Checked,
-                        UppercaseKeywords = chk_UppercaseKeywords.Checked,
-                        HTMLColoring = chk_Coloring.Checked,
-						KeywordStandardization = chk_EnableKeywordStandardization.Checked,
-						NewStatementLineBreaks = int.Parse(txt_StatementBreaks.Text),
-						NewClauseLineBreaks = int.Parse(txt_ClauseBreaks.Text)
-					});
+                {
+                    IndentString = txt_Indent.Text,
+                    SpacesPerTab = int.Parse(txt_IndentWidth.Text),
+                    MaxLineWidth = int.Parse(txt_MaxWidth.Text),
+                    ExpandCommaLists = chk_ExpandCommaLists.Checked,
+                    TrailingCommas = chk_TrailingCommas.Checked,
+                    SpaceAfterExpandedComma = chk_SpaceAfterComma.Checked,
+                    ExpandBooleanExpressions = chk_ExpandBooleanExpressions.Checked,
+                    ExpandCaseStatements = chk_ExpandCaseStatements.Checked,
+                    ExpandBetweenConditions = chk_ExpandBetweenConditions.Checked,
+                    ExpandInLists = chk_ExpandInLists.Checked,
+                    BreakJoinOnSections = chk_BreakJoinOnSections.Checked,
+                    UppercaseKeywords = chk_UppercaseKeywords.Checked,
+                    HTMLColoring = chk_Coloring.Checked,
+                    KeywordStandardization = chk_EnableKeywordStandardization.Checked,
+                    NewStatementLineBreaks = int.Parse(txt_StatementBreaks.Text),
+                    NewClauseLineBreaks = int.Parse(txt_ClauseBreaks.Text)
+                });
             }
             else if (radio_Formatting_Identity.Checked)
                 innerFormatter = new PoorMansTSqlFormatterLib.Formatters.TSqlIdentityFormatter(chk_IdentityColoring.Checked);
@@ -201,7 +202,7 @@ namespace PoorMansTSqlFormatterDemo
                     );
 
             innerFormatter.ErrorOutputPrefix = _generalResourceManager.GetString("ParseErrorWarningPrefix") + Environment.NewLine;
-            _formatter = new PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper(innerFormatter);
+            return new PoorMansTSqlFormatterLib.Formatters.HtmlPageWrapper(innerFormatter);
         }
 
         private void DoFormatting()
@@ -325,8 +326,8 @@ namespace PoorMansTSqlFormatterDemo
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (AboutBox about = new AboutBox())
-                about.ShowDialog();
+            using AboutBox about = new();
+            about.ShowDialog();
         }
 
     }

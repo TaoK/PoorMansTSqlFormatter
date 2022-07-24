@@ -1,8 +1,0 @@
-ILRepack
-
-Copyright Francois Valdy and contributors
-
-Old Homepage (http://code.google.com/p/il-repack/) states this project is released under the Apache License, v2.0.
-
-New homepage (https://github.com/gluck/il-repack) does not appear to reference any specific license.
-

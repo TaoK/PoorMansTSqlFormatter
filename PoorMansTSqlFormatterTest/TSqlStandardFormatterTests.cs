@@ -21,15 +21,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using NUnit.Framework;
 using PoorMansTSqlFormatterLib;
 using PoorMansTSqlFormatterLib.Formatters;
 using PoorMansTSqlFormatterLib.Interfaces;
 using PoorMansTSqlFormatterLib.Parsers;
 using PoorMansTSqlFormatterLib.ParseStructure;
 using PoorMansTSqlFormatterLib.Tokenizers;
-using System;
-using System.Collections.Generic;
 
 namespace PoorMansTSqlFormatterTests
 {
@@ -49,7 +46,7 @@ namespace PoorMansTSqlFormatterTests
 
         private TSqlStandardFormatter GetFormatter(string configString)
         {
-            TSqlStandardFormatter outFormatter;
+            TSqlStandardFormatter? outFormatter;
             if (!_formatters.TryGetValue(configString, out outFormatter))
             {
                 var options = new TSqlStandardFormatterOptions(configString);
@@ -59,7 +56,7 @@ namespace PoorMansTSqlFormatterTests
             return outFormatter;
         }
 
-        [Test, TestCaseSource(typeof(Utils), "GetInputSqlFileNames")]
+        [Test, TestCaseSource(typeof(Utils), nameof(Utils.GetInputSqlFileNames))]
         public void StandardFormatReparsingReformatting(string FileName)
         {
             string inputSQL = Utils.GetTestFileContent(FileName, Utils.INPUTSQLFOLDER);
@@ -78,19 +75,19 @@ namespace PoorMansTSqlFormatterTests
 
             if (!inputSQL.Contains(Utils.REFORMATTING_INCONSISTENCY_WARNING))
             {
-                Assert.AreEqual(outputSQL, formattedAgain, "first-pass formatted vs reformatted");
+                Assert.That(formattedAgain, Is.EqualTo(outputSQL), "first-pass formatted vs reformatted");
                 Utils.StripWhiteSpaceFromSqlTree(parsed);
                 Utils.StripWhiteSpaceFromSqlTree(parsedAgain);
-                Assert.AreEqual(parsed.ToXmlDoc().OuterXml.ToUpper(), parsedAgain.ToXmlDoc().OuterXml.ToUpper(), "first parse xml vs reparse xml");
+                Assert.That(parsedAgain.ToXmlDoc().OuterXml.ToUpper(), Is.EqualTo(parsed.ToXmlDoc().OuterXml.ToUpper()), "first parse xml vs reparse xml");
             }
         }
 
-        public IEnumerable<string> GetStandardFormatSqlFileNames()
+        public static IEnumerable<string> GetStandardFormatSqlFileNames()
         {
             return Utils.FolderFileNameIterator(Utils.GetTestContentFolder("StandardFormatSql"));
         }
 
-        [Test, TestCaseSource("GetStandardFormatSqlFileNames")]
+        [Test, TestCaseSource(nameof(GetStandardFormatSqlFileNames))]
         public void StandardFormatExpectedOutput(string FileName)
         {
             string expectedSql = Utils.GetTestFileContent(FileName, Utils.STANDARDFORMATSQLFOLDER);
@@ -101,7 +98,7 @@ namespace PoorMansTSqlFormatterTests
             Node parsed = _parser.ParseSQL(tokenized);
             string formatted = _treeFormatter.FormatSQLTree(parsed);
 
-            Assert.AreEqual(expectedSql, formatted);
+            Assert.That(formatted, Is.EqualTo(expectedSql));
         }
 
     }

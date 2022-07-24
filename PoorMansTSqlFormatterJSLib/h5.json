@@ -1,0 +1,22 @@
+{
+  "output": "$(OutDir)/h5/",
+
+  "sourceMap": {
+    "enabled": true
+  },
+
+  //"combineScripts": true,
+
+  "html": {
+    "disabled": true
+  },
+
+  "reflection": {
+    "disabled": true
+  },
+  
+  "cleanOutputFolderBeforeBuild": true
+
+  // More config options available at
+  // https://github.com/bridgedotnet/Bridge/wiki/global-configuration
+}

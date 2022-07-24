@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
-library for .Net 2.0 and JS, written in C#. 
-Copyright (C) 2011 Tao Klerks
+library for .Net and JS, written in C#. 
+Copyright (C) 2011-2022 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -18,38 +18,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  */
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Reflection;
-using System.IO;
-using System.Windows.Forms;
 
 namespace PoorMansTSqlFormatterDemo
 {
     partial class AboutBox : Form
     {
-        private FrameworkClassReplacements.SingleAssemblyResourceManager _generalResourceManager = new FrameworkClassReplacements.SingleAssemblyResourceManager("GeneralLanguageContent", System.Reflection.Assembly.GetExecutingAssembly(), typeof(Program));
+        private readonly System.Resources.ResourceManager _generalResourceManager = new("PoorMansTSqlFormatterDemo.GeneralLanguageContent", Assembly.GetExecutingAssembly());
 
         public AboutBox()
         {
 
             InitializeComponent();
-            this.Text = String.Format(_generalResourceManager.GetString("AboutTitleLabel"), AssemblyTitle);
-            this.labelProductName.Text = String.Format("{0}, v{1}", AssemblyProduct, AssemblyVersion);
-            this.labelCopyright.Text = AssemblyCopyright;
-            this.textBoxDescription.Text = _generalResourceManager.GetString("ProjectAboutDescription");
+            Text = FormatTranslation("AboutTitleLabel", AssemblyTitle);
+            labelProductName.Text = String.Format("{0}, v{1}", AssemblyProduct, AssemblyVersion);
+            labelCopyright.Text = AssemblyCopyright;
+            textBoxDescription.Text = _generalResourceManager.GetString("ProjectAboutDescription");
 
             string GPLText = "";
 
-            using (Stream fileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof(Program).Namespace + ".LICENSE.txt"))
-            using (StreamReader textReader = new StreamReader(fileStream, System.Text.Encoding.ASCII))
+            using (Stream? fileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof(AboutBox).Namespace + ".LICENSE.txt"))
             {
+                if (fileStream == null)
+                    throw new Exception("License file not found!");
+
+                using StreamReader textReader = new(fileStream, System.Text.Encoding.ASCII);
                 GPLText = textReader.ReadToEnd();
             }
 
-            this.textBoxDescription.Text += System.Environment.NewLine + System.Environment.NewLine + GPLText;
+            this.textBoxDescription.Text += Environment.NewLine + Environment.NewLine + GPLText;
+        }
+
+        string FormatTranslation(string key, params object[] args)
+        {
+            return String.Format(_generalResourceManager?.GetString(key) ?? "", args);
         }
 
         #region Assembly Attribute Accessors
@@ -67,7 +69,7 @@ namespace PoorMansTSqlFormatterDemo
                         return titleAttribute.Title;
                     }
                 }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
             }
         }
 
@@ -75,7 +77,7 @@ namespace PoorMansTSqlFormatterDemo
         {
             get
             {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                return Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "";
             }
         }
 
@@ -105,18 +107,6 @@ namespace PoorMansTSqlFormatterDemo
             }
         }
 
-        public string AssemblyCompany
-        {
-            get
-            {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyCompanyAttribute)attributes[0]).Company;
-            }
-        }
         #endregion
 
     }
