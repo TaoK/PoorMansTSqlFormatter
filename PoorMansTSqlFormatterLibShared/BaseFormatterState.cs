@@ -34,12 +34,12 @@ namespace PoorMansTSqlFormatterLib
         protected bool HtmlOutput { get; set; }
         protected StringBuilder _outBuilder = new StringBuilder();
 
-        public virtual void AddOutputContent(string content)
+        public virtual void AddOutputContent(string? content)
         {
             AddOutputContent(content, null);
         }
 
-        public virtual void AddOutputContent(string content, string htmlClassName)
+        public virtual void AddOutputContent(string? content, string? htmlClassName)
         {
             if (HtmlOutput)
             {
@@ -68,7 +68,7 @@ namespace PoorMansTSqlFormatterLib
                 _outBuilder.Append(@"</span>");
         }
 
-        public virtual void AddOutputContentRaw(string content)
+        public virtual void AddOutputContentRaw(string? content)
         {
             _outBuilder.Append(content);
         }

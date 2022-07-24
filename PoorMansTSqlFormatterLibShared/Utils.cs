@@ -24,7 +24,7 @@ namespace PoorMansTSqlFormatterLib
 {
     public static class Utils
     {
-        public static string HtmlEncode(string raw)
+        public static string? HtmlEncode(string? raw)
         {
             /*
              * This is a "Roll Your Own" implementation of HtmlEncode, which was necessary in the end because people want
@@ -39,13 +39,13 @@ namespace PoorMansTSqlFormatterLib
             if (raw == null)
                 return null;
 
-            StringBuilder outBuilder = null;
+            StringBuilder? outBuilder = null;
             int latestCheckPos = 0;
             int latestReplacementPos = 0;
 
             foreach (char c in raw)
             {
-                string replacementString = null;
+                string? replacementString = null;
 
                 switch (c)
                 {
@@ -89,5 +89,16 @@ namespace PoorMansTSqlFormatterLib
             else
                 return raw;
         }
+
+#if SIMPLIFIEDFW
+
+        //Invariant conversions are not implemented in Bridge.Net and .Net Standard...
+        public static string ToLowerInvariant(this string value) => value.ToLower();
+        public static string ToUpperInvariant(this string value) => value.ToUpper();
+        public static char ToLowerInvariant(this char value) => char.ToLower(value);
+        public static char ToUpperInvariant(this char value) => char.ToUpper(value);
+
+#endif
+
     }
 }

@@ -21,10 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace PoorMansTSqlFormatterLib.Formatters
 {
     public class TSqlStandardFormatterOptions
@@ -117,7 +113,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
            
         }
 
-        private string _indentString;
+        private string _indentString = null!; // property always set in constructor
         public string IndentString
         {
             get

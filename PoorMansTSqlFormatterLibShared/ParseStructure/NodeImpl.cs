@@ -18,23 +18,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace PoorMansTSqlFormatterLib.ParseStructure
 {
     internal class NodeImpl : Node
     {
-        public NodeImpl()
+        public NodeImpl(string name, string? textValue)
         {
             Attributes = new Dictionary<string, string>();
             Children = new List<Node>();
+            Name = name;
+            TextValue = textValue;
         }
 
         public string Name { get; set; }
-        public string TextValue { get; set; }
-        public Node Parent { get; set; }
+        public string? TextValue { get; set; }
+        public Node? Parent { get; set; }
 
         public IDictionary<string, string> Attributes { get; private set; }
         public IEnumerable<Node> Children { get; private set; }
@@ -48,7 +46,7 @@ namespace PoorMansTSqlFormatterLib.ParseStructure
         public void InsertChildBefore(Node newChild, Node existingChild)
         {
             SetParentOnChild(newChild);
-            var childList = Children as IList<Node>;
+            var childList = (IList<Node>)Children;
             childList.Insert(childList.IndexOf(existingChild), newChild);
         }
 
@@ -68,9 +66,9 @@ namespace PoorMansTSqlFormatterLib.ParseStructure
         }
 
 
-        public string GetAttributeValue(string aName)
+        public string? GetAttributeValue(string aName)
         {
-            string outVal = null;
+            string? outVal;
             Attributes.TryGetValue(aName, out outVal);
             return outVal;
         }

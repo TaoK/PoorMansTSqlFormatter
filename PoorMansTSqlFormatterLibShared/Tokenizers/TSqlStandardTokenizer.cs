@@ -29,7 +29,7 @@ namespace PoorMansTSqlFormatterLib.Tokenizers
         private class TokenizationState
         {
             public TokenList TokenContainer { get; private set; } = new TokenList();
-            public SimplifiedStringReader InputReader { get; private set; } = null;
+            public SimplifiedStringReader InputReader { get; private set; }
             public SqlTokenizationType? CurrentTokenizationType { get; set; } = null;
             public StringBuilder CurrentTokenValue { get; set; } = new StringBuilder();
             public int CommentNesting { get; set; } = 0;

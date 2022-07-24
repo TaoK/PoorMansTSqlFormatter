@@ -43,8 +43,11 @@ namespace PoorMansTSqlFormatterLib.Formatters
         public bool HTMLFormatted { get { return HTMLColoring; } }
         public string ErrorOutputPrefix { get; set; }
 
-        public string FormatSQLTree(Node sqlTreeDoc)
+        public string FormatSQLTree(Node? sqlTreeDoc)
         {
+            if (sqlTreeDoc == null)
+                return "";
+
             BaseFormatterState state = new BaseFormatterState(HTMLColoring);
 
             if (sqlTreeDoc.Name == SqlStructureConstants.ENAME_SQL_ROOT && sqlTreeDoc.GetAttributeValue(SqlStructureConstants.ANAME_ERRORFOUND) == "1")
@@ -149,16 +152,16 @@ namespace PoorMansTSqlFormatterLib.Formatters
                     state.AddOutputContent("//" + contentElement.TextValue, SqlHtmlConstants.CLASS_COMMENT);
                     break;
                 case SqlStructureConstants.ENAME_STRING:
-                    state.AddOutputContent("'" + contentElement.TextValue.Replace("'", "''") + "'", SqlHtmlConstants.CLASS_STRING);
+                    state.AddOutputContent("'" + (contentElement.TextValue ?? "").Replace("'", "''") + "'", SqlHtmlConstants.CLASS_STRING);
                     break;
                 case SqlStructureConstants.ENAME_NSTRING:
-                    state.AddOutputContent("N'" + contentElement.TextValue.Replace("'", "''") + "'", SqlHtmlConstants.CLASS_STRING);
+                    state.AddOutputContent("N'" + (contentElement.TextValue ?? "").Replace("'", "''") + "'", SqlHtmlConstants.CLASS_STRING);
                     break;
                 case SqlStructureConstants.ENAME_QUOTED_STRING:
-                    state.AddOutputContent("\"" + contentElement.TextValue.Replace("\"", "\"\"") + "\"");
+                    state.AddOutputContent("\"" + (contentElement.TextValue ?? "").Replace("\"", "\"\"") + "\"");
                     break;
                 case SqlStructureConstants.ENAME_BRACKET_QUOTED_NAME:
-                    state.AddOutputContent("[" + contentElement.TextValue.Replace("]", "]]") + "]");
+                    state.AddOutputContent("[" + (contentElement.TextValue ?? "").Replace("]", "]]") + "]");
                     break;
 
                 case SqlStructureConstants.ENAME_COMMA:
@@ -174,7 +177,7 @@ namespace PoorMansTSqlFormatterLib.Formatters
 
                 case SqlStructureConstants.ENAME_AND_OPERATOR:
                 case SqlStructureConstants.ENAME_OR_OPERATOR:
-                    state.AddOutputContent(contentElement.ChildByName(SqlStructureConstants.ENAME_OTHERKEYWORD).TextValue, SqlHtmlConstants.CLASS_OPERATOR);
+                    state.AddOutputContent(contentElement.ChildByName(SqlStructureConstants.ENAME_OTHERKEYWORD)?.TextValue, SqlHtmlConstants.CLASS_OPERATOR);
                     break;
 
                 case SqlStructureConstants.ENAME_FUNCTION_KEYWORD:

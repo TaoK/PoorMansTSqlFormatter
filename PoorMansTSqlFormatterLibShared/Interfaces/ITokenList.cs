@@ -29,7 +29,7 @@ namespace PoorMansTSqlFormatterLib.Interfaces
         string PrettyPrint();
         IList<IToken> GetRange(int index, int count);
         IList<IToken> GetRangeByIndex(int fromIndex, int toIndex);
-        IToken MarkerToken { get; }
+        IToken? MarkerToken { get; }
         long? MarkerPosition { get; }
     }
 }

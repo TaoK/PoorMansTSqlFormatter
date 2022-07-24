@@ -18,8 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 using PoorMansTSqlFormatterLib.Interfaces;
 using PoorMansTSqlFormatterLib.ParseStructure;
@@ -28,10 +26,9 @@ namespace PoorMansTSqlFormatterLib
 {
     internal class ParseTree : NodeImpl, Node
     {
-        public ParseTree(string rootName) : base()
+        public ParseTree(string rootName) : base(rootName, null)
         {
-            Name = rootName;
-            CurrentContainer = this;
+            _currentContainer = this;
         }
 
         private Node _currentContainer;
@@ -111,6 +108,8 @@ namespace PoorMansTSqlFormatterLib
 
         internal Node SaveNewElementAsPriorSibling(string newElementName, string newElementValue, Node nodeToSaveBefore)
         {
+            if (nodeToSaveBefore.Parent == null)
+                throw new ArgumentNullException("nodeToSaveBeforeParent");
             Node newElement = NodeFactory.CreateNode(newElementName, newElementValue);
             nodeToSaveBefore.Parent.InsertChildBefore(newElement, nodeToSaveBefore);
             return newElement;
@@ -209,18 +208,27 @@ namespace PoorMansTSqlFormatterLib
                         && PathNameMatches(2, SqlStructureConstants.ENAME_CONTAINER_SINGLESTATEMENT)
                         )
                     {
-                        Node currentSingleContainer = CurrentContainer.Parent.Parent;
+                        Node? currentSingleContainer = CurrentContainer.Parent?.Parent;
+                        if (currentSingleContainer == null)
+                            throw new ArgumentNullException("ImpossibleParentIssue");
+
                         if (PathNameMatches(currentSingleContainer, 1, SqlStructureConstants.ENAME_ELSE_CLAUSE))
                         {
                             //we just ended the one and only statement in an else clause, and need to pop out to the same level as its parent if
                             // singleContainer.else.if.CANDIDATE
-                            CurrentContainer = currentSingleContainer.Parent.Parent.Parent;
+                            var ifCandidate = currentSingleContainer.Parent?.Parent?.Parent;
+                            if (ifCandidate == null)
+                                throw new ArgumentNullException("ifCandidate");
+                            CurrentContainer = ifCandidate;
                         }
                         else
                         {
                             //we just ended the one statement of an if or while, and need to pop out the same level as that if or while
                             // singleContainer.(if or while).CANDIDATE
-                            CurrentContainer = currentSingleContainer.Parent.Parent;
+                            var ifWhileCandidate = currentSingleContainer.Parent?.Parent;
+                            if (ifWhileCandidate == null)
+                                throw new ArgumentNullException("ifWhileCandidate");
+                            CurrentContainer = ifWhileCandidate;
                         }
                     }
                     else
@@ -243,7 +251,7 @@ namespace PoorMansTSqlFormatterLib
                 MoveToAncestorContainer(5);
         }
 
-        private Node EscapeAndLocateNextStatementContainer(bool escapeEmptyContainer)
+        private Node? EscapeAndLocateNextStatementContainer(bool escapeEmptyContainer)
         {
             EscapeAnySingleOrPartialStatementContainers();
 
@@ -253,6 +261,8 @@ namespace PoorMansTSqlFormatterLib
                     )
                 )
             {
+                if (CurrentContainer.Parent == null)
+                    throw new ArgumentNullException("CurrentContainerParent");
                 //we just ended the boolean clause of an if or while, and need to pop to the single-statement container.
                 return SaveNewElement(SqlStructureConstants.ENAME_CONTAINER_SINGLESTATEMENT, "", CurrentContainer.Parent);
             }
@@ -260,7 +270,11 @@ namespace PoorMansTSqlFormatterLib
                 && PathNameMatches(1, SqlStructureConstants.ENAME_SQL_STATEMENT)
                 && (escapeEmptyContainer || HasNonWhiteSpaceNonSingleCommentContent(CurrentContainer))
                 )
+            {
+                if (CurrentContainer.Parent?.Parent == null)
+                    throw new ArgumentNullException("CurrentContainerParent");
                 return CurrentContainer.Parent.Parent;
+            }
             else
                 return null;
         }
@@ -268,7 +282,7 @@ namespace PoorMansTSqlFormatterLib
         private void MigrateApplicableCommentsFromContainer(Node previousContainerElement)
         {
             Node migrationContext = previousContainerElement;
-            Node migrationCandidate = previousContainerElement.Children.Last();
+            Node? migrationCandidate = previousContainerElement.Children.Last();
 
             //keep track of where we're going to be prepending - this will change as we go moving stuff.
             Node insertBeforeNode = CurrentContainer;
@@ -293,11 +307,19 @@ namespace PoorMansTSqlFormatterLib
                         while (!migrationContext.Children.Last().Equals(migrationCandidate))
                         {
                             Node movingNode = migrationContext.Children.Last();
+                            if (movingNode.Parent == null)
+                                throw new ArgumentNullException("movingNodeParent");
+                            if (CurrentContainer.Parent == null)
+                                throw new ArgumentNullException("CurrentContainerParent");
                             movingNode.Parent.RemoveChild(movingNode);
                             CurrentContainer.Parent.InsertChildBefore(movingNode, insertBeforeNode);
                             insertBeforeNode = movingNode;
                         }
+                        if (migrationCandidate.Parent == null)
+                            throw new ArgumentNullException("migrationCandidateParent");
                         migrationCandidate.Parent.RemoveChild(migrationCandidate);
+                        if (CurrentContainer.Parent == null)
+                            throw new ArgumentNullException("CurrentContainerParent");
                         CurrentContainer.Parent.InsertChildBefore(migrationCandidate, insertBeforeNode);
                         insertBeforeNode = migrationCandidate;
 
@@ -334,7 +356,7 @@ namespace PoorMansTSqlFormatterLib
             Node previousContainerElement = CurrentContainer;
 
             //context might change AND suitable ancestor selected
-            Node nextStatementContainer = EscapeAndLocateNextStatementContainer(false);
+            Node? nextStatementContainer = EscapeAndLocateNextStatementContainer(false);
 
             //if suitable ancestor found, start statement and migrate in-between comments to the new statement
             if (nextStatementContainer != null)
@@ -360,6 +382,8 @@ namespace PoorMansTSqlFormatterLib
             {
                 //complete current clause, start a new one in the same container
                 Node previousContainerElement = CurrentContainer;
+                if (CurrentContainer.Parent == null)
+                    throw new ArgumentNullException("CurrentContainerParent");
                 CurrentContainer = SaveNewElement(SqlStructureConstants.ENAME_SQL_CLAUSE, "", CurrentContainer.Parent);
                 MigrateApplicableCommentsFromContainer(previousContainerElement);
             }
@@ -377,7 +401,11 @@ namespace PoorMansTSqlFormatterLib
         internal void EscapeAnySelectionTarget()
         {
             if (PathNameMatches(0, SqlStructureConstants.ENAME_SELECTIONTARGET))
+            {
+                if (CurrentContainer.Parent == null)
+                    throw new ArgumentNullException("CurrentContainerParent");
                 CurrentContainer = CurrentContainer.Parent;
+            }
         }
 
         internal void EscapeJoinCondition()
@@ -390,11 +418,11 @@ namespace PoorMansTSqlFormatterLib
 
         internal bool FindValidBatchEnd()
         {
-            Node nextStatementContainer = EscapeAndLocateNextStatementContainer(true);
+            Node? nextStatementContainer = EscapeAndLocateNextStatementContainer(true);
             return nextStatementContainer != null
                 && (nextStatementContainer.Name.Equals(SqlStructureConstants.ENAME_SQL_ROOT)
                     || (nextStatementContainer.Name.Equals(SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT)
-                        && nextStatementContainer.Parent.Name.Equals(SqlStructureConstants.ENAME_DDL_AS_BLOCK)
+                        && string.Equals(nextStatementContainer.Parent?.Name, SqlStructureConstants.ENAME_DDL_AS_BLOCK)
                         )
                     );
         }
@@ -409,6 +437,9 @@ namespace PoorMansTSqlFormatterLib
             Node currentNode = targetNode;
             while (levelsUp > 0)
             {
+                if (currentNode.Parent == null)
+                    throw new ArgumentNullException("currentNodeParent");
+
                 currentNode = currentNode.Parent;
                 levelsUp--;
             }
@@ -422,7 +453,7 @@ namespace PoorMansTSqlFormatterLib
                     && !testElement.Name.Equals(SqlStructureConstants.ENAME_COMMENT_SINGLELINE)
                     && !testElement.Name.Equals(SqlStructureConstants.ENAME_COMMENT_SINGLELINE_CSTYLE)
                     && (!testElement.Name.Equals(SqlStructureConstants.ENAME_COMMENT_MULTILINE)
-                        || Regex.IsMatch(testElement.TextValue, @"(\r|\n)+")
+                        || Regex.IsMatch((testElement.TextValue ?? ""), @"(\r|\n)+")
                         )
                     )
                     return true;
@@ -435,12 +466,12 @@ namespace PoorMansTSqlFormatterLib
             return containerNode.ChildrenExcludingNames(SqlStructureConstants.ENAMELIST_NONCONTENT).Any();
         }
 
-		internal Node GetFirstNonWhitespaceNonCommentChildElement(Node targetElement)
+		internal Node? GetFirstNonWhitespaceNonCommentChildElement(Node? targetElement)
 		{
-            return targetElement.ChildrenExcludingNames(SqlStructureConstants.ENAMELIST_NONCONTENT).FirstOrDefault();
+            return targetElement?.ChildrenExcludingNames(SqlStructureConstants.ENAMELIST_NONCONTENT).FirstOrDefault();
 		}
 
-		internal Node GetLastNonWhitespaceNonCommentChildElement(Node targetElement)
+		internal Node? GetLastNonWhitespaceNonCommentChildElement(Node targetElement)
 		{
             return targetElement.ChildrenExcludingNames(SqlStructureConstants.ENAMELIST_NONCONTENT).LastOrDefault();
 		}
@@ -449,11 +480,14 @@ namespace PoorMansTSqlFormatterLib
         {
             MoveToAncestorContainer(levelsUp, null);
         }
-        internal void MoveToAncestorContainer(int levelsUp, string targetContainerName)
+        internal void MoveToAncestorContainer(int levelsUp, string? targetContainerName)
         {
             Node candidateContainer = CurrentContainer;
             while (levelsUp > 0)
             {
+                if (candidateContainer.Parent == null)
+                    throw new ArgumentNullException("candidateContainerParent");
+
                 candidateContainer = candidateContainer.Parent;
                 levelsUp--;
             }

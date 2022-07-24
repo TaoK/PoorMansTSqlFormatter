@@ -27,7 +27,7 @@ namespace PoorMansTSqlFormatterLib.ParseStructure
 {
     public static class NodeExtensions
     {
-        public static Node FollowingChild(this Node value, Node fromChild)
+        public static Node? FollowingChild(this Node value, Node fromChild)
         {
             if (value == null)
                 return null;
@@ -36,7 +36,7 @@ namespace PoorMansTSqlFormatterLib.ParseStructure
                 throw new ArgumentNullException("fromChild");
 
             bool targetFound = false;
-            Node sibling = null;
+            Node? sibling = null;
 
             foreach (var child in value.Children)
             {
@@ -53,7 +53,7 @@ namespace PoorMansTSqlFormatterLib.ParseStructure
             return sibling;
         }
 
-        public static Node PreviousChild(this Node value, Node fromChild)
+        public static Node? PreviousChild(this Node value, Node fromChild)
         {
             if (value == null)
                 return null;
@@ -61,7 +61,7 @@ namespace PoorMansTSqlFormatterLib.ParseStructure
             if (fromChild == null)
                 throw new ArgumentNullException("fromChild");
 
-            Node previousSibling = null;
+            Node? previousSibling = null;
 
             foreach (var child in value.Children)
             {
@@ -74,7 +74,7 @@ namespace PoorMansTSqlFormatterLib.ParseStructure
             return null;
         }
 
-        public static Node NextSibling(this Node value)
+        public static Node? NextSibling(this Node value)
         {
             if (value == null || value.Parent == null)
                 return null;
@@ -82,7 +82,7 @@ namespace PoorMansTSqlFormatterLib.ParseStructure
             return value.Parent.FollowingChild(value);
         }
 
-        public static Node PreviousSibling(this Node value)
+        public static Node? PreviousSibling(this Node value)
         {
             if (value == null || value.Parent == null)
                 return null;
@@ -93,7 +93,7 @@ namespace PoorMansTSqlFormatterLib.ParseStructure
         public static Node RootContainer(this Node value)
         {
             if (value == null)
-                return null;
+                throw new ArgumentNullException(nameof(value));
 
             Node currentParent = value;
             while (currentParent.Parent != null)
@@ -125,27 +125,27 @@ namespace PoorMansTSqlFormatterLib.ParseStructure
             return value.Children.Where(p => !names.Contains(p.Name));
         }
 
-        public static Node ChildByName(this Node value, string name)
+        public static Node? ChildByName(this Node value, string name)
         {
             return value.ChildrenByName(name).SingleOrDefault();
         }
 
-        public static Node ChildByNames(this Node value, IEnumerable<string> names)
+        public static Node? ChildByNames(this Node value, IEnumerable<string> names)
         {
             return value.ChildrenByNames(names).SingleOrDefault();
         }
 
-        public static Node ChildExcludingNames(this Node value, IEnumerable<string> names)
+        public static Node? ChildExcludingNames(this Node value, IEnumerable<string> names)
         {
             return value.ChildrenExcludingNames(names).SingleOrDefault();
         }
 
-        public static Node ExtractStructureBetween(Node startingElement, Node endingElement)
+        public static Node? ExtractStructureBetween(Node startingElement, Node endingElement)
         {
             Node currentNode = startingElement;
-            Node previousNode = null;
-            Node remainder = null;
-            Node remainderPosition = null;
+            Node? previousNode = null;
+            Node? remainder = null;
+            Node? remainderPosition = null;
 
             while (currentNode != null)
             {
@@ -181,6 +181,8 @@ namespace PoorMansTSqlFormatterLib.ParseStructure
                     }
                     else if (currentNode.Equals(previousNode.NextSibling()) && remainderPosition.Parent == null)
                     {
+                        if (currentNode.Parent == null)
+                            throw new ArgumentNullException("currentNodeParent");
                         Node copyOfThisNodesParent = NodeFactory.CreateNode(currentNode.Parent.Name, currentNode.Parent.TextValue);
                         remainder = copyOfThisNodesParent;
                         remainder.AddChild(remainderPosition);
@@ -195,20 +197,26 @@ namespace PoorMansTSqlFormatterLib.ParseStructure
                     }
                 }
 
-                Node nextNode = null;
+                Node nextNode;
                 if (previousNode != null
                     && currentNode.Children.Any()
                     && !(currentNode.Equals(previousNode.Parent)))
                 {
-                    nextNode = currentNode.Children.FirstOrDefault();
-                }
-                else if (currentNode.NextSibling() != null)
-                {
-                    nextNode = currentNode.NextSibling();
+                    nextNode = currentNode.Children.First();
                 }
                 else
                 {
-                    nextNode = currentNode.Parent;
+                    var nextSibling = currentNode.NextSibling();
+                    if (nextSibling != null)
+                    {
+                        nextNode = nextSibling;
+                    }
+                    else
+                    {
+                        if (currentNode.Parent == null)
+                            throw new ArgumentNullException("currentNodeParent");
+                        nextNode = currentNode.Parent;
+                    }
                 }
 
                 previousNode = currentNode;

@@ -18,8 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-using System;
-using System.Collections.Generic;
 using System.Text;
 using PoorMansTSqlFormatterLib.Interfaces;
 
@@ -31,7 +29,7 @@ namespace PoorMansTSqlFormatterLib
         
         public string PrettyPrint()
         {
-            StringBuilder outString = new StringBuilder();
+            StringBuilder outString = new();
             foreach(IToken contentToken in this)
             {
                 string tokenType = contentToken.Type.ToString();
@@ -59,7 +57,7 @@ namespace PoorMansTSqlFormatterLib
             return this.GetRange(fromIndex, toIndex - fromIndex + 1);
         }
 
-        public IToken MarkerToken { get; set; }
+        public IToken? MarkerToken { get; set; }
 
         public long? MarkerPosition { get; set; }
     }

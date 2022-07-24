@@ -19,11 +19,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
+#if !SIMPLIFIEDFW
+using System;
+using System.Runtime.InteropServices;
+#endif
 using PoorMansTSqlFormatterLib.Interfaces;
 using PoorMansTSqlFormatterLib.ParseStructure;
 
 namespace PoorMansTSqlFormatterLib
 {
+#if !SIMPLIFIEDFW
+    //These COM-related attributes exist JUST so that we can use this class from VB6 - there is no need to
+    // expose these classes to COM in order for this library to be used in a .Net project.
+    [Guid("A7FD140A-C3C3-4233-95DB-A64B50C8DF2B")]
+    [ClassInterface(ClassInterfaceType.None)]
+    [ComVisible(true)]
+    [ProgId("PoorMansTSqlFormatter.SqlFormattingManager")]
+#endif
     public class SqlFormattingManager
     {
         //default to built-in

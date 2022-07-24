@@ -20,11 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using PoorMansTSqlFormatterLib.Interfaces;
 using PoorMansTSqlFormatterLib.ParseStructure;
-using System;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PoorMansTSqlFormatterLib.Parsers
 {
@@ -45,13 +42,10 @@ namespace PoorMansTSqlFormatterLib.Parsers
          */
 
         //yay for static constructors!
-        public static Dictionary<string, KeywordType> KeywordList { get; set; }
+        public static Dictionary<string, KeywordType> KeywordList { get; set; } = null!; // property always set in constructor
         static TSqlStandardParser()
         {
             InitializeKeywordList();
-            //temporary, to convince VisualStudio to copy the LinqBridge DLL, otherwise ILMerge fails because of the missing file.
-            // - maybe instead I should remove LinqBridge, as I'm not using it at the moment...
-            KeywordList.Take(3);
         }
 
         static Regex _JoinDetector = new Regex("^((RIGHT|INNER|LEFT|CROSS|FULL) )?(OUTER )?((HASH|LOOP|MERGE|REMOTE) )?(JOIN|APPLY) ");
@@ -65,7 +59,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
         public Node ParseSQL(ITokenList tokenList)
         {
-            ParseTree sqlTree = new ParseTree(SqlStructureConstants.ENAME_SQL_ROOT);
+            ParseTree sqlTree = new(SqlStructureConstants.ENAME_SQL_ROOT);
             sqlTree.StartNewStatement();
 
             int tokenCount = tokenList.Count;
@@ -77,39 +71,39 @@ namespace PoorMansTSqlFormatterLib.Parsers
                 switch (token.Type)
                 {
                     case SqlTokenType.OpenParens:
-						Node firstNonCommentParensSibling = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
-						Node lastNonCommentParensSibling = sqlTree.GetLastNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
+						Node? firstNonCommentParensSibling = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
+						Node? lastNonCommentParensSibling = sqlTree.GetLastNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
 						bool isInsertOrValuesClause = (
                             firstNonCommentParensSibling != null
                             && (
-                                (firstNonCommentParensSibling.Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD)
-                                   && firstNonCommentParensSibling.TextValue.ToUpperInvariant().StartsWith("INSERT")
+                                (string.Equals(firstNonCommentParensSibling.Name, SqlStructureConstants.ENAME_OTHERKEYWORD)
+                                   && (firstNonCommentParensSibling.TextValue ?? "").ToUpperInvariant().StartsWith("INSERT")
                                    )
                                 || 
-                                (firstNonCommentParensSibling.Name.Equals(SqlStructureConstants.ENAME_COMPOUNDKEYWORD)
-                                   && firstNonCommentParensSibling.GetAttributeValue(SqlStructureConstants.ANAME_SIMPLETEXT).ToUpperInvariant().StartsWith("INSERT ")
+                                (string.Equals(firstNonCommentParensSibling.Name, SqlStructureConstants.ENAME_COMPOUNDKEYWORD)
+                                   && (firstNonCommentParensSibling.GetAttributeValue(SqlStructureConstants.ANAME_SIMPLETEXT) ?? "").ToUpperInvariant().StartsWith("INSERT ")
                                    )
                                 ||
-                                (firstNonCommentParensSibling.Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD)
-                                   && firstNonCommentParensSibling.TextValue.ToUpperInvariant().StartsWith("VALUES")
+                                (string.Equals(firstNonCommentParensSibling.Name, SqlStructureConstants.ENAME_OTHERKEYWORD)
+                                   && (firstNonCommentParensSibling.TextValue ?? "").ToUpperInvariant().StartsWith("VALUES")
                                    )
                                )
                             );
 
-                        if (sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_CTE_ALIAS)
-                            && sqlTree.CurrentContainer.Parent.Name.Equals(SqlStructureConstants.ENAME_CTE_WITH_CLAUSE)
+                        if (string.Equals(sqlTree.CurrentContainer.Name, SqlStructureConstants.ENAME_CTE_ALIAS)
+                            && string.Equals(sqlTree.CurrentContainer.Parent?.Name, SqlStructureConstants.ENAME_CTE_WITH_CLAUSE)
                             )
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_DDL_PARENS, "");
-                        else if (sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT)
-                            && sqlTree.CurrentContainer.Parent.Name.Equals(SqlStructureConstants.ENAME_CTE_AS_BLOCK)
+                        else if (string.Equals(sqlTree.CurrentContainer.Name, SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT)
+                            && string.Equals(sqlTree.CurrentContainer.Parent?.Name, SqlStructureConstants.ENAME_CTE_AS_BLOCK)
                             )
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS, "");
                         else if (firstNonCommentParensSibling == null
-                            && sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_SELECTIONTARGET)
+                            && string.Equals(sqlTree.CurrentContainer.Name, SqlStructureConstants.ENAME_SELECTIONTARGET)
                             )
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS, "");
                         else if (firstNonCommentParensSibling != null
-                            && firstNonCommentParensSibling.Name.Equals(SqlStructureConstants.ENAME_SET_OPERATOR_CLAUSE)
+                            && string.Equals(firstNonCommentParensSibling.Name, SqlStructureConstants.ENAME_SET_OPERATOR_CLAUSE)
                             )
                         {
                             sqlTree.ConsiderStartingNewClause();
@@ -117,21 +111,21 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (IsLatestTokenADDLDetailValue(sqlTree))
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_DDLDETAIL_PARENS, "");
-                        else if (sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK)
-                            || sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_DDL_OTHER_BLOCK)
-                            || sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_DDL_DECLARE_BLOCK)
-                            || (sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_SQL_CLAUSE) 
+                        else if (string.Equals(sqlTree.CurrentContainer.Name, SqlStructureConstants.ENAME_DDL_PROCEDURAL_BLOCK)
+                            || string.Equals(sqlTree.CurrentContainer.Name, SqlStructureConstants.ENAME_DDL_OTHER_BLOCK)
+                            || string.Equals(sqlTree.CurrentContainer.Name, SqlStructureConstants.ENAME_DDL_DECLARE_BLOCK)
+                            || (string.Equals(sqlTree.CurrentContainer.Name, SqlStructureConstants.ENAME_SQL_CLAUSE) 
                                 && (firstNonCommentParensSibling != null
-                                    && firstNonCommentParensSibling.Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD)
-                                    && firstNonCommentParensSibling.TextValue.ToUpperInvariant().StartsWith("OPTION")
+                                    && string.Equals(firstNonCommentParensSibling.Name, SqlStructureConstants.ENAME_OTHERKEYWORD)
+                                    && (firstNonCommentParensSibling.TextValue ?? "").ToUpperInvariant().StartsWith("OPTION")
                                     )
                                 )
                             || isInsertOrValuesClause
                             )
                             sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_DDL_PARENS, "");
 						else if ((lastNonCommentParensSibling != null
-									&& lastNonCommentParensSibling.Name.Equals(SqlStructureConstants.ENAME_ALPHAOPERATOR)
-									&& lastNonCommentParensSibling.TextValue.ToUpperInvariant().Equals("IN")
+									&& string.Equals(lastNonCommentParensSibling.Name, SqlStructureConstants.ENAME_ALPHAOPERATOR)
+									&& (lastNonCommentParensSibling.TextValue ?? "").ToUpperInvariant().Equals("IN")
 									)
 							)
 							sqlTree.CurrentContainer = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_IN_PARENS, "");
@@ -158,9 +152,9 @@ namespace PoorMansTSqlFormatterLib.Parsers
                             sqlTree.MoveToAncestorContainer(1); //unspecified parent node...
                         }
                         else if (sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_SQL_CLAUSE)
-                                && sqlTree.CurrentContainer.Parent.Name.Equals(SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS)
-                                && sqlTree.CurrentContainer.Parent.Parent.Name.Equals(SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT)
-                                && sqlTree.CurrentContainer.Parent.Parent.Parent.Name.Equals(SqlStructureConstants.ENAME_CTE_AS_BLOCK)
+                                && string.Equals(sqlTree.CurrentContainer.Parent?.Name, SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS)
+                                && string.Equals(sqlTree.CurrentContainer.Parent?.Parent?.Name, SqlStructureConstants.ENAME_CONTAINER_GENERALCONTENT)
+                                && string.Equals(sqlTree.CurrentContainer.Parent?.Parent?.Parent?.Name, SqlStructureConstants.ENAME_CTE_AS_BLOCK)
                                 )
                         {
                             sqlTree.MoveToAncestorContainer(4, SqlStructureConstants.ENAME_CTE_WITH_CLAUSE);
@@ -168,9 +162,9 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (sqlTree.CurrentContainer.Name.Equals(SqlStructureConstants.ENAME_SQL_CLAUSE)
                                 && (
-                                    sqlTree.CurrentContainer.Parent.Name.Equals(SqlStructureConstants.ENAME_EXPRESSION_PARENS)
-									|| sqlTree.CurrentContainer.Parent.Name.Equals(SqlStructureConstants.ENAME_IN_PARENS)
-									|| sqlTree.CurrentContainer.Parent.Name.Equals(SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS)
+                                    string.Equals(sqlTree.CurrentContainer.Parent?.Name, SqlStructureConstants.ENAME_EXPRESSION_PARENS)
+									|| string.Equals(sqlTree.CurrentContainer.Parent?.Name, SqlStructureConstants.ENAME_IN_PARENS)
+									|| string.Equals(sqlTree.CurrentContainer.Parent?.Name, SqlStructureConstants.ENAME_SELECTIONTARGET_PARENS)
                                 )
                             )
                         {
@@ -591,7 +585,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 )
                             {
                                 //clause.statement.multicontainer.try
-                                Node tryBlock = sqlTree.CurrentContainer.Parent.Parent.Parent;
+                                Node? tryBlock = sqlTree.CurrentContainer.Parent?.Parent?.Parent;
+                                if (tryBlock == null)
+                                    throw new ArgumentNullException(nameof(tryBlock));
+                                if (tryBlock.Parent == null)
+                                    throw new ArgumentNullException("tryBlockParent");
                                 Node tryContainerClose = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_CONTAINER_CLOSE, "", tryBlock);
                                 ProcessCompoundKeyword(tokenList, sqlTree, tryContainerClose, ref tokenID, significantTokenPositions, 2);
                                 sqlTree.CurrentContainer = tryBlock.Parent;
@@ -612,7 +610,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 )
                             {
                                 //clause.statement.multicontainer.catch
-                                Node catchBlock = sqlTree.CurrentContainer.Parent.Parent.Parent;
+                                Node? catchBlock = sqlTree.CurrentContainer.Parent?.Parent?.Parent;
+                                if (catchBlock == null)
+                                    throw new ArgumentNullException("catchBlock");
+                                if (catchBlock.Parent == null)
+                                    throw new ArgumentNullException("catchBlockParent");
                                 Node catchContainerClose = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_CONTAINER_CLOSE, "", catchBlock);
                                 ProcessCompoundKeyword(tokenList, sqlTree, catchContainerClose, ref tokenID, significantTokenPositions, 2);
                                 sqlTree.CurrentContainer = catchBlock.Parent;
@@ -651,7 +653,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                     && sqlTree.PathNameMatches(3, SqlStructureConstants.ENAME_BEGIN_END_BLOCK)
                                     )
                                 {
-                                    Node beginBlock = sqlTree.CurrentContainer.Parent.Parent.Parent;
+                                    Node? beginBlock = sqlTree.CurrentContainer.Parent?.Parent?.Parent;
+                                    if (beginBlock == null)
+                                        throw new ArgumentNullException("beginBlock");
+                                    if (beginBlock.Parent == null)
+                                        throw new ArgumentNullException("beginBlockParent");
                                     Node beginContainerClose = sqlTree.SaveNewElement(SqlStructureConstants.ENAME_CONTAINER_CLOSE, "", beginBlock);
                                     sqlTree.SaveNewElement(SqlStructureConstants.ENAME_OTHERKEYWORD, token.Value, beginContainerClose);
                                     sqlTree.CurrentContainer = beginBlock.Parent;
@@ -791,13 +797,18 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                 {
                                     //we need to pop up the single-statement containers stack to the next "if" that doesn't have an "else" (if any; else error).
                                     // LOCAL SEARCH - we're not actually changing the "CurrentContainer" until we decide to start a statement.
-                                    Node currentNode = sqlTree.CurrentContainer.Parent.Parent;
+                                    Node? currentNode = sqlTree.CurrentContainer.Parent?.Parent;
                                     bool stopSearching = false;
                                     while (!stopSearching)
                                     {
+                                        if (currentNode == null)
+                                            throw new ArgumentNullException("currentNode");
+
                                         if (sqlTree.PathNameMatches(currentNode, 1, SqlStructureConstants.ENAME_IF_STATEMENT))
                                         {
                                             //if this is in an "If", then the "Else" must still be available - yay!
+                                            if (currentNode.Parent == null)
+                                                throw new ArgumentNullException("currentNodeParent");
                                             sqlTree.CurrentContainer = currentNode.Parent;
                                             sqlTree.StartNewContainer(SqlStructureConstants.ENAME_ELSE_CLAUSE, token.Value, SqlStructureConstants.ENAME_CONTAINER_SINGLESTATEMENT);
                                             sqlTree.StartNewStatement();
@@ -807,13 +818,13 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                         {
                                             //If this is in an "Else", we should skip its parent "IF" altogether, and go to the next singlestatementcontainer candidate.
                                             //singlestatementcontainer.else.if.clause.statement.NEWCANDIDATE
-                                            currentNode = currentNode.Parent.Parent.Parent.Parent.Parent;
+                                            currentNode = currentNode.Parent?.Parent?.Parent?.Parent?.Parent;
                                         }
                                         else if (sqlTree.PathNameMatches(currentNode, 1, SqlStructureConstants.ENAME_WHILE_LOOP))
                                         {
                                             //If this is in a "While", we should skip to the next singlestatementcontainer candidate.
                                             //singlestatementcontainer.while.clause.statement.NEWCANDIDATE
-                                            currentNode = currentNode.Parent.Parent.Parent.Parent;
+                                            currentNode = currentNode.Parent?.Parent?.Parent?.Parent;
                                         }
                                         else
                                         {
@@ -893,30 +904,34 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
                             if (sqlTree.PathNameMatches(0, SqlStructureConstants.ENAME_SQL_CLAUSE))
                             {
-                                Node firstStatementClause = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer.Parent);
+                                Node? firstStatementClause = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer.Parent);
 
                                 bool isPrecededByInsertStatement = false;
-                                foreach (Node clause in sqlTree.CurrentContainer.Parent.ChildrenByName(SqlStructureConstants.ENAME_SQL_CLAUSE))
-                                    if (ContentStartsWithKeyword(clause, "INSERT"))
-                                        isPrecededByInsertStatement = true;
+                                if (sqlTree.CurrentContainer.Parent != null)
+                                    foreach (Node clause in sqlTree.CurrentContainer.Parent.ChildrenByName(SqlStructureConstants.ENAME_SQL_CLAUSE))
+                                        if (ContentStartsWithKeyword(clause, "INSERT"))
+                                            isPrecededByInsertStatement = true;
 
                                 if (isPrecededByInsertStatement)
                                 {
                                     bool existingSelectClauseFound = false;
-                                    foreach (Node clause in sqlTree.CurrentContainer.Parent.ChildrenByName(SqlStructureConstants.ENAME_SQL_CLAUSE))
-                                        if (ContentStartsWithKeyword(clause, "SELECT"))
-                                            existingSelectClauseFound = true;
+                                    if (sqlTree.CurrentContainer.Parent != null)
+                                        foreach (Node clause in sqlTree.CurrentContainer.Parent.ChildrenByName(SqlStructureConstants.ENAME_SQL_CLAUSE))
+                                            if (ContentStartsWithKeyword(clause, "SELECT"))
+                                                existingSelectClauseFound = true;
 
                                     bool existingValuesClauseFound = false;
-                                    foreach (Node clause in sqlTree.CurrentContainer.Parent.ChildrenByName(SqlStructureConstants.ENAME_SQL_CLAUSE))
-                                        if (ContentStartsWithKeyword(clause, "VALUES"))
-                                            existingValuesClauseFound = true;
+                                    if (sqlTree.CurrentContainer.Parent != null)
+                                        foreach (Node clause in sqlTree.CurrentContainer.Parent.ChildrenByName(SqlStructureConstants.ENAME_SQL_CLAUSE))
+                                            if (ContentStartsWithKeyword(clause, "VALUES"))
+                                                existingValuesClauseFound = true;
 
                                     bool existingExecClauseFound = false;
-                                    foreach (Node clause in sqlTree.CurrentContainer.Parent.ChildrenByName(SqlStructureConstants.ENAME_SQL_CLAUSE))
-                                        if (ContentStartsWithKeyword(clause, "EXEC")
-                                            || ContentStartsWithKeyword(clause, "EXECUTE"))
-                                            existingExecClauseFound = true;
+                                    if (sqlTree.CurrentContainer.Parent != null)
+                                        foreach (Node clause in sqlTree.CurrentContainer.Parent.ChildrenByName(SqlStructureConstants.ENAME_SQL_CLAUSE))
+                                            if (ContentStartsWithKeyword(clause, "EXEC")
+                                                || ContentStartsWithKeyword(clause, "EXECUTE"))
+                                                existingExecClauseFound = true;
 
                                     if (!existingSelectClauseFound
                                         && !existingValuesClauseFound
@@ -925,7 +940,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
                                         selectShouldntTryToStartNewStatement = true;
                                 }
 
-                                Node firstEntryOfThisClause = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
+                                Node? firstEntryOfThisClause = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
                                 if (firstEntryOfThisClause != null && firstEntryOfThisClause.Name.Equals(SqlStructureConstants.ENAME_SET_OPERATOR_CLAUSE))
                                     selectShouldntTryToStartNewStatement = true;
                             }
@@ -997,11 +1012,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
                         }
                         else if (significantTokensString.StartsWith("SET "))
                         {
-                            Node firstNonCommentSibling2 = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
+                            Node? firstNonCommentSibling2 = sqlTree.GetFirstNonWhitespaceNonCommentChildElement(sqlTree.CurrentContainer);
                             if (!(
                                     firstNonCommentSibling2 != null
                                     && firstNonCommentSibling2.Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD)
-                                    && firstNonCommentSibling2.TextValue.ToUpperInvariant().StartsWith("UPDATE")
+                                    && (firstNonCommentSibling2.TextValue ?? "").ToUpperInvariant().StartsWith("UPDATE")
                                     )
                                 )
                                 sqlTree.ConsiderStartingNewStatement();
@@ -1218,11 +1233,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
         }
 
         //TODO: move into parse tree
-        private static bool ContentStartsWithKeyword(Node providedContainer, string contentToMatch)
+        private static bool ContentStartsWithKeyword(Node providedContainer, string? contentToMatch)
         {
-            Node firstEntryOfProvidedContainer = ((ParseTree)providedContainer.RootContainer()).GetFirstNonWhitespaceNonCommentChildElement(providedContainer);
-            bool targetFound = false;
-            string keywordUpperValue = null;
+            Node? firstEntryOfProvidedContainer = ((ParseTree)providedContainer.RootContainer()).GetFirstNonWhitespaceNonCommentChildElement(providedContainer);
+            bool targetFound;
+            string? keywordUpperValue = null;
 
             if (firstEntryOfProvidedContainer != null
                 && firstEntryOfProvidedContainer.Name.Equals(SqlStructureConstants.ENAME_OTHERKEYWORD)
@@ -1529,11 +1544,11 @@ namespace PoorMansTSqlFormatterLib.Parsers
                     || latestContentNode.Name.Equals(SqlStructureConstants.ENAME_COMPOUNDKEYWORD)
                     ))
             {
-                string uppercaseText = null;
+                string uppercaseText;
                 if (latestContentNode.Name.Equals(SqlStructureConstants.ENAME_COMPOUNDKEYWORD))
-                    uppercaseText = latestContentNode.GetAttributeValue(SqlStructureConstants.ANAME_SIMPLETEXT);
+                    uppercaseText = latestContentNode.GetAttributeValue(SqlStructureConstants.ANAME_SIMPLETEXT) ?? "";
                 else
-                    uppercaseText = latestContentNode.TextValue.ToUpperInvariant();
+                    uppercaseText = (latestContentNode.TextValue ?? "").ToUpperInvariant();
 
                 return (
                     uppercaseText.Equals("NVARCHAR")
@@ -1569,7 +1584,7 @@ namespace PoorMansTSqlFormatterLib.Parsers
 
             if (latestContent != null)
             {
-                string testValue = latestContent.TextValue.ToUpperInvariant();
+                string testValue = (latestContent.TextValue ?? "").ToUpperInvariant();
 
                 if (latestContent.Name.Equals(SqlStructureConstants.ENAME_BRACKET_QUOTED_NAME))
                     return true;
@@ -1640,559 +1655,561 @@ namespace PoorMansTSqlFormatterLib.Parsers
             // cursor options "READ_ONLY", "FAST_FORWARD", etc.
             // also added numerous missing entries, such as "Xml", etc
             // Could/Should check against MSDN Ref: http://msdn.microsoft.com/en-us/library/ms189822.aspx
-            KeywordList = new Dictionary<string, KeywordType>();
-            KeywordList.Add("@@CONNECTIONS", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@CPU_BUSY", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@CURSOR_ROWS", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@DATEFIRST", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@DBTS", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@ERROR", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@FETCH_STATUS", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@IDENTITY", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@IDLE", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@IO_BUSY", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@LANGID", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@LANGUAGE", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@LOCK_TIMEOUT", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@MAX_CONNECTIONS", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@MAX_PRECISION", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@NESTLEVEL", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@OPTIONS", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@PACKET_ERRORS", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@PACK_RECEIVED", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@PACK_SENT", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@PROCID", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@REMSERVER", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@ROWCOUNT", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@SERVERNAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@SERVICENAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@SPID", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@TEXTSIZE", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@TIMETICKS", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@TOTAL_ERRORS", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@TOTAL_READ", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@TOTAL_WRITE", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@TRANCOUNT", KeywordType.FunctionKeyword);
-            KeywordList.Add("@@VERSION", KeywordType.FunctionKeyword);
-            KeywordList.Add("ABS", KeywordType.FunctionKeyword);
-            KeywordList.Add("ACOS", KeywordType.FunctionKeyword);
-            KeywordList.Add("ACTIVATION", KeywordType.OtherKeyword);
-            KeywordList.Add("ADD", KeywordType.OtherKeyword);
-            KeywordList.Add("ALL", KeywordType.OperatorKeyword);
-            KeywordList.Add("ALTER", KeywordType.OtherKeyword);
-            KeywordList.Add("AND", KeywordType.OperatorKeyword);
-            KeywordList.Add("ANSI_DEFAULTS", KeywordType.OtherKeyword);
-            KeywordList.Add("ANSI_NULLS", KeywordType.OtherKeyword);
-            KeywordList.Add("ANSI_NULL_DFLT_OFF", KeywordType.OtherKeyword);
-            KeywordList.Add("ANSI_NULL_DFLT_ON", KeywordType.OtherKeyword);
-            KeywordList.Add("ANSI_PADDING", KeywordType.OtherKeyword);
-            KeywordList.Add("ANSI_WARNINGS", KeywordType.OtherKeyword);
-            KeywordList.Add("ANY", KeywordType.OperatorKeyword);
-            KeywordList.Add("APP_NAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("ARITHABORT", KeywordType.OtherKeyword);
-            KeywordList.Add("ARITHIGNORE", KeywordType.OtherKeyword);
-            KeywordList.Add("AS", KeywordType.OtherKeyword);
-            KeywordList.Add("ASC", KeywordType.OtherKeyword);
-            KeywordList.Add("ASCII", KeywordType.FunctionKeyword);
-            KeywordList.Add("ASIN", KeywordType.FunctionKeyword);
-            KeywordList.Add("ATAN", KeywordType.FunctionKeyword);
-            KeywordList.Add("ATN2", KeywordType.FunctionKeyword);
-            KeywordList.Add("AUTHORIZATION", KeywordType.OtherKeyword);
-            KeywordList.Add("AVG", KeywordType.FunctionKeyword);
-            KeywordList.Add("BACKUP", KeywordType.OtherKeyword);
-            KeywordList.Add("BEGIN", KeywordType.OtherKeyword);
-            KeywordList.Add("BETWEEN", KeywordType.OperatorKeyword);
-            KeywordList.Add("BIGINT", KeywordType.DataTypeKeyword);
-            KeywordList.Add("BINARY", KeywordType.DataTypeKeyword);
-            KeywordList.Add("BIT", KeywordType.DataTypeKeyword);
-            KeywordList.Add("BREAK", KeywordType.OtherKeyword);
-            KeywordList.Add("BROWSE", KeywordType.OtherKeyword);
-            KeywordList.Add("BULK", KeywordType.OtherKeyword);
-            KeywordList.Add("BY", KeywordType.OtherKeyword);
-            KeywordList.Add("CALLER", KeywordType.OtherKeyword);
-            KeywordList.Add("CASCADE", KeywordType.OtherKeyword);
-            KeywordList.Add("CASE", KeywordType.FunctionKeyword);
-            KeywordList.Add("CAST", KeywordType.FunctionKeyword);
-            KeywordList.Add("CATALOG", KeywordType.OtherKeyword);
-            KeywordList.Add("CEILING", KeywordType.FunctionKeyword);
-            KeywordList.Add("CHAR", KeywordType.DataTypeKeyword);
-            KeywordList.Add("CHARACTER", KeywordType.DataTypeKeyword);
-            KeywordList.Add("CHARINDEX", KeywordType.FunctionKeyword);
-            KeywordList.Add("CHECK", KeywordType.OtherKeyword);
-            KeywordList.Add("CHECKALLOC", KeywordType.OtherKeyword);
-            KeywordList.Add("CHECKCATALOG", KeywordType.OtherKeyword);
-            KeywordList.Add("CHECKCONSTRAINTS", KeywordType.OtherKeyword);
-            KeywordList.Add("CHECKDB", KeywordType.OtherKeyword);
-            KeywordList.Add("CHECKFILEGROUP", KeywordType.OtherKeyword);
-            KeywordList.Add("CHECKIDENT", KeywordType.OtherKeyword);
-            KeywordList.Add("CHECKPOINT", KeywordType.OtherKeyword);
-            KeywordList.Add("CHECKSUM", KeywordType.FunctionKeyword);
-            KeywordList.Add("CHECKSUM_AGG", KeywordType.FunctionKeyword);
-            KeywordList.Add("CHECKTABLE", KeywordType.OtherKeyword);
-            KeywordList.Add("CLEANTABLE", KeywordType.OtherKeyword);
-            KeywordList.Add("CLOSE", KeywordType.OtherKeyword);
-            KeywordList.Add("CLUSTERED", KeywordType.OtherKeyword);
-            KeywordList.Add("COALESCE", KeywordType.FunctionKeyword);
-            KeywordList.Add("COLLATIONPROPERTY", KeywordType.FunctionKeyword);
-            KeywordList.Add("COLLECTION", KeywordType.OtherKeyword);
-            KeywordList.Add("COLUMN", KeywordType.OtherKeyword);
-            KeywordList.Add("COLUMNPROPERTY", KeywordType.FunctionKeyword);
-            KeywordList.Add("COL_LENGTH", KeywordType.FunctionKeyword);
-            KeywordList.Add("COL_NAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("COMMIT", KeywordType.OtherKeyword);
-            KeywordList.Add("COMMITTED", KeywordType.OtherKeyword);
-            KeywordList.Add("COMPUTE", KeywordType.OtherKeyword);
-            KeywordList.Add("CONCAT", KeywordType.OtherKeyword);
-            KeywordList.Add("CONCAT_NULL_YIELDS_NULL", KeywordType.OtherKeyword);
-            KeywordList.Add("CONCURRENCYVIOLATION", KeywordType.OtherKeyword);
-            KeywordList.Add("CONFIRM", KeywordType.OtherKeyword);
-            KeywordList.Add("CONSTRAINT", KeywordType.OtherKeyword);
-            KeywordList.Add("CONTAINS", KeywordType.OtherKeyword);
-            KeywordList.Add("CONTAINSTABLE", KeywordType.FunctionKeyword);
-            KeywordList.Add("CONTINUE", KeywordType.OtherKeyword);
-            KeywordList.Add("CONTROL", KeywordType.OtherKeyword);
-            KeywordList.Add("CONTROLROW", KeywordType.OtherKeyword);
-            KeywordList.Add("CONVERT", KeywordType.FunctionKeyword);
-            KeywordList.Add("COS", KeywordType.FunctionKeyword);
-            KeywordList.Add("COT", KeywordType.FunctionKeyword);
-            KeywordList.Add("COUNT", KeywordType.FunctionKeyword);
-            KeywordList.Add("COUNT_BIG", KeywordType.FunctionKeyword);
-            KeywordList.Add("CREATE", KeywordType.OtherKeyword);
-            KeywordList.Add("CROSS", KeywordType.OtherKeyword);
-            KeywordList.Add("CURRENT", KeywordType.OtherKeyword);
-            KeywordList.Add("CURRENT_DATE", KeywordType.OtherKeyword);
-            KeywordList.Add("CURRENT_TIME", KeywordType.OtherKeyword);
-            KeywordList.Add("CURRENT_TIMESTAMP", KeywordType.FunctionKeyword);
-            KeywordList.Add("CURRENT_USER", KeywordType.FunctionKeyword);
-            KeywordList.Add("CURSOR", KeywordType.OtherKeyword);
-            KeywordList.Add("CURSOR_CLOSE_ON_COMMIT", KeywordType.OtherKeyword);
-            KeywordList.Add("CURSOR_STATUS", KeywordType.FunctionKeyword);
-            KeywordList.Add("DATABASE", KeywordType.OtherKeyword);
-            KeywordList.Add("DATABASEPROPERTY", KeywordType.FunctionKeyword);
-            KeywordList.Add("DATABASEPROPERTYEX", KeywordType.FunctionKeyword);
-            KeywordList.Add("DATALENGTH", KeywordType.FunctionKeyword);
-            KeywordList.Add("DATEADD", KeywordType.FunctionKeyword);
-            KeywordList.Add("DATEDIFF", KeywordType.FunctionKeyword);
-            KeywordList.Add("DATEFIRST", KeywordType.OtherKeyword);
-            KeywordList.Add("DATEFORMAT", KeywordType.OtherKeyword);
-            KeywordList.Add("DATENAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("DATE", KeywordType.DataTypeKeyword);
-            KeywordList.Add("DATEPART", KeywordType.FunctionKeyword);
-            KeywordList.Add("DATETIME", KeywordType.DataTypeKeyword);
-            KeywordList.Add("DATETIME2", KeywordType.DataTypeKeyword);
-            KeywordList.Add("DATETIMEOFFSET", KeywordType.DataTypeKeyword);
-            KeywordList.Add("DAY", KeywordType.FunctionKeyword);
-            KeywordList.Add("DBCC", KeywordType.OtherKeyword);
-            KeywordList.Add("DBREINDEX", KeywordType.OtherKeyword);
-            KeywordList.Add("DBREPAIR", KeywordType.OtherKeyword);
-            KeywordList.Add("DB_ID", KeywordType.FunctionKeyword);
-            KeywordList.Add("DB_NAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("DEADLOCK_PRIORITY", KeywordType.OtherKeyword);
-            KeywordList.Add("DEALLOCATE", KeywordType.OtherKeyword);
-            KeywordList.Add("DEC", KeywordType.DataTypeKeyword);
-            KeywordList.Add("DECIMAL", KeywordType.DataTypeKeyword);
-            KeywordList.Add("DECLARE", KeywordType.OtherKeyword);
-            KeywordList.Add("DEFAULT", KeywordType.OtherKeyword);
-            KeywordList.Add("DEFINITION", KeywordType.OtherKeyword);
-            KeywordList.Add("DEGREES", KeywordType.FunctionKeyword);
-            KeywordList.Add("DELAY", KeywordType.OtherKeyword);
-            KeywordList.Add("DELETE", KeywordType.OtherKeyword);
-            KeywordList.Add("DENY", KeywordType.OtherKeyword);
-            KeywordList.Add("DESC", KeywordType.OtherKeyword);
-            KeywordList.Add("DIFFERENCE", KeywordType.FunctionKeyword);
-            KeywordList.Add("DISABLE_DEF_CNST_CHK", KeywordType.OtherKeyword);
-            KeywordList.Add("DISK", KeywordType.OtherKeyword);
-            KeywordList.Add("DISTINCT", KeywordType.OtherKeyword);
-            KeywordList.Add("DISTRIBUTED", KeywordType.OtherKeyword);
-            KeywordList.Add("DOUBLE", KeywordType.DataTypeKeyword);
-            KeywordList.Add("DROP", KeywordType.OtherKeyword);
-            KeywordList.Add("DROPCLEANBUFFERS", KeywordType.OtherKeyword);
-            KeywordList.Add("DUMMY", KeywordType.OtherKeyword);
-            KeywordList.Add("DUMP", KeywordType.OtherKeyword);
-            KeywordList.Add("DYNAMIC", KeywordType.OtherKeyword);
-            KeywordList.Add("ELSE", KeywordType.OtherKeyword);
-            KeywordList.Add("ENCRYPTION", KeywordType.OtherKeyword);
-            KeywordList.Add("ERRLVL", KeywordType.OtherKeyword);
-            KeywordList.Add("ERROREXIT", KeywordType.OtherKeyword);
-            KeywordList.Add("ESCAPE", KeywordType.OtherKeyword);
-            KeywordList.Add("EXCEPT", KeywordType.OtherKeyword);
-            KeywordList.Add("EXEC", KeywordType.OtherKeyword);
-            KeywordList.Add("EXECUTE", KeywordType.OtherKeyword);
-            KeywordList.Add("EXISTS", KeywordType.OperatorKeyword);
-            KeywordList.Add("EXIT", KeywordType.OtherKeyword);
-            KeywordList.Add("EXP", KeywordType.FunctionKeyword);
-            KeywordList.Add("EXPAND", KeywordType.OtherKeyword);
-            KeywordList.Add("EXTERNAL", KeywordType.OtherKeyword);
-            KeywordList.Add("FAST", KeywordType.OtherKeyword);
-            KeywordList.Add("FAST_FORWARD", KeywordType.OtherKeyword);
-            KeywordList.Add("FASTFIRSTROW", KeywordType.OtherKeyword);
-            KeywordList.Add("FETCH", KeywordType.OtherKeyword);
-            KeywordList.Add("FILE", KeywordType.OtherKeyword);
-            KeywordList.Add("FILEGROUPPROPERTY", KeywordType.FunctionKeyword);
-            KeywordList.Add("FILEGROUP_ID", KeywordType.FunctionKeyword);
-            KeywordList.Add("FILEGROUP_NAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("FILEPROPERTY", KeywordType.FunctionKeyword);
-            KeywordList.Add("FILE_ID", KeywordType.FunctionKeyword);
-            KeywordList.Add("FILE_IDEX", KeywordType.FunctionKeyword);
-            KeywordList.Add("FILE_NAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("FILLFACTOR", KeywordType.OtherKeyword);
-            KeywordList.Add("FIPS_FLAGGER", KeywordType.OtherKeyword);
-            KeywordList.Add("FLOAT", KeywordType.DataTypeKeyword);
-            KeywordList.Add("FLOOR", KeywordType.FunctionKeyword);
-            KeywordList.Add("FLOPPY", KeywordType.OtherKeyword);
-            KeywordList.Add("FMTONLY", KeywordType.OtherKeyword);
-            KeywordList.Add("FOR", KeywordType.OtherKeyword);
-            KeywordList.Add("FORCE", KeywordType.OtherKeyword);
-            KeywordList.Add("FORCED", KeywordType.OtherKeyword);
-            KeywordList.Add("FORCEPLAN", KeywordType.OtherKeyword);
-            KeywordList.Add("FOREIGN", KeywordType.OtherKeyword);
-            KeywordList.Add("FORMATMESSAGE", KeywordType.FunctionKeyword);
-            KeywordList.Add("FORWARD_ONLY", KeywordType.OtherKeyword);
-            KeywordList.Add("FREEPROCCACHE", KeywordType.OtherKeyword);
-            KeywordList.Add("FREESESSIONCACHE", KeywordType.OtherKeyword);
-            KeywordList.Add("FREESYSTEMCACHE", KeywordType.OtherKeyword);
-            KeywordList.Add("FREETEXT", KeywordType.OtherKeyword);
-            KeywordList.Add("FREETEXTTABLE", KeywordType.FunctionKeyword);
-            KeywordList.Add("FROM", KeywordType.OtherKeyword);
-            KeywordList.Add("FULL", KeywordType.OtherKeyword);
-            KeywordList.Add("FULLTEXT", KeywordType.OtherKeyword);
-            KeywordList.Add("FULLTEXTCATALOGPROPERTY", KeywordType.FunctionKeyword);
-            KeywordList.Add("FULLTEXTSERVICEPROPERTY", KeywordType.FunctionKeyword);
-            KeywordList.Add("FUNCTION", KeywordType.OtherKeyword);
-            KeywordList.Add("GEOGRAPHY", KeywordType.DataTypeKeyword);
-            KeywordList.Add("GETANCESTOR", KeywordType.FunctionKeyword);
-            KeywordList.Add("GETANSINULL", KeywordType.FunctionKeyword);
-            KeywordList.Add("GETDATE", KeywordType.FunctionKeyword);
-            KeywordList.Add("GETDESCENDANT", KeywordType.FunctionKeyword);
-            KeywordList.Add("GETLEVEL", KeywordType.FunctionKeyword);
-            KeywordList.Add("GETREPARENTEDVALUE", KeywordType.FunctionKeyword);
-            KeywordList.Add("GETROOT", KeywordType.FunctionKeyword);
-            KeywordList.Add("GLOBAL", KeywordType.OtherKeyword);
-            KeywordList.Add("GO", KeywordType.OtherKeyword);
-            KeywordList.Add("GOTO", KeywordType.OtherKeyword);
-            KeywordList.Add("GRANT", KeywordType.OtherKeyword);
-            KeywordList.Add("GROUP", KeywordType.OtherKeyword);
-            KeywordList.Add("GROUPING", KeywordType.FunctionKeyword);
-            KeywordList.Add("HASH", KeywordType.OtherKeyword);
-            KeywordList.Add("HAVING", KeywordType.OtherKeyword);
-            KeywordList.Add("HELP", KeywordType.OtherKeyword);
-            KeywordList.Add("HIERARCHYID", KeywordType.DataTypeKeyword);
-            KeywordList.Add("HOLDLOCK", KeywordType.OtherKeyword);
-            KeywordList.Add("HOST_ID", KeywordType.FunctionKeyword);
-            KeywordList.Add("HOST_NAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("IDENTITY", KeywordType.FunctionKeyword);
-            KeywordList.Add("IDENTITYCOL", KeywordType.OtherKeyword);
-            KeywordList.Add("IDENTITY_INSERT", KeywordType.OtherKeyword);
-            KeywordList.Add("IDENT_CURRENT", KeywordType.FunctionKeyword);
-            KeywordList.Add("IDENT_INCR", KeywordType.FunctionKeyword);
-            KeywordList.Add("IDENT_SEED", KeywordType.FunctionKeyword);
-            KeywordList.Add("IF", KeywordType.OtherKeyword);
-            KeywordList.Add("IGNORE_CONSTRAINTS", KeywordType.OtherKeyword);
-            KeywordList.Add("IGNORE_TRIGGERS", KeywordType.OtherKeyword);
-            KeywordList.Add("IMAGE", KeywordType.DataTypeKeyword);
-            KeywordList.Add("IMPLICIT_TRANSACTIONS", KeywordType.OtherKeyword);
-            KeywordList.Add("IN", KeywordType.OperatorKeyword);
-            KeywordList.Add("INDEX", KeywordType.OtherKeyword);
-            KeywordList.Add("INDEXDEFRAG", KeywordType.OtherKeyword);
-            KeywordList.Add("INDEXKEY_PROPERTY", KeywordType.FunctionKeyword);
-            KeywordList.Add("INDEXPROPERTY", KeywordType.FunctionKeyword);
-            KeywordList.Add("INDEX_COL", KeywordType.FunctionKeyword);
-            KeywordList.Add("INNER", KeywordType.OtherKeyword);
-            KeywordList.Add("INPUTBUFFER", KeywordType.OtherKeyword);
-            KeywordList.Add("INSENSITIVE", KeywordType.DataTypeKeyword);
-            KeywordList.Add("INSERT", KeywordType.OtherKeyword);
-            KeywordList.Add("INT", KeywordType.DataTypeKeyword);
-            KeywordList.Add("INTEGER", KeywordType.DataTypeKeyword);
-            KeywordList.Add("INTERSECT", KeywordType.OtherKeyword);
-            KeywordList.Add("INTO", KeywordType.OtherKeyword);
-            KeywordList.Add("IO", KeywordType.OtherKeyword);
-            KeywordList.Add("IS", KeywordType.OtherKeyword);
-            KeywordList.Add("ISDATE", KeywordType.FunctionKeyword);
-            KeywordList.Add("ISDESCENDANTOF", KeywordType.FunctionKeyword);
-            KeywordList.Add("ISNULL", KeywordType.FunctionKeyword);
-            KeywordList.Add("ISNUMERIC", KeywordType.FunctionKeyword);
-            KeywordList.Add("ISOLATION", KeywordType.OtherKeyword);
-            KeywordList.Add("IS_MEMBER", KeywordType.FunctionKeyword);
-            KeywordList.Add("IS_SRVROLEMEMBER", KeywordType.FunctionKeyword);
-            KeywordList.Add("JOIN", KeywordType.OtherKeyword);
-            KeywordList.Add("KEEP", KeywordType.OtherKeyword);
-            KeywordList.Add("KEEPDEFAULTS", KeywordType.OtherKeyword);
-            KeywordList.Add("KEEPFIXED", KeywordType.OtherKeyword);
-            KeywordList.Add("KEEPIDENTITY", KeywordType.OtherKeyword);
-            KeywordList.Add("KEY", KeywordType.OtherKeyword);
-            KeywordList.Add("KEYSET", KeywordType.OtherKeyword);
-            KeywordList.Add("KILL", KeywordType.OtherKeyword);
-            KeywordList.Add("LANGUAGE", KeywordType.OtherKeyword);
-            KeywordList.Add("LEFT", KeywordType.FunctionKeyword);
-            KeywordList.Add("LEN", KeywordType.FunctionKeyword);
-            KeywordList.Add("LEVEL", KeywordType.OtherKeyword);
-            KeywordList.Add("LIKE", KeywordType.OperatorKeyword);
-            KeywordList.Add("LINENO", KeywordType.OtherKeyword);
-            KeywordList.Add("LOAD", KeywordType.OtherKeyword);
-            KeywordList.Add("LOCAL", KeywordType.OtherKeyword);
-            KeywordList.Add("LOCK_TIMEOUT", KeywordType.OtherKeyword);
-            KeywordList.Add("LOG", KeywordType.FunctionKeyword);
-            KeywordList.Add("LOG10", KeywordType.FunctionKeyword);
-            KeywordList.Add("LOGIN", KeywordType.OtherKeyword);
-            KeywordList.Add("LOOP", KeywordType.OtherKeyword);
-            KeywordList.Add("LOWER", KeywordType.FunctionKeyword);
-            KeywordList.Add("LTRIM", KeywordType.FunctionKeyword);
-            KeywordList.Add("MATCHED", KeywordType.OtherKeyword);
-            KeywordList.Add("MAX", KeywordType.FunctionKeyword);
-            KeywordList.Add("MAX_QUEUE_READERS", KeywordType.OtherKeyword);
-            KeywordList.Add("MAXDOP", KeywordType.OtherKeyword);
-            KeywordList.Add("MAXRECURSION", KeywordType.OtherKeyword);
-            KeywordList.Add("MERGE", KeywordType.OtherKeyword);
-            KeywordList.Add("MIN", KeywordType.FunctionKeyword);
-            KeywordList.Add("MIRROREXIT", KeywordType.OtherKeyword);
-            KeywordList.Add("MODIFY", KeywordType.FunctionKeyword);
-            KeywordList.Add("MONEY", KeywordType.DataTypeKeyword);
-            KeywordList.Add("MONTH", KeywordType.FunctionKeyword);
-            KeywordList.Add("MOVE", KeywordType.OtherKeyword);
-            KeywordList.Add("NAMES", KeywordType.OtherKeyword);
-            KeywordList.Add("NATIONAL", KeywordType.DataTypeKeyword);
-            KeywordList.Add("NCHAR", KeywordType.DataTypeKeyword);
-            KeywordList.Add("NEWID", KeywordType.FunctionKeyword);
-            KeywordList.Add("NEXT", KeywordType.OtherKeyword);
-            KeywordList.Add("NOCHECK", KeywordType.OtherKeyword);
-            KeywordList.Add("NOCOUNT", KeywordType.OtherKeyword);
-            KeywordList.Add("NODES", KeywordType.FunctionKeyword);
-            KeywordList.Add("NOEXEC", KeywordType.OtherKeyword);
-            KeywordList.Add("NOEXPAND", KeywordType.OtherKeyword);
-            KeywordList.Add("NOLOCK", KeywordType.OtherKeyword);
-            KeywordList.Add("NONCLUSTERED", KeywordType.OtherKeyword);
-            KeywordList.Add("NOT", KeywordType.OperatorKeyword);
-            KeywordList.Add("NOWAIT", KeywordType.OtherKeyword);
-            KeywordList.Add("NTEXT", KeywordType.DataTypeKeyword);
-            KeywordList.Add("NTILE", KeywordType.FunctionKeyword);
-            KeywordList.Add("NULL", KeywordType.OtherKeyword);
-            KeywordList.Add("NULLIF", KeywordType.FunctionKeyword);
-            KeywordList.Add("NUMERIC", KeywordType.DataTypeKeyword);
-            KeywordList.Add("NUMERIC_ROUNDABORT", KeywordType.OtherKeyword);
-            KeywordList.Add("NVARCHAR", KeywordType.DataTypeKeyword);
-            KeywordList.Add("OBJECTPROPERTY", KeywordType.FunctionKeyword);
-            KeywordList.Add("OBJECTPROPERTYEX", KeywordType.FunctionKeyword);
-            KeywordList.Add("OBJECT", KeywordType.OtherKeyword);
-            KeywordList.Add("OBJECT_ID", KeywordType.FunctionKeyword);
-            KeywordList.Add("OBJECT_NAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("OF", KeywordType.OtherKeyword);
-            KeywordList.Add("OFF", KeywordType.OtherKeyword);
-            KeywordList.Add("OFFSETS", KeywordType.OtherKeyword);
-            KeywordList.Add("ON", KeywordType.OtherKeyword);
-            KeywordList.Add("ONCE", KeywordType.OtherKeyword);
-            KeywordList.Add("ONLY", KeywordType.OtherKeyword);
-            KeywordList.Add("OPEN", KeywordType.OtherKeyword);
-            KeywordList.Add("OPENDATASOURCE", KeywordType.OtherKeyword);
-            KeywordList.Add("OPENQUERY", KeywordType.FunctionKeyword);
-            KeywordList.Add("OPENROWSET", KeywordType.FunctionKeyword);
-            KeywordList.Add("OPENTRAN", KeywordType.OtherKeyword);
-            KeywordList.Add("OPTIMIZE", KeywordType.OtherKeyword);
-            KeywordList.Add("OPTIMISTIC", KeywordType.OtherKeyword);
-            KeywordList.Add("OPTION", KeywordType.OtherKeyword);
-            KeywordList.Add("OR", KeywordType.OperatorKeyword);
-            KeywordList.Add("ORDER", KeywordType.OtherKeyword);
-            KeywordList.Add("OUTER", KeywordType.OtherKeyword);
-			KeywordList.Add("OUT", KeywordType.OtherKeyword);
-			KeywordList.Add("OUTPUT", KeywordType.OtherKeyword);
-			KeywordList.Add("OUTPUTBUFFER", KeywordType.OtherKeyword);
-            KeywordList.Add("OVER", KeywordType.OtherKeyword);
-            KeywordList.Add("OWNER", KeywordType.OtherKeyword);
-            KeywordList.Add("PAGLOCK", KeywordType.OtherKeyword);
-            KeywordList.Add("PARAMETERIZATION", KeywordType.OtherKeyword);
-            KeywordList.Add("PARSE", KeywordType.FunctionKeyword);
-            KeywordList.Add("PARSENAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("PARSEONLY", KeywordType.OtherKeyword);
-            KeywordList.Add("PARTITION", KeywordType.OtherKeyword);
-            KeywordList.Add("PATINDEX", KeywordType.FunctionKeyword);
-            KeywordList.Add("PERCENT", KeywordType.OtherKeyword);
-            KeywordList.Add("PERM", KeywordType.OtherKeyword);
-            KeywordList.Add("PERMANENT", KeywordType.OtherKeyword);
-            KeywordList.Add("PERMISSIONS", KeywordType.FunctionKeyword);
-            KeywordList.Add("PI", KeywordType.FunctionKeyword);
-            KeywordList.Add("PINTABLE", KeywordType.OtherKeyword);
-            KeywordList.Add("PIPE", KeywordType.OtherKeyword);
-            KeywordList.Add("PLAN", KeywordType.OtherKeyword);
-            KeywordList.Add("POWER", KeywordType.FunctionKeyword);
-            KeywordList.Add("PREPARE", KeywordType.OtherKeyword);
-            KeywordList.Add("PRIMARY", KeywordType.OtherKeyword);
-            KeywordList.Add("PRINT", KeywordType.OtherKeyword);
-            KeywordList.Add("PRIVILEGES", KeywordType.OtherKeyword);
-            KeywordList.Add("PROC", KeywordType.OtherKeyword);
-            KeywordList.Add("PROCCACHE", KeywordType.OtherKeyword);
-            KeywordList.Add("PROCEDURE", KeywordType.OtherKeyword);
-            KeywordList.Add("PROCEDURE_NAME", KeywordType.OtherKeyword);
-            KeywordList.Add("PROCESSEXIT", KeywordType.OtherKeyword);
-            KeywordList.Add("PROCID", KeywordType.OtherKeyword);
-            KeywordList.Add("PROFILE", KeywordType.OtherKeyword);
-            KeywordList.Add("PUBLIC", KeywordType.OtherKeyword);
-            KeywordList.Add("QUERY", KeywordType.FunctionKeyword);
-            KeywordList.Add("QUERY_GOVERNOR_COST_LIMIT", KeywordType.OtherKeyword);
-            KeywordList.Add("QUEUE", KeywordType.OtherKeyword);
-            KeywordList.Add("QUOTED_IDENTIFIER", KeywordType.OtherKeyword);
-            KeywordList.Add("QUOTENAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("RADIANS", KeywordType.FunctionKeyword);
-            KeywordList.Add("RAISERROR", KeywordType.OtherKeyword);
-            KeywordList.Add("RAND", KeywordType.FunctionKeyword);
-            KeywordList.Add("READ", KeywordType.OtherKeyword);
-            KeywordList.Add("READCOMMITTED", KeywordType.OtherKeyword);
-            KeywordList.Add("READCOMMITTEDLOCK", KeywordType.OtherKeyword);
-            KeywordList.Add("READPAST", KeywordType.OtherKeyword);
-            KeywordList.Add("READTEXT", KeywordType.OtherKeyword);
-            KeywordList.Add("READUNCOMMITTED", KeywordType.OtherKeyword);
-            KeywordList.Add("READ_ONLY", KeywordType.OtherKeyword);
-            KeywordList.Add("REAL", KeywordType.DataTypeKeyword);
-            KeywordList.Add("RECOMPILE", KeywordType.OtherKeyword);
-            KeywordList.Add("RECONFIGURE", KeywordType.OtherKeyword);
-            KeywordList.Add("REFERENCES", KeywordType.OtherKeyword);
-            KeywordList.Add("REMOTE_PROC_TRANSACTIONS", KeywordType.OtherKeyword);
-            KeywordList.Add("REPEATABLE", KeywordType.OtherKeyword);
-            KeywordList.Add("REPEATABLEREAD", KeywordType.OtherKeyword);
-            KeywordList.Add("REPLACE", KeywordType.FunctionKeyword);
-            KeywordList.Add("REPLICATE", KeywordType.FunctionKeyword);
-            KeywordList.Add("REPLICATION", KeywordType.OtherKeyword);
-            KeywordList.Add("RESTORE", KeywordType.OtherKeyword);
-            KeywordList.Add("RESTRICT", KeywordType.OtherKeyword);
-            KeywordList.Add("RETURN", KeywordType.OtherKeyword);
-            KeywordList.Add("RETURNS", KeywordType.OtherKeyword);
-            KeywordList.Add("REVERSE", KeywordType.FunctionKeyword);
-            KeywordList.Add("REVERT", KeywordType.OtherKeyword);
-            KeywordList.Add("REVOKE", KeywordType.OtherKeyword);
-            KeywordList.Add("RIGHT", KeywordType.FunctionKeyword);
-            KeywordList.Add("ROBUST", KeywordType.OtherKeyword);
-            KeywordList.Add("ROLE", KeywordType.OtherKeyword);
-            KeywordList.Add("ROLLBACK", KeywordType.OtherKeyword);
-            KeywordList.Add("ROUND", KeywordType.FunctionKeyword);
-            KeywordList.Add("ROWCOUNT", KeywordType.OtherKeyword);
-            KeywordList.Add("ROWGUIDCOL", KeywordType.OtherKeyword);
-            KeywordList.Add("ROWLOCK", KeywordType.OtherKeyword);
-            KeywordList.Add("ROWVERSION", KeywordType.DataTypeKeyword);
-            KeywordList.Add("RTRIM", KeywordType.FunctionKeyword);
-            KeywordList.Add("RULE", KeywordType.OtherKeyword);
-            KeywordList.Add("SAVE", KeywordType.OtherKeyword);
-            KeywordList.Add("SCHEMA", KeywordType.OtherKeyword);
-            KeywordList.Add("SCHEMA_ID", KeywordType.FunctionKeyword);
-            KeywordList.Add("SCHEMA_NAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("SCOPE_IDENTITY", KeywordType.FunctionKeyword);
-            KeywordList.Add("SCROLL", KeywordType.OtherKeyword);
-            KeywordList.Add("SCROLL_LOCKS", KeywordType.OtherKeyword);
-            KeywordList.Add("SELECT", KeywordType.OtherKeyword);
-            KeywordList.Add("SELF", KeywordType.OtherKeyword);
-            KeywordList.Add("SERIALIZABLE", KeywordType.OtherKeyword);
-            KeywordList.Add("SERVER", KeywordType.OtherKeyword);
-            KeywordList.Add("SERVERPROPERTY", KeywordType.FunctionKeyword);
-            KeywordList.Add("SESSIONPROPERTY", KeywordType.FunctionKeyword);
-            KeywordList.Add("SESSION_USER", KeywordType.FunctionKeyword);
-            KeywordList.Add("SET", KeywordType.OtherKeyword);
-            KeywordList.Add("SETUSER", KeywordType.OtherKeyword);
-            KeywordList.Add("SHOWCONTIG", KeywordType.OtherKeyword);
-            KeywordList.Add("SHOWPLAN_ALL", KeywordType.OtherKeyword);
-            KeywordList.Add("SHOWPLAN_TEXT", KeywordType.OtherKeyword);
-            KeywordList.Add("SHOW_STATISTICS", KeywordType.OtherKeyword);
-            KeywordList.Add("SHRINKDATABASE", KeywordType.OtherKeyword);
-            KeywordList.Add("SHRINKFILE", KeywordType.OtherKeyword);
-            KeywordList.Add("SHUTDOWN", KeywordType.OtherKeyword);
-            KeywordList.Add("SIGN", KeywordType.FunctionKeyword);
-            KeywordList.Add("SIMPLE", KeywordType.OtherKeyword);
-            KeywordList.Add("SIN", KeywordType.FunctionKeyword);
-            KeywordList.Add("SMALLDATETIME", KeywordType.DataTypeKeyword);
-            KeywordList.Add("SMALLINT", KeywordType.DataTypeKeyword);
-            KeywordList.Add("SMALLMONEY", KeywordType.DataTypeKeyword);
-            KeywordList.Add("SOME", KeywordType.OperatorKeyword);
-            KeywordList.Add("SOUNDEX", KeywordType.FunctionKeyword);
-            KeywordList.Add("SPACE", KeywordType.FunctionKeyword);
-            KeywordList.Add("SQLPERF", KeywordType.OtherKeyword);
-            KeywordList.Add("SQL_VARIANT", KeywordType.DataTypeKeyword);
-            KeywordList.Add("SQL_VARIANT_PROPERTY", KeywordType.FunctionKeyword);
-            KeywordList.Add("SQRT", KeywordType.FunctionKeyword);
-            KeywordList.Add("SQUARE", KeywordType.FunctionKeyword);
-            KeywordList.Add("STATE", KeywordType.OtherKeyword);
-            KeywordList.Add("STATISTICS", KeywordType.OtherKeyword);
-            KeywordList.Add("STATIC", KeywordType.OtherKeyword);
-            KeywordList.Add("STATS_DATE", KeywordType.FunctionKeyword);
-            KeywordList.Add("STATUS", KeywordType.OtherKeyword);
-            KeywordList.Add("STDEV", KeywordType.FunctionKeyword);
-            KeywordList.Add("STDEVP", KeywordType.FunctionKeyword);
-            KeywordList.Add("STOPLIST", KeywordType.OtherKeyword);
-            KeywordList.Add("STR", KeywordType.FunctionKeyword);
-            KeywordList.Add("STUFF", KeywordType.FunctionKeyword);
-            KeywordList.Add("SUBSTRING", KeywordType.FunctionKeyword);
-            KeywordList.Add("SUM", KeywordType.FunctionKeyword);
-            KeywordList.Add("SUSER_ID", KeywordType.FunctionKeyword);
-            KeywordList.Add("SUSER_NAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("SUSER_SID", KeywordType.FunctionKeyword);
-            KeywordList.Add("SUSER_SNAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("SYNONYM", KeywordType.OtherKeyword);
-            KeywordList.Add("SYSNAME", KeywordType.DataTypeKeyword);
-            KeywordList.Add("SYSTEM_USER", KeywordType.FunctionKeyword);
-            KeywordList.Add("TABLE", KeywordType.OtherKeyword);
-            KeywordList.Add("TABLOCK", KeywordType.OtherKeyword);
-            KeywordList.Add("TABLOCKX", KeywordType.OtherKeyword);
-            KeywordList.Add("TAN", KeywordType.FunctionKeyword);
-            KeywordList.Add("TAPE", KeywordType.OtherKeyword);
-            KeywordList.Add("TEMP", KeywordType.OtherKeyword);
-            KeywordList.Add("TEMPORARY", KeywordType.OtherKeyword);
-            KeywordList.Add("TEXT", KeywordType.DataTypeKeyword);
-            KeywordList.Add("TEXTPTR", KeywordType.FunctionKeyword);
-            KeywordList.Add("TEXTSIZE", KeywordType.OtherKeyword);
-            KeywordList.Add("TEXTVALID", KeywordType.FunctionKeyword);
-            KeywordList.Add("THEN", KeywordType.OtherKeyword);
-            KeywordList.Add("TIME", KeywordType.DataTypeKeyword); //not strictly-speaking true, can also be keyword in WAITFOR TIME
-            KeywordList.Add("TIMESTAMP", KeywordType.DataTypeKeyword);
-            KeywordList.Add("TINYINT", KeywordType.DataTypeKeyword);
-            KeywordList.Add("TO", KeywordType.OtherKeyword);
-            KeywordList.Add("TOP", KeywordType.OtherKeyword);
-            KeywordList.Add("TOSTRING", KeywordType.FunctionKeyword);
-            KeywordList.Add("TRACEOFF", KeywordType.OtherKeyword);
-            KeywordList.Add("TRACEON", KeywordType.OtherKeyword);
-            KeywordList.Add("TRACESTATUS", KeywordType.OtherKeyword);
-            KeywordList.Add("TRAN", KeywordType.OtherKeyword);
-            KeywordList.Add("TRANSACTION", KeywordType.OtherKeyword);
-            KeywordList.Add("TRIGGER", KeywordType.OtherKeyword);
-            KeywordList.Add("TRUNCATE", KeywordType.OtherKeyword);
-            KeywordList.Add("TSEQUAL", KeywordType.OtherKeyword);
-            KeywordList.Add("TYPEPROPERTY", KeywordType.FunctionKeyword);
-            KeywordList.Add("TYPE_ID", KeywordType.FunctionKeyword);
-            KeywordList.Add("TYPE_NAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("TYPE_WARNING", KeywordType.OtherKeyword);
-            KeywordList.Add("UNCOMMITTED", KeywordType.OtherKeyword);
-            KeywordList.Add("UNICODE", KeywordType.FunctionKeyword);
-            KeywordList.Add("UNION", KeywordType.OtherKeyword);
-            KeywordList.Add("UNIQUE", KeywordType.OtherKeyword);
-            KeywordList.Add("UNIQUEIDENTIFIER", KeywordType.DataTypeKeyword);
-            KeywordList.Add("UNKNOWN", KeywordType.OtherKeyword);
-            KeywordList.Add("UNPINTABLE", KeywordType.OtherKeyword);
-            KeywordList.Add("UPDATE", KeywordType.OtherKeyword);
-            KeywordList.Add("UPDATETEXT", KeywordType.OtherKeyword);
-            KeywordList.Add("UPDATEUSAGE", KeywordType.OtherKeyword);
-            KeywordList.Add("UPDLOCK", KeywordType.OtherKeyword);
-            KeywordList.Add("UPPER", KeywordType.FunctionKeyword);
-            KeywordList.Add("USE", KeywordType.OtherKeyword);
-            KeywordList.Add("USER", KeywordType.FunctionKeyword);
-            KeywordList.Add("USEROPTIONS", KeywordType.OtherKeyword);
-            KeywordList.Add("USER_ID", KeywordType.FunctionKeyword);
-            KeywordList.Add("USER_NAME", KeywordType.FunctionKeyword);
-            KeywordList.Add("USING", KeywordType.OtherKeyword);
-            KeywordList.Add("VALUE", KeywordType.FunctionKeyword);
-            KeywordList.Add("VALUES", KeywordType.OtherKeyword);
-            KeywordList.Add("VAR", KeywordType.FunctionKeyword);
-            KeywordList.Add("VARBINARY", KeywordType.DataTypeKeyword);
-            KeywordList.Add("VARCHAR", KeywordType.DataTypeKeyword);
-            KeywordList.Add("VARP", KeywordType.FunctionKeyword);
-            KeywordList.Add("VARYING", KeywordType.OtherKeyword);
-            KeywordList.Add("VIEW", KeywordType.OtherKeyword);
-            KeywordList.Add("VIEWS", KeywordType.OtherKeyword);
-            KeywordList.Add("WAITFOR", KeywordType.OtherKeyword);
-            KeywordList.Add("WHEN", KeywordType.OtherKeyword);
-            KeywordList.Add("WHERE", KeywordType.OtherKeyword);
-            KeywordList.Add("WHILE", KeywordType.OtherKeyword);
-            KeywordList.Add("WITH", KeywordType.OtherKeyword);
-            KeywordList.Add("WORK", KeywordType.OtherKeyword);
-            KeywordList.Add("WRITE", KeywordType.FunctionKeyword);
-            KeywordList.Add("WRITETEXT", KeywordType.OtherKeyword);
-            KeywordList.Add("XACT_ABORT", KeywordType.OtherKeyword);
-            KeywordList.Add("XLOCK", KeywordType.OtherKeyword);
-            KeywordList.Add("XML", KeywordType.DataTypeKeyword);
-            KeywordList.Add("YEAR", KeywordType.FunctionKeyword);
+            KeywordList = new Dictionary<string, KeywordType>
+            {
+                { "@@CONNECTIONS", KeywordType.FunctionKeyword },
+                { "@@CPU_BUSY", KeywordType.FunctionKeyword },
+                { "@@CURSOR_ROWS", KeywordType.FunctionKeyword },
+                { "@@DATEFIRST", KeywordType.FunctionKeyword },
+                { "@@DBTS", KeywordType.FunctionKeyword },
+                { "@@ERROR", KeywordType.FunctionKeyword },
+                { "@@FETCH_STATUS", KeywordType.FunctionKeyword },
+                { "@@IDENTITY", KeywordType.FunctionKeyword },
+                { "@@IDLE", KeywordType.FunctionKeyword },
+                { "@@IO_BUSY", KeywordType.FunctionKeyword },
+                { "@@LANGID", KeywordType.FunctionKeyword },
+                { "@@LANGUAGE", KeywordType.FunctionKeyword },
+                { "@@LOCK_TIMEOUT", KeywordType.FunctionKeyword },
+                { "@@MAX_CONNECTIONS", KeywordType.FunctionKeyword },
+                { "@@MAX_PRECISION", KeywordType.FunctionKeyword },
+                { "@@NESTLEVEL", KeywordType.FunctionKeyword },
+                { "@@OPTIONS", KeywordType.FunctionKeyword },
+                { "@@PACKET_ERRORS", KeywordType.FunctionKeyword },
+                { "@@PACK_RECEIVED", KeywordType.FunctionKeyword },
+                { "@@PACK_SENT", KeywordType.FunctionKeyword },
+                { "@@PROCID", KeywordType.FunctionKeyword },
+                { "@@REMSERVER", KeywordType.FunctionKeyword },
+                { "@@ROWCOUNT", KeywordType.FunctionKeyword },
+                { "@@SERVERNAME", KeywordType.FunctionKeyword },
+                { "@@SERVICENAME", KeywordType.FunctionKeyword },
+                { "@@SPID", KeywordType.FunctionKeyword },
+                { "@@TEXTSIZE", KeywordType.FunctionKeyword },
+                { "@@TIMETICKS", KeywordType.FunctionKeyword },
+                { "@@TOTAL_ERRORS", KeywordType.FunctionKeyword },
+                { "@@TOTAL_READ", KeywordType.FunctionKeyword },
+                { "@@TOTAL_WRITE", KeywordType.FunctionKeyword },
+                { "@@TRANCOUNT", KeywordType.FunctionKeyword },
+                { "@@VERSION", KeywordType.FunctionKeyword },
+                { "ABS", KeywordType.FunctionKeyword },
+                { "ACOS", KeywordType.FunctionKeyword },
+                { "ACTIVATION", KeywordType.OtherKeyword },
+                { "ADD", KeywordType.OtherKeyword },
+                { "ALL", KeywordType.OperatorKeyword },
+                { "ALTER", KeywordType.OtherKeyword },
+                { "AND", KeywordType.OperatorKeyword },
+                { "ANSI_DEFAULTS", KeywordType.OtherKeyword },
+                { "ANSI_NULLS", KeywordType.OtherKeyword },
+                { "ANSI_NULL_DFLT_OFF", KeywordType.OtherKeyword },
+                { "ANSI_NULL_DFLT_ON", KeywordType.OtherKeyword },
+                { "ANSI_PADDING", KeywordType.OtherKeyword },
+                { "ANSI_WARNINGS", KeywordType.OtherKeyword },
+                { "ANY", KeywordType.OperatorKeyword },
+                { "APP_NAME", KeywordType.FunctionKeyword },
+                { "ARITHABORT", KeywordType.OtherKeyword },
+                { "ARITHIGNORE", KeywordType.OtherKeyword },
+                { "AS", KeywordType.OtherKeyword },
+                { "ASC", KeywordType.OtherKeyword },
+                { "ASCII", KeywordType.FunctionKeyword },
+                { "ASIN", KeywordType.FunctionKeyword },
+                { "ATAN", KeywordType.FunctionKeyword },
+                { "ATN2", KeywordType.FunctionKeyword },
+                { "AUTHORIZATION", KeywordType.OtherKeyword },
+                { "AVG", KeywordType.FunctionKeyword },
+                { "BACKUP", KeywordType.OtherKeyword },
+                { "BEGIN", KeywordType.OtherKeyword },
+                { "BETWEEN", KeywordType.OperatorKeyword },
+                { "BIGINT", KeywordType.DataTypeKeyword },
+                { "BINARY", KeywordType.DataTypeKeyword },
+                { "BIT", KeywordType.DataTypeKeyword },
+                { "BREAK", KeywordType.OtherKeyword },
+                { "BROWSE", KeywordType.OtherKeyword },
+                { "BULK", KeywordType.OtherKeyword },
+                { "BY", KeywordType.OtherKeyword },
+                { "CALLER", KeywordType.OtherKeyword },
+                { "CASCADE", KeywordType.OtherKeyword },
+                { "CASE", KeywordType.FunctionKeyword },
+                { "CAST", KeywordType.FunctionKeyword },
+                { "CATALOG", KeywordType.OtherKeyword },
+                { "CEILING", KeywordType.FunctionKeyword },
+                { "CHAR", KeywordType.DataTypeKeyword },
+                { "CHARACTER", KeywordType.DataTypeKeyword },
+                { "CHARINDEX", KeywordType.FunctionKeyword },
+                { "CHECK", KeywordType.OtherKeyword },
+                { "CHECKALLOC", KeywordType.OtherKeyword },
+                { "CHECKCATALOG", KeywordType.OtherKeyword },
+                { "CHECKCONSTRAINTS", KeywordType.OtherKeyword },
+                { "CHECKDB", KeywordType.OtherKeyword },
+                { "CHECKFILEGROUP", KeywordType.OtherKeyword },
+                { "CHECKIDENT", KeywordType.OtherKeyword },
+                { "CHECKPOINT", KeywordType.OtherKeyword },
+                { "CHECKSUM", KeywordType.FunctionKeyword },
+                { "CHECKSUM_AGG", KeywordType.FunctionKeyword },
+                { "CHECKTABLE", KeywordType.OtherKeyword },
+                { "CLEANTABLE", KeywordType.OtherKeyword },
+                { "CLOSE", KeywordType.OtherKeyword },
+                { "CLUSTERED", KeywordType.OtherKeyword },
+                { "COALESCE", KeywordType.FunctionKeyword },
+                { "COLLATIONPROPERTY", KeywordType.FunctionKeyword },
+                { "COLLECTION", KeywordType.OtherKeyword },
+                { "COLUMN", KeywordType.OtherKeyword },
+                { "COLUMNPROPERTY", KeywordType.FunctionKeyword },
+                { "COL_LENGTH", KeywordType.FunctionKeyword },
+                { "COL_NAME", KeywordType.FunctionKeyword },
+                { "COMMIT", KeywordType.OtherKeyword },
+                { "COMMITTED", KeywordType.OtherKeyword },
+                { "COMPUTE", KeywordType.OtherKeyword },
+                { "CONCAT", KeywordType.OtherKeyword },
+                { "CONCAT_NULL_YIELDS_NULL", KeywordType.OtherKeyword },
+                { "CONCURRENCYVIOLATION", KeywordType.OtherKeyword },
+                { "CONFIRM", KeywordType.OtherKeyword },
+                { "CONSTRAINT", KeywordType.OtherKeyword },
+                { "CONTAINS", KeywordType.OtherKeyword },
+                { "CONTAINSTABLE", KeywordType.FunctionKeyword },
+                { "CONTINUE", KeywordType.OtherKeyword },
+                { "CONTROL", KeywordType.OtherKeyword },
+                { "CONTROLROW", KeywordType.OtherKeyword },
+                { "CONVERT", KeywordType.FunctionKeyword },
+                { "COS", KeywordType.FunctionKeyword },
+                { "COT", KeywordType.FunctionKeyword },
+                { "COUNT", KeywordType.FunctionKeyword },
+                { "COUNT_BIG", KeywordType.FunctionKeyword },
+                { "CREATE", KeywordType.OtherKeyword },
+                { "CROSS", KeywordType.OtherKeyword },
+                { "CURRENT", KeywordType.OtherKeyword },
+                { "CURRENT_DATE", KeywordType.OtherKeyword },
+                { "CURRENT_TIME", KeywordType.OtherKeyword },
+                { "CURRENT_TIMESTAMP", KeywordType.FunctionKeyword },
+                { "CURRENT_USER", KeywordType.FunctionKeyword },
+                { "CURSOR", KeywordType.OtherKeyword },
+                { "CURSOR_CLOSE_ON_COMMIT", KeywordType.OtherKeyword },
+                { "CURSOR_STATUS", KeywordType.FunctionKeyword },
+                { "DATABASE", KeywordType.OtherKeyword },
+                { "DATABASEPROPERTY", KeywordType.FunctionKeyword },
+                { "DATABASEPROPERTYEX", KeywordType.FunctionKeyword },
+                { "DATALENGTH", KeywordType.FunctionKeyword },
+                { "DATEADD", KeywordType.FunctionKeyword },
+                { "DATEDIFF", KeywordType.FunctionKeyword },
+                { "DATEFIRST", KeywordType.OtherKeyword },
+                { "DATEFORMAT", KeywordType.OtherKeyword },
+                { "DATENAME", KeywordType.FunctionKeyword },
+                { "DATE", KeywordType.DataTypeKeyword },
+                { "DATEPART", KeywordType.FunctionKeyword },
+                { "DATETIME", KeywordType.DataTypeKeyword },
+                { "DATETIME2", KeywordType.DataTypeKeyword },
+                { "DATETIMEOFFSET", KeywordType.DataTypeKeyword },
+                { "DAY", KeywordType.FunctionKeyword },
+                { "DBCC", KeywordType.OtherKeyword },
+                { "DBREINDEX", KeywordType.OtherKeyword },
+                { "DBREPAIR", KeywordType.OtherKeyword },
+                { "DB_ID", KeywordType.FunctionKeyword },
+                { "DB_NAME", KeywordType.FunctionKeyword },
+                { "DEADLOCK_PRIORITY", KeywordType.OtherKeyword },
+                { "DEALLOCATE", KeywordType.OtherKeyword },
+                { "DEC", KeywordType.DataTypeKeyword },
+                { "DECIMAL", KeywordType.DataTypeKeyword },
+                { "DECLARE", KeywordType.OtherKeyword },
+                { "DEFAULT", KeywordType.OtherKeyword },
+                { "DEFINITION", KeywordType.OtherKeyword },
+                { "DEGREES", KeywordType.FunctionKeyword },
+                { "DELAY", KeywordType.OtherKeyword },
+                { "DELETE", KeywordType.OtherKeyword },
+                { "DENY", KeywordType.OtherKeyword },
+                { "DESC", KeywordType.OtherKeyword },
+                { "DIFFERENCE", KeywordType.FunctionKeyword },
+                { "DISABLE_DEF_CNST_CHK", KeywordType.OtherKeyword },
+                { "DISK", KeywordType.OtherKeyword },
+                { "DISTINCT", KeywordType.OtherKeyword },
+                { "DISTRIBUTED", KeywordType.OtherKeyword },
+                { "DOUBLE", KeywordType.DataTypeKeyword },
+                { "DROP", KeywordType.OtherKeyword },
+                { "DROPCLEANBUFFERS", KeywordType.OtherKeyword },
+                { "DUMMY", KeywordType.OtherKeyword },
+                { "DUMP", KeywordType.OtherKeyword },
+                { "DYNAMIC", KeywordType.OtherKeyword },
+                { "ELSE", KeywordType.OtherKeyword },
+                { "ENCRYPTION", KeywordType.OtherKeyword },
+                { "ERRLVL", KeywordType.OtherKeyword },
+                { "ERROREXIT", KeywordType.OtherKeyword },
+                { "ESCAPE", KeywordType.OtherKeyword },
+                { "EXCEPT", KeywordType.OtherKeyword },
+                { "EXEC", KeywordType.OtherKeyword },
+                { "EXECUTE", KeywordType.OtherKeyword },
+                { "EXISTS", KeywordType.OperatorKeyword },
+                { "EXIT", KeywordType.OtherKeyword },
+                { "EXP", KeywordType.FunctionKeyword },
+                { "EXPAND", KeywordType.OtherKeyword },
+                { "EXTERNAL", KeywordType.OtherKeyword },
+                { "FAST", KeywordType.OtherKeyword },
+                { "FAST_FORWARD", KeywordType.OtherKeyword },
+                { "FASTFIRSTROW", KeywordType.OtherKeyword },
+                { "FETCH", KeywordType.OtherKeyword },
+                { "FILE", KeywordType.OtherKeyword },
+                { "FILEGROUPPROPERTY", KeywordType.FunctionKeyword },
+                { "FILEGROUP_ID", KeywordType.FunctionKeyword },
+                { "FILEGROUP_NAME", KeywordType.FunctionKeyword },
+                { "FILEPROPERTY", KeywordType.FunctionKeyword },
+                { "FILE_ID", KeywordType.FunctionKeyword },
+                { "FILE_IDEX", KeywordType.FunctionKeyword },
+                { "FILE_NAME", KeywordType.FunctionKeyword },
+                { "FILLFACTOR", KeywordType.OtherKeyword },
+                { "FIPS_FLAGGER", KeywordType.OtherKeyword },
+                { "FLOAT", KeywordType.DataTypeKeyword },
+                { "FLOOR", KeywordType.FunctionKeyword },
+                { "FLOPPY", KeywordType.OtherKeyword },
+                { "FMTONLY", KeywordType.OtherKeyword },
+                { "FOR", KeywordType.OtherKeyword },
+                { "FORCE", KeywordType.OtherKeyword },
+                { "FORCED", KeywordType.OtherKeyword },
+                { "FORCEPLAN", KeywordType.OtherKeyword },
+                { "FOREIGN", KeywordType.OtherKeyword },
+                { "FORMATMESSAGE", KeywordType.FunctionKeyword },
+                { "FORWARD_ONLY", KeywordType.OtherKeyword },
+                { "FREEPROCCACHE", KeywordType.OtherKeyword },
+                { "FREESESSIONCACHE", KeywordType.OtherKeyword },
+                { "FREESYSTEMCACHE", KeywordType.OtherKeyword },
+                { "FREETEXT", KeywordType.OtherKeyword },
+                { "FREETEXTTABLE", KeywordType.FunctionKeyword },
+                { "FROM", KeywordType.OtherKeyword },
+                { "FULL", KeywordType.OtherKeyword },
+                { "FULLTEXT", KeywordType.OtherKeyword },
+                { "FULLTEXTCATALOGPROPERTY", KeywordType.FunctionKeyword },
+                { "FULLTEXTSERVICEPROPERTY", KeywordType.FunctionKeyword },
+                { "FUNCTION", KeywordType.OtherKeyword },
+                { "GEOGRAPHY", KeywordType.DataTypeKeyword },
+                { "GETANCESTOR", KeywordType.FunctionKeyword },
+                { "GETANSINULL", KeywordType.FunctionKeyword },
+                { "GETDATE", KeywordType.FunctionKeyword },
+                { "GETDESCENDANT", KeywordType.FunctionKeyword },
+                { "GETLEVEL", KeywordType.FunctionKeyword },
+                { "GETREPARENTEDVALUE", KeywordType.FunctionKeyword },
+                { "GETROOT", KeywordType.FunctionKeyword },
+                { "GLOBAL", KeywordType.OtherKeyword },
+                { "GO", KeywordType.OtherKeyword },
+                { "GOTO", KeywordType.OtherKeyword },
+                { "GRANT", KeywordType.OtherKeyword },
+                { "GROUP", KeywordType.OtherKeyword },
+                { "GROUPING", KeywordType.FunctionKeyword },
+                { "HASH", KeywordType.OtherKeyword },
+                { "HAVING", KeywordType.OtherKeyword },
+                { "HELP", KeywordType.OtherKeyword },
+                { "HIERARCHYID", KeywordType.DataTypeKeyword },
+                { "HOLDLOCK", KeywordType.OtherKeyword },
+                { "HOST_ID", KeywordType.FunctionKeyword },
+                { "HOST_NAME", KeywordType.FunctionKeyword },
+                { "IDENTITY", KeywordType.FunctionKeyword },
+                { "IDENTITYCOL", KeywordType.OtherKeyword },
+                { "IDENTITY_INSERT", KeywordType.OtherKeyword },
+                { "IDENT_CURRENT", KeywordType.FunctionKeyword },
+                { "IDENT_INCR", KeywordType.FunctionKeyword },
+                { "IDENT_SEED", KeywordType.FunctionKeyword },
+                { "IF", KeywordType.OtherKeyword },
+                { "IGNORE_CONSTRAINTS", KeywordType.OtherKeyword },
+                { "IGNORE_TRIGGERS", KeywordType.OtherKeyword },
+                { "IMAGE", KeywordType.DataTypeKeyword },
+                { "IMPLICIT_TRANSACTIONS", KeywordType.OtherKeyword },
+                { "IN", KeywordType.OperatorKeyword },
+                { "INDEX", KeywordType.OtherKeyword },
+                { "INDEXDEFRAG", KeywordType.OtherKeyword },
+                { "INDEXKEY_PROPERTY", KeywordType.FunctionKeyword },
+                { "INDEXPROPERTY", KeywordType.FunctionKeyword },
+                { "INDEX_COL", KeywordType.FunctionKeyword },
+                { "INNER", KeywordType.OtherKeyword },
+                { "INPUTBUFFER", KeywordType.OtherKeyword },
+                { "INSENSITIVE", KeywordType.DataTypeKeyword },
+                { "INSERT", KeywordType.OtherKeyword },
+                { "INT", KeywordType.DataTypeKeyword },
+                { "INTEGER", KeywordType.DataTypeKeyword },
+                { "INTERSECT", KeywordType.OtherKeyword },
+                { "INTO", KeywordType.OtherKeyword },
+                { "IO", KeywordType.OtherKeyword },
+                { "IS", KeywordType.OtherKeyword },
+                { "ISDATE", KeywordType.FunctionKeyword },
+                { "ISDESCENDANTOF", KeywordType.FunctionKeyword },
+                { "ISNULL", KeywordType.FunctionKeyword },
+                { "ISNUMERIC", KeywordType.FunctionKeyword },
+                { "ISOLATION", KeywordType.OtherKeyword },
+                { "IS_MEMBER", KeywordType.FunctionKeyword },
+                { "IS_SRVROLEMEMBER", KeywordType.FunctionKeyword },
+                { "JOIN", KeywordType.OtherKeyword },
+                { "KEEP", KeywordType.OtherKeyword },
+                { "KEEPDEFAULTS", KeywordType.OtherKeyword },
+                { "KEEPFIXED", KeywordType.OtherKeyword },
+                { "KEEPIDENTITY", KeywordType.OtherKeyword },
+                { "KEY", KeywordType.OtherKeyword },
+                { "KEYSET", KeywordType.OtherKeyword },
+                { "KILL", KeywordType.OtherKeyword },
+                { "LANGUAGE", KeywordType.OtherKeyword },
+                { "LEFT", KeywordType.FunctionKeyword },
+                { "LEN", KeywordType.FunctionKeyword },
+                { "LEVEL", KeywordType.OtherKeyword },
+                { "LIKE", KeywordType.OperatorKeyword },
+                { "LINENO", KeywordType.OtherKeyword },
+                { "LOAD", KeywordType.OtherKeyword },
+                { "LOCAL", KeywordType.OtherKeyword },
+                { "LOCK_TIMEOUT", KeywordType.OtherKeyword },
+                { "LOG", KeywordType.FunctionKeyword },
+                { "LOG10", KeywordType.FunctionKeyword },
+                { "LOGIN", KeywordType.OtherKeyword },
+                { "LOOP", KeywordType.OtherKeyword },
+                { "LOWER", KeywordType.FunctionKeyword },
+                { "LTRIM", KeywordType.FunctionKeyword },
+                { "MATCHED", KeywordType.OtherKeyword },
+                { "MAX", KeywordType.FunctionKeyword },
+                { "MAX_QUEUE_READERS", KeywordType.OtherKeyword },
+                { "MAXDOP", KeywordType.OtherKeyword },
+                { "MAXRECURSION", KeywordType.OtherKeyword },
+                { "MERGE", KeywordType.OtherKeyword },
+                { "MIN", KeywordType.FunctionKeyword },
+                { "MIRROREXIT", KeywordType.OtherKeyword },
+                { "MODIFY", KeywordType.FunctionKeyword },
+                { "MONEY", KeywordType.DataTypeKeyword },
+                { "MONTH", KeywordType.FunctionKeyword },
+                { "MOVE", KeywordType.OtherKeyword },
+                { "NAMES", KeywordType.OtherKeyword },
+                { "NATIONAL", KeywordType.DataTypeKeyword },
+                { "NCHAR", KeywordType.DataTypeKeyword },
+                { "NEWID", KeywordType.FunctionKeyword },
+                { "NEXT", KeywordType.OtherKeyword },
+                { "NOCHECK", KeywordType.OtherKeyword },
+                { "NOCOUNT", KeywordType.OtherKeyword },
+                { "NODES", KeywordType.FunctionKeyword },
+                { "NOEXEC", KeywordType.OtherKeyword },
+                { "NOEXPAND", KeywordType.OtherKeyword },
+                { "NOLOCK", KeywordType.OtherKeyword },
+                { "NONCLUSTERED", KeywordType.OtherKeyword },
+                { "NOT", KeywordType.OperatorKeyword },
+                { "NOWAIT", KeywordType.OtherKeyword },
+                { "NTEXT", KeywordType.DataTypeKeyword },
+                { "NTILE", KeywordType.FunctionKeyword },
+                { "NULL", KeywordType.OtherKeyword },
+                { "NULLIF", KeywordType.FunctionKeyword },
+                { "NUMERIC", KeywordType.DataTypeKeyword },
+                { "NUMERIC_ROUNDABORT", KeywordType.OtherKeyword },
+                { "NVARCHAR", KeywordType.DataTypeKeyword },
+                { "OBJECTPROPERTY", KeywordType.FunctionKeyword },
+                { "OBJECTPROPERTYEX", KeywordType.FunctionKeyword },
+                { "OBJECT", KeywordType.OtherKeyword },
+                { "OBJECT_ID", KeywordType.FunctionKeyword },
+                { "OBJECT_NAME", KeywordType.FunctionKeyword },
+                { "OF", KeywordType.OtherKeyword },
+                { "OFF", KeywordType.OtherKeyword },
+                { "OFFSETS", KeywordType.OtherKeyword },
+                { "ON", KeywordType.OtherKeyword },
+                { "ONCE", KeywordType.OtherKeyword },
+                { "ONLY", KeywordType.OtherKeyword },
+                { "OPEN", KeywordType.OtherKeyword },
+                { "OPENDATASOURCE", KeywordType.OtherKeyword },
+                { "OPENQUERY", KeywordType.FunctionKeyword },
+                { "OPENROWSET", KeywordType.FunctionKeyword },
+                { "OPENTRAN", KeywordType.OtherKeyword },
+                { "OPTIMIZE", KeywordType.OtherKeyword },
+                { "OPTIMISTIC", KeywordType.OtherKeyword },
+                { "OPTION", KeywordType.OtherKeyword },
+                { "OR", KeywordType.OperatorKeyword },
+                { "ORDER", KeywordType.OtherKeyword },
+                { "OUTER", KeywordType.OtherKeyword },
+                { "OUT", KeywordType.OtherKeyword },
+                { "OUTPUT", KeywordType.OtherKeyword },
+                { "OUTPUTBUFFER", KeywordType.OtherKeyword },
+                { "OVER", KeywordType.OtherKeyword },
+                { "OWNER", KeywordType.OtherKeyword },
+                { "PAGLOCK", KeywordType.OtherKeyword },
+                { "PARAMETERIZATION", KeywordType.OtherKeyword },
+                { "PARSE", KeywordType.FunctionKeyword },
+                { "PARSENAME", KeywordType.FunctionKeyword },
+                { "PARSEONLY", KeywordType.OtherKeyword },
+                { "PARTITION", KeywordType.OtherKeyword },
+                { "PATINDEX", KeywordType.FunctionKeyword },
+                { "PERCENT", KeywordType.OtherKeyword },
+                { "PERM", KeywordType.OtherKeyword },
+                { "PERMANENT", KeywordType.OtherKeyword },
+                { "PERMISSIONS", KeywordType.FunctionKeyword },
+                { "PI", KeywordType.FunctionKeyword },
+                { "PINTABLE", KeywordType.OtherKeyword },
+                { "PIPE", KeywordType.OtherKeyword },
+                { "PLAN", KeywordType.OtherKeyword },
+                { "POWER", KeywordType.FunctionKeyword },
+                { "PREPARE", KeywordType.OtherKeyword },
+                { "PRIMARY", KeywordType.OtherKeyword },
+                { "PRINT", KeywordType.OtherKeyword },
+                { "PRIVILEGES", KeywordType.OtherKeyword },
+                { "PROC", KeywordType.OtherKeyword },
+                { "PROCCACHE", KeywordType.OtherKeyword },
+                { "PROCEDURE", KeywordType.OtherKeyword },
+                { "PROCEDURE_NAME", KeywordType.OtherKeyword },
+                { "PROCESSEXIT", KeywordType.OtherKeyword },
+                { "PROCID", KeywordType.OtherKeyword },
+                { "PROFILE", KeywordType.OtherKeyword },
+                { "PUBLIC", KeywordType.OtherKeyword },
+                { "QUERY", KeywordType.FunctionKeyword },
+                { "QUERY_GOVERNOR_COST_LIMIT", KeywordType.OtherKeyword },
+                { "QUEUE", KeywordType.OtherKeyword },
+                { "QUOTED_IDENTIFIER", KeywordType.OtherKeyword },
+                { "QUOTENAME", KeywordType.FunctionKeyword },
+                { "RADIANS", KeywordType.FunctionKeyword },
+                { "RAISERROR", KeywordType.OtherKeyword },
+                { "RAND", KeywordType.FunctionKeyword },
+                { "READ", KeywordType.OtherKeyword },
+                { "READCOMMITTED", KeywordType.OtherKeyword },
+                { "READCOMMITTEDLOCK", KeywordType.OtherKeyword },
+                { "READPAST", KeywordType.OtherKeyword },
+                { "READTEXT", KeywordType.OtherKeyword },
+                { "READUNCOMMITTED", KeywordType.OtherKeyword },
+                { "READ_ONLY", KeywordType.OtherKeyword },
+                { "REAL", KeywordType.DataTypeKeyword },
+                { "RECOMPILE", KeywordType.OtherKeyword },
+                { "RECONFIGURE", KeywordType.OtherKeyword },
+                { "REFERENCES", KeywordType.OtherKeyword },
+                { "REMOTE_PROC_TRANSACTIONS", KeywordType.OtherKeyword },
+                { "REPEATABLE", KeywordType.OtherKeyword },
+                { "REPEATABLEREAD", KeywordType.OtherKeyword },
+                { "REPLACE", KeywordType.FunctionKeyword },
+                { "REPLICATE", KeywordType.FunctionKeyword },
+                { "REPLICATION", KeywordType.OtherKeyword },
+                { "RESTORE", KeywordType.OtherKeyword },
+                { "RESTRICT", KeywordType.OtherKeyword },
+                { "RETURN", KeywordType.OtherKeyword },
+                { "RETURNS", KeywordType.OtherKeyword },
+                { "REVERSE", KeywordType.FunctionKeyword },
+                { "REVERT", KeywordType.OtherKeyword },
+                { "REVOKE", KeywordType.OtherKeyword },
+                { "RIGHT", KeywordType.FunctionKeyword },
+                { "ROBUST", KeywordType.OtherKeyword },
+                { "ROLE", KeywordType.OtherKeyword },
+                { "ROLLBACK", KeywordType.OtherKeyword },
+                { "ROUND", KeywordType.FunctionKeyword },
+                { "ROWCOUNT", KeywordType.OtherKeyword },
+                { "ROWGUIDCOL", KeywordType.OtherKeyword },
+                { "ROWLOCK", KeywordType.OtherKeyword },
+                { "ROWVERSION", KeywordType.DataTypeKeyword },
+                { "RTRIM", KeywordType.FunctionKeyword },
+                { "RULE", KeywordType.OtherKeyword },
+                { "SAVE", KeywordType.OtherKeyword },
+                { "SCHEMA", KeywordType.OtherKeyword },
+                { "SCHEMA_ID", KeywordType.FunctionKeyword },
+                { "SCHEMA_NAME", KeywordType.FunctionKeyword },
+                { "SCOPE_IDENTITY", KeywordType.FunctionKeyword },
+                { "SCROLL", KeywordType.OtherKeyword },
+                { "SCROLL_LOCKS", KeywordType.OtherKeyword },
+                { "SELECT", KeywordType.OtherKeyword },
+                { "SELF", KeywordType.OtherKeyword },
+                { "SERIALIZABLE", KeywordType.OtherKeyword },
+                { "SERVER", KeywordType.OtherKeyword },
+                { "SERVERPROPERTY", KeywordType.FunctionKeyword },
+                { "SESSIONPROPERTY", KeywordType.FunctionKeyword },
+                { "SESSION_USER", KeywordType.FunctionKeyword },
+                { "SET", KeywordType.OtherKeyword },
+                { "SETUSER", KeywordType.OtherKeyword },
+                { "SHOWCONTIG", KeywordType.OtherKeyword },
+                { "SHOWPLAN_ALL", KeywordType.OtherKeyword },
+                { "SHOWPLAN_TEXT", KeywordType.OtherKeyword },
+                { "SHOW_STATISTICS", KeywordType.OtherKeyword },
+                { "SHRINKDATABASE", KeywordType.OtherKeyword },
+                { "SHRINKFILE", KeywordType.OtherKeyword },
+                { "SHUTDOWN", KeywordType.OtherKeyword },
+                { "SIGN", KeywordType.FunctionKeyword },
+                { "SIMPLE", KeywordType.OtherKeyword },
+                { "SIN", KeywordType.FunctionKeyword },
+                { "SMALLDATETIME", KeywordType.DataTypeKeyword },
+                { "SMALLINT", KeywordType.DataTypeKeyword },
+                { "SMALLMONEY", KeywordType.DataTypeKeyword },
+                { "SOME", KeywordType.OperatorKeyword },
+                { "SOUNDEX", KeywordType.FunctionKeyword },
+                { "SPACE", KeywordType.FunctionKeyword },
+                { "SQLPERF", KeywordType.OtherKeyword },
+                { "SQL_VARIANT", KeywordType.DataTypeKeyword },
+                { "SQL_VARIANT_PROPERTY", KeywordType.FunctionKeyword },
+                { "SQRT", KeywordType.FunctionKeyword },
+                { "SQUARE", KeywordType.FunctionKeyword },
+                { "STATE", KeywordType.OtherKeyword },
+                { "STATISTICS", KeywordType.OtherKeyword },
+                { "STATIC", KeywordType.OtherKeyword },
+                { "STATS_DATE", KeywordType.FunctionKeyword },
+                { "STATUS", KeywordType.OtherKeyword },
+                { "STDEV", KeywordType.FunctionKeyword },
+                { "STDEVP", KeywordType.FunctionKeyword },
+                { "STOPLIST", KeywordType.OtherKeyword },
+                { "STR", KeywordType.FunctionKeyword },
+                { "STUFF", KeywordType.FunctionKeyword },
+                { "SUBSTRING", KeywordType.FunctionKeyword },
+                { "SUM", KeywordType.FunctionKeyword },
+                { "SUSER_ID", KeywordType.FunctionKeyword },
+                { "SUSER_NAME", KeywordType.FunctionKeyword },
+                { "SUSER_SID", KeywordType.FunctionKeyword },
+                { "SUSER_SNAME", KeywordType.FunctionKeyword },
+                { "SYNONYM", KeywordType.OtherKeyword },
+                { "SYSNAME", KeywordType.DataTypeKeyword },
+                { "SYSTEM_USER", KeywordType.FunctionKeyword },
+                { "TABLE", KeywordType.OtherKeyword },
+                { "TABLOCK", KeywordType.OtherKeyword },
+                { "TABLOCKX", KeywordType.OtherKeyword },
+                { "TAN", KeywordType.FunctionKeyword },
+                { "TAPE", KeywordType.OtherKeyword },
+                { "TEMP", KeywordType.OtherKeyword },
+                { "TEMPORARY", KeywordType.OtherKeyword },
+                { "TEXT", KeywordType.DataTypeKeyword },
+                { "TEXTPTR", KeywordType.FunctionKeyword },
+                { "TEXTSIZE", KeywordType.OtherKeyword },
+                { "TEXTVALID", KeywordType.FunctionKeyword },
+                { "THEN", KeywordType.OtherKeyword },
+                { "TIME", KeywordType.DataTypeKeyword }, //not strictly-speaking true, can also be keyword in WAITFOR TIME
+                { "TIMESTAMP", KeywordType.DataTypeKeyword },
+                { "TINYINT", KeywordType.DataTypeKeyword },
+                { "TO", KeywordType.OtherKeyword },
+                { "TOP", KeywordType.OtherKeyword },
+                { "TOSTRING", KeywordType.FunctionKeyword },
+                { "TRACEOFF", KeywordType.OtherKeyword },
+                { "TRACEON", KeywordType.OtherKeyword },
+                { "TRACESTATUS", KeywordType.OtherKeyword },
+                { "TRAN", KeywordType.OtherKeyword },
+                { "TRANSACTION", KeywordType.OtherKeyword },
+                { "TRIGGER", KeywordType.OtherKeyword },
+                { "TRUNCATE", KeywordType.OtherKeyword },
+                { "TSEQUAL", KeywordType.OtherKeyword },
+                { "TYPEPROPERTY", KeywordType.FunctionKeyword },
+                { "TYPE_ID", KeywordType.FunctionKeyword },
+                { "TYPE_NAME", KeywordType.FunctionKeyword },
+                { "TYPE_WARNING", KeywordType.OtherKeyword },
+                { "UNCOMMITTED", KeywordType.OtherKeyword },
+                { "UNICODE", KeywordType.FunctionKeyword },
+                { "UNION", KeywordType.OtherKeyword },
+                { "UNIQUE", KeywordType.OtherKeyword },
+                { "UNIQUEIDENTIFIER", KeywordType.DataTypeKeyword },
+                { "UNKNOWN", KeywordType.OtherKeyword },
+                { "UNPINTABLE", KeywordType.OtherKeyword },
+                { "UPDATE", KeywordType.OtherKeyword },
+                { "UPDATETEXT", KeywordType.OtherKeyword },
+                { "UPDATEUSAGE", KeywordType.OtherKeyword },
+                { "UPDLOCK", KeywordType.OtherKeyword },
+                { "UPPER", KeywordType.FunctionKeyword },
+                { "USE", KeywordType.OtherKeyword },
+                { "USER", KeywordType.FunctionKeyword },
+                { "USEROPTIONS", KeywordType.OtherKeyword },
+                { "USER_ID", KeywordType.FunctionKeyword },
+                { "USER_NAME", KeywordType.FunctionKeyword },
+                { "USING", KeywordType.OtherKeyword },
+                { "VALUE", KeywordType.FunctionKeyword },
+                { "VALUES", KeywordType.OtherKeyword },
+                { "VAR", KeywordType.FunctionKeyword },
+                { "VARBINARY", KeywordType.DataTypeKeyword },
+                { "VARCHAR", KeywordType.DataTypeKeyword },
+                { "VARP", KeywordType.FunctionKeyword },
+                { "VARYING", KeywordType.OtherKeyword },
+                { "VIEW", KeywordType.OtherKeyword },
+                { "VIEWS", KeywordType.OtherKeyword },
+                { "WAITFOR", KeywordType.OtherKeyword },
+                { "WHEN", KeywordType.OtherKeyword },
+                { "WHERE", KeywordType.OtherKeyword },
+                { "WHILE", KeywordType.OtherKeyword },
+                { "WITH", KeywordType.OtherKeyword },
+                { "WORK", KeywordType.OtherKeyword },
+                { "WRITE", KeywordType.FunctionKeyword },
+                { "WRITETEXT", KeywordType.OtherKeyword },
+                { "XACT_ABORT", KeywordType.OtherKeyword },
+                { "XLOCK", KeywordType.OtherKeyword },
+                { "XML", KeywordType.DataTypeKeyword },
+                { "YEAR", KeywordType.FunctionKeyword }
+            };
         }
 
         public enum KeywordType
