@@ -104,10 +104,6 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PoorMansTSqlFormatterLib\PoorMansTSqlFormatterLib.csproj">
-      <Project>{adbdfdca-cab6-4569-9151-0bd42e65b400}</Project>
-      <Name>PoorMansTSqlFormatterLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PoorMansTSqlFormatterPluginShared\PoorMansTSqlFormatterPluginShared.csproj">
       <Project>{4c350944-937b-4416-8442-3197fc7098f2}</Project>
       <Name>PoorMansTSqlFormatterPluginShared</Name>
