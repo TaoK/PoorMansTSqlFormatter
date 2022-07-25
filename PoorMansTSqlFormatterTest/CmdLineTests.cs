@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 
 namespace PoorMansTSqlFormatterTests
@@ -26,8 +27,6 @@ namespace PoorMansTSqlFormatterTests
     [TestFixture]
     public class CmdLineTests
     {
-        private const string FORMATTER_EXECUTABLE = "..\\..\\..\\..\\PoorMansTSqlFormatterCmdLine\\bin\\Release\\net6.0-windows\\publish\\win-x64\\PoorMansTSqlFormatterCmdLine.exe";
-
         [Test]
         public void TestCmdLineFormattingSwitches()
         {
@@ -57,7 +56,7 @@ namespace PoorMansTSqlFormatterTests
         {
             //without worrying too much about which encoding it is, let's check we can input and output funky stuff.
             TestFormattingFlags("SELECT 'João played with l''Orange Amère, and they discovered that ãΕΙΒοςπ looked like nonsensical greek while ڡڣڲۆۏ was clearly intended to be some sort of arabic...'",
-                "SELECT 'João played with l''Orange Amère, and they discovered that ãΕΙΒοςπ looked like nonsensical greek while ڡڣڲۆۏ was clearly intended to be some sort of arabic...'", 
+                "SELECT 'João played with l''Orange Amère, and they discovered that ãΕΙΒοςπ looked like nonsensical greek while ڡڣڲۆۏ was clearly intended to be some sort of arabic...'",
                 "");
         }
 
@@ -77,8 +76,8 @@ namespace PoorMansTSqlFormatterTests
 
         private Process StartFormatterProcess(string arguments)
         {
-            Process myProcess = new Process();
-            myProcess.StartInfo.FileName = FORMATTER_EXECUTABLE;
+            Process myProcess = new();
+            myProcess.StartInfo.FileName = GetFormatterExecutable();
             myProcess.StartInfo.Arguments = arguments;
             myProcess.StartInfo.UseShellExecute = false;
             myProcess.StartInfo.RedirectStandardInput = true;
@@ -108,6 +107,15 @@ namespace PoorMansTSqlFormatterTests
             if (formatterProcess.ExitCode != 0)
                 throw new Exception("Formatter reported error: " + formatterProcess.StandardError.ReadToEnd());
             Assert.That(outputString, Is.EqualTo(expectedOutputString + outputSuffix), "Output did not match expected");
+        }
+
+        private string GetFormatterExecutable()
+        {
+            const string FORMATTER_EXECUTABLE = "..\\..\\..\\..\\..\\PoorMansTSqlFormatterCmdLine\\bin\\Debug\\net6.0-windows\\win-x64\\publish\\PoorMansTSqlFormatterCmdLine.exe";
+            var assemblyLocation = Assembly.GetExecutingAssembly().Location;
+            var compositePath = Path.Combine(assemblyLocation, FORMATTER_EXECUTABLE);
+            var resolvedPath = Path.GetFullPath(compositePath);
+            return resolvedPath;
         }
     }
 }
