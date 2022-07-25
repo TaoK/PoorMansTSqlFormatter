@@ -12,12 +12,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoorMansTSqlFormatterCmdLin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoorMansTSqlFormatterTests", "PoorMansTSqlFormatterTest\PoorMansTSqlFormatterTests.csproj", "{94DD1885-BBC0-4238-AA33-E3249F8A6CA9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoorMansTSqlFormatterJSLib", "tst\PoorMansTSqlFormatterJSLib.csproj", "{C29D1881-65EA-45D4-9FE7-5E67825364B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoorMansTSqlFormatterJSLib", "PoorMansTSqlFormatterJSLib\PoorMansTSqlFormatterJSLib.csproj", "{C29D1881-65EA-45D4-9FE7-5E67825364B3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{691283D3-9C0F-43D2-B4A9-5E06D36B40F6} = {691283D3-9C0F-43D2-B4A9-5E06D36B40F6}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterDemo", "WinFormsApp1\PoorMansTSqlFormatterDemo.csproj", "{3C44524E-2882-49BA-B72C-941FDF0BB09B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoorMansTSqlFormatterDemo", "PoorMansTSqlFormatterDemo\PoorMansTSqlFormatterDemo.csproj", "{3C44524E-2882-49BA-B72C-941FDF0BB09B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorMansTSqlFormatterPluginShared", "PoorMansTSqlFormatterPluginShared\PoorMansTSqlFormatterPluginShared.csproj", "{A8A125A2-9492-4705-89D8-148802779997}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{3C44524E-2882-49BA-B72C-941FDF0BB09B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C44524E-2882-49BA-B72C-941FDF0BB09B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C44524E-2882-49BA-B72C-941FDF0BB09B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8A125A2-9492-4705-89D8-148802779997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8A125A2-9492-4705-89D8-148802779997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8A125A2-9492-4705-89D8-148802779997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8A125A2-9492-4705-89D8-148802779997}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
