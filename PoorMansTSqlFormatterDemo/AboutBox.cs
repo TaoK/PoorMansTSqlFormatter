@@ -69,7 +69,7 @@ namespace PoorMansTSqlFormatterDemo
                         return titleAttribute.Title;
                     }
                 }
-                return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
+                return "";
             }
         }
 

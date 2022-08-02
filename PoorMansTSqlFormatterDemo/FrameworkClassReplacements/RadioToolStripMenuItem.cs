@@ -29,7 +29,7 @@ namespace PoorMansTSqlFormatterDemo.FrameworkClassReplacements
             // Clear the checked state for all siblings. 
             foreach (ToolStripItem item in Parent.Items)
             {
-                RadioToolStripMenuItem radioItem =
+                RadioToolStripMenuItem? radioItem =
                     item as RadioToolStripMenuItem;
                 if (radioItem != null && radioItem != this && radioItem.Checked)
                 {
@@ -155,7 +155,7 @@ namespace PoorMansTSqlFormatterDemo.FrameworkClassReplacements
         {
             get
             {
-                ToolStripMenuItem ownerMenuItem =
+                ToolStripMenuItem? ownerMenuItem =
                     OwnerItem as ToolStripMenuItem;
 
                 // Use the base value in design mode to prevent the designer
@@ -178,7 +178,7 @@ namespace PoorMansTSqlFormatterDemo.FrameworkClassReplacements
         // CheckedChanged event. 
         protected override void OnOwnerChanged(EventArgs e)
         {
-            ToolStripMenuItem ownerMenuItem =
+            ToolStripMenuItem? ownerMenuItem =
                 OwnerItem as ToolStripMenuItem;
             if (ownerMenuItem != null && ownerMenuItem.CheckOnClick)
             {
@@ -191,7 +191,7 @@ namespace PoorMansTSqlFormatterDemo.FrameworkClassReplacements
         // When the checked state of the parent item changes, 
         // repaint the item so that the new Enabled state is displayed. 
         private void OwnerMenuItem_CheckedChanged(
-            object sender, EventArgs e)
+            object? sender, EventArgs e)
         {
             Invalidate();
         }

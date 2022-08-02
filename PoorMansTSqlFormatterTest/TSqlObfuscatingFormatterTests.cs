@@ -69,7 +69,7 @@ namespace PoorMansTSqlFormatterTests
             Utils.StripCommentsFromSqlTree(parsedOriginal);
             string standardFormattedSql = _standardFormatter.FormatSQLTree(parsedOriginal);
 
-            Assert.AreEqual(standardFormattedSql, unObfuscatedSql, "standard-formatted vs obfuscatd and reformatted");
+            Assert.That(unObfuscatedSql, Is.EqualTo(standardFormattedSql), "standard-formatted vs obfuscatd and reformatted");
         }
     }
 }
