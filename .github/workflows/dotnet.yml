@@ -51,12 +51,12 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: PoorMansTSqlFormatterLib
-        path: PoorMansTSqlFormatterLib\/bin/Debug/netstandard2.1/publish/PoorMansTSqlFormatterLib.dll
+        path: PoorMansTSqlFormatterLib/bin/Debug/netstandard2.1/publish/PoorMansTSqlFormatterLib.dll
     - name: Upload Lib DLL
       uses: actions/upload-artifact@v3
       with:
         name: PoorMansTSqlFormatterLib
-        path: PoorMansTSqlFormatterLib\/bin/Debug/netstandard2.1/publish/PoorMansTSqlFormatterLib.pdb
+        path: PoorMansTSqlFormatterLib/bin/Debug/netstandard2.1/publish/PoorMansTSqlFormatterLib.pdb
     - name: Upload JS Lib
       uses: actions/upload-artifact@v3
       with:
