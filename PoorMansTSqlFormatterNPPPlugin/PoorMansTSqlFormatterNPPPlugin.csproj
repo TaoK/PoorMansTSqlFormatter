@@ -82,7 +82,11 @@
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
   -->
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <ProjectOutputFiles Include="$(OutputPath)\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(ProjectOutputFiles)" DestinationFolder="$(ProgramW6432)\Notepad++\plugins\$(TargetName)\%(RecursiveDir)" Condition="Exists('$(ProgramW6432)\Notepad++\plugins\$(TargetName)\')" ContinueOnError="false" />
+  </Target>
 </Project>
