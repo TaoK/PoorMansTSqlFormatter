@@ -50,7 +50,7 @@ namespace Kbg.NppPluginNET
             if (notification.Header.Code == (uint)NppMsg.NPPN_TBMODIFICATION)
             {
                 PluginBase._funcItems.RefreshItems();
-                Main.SetToolBarIcon();
+                //Main.SetToolBarIcon();
             }
             else if (notification.Header.Code == (uint)NppMsg.NPPN_SHUTDOWN)
             {
@@ -59,7 +59,7 @@ namespace Kbg.NppPluginNET
             }
             else
             {
-	            Main.OnNotification(notification);
+	            //Main.OnNotification(notification);
             }
         }
     }

@@ -21,7 +21,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
+using System;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace PoorMansTSqlFormatterPluginShared
 {
@@ -34,13 +37,13 @@ namespace PoorMansTSqlFormatterPluginShared
         Assembly _pluginAssembly;
         string _aboutDescription;
         bool _supportsHotkey = false;
-        FixHotkeyDefault? _hotkeyDefaultFixMethod;
+        FixHotkeyDefault _hotkeyDefaultFixMethod;
 
         public SettingsForm(ISqlSettings settings, Assembly pluginAssembly, string aboutDescription) : this(settings, pluginAssembly, aboutDescription, null)
         {
         }
 
-        public SettingsForm(ISqlSettings settings, Assembly pluginAssembly, string aboutDescription, FixHotkeyDefault? hotkeyDefaultFixMethod)
+        public SettingsForm(ISqlSettings settings, Assembly pluginAssembly, string aboutDescription, FixHotkeyDefault hotkeyDefaultFixMethod)
         {
             _settings = settings;
             _pluginAssembly = pluginAssembly;

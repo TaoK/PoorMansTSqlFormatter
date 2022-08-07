@@ -18,13 +18,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  */
 
+using System;
+using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace PoorMansTSqlFormatterPluginShared
 {
     partial class AboutBox : Form
     {
-        private readonly System.Resources.ResourceManager _generalResourceManager = new("PoorMansTSqlFormatterPluginShared.GeneralLanguageContent", Assembly.GetExecutingAssembly());
+        private readonly System.Resources.ResourceManager _generalResourceManager = new System.Resources.ResourceManager("PoorMansTSqlFormatterPluginShared.GeneralLanguageContent", Assembly.GetExecutingAssembly());
 
         public AboutBox(Assembly ProductAssembly, string ProductAboutDescription)
         {
@@ -36,7 +39,7 @@ namespace PoorMansTSqlFormatterPluginShared
 
             string GPLText = "";
 
-            using (Stream? fileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof(AboutBox).Namespace + ".LICENSE.txt"))
+            using (Stream fileStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof(AboutBox).Namespace + ".LICENSE.txt"))
             {
                 if (fileStream == null)
                     throw new Exception("License file not found!");
