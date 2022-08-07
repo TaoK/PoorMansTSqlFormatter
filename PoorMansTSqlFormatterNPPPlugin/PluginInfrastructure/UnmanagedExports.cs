@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using Kbg.NppPluginNET.PluginInfrastructure;
 using NppPlugin.DllExport;
 
-namespace PoorMansTSqlFormatterNPPPlugin
+namespace Kbg.NppPluginNET
 {
     class UnmanagedExports
     {

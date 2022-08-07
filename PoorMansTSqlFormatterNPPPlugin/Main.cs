@@ -7,15 +7,17 @@ using System.Text;
 using System.Windows.Forms;
 using Kbg.NppPluginNET.PluginInfrastructure;
 
-namespace PoorMansTSqlFormatterNPPPlugin
+namespace Kbg.NppPluginNET
 {
     class Main
     {
-        internal const string PluginName = "Poor Man's T-Sql Formatter 2";
+        internal const string PluginName = "PoorMansTSqlFormatterNPPPlugin";
         static string iniFilePath = null;
         static bool someSetting = false;
         static frmMyDlg frmMyDlg = null;
         static int idMyDlg = -1;
+        static Bitmap tbBmp = Properties.Resources.star;
+        static Bitmap tbBmp_tbTab = Properties.Resources.star_bmp;
         static Icon tbIcon = null;
 
         public static void OnNotification(ScNotification notification)
@@ -46,7 +48,7 @@ namespace PoorMansTSqlFormatterNPPPlugin
         internal static void SetToolBarIcon()
         {
             toolbarIcons tbIcons = new toolbarIcons();
-            //tbIcons.hToolbarBmp = tbBmp.GetHbitmap();
+            tbIcons.hToolbarBmp = tbBmp.GetHbitmap();
             IntPtr pTbIcons = Marshal.AllocHGlobal(Marshal.SizeOf(tbIcons));
             Marshal.StructureToPtr(tbIcons, pTbIcons, false);
             Win32.SendMessage(PluginBase.nppData._nppHandle, (uint) NppMsg.NPPM_ADDTOOLBARICON, PluginBase._funcItems.Items[idMyDlg]._cmdID, pTbIcons);
@@ -61,7 +63,7 @@ namespace PoorMansTSqlFormatterNPPPlugin
 
         internal static void myMenuFunction()
         {
-            MessageBox.Show("Hello N++!");
+            MessageBox.Show("Hello N++! This Works!");
         }
 
         internal static void myDockableDialog()
@@ -79,7 +81,7 @@ namespace PoorMansTSqlFormatterNPPPlugin
                     colorMap[0].NewColor = Color.FromKnownColor(KnownColor.ButtonFace);
                     ImageAttributes attr = new ImageAttributes();
                     attr.SetRemapTable(colorMap);
-                    //g.DrawImage(tbBmp_tbTab, new Rectangle(0, 0, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel, attr);
+                    g.DrawImage(tbBmp_tbTab, new Rectangle(0, 0, 16, 16), 0, 0, 16, 16, GraphicsUnit.Pixel, attr);
                     tbIcon = Icon.FromHandle(newBmp.GetHicon());
                 }
 

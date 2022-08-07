@@ -1,4 +1,4 @@
-﻿namespace PoorMansTSqlFormatterNPPPlugin
+﻿namespace Kbg.NppPluginNET
 {
     partial class frmMyDlg
     {
