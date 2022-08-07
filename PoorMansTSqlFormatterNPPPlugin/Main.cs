@@ -35,8 +35,8 @@ namespace Kbg.NppPluginNET
         #region " Fields "
         internal const string PluginName = "Poor Man's T-Sql Formatter";
         static string iniFilePath = null;
-        static PoorMansTSqlFormatterLib.SqlFormattingManager _formattingManager = null;
-        static ResourceManager _generalResourceManager = new ResourceManager("PoorMansTSqlFormatterNppPlugin.GeneralLanguageContent", Assembly.GetExecutingAssembly());
+        static PoorMansTSqlFormatterLib.SqlFormattingManager _formattingManager = new PoorMansTSqlFormatterLib.SqlFormattingManager();
+        static ResourceManager _generalResourceManager = new ResourceManager("PoorMansTSqlFormatterNPPPlugin.GeneralLanguageContent", Assembly.GetExecutingAssembly());
         #endregion
 
         #region " StartUp/CleanUp "
@@ -51,9 +51,9 @@ namespace Kbg.NppPluginNET
             string iniFolder = sbIniFilePath.ToString();
             if (!Directory.Exists(iniFolder)) Directory.CreateDirectory(iniFolder);
             iniFilePath = Path.Combine(iniFolder, PluginName + ".ini.xml");
-            PoorMansTSqlFormatterNPPPlugin.Properties.Settings.Default.Context["settingsPath"] = iniFilePath;
+            //PoorMansTSqlFormatterNPPPlugin.Properties.Settings.Default.Context["settingsPath"] = iniFilePath;
 
-            _formattingManager = Utils.GetFormattingManager(PoorMansTSqlFormatterNPPPlugin.Properties.Settings.Default);
+            //_formattingManager = Utils.GetFormattingManager(PoorMansTSqlFormatterNPPPlugin.Properties.Settings.Default);
 
             //set up menu items
             PluginBase.SetCommand(0, _generalResourceManager.GetString("FormatButtonText"), formatSqlCommand, new ShortcutKey(false, false, false, Keys.None));
@@ -131,10 +131,10 @@ namespace Kbg.NppPluginNET
 
         internal static void formattingOptionsCommand()
         {
-            SettingsForm settings = new SettingsForm(PoorMansTSqlFormatterNPPPlugin.Properties.Settings.Default, Assembly.GetExecutingAssembly(), _generalResourceManager.GetString("ProjectAboutDescription"));
+            SettingsForm settings = new SettingsForm(null, Assembly.GetExecutingAssembly(), _generalResourceManager.GetString("ProjectAboutDescription"));
             if (settings.ShowDialog() == DialogResult.OK)
             {
-                _formattingManager = Utils.GetFormattingManager(PoorMansTSqlFormatterNPPPlugin.Properties.Settings.Default);
+                //_formattingManager = Utils.GetFormattingManager(PoorMansTSqlFormatterNPPPlugin.Properties.Settings.Default);
             }
             settings.Dispose();
         }
