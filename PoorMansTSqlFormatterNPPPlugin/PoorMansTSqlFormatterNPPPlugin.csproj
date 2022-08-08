@@ -83,7 +83,7 @@
   <Target Name="BeforeBuild">
   </Target>
   -->
-  <Target Name="AfterBuild">
+  <Target Name="AfterBuild"  DependsOnTargets="AfterBuild_DllExport">
     <ItemGroup>
       <ProjectOutputFiles Include="$(OutputPath)\**\*.*" />
     </ItemGroup>
