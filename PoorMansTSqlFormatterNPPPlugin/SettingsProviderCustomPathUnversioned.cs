@@ -41,6 +41,14 @@ namespace PoorMansTSqlFormatterNPPPlugin
             base.Initialize(this.ApplicationName, config);
         }
 
+        public override string Name
+        {
+            get
+            {
+                return "SettingsProviderCustomPathUnversioned";
+            }
+        }
+
         public override string ApplicationName
         {
             get
