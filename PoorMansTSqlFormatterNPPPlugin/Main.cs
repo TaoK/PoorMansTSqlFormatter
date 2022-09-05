@@ -1,7 +1,7 @@
 ﻿/*
 Poor Man's T-SQL Formatter - a small free Transact-SQL formatting 
 library for .Net 2.0 and JS, written in C#. 
-Copyright (C) 2011 Tao Klerks
+Copyright (C) 2011-2022 Tao Klerks
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -18,8 +18,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
+
+/* 
+-------------
+TESTING NOTES
+-------------
+
+Unfortunately I haven't devised (or found) any method of automating integration tests against NPP/Scintilla,
+so testing is manual. The important things that I have found to test so far include:
+ * Long documents (hundreds of kb)
+ * Documents with "interesting" characters (CP-1252, Arabic, Chinese, and Smileys for example)
+ * Documents in other encodings, eg UTF-16
+ * Documents with different line ending schemes - CrLf, Lf, and Cr
+ * Settings storage & retrieval
+ * "About" dialog display
+ * ...
+
+For different types of documents, things to check include:
+ * Try a first-format for both selection and no selection
+ * That the first format results in a reasonable length wrt the original
+ * That no interesting characters have been mangled
+ * That line endings are consistent with the doc type
+ * That the first format without selection leaves the cursor in a reasonable place
+ * That later formats have no impact / make no change
+ * That later formats without selection leave the cursor in the *same* place
+
+*/
+
+
 using System;
-using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Resources;
@@ -37,6 +64,7 @@ namespace Kbg.NppPluginNET
         static string iniFilePath = null;
         static PoorMansTSqlFormatterLib.SqlFormattingManager _formattingManager = null;
         static ResourceManager _generalResourceManager = new ResourceManager("PoorMansTSqlFormatterNppPlugin.GeneralLanguageContent", Assembly.GetExecutingAssembly());
+        static IScintillaGateway editor = new ScintillaGateway(PluginBase.GetCurrentScintilla());
         #endregion
 
         #region " StartUp/CleanUp "
@@ -70,56 +98,66 @@ namespace Kbg.NppPluginNET
         #region " Menu functions "
         internal static void formatSqlCommand()
         {
-            StringBuilder textBuffer = null;
-            StringBuilder outBuffer = null;
+            string inputText;
+            string outputText;
 
-            IntPtr currentScintilla = PluginBase.GetCurrentScintilla();
-
-            //apparently calling with null pointer returns selection buffer length: http://www.scintilla.org/ScintillaDoc.html#SCI_GETSELTEXT
-            int selectionBufferLength = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETSELTEXT, 0, 0);
-
-            if (selectionBufferLength > 1)
+            int selectionBufferLength = editor.GetSelectionLength();
+            if (selectionBufferLength > 0)
             {
-                //prep the buffer/StringBuilder with the right length
-                textBuffer = new StringBuilder(selectionBufferLength);
-
-                //populate the buffer
-                Win32.SendMessage(currentScintilla, SciMsg.SCI_GETSELTEXT, 0, textBuffer);
+                //auto-generated "editor.GetSelText()" implementation in ScintillaGateway is broken, bottoms out at 10,000 utf-8 bytes
+                inputText = editor.GetSelText_Fixed();
 
                 //if formatting is successful or user chooses to continue despite error
-                if (FormatAndWarn(textBuffer, out outBuffer))
+                if (FormatAndWarn(inputText, out outputText))
                 {
                     //replace the selection with the formatted content
-                    Win32.SendMessage(currentScintilla, SciMsg.SCI_REPLACESEL, 0, outBuffer);
-
+                    editor.ReplaceSel(outputText);
                     //position of the cursor will automatically be the end of the replaced selection
                 }
             }
             else
             {
-                //Do as they say here:
-                //http://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXT
-                int docBufferLength = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETTEXT, 0, 0);
-                int docCursorPosition = (int)Win32.SendMessage(currentScintilla, SciMsg.SCI_GETCURRENTPOS, 0, 0);
-                textBuffer = new StringBuilder(docBufferLength);
-                Win32.SendMessage(currentScintilla, SciMsg.SCI_GETTEXT, docBufferLength, textBuffer);
+                /* Scintilla's idea of text length is a little weird; a multibyte character like 😀
+                is recorded as length 4 in this "text length" measurement... but counted as 1 in a
+                "selection length" measurement!
+                You can see this inconsistency in NPP if you have a short doc, you look at the doc
+                length in the status bar, you select the whole doc, and you look at your selection
+                length - the more smileys in the text, the greater the discrepancy.
 
-                if (FormatAndWarn(textBuffer, out outBuffer))
+                It's tempting to assume it's a "bytes" number then, but it's definitely not - a
+                utf-16 doc still shows up as the same number of characters as a utf-8 doc. It looks
+                like it's probably a "bytes when encoded in utf-8" number.
+
+                Scintilla's number should only be used in its text-targeting APIs; for text length
+                arithmetic, use .Net's own understanding of string lengths.
+                */
+                int editorTextLength = editor.GetTextLength();
+
+                int cursorPosition = editor.GetCurrentPos();
+                //auto-generated "editor.GetText()" implementation in ScintillaGateway is broken, bottoms out at 10,000 utf-8 bytes
+                inputText = editor.GetText_Fixed(editorTextLength);
+
+                if (FormatAndWarn(inputText, out outputText))
                 {
-                    //note: the "docBufferLength" always seems to be 1 too high, even for an empty doc it is 1, so am subtracting explicitly to avoid "cursor creep".
-                    int newPosition = (int)Math.Round(1.0 * docCursorPosition * outBuffer.Length / (docBufferLength - 1), 0, MidpointRounding.AwayFromZero);
-                    //replace the doc content
-                    Win32.SendMessage(currentScintilla, SciMsg.SCI_SETTEXT, 0, outBuffer);
-                    //set the cursor position to somewhere reasonable
-                    Win32.SendMessage(currentScintilla, SciMsg.SCI_SETSEL, newPosition, newPosition);
+                    int newPosition = (int)Math.Round(1.0 * cursorPosition * outputText.Length / inputText.Length, 0, MidpointRounding.AwayFromZero);
+                    editor.SetText(outputText);
+                    editor.SetEmptySelection(newPosition);
+                    editor.ScrollCaret();
                 }
             }
         }
 
-        private static bool FormatAndWarn(StringBuilder textBuffer, out StringBuilder outBuffer)
+        private static bool FormatAndWarn(string inputString, out string outputString)
         {
             bool errorsEncountered = false;
-            outBuffer = new StringBuilder(_formattingManager.Format(textBuffer.ToString(), ref errorsEncountered));
+            outputString = _formattingManager.Format(inputString, ref errorsEncountered);
+
+            // The formatting library uses Environment.NewLine. In .Net on Windows that's CrLf.
+            var lineEnding = editor.GetEOLMode();
+            if (lineEnding == EndOfLine.CR)
+                outputString = outputString.Replace("\r\n", "\r");
+            else if (lineEnding == EndOfLine.LF)
+                outputString = outputString.Replace("\r\n", "\n");
 
             if (errorsEncountered)
                 if (MessageBox.Show(_generalResourceManager.GetString("ParseErrorWarningMessage"), _generalResourceManager.GetString("ParseErrorWarningMessageTitle"), MessageBoxButtons.OKCancel) != DialogResult.OK)
