@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Include href="KnownImageIds.vsct"/>
+  <Commands package="guidPackage2">
+    <Groups>
+      <Group guid="guidMyCommandPackageCmdSet2" id="MyMenuGroup2" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+      </Group>
+    </Groups>
+    <Buttons>
+      <Button guid="guidMyCommandPackageCmdSet2" id="MyCommandId2" priority="0x0100" type="Button">
+        <Parent guid="guidMyCommandPackageCmdSet2" id="MyMenuGroup2" />
+        <Icon guid="ImageCatalogGuid" id="ButtonClick" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>My Command 12</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+  <KeyBindings>
+    <KeyBinding guid="guidMyCommandPackageCmdSet2" id="MyCommandId2" editor="guidVSStd97" key1="K" mod1="Control" key2="2" mod2="Control" />
+  </KeyBindings>
+  <Symbols>
+    <GuidSymbol name="guidPackage2" value="{0b08762c-20ba-42de-9e99-916579184d4f}" />
+
+    <GuidSymbol name="guidMyCommandPackageCmdSet2" value="{2b40859b-27f8-4dc6-85b1-f253386aa5f7}">
+      <IDSymbol name="MyMenuGroup2" value="0x1021" />
+      <IDSymbol name="MyCommandId2" value="0x0101" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>

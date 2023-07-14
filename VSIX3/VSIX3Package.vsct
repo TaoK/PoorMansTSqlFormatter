@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Commands package="guidVSIX3Package">
+    <Groups>
+      <Group guid="guidVSIX3PackageCmdSet" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+      </Group>
+    </Groups>
+    <Buttons>
+      <Button guid="guidVSIX3PackageCmdSet" id="Command1Id" priority="0x0100" type="Button">
+        <Parent guid="guidVSIX3PackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Invoke Command1mfrom VSIX3</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+    <Bitmaps>
+      <Bitmap guid="guidImages" href="Resources\Command1.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough"/>
+    </Bitmaps>
+  </Commands>
+  <Symbols>
+    <GuidSymbol name="guidVSIX3Package" value="{025c7a1a-779e-47d3-a105-6e0ff301d347}" />
+    <GuidSymbol name="guidVSIX3PackageCmdSet" value="{fb726574-1d41-48de-baed-e8af09aa2037}">
+      <IDSymbol name="MyMenuGroup" value="0x1020" />
+      <IDSymbol name="Command1Id" value="0x0106" />
+    </GuidSymbol>
+    <GuidSymbol name="guidImages" value="{0c503a03-433d-4d85-ae29-cef1c658fa81}" >
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
