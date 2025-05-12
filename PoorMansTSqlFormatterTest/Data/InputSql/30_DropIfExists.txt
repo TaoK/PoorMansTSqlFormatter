@@ -1,0 +1,2 @@
+﻿drop table if exists myTbl;
+drop view if exists vMyTbl;
