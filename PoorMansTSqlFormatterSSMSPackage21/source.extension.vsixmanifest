@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0"
+    xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
+    xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+    <Metadata>
+        <Identity Id="PoorMansTSqlFormatterSSMS21.TaoKlerks"
+                  Version="0.0.1" Language="en-US" Publisher="Rodrigo Salas" />
+        <DisplayName>Poor Man's T-SQL Formatter (SSMS 21)</DisplayName>
+        <Description xml:space="preserve">Formateador de T-SQL para SQL Server Management Studio 21</Description>
+    </Metadata>
+    <Installation>
+        <InstallationTarget Id="Microsoft.VisualStudio.Ssms" Version="[17.0,)">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+    </Installation>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor"
+                      Version="[17.0,)"
+                      DisplayName="Visual Studio core editor"
+                      d:Source="Installed" />
+    </Prerequisites>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage"
+           d:Source="File"
+           Path="PoorMansTSqlFormatterSSMS21Package.pkgdef" />
+    </Assets>
+</PackageManifest>
+
+

@@ -8,6 +8,14 @@ This changelog aims to follow the structure laid out at [Keep a Changelog](http:
 
 * "Version Bump" script, for simplifying the release process
 
+### Added
+* VSIX extension for SQL Server Management Studio 18–21 (`PoorMansTSqlFormatterSSMSPackage21`)
+    * Uses `AsyncPackage` and the modern VS 17.x shell extension model, replacing the
+      legacy add-in mechanism that stopped working in SSMS 18
+    * Adds **Tools → Poor's Man T-SQL Formatter → Format T-SQL Code** (formats selection or full editor)
+    * Adds **Tools → Poor's Man T-SQL Formatter → Settings...** (opens options page under Tools → Options)
+    * Includes interactive PowerShell installer/uninstaller (`Launch.bat`) for SSMS 21/22
+    
 ### Changed
 
 * Merge Pull Request #188
