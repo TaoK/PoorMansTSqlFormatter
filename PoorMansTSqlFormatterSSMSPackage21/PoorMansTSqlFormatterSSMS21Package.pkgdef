@@ -1,0 +1,19 @@
+// Poor Man's T-SQL Formatter - SSMS 21
+// Package: FormatterPackage  GUID: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+
+[$RootKey$\Packages\{a1b2c3d4-e5f6-7890-abcd-ef1234567890}]
+@="Poor Man's T-SQL Formatter (SSMS 21)"
+"InprocServer32"="$WinDir$\SYSTEM32\MSCOREE.DLL"
+"Class"="PoorMansTSqlFormatterSSMS21.PoorMansTSqlFormatterSSMS21Package"
+"CodeBase"="$PackageFolder$\PoorMansTSqlFormatterSSMS21.dll"
+"AllowsBackgroundLoad"=dword:00000001
+
+[$RootKey$\AutoLoadPackages\{ADFC4E64-0397-11D1-9F4E-00A0C911004F}]
+"{a1b2c3d4-e5f6-7890-abcd-ef1234567890}"=dword:00000002
+
+[$RootKey$\AutoLoadPackages\{f1536ef8-92ec-443c-9ed7-fdadf150da82}]
+"{a1b2c3d4-e5f6-7890-abcd-ef1234567890}"=dword:00000002
+
+[$RootKey$\ToolsOptionsPages\SQL Tools\T-SQL Formatter]
+"Package"="{a1b2c3d4-e5f6-7890-abcd-ef1234567890}"
+"Page"="{B4C5D6E7-F8A9-4B2C-9D3E-F456789012AB}"
