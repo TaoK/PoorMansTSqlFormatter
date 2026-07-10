@@ -186,7 +186,7 @@ SqlFormatter [options] [filename or pattern]
 -e, --extensions (default: sql)
 -r, --recursive (default: false)
 -b, --backups (default: true)
--b, --outputFileOrFolder (default: none; if set, overrides the backup option)
+-o, --outputFileOrFolder (default: none; if set, overrides the backup option)
 -l, --languageCode (default: current if supported or EN; valid values include EN, FR and ES)
 -h, -?, --help
 
