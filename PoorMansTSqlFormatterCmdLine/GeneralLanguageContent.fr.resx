@@ -163,42 +163,44 @@ Copyright (C) 2011 Tao Klerks</value>
   </data>
   <data name="ProgramUsageNotes" xml:space="preserve">
     <value>
-Notes d'usage: 
+Notes d'usage:
 
-SqlFormatter &lt;nom de fichier ou modèle&gt; &lt;options&gt;
+Les options sont analysées avec NDesk.Options. Plusieurs styles sont pris en charge. Les options peuvent être passées avec un tiret simple (-), un double tiret (--), ou une barre oblique (/). Les valeurs d'option peuvent être séparées par un signe égal (=), ou deux-points (:), ou peuvent suivre dans l'option suivante.
 
-is  indentString (par défaut: \t)
-st  spacesPerTab (par défaut: 4)
-mw  maxLineWidth (par défaut: 999)
-sb  statementBreaks (par défaut: 2)
-cb  clauseBreaks (par défaut: 1)
-tc  trailingCommas (par défaut: faux)
-sac spaceAfterExpandedComma (par défaut: faux)
-ebc expandBetweenConditions (par défaut: vrai)
-ebe expandBooleanExpressions (par défaut: vrai)
-ecs expandCaseStatements (par défaut: vrai)
-ecl expandCommaLists (par défaut: vrai)
-eil expandInLists (par défaut: vrai)
-uk  uppercaseKeywords (par défaut: vrai)
-sk  standardizeKeywords (par défaut: faux)
-ae  allowParsingErrors (par défaut: faux)
-e   extensions (par défaut: sql)
-r   recursive (par défaut: faux)
-b   backups (par défaut: vrai)
-b   outputFileOrFolder (par défaut: aucun; s'il est spécifié, overrides the backup option)
-l   languageCode (par défaut: langue actuelle si elle est supportée; valeurs valables sont EN, FR et ES)
-h ? help
+SqlFormatter [options] [nom de fichier ou modèle]
 
-On peut désactiver les options booléennes en les suivant d'un "moins", et les activer simplement en les spécifiant, ou aussi en les suivant d'un "plus".
-Vous pouvez aussi utilizer un Tube (/tuyeau/pipe) pour proportionner le SQL d'entree (en codage UTF-8), et alors aucun nom de fichier est attenu.
+--is, --indentString (par défaut: \t)
+--st, --spacesPerTab (par défaut: 4)
+--mw, --maxLineWidth (par défaut: 999)
+--sb, --statementBreaks (par défaut: 2)
+--cb, --clauseBreaks (par défaut: 1)
+--tc, --trailingCommas (par défaut: faux)
+--sac, --spaceAfterExpandedComma (par défaut: faux)
+--ebc, --expandBetweenConditions (par défaut: vrai)
+--ebe, --expandBooleanExpressions (par défaut: vrai)
+--ecs, --expandCaseStatements (par défaut: vrai)
+--ecl, --expandCommaLists (par défaut: vrai)
+--eil, --expandInLists (par défaut: vrai)
+--uk, --uppercaseKeywords (par défaut: vrai)
+--sk, --standardizeKeywords (par défaut: faux)
+--ae, --allowParsingErrors (par défaut: faux)
+-e, --extensions (par défaut: sql)
+-r, --recursive (par défaut: faux)
+-b, --backups (par défaut: vrai)
+-o, --outputFileOrFolder (par défaut: aucun; s'il est spécifié, remplace l'option de sauvegarde)
+-l, --languageCode (par défaut: langue actuelle si elle est supportée, sinon EN; valeurs valables incluent EN, FR et ES)
+-h, -?, --help
 
-Par exemple:
+On peut désactiver les options booléennes en les suivant d'un « moins », et les activer simplement en les spécifiant, ou aussi en les suivant d'un « plus ».
+Vous pouvez aussi utiliser un tube (pipe) pour fournir le SQL d'entrée (encodage UTF-8), et alors aucun chemin d'entrée n'est attendu.
 
-SqlFormatter TestFiles\* /is:"  " /tc /uk- 
+Exemples:
 
-SqlFormatter test*.sql /o:resultfile.sql
+SqlFormatter TestFiles\* --is:"  " --tc --uk-
 
-echo select unecolonnequelconque from untableauquelconque | SqlFormatter 
+SqlFormatter test*.sql -o:resultfile.sql
+
+echo select unecolonnequelconque from untableauquelconque | SqlFormatter
 
 </value>
   </data>

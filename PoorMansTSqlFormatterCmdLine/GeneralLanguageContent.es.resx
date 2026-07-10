@@ -163,43 +163,45 @@ Copyright (C) 2011 Tao Klerks</value>
   </data>
   <data name="ProgramUsageNotes" xml:space="preserve">
     <value>
-Notas de uso: 
+Notas de uso:
 
-SqlFormatter &lt;archivo or patrón&gt; &lt;opciones&gt;
+Las opciones se analizan con NDesk.Options. Se admiten varios estilos. Las opciones pueden pasarse con un guion simple (-), un guion doble (--), o una barra (/). Los valores de opción pueden separarse con signo igual (=), o dos puntos (:), o pueden seguir en la siguiente opción.
 
-is  indentString (predeterminado: \t)
-st  spacesPerTab (predeterminado: 4)
-mw  maxLineWidth (predeterminado: 999)
-sb  statementBreaks (predeterminado: 2)
-cb  clauseBreaks (predeterminado: 1)
-tc  trailingCommas (predeterminado: falso)
-sac spaceAfterExpandedComma (predeterminado: falso)
-ebc expandBetweenConditions (predeterminado: verdadero)
-ebe expandBooleanExpressions (predeterminado: verdadero)
-ecs expandCaseStatements (predeterminado: verdadero)
-ecl expandCommaLists (predeterminado: verdadero)
-ecl expandInLists (predeterminado: verdadero)
-uk  uppercaseKeywords (predeterminado: verdadero)
-sk  standardizeKeywords (predeterminado: falso)
-ae  allowParsingErrors (predeterminado: falso)
-e   extensions (predeterminado: sql)
-r   recursive (predeterminado: falso)
-b   backups (predeterminado: verdadero)
-b   outputFileOrFolder (predeterminado: ninguno; si se incluye, anula la option "backups")
-l   languageCode (predeterminado: idioma actual si es soportado; optiones soportadas incluyen EN, FR y ES)
-h ? help
+SqlFormatter [opciones] [archivo o patrón]
 
-Se pueden desactivar opciones booleanas siguendolas de un "menos", o activarlas con solo incluirlas o siguendolas de un "mas".
-Se puede proporcionar el codigo SQL por tubería (pipe) en vez de proporcionar un nombre de archivo, pero tiene que ser codificado con UTF-8.
+--is, --indentString (predeterminado: \t)
+--st, --spacesPerTab (predeterminado: 4)
+--mw, --maxLineWidth (predeterminado: 999)
+--sb, --statementBreaks (predeterminado: 2)
+--cb, --clauseBreaks (predeterminado: 1)
+--tc, --trailingCommas (predeterminado: falso)
+--sac, --spaceAfterExpandedComma (predeterminado: falso)
+--ebc, --expandBetweenConditions (predeterminado: verdadero)
+--ebe, --expandBooleanExpressions (predeterminado: verdadero)
+--ecs, --expandCaseStatements (predeterminado: verdadero)
+--ecl, --expandCommaLists (predeterminado: verdadero)
+--eil, --expandInLists (predeterminado: verdadero)
+--uk, --uppercaseKeywords (predeterminado: verdadero)
+--sk, --standardizeKeywords (predeterminado: falso)
+--ae, --allowParsingErrors (predeterminado: falso)
+-e, --extensions (predeterminado: sql)
+-r, --recursive (predeterminado: falso)
+-b, --backups (predeterminado: verdadero)
+-o, --outputFileOrFolder (predeterminado: ninguno; si se incluye, anula la opción "backups")
+-l, --languageCode (predeterminado: idioma actual si es soportado, o EN; valores válidos incluyen EN, FR y ES)
+-h, -?, --help
 
-Exemplos:
+Se pueden desactivar opciones booleanas siguiéndolas de un « menos », o activarlas con solo incluirlas o siguiéndolas de un « más ».
+También se puede proporcionar el código SQL por tubería (pipe) con codificación UTF-8, y entonces no se espera una ruta de entrada.
 
-SqlFormatter TestFiles\* /is:"  " /tc /uk- 
+Ejemplos:
 
-SqlFormatter test*.sql /o:resultfile.sql
+SqlFormatter TestFiles\* --is:"  " --tc --uk-
 
-echo select algunacolumna from algunatabla | SqlFormatter 
-    
+SqlFormatter test*.sql -o:resultfile.sql
+
+echo select algunacolumna from algunatabla | SqlFormatter
+
 </value>
   </data>
   <data name="UnrecognizedLanguageErrorMessage" xml:space="preserve">
