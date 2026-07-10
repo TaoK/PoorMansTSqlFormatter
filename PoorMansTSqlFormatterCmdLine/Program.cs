@@ -141,7 +141,7 @@ namespace PoorMansTSqlFormatterCmdLine
             }
 
             //then complain about missing input or unrecognized args
-            if (string.IsNullOrEmpty(stdInput) && remainingArgs.Count == 0)
+            if (!showUsageFriendly && string.IsNullOrEmpty(stdInput) && remainingArgs.Count == 0)
             {
                 showUsageError = true;
                 Console.Error.WriteLine(_generalResourceManager.GetString("NoInputErrorMessage"));
