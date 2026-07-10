@@ -19,7 +19,7 @@ namespace PoorMansTSqlFormatterCmdLine {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class GeneralLanguageContent {
@@ -169,7 +169,7 @@ namespace PoorMansTSqlFormatterCmdLine {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Poor Man&apos;s T-SQL Formatter - a small free Transact-SQL formatting 
+        ///   Looks up a localized string similar to Poor Man&apos;s T-SQL Formatter - a small free Transact-SQL formatting
         ///library for .Net 2.0 and JS, written in C#. Distributed under AGPL v3.
         ///Copyright (C) 2011-2017 Tao Klerks.
         /// </summary>
@@ -181,22 +181,18 @@ namespace PoorMansTSqlFormatterCmdLine {
         
         /// <summary>
         ///   Looks up a localized string similar to 
-        ///Usage notes: 
+        ///Usage notes:
         ///
-        ///SqlFormatter &lt;filename or pattern&gt; &lt;options&gt;
+        ///Options are parsed using NDesk.Options. Multiple styles are supported. Options can be passed with a single dash (-), a double-dash (--), or a slash (/). Option values can be separated with equal sign (=), or colon (:), or can follow in the next option.
         ///
-        ///is  indentString (default: \t)
-        ///st  spacesPerTab (default: 4)
-        ///mw  maxLineWidth (default: 999)
-        ///sb  statementBreaks (default: 2)
-        ///cb  clauseBreaks (default: 1)
-        ///tc  trailingCommas (default: false)
-        ///sac spaceAfterExpandedComma (default: false)
-        ///ebc expandBetweenConditions (default: true)
-        ///ebe expandBooleanExpressions (default: true)
-        ///ecs expandCaseStatements (default: true)
-        ///ecl expandCommaLists (default: true)
-        ///eil expandInLists (default: tr [rest of string was truncated]&quot;;.
+        ///SqlFormatter [options] [filename or pattern]
+        ///
+        ///--is, --indentString (default: \t)
+        ///--st, --spacesPerTab (default: 4)
+        ///--mw, --maxLineWidth (default: 999)
+        ///--sb, --statementBreaks (default: 2)
+        ///--cb, --clauseBreaks (default: 1)
+        ///--tc, --t [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ProgramUsageNotes {
             get {
